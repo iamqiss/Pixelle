@@ -1,0 +1,38 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Setup development environment"
+  lane :setup do
+    cocoapods
+    setup_certificates
+    run_tests
+  end
+
+  desc "Build for development"
+  lane :dev do
+    build_app(
+      scheme: "Pixelle-Development",
+      configuration: "Debug"
+    )
+  end
+
+  desc "Deploy to staging"
+  lane :staging do
+    build_app(
+      scheme: "Pixelle-Staging",
+      configuration: "Release"
+    )
+    upload_to_testflight
+  end
+
+  desc "Production release (may the force be with you)"
+  lane :production do
+    ensure_git_status_clean
+    increment_build_number
+    build_app(
+      scheme: "Pixelle-Production",
+      configuration: "Release"
+    )
+    upload_to_app_store
+  end
+end

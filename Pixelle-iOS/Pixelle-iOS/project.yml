@@ -1,0 +1,38 @@
+name: Pixelle-iOS
+options:
+  bundleIdPrefix: com.pixelle
+  deploymentTarget:
+    iOS: "15.0"
+
+schemes:
+  Pixelle-Development:
+    build:
+      targets:
+        Pixelle-iOS: all
+    test:
+      targets:
+        - PixelleTests
+  
+  Pixelle-Staging:
+    build:
+      targets:
+        Pixelle-iOS: all
+        
+  Pixelle-Production:
+    build:
+      targets:
+        Pixelle-iOS: all
+
+targets:
+  Pixelle-iOS:
+    type: application
+    platform: iOS
+    sources:
+      - path: Pixelle-iOS
+        excludes:
+          - "Legacy/DoNotTouch2019/**"
+          - "Experimental/**"
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.pixelle.app
+      MARKETING_VERSION: "1.0.0"
+      CURRENT_PROJECT_VERSION: "1"
