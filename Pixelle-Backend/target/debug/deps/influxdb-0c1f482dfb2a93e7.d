@@ -1,0 +1,16 @@
+/workspace/Pixelle-Backend/target/debug/deps/influxdb-0c1f482dfb2a93e7.d: /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/lib.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/client/mod.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/error.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/query/mod.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/query/consts.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/query/line_proto_term.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/query/read_query.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/query/write_query.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/integrations/serde_integration/mod.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/integrations/serde_integration/de.rs
+
+/workspace/Pixelle-Backend/target/debug/deps/libinfluxdb-0c1f482dfb2a93e7.rmeta: /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/lib.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/client/mod.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/error.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/query/mod.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/query/consts.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/query/line_proto_term.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/query/read_query.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/query/write_query.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/integrations/serde_integration/mod.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/integrations/serde_integration/de.rs
+
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/lib.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/client/mod.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/error.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/query/mod.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/query/consts.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/query/line_proto_term.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/query/read_query.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/query/write_query.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/integrations/serde_integration/mod.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/influxdb-0.7.2/src/integrations/serde_integration/de.rs:
+
+# env-dep:CARGO_PKG_VERSION=0.7.2

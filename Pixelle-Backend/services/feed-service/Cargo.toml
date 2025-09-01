@@ -12,12 +12,11 @@ anyhow = { workspace = true }
 # Internal crates
 pixelle-core = { path = "../../crates/pixelle-core" }
 pixelle-database = { path = "../../crates/pixelle-database" }
-pixelle-ml = { path = "../../crates/pixelle-ml" }
 pixelle-analytics = { path = "../../crates/pixelle-analytics" }
 
-# Machine Learning for feed algorithm
-candle-core = { workspace = true }
-tch = { workspace = true }
+# Machine Learning for feed algorithm (commented out for basic implementation)
+# candle-core = { workspace = true }
+# tch = { workspace = true }
 
 # High-performance data structures
 dashmap = { workspace = true }

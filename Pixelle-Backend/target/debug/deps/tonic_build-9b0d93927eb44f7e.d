@@ -1,0 +1,12 @@
+/workspace/Pixelle-Backend/target/debug/deps/tonic_build-9b0d93927eb44f7e.d: /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/lib.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/prost.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/manual.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/client.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/server.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/code_gen.rs
+
+/workspace/Pixelle-Backend/target/debug/deps/libtonic_build-9b0d93927eb44f7e.rlib: /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/lib.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/prost.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/manual.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/client.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/server.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/code_gen.rs
+
+/workspace/Pixelle-Backend/target/debug/deps/libtonic_build-9b0d93927eb44f7e.rmeta: /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/lib.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/prost.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/manual.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/client.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/server.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/code_gen.rs
+
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/lib.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/prost.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/manual.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/client.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/server.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tonic-build-0.9.2/src/code_gen.rs:

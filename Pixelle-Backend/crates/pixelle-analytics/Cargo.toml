@@ -1,0 +1,23 @@
+[package]
+name = "pixelle-analytics"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Core dependencies
+pixelle-core = { path = "../pixelle-core" }
+
+# Analytics and metrics
+prometheus = { workspace = true }
+tracing = { workspace = true }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Time
+chrono = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }

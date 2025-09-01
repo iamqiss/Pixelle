@@ -1,0 +1,2 @@
+fn() -> impl futures::Future<Output = Result<HttpResponse, actix_web::Error>> {metrics}
+fn() -> impl futures::Future<Output = Result<HttpResponse, actix_web::Error>> {metrics}: HttpServiceFactory

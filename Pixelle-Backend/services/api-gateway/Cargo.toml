@@ -20,7 +20,7 @@ pixelle-monitoring = { path = "../../crates/pixelle-monitoring" }
 # Rate limiting & security
 governor = "0.6"
 tower = "0.4"
-tower-http = { version = "0.4", features = ["cors", "trace", "compression"] }
+tower-http = { version = "0.4", features = ["cors", "trace"] }
 
 # Load balancing & service discovery
 consul = "0.4"

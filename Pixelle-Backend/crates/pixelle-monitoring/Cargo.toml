@@ -1,0 +1,32 @@
+[package]
+name = "pixelle-monitoring"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Core dependencies
+pixelle-core = { path = "../pixelle-core" }
+
+# Monitoring
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true, features = ["env-filter"] }
+prometheus = { workspace = true }
+opentelemetry = { workspace = true }
+
+# Web framework for metrics endpoint
+actix-web = { workspace = true }
+actix-web-prom = "0.6"
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# Async
+tokio = { workspace = true }
+
+# Time
+chrono = { workspace = true }

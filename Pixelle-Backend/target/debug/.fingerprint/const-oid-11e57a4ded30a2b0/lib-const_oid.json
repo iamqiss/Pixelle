@@ -1,0 +1,1 @@
+{"rustc":11111913435057903237,"features":"[]","declared_features":"[\"arbitrary\", \"db\", \"std\"]","target":17089197581752919419,"profile":3033921117576893,"path":13554142815743078837,"deps":[],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/const-oid-11e57a4ded30a2b0/dep-lib-const_oid","checksum":false}}],"rustflags":[],"config":2069994364910194474,"compile_kind":0}

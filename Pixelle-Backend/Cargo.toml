@@ -105,9 +105,9 @@ rayon = "1.8"
 crossbeam = "0.8"
 dashmap = "5.5"
 
-# Machine Learning
-candle-core = "0.3"
-tch = "0.13"  # PyTorch bindings
+# Machine Learning (commented out for basic implementation)
+# candle-core = "0.3"
+# tch = "0.13"  # PyTorch bindings
 
 # Media processing
 ffmpeg-next = "6.0"
