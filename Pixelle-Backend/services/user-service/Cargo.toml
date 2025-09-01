@@ -1,0 +1,43 @@
+[package]
+name = "pixelle-user-service"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { workspace = true }
+actix-web = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# Internal crates
+pixelle-core = { path = "../../crates/pixelle-core" }
+pixelle-database = { path = "../../crates/pixelle-database" }
+pixelle-auth = { path = "../../crates/pixelle-auth" }
+pixelle-analytics = { path = "../../crates/pixelle-analytics" }
+
+# Database
+sqlx = { workspace = true }
+redis = { workspace = true }
+
+# Authentication
+jsonwebtoken = { workspace = true }
+argon2 = { workspace = true }
+
+# Validation
+validator = { version = "0.16", features = ["derive"] }
+
+# Email services
+lettre = "0.11"
+
+# Image processing for profile pictures
+image = { workspace = true }
+
+# Monitoring
+tracing = { workspace = true }
+prometheus = { workspace = true }
+
+# Time
+chrono = { workspace = true }
+uuid = { workspace = true }

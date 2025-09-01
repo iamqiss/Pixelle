@@ -1,0 +1,46 @@
+[package]
+name = "pixelle-database"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Multiple ORMs because choices are hard
+sqlx = { workspace = true, features = ["postgres", "mysql", "sqlite", "chrono", "uuid", "json"] }
+diesel = { workspace = true, features = ["postgres", "chrono", "uuid", "serde_json"] }
+sea-orm = { workspace = true }
+
+# Connection pooling
+deadpool-postgres = "0.12"
+r2d2 = "0.8"
+
+# Migrations
+refinery = { version = "0.8", features = ["postgres", "mysql"] }
+
+# NoSQL databases  
+redis = { workspace = true }
+mongodb = { workspace = true }
+
+# Search
+elasticsearch = "8.5"
+
+# Graph database
+neo4rs = "0.7"
+
+# Time series
+influxdb = "0.7"
+
+# Serialization
+serde = { workspace = true }
+chrono = { workspace = true, features = ["serde"] }
+uuid = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# Async
+tokio = { workspace = true }
+futures = { workspace = true }
+
+# Monitoring
+tracing = { workspace = true }
