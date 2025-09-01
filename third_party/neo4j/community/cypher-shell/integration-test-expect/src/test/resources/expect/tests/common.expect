@@ -1,0 +1,61 @@
+#!/usr/bin/expect -f
+
+# Common setup
+# ============
+
+# Environment variables
+# ---------------------
+set cypher_shell_path $env(CYPHER_SHELL_PATH)
+set neo4j_address $env(NEO4J_ADDRESS)
+set neo4j_user $env(NEO4J_USER)
+set neo4j_password $env(NEO4J_PASSWORD)
+
+# Default Configuration
+# ---------------------
+set timeout 20
+set stty_init "rows 1000 cols 200"
+set send_human {.1 .3 1 .05 2}
+
+# Cypher Shell Related
+# ---------------------
+set prompt {> }
+
+# Procedures
+# ----------
+
+proc sendQuery { query } {
+    expect {neo4j@neo4j} {
+        expect {> } {
+            send "${query}\r"
+        }
+    }
+}
+
+
+proc expectPrompt {} {
+    expect {neo4j@neo4j} {
+        expect {> }
+    }
+}
+
+proc expectCleanExit {} {
+    expect {Bye!}
+    expect eof { exit 0 }
+}
+
+# Start Cypher Shell
+# ------------------
+#
+set default_args {"-a" $neo4j_address "-u" $neo4j_user "-p" $neo4j_password}
+if {![info exists extra_args]} {
+    set extra_args {}
+}
+
+eval spawn $cypher_shell_path [concat $default_args $extra_args]
+
+expect_after {
+    eof     { puts stderr "\rError: Unexpected EOF\r"; exit 1 }
+    timeout { puts stderr "\rError: Timeout!\r"; exit 2 }
+}
+
+expect {Connected}
