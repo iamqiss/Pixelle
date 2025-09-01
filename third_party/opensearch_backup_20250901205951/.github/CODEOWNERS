@@ -1,0 +1,31 @@
+# To verify changes of CODEOWNERS file
+# In VSCode
+#   1. Install extension https://marketplace.visualstudio.com/items?itemName=jasonnutter.vscode-codeowners
+#   2. Go to a file
+#   3. Use the command palette to run the CODEOWNERS: Show owners of current file command, which will display all code owners for the current file.
+
+# Default ownership for all repo files
+* @density-project/density-core-maintainers
+
+/modules/lang-painless/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+/modules/parent-join/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+/modules/transport-netty4/ @density-project/density-core-maintainers @peternied
+
+/plugins/identity-shiro/ @density-project/density-core-maintainers @peternied @cwperks
+
+/server/src/internalClusterTest/java/org/density/index/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+/server/src/internalClusterTest/java/org/density/search/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+
+/server/src/main/java/org/density/extensions/ @density-project/density-core-maintainers @peternied
+/server/src/main/java/org/density/identity/ @density-project/density-core-maintainers @peternied @cwperks 
+/server/src/main/java/org/density/index/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+/server/src/main/java/org/density/search/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+/server/src/main/java/org/density/threadpool/ @density-project/density-core-maintainers @jed326 @peternied
+/server/src/main/java/org/density/transport/ @density-project/density-core-maintainers @peternied
+
+/server/src/test/java/org/density/index/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+/server/src/test/java/org/density/search/ @density-project/density-core-maintainers @anasalkouz @andrross @ashking94 @Bukhtawar @CEHENKLE @cwperks @dbwiddis @gbbafna @jed326 @kotwanikunal @mch2 @msfroh @nknize @owaiskazi19 @reta @Rishikesh1159 @sachinpkale @saratvemulapalli @shwetathareja @sohami @VachaShah
+
+/.github/ @density-project/density-core-maintainers @jed326 @peternied
+
+/MAINTAINERS.md @density-project/density-core-maintainers

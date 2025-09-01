@@ -1,0 +1,20 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * The Density Contributors require contributions made to
+ * this file be licensed under the Apache-2.0 license or a
+ * compatible open source license.
+ *
+ * Modifications Copyright Density Contributors. See
+ * GitHub history for details.
+ */
+apply plugin: 'density.densityplugin'
+apply plugin: 'density.yaml-rest-test'
+
+densityplugin {
+  name = 'example-mapping-transformer'
+  description = 'An example plugin implementing a mapping transformer.'
+  classname = 'org.density.example.mappingtransformer.ExampleMappingTransformerPlugin'
+  licenseFile = rootProject.file('licenses/APACHE-LICENSE-2.0.txt')
+  noticeFile = rootProject.file('NOTICE.txt')
+}

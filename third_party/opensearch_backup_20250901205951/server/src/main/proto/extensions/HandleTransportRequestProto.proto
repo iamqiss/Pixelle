@@ -1,0 +1,20 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * The Density Contributors require contributions made to
+ * this file be licensed under the Apache-2.0 license or a
+ * compatible open source license.
+ *
+ * Modifications Copyright Density Contributors. See
+ * GitHub history for details.
+ */
+
+syntax = "proto3";
+package org.density.extensions.proto;
+
+option java_outer_classname = "ExtensionTransportMessageProto";
+
+message ExtensionTransportMessage {
+  string action = 1;
+  bytes requestBytes = 2;
+}

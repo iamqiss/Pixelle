@@ -1,0 +1,26 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * The Density Contributors require contributions made to
+ * this file be licensed under the Apache-2.0 license or a
+ * compatible open source license.
+ */
+
+apply plugin: 'density.build'
+apply plugin: 'density.publish'
+
+
+base {
+  group = 'org.density.plugin'
+  archivesName = 'autotagging-commons-spi'
+}
+
+dependencies {
+  implementation project(':modules:autotagging-commons:common')
+}
+
+disableTasks("forbiddenApisMain")
+
+testingConventions {
+  enabled = false
+}

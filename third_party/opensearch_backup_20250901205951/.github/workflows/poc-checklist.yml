@@ -1,0 +1,49 @@
+name: Add comment
+on:
+  issues:
+    types:
+      - labeled
+jobs:
+  add-comment:
+    if: github.event.label.name == 'poc'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Add comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ### POC Checklist:
+
+            Please go through the following checklist to ensure these items are taken into account while designing the POC.
+
+            - [ ] Supports safe upgrade paths from all supported BWC versions to the current version
+            - [ ] Supports compatibility with all plugins
+                - [ ] density-alerting
+                - [ ] density-anomaly-detection
+                - [ ] density-asynchronous-search
+                - [ ] density-cross-cluster-replication
+                - [ ] density-geospatial
+                - [ ] density-index-management
+                - [ ] density-job-scheduler
+                - [ ] density-knn
+                - [ ] density-ml
+                - [ ] density-notifications
+                - [ ] density-notifications-core
+                - [ ] density-observability
+                - [ ] density-performance-analyzer
+                - [ ] density-reports-scheduler
+                - [ ] density-security
+                - [ ] density-sql
+            - [ ] Supports lucene upgrades across minor lucene versions
+            - [ ] Supports lucene upgrades across major lucene versions
+            - [ ] Supports lucene upgrades across underlying lucene codec bumps (Eg: Lucene95Codec -> Lucene96Codec)
+            - [ ] Supports wire compatibility of Density
+            - [ ] Plan to measure performance degradation/improvement (if any)
+            - [ ] Plan to document any user facing changes introduced by this feature
+            - [ ] Ensure working and passing CI
+
+            Thank you for your contribution!
+

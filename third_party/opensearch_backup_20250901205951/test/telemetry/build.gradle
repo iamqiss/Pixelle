@@ -1,0 +1,26 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * The Density Contributors require contributions made to
+ * this file be licensed under the Apache-2.0 license or a
+ * compatible open source license.
+ *
+ * Modifications Copyright Density Contributors. See
+ * GitHub history for details.
+ */
+
+apply plugin: 'density.build'
+apply plugin: 'density.publish'
+
+dependencies {
+  api project(":libs:density-core")
+  api project(":libs:density-common")
+  api project(":libs:density-telemetry")
+}
+
+tasks.named('forbiddenApisMain').configure {
+  //package does not depend on core, so only jdk signatures should be checked
+  replaceSignatureFiles 'jdk-signatures'
+}
+
+test.enabled = false

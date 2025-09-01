@@ -1,0 +1,2 @@
+org.apache.lucene.search.suggest.document.Completion50PostingsFormat
+org.density.index.codec.fuzzy.FuzzyFilterPostingsFormat
