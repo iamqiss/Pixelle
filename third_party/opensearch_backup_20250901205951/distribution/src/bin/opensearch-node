@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-set -e -o pipefail
-
-DENSITY_MAIN_CLASS=org.density.cluster.coordination.NodeToolCli \
-  "`dirname "$0"`"/density-cli \
-  "$@"
