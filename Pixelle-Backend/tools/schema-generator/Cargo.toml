@@ -1,0 +1,10 @@
+[package]
+name = "pixelle-schema-generator"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { workspace = true }
+clap = { workspace = true }
+pixelle-core = { path = "../../crates/pixelle-core" }
+anyhow = { workspace = true }

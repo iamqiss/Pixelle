@@ -1,0 +1,2 @@
+fn() -> impl std::future::Future<Output = HttpResponse> {health_check}
+fn() -> impl std::future::Future<Output = HttpResponse> {health_check}: HttpServiceFactory

@@ -1,0 +1,2 @@
+fn(HttpRequest, actix_web::web::Payload, actix_web::web::Data<Arc<tokio::sync::RwLock<ServiceRouter>>>) -> impl futures::Future<Output = Result<HttpResponse, actix_web::Error>> {proxy_request}
+fn(HttpRequest, actix_web::web::Payload, actix_web::web::Data<Arc<tokio::sync::RwLock<ServiceRouter>>>) -> impl futures::Future<Output = Result<HttpResponse, actix_web::Error>> {proxy_request}: HttpServiceFactory

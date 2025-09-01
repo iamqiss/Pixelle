@@ -21,7 +21,7 @@ redis = { workspace = true }
 mongodb = { workspace = true }
 
 # Search
-elasticsearch = "8.5"
+elasticsearch = "9.1.0-alpha.1"
 
 # Graph database
 neo4rs = "0.7"

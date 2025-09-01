@@ -1,0 +1,10 @@
+/workspace/Pixelle-Backend/target/debug/deps/tracing_actix_web-ce877538f19f9798.d: /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/lib.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/middleware.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/request_id.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/root_span.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/root_span_builder.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/root_span_macro.rs
+
+/workspace/Pixelle-Backend/target/debug/deps/libtracing_actix_web-ce877538f19f9798.rmeta: /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/lib.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/middleware.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/request_id.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/root_span.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/root_span_builder.rs /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/root_span_macro.rs
+
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/lib.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/middleware.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/request_id.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/root_span.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/root_span_builder.rs:
+/usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tracing-actix-web-0.7.19/src/root_span_macro.rs:
