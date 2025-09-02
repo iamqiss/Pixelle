@@ -1,8 +1,8 @@
 #!/bin/bash
-# Scaffold Nimbux Rust project with juicy copyright headers
+# Scaffold Nimbux Rust project as a standalone repo
 # Author: Neo Qiss
 # Year: 2025
-# Description: Automatically generates directories and stub files for Nimbux MVP
+# Description: Generates directories, stub files, and initializes Git with first commit
 
 PROJECT_DIR="Nimbux"
 
@@ -92,8 +92,13 @@ DIRS=(
                                                                                                                                                                                                                                                 echo -e "${FILES[$file]}" > "$file"
                                                                                                                                                                                                                                                 done
 
-                                                                                                                                                                                                                                                # Initialize Git repo
+                                                                                                                                                                                                                                                # Initialize Git repository inside Nimbux
                                                                                                                                                                                                                                                 cd "$PROJECT_DIR" || exit
+                                                                                                                                                                                                                                                rm -rf .git  # Ensure no existing nested git
                                                                                                                                                                                                                                                 git init
-                                                                                                                                                                                                                                                echo "Nimbux scaffold created successfully under '$PROJECT_DIR'."
-                                                                                                                                                                                                                                                echo "Git repository initialized. You're ready to start coding, Neo Qiss! 💪"
+                                                                                                                                                                                                                                                git add .
+                                                                                                                                                                                                                                                git commit -m "Initial Nimbux scaffold by Neo Qiss 💪"
+                                                                                                                                                                                                                                                git branch -M main
+
+                                                                                                                                                                                                                                                echo "✅ Nimbux scaffold created successfully under '$PROJECT_DIR'."
+                                                                                                                                                                                                                                                echo "Git repo initialized with first commit. You're ready to start coding, Neo Qiss! 💪"
