@@ -1,13 +1,13 @@
 use async_trait::async_trait;
 use pixelle_core::{AuthService, UserProfile, PixelleResult, UserId};
 use crate::jwt::JwtService;
-use crate::password::PasswordService;
+use crate::passphrase::PassphraseService;
 use crate::session::SessionService;
 
 /// Authentication service implementation
 pub struct AuthServiceImpl {
     jwt_service: JwtService,
-    password_service: PasswordService,
+    passphrase_service: PassphraseService,
     session_service: SessionService,
 }
 
@@ -15,7 +15,7 @@ impl AuthServiceImpl {
     pub fn new(jwt_secret: String) -> Self {
         Self {
             jwt_service: JwtService::new(jwt_secret),
-            password_service: PasswordService::new(),
+            passphrase_service: PassphraseService::new(),
             session_service: SessionService::new(),
         }
     }
@@ -41,11 +41,11 @@ impl AuthService for AuthServiceImpl {
         self.session_service.revoke_session(session_token).await
     }
 
-    async fn hash_password(&self, password: &str) -> PixelleResult<String> {
-        self.password_service.hash_password(password).await
+    async fn hash_passphrase(&self, passphrase: &str) -> PixelleResult<String> {
+        self.passphrase_service.hash_password(passphrase).await
     }
 
-    async fn verify_password(&self, password: &str, hash: &str) -> PixelleResult<bool> {
-        self.password_service.verify_password(password, hash).await
+    async fn verify_passphrase(&self, passphrase: &str, hash: &str) -> PixelleResult<bool> {
+        self.passphrase_service.verify_password(passphrase, hash).await
     }
 }
