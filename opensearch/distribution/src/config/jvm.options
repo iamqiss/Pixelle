@@ -37,15 +37,19 @@
 8-10:-XX:CMSInitiatingOccupancyFraction=75
 8-10:-XX:+UseCMSInitiatingOccupancyOnly
 
-## G1GC Configuration
+## G1GC Configuration - Optimized for Performance
 # NOTE: G1GC is the default GC for all JDKs 11 and newer
 11-:-XX:+UseG1GC
-# See https://github.com/elastic/elasticsearch/pull/46169 for the history
-# behind these settings, but the tl;dr is that default values can lead
-# to situations where heap usage grows enough to trigger a circuit breaker
-# before GC kicks in.
-11-:-XX:G1ReservePercent=25
-11-:-XX:InitiatingHeapOccupancyPercent=30
+# Optimized G1GC settings for better performance and lower latency
+11-:-XX:G1ReservePercent=20
+11-:-XX:InitiatingHeapOccupancyPercent=25
+11-:-XX:G1HeapRegionSize=16m
+11-:-XX:MaxGCPauseMillis=200
+11-:-XX:G1MixedGCCountTarget=8
+11-:-XX:G1MixedGCLiveThresholdPercent=85
+11-:-XX:G1OldCSetRegionThreshold=10
+11-:-XX:+G1UseAdaptiveIHOP
+11-:-XX:G1AdaptiveIHOPNumInitialSamples=3
 
 ## JVM temporary directory
 -Djava.io.tmpdir=${DENSITY_TMPDIR}
@@ -86,3 +90,23 @@ ${error.file}
 
 21-:-javaagent:agent/density-agent.jar
 21-:--add-opens=java.base/java.nio=org.apache.arrow.memory.core,ALL-UNNAMED
+
+## Performance Optimizations
+# Enable JIT optimizations for better performance
+-XX:+TieredCompilation
+-XX:TieredStopAtLevel=4
+-XX:+UseCompressedOops
+-XX:+UseCompressedClassPointers
+
+# Optimize for search workloads
+-XX:+UseStringDeduplication
+-XX:+OptimizeStringConcat
+
+# Memory and allocation optimizations
+-XX:+UseLargePages
+-XX:+UseTransparentHugePages
+-XX:+AlwaysPreTouch
+
+# Network and I/O optimizations
+-Djava.net.preferIPv4Stack=true
+-Djava.awt.headless=true

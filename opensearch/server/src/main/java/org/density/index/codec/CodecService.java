@@ -82,7 +82,8 @@ public class CodecService {
             if (mapperService.isCompositeIndexPresent()) {
                 codecs.putAll(compositeCodecFactory.getCompositeIndexCodecs(mapperService, logger));
             } else {
-                codecs.put(DEFAULT_CODEC, new PerFieldMappingPostingFormatCodec(Mode.BEST_SPEED, mapperService, logger));
+                // Optimized default: Balance between speed and compression for better disk efficiency
+                codecs.put(DEFAULT_CODEC, new PerFieldMappingPostingFormatCodec(Mode.BEST_COMPRESSION, mapperService, logger));
                 codecs.put(LZ4, new PerFieldMappingPostingFormatCodec(Mode.BEST_SPEED, mapperService, logger));
                 codecs.put(BEST_COMPRESSION_CODEC, new PerFieldMappingPostingFormatCodec(Mode.BEST_COMPRESSION, mapperService, logger));
                 codecs.put(ZLIB, new PerFieldMappingPostingFormatCodec(Mode.BEST_COMPRESSION, mapperService, logger));
