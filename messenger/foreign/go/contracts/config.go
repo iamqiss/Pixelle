@@ -17,14 +17,14 @@
 
 package iggcon
 
-type IggyMessageCompression string
+type MessengerMessageCompression string
 
 const (
-	MESSAGE_COMPRESSION_NONE      IggyMessageCompression = "none"
-	MESSAGE_COMPRESSION_S2        IggyMessageCompression = "s2"
-	MESSAGE_COMPRESSION_S2_BETTER IggyMessageCompression = "s2-better"
-	MESSAGE_COMPRESSION_S2_BEST   IggyMessageCompression = "s2-best"
-	// MESSAGE_COMPRESSION_ZSTD IggyMessageCompression = "zstd"
+	MESSAGE_COMPRESSION_NONE      MessengerMessageCompression = "none"
+	MESSAGE_COMPRESSION_S2        MessengerMessageCompression = "s2"
+	MESSAGE_COMPRESSION_S2_BETTER MessengerMessageCompression = "s2-better"
+	MESSAGE_COMPRESSION_S2_BEST   MessengerMessageCompression = "s2-best"
+	// MESSAGE_COMPRESSION_ZSTD MessengerMessageCompression = "zstd"
 )
 
 type Protocol string

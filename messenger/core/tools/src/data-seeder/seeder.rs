@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use iggy::prelude::*;
+use messenger::prelude::*;
 use rand::Rng;
 use std::collections::HashMap;
 use std::str::FromStr;
@@ -25,21 +25,21 @@ const PROD_STREAM_ID: u32 = 1;
 const TEST_STREAM_ID: u32 = 2;
 const DEV_STREAM_ID: u32 = 3;
 
-pub async fn seed(client: &IggyClient) -> Result<(), IggyError> {
+pub async fn seed(client: &MessengerClient) -> Result<(), MessengerError> {
     create_streams(client).await?;
     create_topics(client).await?;
     send_messages(client).await?;
     Ok(())
 }
 
-async fn create_streams(client: &IggyClient) -> Result<(), IggyError> {
+async fn create_streams(client: &MessengerClient) -> Result<(), MessengerError> {
     client.create_stream("prod", Some(PROD_STREAM_ID)).await?;
     client.create_stream("test", Some(TEST_STREAM_ID)).await?;
     client.create_stream("dev", Some(DEV_STREAM_ID)).await?;
     Ok(())
 }
 
-async fn create_topics(client: &IggyClient) -> Result<(), IggyError> {
+async fn create_topics(client: &MessengerClient) -> Result<(), MessengerError> {
     let streams = [PROD_STREAM_ID, TEST_STREAM_ID, DEV_STREAM_ID];
     for stream_id in streams {
         let stream_id = stream_id.try_into()?;
@@ -51,7 +51,7 @@ async fn create_topics(client: &IggyClient) -> Result<(), IggyError> {
                 Default::default(),
                 None,
                 None,
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 MaxTopicSize::ServerDefault,
             )
             .await?;
@@ -64,7 +64,7 @@ async fn create_topics(client: &IggyClient) -> Result<(), IggyError> {
                 Default::default(),
                 None,
                 None,
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 MaxTopicSize::ServerDefault,
             )
             .await?;
@@ -77,7 +77,7 @@ async fn create_topics(client: &IggyClient) -> Result<(), IggyError> {
                 Default::default(),
                 None,
                 None,
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 MaxTopicSize::ServerDefault,
             )
             .await?;
@@ -90,7 +90,7 @@ async fn create_topics(client: &IggyClient) -> Result<(), IggyError> {
                 Default::default(),
                 None,
                 None,
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 MaxTopicSize::ServerDefault,
             )
             .await?;
@@ -103,7 +103,7 @@ async fn create_topics(client: &IggyClient) -> Result<(), IggyError> {
                 Default::default(),
                 None,
                 None,
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 MaxTopicSize::ServerDefault,
             )
             .await?;
@@ -111,7 +111,7 @@ async fn create_topics(client: &IggyClient) -> Result<(), IggyError> {
     Ok(())
 }
 
-async fn send_messages(client: &IggyClient) -> Result<(), IggyError> {
+async fn send_messages(client: &MessengerClient) -> Result<(), MessengerError> {
     let mut rng = rand::rng();
     let streams = [PROD_STREAM_ID, TEST_STREAM_ID, DEV_STREAM_ID];
     let partitioning = Partitioning::balanced();
@@ -168,12 +168,12 @@ async fn send_messages(client: &IggyClient) -> Result<(), IggyError> {
                     };
 
                     let message = if let Some(headers) = headers {
-                        IggyMessage::builder()
+                        MessengerMessage::builder()
                             .payload(payload.into())
                             .user_headers(headers)
                             .build()?
                     } else {
-                        IggyMessage::builder().payload(payload.into()).build()?
+                        MessengerMessage::builder().payload(payload.into()).build()?
                     };
 
                     messages.push(message);

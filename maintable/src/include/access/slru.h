@@ -3,7 +3,7 @@
  * slru.h
  *		Simple LRU buffering for transaction status logfiles
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/access/slru.h
@@ -25,7 +25,7 @@
 
 /*
  * Define SLRU segment size.  A page is the same BLCKSZ as is used everywhere
- * else in Postgres.  The segment size can be chosen somewhat arbitrarily;
+ * else in Maintable.  The segment size can be chosen somewhat arbitrarily;
  * we make it 32 pages by default, or 256Kb, i.e. 1M transactions for CLOG
  * or 64K transactions for SUBTRANS.
  *

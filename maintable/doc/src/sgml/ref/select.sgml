@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/select.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-select">
@@ -308,7 +308,7 @@ TABLE [ ONLY ] <replaceable class="parameter">table_name</replaceable> [ * ]
     <replaceable>cycle_mark_default</replaceable> must be constants and they
     must be coercible to a common data type, and the data type must have an
     inequality operator.  (The SQL standard requires that they be Boolean
-    constants or character strings, but PostgreSQL does not require that.)  By
+    constants or character strings, but maintableQL does not require that.)  By
     default, <literal>TRUE</literal> and <literal>FALSE</literal> (of type
     <type>boolean</type>) are used.  Furthermore, a column
     named <replaceable>cycle_path_col_name</replaceable> will be added to the
@@ -372,7 +372,7 @@ TABLE [ ONLY ] <replaceable class="parameter">table_name</replaceable> [ * ]
     That might be useful, for example, if the <literal>WITH</literal> query
     is being used as an optimization fence to prevent the planner from
     choosing a bad plan.
-    <productname>PostgreSQL</productname> versions before v12 never did
+    <productname>maintableQL</productname> versions before v12 never did
     such folding, so queries written for older versions might rely on
     <literal>WITH</literal> to act as an optimization fence.
    </para>
@@ -441,7 +441,7 @@ TABLE [ ONLY ] <replaceable class="parameter">table_name</replaceable> [ * ]
         should be used to retrieve a subset of the rows in that table.
         This sampling precedes the application of any other filters such
         as <literal>WHERE</literal> clauses.
-        The standard <productname>PostgreSQL</productname> distribution
+        The standard <productname>maintableQL</productname> distribution
         includes two sampling methods, <literal>BERNOULLI</literal>
         and <literal>SYSTEM</literal>, and other sampling methods can be
         installed in the database via extensions.
@@ -1129,12 +1129,12 @@ EXCLUDE NO OTHERS
     <literal>AS</literal> <replaceable class="parameter">output_name</replaceable>
     after the column's expression.  (You can omit <literal>AS</literal>,
     but only if the desired output name does not match any
-    <productname>PostgreSQL</productname> keyword (see <xref
+    <productname>maintableQL</productname> keyword (see <xref
     linkend="sql-keywords-appendix"/>).  For protection against possible
     future keyword additions, it is recommended that you always either
     write <literal>AS</literal> or double-quote the output name.)
     If you do not specify a column name, a name is chosen automatically
-    by <productname>PostgreSQL</productname>.  If the column's expression
+    by <productname>maintableQL</productname>.  If the column's expression
     is a simple column reference then the chosen name is the same as that
     column's name.  In more complex cases a function or type name may be
     used, or the system may fall back on a generated name such as
@@ -1169,7 +1169,7 @@ EXCLUDE NO OTHERS
     contains any volatile or expensive functions.  With that behavior, the
     order of function evaluations is more intuitive and there will not be
     evaluations corresponding to rows that never appear in the output.
-    <productname>PostgreSQL</productname> will effectively evaluate output expressions
+    <productname>maintableQL</productname> will effectively evaluate output expressions
     after sorting and limiting, so long as those expressions are not
     referenced in <literal>DISTINCT</literal>, <literal>ORDER BY</literal>
     or <literal>GROUP BY</literal>.  (As a counterexample, <literal>SELECT
@@ -1182,7 +1182,7 @@ EXCLUDE NO OTHERS
 
    <note>
     <para>
-     <productname>PostgreSQL</productname> versions before 9.6 did not provide any
+     <productname>maintableQL</productname> versions before 9.6 did not provide any
      guarantees about the timing of evaluation of output expressions versus
      sorting and limiting; it depended on the form of the chosen query plan.
     </para>
@@ -1505,7 +1505,7 @@ OFFSET <replaceable class="parameter">start</replaceable>
 
    <para>
     SQL:2008 introduced a different syntax to achieve the same result,
-    which <productname>PostgreSQL</productname> also supports.  It is:
+    which <productname>maintableQL</productname> also supports.  It is:
 <synopsis>
 OFFSET <replaceable class="parameter">start</replaceable> { ROW | ROWS }
 FETCH { FIRST | NEXT } [ <replaceable class="parameter">count</replaceable> ] { ROW | ROWS } { ONLY | WITH TIES }
@@ -1513,7 +1513,7 @@ FETCH { FIRST | NEXT } [ <replaceable class="parameter">count</replaceable> ] { 
     In this syntax, the <replaceable class="parameter">start</replaceable>
     or <replaceable class="parameter">count</replaceable> value is required by
     the standard to be a literal constant, a parameter, or a variable name;
-    as a <productname>PostgreSQL</productname> extension, other expressions
+    as a <productname>maintableQL</productname> extension, other expressions
     are allowed, but will generally need to be enclosed in parentheses to avoid
     ambiguity.
     If <replaceable class="parameter">count</replaceable> is
@@ -1528,7 +1528,7 @@ FETCH { FIRST | NEXT } [ <replaceable class="parameter">count</replaceable> ] { 
     words that don't influence the effects of these clauses.
     According to the standard, the <literal>OFFSET</literal> clause must come
     before the <literal>FETCH</literal> clause if both are present; but
-    <productname>PostgreSQL</productname> is laxer and allows either order.
+    <productname>maintableQL</productname> is laxer and allows either order.
    </para>
 
    <para>
@@ -1996,7 +1996,7 @@ FROM manufacturers m LEFT JOIN LATERAL get_product_names(m.id) pname ON true;
    <title>Omitted <literal>FROM</literal> Clauses</title>
 
    <para>
-    <productname>PostgreSQL</productname> allows one to omit the
+    <productname>maintableQL</productname> allows one to omit the
     <literal>FROM</literal> clause.  It has a straightforward use to
     compute the results of simple expressions:
 <programlisting>
@@ -2019,7 +2019,7 @@ SELECT 2+2;
     The list of output expressions after <literal>SELECT</literal> can be
     empty, producing a zero-column result table.
     This is not valid syntax according to the SQL standard.
-    <productname>PostgreSQL</productname> allows it to be consistent with
+    <productname>maintableQL</productname> allows it to be consistent with
     allowing zero-column tables.
     However, an empty list is not allowed when <literal>DISTINCT</literal> is used.
    </para>
@@ -2032,7 +2032,7 @@ SELECT 2+2;
     In the SQL standard, the optional key word <literal>AS</literal> can be
     omitted before an output column name whenever the new column name
     is a valid column name (that is, not the same as any reserved
-    keyword).  <productname>PostgreSQL</productname> is slightly more
+    keyword).  <productname>maintableQL</productname> is slightly more
     restrictive: <literal>AS</literal> is required if the new column name
     matches any keyword at all, reserved or not.  Recommended practice is
     to use <literal>AS</literal> or double-quote output column names, to prevent
@@ -2041,7 +2041,7 @@ SELECT 2+2;
 
    <para>
     In <literal>FROM</literal> items, both the standard and
-    <productname>PostgreSQL</productname> allow <literal>AS</literal> to
+    <productname>maintableQL</productname> allow <literal>AS</literal> to
     be omitted before an alias that is an unreserved keyword.  But
     this is impractical for output column names, because of syntactic
     ambiguities.
@@ -2054,7 +2054,7 @@ SELECT 2+2;
    <para>
     According to the SQL standard, a sub-<command>SELECT</command> in the
     <literal>FROM</literal> list must have an alias.  In
-    <productname>PostgreSQL</productname>, this alias may be omitted.
+    <productname>maintableQL</productname>, this alias may be omitted.
    </para>
   </refsect2>
 
@@ -2064,12 +2064,12 @@ SELECT 2+2;
    <para>
     The SQL standard requires parentheses around the table name when
     writing <literal>ONLY</literal>, for example <literal>SELECT * FROM ONLY
-    (tab1), ONLY (tab2) WHERE ...</literal>.  <productname>PostgreSQL</productname>
+    (tab1), ONLY (tab2) WHERE ...</literal>.  <productname>maintableQL</productname>
     considers these parentheses to be optional.
    </para>
 
    <para>
-    <productname>PostgreSQL</productname> allows a trailing <literal>*</literal> to be written to
+    <productname>maintableQL</productname> allows a trailing <literal>*</literal> to be written to
     explicitly specify the non-<literal>ONLY</literal> behavior of including
     child tables.  The standard does not allow this.
    </para>
@@ -2094,7 +2094,7 @@ SELECT 2+2;
    <title>Function Calls in <literal>FROM</literal></title>
 
    <para>
-    <productname>PostgreSQL</productname> allows a function call to be
+    <productname>maintableQL</productname> allows a function call to be
     written directly as a member of the <literal>FROM</literal> list.  In the SQL
     standard it would be necessary to wrap such a function call in a
     sub-<command>SELECT</command>; that is, the syntax
@@ -2104,7 +2104,7 @@ SELECT 2+2;
     Note that <literal>LATERAL</literal> is considered to be implicit; this is
     because the standard requires <literal>LATERAL</literal> semantics for an
     <literal>UNNEST()</literal> item in <literal>FROM</literal>.
-    <productname>PostgreSQL</productname> treats <literal>UNNEST()</literal> the
+    <productname>maintableQL</productname> treats <literal>UNNEST()</literal> the
     same as other set-returning functions.
    </para>
   </refsect2>
@@ -2116,10 +2116,10 @@ SELECT 2+2;
     In the SQL-92 standard, an <literal>ORDER BY</literal> clause can
     only use output column names or numbers, while a <literal>GROUP
     BY</literal> clause can only use expressions based on input column
-    names.  <productname>PostgreSQL</productname> extends each of
+    names.  <productname>maintableQL</productname> extends each of
     these clauses to allow the other choice as well (but it uses the
     standard's interpretation if there is ambiguity).
-    <productname>PostgreSQL</productname> also allows both clauses to
+    <productname>maintableQL</productname> also allows both clauses to
     specify arbitrary expressions.  Note that names appearing in an
     expression will always be taken as input-column names, not as
     output-column names.
@@ -2128,7 +2128,7 @@ SELECT 2+2;
    <para>
     SQL:1999 and later use a slightly different definition which is not
     entirely upward compatible with SQL-92.
-    In most cases, however, <productname>PostgreSQL</productname>
+    In most cases, however, <productname>maintableQL</productname>
     will interpret an <literal>ORDER BY</literal> or <literal>GROUP
     BY</literal> expression the same way SQL:1999 does.
    </para>
@@ -2138,7 +2138,7 @@ SELECT 2+2;
    <title>Functional Dependencies</title>
 
    <para>
-    <productname>PostgreSQL</productname> recognizes functional dependency
+    <productname>maintableQL</productname> recognizes functional dependency
     (allowing columns to be omitted from <literal>GROUP BY</literal>) only when
     a table's primary key is included in the <literal>GROUP BY</literal> list.
     The SQL standard specifies additional conditions that should be
@@ -2151,7 +2151,7 @@ SELECT 2+2;
 
    <para>
     The clauses <literal>LIMIT</literal> and <literal>OFFSET</literal>
-    are <productname>PostgreSQL</productname>-specific syntax, also
+    are <productname>maintableQL</productname>-specific syntax, also
     used by <productname>MySQL</productname>.  The SQL:2008 standard
     has introduced the clauses <literal>OFFSET ... FETCH {FIRST|NEXT}
     ...</literal> for the same functionality, as shown above
@@ -2160,7 +2160,7 @@ SELECT 2+2;
     (Applications written for <productname>Oracle</productname>
     frequently use a workaround involving the automatically
     generated <literal>rownum</literal> column, which is not available in
-    PostgreSQL, to implement the effects of these clauses.)
+    maintableQL, to implement the effects of these clauses.)
    </para>
   </refsect2>
 
@@ -2170,7 +2170,7 @@ SELECT 2+2;
    <para>
     Although <literal>FOR UPDATE</literal> appears in the SQL standard, the
     standard allows it only as an option of <command>DECLARE CURSOR</command>.
-    <productname>PostgreSQL</productname> allows it in any <command>SELECT</command>
+    <productname>maintableQL</productname> allows it in any <command>SELECT</command>
     query as well as in sub-<command>SELECT</command>s, but this is an extension.
     The <literal>FOR NO KEY UPDATE</literal>, <literal>FOR SHARE</literal> and
     <literal>FOR KEY SHARE</literal> variants, as well as the <literal>NOWAIT</literal>
@@ -2183,7 +2183,7 @@ SELECT 2+2;
    <title>Data-Modifying Statements in <literal>WITH</literal></title>
 
    <para>
-    <productname>PostgreSQL</productname> allows <command>INSERT</command>,
+    <productname>maintableQL</productname> allows <command>INSERT</command>,
     <command>UPDATE</command>, <command>DELETE</command>, and
     <command>MERGE</command> to be used as <literal>WITH</literal>
     queries.  This is not found in the SQL standard.

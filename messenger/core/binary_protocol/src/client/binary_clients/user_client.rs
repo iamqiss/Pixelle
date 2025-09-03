@@ -17,8 +17,8 @@
  */
 
 use async_trait::async_trait;
-use iggy_common::{
-    Identifier, IdentityInfo, IggyError, Permissions, UserInfo, UserInfoDetails, UserStatus,
+use messenger_common::{
+    Identifier, IdentityInfo, MessengerError, Permissions, UserInfo, UserInfoDetails, UserStatus,
 };
 
 /// This trait defines the methods to interact with the user module.
@@ -27,11 +27,11 @@ pub trait UserClient {
     /// Get the info about a specific user by unique ID or username.
     ///
     /// Authentication is required, and the permission to read the users, unless the provided user ID is the same as the authenticated user.
-    async fn get_user(&self, user_id: &Identifier) -> Result<Option<UserInfoDetails>, IggyError>;
+    async fn get_user(&self, user_id: &Identifier) -> Result<Option<UserInfoDetails>, MessengerError>;
     /// Get the info about all the users.
     ///
     /// Authentication is required, and the permission to read the users.
-    async fn get_users(&self) -> Result<Vec<UserInfo>, IggyError>;
+    async fn get_users(&self) -> Result<Vec<UserInfo>, MessengerError>;
     /// Create a new user.
     ///
     /// Authentication is required, and the permission to manage the users.
@@ -41,11 +41,11 @@ pub trait UserClient {
         password: &str,
         status: UserStatus,
         permissions: Option<Permissions>,
-    ) -> Result<UserInfoDetails, IggyError>;
+    ) -> Result<UserInfoDetails, MessengerError>;
     /// Delete a user by unique ID or username.
     ///
     /// Authentication is required, and the permission to manage the users.
-    async fn delete_user(&self, user_id: &Identifier) -> Result<(), IggyError>;
+    async fn delete_user(&self, user_id: &Identifier) -> Result<(), MessengerError>;
     /// Update a user by unique ID or username.
     ///
     /// Authentication is required, and the permission to manage the users.
@@ -54,7 +54,7 @@ pub trait UserClient {
         user_id: &Identifier,
         username: Option<&str>,
         status: Option<UserStatus>,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
     /// Update the permissions of a user by unique ID or username.
     ///
     /// Authentication is required, and the permission to manage the users.
@@ -62,7 +62,7 @@ pub trait UserClient {
         &self,
         user_id: &Identifier,
         permissions: Option<Permissions>,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
     /// Change the password of a user by unique ID or username.
     ///
     /// Authentication is required, and the permission to manage the users, unless the provided user ID is the same as the authenticated user.
@@ -71,9 +71,9 @@ pub trait UserClient {
         user_id: &Identifier,
         current_password: &str,
         new_password: &str,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
     /// Login a user by username and password.
-    async fn login_user(&self, username: &str, password: &str) -> Result<IdentityInfo, IggyError>;
+    async fn login_user(&self, username: &str, password: &str) -> Result<IdentityInfo, MessengerError>;
     /// Logout the currently authenticated user.
-    async fn logout_user(&self) -> Result<(), IggyError>;
+    async fn logout_user(&self) -> Result<(), MessengerError>;
 }

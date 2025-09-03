@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_user.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-alteruser">
@@ -66,7 +66,7 @@ ALTER USER { <replaceable class="parameter">role_specification</replaceable> | A
 
   <para>
    The <command>ALTER USER</command> statement is a
-   <productname>PostgreSQL</productname> extension.  The SQL standard
+   <productname>maintableQL</productname> extension.  The SQL standard
    leaves the definition of users to the implementation.
   </para>
  </refsect1>

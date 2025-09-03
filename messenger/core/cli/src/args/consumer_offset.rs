@@ -17,7 +17,7 @@
  */
 
 use clap::{Args, Subcommand};
-use iggy::prelude::{ConsumerKind, Identifier};
+use messenger::prelude::{ConsumerKind, Identifier};
 
 #[derive(Debug, Clone, Subcommand)]
 pub(crate) enum ConsumerOffsetAction {
@@ -28,15 +28,15 @@ pub(crate) enum ConsumerOffsetAction {
     /// Topic ID can be specified as a topic name or ID
     ///
     /// Examples:
-    ///  iggy consumer-offset get 1 3 5 1
-    ///  iggy consumer-offset get consumer stream 5 1
-    ///  iggy consumer-offset get 1 3 topic 1
-    ///  iggy consumer-offset get consumer stream 5 1
-    ///  iggy consumer-offset get consumer 3 topic 1
-    ///  iggy consumer-offset get 1 stream topic 1
-    ///  iggy consumer-offset get consumer stream topic 1
-    ///  iggy consumer-offset get cg-1 3000001 1 1 --kind consumer-group
-    ///  iggy consumer-offset get cg-1 3000001 1 1 -k consumer-group
+    ///  messenger consumer-offset get 1 3 5 1
+    ///  messenger consumer-offset get consumer stream 5 1
+    ///  messenger consumer-offset get 1 3 topic 1
+    ///  messenger consumer-offset get consumer stream 5 1
+    ///  messenger consumer-offset get consumer 3 topic 1
+    ///  messenger consumer-offset get 1 stream topic 1
+    ///  messenger consumer-offset get consumer stream topic 1
+    ///  messenger consumer-offset get cg-1 3000001 1 1 --kind consumer-group
+    ///  messenger consumer-offset get cg-1 3000001 1 1 -k consumer-group
     #[clap(verbatim_doc_comment, visible_alias = "g")]
     Get(ConsumerOffsetGetArgs),
     /// Set the offset of a consumer for a given partition on the server
@@ -46,14 +46,14 @@ pub(crate) enum ConsumerOffsetAction {
     /// Topic ID can be specified as a topic name or ID
     ///
     /// Examples:
-    ///  iggy consumer-offset set 1 3 5 1 100
-    ///  iggy consumer-offset set consumer 3 5 1 100
-    ///  iggy consumer-offset set 1 stream 5 1 100
-    ///  iggy consumer-offset set 1 3 topic 1 100
-    ///  iggy consumer-offset set consumer stream 5 1 100
-    ///  iggy consumer-offset set consumer 3 topic 1 100
-    ///  iggy consumer-offset set 1 stream topic 1 100
-    ///  iggy consumer-offset set consumer stream topic 1 100
+    ///  messenger consumer-offset set 1 3 5 1 100
+    ///  messenger consumer-offset set consumer 3 5 1 100
+    ///  messenger consumer-offset set 1 stream 5 1 100
+    ///  messenger consumer-offset set 1 3 topic 1 100
+    ///  messenger consumer-offset set consumer stream 5 1 100
+    ///  messenger consumer-offset set consumer 3 topic 1 100
+    ///  messenger consumer-offset set 1 stream topic 1 100
+    ///  messenger consumer-offset set consumer stream topic 1 100
     #[clap(verbatim_doc_comment, visible_alias = "s")]
     Set(ConsumerOffsetSetArgs),
 }

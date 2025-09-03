@@ -3,14 +3,14 @@
  * win32_shmem.c
  *	  Implement shared memory using win32 facilities
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/port/win32_shmem.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "miscadmin.h"
 #include "storage/dsm.h"
@@ -74,11 +74,11 @@ GetSharedMemName(void)
 		elog(FATAL, "could not get size for full pathname of datadir %s: error code %lu",
 			 DataDir, GetLastError());
 
-	retptr = malloc(bufsize + 18);	/* 18 for Global\PostgreSQL: */
+	retptr = malloc(bufsize + 18);	/* 18 for Global\maintableQL: */
 	if (retptr == NULL)
 		elog(FATAL, "could not allocate memory for shared memory name");
 
-	strcpy(retptr, "Global\\PostgreSQL:");
+	strcpy(retptr, "Global\\maintableQL:");
 	r = GetFullPathName(DataDir, bufsize, retptr + 18, NULL);
 	if (r == 0 || r > bufsize)
 		elog(FATAL, "could not generate full pathname for datadir %s: error code %lu",
@@ -182,7 +182,7 @@ EnableLockPagesPrivilege(int elevel)
 			ereport(elevel,
 					(errcode(ERRCODE_INSUFFICIENT_PRIVILEGE),
 					 errmsg("could not enable user right \"%s\"", _("Lock pages in memory")),
-					 errhint("Assign user right \"%s\" to the Windows user account which runs PostgreSQL.",
+					 errhint("Assign user right \"%s\" to the Windows user account which runs maintableQL.",
 							 _("Lock pages in memory"))));
 		else
 			ereport(elevel,
@@ -378,7 +378,7 @@ retry:
 
 	/*
 	 * OK, we created a new segment.  Mark it as created by this process. The
-	 * order of assignments here is critical so that another Postgres process
+	 * order of assignments here is critical so that another Maintable process
 	 * can't see the header as valid but belonging to an invalid PID!
 	 */
 	hdr = (PGShmemHeader *) memAddress;
@@ -448,7 +448,7 @@ PGSharedMemoryReAttach(void)
 		elog(FATAL, "reattaching to shared memory returned unexpected address (got %p, expected %p)",
 			 hdr, origUsedShmemSegAddr);
 	if (hdr->magic != PGShmemMagic)
-		elog(FATAL, "reattaching to shared memory returned non-PostgreSQL memory");
+		elog(FATAL, "reattaching to shared memory returned non-maintableQL memory");
 	dsm_set_control_handle(hdr->dsm_control);
 
 	UsedShmemSegAddr = hdr;		/* probably redundant */

@@ -18,7 +18,7 @@
 
 use std::collections::HashMap;
 
-use iggy::prelude;
+use messenger::prelude;
 use rmcp::schemars::{self, JsonSchema};
 use serde::Deserialize;
 

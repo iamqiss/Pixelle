@@ -1,31 +1,31 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test CREATE INDEX CONCURRENTLY with concurrent prepared-xact modifications
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 
 use Test::More;
 
 Test::More->builder->todo_start('filesystem bug')
-  if PostgreSQL::Test::Utils::has_wal_read_bug;
+  if maintableQL::Test::Utils::has_wal_read_bug;
 
 my ($node, $result);
 
 #
 # Test set-up
 #
-$node = PostgreSQL::Test::Cluster->new('CIC_2PC_test');
+$node = maintableQL::Test::Cluster->new('CIC_2PC_test');
 $node->init;
-$node->append_conf('postgresql.conf', 'max_prepared_transactions = 10');
-$node->append_conf('postgresql.conf',
-	'lock_timeout = ' . (1000 * $PostgreSQL::Test::Utils::timeout_default));
+$node->append_conf('maintableql.conf', 'max_prepared_transactions = 10');
+$node->append_conf('maintableql.conf',
+	'lock_timeout = ' . (1000 * $maintableQL::Test::Utils::timeout_default));
 $node->start;
-$node->safe_psql('postgres', q(CREATE EXTENSION amcheck));
-$node->safe_psql('postgres', q(CREATE TABLE tbl(i int, j jsonb)));
+$node->safe_psql('maintable', q(CREATE EXTENSION amcheck));
+$node->safe_psql('maintable', q(CREATE TABLE tbl(i int, j jsonb)));
 
 
 #
@@ -36,7 +36,7 @@ $node->safe_psql('postgres', q(CREATE TABLE tbl(i int, j jsonb)));
 # statements.
 #
 
-my $main_h = $node->background_psql('postgres');
+my $main_h = $node->background_psql('maintable');
 
 $main_h->query_safe(
 	q(
@@ -44,7 +44,7 @@ BEGIN;
 INSERT INTO tbl VALUES(0, '[[14,2,3]]');
 ));
 
-my $cic_h = $node->background_psql('postgres');
+my $cic_h = $node->background_psql('maintable');
 
 $cic_h->query_until(
 	qr/start/, q(
@@ -64,7 +64,7 @@ BEGIN;
 INSERT INTO tbl VALUES(0, '[[14,2,3]]');
 ));
 
-$node->safe_psql('postgres', q(COMMIT PREPARED 'a';));
+$node->safe_psql('maintable', q(COMMIT PREPARED 'a';));
 
 $main_h->query_safe(
 	q(
@@ -73,7 +73,7 @@ BEGIN;
 INSERT INTO tbl VALUES(0, '"mary had a little lamb"');
 ));
 
-$node->safe_psql('postgres', q(COMMIT PREPARED 'b';));
+$node->safe_psql('maintable', q(COMMIT PREPARED 'b';));
 
 $main_h->query_safe(
 	q(
@@ -84,10 +84,10 @@ COMMIT PREPARED 'c';
 $main_h->quit;
 $cic_h->quit;
 
-$result = $node->psql('postgres', q(SELECT bt_index_check('idx',true)));
+$result = $node->psql('maintable', q(SELECT bt_index_check('idx',true)));
 is($result, '0', 'bt_index_check after overlapping 2PC');
 
-$result = $node->psql('postgres', q(SELECT gin_index_check('ginidx')));
+$result = $node->psql('maintable', q(SELECT gin_index_check('ginidx')));
 is($result, '0', 'gin_index_check after overlapping 2PC');
 
 
@@ -96,7 +96,7 @@ is($result, '0', 'gin_index_check after overlapping 2PC');
 #
 
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 BEGIN;
 INSERT INTO tbl VALUES(0, '{"a":[["b",{"x":1}],["b",{"x":2}]],"c":3}');
 PREPARE TRANSACTION 'spans_restart';
@@ -106,7 +106,7 @@ PREPARE TRANSACTION 'persists_forever';
 ));
 $node->restart;
 
-my $reindex_h = $node->background_psql('postgres');
+my $reindex_h = $node->background_psql('maintable');
 $reindex_h->query_until(
 	qr/start/, q(
 \echo start
@@ -116,11 +116,11 @@ DROP INDEX CONCURRENTLY ginidx;
 CREATE INDEX CONCURRENTLY ginidx ON tbl USING gin(j);
 ));
 
-$node->safe_psql('postgres', "COMMIT PREPARED 'spans_restart'");
+$node->safe_psql('maintable', "COMMIT PREPARED 'spans_restart'");
 $reindex_h->quit;
-$result = $node->psql('postgres', q(SELECT bt_index_check('idx',true)));
+$result = $node->psql('maintable', q(SELECT bt_index_check('idx',true)));
 is($result, '0', 'bt_index_check after 2PC and restart');
-$result = $node->psql('postgres', q(SELECT gin_index_check('ginidx')));
+$result = $node->psql('maintable', q(SELECT gin_index_check('ginidx')));
 is($result, '0', 'gin_index_check after 2PC and restart');
 
 
@@ -132,7 +132,7 @@ is($result, '0', 'gin_index_check after 2PC and restart');
 # lock to ensure only one CIC runs at a time.
 
 # Fix broken index first
-$node->safe_psql('postgres', q(REINDEX TABLE tbl;));
+$node->safe_psql('maintable', q(REINDEX TABLE tbl;));
 
 # Run pgbench.
 $node->pgbench(

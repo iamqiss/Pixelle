@@ -10,7 +10,7 @@
  * test behaviors where some specified action happens in another backend
  * between parsing and execution of any desired query.
  *
- * Copyright (c) 2020-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2020-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/test/modules/delay_execution/delay_execution.c
@@ -18,7 +18,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 

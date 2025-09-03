@@ -915,7 +915,7 @@ from (values ('a', 'b')) AS v(foo,bar);
 
 select any_value(v) filter (where v > 2) from (values (1), (2), (3)) as v (v);
 
--- outer reference in FILTER (PostgreSQL extension)
+-- outer reference in FILTER (maintableQL extension)
 select (select count(*)
         from (values (1)) t0(inner_c))
 from (values (2),(3)) t1(outer_c); -- inner query is aggregation query
@@ -930,7 +930,7 @@ select
      filter (where o.unique1 < 10))
 from tenk1 o;					-- outer query is aggregation query
 
--- subquery in FILTER clause (PostgreSQL extension)
+-- subquery in FILTER clause (maintableQL extension)
 select sum(unique1) FILTER (WHERE
   unique1 IN (SELECT unique1 FROM onek where unique1 < 100)) FROM tenk1;
 

@@ -20,10 +20,10 @@ use crate::sdk::producer::{
     PARTITION_ID, STREAM_ID, TOPIC_ID, cleanup, create_message_payload, init_system,
 };
 use bytes::Bytes;
-use iggy::clients::producer_config::BackpressureMode;
-use iggy::prelude::*;
-use iggy::{clients::client::IggyClient, prelude::TcpClient};
-use iggy_common::TcpClientConfig;
+use messenger::clients::producer_config::BackpressureMode;
+use messenger::prelude::*;
+use messenger::{clients::client::MessengerClient, prelude::TcpClient};
+use messenger_common::TcpClientConfig;
 use integration::test_server::{TestServer, login_root};
 use serial_test::parallel;
 use std::sync::Arc;
@@ -41,7 +41,7 @@ async fn background_send_receive_ok() {
         ..TcpClientConfig::default()
     };
     let client = ClientWrapper::Tcp(TcpClient::create(Arc::new(tcp_client_config)).unwrap());
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
 
     client.connect().await.unwrap();
     assert!(client.ping().await.is_ok(), "Failed to ping server");
@@ -59,7 +59,7 @@ async fn background_send_receive_ok() {
         let id = (offset + 1) as u128;
         let payload = create_message_payload(offset as u64);
         messages.push(
-            IggyMessage::builder()
+            MessengerMessage::builder()
                 .id(id)
                 .payload(payload)
                 .build()
@@ -107,7 +107,7 @@ async fn background_buffer_overflow_immediate() {
         ..TcpClientConfig::default()
     };
     let client = ClientWrapper::Tcp(TcpClient::create(Arc::new(tcp_client_config)).unwrap());
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
 
     client.connect().await.unwrap();
     assert!(client.ping().await.is_ok(), "Failed to ping server");
@@ -119,7 +119,7 @@ async fn background_buffer_overflow_immediate() {
     assert!(client.ping().await.is_ok(), "Failed to ping server");
 
     let cfg = BackgroundConfig::builder()
-        .max_buffer_size(IggyByteSize::from(1024))
+        .max_buffer_size(MessengerByteSize::from(1024))
         .failure_mode(BackpressureMode::FailImmediately)
         .build();
     let producer = client
@@ -128,13 +128,13 @@ async fn background_buffer_overflow_immediate() {
         .background(cfg)
         .build();
 
-    let big = IggyMessage::builder()
+    let big = MessengerMessage::builder()
         .id(1)
         .payload(Bytes::from(vec![0u8; 2048]))
         .build()
         .unwrap();
     let err = producer.send(vec![big]).await.unwrap_err();
-    assert!(matches!(err, IggyError::BackgroundSendBufferOverflow));
+    assert!(matches!(err, MessengerError::BackgroundSendBufferOverflow));
 
     cleanup(&client).await;
 }
@@ -158,7 +158,7 @@ async fn background_block_with_timeout() {
         ..TcpClientConfig::default()
     };
     let client = ClientWrapper::Tcp(TcpClient::create(Arc::new(tcp_client_config)).unwrap());
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
 
     client.connect().await.unwrap();
     assert!(client.ping().await.is_ok(), "Failed to ping server");
@@ -169,7 +169,7 @@ async fn background_block_with_timeout() {
     client.connect().await.unwrap();
     assert!(client.ping().await.is_ok(), "Failed to ping server");
 
-    let big = IggyMessage::builder()
+    let big = MessengerMessage::builder()
         .id(1)
         .payload(Bytes::from(vec![0u8; 2048]))
         .build()
@@ -179,8 +179,8 @@ async fn background_block_with_timeout() {
         .max_in_flight(1)
         .batch_length(0)
         .batch_size(0)
-        .linger_time(IggyDuration::from(500_000))
-        .failure_mode(BackpressureMode::BlockWithTimeout(IggyDuration::from(
+        .linger_time(MessengerDuration::from(500_000))
+        .failure_mode(BackpressureMode::BlockWithTimeout(MessengerDuration::from(
             100_000,
         )))
         .build();
@@ -192,14 +192,14 @@ async fn background_block_with_timeout() {
 
     producer.send(vec![big]).await.unwrap();
 
-    let big = IggyMessage::builder()
+    let big = MessengerMessage::builder()
         .id(1)
         .payload(Bytes::from(vec![0u8; 512]))
         .build()
         .unwrap();
     let t0 = Instant::now();
     let err = producer.send(vec![big]).await.unwrap_err();
-    assert!(matches!(err, IggyError::BackgroundSendTimeout));
+    assert!(matches!(err, MessengerError::BackgroundSendTimeout));
     assert!(t0.elapsed() >= Duration::from_millis(100));
 
     cleanup(&client).await;
@@ -216,13 +216,13 @@ async fn background_block_waits_then_succeeds() {
         ..TcpClientConfig::default()
     };
     let client = ClientWrapper::Tcp(TcpClient::create(Arc::new(tcp_client_config)).unwrap());
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
 
     client.connect().await.unwrap();
     login_root(&client).await;
     init_system(&client).await;
 
-    let big_msg = IggyMessage::builder()
+    let big_msg = MessengerMessage::builder()
         .id(1)
         .payload(Bytes::from(vec![0u8; 2048]))
         .build()
@@ -233,7 +233,7 @@ async fn background_block_waits_then_succeeds() {
         .max_in_flight(1)
         .batch_length(0)
         .batch_size(0)
-        .linger_time(IggyDuration::from(300_000))
+        .linger_time(MessengerDuration::from(300_000))
         .failure_mode(BackpressureMode::Block)
         .build();
 
@@ -245,7 +245,7 @@ async fn background_block_waits_then_succeeds() {
 
     producer.send(vec![big_msg]).await.unwrap();
 
-    let small_msg = IggyMessage::builder()
+    let small_msg = MessengerMessage::builder()
         .id(2)
         .payload(Bytes::from_static(b"x"))
         .build()
@@ -272,7 +272,7 @@ async fn background_graceful_shutdown() {
         ..TcpClientConfig::default()
     };
     let client = ClientWrapper::Tcp(TcpClient::create(Arc::new(tcp_client_config)).unwrap());
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
 
     client.connect().await.unwrap();
     assert!(client.ping().await.is_ok(), "Failed to ping server");
@@ -287,7 +287,7 @@ async fn background_graceful_shutdown() {
         .max_in_flight(1)
         .batch_length(0)
         .batch_size(0)
-        .linger_time(IggyDuration::from(2_000_000)) // 2s – long enough not to flush automatically
+        .linger_time(MessengerDuration::from(2_000_000)) // 2s – long enough not to flush automatically
         .build();
     let producer = client
         .producer(&STREAM_ID.to_string(), &TOPIC_ID.to_string())
@@ -295,7 +295,7 @@ async fn background_graceful_shutdown() {
         .background(cfg)
         .build();
 
-    let msg = IggyMessage::builder()
+    let msg = MessengerMessage::builder()
         .id(1)
         .payload(Bytes::from(vec![0u8; 512]))
         .build()
@@ -350,7 +350,7 @@ async fn background_many_parallel_producers() {
         ..TcpClientConfig::default()
     };
     let client = ClientWrapper::Tcp(TcpClient::create(Arc::new(tcp_client_config)).unwrap());
-    let client = Arc::new(IggyClient::create(client, None, None));
+    let client = Arc::new(MessengerClient::create(client, None, None));
 
     client.connect().await.unwrap();
     login_root(&client).await;
@@ -371,7 +371,7 @@ async fn background_many_parallel_producers() {
 
             let _ = producer.init().await;
 
-            let msg = IggyMessage::builder()
+            let msg = MessengerMessage::builder()
                 .id(i as u128)
                 .payload(Bytes::from(vec![0u8; 100]))
                 .build()

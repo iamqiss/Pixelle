@@ -3,7 +3,7 @@
  *
  * Definitions for the WAL record format.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/access/xlogrecord.h
@@ -76,7 +76,7 @@ typedef struct XLogRecord
 /*
  * If a WAL record modifies any relation files, in ways not covered by the
  * usual block references, this flag is set. This is not used for anything
- * by PostgreSQL itself, but it allows external tools that read WAL and keep
+ * by maintableQL itself, but it allows external tools that read WAL and keep
  * track of modified blocks to recognize such special record types.
  */
 #define XLR_SPECIAL_REL_UPDATE	0x01

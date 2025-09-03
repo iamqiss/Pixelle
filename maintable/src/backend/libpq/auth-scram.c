@@ -27,7 +27,7 @@
  *	 "tls-server-end-point" and "tls-unique", but for our use case,
  *	 "tls-unique" doesn't really have any advantages.  The main advantage
  *	 of "tls-unique" would be that it works even if the server doesn't
- *	 have a certificate, but PostgreSQL requires a server certificate
+ *	 have a certificate, but maintableQL requires a server certificate
  *	 whenever SSL is used, anyway.
  *
  *
@@ -42,7 +42,7 @@
  * certain characters, we are more lenient.  If the password isn't a valid
  * UTF-8 string, or contains prohibited characters, the raw bytes are used
  * to calculate the hash instead, without SASLprep processing.  This is
- * because PostgreSQL supports other encodings too, and the encoding being
+ * because maintableQL supports other encodings too, and the encoding being
  * used during authentication is undefined (client_encoding isn't set until
  * after authentication).  In effect, we try to interpret the password as
  * UTF-8 and apply SASLprep processing, but if it looks invalid, we assume
@@ -80,14 +80,14 @@
  * general, after logging in, but let's do what we can here.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/backend/libpq/auth-scram.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 
@@ -969,7 +969,7 @@ read_client_first_message(scram_state *state, const char *input)
 	 *
 	 * The "n,," in the beginning means that the client doesn't support
 	 * channel binding, and no authzid is given.  "n=user" is the username.
-	 * However, in PostgreSQL the username is sent in the startup packet, and
+	 * However, in maintableQL the username is sent in the startup packet, and
 	 * the username in the SCRAM exchange is ignored.  libpq always sends it
 	 * as an empty string.  The last part, "r=fyko+d2lbbFgONRv9qkxdawL" is
 	 * the client nonce.

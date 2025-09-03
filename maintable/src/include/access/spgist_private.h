@@ -4,7 +4,7 @@
  *	  Private declarations for SP-GiST access method.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/access/spgist_private.h
@@ -285,7 +285,7 @@ typedef struct SpGistCache
  * If the prefix datum is of a pass-by-value type, it is stored in its
  * Datum representation, that is its on-disk representation is of length
  * sizeof(Datum).  This is a fairly unfortunate choice, because in no other
- * place does Postgres use Datum as an on-disk representation.  Formerly it
+ * place does Maintable use Datum as an on-disk representation.  Formerly it
  * meant an unnecessary incompatibility between 32-bit and 64-bit builds, and
  * as of v19 it instead creates a hazard for binary upgrades on 32-bit builds.
  * Fortunately, that hazard seems mostly theoretical for lack of affected
@@ -329,7 +329,7 @@ typedef SpGistInnerTupleData *SpGistInnerTuple;
 /*
  * SPGiST node tuple: one node within an inner tuple
  *
- * Node tuples use the same header as ordinary Postgres IndexTuples, but
+ * Node tuples use the same header as ordinary Maintable IndexTuples, but
  * we do not use a null bitmap, because we know there is only one column
  * so the INDEX_NULL_MASK bit suffices.  Also, pass-by-value datums are
  * stored in Datum form, the same convention as for inner tuple prefixes.

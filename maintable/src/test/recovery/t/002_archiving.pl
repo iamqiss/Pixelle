@@ -1,16 +1,16 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # test for archiving with hot standby
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 use File::Copy;
 
 # Initialize primary node, doing archives
-my $node_primary = PostgreSQL::Test::Cluster->new('primary');
+my $node_primary = maintableQL::Test::Cluster->new('primary');
 $node_primary->init(
 	has_archiving => 1,
 	allows_streaming => 1);
@@ -23,12 +23,12 @@ $node_primary->start;
 $node_primary->backup($backup_name);
 
 # Initialize standby node from backup, fetching WAL from archives
-my $node_standby = PostgreSQL::Test::Cluster->new('standby');
+my $node_standby = maintableQL::Test::Cluster->new('standby');
 # Note that this makes the standby store its contents on the archives
 # of the primary.
 $node_standby->init_from_backup($node_primary, $backup_name,
 	has_restoring => 1);
-$node_standby->append_conf('postgresql.conf',
+$node_standby->append_conf('maintableql.conf',
 	"wal_retrieve_retry_interval = '100ms'");
 
 # Set archive_cleanup_command and recovery_end_command, checking their
@@ -37,45 +37,45 @@ my $data_dir = $node_standby->data_dir;
 my $archive_cleanup_command_file = "archive_cleanup_command.done";
 my $recovery_end_command_file = "recovery_end_command.done";
 $node_standby->append_conf(
-	'postgresql.conf', qq(
+	'maintableql.conf', qq(
 archive_cleanup_command = 'echo archive_cleanup_done > $archive_cleanup_command_file'
 recovery_end_command = 'echo recovery_ended_done > $recovery_end_command_file'
 ));
 $node_standby->start;
 
 # Create some content on primary
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"CREATE TABLE tab_int AS SELECT generate_series(1,1000) AS a");
 
 # Note the presence of this checkpoint for the archive_cleanup_command
 # check done below, before switching to a new segment.
-$node_primary->safe_psql('postgres', "CHECKPOINT");
+$node_primary->safe_psql('maintable', "CHECKPOINT");
 
 # Done after the checkpoint to ensure that it is replayed on the standby,
 # for archive_cleanup_command.
 my $current_lsn =
-  $node_primary->safe_psql('postgres', "SELECT pg_current_wal_lsn();");
+  $node_primary->safe_psql('maintable', "SELECT pg_current_wal_lsn();");
 
 # Force archiving of WAL file to make it present on primary
-$node_primary->safe_psql('postgres', "SELECT pg_switch_wal()");
+$node_primary->safe_psql('maintable', "SELECT pg_switch_wal()");
 
 # Add some more content, it should not be present on standby
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"INSERT INTO tab_int VALUES (generate_series(1001,2000))");
 
 # Wait until necessary replay has been done on standby
 my $caughtup_query =
   "SELECT '$current_lsn'::pg_lsn <= pg_last_wal_replay_lsn()";
-$node_standby->poll_query_until('postgres', $caughtup_query)
+$node_standby->poll_query_until('maintable', $caughtup_query)
   or die "Timed out while waiting for standby to catch up";
 
 my $result =
-  $node_standby->safe_psql('postgres', "SELECT count(*) FROM tab_int");
+  $node_standby->safe_psql('maintable', "SELECT count(*) FROM tab_int");
 is($result, qq(1000), 'check content from archives');
 
 # archive_cleanup_command is executed after generating a restart point,
 # with a checkpoint.
-$node_standby->safe_psql('postgres', q{CHECKPOINT});
+$node_standby->safe_psql('maintable', q{CHECKPOINT});
 ok( -f "$data_dir/$archive_cleanup_command_file",
 	'archive_cleanup_command executed on checkpoint');
 ok( !-f "$data_dir/$recovery_end_command_file",
@@ -97,21 +97,21 @@ $node_standby->promote;
 my $primary_archive = $node_primary->archive_dir;
 $caughtup_query =
   "SELECT size IS NOT NULL FROM pg_stat_file('$primary_archive/00000002.history', true)";
-$node_primary->poll_query_until('postgres', $caughtup_query)
+$node_primary->poll_query_until('maintable', $caughtup_query)
   or die "Timed out while waiting for archiving of 00000002.history";
 
 # recovery_end_command should have been triggered on promotion.
 ok( -f "$data_dir/$recovery_end_command_file",
 	'recovery_end_command executed after promotion');
 
-my $node_standby2 = PostgreSQL::Test::Cluster->new('standby2');
+my $node_standby2 = maintableQL::Test::Cluster->new('standby2');
 $node_standby2->init_from_backup($node_primary, $backup_name,
 	has_restoring => 1);
 
 # Make execution of recovery_end_command fail.  This should not affect
 # promotion, and its failure should be logged.
 $node_standby2->append_conf(
-	'postgresql.conf', qq(
+	'maintableql.conf', qq(
 recovery_end_command = 'echo recovery_end_failed > missing_dir/xyz.file'
 ));
 

@@ -16,18 +16,18 @@
  * under the License.
  */
 
-use iggy::prelude::*;
+use messenger::prelude::*;
 use std::str::FromStr;
 
-const IGGY_URL: &str = "iggy://iggy:iggy@localhost:8090";
+const MESSENGER_URL: &str = "messenger://messenger:messenger@localhost:8090";
 
 #[tokio::main]
-async fn main() -> Result<(), IggyError> {
+async fn main() -> Result<(), MessengerError> {
     let stream = "test_stream";
     let topic = "test_topic";
 
-    // The builder simplifies the IggyProducer configuration.
-    let config = IggyProducerConfig::builder()
+    // The builder simplifies the MessengerProducer configuration.
+    let config = MessengerProducerConfig::builder()
         // Set the stream identifier and name.
         .stream_id(Identifier::from_str_value(stream)?)
         .stream_name(stream)
@@ -46,7 +46,7 @@ async fn main() -> Result<(), IggyError> {
         // Note, this only applies to batch send messages. Single messages are sent immediately.
         .batch_length(100)
         // Sets the interval between sending the messages. Affects latency so you want to benchmark this value.
-        .linger_time(IggyDuration::from_str("5ms").unwrap())
+        .linger_time(MessengerDuration::from_str("5ms").unwrap())
         // `Partitioning` is used to specify to which partition the messages should be sent.
         // It has the following kinds:
         // - `Balanced` - the partition ID is calculated by the server using the round-robin algorithm.
@@ -57,23 +57,23 @@ async fn main() -> Result<(), IggyError> {
         // The error can be related either to disconnecting from the server or to the server rejecting the messages.
         // Default is 3 retries with 1 second interval between them. Customize to your requirements.
         .send_retries_count(3)
-        .send_retries_interval(IggyDuration::new_from_secs(1))
+        .send_retries_interval(MessengerDuration::new_from_secs(1))
         // Optionally, set a custom client side encryptor for encrypting the messages' payloads. Currently only Aes256Gcm is supported.
         // Note, this is independent of server side encryption meaning you can add client encryption, server encryption, or both.
         // .encryptor( Arc::new(EncryptorKind::Aes256Gcm(Aes256GcmEncryptor::new(&[1; 32])?)))
         .build();
 
-    let (client, producer) = IggyStreamProducer::with_client_from_url(IGGY_URL, &config).await?;
+    let (client, producer) = MessengerStreamProducer::with_client_from_url(MESSENGER_URL, &config).await?;
 
     println!("Send 3 test messages...");
     producer
-        .send_one(IggyMessage::from_str("Hello World")?)
+        .send_one(MessengerMessage::from_str("Hello World")?)
         .await?;
 
     // Wait a bit for all messages to arrive.
     tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
 
-    println!("Stop the message stream and shutdown iggy client");
+    println!("Stop the message stream and shutdown messenger client");
     client.shutdown().await?;
 
     Ok(())

@@ -21,8 +21,8 @@ use crate::cli::cli_command::{CliCommand, PRINT_TARGET};
 use anyhow::Context;
 use async_trait::async_trait;
 use comfy_table::Table;
-use iggy_common::get_topics::GetTopics;
-use iggy_common::{Identifier, IggyExpiry};
+use messenger_common::get_topics::GetTopics;
+use messenger_common::{Identifier, MessengerExpiry};
 use std::fmt::{self, Display, Formatter};
 use tracing::{Level, event};
 
@@ -101,9 +101,9 @@ impl CliCommand for GetTopicsCmd {
                         format!("{}", topic.max_topic_size),
                         topic.compression_algorithm.to_string(),
                         match topic.message_expiry {
-                            IggyExpiry::NeverExpire => String::from("unlimited"),
-                            IggyExpiry::ServerDefault => String::from("server_default"),
-                            IggyExpiry::ExpireDuration(value) => format!("{value}"),
+                            MessengerExpiry::NeverExpire => String::from("unlimited"),
+                            MessengerExpiry::ServerDefault => String::from("server_default"),
+                            MessengerExpiry::ExpireDuration(value) => format!("{value}"),
                         },
                         format!("{}", topic.messages_count),
                         format!("{}", topic.partitions_count),
@@ -123,9 +123,9 @@ impl CliCommand for GetTopicsCmd {
                             topic.max_topic_size,
                             topic.compression_algorithm.to_string(),
                             match topic.message_expiry {
-                    IggyExpiry::NeverExpire => String::from("unlimited"),
-                    IggyExpiry::ServerDefault => String::from("server_default"),
-                    IggyExpiry::ExpireDuration(value) => format!("{value}"),
+                    MessengerExpiry::NeverExpire => String::from("unlimited"),
+                    MessengerExpiry::ServerDefault => String::from("server_default"),
+                    MessengerExpiry::ExpireDuration(value) => format!("{value}"),
                             },
                             topic.messages_count,
                             topic.partitions_count

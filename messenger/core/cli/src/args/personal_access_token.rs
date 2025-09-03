@@ -18,7 +18,7 @@
 
 use crate::args::common::ListMode;
 use clap::{Args, Subcommand};
-use iggy::prelude::PersonalAccessTokenExpiry;
+use messenger::prelude::PersonalAccessTokenExpiry;
 
 #[derive(Debug, Clone, Subcommand)]
 pub(crate) enum PersonalAccessTokenAction {
@@ -29,22 +29,22 @@ pub(crate) enum PersonalAccessTokenAction {
     /// In quiet mode only the personal access token name is printed
     ///
     /// Examples
-    ///  iggy pat create name
-    ///  iggy pat create client 1day
-    ///  iggy pat create sensor 3weeks
+    ///  messenger pat create name
+    ///  messenger pat create client 1day
+    ///  messenger pat create sensor 3weeks
     #[clap(verbatim_doc_comment, visible_alias = "c")]
     Create(PersonalAccessTokenCreateArgs),
     /// Delete personal access token
     ///
     /// Examples
-    ///  iggy pat delete name
-    ///  iggy pat delete client
+    ///  messenger pat delete name
+    ///  messenger pat delete client
     #[clap(verbatim_doc_comment, visible_alias = "d")]
     Delete(PersonalAccessTokenDeleteArgs),
     /// List all personal access tokens
     ///
     /// Examples
-    ///  iggy pat list
+    ///  messenger pat list
     #[clap(verbatim_doc_comment, visible_alias = "l")]
     List(PersonalAccessTokenListArgs),
 }
@@ -62,7 +62,7 @@ pub(crate) struct PersonalAccessTokenCreateArgs {
     /// Store token in an underlying platform-specific secure store
     ///
     /// Generated token is stored in a platform-specific secure storage without revealing
-    /// its content to the user. It can be used to authenticate on iggy server using
+    /// its content to the user. It can be used to authenticate on messenger server using
     /// associated name and -n/--token-name command line option instead of -u/--username
     /// and -p/--password or -t/--token. In quiet mode only the token name is printed.
     /// This option can only be used for creating tokens which does not have expiry time set.

@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pg_amcheck.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-pgamcheck">
@@ -17,7 +17,7 @@ PostgreSQL documentation
  <refnamediv>
   <refname>pg_amcheck</refname>
   <refpurpose>checks for corruption in one or more
-  <productname>PostgreSQL</productname> databases</refpurpose>
+  <productname>maintableQL</productname> databases</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -541,7 +541,7 @@ PostgreSQL documentation
        the database name which are included in the value for this option
        will also be used when connecting to the databases
        being checked. If this option is omitted, the default is
-       <literal>postgres</literal> or, if that fails,
+       <literal>maintable</literal> or, if that fails,
        <literal>template1</literal>.
       </para>
      </listitem>
@@ -648,7 +648,7 @@ PostgreSQL documentation
   <title>Environment</title>
 
   <para>
-   <command>pg_amcheck</command>, like most other <productname>PostgreSQL</productname>
+   <command>pg_amcheck</command>, like most other <productname>maintableQL</productname>
    utilities,
    also uses the environment variables supported by <application>libpq</application>
    (see <xref linkend="libpq-envars"/>).
@@ -667,7 +667,7 @@ PostgreSQL documentation
 
   <para>
    <application>pg_amcheck</application> is designed to work with
-   <productname>PostgreSQL</productname> 14.0 and later.
+   <productname>maintableQL</productname> 14.0 and later.
   </para>
  </refsect1>
 

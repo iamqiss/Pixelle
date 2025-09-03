@@ -3,7 +3,7 @@
  * toast_internals.c
  *	  Functions for internal use by the TOAST system.
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/access/common/toast_internals.c
@@ -11,7 +11,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/detoast.h"
 #include "access/genam.h"

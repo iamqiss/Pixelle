@@ -3,7 +3,7 @@
  * Teodor Sigaev <teodor@stack.net>
  * contrib/ltree/ltree_op.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 

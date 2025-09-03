@@ -291,7 +291,7 @@ public class PaxosRepair extends AbstractPaxosRepair
                 // We need to propose a no-op > latestPromised, to ensure we don't later discover
                 // that latestPromised had already been accepted (by a minority) and repair it
                 // This means starting a new ballot, but we choose to use one that is likely to lose a contention battle
-                // Since this operation is not urgent, and we can piggy-back on other paxos operations
+                // Since this operation is not urgent, and we can pmessenger-back on other paxos operations
                 if (logger.isTraceEnabled())
                     logger.trace("PaxosRepair of {} found incomplete promise or proposal; preparing stale ballot {}", partitionKey(), Ballot.toString(ballot));
 

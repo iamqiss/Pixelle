@@ -23,22 +23,22 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
 use error_set::ErrContext;
-use iggy_common::{FlushUnsavedBuffer, IggyError};
+use messenger_common::{FlushUnsavedBuffer, MessengerError};
 use tracing::{debug, instrument};
 
 impl ServerCommandHandler for FlushUnsavedBuffer {
     fn code(&self) -> u32 {
-        iggy_common::FLUSH_UNSAVED_BUFFER_CODE
+        messenger_common::FLUSH_UNSAVED_BUFFER_CODE
     }
 
-    #[instrument(skip_all, name = "trace_flush_unsaved_buffer", fields(iggy_user_id = session.get_user_id(), iggy_client_id = session.client_id, iggy_stream_id = self.stream_id.as_string(), iggy_topic_id = self.topic_id.as_string(), iggy_partition_id = self.partition_id, iggy_fsync = self.fsync))]
+    #[instrument(skip_all, name = "trace_flush_unsaved_buffer", fields(messenger_user_id = session.get_user_id(), messenger_client_id = session.client_id, messenger_stream_id = self.stream_id.as_string(), messenger_topic_id = self.topic_id.as_string(), messenger_partition_id = self.partition_id, messenger_fsync = self.fsync))]
     async fn handle(
         self,
         sender: &mut SenderKind,
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
 
         let system = system.read().await;
@@ -65,10 +65,10 @@ impl BinaryServerCommand for FlushUnsavedBuffer {
         sender: &mut SenderKind,
         code: u32,
         length: u32,
-    ) -> Result<Self, IggyError> {
+    ) -> Result<Self, MessengerError> {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::FlushUnsavedBuffer(flush_unsaved_buffer) => Ok(flush_unsaved_buffer),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

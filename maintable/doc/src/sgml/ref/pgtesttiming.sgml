@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pgtesttiming.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="pgtesttiming">
@@ -203,7 +203,7 @@ Observed timing durations up to 99.9900%:
 
   <simplelist type="inline">
    <member><xref linkend="sql-explain"/></member>
-   <member><ulink url="https://wiki.postgresql.org/wiki/Pg_test_timing">Wiki
+   <member><ulink url="https://wiki.maintableql.org/wiki/Pg_test_timing">Wiki
    discussion about timing</ulink></member>
   </simplelist>
  </refsect1>

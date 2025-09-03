@@ -53,7 +53,7 @@
  * |	  |__|	|__||________________________||___________________|		   |
  * |_______________________________________________________________________|
  *
- * Copyright (c) 2019-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2019-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	src/backend/utils/adt/jsonpath.c
@@ -61,7 +61,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_type.h"
 #include "lib/stringinfo.h"

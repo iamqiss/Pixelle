@@ -24,9 +24,9 @@ import (
 	"testing"
 	"time"
 
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	"github.com/apache/iggy/foreign/go/iggycli"
-	"github.com/apache/iggy/foreign/go/tcp"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	"github.com/apache/messenger/foreign/go/messengercli"
+	"github.com/apache/messenger/foreign/go/tcp"
 	"github.com/google/uuid"
 )
 
@@ -41,18 +41,18 @@ const (
 
 func BenchmarkSendMessage(b *testing.B) {
 	rand.New(rand.NewSource(42)) // Seed the random number generator for consistent results
-	clients := make([]iggycli.Client, producerCount)
+	clients := make([]messengercli.Client, producerCount)
 
 	for i := 0; i < producerCount; i++ {
-		cli, err := iggycli.NewIggyClient(
-			iggycli.WithTcp(
+		cli, err := messengercli.NewMessengerClient(
+			messengercli.WithTcp(
 				tcp.WithServerAddress("127.0.0.1:8090"),
 			),
 		)
 		if err != nil {
 			panic("COULD NOT CREATE MESSAGE STREAM")
 		}
-		_, err = cli.LoginUser("iggy", "iggy")
+		_, err = cli.LoginUser("messenger", "messenger")
 		if err != nil {
 			panic("COULD NOT LOG IN")
 		}
@@ -103,7 +103,7 @@ func BenchmarkSendMessage(b *testing.B) {
 	}
 }
 
-func ensureInfrastructureIsInitialized(cli iggycli.Client, streamId uint32) error {
+func ensureInfrastructureIsInitialized(cli messengercli.Client, streamId uint32) error {
 	streamIdentifier, _ := iggcon.NewIdentifier(streamId)
 	if _, streamErr := cli.GetStream(streamIdentifier); streamErr != nil {
 		_, streamErr = cli.CreateStream("benchmark"+fmt.Sprint(streamId), &streamId)
@@ -119,7 +119,7 @@ func ensureInfrastructureIsInitialized(cli iggycli.Client, streamId uint32) erro
 			"benchmark",
 			1,
 			iggcon.CompressionAlgorithmNone,
-			iggcon.IggyExpiryServerDefault,
+			iggcon.MessengerExpiryServerDefault,
 			1,
 			nil,
 			nil,
@@ -132,14 +132,14 @@ func ensureInfrastructureIsInitialized(cli iggycli.Client, streamId uint32) erro
 	return nil
 }
 
-func cleanupInfrastructure(cli iggycli.Client, streamId uint32) error {
+func cleanupInfrastructure(cli messengercli.Client, streamId uint32) error {
 	streamIdent, _ := iggcon.NewIdentifier(streamId)
 	return cli.DeleteStream(streamIdent)
 }
 
 // CreateMessages creates messages with random payloads.
-func CreateMessages(messagesCount, messageSize int) []iggcon.IggyMessage {
-	messages := make([]iggcon.IggyMessage, messagesCount)
+func CreateMessages(messagesCount, messageSize int) []iggcon.MessengerMessage {
+	messages := make([]iggcon.MessengerMessage, messagesCount)
 	for i := 0; i < messagesCount; i++ {
 		payload := make([]byte, messageSize)
 		for j := 0; j < messageSize; j++ {
@@ -148,7 +148,7 @@ func CreateMessages(messagesCount, messageSize int) []iggcon.IggyMessage {
 		id, _ := uuid.NewUUID()
 
 		var err error
-		messages[i], err = iggcon.NewIggyMessage(payload, iggcon.WithID(id))
+		messages[i], err = iggcon.NewMessengerMessage(payload, iggcon.WithID(id))
 		if err != nil {
 			panic(err)
 		}
@@ -157,7 +157,7 @@ func CreateMessages(messagesCount, messageSize int) []iggcon.IggyMessage {
 }
 
 // SendMessage performs the message sending operation.
-func SendMessage(cli iggycli.Client, producerNumber, messagesCount, messagesBatch, messageSize int) (avgLatency float64, avgThroughput float64) {
+func SendMessage(cli messengercli.Client, producerNumber, messagesCount, messagesBatch, messageSize int) (avgLatency float64, avgThroughput float64) {
 	totalMessages := messagesBatch * messagesCount
 	totalMessagesBytes := int64(totalMessages * messageSize)
 	fmt.Printf("Executing Send Messages command for producer %d, messages count %d, with size %d bytes\n", producerNumber, totalMessages, totalMessagesBytes)

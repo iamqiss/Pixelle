@@ -17,7 +17,7 @@
 
 use crate::test_server::Transport;
 use assert_cmd::prelude::CommandCargoExt;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use std::{
     fs::{self, File, OpenOptions},
     io::Write,
@@ -35,14 +35,14 @@ pub fn run_bench_and_wait_for_finish(
     server_addr: &str,
     transport: &Transport,
     bench: &str,
-    amount_of_data_to_process: IggyByteSize,
+    amount_of_data_to_process: MessengerByteSize,
 ) {
-    let mut command = Command::cargo_bin("iggy-bench").unwrap();
+    let mut command = Command::cargo_bin("messenger-bench").unwrap();
 
     let mut stderr_file_path = None;
     let mut stdout_file_path = None;
 
-    let test_verbosity_env_var = "IGGY_TEST_VERBOSE";
+    let test_verbosity_env_var = "MESSENGER_TEST_VERBOSE";
     if std::env::var(test_verbosity_env_var).is_err() {
         let stderr_file = get_random_path();
         let stdout_file = get_random_path();
@@ -69,8 +69,8 @@ pub fn run_bench_and_wait_for_finish(
         server_addr,
     ]);
 
-    // By default, all iggy-bench logs are redirected to files,
-    // and dumped to stderr when test fails. With IGGY_TEST_VERBOSE=1
+    // By default, all messenger-bench logs are redirected to files,
+    // and dumped to stderr when test fails. With MESSENGER_TEST_VERBOSE=1
     // logs are dumped to stdout during test execution.
     if std::env::var(test_verbosity_env_var).is_ok() {
         command.stdout(Stdio::inherit());
@@ -120,20 +120,20 @@ pub fn run_bench_and_wait_for_finish(
                 .unwrap();
         }
     } else {
-        panic!("Failed to get output from iggy-bench");
+        panic!("Failed to get output from messenger-bench");
     }
 
     if panicking() {
         if let Some(stdout_file_path) = &stdout_file_path {
             eprintln!(
-                "Iggy bench stdout:\n{}",
+                "Messenger bench stdout:\n{}",
                 fs::read_to_string(stdout_file_path).unwrap()
             );
         }
 
         if let Some(stderr_file_path) = &stderr_file_path {
             eprintln!(
-                "Iggy bench stderr:\n{}",
+                "Messenger bench stderr:\n{}",
                 fs::read_to_string(stderr_file_path).unwrap()
             );
         }

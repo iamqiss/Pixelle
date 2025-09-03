@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_database.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-alterdatabase">
@@ -88,12 +88,12 @@ ALTER DATABASE <replaceable class="parameter">name</replaceable> RESET ALL
 
   <para>
    The remaining forms change the session default for a run-time
-   configuration variable for a <productname>PostgreSQL</productname>
+   configuration variable for a <productname>maintableQL</productname>
    database. Whenever a new session is subsequently started in that
    database, the specified value becomes the session default value.
    The database-specific default overrides whatever setting is present
-   in <filename>postgresql.conf</filename> or has been received from the
-   <command>postgres</command> command line.  Only the database
+   in <filename>maintableql.conf</filename> or has been received from the
+   <command>maintable</command> command line.  Only the database
    owner or a superuser can change the session defaults for a
    database.  Certain variables cannot be set this way, or can only be
    set by a superuser.
@@ -239,7 +239,7 @@ ALTER DATABASE test SET enable_indexscan TO off;
 
   <para>
    The <command>ALTER DATABASE</command> statement is a
-   <productname>PostgreSQL</productname> extension.
+   <productname>maintableQL</productname> extension.
   </para>
  </refsect1>
 

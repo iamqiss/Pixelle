@@ -21,12 +21,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/apache/iggy/foreign/go/iggycli"
-	"github.com/apache/iggy/foreign/go/tcp"
+	"github.com/apache/messenger/foreign/go/messengercli"
+	"github.com/apache/messenger/foreign/go/tcp"
 	"github.com/google/uuid"
 
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	sharedDemoContracts "github.com/apache/iggy/foreign/go/samples/shared"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	sharedDemoContracts "github.com/apache/messenger/foreign/go/samples/shared"
 )
 
 const (
@@ -38,15 +38,15 @@ const (
 )
 
 func main() {
-	cli, err := iggycli.NewIggyClient(
-		iggycli.WithTcp(
+	cli, err := messengercli.NewMessengerClient(
+		messengercli.WithTcp(
 			tcp.WithServerAddress("127.0.0.1:8090"),
 		),
 	)
 	if err != nil {
 		panic(err)
 	}
-	_, err = cli.LoginUser("iggy", "iggy")
+	_, err = cli.LoginUser("messenger", "messenger")
 	if err != nil {
 		panic("COULD NOT LOG IN")
 	}
@@ -60,7 +60,7 @@ func main() {
 	}
 }
 
-func EnsureInfrastructureIsInitialized(cli iggycli.Client) error {
+func EnsureInfrastructureIsInitialized(cli messengercli.Client) error {
 	streamIdentifier, _ := iggcon.NewIdentifier(StreamId)
 	if _, streamErr := cli.GetStream(streamIdentifier); streamErr != nil {
 		uint32StreamId := uint32(StreamId)
@@ -102,20 +102,20 @@ func EnsureInfrastructureIsInitialized(cli iggycli.Client) error {
 	return nil
 }
 
-func PublishMessages(messageStream iggycli.Client) error {
+func PublishMessages(messageStream messengercli.Client) error {
 	fmt.Printf("Messages will be sent to stream '%d', topic '%d', partition '%d' with interval %d ms.\n", StreamId, TopicId, Partition, Interval)
 	messageGenerator := NewMessageGenerator()
 
 	for {
 		var debugMessages []sharedDemoContracts.ISerializableMessage
-		var messages []iggcon.IggyMessage
+		var messages []iggcon.MessengerMessage
 
 		for i := 0; i < MessageBatchCount; i++ {
 			message := messageGenerator.GenerateMessage()
 			json := message.ToBytes()
 
 			debugMessages = append(debugMessages, message)
-			messages = append(messages, iggcon.IggyMessage{
+			messages = append(messages, iggcon.MessengerMessage{
 				Header: iggcon.MessageHeader{
 					Id:               iggcon.MessageID(uuid.New()),
 					OriginTimestamp:  uint64(time.Now().UnixMicro()),

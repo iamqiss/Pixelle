@@ -17,11 +17,11 @@
  */
 
 use crate::http::http_transport::HttpTransport;
-use crate::prelude::{Client, HttpClientConfig, IggyDuration, IggyError};
+use crate::prelude::{Client, HttpClientConfig, MessengerDuration, MessengerError};
 use async_broadcast::{Receiver, Sender, broadcast};
 use async_trait::async_trait;
-use iggy_common::locking::{IggySharedMut, IggySharedMutFn};
-use iggy_common::{
+use messenger_common::locking::{MessengerSharedMut, MessengerSharedMutFn};
+use messenger_common::{
     ConnectionString, ConnectionStringUtils, DiagnosticEvent, HttpConnectionStringOptions,
     IdentityInfo, TransportProtocol,
 };
@@ -43,29 +43,29 @@ const PUBLIC_PATHS: &[&str] = &[
     "/personal-access-tokens/login",
 ];
 
-/// HTTP client for interacting with the Iggy API.
+/// HTTP client for interacting with the Messenger API.
 /// It requires a valid API URL.
 #[derive(Debug)]
 pub struct HttpClient {
-    /// The URL of the Iggy API.
+    /// The URL of the Messenger API.
     pub api_url: Url,
-    pub(crate) heartbeat_interval: IggyDuration,
+    pub(crate) heartbeat_interval: MessengerDuration,
     client: ClientWithMiddleware,
-    access_token: IggySharedMut<String>,
+    access_token: MessengerSharedMut<String>,
     events: (Sender<DiagnosticEvent>, Receiver<DiagnosticEvent>),
 }
 
 #[async_trait]
 impl Client for HttpClient {
-    async fn connect(&self) -> Result<(), IggyError> {
+    async fn connect(&self) -> Result<(), MessengerError> {
         HttpClient::connect(self).await
     }
 
-    async fn disconnect(&self) -> Result<(), IggyError> {
+    async fn disconnect(&self) -> Result<(), MessengerError> {
         HttpClient::disconnect(self).await
     }
 
-    async fn shutdown(&self) -> Result<(), IggyError> {
+    async fn shutdown(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 
@@ -86,14 +86,14 @@ impl Default for HttpClient {
 #[async_trait]
 impl HttpTransport for HttpClient {
     /// Get full URL for the provided path.
-    fn get_url(&self, path: &str) -> Result<Url, IggyError> {
+    fn get_url(&self, path: &str) -> Result<Url, MessengerError> {
         self.api_url
             .join(path)
-            .map_err(|_| IggyError::CannotParseUrl)
+            .map_err(|_| MessengerError::CannotParseUrl)
     }
 
-    /// Invoke HTTP GET request to the Iggy API.
-    async fn get(&self, path: &str) -> Result<Response, IggyError> {
+    /// Invoke HTTP GET request to the Messenger API.
+    async fn get(&self, path: &str) -> Result<Response, MessengerError> {
         let url = self.get_url(path)?;
         self.fail_if_not_authenticated(path).await?;
         let token = self.access_token.read().await;
@@ -103,16 +103,16 @@ impl HttpTransport for HttpClient {
             .bearer_auth(token.deref())
             .send()
             .await
-            .map_err(|_| IggyError::InvalidHttpRequest)?;
+            .map_err(|_| MessengerError::InvalidHttpRequest)?;
         Self::handle_response(response).await
     }
 
-    /// Invoke HTTP GET request to the Iggy API with query parameters.
+    /// Invoke HTTP GET request to the Messenger API with query parameters.
     async fn get_with_query<T: Serialize + Sync + ?Sized>(
         &self,
         path: &str,
         query: &T,
-    ) -> Result<Response, IggyError> {
+    ) -> Result<Response, MessengerError> {
         let url = self.get_url(path)?;
         self.fail_if_not_authenticated(path).await?;
         let token = self.access_token.read().await;
@@ -123,16 +123,16 @@ impl HttpTransport for HttpClient {
             .query(query)
             .send()
             .await
-            .map_err(|_| IggyError::InvalidHttpRequest)?;
+            .map_err(|_| MessengerError::InvalidHttpRequest)?;
         Self::handle_response(response).await
     }
 
-    /// Invoke HTTP POST request to the Iggy API.
+    /// Invoke HTTP POST request to the Messenger API.
     async fn post<T: Serialize + Sync + ?Sized>(
         &self,
         path: &str,
         payload: &T,
-    ) -> Result<Response, IggyError> {
+    ) -> Result<Response, MessengerError> {
         let url = self.get_url(path)?;
         self.fail_if_not_authenticated(path).await?;
         let token = self.access_token.read().await;
@@ -143,16 +143,16 @@ impl HttpTransport for HttpClient {
             .json(payload)
             .send()
             .await
-            .map_err(|_| IggyError::InvalidHttpRequest)?;
+            .map_err(|_| MessengerError::InvalidHttpRequest)?;
         Self::handle_response(response).await
     }
 
-    /// Invoke HTTP PUT request to the Iggy API.
+    /// Invoke HTTP PUT request to the Messenger API.
     async fn put<T: Serialize + Sync + ?Sized>(
         &self,
         path: &str,
         payload: &T,
-    ) -> Result<Response, IggyError> {
+    ) -> Result<Response, MessengerError> {
         let url = self.get_url(path)?;
         self.fail_if_not_authenticated(path).await?;
         let token = self.access_token.read().await;
@@ -163,12 +163,12 @@ impl HttpTransport for HttpClient {
             .json(payload)
             .send()
             .await
-            .map_err(|_| IggyError::InvalidHttpRequest)?;
+            .map_err(|_| MessengerError::InvalidHttpRequest)?;
         Self::handle_response(response).await
     }
 
-    /// Invoke HTTP DELETE request to the Iggy API.
-    async fn delete(&self, path: &str) -> Result<Response, IggyError> {
+    /// Invoke HTTP DELETE request to the Messenger API.
+    async fn delete(&self, path: &str) -> Result<Response, MessengerError> {
         let url = self.get_url(path)?;
         self.fail_if_not_authenticated(path).await?;
         let token = self.access_token.read().await;
@@ -178,16 +178,16 @@ impl HttpTransport for HttpClient {
             .bearer_auth(token.deref())
             .send()
             .await
-            .map_err(|_| IggyError::InvalidHttpRequest)?;
+            .map_err(|_| MessengerError::InvalidHttpRequest)?;
         Self::handle_response(response).await
     }
 
-    /// Invoke HTTP DELETE request to the Iggy API with query parameters.
+    /// Invoke HTTP DELETE request to the Messenger API with query parameters.
     async fn delete_with_query<T: Serialize + Sync + ?Sized>(
         &self,
         path: &str,
         query: &T,
-    ) -> Result<Response, IggyError> {
+    ) -> Result<Response, MessengerError> {
         let url = self.get_url(path)?;
         self.fail_if_not_authenticated(path).await?;
         let token = self.access_token.read().await;
@@ -198,7 +198,7 @@ impl HttpTransport for HttpClient {
             .query(query)
             .send()
             .await
-            .map_err(|_| IggyError::InvalidHttpRequest)?;
+            .map_err(|_| MessengerError::InvalidHttpRequest)?;
         Self::handle_response(response).await
     }
 
@@ -210,10 +210,10 @@ impl HttpTransport for HttpClient {
 
     /// Refresh the access token using the current access token.
     // TODO(hubcio): method `refresh_access_token` is never used
-    async fn _refresh_access_token(&self) -> Result<(), IggyError> {
+    async fn _refresh_access_token(&self) -> Result<(), MessengerError> {
         let token = self.access_token.read().await;
         if token.is_empty() {
-            return Err(IggyError::AccessTokenMissing);
+            return Err(MessengerError::AccessTokenMissing);
         }
 
         let command = _RefreshToken {
@@ -223,9 +223,9 @@ impl HttpTransport for HttpClient {
         let identity_info: IdentityInfo = response
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         if identity_info.access_token.is_none() {
-            return Err(IggyError::JwtMissing);
+            return Err(MessengerError::JwtMissing);
         }
 
         self.set_token_from_identity(&identity_info).await?;
@@ -243,9 +243,9 @@ impl HttpTransport for HttpClient {
     }
 
     /// Set the access token from the provided identity.
-    async fn set_token_from_identity(&self, identity: &IdentityInfo) -> Result<(), IggyError> {
+    async fn set_token_from_identity(&self, identity: &IdentityInfo) -> Result<(), MessengerError> {
         if identity.access_token.is_none() {
-            return Err(IggyError::JwtMissing);
+            return Err(MessengerError::JwtMissing);
         }
 
         let access_token = identity.access_token.as_ref().unwrap();
@@ -256,19 +256,19 @@ impl HttpTransport for HttpClient {
 }
 
 impl HttpClient {
-    /// Create a new HTTP client for interacting with the Iggy API using the provided API URL.
-    pub fn new(api_url: &str) -> Result<Self, IggyError> {
+    /// Create a new HTTP client for interacting with the Messenger API using the provided API URL.
+    pub fn new(api_url: &str) -> Result<Self, MessengerError> {
         Self::create(Arc::new(HttpClientConfig {
             api_url: api_url.to_string(),
             ..Default::default()
         }))
     }
 
-    /// Create a new HTTP client for interacting with the Iggy API using the provided configuration.
-    pub fn create(config: Arc<HttpClientConfig>) -> Result<Self, IggyError> {
+    /// Create a new HTTP client for interacting with the Messenger API using the provided configuration.
+    pub fn create(config: Arc<HttpClientConfig>) -> Result<Self, MessengerError> {
         let api_url = Url::parse(&config.api_url);
         if api_url.is_err() {
-            return Err(IggyError::CannotParseUrl);
+            return Err(MessengerError::CannotParseUrl);
         }
         let api_url = api_url.unwrap();
         let retry_policy = ExponentialBackoff::builder().build_with_max_retries(config.retries);
@@ -279,16 +279,16 @@ impl HttpClient {
         Ok(Self {
             api_url,
             client,
-            heartbeat_interval: IggyDuration::from_str("5s").unwrap(),
-            access_token: IggySharedMut::new("".to_string()),
+            heartbeat_interval: MessengerDuration::from_str("5s").unwrap(),
+            access_token: MessengerSharedMut::new("".to_string()),
             events: broadcast(1000),
         })
     }
 
     /// Create a new HttpClient from a connection string.
-    pub fn from_connection_string(connection_string: &str) -> Result<Self, IggyError> {
+    pub fn from_connection_string(connection_string: &str) -> Result<Self, MessengerError> {
         if ConnectionStringUtils::parse_protocol(connection_string)? != TransportProtocol::Http {
-            return Err(IggyError::InvalidConnectionString);
+            return Err(MessengerError::InvalidConnectionString);
         }
 
         Self::create(Arc::new(
@@ -296,37 +296,37 @@ impl HttpClient {
         ))
     }
 
-    async fn handle_response(response: Response) -> Result<Response, IggyError> {
+    async fn handle_response(response: Response) -> Result<Response, MessengerError> {
         let status = response.status();
         match status.is_success() {
             true => Ok(response),
             false => {
                 let reason = response.text().await.unwrap_or("error".to_string());
                 match status {
-                    StatusCode::UNAUTHORIZED => Err(IggyError::Unauthenticated),
-                    StatusCode::FORBIDDEN => Err(IggyError::Unauthorized),
-                    StatusCode::NOT_FOUND => Err(IggyError::ResourceNotFound(reason)),
-                    _ => Err(IggyError::HttpResponseError(status.as_u16(), reason)),
+                    StatusCode::UNAUTHORIZED => Err(MessengerError::Unauthenticated),
+                    StatusCode::FORBIDDEN => Err(MessengerError::Unauthorized),
+                    StatusCode::NOT_FOUND => Err(MessengerError::ResourceNotFound(reason)),
+                    _ => Err(MessengerError::HttpResponseError(status.as_u16(), reason)),
                 }
             }
         }
     }
 
-    async fn fail_if_not_authenticated(&self, path: &str) -> Result<(), IggyError> {
+    async fn fail_if_not_authenticated(&self, path: &str) -> Result<(), MessengerError> {
         if PUBLIC_PATHS.contains(&path) {
             return Ok(());
         }
         if !self.is_authenticated().await {
-            return Err(IggyError::Unauthenticated);
+            return Err(MessengerError::Unauthenticated);
         }
         Ok(())
     }
 
-    async fn connect(&self) -> Result<(), IggyError> {
+    async fn connect(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 
-    async fn disconnect(&self) -> Result<(), IggyError> {
+    async fn disconnect(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -352,7 +352,7 @@ mod tests {
 
     #[test]
     fn should_fail_without_username() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Http;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -367,7 +367,7 @@ mod tests {
 
     #[test]
     fn should_fail_without_password() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Http;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -382,7 +382,7 @@ mod tests {
 
     #[test]
     fn should_fail_without_server_address() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Http;
         let server_address = "";
         let port = "1234";
@@ -397,7 +397,7 @@ mod tests {
 
     #[test]
     fn should_fail_without_port() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Http;
         let server_address = "127.0.0.1";
         let port = "";
@@ -427,7 +427,7 @@ mod tests {
 
     #[test]
     fn should_fail_with_unmatch_protocol() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Quic;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -442,7 +442,7 @@ mod tests {
 
     #[test]
     fn should_fail_with_default_prefix() {
-        let default_connection_string_prefix = "iggy://";
+        let default_connection_string_prefix = "messenger://";
         let server_address = "127.0.0.1";
         let port = "1234";
         let username = "user";
@@ -456,7 +456,7 @@ mod tests {
 
     #[test]
     fn should_fail_with_invalid_options() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Http;
         let server_address = "127.0.0.1";
         let port = "";
@@ -471,7 +471,7 @@ mod tests {
 
     #[test]
     fn should_succeed_without_options() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Http;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -489,13 +489,13 @@ mod tests {
         );
         assert_eq!(
             http_client.as_ref().unwrap().heartbeat_interval,
-            IggyDuration::from_str("5s").unwrap()
+            MessengerDuration::from_str("5s").unwrap()
         );
     }
 
     #[test]
     fn should_succeed_with_options() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Http;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -516,11 +516,11 @@ mod tests {
 
     #[test]
     fn should_succeed_with_pat() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Http;
         let server_address = "127.0.0.1";
         let port = "1234";
-        let pat = "iggypat-1234567890abcdef";
+        let pat = "messengerpat-1234567890abcdef";
         let value = format!("{connection_string_prefix}{protocol}://{pat}@{server_address}:{port}");
         let http_client = HttpClient::from_connection_string(&value);
         assert!(http_client.is_ok());
@@ -531,7 +531,7 @@ mod tests {
         );
         assert_eq!(
             http_client.as_ref().unwrap().heartbeat_interval,
-            IggyDuration::from_str("5s").unwrap()
+            MessengerDuration::from_str("5s").unwrap()
         );
     }
 }

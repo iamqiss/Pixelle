@@ -16,6 +16,6 @@
  * under the License.
  */
 
-use iggy_common::IggyExpiry;
+use messenger_common::MessengerExpiry;
 
-pub type LoginSessionExpiry = IggyExpiry;
+pub type LoginSessionExpiry = MessengerExpiry;

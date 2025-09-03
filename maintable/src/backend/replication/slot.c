@@ -4,7 +4,7 @@
  *	   Replication slot management.
  *
  *
- * Copyright (c) 2012-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2012-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -34,7 +34,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 #include <sys/stat.h>

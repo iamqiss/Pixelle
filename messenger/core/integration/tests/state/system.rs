@@ -17,14 +17,14 @@
  */
 
 use crate::state::StateSetup;
-use iggy::prelude::IggyExpiry;
-use iggy_common::create_consumer_group::CreateConsumerGroup;
-use iggy_common::create_partitions::CreatePartitions;
-use iggy_common::create_personal_access_token::CreatePersonalAccessToken;
-use iggy_common::create_stream::CreateStream;
-use iggy_common::create_topic::CreateTopic;
-use iggy_common::create_user::CreateUser;
-use iggy_common::delete_stream::DeleteStream;
+use messenger::prelude::MessengerExpiry;
+use messenger_common::create_consumer_group::CreateConsumerGroup;
+use messenger_common::create_partitions::CreatePartitions;
+use messenger_common::create_personal_access_token::CreatePersonalAccessToken;
+use messenger_common::create_stream::CreateStream;
+use messenger_common::create_topic::CreateTopic;
+use messenger_common::create_user::CreateUser;
+use messenger_common::delete_stream::DeleteStream;
 use server::state::State;
 use server::state::command::EntryCommand;
 use server::state::models::{
@@ -118,7 +118,7 @@ async fn should_be_initialized_based_on_state_entries() {
     let create_personal_access_token = CreatePersonalAccessTokenWithHash {
         command: CreatePersonalAccessToken {
             name: "test".to_string(),
-            expiry: IggyExpiry::NeverExpire,
+            expiry: MessengerExpiry::NeverExpire,
         },
         hash: "hash".to_string(),
     };
@@ -126,7 +126,7 @@ async fn should_be_initialized_based_on_state_entries() {
     let create_personal_access_token_clone = CreatePersonalAccessTokenWithHash {
         command: CreatePersonalAccessToken {
             name: "test".to_string(),
-            expiry: IggyExpiry::NeverExpire,
+            expiry: MessengerExpiry::NeverExpire,
         },
         hash: "hash".to_string(),
     };

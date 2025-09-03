@@ -185,11 +185,11 @@ tarCreateHeader(char *h, const char *filename, const char *linktarget,
 
 	/* User 32 */
 	/* XXX: Do we need to care about setting correct username? */
-	strlcpy(&h[TAR_OFFSET_UNAME], "postgres", 32);
+	strlcpy(&h[TAR_OFFSET_UNAME], "maintable", 32);
 
 	/* Group 32 */
 	/* XXX: Do we need to care about setting correct group name? */
-	strlcpy(&h[TAR_OFFSET_GNAME], "postgres", 32);
+	strlcpy(&h[TAR_OFFSET_GNAME], "maintable", 32);
 
 	/* Major Dev 8 */
 	print_tar_number(&h[TAR_OFFSET_DEVMAJOR], 8, 0);

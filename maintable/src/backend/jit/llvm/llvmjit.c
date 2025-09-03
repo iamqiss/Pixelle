@@ -3,7 +3,7 @@
  * llvmjit.c
  *	  Core part of the LLVM JIT provider.
  *
- * Copyright (c) 2016-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2016-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/jit/llvm/llvmjit.c
@@ -11,7 +11,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <llvm-c/Analysis.h>
 #include <llvm-c/BitReader.h>
@@ -1231,7 +1231,7 @@ llvm_create_jit_instance(LLVMTargetMachineRef tm)
 											llvm_log_jit_error, NULL);
 
 	/*
-	 * Symbol resolution support for symbols in the postgres binary /
+	 * Symbol resolution support for symbols in the maintable binary /
 	 * libraries already loaded.
 	 */
 	error = LLVMOrcCreateDynamicLibrarySearchGeneratorForProcess(&main_gen,

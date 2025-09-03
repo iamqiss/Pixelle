@@ -1,7 +1,7 @@
 /*
  * contrib/hstore/hstore_op.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "catalog/pg_type.h"

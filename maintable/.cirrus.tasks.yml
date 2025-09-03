@@ -91,19 +91,19 @@ task:
     folder: $CCACHE_DIR
 
   create_user_script: |
-    useradd -m postgres
-    chown -R postgres:postgres .
+    useradd -m maintable
+    chown -R maintable:maintable .
     mkdir -p ${CCACHE_DIR}
-    chown -R postgres:postgres ${CCACHE_DIR}
-    echo '* - memlock 134217728' > /etc/security/limits.d/postgres.conf
-    su postgres -c "ulimit -l -H && ulimit -l -S"
-    # Can't change container's kernel.core_pattern. Postgres user can't write
+    chown -R maintable:maintable ${CCACHE_DIR}
+    echo '* - memlock 134217728' > /etc/security/limits.d/maintable.conf
+    su maintable -c "ulimit -l -H && ulimit -l -S"
+    # Can't change container's kernel.core_pattern. Maintable user can't write
     # to / normally. Change that.
-    chown root:postgres /
+    chown root:maintable /
     chmod g+rwx /
 
   configure_script: |
-    su postgres <<-EOF
+    su maintable <<-EOF
       meson setup \
         --buildtype=debug \
         --auto-features=disabled \
@@ -111,7 +111,7 @@ task:
         build
     EOF
   build_script: |
-    su postgres <<-EOF
+    su maintable <<-EOF
       ninja -C build -j${BUILD_JOBS} ${MBUILD_TARGET}
     EOF
   upload_caches: ccache
@@ -120,7 +120,7 @@ task:
   # this purpose. For now this is a random quick pg_regress style test, and a
   # tap test that exercises both a frontend binary and the backend.
   test_minimal_script: |
-    su postgres <<-EOF
+    su maintable <<-EOF
       ulimit -c unlimited
       meson test $MTEST_ARGS --suite setup
       meson test $MTEST_ARGS --num-processes ${TEST_JOBS} \
@@ -136,10 +136,10 @@ task:
 
 
 # SPECIAL:
-# - Uses postgres specific CPPFLAGS that increase test coverage
+# - Uses maintable specific CPPFLAGS that increase test coverage
 # - Specifies configuration options that test reading/writing/copying of node trees
 # - Specifies debug_parallel_query=regress, to catch related issues during CI
-# - Also runs tests against a running postgres instance, see test_running_script
+# - Also runs tests against a running maintable instance, see test_running_script
 task:
   name: FreeBSD - Meson
 
@@ -179,13 +179,13 @@ task:
     folder: $CCACHE_DIR
   setup_ram_disk_script: src/tools/ci/gcp_ram_disk.sh
   create_user_script: |
-    pw useradd postgres
-    chown -R postgres:postgres .
+    pw useradd maintable
+    chown -R maintable:maintable .
     mkdir -p ${CCACHE_DIR}
-    chown -R postgres:postgres ${CCACHE_DIR}
+    chown -R maintable:maintable ${CCACHE_DIR}
   setup_core_files_script: |
     mkdir -m 770 /tmp/cores
-    chown root:postgres /tmp/cores
+    chown root:maintable /tmp/cores
     sysctl kern.corefile='/tmp/cores/%N.%P.core'
   setup_additional_packages_script: |
     #pkg install -y ...
@@ -194,7 +194,7 @@ task:
   # large enough to make VM startup slow, and even without llvm freebsd
   # already takes longer than other platforms except for windows.
   configure_script: |
-    su postgres <<-EOF
+    su maintable <<-EOF
       meson setup \
         --buildtype=debug \
         -Dcassert=true -Dinjection_points=true \
@@ -202,25 +202,25 @@ task:
         -Dextra_lib_dirs=/usr/local/lib -Dextra_include_dirs=/usr/local/include/ \
         build
     EOF
-  build_script: su postgres -c 'ninja -C build -j${BUILD_JOBS} ${MBUILD_TARGET}'
+  build_script: su maintable -c 'ninja -C build -j${BUILD_JOBS} ${MBUILD_TARGET}'
   upload_caches: ccache
 
   test_world_script: |
-    su postgres <<-EOF
+    su maintable <<-EOF
       ulimit -c unlimited
       meson test $MTEST_ARGS --num-processes ${TEST_JOBS}
     EOF
 
   # test runningcheck, freebsd chosen because it's currently fast enough
   test_running_script: |
-    su postgres <<-EOF
+    su maintable <<-EOF
       set -e
       ulimit -c unlimited
       meson test $MTEST_ARGS --quiet --suite setup
       export LD_LIBRARY_PATH="$(pwd)/build/tmp_install/usr/local/pgsql/lib/:$LD_LIBRARY_PATH"
       mkdir -p build/testrun
       build/tmp_install/usr/local/pgsql/bin/initdb -N build/runningcheck --no-instructions -A trust
-      echo "include '$(pwd)/src/tools/ci/pg_ci_base.conf'" >> build/runningcheck/postgresql.conf
+      echo "include '$(pwd)/src/tools/ci/pg_ci_base.conf'" >> build/runningcheck/maintableql.conf
       build/tmp_install/usr/local/pgsql/bin/pg_ctl -c -o '-c fsync=off' -D build/runningcheck -l build/testrun/runningcheck.log start
       meson test $MTEST_ARGS --num-processes ${TEST_JOBS} --setup running
       build/tmp_install/usr/local/pgsql/bin/pg_ctl -D build/runningcheck stop
@@ -230,7 +230,7 @@ task:
     # if the server continues running, it often causes cirrus-ci to fail
     # during upload, as it doesn't expect artifacts to change size
     stop_running_script: |
-      su postgres <<-EOF
+      su maintable <<-EOF
         build/tmp_install/usr/local/pgsql/bin/pg_ctl -D build/runningcheck stop || true
       EOF
     <<: *on_failure_meson
@@ -248,8 +248,8 @@ task:
 
     # Default working directory is /tmp, but its total size (1.2 GB) is not
     # enough, so different working and cache directory are set.
-    CIRRUS_WORKING_DIR: /home/postgres/postgres
-    CCACHE_DIR: /home/postgres/cache
+    CIRRUS_WORKING_DIR: /home/maintable/maintable
+    CCACHE_DIR: /home/maintable/cache
 
     PATH: /usr/sbin:$PATH
     CORE_DUMP_DIR: /var/crash
@@ -261,7 +261,7 @@ task:
       only_if: $CI_NETBSD_ENABLED
       env:
         OS_NAME: netbsd
-        IMAGE_FAMILY: pg-ci-netbsd-postgres
+        IMAGE_FAMILY: pg-ci-netbsd-maintable
         PKGCONFIG_PATH: '/usr/lib/pkgconfig:/usr/pkg/lib/pkgconfig'
         # initdb fails with: 'invalid locale settings' error on NetBSD.
         # Force 'LANG' and 'LC_*' variables to be 'C'.
@@ -280,7 +280,7 @@ task:
       only_if: $CI_OPENBSD_ENABLED
       env:
         OS_NAME: openbsd
-        IMAGE_FAMILY: pg-ci-openbsd-postgres
+        IMAGE_FAMILY: pg-ci-openbsd-maintable
         PKGCONFIG_PATH: '/usr/lib/pkgconfig:/usr/local/lib/pkgconfig'
         UUID: -Duuid=e2fs
         TCL: -Dtcl_version=tcl86
@@ -301,21 +301,21 @@ task:
     folder: $CCACHE_DIR
   setup_ram_disk_script: src/tools/ci/gcp_ram_disk.sh
   create_user_script: |
-    useradd postgres
-    chown -R postgres:users /home/postgres
+    useradd maintable
+    chown -R maintable:users /home/maintable
     mkdir -p ${CCACHE_DIR}
-    chown -R postgres:users ${CCACHE_DIR}
+    chown -R maintable:users ${CCACHE_DIR}
   setup_core_files_script: |
     mkdir -p ${CORE_DUMP_DIR}
     chmod -R 770 ${CORE_DUMP_DIR}
-    chown -R postgres:users ${CORE_DUMP_DIR}
+    chown -R maintable:users ${CORE_DUMP_DIR}
 
   # -Duuid=bsd is not set since 'bsd' uuid option
   # is not working on NetBSD & OpenBSD. See
-  # https://www.postgresql.org/message-id/17358-89806e7420797025@postgresql.org
+  # https://www.maintableql.org/message-id/17358-89806e7420797025@maintableql.org
   # And other uuid options are not available on NetBSD.
   configure_script: |
-    su postgres <<-EOF
+    su maintable <<-EOF
       meson setup \
         --buildtype=debugoptimized \
         --pkg-config-path ${PKGCONFIG_PATH} \
@@ -325,11 +325,11 @@ task:
         build
     EOF
 
-  build_script: su postgres -c 'ninja -C build -j${BUILD_JOBS} ${MBUILD_TARGET}'
+  build_script: su maintable -c 'ninja -C build -j${BUILD_JOBS} ${MBUILD_TARGET}'
   upload_caches: ccache
 
   test_world_script: |
-    su postgres <<-EOF
+    su maintable <<-EOF
       ulimit -c unlimited
       # Otherwise tests will fail on OpenBSD, due to inability to start enough
       # processes.
@@ -429,15 +429,15 @@ task:
     ulimit -a -H && ulimit -a -S
     export
   create_user_script: |
-    useradd -m postgres
-    chown -R postgres:postgres .
+    useradd -m maintable
+    chown -R maintable:maintable .
     mkdir -p ${CCACHE_DIR}
-    chown -R postgres:postgres ${CCACHE_DIR}
-    echo '* - memlock 134217728' > /etc/security/limits.d/postgres.conf
-    su postgres -c "ulimit -l -H && ulimit -l -S"
+    chown -R maintable:maintable ${CCACHE_DIR}
+    echo '* - memlock 134217728' > /etc/security/limits.d/maintable.conf
+    su maintable -c "ulimit -l -H && ulimit -l -S"
   setup_core_files_script: |
     mkdir -m 770 /tmp/cores
-    chown root:postgres /tmp/cores
+    chown root:maintable /tmp/cores
     sysctl kernel.core_pattern='/tmp/cores/%e-%s-%p.core'
 
   setup_hosts_file_script: |
@@ -455,7 +455,7 @@ task:
     # SPECIAL:
     # - Uses address sanitizer, sanitizer failures are typically printed in
     #   the server log
-    # - Configures postgres with a small segment size
+    # - Configures maintable with a small segment size
     - name: Linux - Debian Bookworm - Autoconf
 
       env:
@@ -469,7 +469,7 @@ task:
       # here. Use a non-power-of-two segment size, given we currently allow
       # that.
       configure_script: |
-        su postgres <<-EOF
+        su maintable <<-EOF
           ./configure \
             --enable-cassert --enable-injection-points --enable-debug \
             --enable-tap-tests --enable-nls \
@@ -481,11 +481,11 @@ task:
             \
             CLANG="ccache clang-16"
         EOF
-      build_script: su postgres -c "make -s -j${BUILD_JOBS} world-bin"
+      build_script: su maintable -c "make -s -j${BUILD_JOBS} world-bin"
       upload_caches: ccache
 
       test_world_script: |
-        su postgres <<-EOF
+        su maintable <<-EOF
           ulimit -c unlimited # default is 0
           make -s ${CHECK} ${CHECKFLAGS} -j${TEST_JOBS}
         EOF
@@ -507,7 +507,7 @@ task:
           -c io_method=io_uring
 
       configure_script: |
-        su postgres <<-EOF
+        su maintable <<-EOF
           meson setup \
             --buildtype=debug \
             -Dcassert=true -Dinjection_points=true \
@@ -518,7 +518,7 @@ task:
       # Also build & test in a 32bit build - it's gotten rare to test that
       # locally.
       configure_32_script: |
-        su postgres <<-EOF
+        su maintable <<-EOF
           export CC='ccache gcc -m32'
           meson setup \
             --buildtype=debug \
@@ -532,13 +532,13 @@ task:
         EOF
 
       build_script: |
-        su postgres <<-EOF
+        su maintable <<-EOF
           ninja -C build -j${BUILD_JOBS} ${MBUILD_TARGET}
           ninja -C build -t missingdeps
         EOF
 
       build_32_script: |
-        su postgres <<-EOF
+        su maintable <<-EOF
           ninja -C build-32 -j${BUILD_JOBS} ${MBUILD_TARGET}
           ninja -C build -t missingdeps
         EOF
@@ -546,7 +546,7 @@ task:
       upload_caches: ccache
 
       test_world_script: |
-        su postgres <<-EOF
+        su maintable <<-EOF
           ulimit -c unlimited
           meson test $MTEST_ARGS --num-processes ${TEST_JOBS}
         EOF
@@ -558,7 +558,7 @@ task:
       # way. Newer versions of python insist on changing the LC_CTYPE away
       # from C, prevent that with PYTHONCOERCECLOCALE.
       test_world_32_script: |
-        su postgres <<-EOF
+        su maintable <<-EOF
           ulimit -c unlimited
           PYTHONCOERCECLOCALE=0 LANG=C meson test $MTEST_ARGS -C build-32 --num-processes ${TEST_JOBS}
         EOF

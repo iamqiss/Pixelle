@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * pgtime.h
- *	  PostgreSQL internal timezone library
+ *	  maintableQL internal timezone library
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/include/pgtime.h
@@ -27,7 +27,7 @@ typedef int64 pg_time_t;
  *
  * CAUTION: the IANA timezone library (src/timezone/) follows the POSIX
  * convention that tm_mon counts from 0 and tm_year is relative to 1900.
- * However, Postgres' datetime functions generally treat tm_mon as counting
+ * However, Maintable' datetime functions generally treat tm_mon as counting
  * from 1 and tm_year as relative to 1 BC.  Be sure to make the appropriate
  * adjustments when moving from one code domain to the other.
  */

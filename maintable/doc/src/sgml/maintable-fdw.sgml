@@ -1,34 +1,34 @@
-<!-- doc/src/sgml/postgres-fdw.sgml -->
+<!-- doc/src/sgml/maintable-fdw.sgml -->
 
-<sect1 id="postgres-fdw" xreflabel="postgres_fdw">
- <title>postgres_fdw &mdash;
-   access data stored in external <productname>PostgreSQL</productname>
+<sect1 id="maintable-fdw" xreflabel="maintable_fdw">
+ <title>maintable_fdw &mdash;
+   access data stored in external <productname>maintableQL</productname>
    servers</title>
 
- <indexterm zone="postgres-fdw">
-  <primary>postgres_fdw</primary>
+ <indexterm zone="maintable-fdw">
+  <primary>maintable_fdw</primary>
  </indexterm>
 
  <para>
-  The <filename>postgres_fdw</filename> module provides the foreign-data wrapper
-  <literal>postgres_fdw</literal>, which can be used to access data
-  stored in external <productname>PostgreSQL</productname> servers.
+  The <filename>maintable_fdw</filename> module provides the foreign-data wrapper
+  <literal>maintable_fdw</literal>, which can be used to access data
+  stored in external <productname>maintableQL</productname> servers.
  </para>
 
  <para>
   The functionality provided by this module overlaps substantially
   with the functionality of the older <xref linkend="dblink"/> module.
-  But <filename>postgres_fdw</filename> provides more transparent and
+  But <filename>maintable_fdw</filename> provides more transparent and
   standards-compliant syntax for accessing remote tables, and can give
   better performance in many cases.
  </para>
 
  <para>
-  To prepare for remote access using <filename>postgres_fdw</filename>:
+  To prepare for remote access using <filename>maintable_fdw</filename>:
   <orderedlist spacing="compact">
    <listitem>
     <para>
-     Install the  <filename>postgres_fdw</filename> extension using <xref
+     Install the  <filename>maintable_fdw</filename> extension using <xref
      linkend="sql-createextension"/>.
     </para>
    </listitem>
@@ -80,12 +80,12 @@
  </para>
 
  <para>
-  Note that <filename>postgres_fdw</filename> currently lacks support for
+  Note that <filename>maintable_fdw</filename> currently lacks support for
   <command>INSERT</command> statements with an <literal>ON CONFLICT DO
   UPDATE</literal> clause.  However, the <literal>ON CONFLICT DO NOTHING</literal>
   clause is supported, provided a unique index inference specification
   is omitted.
-  Note also that <filename>postgres_fdw</filename> supports row movement
+  Note also that <filename>maintable_fdw</filename> supports row movement
   invoked by <command>UPDATE</command> statements executed on partitioned
   tables, but it currently does not handle the case where a remote partition
   chosen to insert a moved row into is also an <command>UPDATE</command>
@@ -95,7 +95,7 @@
  <para>
   It is generally recommended that the columns of a foreign table be declared
   with exactly the same data types, and collations if applicable, as the
-  referenced columns of the remote table.  Although <filename>postgres_fdw</filename>
+  referenced columns of the remote table.  Although <filename>maintable_fdw</filename>
   is currently rather forgiving about performing data type conversions at
   need, surprising semantic anomalies may arise when types or collations do
   not match, due to the remote server interpreting query conditions
@@ -108,14 +108,14 @@
   of columns to the remote table is by name, not position.
  </para>
 
- <sect2 id="postgres-fdw-options">
-  <title>FDW Options of postgres_fdw</title>
+ <sect2 id="maintable-fdw-options">
+  <title>FDW Options of maintable_fdw</title>
 
-  <sect3 id="postgres-fdw-options-connection">
+  <sect3 id="maintable-fdw-options-connection">
    <title>Connection Options</title>
 
    <para>
-    A foreign server using the <filename>postgres_fdw</filename> foreign data wrapper
+    A foreign server using the <filename>maintable_fdw</filename> foreign data wrapper
     can have the same options that <application>libpq</application> accepts in
     connection strings, as described in <xref linkend="libpq-paramkeywords"/>,
     except that these options are not allowed or have special handling:
@@ -138,10 +138,10 @@
        <literal>application_name</literal> - this may appear in
        <emphasis>either or both</emphasis> a connection and
        <xref linkend="guc-pgfdw-application-name"/>.
-       If both are present, <varname>postgres_fdw.application_name</varname>
+       If both are present, <varname>maintable_fdw.application_name</varname>
        overrides the connection setting.
        Unlike <application>libpq</application>,
-       <filename>postgres_fdw</filename> allows
+       <filename>maintable_fdw</filename> allows
        <varname>application_name</varname> to include
        <quote>escape sequences</quote>.
        See <xref linkend="guc-pgfdw-application-name"/> for details.
@@ -150,7 +150,7 @@
      <listitem>
       <para>
        <literal>fallback_application_name</literal> (always set to
-       <literal>postgres_fdw</literal>)
+       <literal>maintable_fdw</literal>)
       </para>
      </listitem>
      <listitem>
@@ -182,7 +182,7 @@ ALTER USER MAPPING FOR some_non_superuser SERVER loopback_nopw
 OPTIONS (ADD password_required 'false');
 </programlisting>
     To prevent unprivileged users from exploiting the authentication rights
-    of the unix user the postgres server is running as to escalate to superuser
+    of the unix user the maintable server is running as to escalate to superuser
     rights, only the superuser may set this option on a user mapping.
     </para>
     <para>
@@ -194,7 +194,7 @@ OPTIONS (ADD password_required 'false');
     user can potentially use any client certificates,
     <filename>.pgpass</filename>,
     <filename>.pg_service.conf</filename> etc. in the unix home directory of the
-    system user the postgres server runs as.   (For details on how home
+    system user the maintable server runs as.   (For details on how home
     directories are found, see <xref linkend="libpq-pgpass"/>.)  They can
     also use any trust
     relationship granted by authentication modes like <literal>peer</literal>
@@ -202,12 +202,12 @@ OPTIONS (ADD password_required 'false');
    </para>
   </sect3>
 
-  <sect3 id="postgres-fdw-options-object-name">
+  <sect3 id="maintable-fdw-options-object-name">
    <title>Object Name Options</title>
 
    <para>
     These options can be used to control the names used in SQL statements
-    sent to the remote <productname>PostgreSQL</productname> server.  These
+    sent to the remote <productname>maintableQL</productname> server.  These
     options are needed when a foreign table is created with names different
     from the underlying remote table's names.
    </para>
@@ -251,18 +251,18 @@ OPTIONS (ADD password_required 'false');
 
   </sect3>
 
-  <sect3 id="postgres-fdw-options-cost-estimation">
+  <sect3 id="maintable-fdw-options-cost-estimation">
    <title>Cost Estimation Options</title>
 
    <para>
-    <filename>postgres_fdw</filename> retrieves remote data by executing queries
+    <filename>maintable_fdw</filename> retrieves remote data by executing queries
     against remote servers, so ideally the estimated cost of scanning a
     foreign table should be whatever it costs to be done on the remote
     server, plus some overhead for communication.  The most reliable way to
     get such an estimate is to ask the remote server and then add something
     for overhead &mdash; but for simple queries, it may not be worth the cost
     of an additional remote query to get a cost estimate.
-    So <filename>postgres_fdw</filename> provides the following options to control
+    So <filename>maintable_fdw</filename> provides the following options to control
     how cost estimation is done:
    </para>
 
@@ -273,7 +273,7 @@ OPTIONS (ADD password_required 'false');
      <listitem>
       <para>
        This option, which can be specified for a foreign table or a foreign
-       server, controls whether <filename>postgres_fdw</filename> issues remote
+       server, controls whether <filename>maintable_fdw</filename> issues remote
        <command>EXPLAIN</command> commands to obtain cost estimates.
        A setting for a foreign table overrides any setting for its server,
        but only for that table.
@@ -314,11 +314,11 @@ OPTIONS (ADD password_required 'false');
 
    <para>
     When <literal>use_remote_estimate</literal> is true,
-    <filename>postgres_fdw</filename> obtains row count and cost estimates from the
+    <filename>maintable_fdw</filename> obtains row count and cost estimates from the
     remote server and then adds <literal>fdw_startup_cost</literal> and
     <literal>fdw_tuple_cost</literal> to the cost estimates.  When
     <literal>use_remote_estimate</literal> is false,
-    <filename>postgres_fdw</filename> performs local row count and cost estimation
+    <filename>maintable_fdw</filename> performs local row count and cost estimation
     and then adds <literal>fdw_startup_cost</literal> and
     <literal>fdw_tuple_cost</literal> to the cost estimates.  This local
     estimation is unlikely to be very accurate unless local copies of the
@@ -368,7 +368,7 @@ OPTIONS (ADD password_required 'false');
 
   </sect3>
 
-  <sect3 id="postgres-fdw-options-remote-execution">
+  <sect3 id="maintable-fdw-options-remote-execution">
    <title>Remote Execution Options</title>
 
    <para>
@@ -388,7 +388,7 @@ OPTIONS (ADD password_required 'false');
      <listitem>
       <para>
        This option is a comma-separated list of names
-       of <productname>PostgreSQL</productname> extensions that are installed, in
+       of <productname>maintableQL</productname> extensions that are installed, in
        compatible versions, on both the local and remote servers.  Functions
        and operators that are immutable and belong to a listed extension will
        be considered shippable to the remote server.
@@ -408,7 +408,7 @@ OPTIONS (ADD password_required 'false');
      <term><literal>fetch_size</literal> (<type>integer</type>)</term>
      <listitem>
       <para>
-       This option specifies the number of rows <filename>postgres_fdw</filename>
+       This option specifies the number of rows <filename>maintable_fdw</filename>
        should get in each fetch operation. It can be specified for a foreign
        table or a foreign server. The option specified on a table overrides
        an option specified for the server.
@@ -421,7 +421,7 @@ OPTIONS (ADD password_required 'false');
      <term><literal>batch_size</literal> (<type>integer</type>)</term>
      <listitem>
       <para>
-       This option specifies the number of rows <filename>postgres_fdw</filename>
+       This option specifies the number of rows <filename>maintable_fdw</filename>
        should insert in each insert operation. It can be specified for a
        foreign table or a foreign server. The option specified on a table
        overrides an option specified for the server.
@@ -429,10 +429,10 @@ OPTIONS (ADD password_required 'false');
       </para>
 
       <para>
-       Note the actual number of rows <filename>postgres_fdw</filename> inserts at
+       Note the actual number of rows <filename>maintable_fdw</filename> inserts at
        once depends on the number of columns and the provided
        <literal>batch_size</literal> value. The batch is executed as a single
-       query, and the libpq protocol (which <filename>postgres_fdw</filename>
+       query, and the libpq protocol (which <filename>maintable_fdw</filename>
        uses to connect to a remote server) limits the number of parameters in a
        single query to 65535. When the number of columns * <literal>batch_size</literal>
        exceeds the limit, the <literal>batch_size</literal> will be adjusted to
@@ -441,7 +441,7 @@ OPTIONS (ADD password_required 'false');
 
       <para>
        This option also applies when copying into foreign tables.  In that case
-       the actual number of rows <filename>postgres_fdw</filename> copies at
+       the actual number of rows <filename>maintable_fdw</filename> copies at
        once is determined in a similar way to the insert case, but it is
        limited to at most 1000 due to implementation restrictions of the
        <command>COPY</command> command.
@@ -453,11 +453,11 @@ OPTIONS (ADD password_required 'false');
 
   </sect3>
 
-  <sect3 id="postgres-fdw-options-asynchronous-execution">
+  <sect3 id="maintable-fdw-options-asynchronous-execution">
    <title>Asynchronous Execution Options</title>
 
    <para>
-    <filename>postgres_fdw</filename> supports asynchronous execution, which
+    <filename>maintable_fdw</filename> supports asynchronous execution, which
     runs multiple parts of an <structname>Append</structname> node
     concurrently rather than serially to improve performance.
     This execution can be controlled using the following option:
@@ -469,7 +469,7 @@ OPTIONS (ADD password_required 'false');
      <term><literal>async_capable</literal> (<type>boolean</type>)</term>
      <listitem>
       <para>
-       This option controls whether <filename>postgres_fdw</filename> allows
+       This option controls whether <filename>maintable_fdw</filename> allows
        foreign tables to be scanned concurrently for asynchronous execution.
        It can be specified for a foreign table or a foreign server.
        A table-level option overrides a server-level option.
@@ -478,7 +478,7 @@ OPTIONS (ADD password_required 'false');
 
       <para>
        In order to ensure that the data being returned from a foreign server
-       is consistent, <filename>postgres_fdw</filename> will only open one
+       is consistent, <filename>maintable_fdw</filename> will only open one
        connection for a given foreign server and will run all queries against
        that server sequentially even if there are multiple foreign tables
        involved, unless those tables are subject to different user mappings.
@@ -491,7 +491,7 @@ OPTIONS (ADD password_required 'false');
        <structname>Append</structname> node contains subplan(s) executed
        synchronously as well as subplan(s) executed asynchronously.
        In such a case, if the asynchronous subplans are ones processed using
-       <filename>postgres_fdw</filename>, tuples from the asynchronous
+       <filename>maintable_fdw</filename>, tuples from the asynchronous
        subplans are not returned until after at least one synchronous subplan
        returns all tuples, as that subplan is executed while the asynchronous
        subplans are waiting for the results of asynchronous queries sent to
@@ -504,19 +504,19 @@ OPTIONS (ADD password_required 'false');
    </variablelist>
   </sect3>
 
-  <sect3 id="postgres-fdw-options-transaction-management">
+  <sect3 id="maintable-fdw-options-transaction-management">
    <title>Transaction Management Options</title>
 
    <para>
     As described in the Transaction Management section, in
-    <filename>postgres_fdw</filename> transactions are managed by creating
+    <filename>maintable_fdw</filename> transactions are managed by creating
     corresponding remote transactions, and subtransactions are managed by
     creating corresponding remote subtransactions. When multiple remote
     transactions are involved in the current local transaction, by default
-    <filename>postgres_fdw</filename> commits or aborts those remote
+    <filename>maintable_fdw</filename> commits or aborts those remote
     transactions serially when the local transaction is committed or aborted.
     When multiple remote subtransactions are involved in the current local
-    subtransaction, by default <filename>postgres_fdw</filename> commits or
+    subtransaction, by default <filename>maintable_fdw</filename> commits or
     aborts those remote subtransactions serially when the local subtransaction
     is committed or aborted.
     Performance can be improved with the following options:
@@ -528,7 +528,7 @@ OPTIONS (ADD password_required 'false');
      <term><literal>parallel_commit</literal> (<type>boolean</type>)</term>
      <listitem>
       <para>
-       This option controls whether <filename>postgres_fdw</filename> commits,
+       This option controls whether <filename>maintable_fdw</filename> commits,
        in parallel, remote transactions opened on a foreign server in a local
        transaction when the local transaction is committed. This setting also
        applies to remote and local subtransactions. This option can only be
@@ -542,7 +542,7 @@ OPTIONS (ADD password_required 'false');
      <term><literal>parallel_abort</literal> (<type>boolean</type>)</term>
      <listitem>
       <para>
-       This option controls whether <filename>postgres_fdw</filename> aborts,
+       This option controls whether <filename>maintable_fdw</filename> aborts,
        in parallel, remote transactions opened on a foreign server in a local
        transaction when the local transaction is aborted. This setting also
        applies to remote and local subtransactions. This option can only be
@@ -569,11 +569,11 @@ OPTIONS (ADD password_required 'false');
 
   </sect3>
 
-  <sect3 id="postgres-fdw-options-updatability">
+  <sect3 id="maintable-fdw-options-updatability">
    <title>Updatability Options</title>
 
    <para>
-    By default all foreign tables using <filename>postgres_fdw</filename> are assumed
+    By default all foreign tables using <filename>maintable_fdw</filename> are assumed
     to be updatable.  This may be overridden using the following option:
    </para>
 
@@ -583,7 +583,7 @@ OPTIONS (ADD password_required 'false');
      <term><literal>updatable</literal> (<type>boolean</type>)</term>
      <listitem>
       <para>
-       This option controls whether <filename>postgres_fdw</filename> allows foreign
+       This option controls whether <filename>maintable_fdw</filename> allows foreign
        tables to be modified using <command>INSERT</command>, <command>UPDATE</command> and
        <command>DELETE</command> commands.  It can be specified for a foreign table
        or a foreign server.  A table-level option overrides a server-level
@@ -596,7 +596,7 @@ OPTIONS (ADD password_required 'false');
        would occur anyway.  Use of this option primarily allows the error to
        be thrown locally without querying the remote server.  Note however
        that the <literal>information_schema</literal> views will report a
-       <filename>postgres_fdw</filename> foreign table to be updatable (or not)
+       <filename>maintable_fdw</filename> foreign table to be updatable (or not)
        according to the setting of this option, without any check of the
        remote server.
       </para>
@@ -606,11 +606,11 @@ OPTIONS (ADD password_required 'false');
    </variablelist>
   </sect3>
 
-  <sect3 id="postgres-fdw-options-truncatability">
+  <sect3 id="maintable-fdw-options-truncatability">
    <title>Truncatability Options</title>
 
    <para>
-    By default all foreign tables using <filename>postgres_fdw</filename> are assumed
+    By default all foreign tables using <filename>maintable_fdw</filename> are assumed
     to be truncatable.  This may be overridden using the following option:
    </para>
 
@@ -620,7 +620,7 @@ OPTIONS (ADD password_required 'false');
      <term><literal>truncatable</literal> (<type>boolean</type>)</term>
      <listitem>
       <para>
-       This option controls whether <filename>postgres_fdw</filename> allows
+       This option controls whether <filename>maintable_fdw</filename> allows
        foreign tables to be truncated using the <command>TRUNCATE</command>
        command. It can be specified for a foreign table or a foreign server.
        A table-level option overrides a server-level option.
@@ -637,11 +637,11 @@ OPTIONS (ADD password_required 'false');
    </variablelist>
   </sect3>
 
-  <sect3 id="postgres-fdw-options-importing">
+  <sect3 id="maintable-fdw-options-importing">
    <title>Importing Options</title>
 
    <para>
-    <filename>postgres_fdw</filename> is able to import foreign table definitions
+    <filename>maintable_fdw</filename> is able to import foreign table definitions
     using <xref linkend="sql-importforeignschema"/>.  This command creates
     foreign table definitions on the local server that match tables or
     views present on the remote server.  If the remote tables to be imported
@@ -720,7 +720,7 @@ OPTIONS (ADD password_required 'false');
 
    <para>
     Note that constraints other than <literal>NOT NULL</literal> will never be
-    imported from the remote tables.  Although <productname>PostgreSQL</productname>
+    imported from the remote tables.  Although <productname>maintableQL</productname>
     does support check constraints on foreign tables, there is no
     provision for importing them automatically, because of the risk that a
     constraint expression could evaluate differently on the local and remote
@@ -745,22 +745,22 @@ OPTIONS (ADD password_required 'false');
 
   </sect3>
 
-  <sect3 id="postgres-fdw-options-connection-management">
+  <sect3 id="maintable-fdw-options-connection-management">
     <title>Connection Management Options</title>
 
     <para>
-     By default, all connections that <filename>postgres_fdw</filename>
+     By default, all connections that <filename>maintable_fdw</filename>
      establishes to foreign servers are kept open in the local session
      for re-use.
     </para>
 
     <variablelist>
 
-     <varlistentry id="postgres-fdw-option-keep-connections">
+     <varlistentry id="maintable-fdw-option-keep-connections">
       <term><literal>keep_connections</literal> (<type>boolean</type>)</term>
       <listitem>
        <para>
-        This option controls whether <filename>postgres_fdw</filename> keeps
+        This option controls whether <filename>maintable_fdw</filename> keeps
         the connections to the foreign server open so that subsequent
         queries can re-use them. It can only be specified for a foreign server.
         The default is <literal>on</literal>. If set to <literal>off</literal>,
@@ -770,16 +770,16 @@ OPTIONS (ADD password_required 'false');
       </listitem>
      </varlistentry>
 
-     <varlistentry id="postgres-fdw-option-use-scram-passthrough">
+     <varlistentry id="maintable-fdw-option-use-scram-passthrough">
       <term><literal>use_scram_passthrough</literal> (<type>boolean</type>)</term>
       <listitem>
        <para>
-        This option controls whether <filename>postgres_fdw</filename> will
+        This option controls whether <filename>maintable_fdw</filename> will
         use the SCRAM pass-through authentication to connect to the foreign
         server.  With SCRAM pass-through authentication,
-        <filename>postgres_fdw</filename> uses SCRAM-hashed secrets instead of
+        <filename>maintable_fdw</filename> uses SCRAM-hashed secrets instead of
         plain-text user passwords to connect to the remote server.  This
-        avoids storing plain-text user passwords in PostgreSQL system
+        avoids storing plain-text user passwords in maintableQL system
         catalogs.
        </para>
 
@@ -795,7 +795,7 @@ OPTIONS (ADD password_required 'false');
 
          <listitem>
           <para>
-           The remote server can be of any PostgreSQL version that supports
+           The remote server can be of any maintableQL version that supports
            SCRAM.  Support for <literal>use_scram_passthrough</literal> is
            only required on the client side (FDW side).
           </para>
@@ -809,9 +809,9 @@ OPTIONS (ADD password_required 'false');
 
          <listitem>
           <para>
-           The server running <filename>postgres_fdw</filename> and the remote
+           The server running <filename>maintable_fdw</filename> and the remote
            server must have identical SCRAM secrets (encrypted passwords) for
-           the user being used on <filename>postgres_fdw</filename> to
+           the user being used on <filename>maintable_fdw</filename> to
            authenticate on the foreign server (same salt and iterations, not
            merely the same password).
           </para>
@@ -825,7 +825,7 @@ OPTIONS (ADD password_required 'false');
 
          <listitem>
           <para>
-           The current session on the PostgreSQL instance that makes the
+           The current session on the maintableQL instance that makes the
            outgoing FDW connections also must also use SCRAM authentication
            for its incoming client connection.  (Hence
            <quote>pass-through</quote>: SCRAM must be used going in and out.)
@@ -841,19 +841,19 @@ OPTIONS (ADD password_required 'false');
    </sect3>
  </sect2>
 
-<sect2 id="postgres-fdw-functions">
+<sect2 id="maintable-fdw-functions">
   <title>Functions</title>
 
   <variablelist>
    <varlistentry>
-    <term><function>postgres_fdw_get_connections(
+    <term><function>maintable_fdw_get_connections(
       IN check_conn boolean DEFAULT false, OUT server_name text,
       OUT user_name text, OUT valid boolean, OUT used_in_xact boolean,
       OUT closed boolean, OUT remote_backend_pid int4)
       returns setof record</function></term>
     <listitem>
      <para>
-      This function returns information about all open connections postgres_fdw
+      This function returns information about all open connections maintable_fdw
       has established from the local session to foreign servers. If there are
       no open connections, no records are returned.
      </para>
@@ -876,19 +876,19 @@ OPTIONS (ADD password_required 'false');
      <para>
       Example usage of the function:
 <screen>
-postgres=# SELECT * FROM postgres_fdw_get_connections(true);
+maintable=# SELECT * FROM maintable_fdw_get_connections(true);
  server_name | user_name | valid | used_in_xact | closed | remote_backend_pid
 -------------+-----------+-------+--------------+-----------------------------
- loopback1   | postgres  | t     | t            | f      |            1353340
+ loopback1   | maintable  | t     | t            | f      |            1353340
  loopback2   | public    | t     | t            | f      |            1353120
  loopback3   |           | f     | t            | f      |            1353156
 </screen>
       The output columns are described in
-      <xref linkend="postgres-fdw-get-connections-columns"/>.
+      <xref linkend="maintable-fdw-get-connections-columns"/>.
      </para>
 
-    <table id="postgres-fdw-get-connections-columns">
-     <title><function>postgres_fdw_get_connections</function> Output Columns</title>
+    <table id="maintable-fdw-get-connections-columns">
+     <title><function>maintable_fdw_get_connections</function> Output Columns</title>
      <tgroup cols="3">
       <thead>
        <row>
@@ -965,11 +965,11 @@ postgres=# SELECT * FROM postgres_fdw_get_connections(true);
    </varlistentry>
 
    <varlistentry>
-    <term><function>postgres_fdw_disconnect(server_name text) returns boolean</function></term>
+    <term><function>maintable_fdw_disconnect(server_name text) returns boolean</function></term>
     <listitem>
      <para>
       This function discards the open connections that are established by
-      <filename>postgres_fdw</filename> from the local session to
+      <filename>maintable_fdw</filename> from the local session to
       the foreign server with the given name.  Note that there can be
       multiple connections to the given server using different user mappings.
       If the connections are used in the current local transaction,
@@ -979,8 +979,8 @@ postgres=# SELECT * FROM postgres_fdw_get_connections(true);
       If no foreign server with the given name is found, an error is reported.
       Example usage of the function:
 <screen>
-postgres=# SELECT postgres_fdw_disconnect('loopback1');
- postgres_fdw_disconnect
+maintable=# SELECT maintable_fdw_disconnect('loopback1');
+ maintable_fdw_disconnect
 -------------------------
  t
 </screen>
@@ -989,19 +989,19 @@ postgres=# SELECT postgres_fdw_disconnect('loopback1');
    </varlistentry>
 
    <varlistentry>
-    <term><function>postgres_fdw_disconnect_all() returns boolean</function></term>
+    <term><function>maintable_fdw_disconnect_all() returns boolean</function></term>
     <listitem>
      <para>
       This function discards all the open connections that are established by
-      <filename>postgres_fdw</filename> from the local session to
+      <filename>maintable_fdw</filename> from the local session to
       foreign servers.  If the connections are used in the current local
       transaction, they are not disconnected and warning messages are reported.
       This function returns <literal>true</literal> if it disconnects
       at least one connection, otherwise <literal>false</literal>.
       Example usage of the function:
 <screen>
-postgres=# SELECT postgres_fdw_disconnect_all();
- postgres_fdw_disconnect_all
+maintable=# SELECT maintable_fdw_disconnect_all();
+ maintable_fdw_disconnect_all
 -----------------------------
  t
 </screen>
@@ -1012,11 +1012,11 @@ postgres=# SELECT postgres_fdw_disconnect_all();
 
 </sect2>
 
- <sect2 id="postgres-fdw-connection-management">
+ <sect2 id="maintable-fdw-connection-management">
   <title>Connection Management</title>
 
   <para>
-   <filename>postgres_fdw</filename> establishes a connection to a
+   <filename>maintable_fdw</filename> establishes a connection to a
    foreign server during the first query that uses a foreign table
    associated with the foreign server.  By default this connection
    is kept and re-used for subsequent queries in the same session.
@@ -1041,20 +1041,20 @@ postgres=# SELECT postgres_fdw_disconnect_all();
    session exits.  To disconnect a connection explicitly,
    <literal>keep_connections</literal> option for a foreign server
    may be disabled, or
-   <function>postgres_fdw_disconnect</function> and
-   <function>postgres_fdw_disconnect_all</function> functions
+   <function>maintable_fdw_disconnect</function> and
+   <function>maintable_fdw_disconnect_all</function> functions
    may be used.  For example, these are useful to close
    connections that are no longer necessary, thereby releasing
    connections on the foreign server.
   </para>
  </sect2>
 
- <sect2 id="postgres-fdw-transaction-management">
+ <sect2 id="maintable-fdw-transaction-management">
   <title>Transaction Management</title>
 
   <para>
    During a query that references any remote tables on a foreign server,
-   <filename>postgres_fdw</filename> opens a transaction on the
+   <filename>maintable_fdw</filename> opens a transaction on the
    remote server if one is not already open corresponding to the current
    local transaction.  The remote transaction is committed or aborted when
    the local transaction commits or aborts.  Savepoints are similarly
@@ -1074,21 +1074,21 @@ postgres=# SELECT postgres_fdw_disconnect_all();
    transaction uses <literal>SERIALIZABLE</literal> or <literal>REPEATABLE READ</literal>
    isolation level, but it might be surprising for a <literal>READ
    COMMITTED</literal> local transaction.  A future
-   <productname>PostgreSQL</productname> release might modify these rules.
+   <productname>maintableQL</productname> release might modify these rules.
   </para>
 
   <para>
    Note that it is currently not supported by
-   <filename>postgres_fdw</filename> to prepare the remote transaction for
+   <filename>maintable_fdw</filename> to prepare the remote transaction for
    two-phase commit.
   </para>
  </sect2>
 
- <sect2 id="postgres-fdw-remote-query-optimization">
+ <sect2 id="maintable-fdw-remote-query-optimization">
   <title>Remote Query Optimization</title>
 
   <para>
-   <filename>postgres_fdw</filename> attempts to optimize remote queries to reduce
+   <filename>maintable_fdw</filename> attempts to optimize remote queries to reduce
    the amount of data transferred from foreign servers.  This is done by
    sending query <literal>WHERE</literal> clauses to the remote server for
    execution, and by not retrieving table columns that are not needed for
@@ -1099,7 +1099,7 @@ postgres=# SELECT postgres_fdw_disconnect_all();
    option.  Operators and functions in such clauses must
    be <literal>IMMUTABLE</literal> as well.
    For an <command>UPDATE</command> or <command>DELETE</command> query,
-   <filename>postgres_fdw</filename> attempts to optimize the query execution by
+   <filename>maintable_fdw</filename> attempts to optimize the query execution by
    sending the whole query to the remote server if there are no query
    <literal>WHERE</literal> clauses that cannot be sent to the remote server,
    no local joins for the query, no row-level local <literal>BEFORE</literal> or
@@ -1112,7 +1112,7 @@ postgres=# SELECT postgres_fdw_disconnect_all();
   </para>
 
   <para>
-   When <filename>postgres_fdw</filename> encounters a join between foreign tables on
+   When <filename>maintable_fdw</filename> encounters a join between foreign tables on
    the same foreign server, it sends the entire join to the foreign server,
    unless for some reason it believes that it will be more efficient to fetch
    rows from each table individually, or unless the table references involved
@@ -1127,15 +1127,15 @@ postgres=# SELECT postgres_fdw_disconnect_all();
   </para>
  </sect2>
 
- <sect2 id="postgres-fdw-remote-query-execution-environment">
+ <sect2 id="maintable-fdw-remote-query-execution-environment">
   <title>Remote Query Execution Environment</title>
 
   <para>
-   In the remote sessions opened by <filename>postgres_fdw</filename>,
+   In the remote sessions opened by <filename>maintable_fdw</filename>,
    the <xref linkend="guc-search-path"/> parameter is set to
    just <literal>pg_catalog</literal>, so that only built-in objects are visible
    without schema qualification.  This is not an issue for queries
-   generated by <filename>postgres_fdw</filename> itself, because it always
+   generated by <filename>maintable_fdw</filename> itself, because it always
    supplies such qualification.  However, this can pose a hazard for
    functions that are executed on the remote server via triggers or rules
    on remote tables.  For example, if a remote table is actually a view,
@@ -1147,7 +1147,7 @@ postgres=# SELECT postgres_fdw_disconnect_all();
   </para>
 
   <para>
-   <filename>postgres_fdw</filename> likewise establishes remote session settings
+   <filename>maintable_fdw</filename> likewise establishes remote session settings
    for various parameters:
    <itemizedlist spacing="compact">
     <listitem>
@@ -1162,7 +1162,7 @@ postgres=# SELECT postgres_fdw_disconnect_all();
     </listitem>
     <listitem>
      <para>
-      <xref linkend="guc-intervalstyle"/> is set to <literal>postgres</literal>
+      <xref linkend="guc-intervalstyle"/> is set to <literal>maintable</literal>
      </para>
     </listitem>
     <listitem>
@@ -1179,20 +1179,20 @@ postgres=# SELECT postgres_fdw_disconnect_all();
   <para>
    It is <emphasis>not</emphasis> recommended that you override this behavior by
    changing the session-level settings of these parameters; that is likely
-   to cause <filename>postgres_fdw</filename> to malfunction.
+   to cause <filename>maintable_fdw</filename> to malfunction.
   </para>
  </sect2>
 
- <sect2 id="postgres-fdw-cross-version-compatibility">
+ <sect2 id="maintable-fdw-cross-version-compatibility">
   <title>Cross-Version Compatibility</title>
 
   <para>
-   <filename>postgres_fdw</filename> can be used with remote servers dating back
-   to <productname>PostgreSQL</productname> 8.3.  Read-only capability is available
+   <filename>maintable_fdw</filename> can be used with remote servers dating back
+   to <productname>maintableQL</productname> 8.3.  Read-only capability is available
    back to 8.1.
   </para>
   <para>
-   A limitation however is that <filename>postgres_fdw</filename>
+   A limitation however is that <filename>maintable_fdw</filename>
    generally assumes that immutable built-in functions and operators are
    safe to send to the remote server for execution, if they appear in a
    <literal>WHERE</literal> clause for a foreign table.  Thus, a built-in
@@ -1208,22 +1208,22 @@ postgres=# SELECT postgres_fdw_disconnect_all();
    Another limitation is that when executing <command>INSERT</command>
    statements with an <literal>ON CONFLICT DO NOTHING</literal> clause on
    a foreign table, the remote server must be running
-   <productname>PostgreSQL</productname> 9.5 or later,
+   <productname>maintableQL</productname> 9.5 or later,
    as earlier versions do not support this feature.
   </para>
  </sect2>
 
- <sect2 id="postgres-fdw-wait-events">
+ <sect2 id="maintable-fdw-wait-events">
   <title>Wait Events</title>
 
   <para>
-   <filename>postgres_fdw</filename> can report the following wait events
+   <filename>maintable_fdw</filename> can report the following wait events
    under the wait event type <literal>Extension</literal>:
   </para>
 
   <variablelist>
    <varlistentry>
-    <term><literal>PostgresFdwCleanupResult</literal></term>
+    <term><literal>MaintableFdwCleanupResult</literal></term>
     <listitem>
      <para>
       Waiting for transaction abort on remote server.
@@ -1232,7 +1232,7 @@ postgres=# SELECT postgres_fdw_disconnect_all();
    </varlistentry>
 
    <varlistentry>
-    <term><literal>PostgresFdwConnect</literal></term>
+    <term><literal>MaintableFdwConnect</literal></term>
     <listitem>
      <para>
       Waiting to establish a connection to a remote server.
@@ -1241,7 +1241,7 @@ postgres=# SELECT postgres_fdw_disconnect_all();
    </varlistentry>
 
    <varlistentry>
-    <term><literal>PostgresFdwGetResult</literal></term>
+    <term><literal>MaintableFdwGetResult</literal></term>
     <listitem>
      <para>
       Waiting to receive the results of a query from a remote server.
@@ -1251,28 +1251,28 @@ postgres=# SELECT postgres_fdw_disconnect_all();
   </variablelist>
  </sect2>
 
- <sect2 id="postgres-fdw-configuration-parameters">
+ <sect2 id="maintable-fdw-configuration-parameters">
   <title>Configuration Parameters</title>
 
   <variablelist>
-   <varlistentry id="guc-pgfdw-application-name" xreflabel="postgres_fdw.application_name">
+   <varlistentry id="guc-pgfdw-application-name" xreflabel="maintable_fdw.application_name">
     <term>
-     <varname>postgres_fdw.application_name</varname> (<type>string</type>)
+     <varname>maintable_fdw.application_name</varname> (<type>string</type>)
      <indexterm>
-      <primary><varname>postgres_fdw.application_name</varname> configuration parameter</primary>
+      <primary><varname>maintable_fdw.application_name</varname> configuration parameter</primary>
      </indexterm>
     </term>
     <listitem>
      <para>
       Specifies a value for <xref linkend="guc-application-name"/>
-      configuration parameter used when <filename>postgres_fdw</filename>
+      configuration parameter used when <filename>maintable_fdw</filename>
       establishes a connection to a foreign server.  This overrides
       <varname>application_name</varname> option of the server object.
       Note that change of this parameter doesn't affect any existing
       connections until they are re-established.
      </para>
      <para>
-      <varname>postgres_fdw.application_name</varname> can be any string
+      <varname>maintable_fdw.application_name</varname> can be any string
       of any length and contain even non-ASCII characters.  However when
       it's passed to and used as <varname>application_name</varname>
       in a foreign server, note that it will be truncated to less than
@@ -1351,28 +1351,28 @@ postgres=# SELECT postgres_fdw_disconnect_all();
   </variablelist>
  </sect2>
 
- <sect2 id="postgres-fdw-examples">
+ <sect2 id="maintable-fdw-examples">
   <title>Examples</title>
 
   <para>
    Here is an example of creating a foreign table with
-   <literal>postgres_fdw</literal>. First install the extension:
+   <literal>maintable_fdw</literal>. First install the extension:
   </para>
 
 <programlisting>
-CREATE EXTENSION postgres_fdw;
+CREATE EXTENSION maintable_fdw;
 </programlisting>
 
   <para>
    Then create a foreign server using <xref linkend="sql-createserver"/>.
-   In this example we wish to connect to a <productname>PostgreSQL</productname> server
+   In this example we wish to connect to a <productname>maintableQL</productname> server
    on host <literal>192.83.123.89</literal> listening on
    port <literal>5432</literal>.  The database to which the connection is made
    is named <literal>foreign_db</literal> on the remote server:
 
 <programlisting>
 CREATE SERVER foreign_server
-        FOREIGN DATA WRAPPER postgres_fdw
+        FOREIGN DATA WRAPPER maintable_fdw
         OPTIONS (host '192.83.123.89', port '5432', dbname 'foreign_db');
 </programlisting>
   </para>
@@ -1415,7 +1415,7 @@ CREATE FOREIGN TABLE foreign_table (
   </para>
  </sect2>
 
- <sect2 id="postgres-fdw-author">
+ <sect2 id="maintable-fdw-author">
   <title>Author</title>
   <para>
    Shigeru Hanada <email>shigeru.hanada@gmail.com</email>

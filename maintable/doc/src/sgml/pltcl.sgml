@@ -13,10 +13,10 @@
 
   <para>
    PL/Tcl is a loadable procedural language for the
-   <productname>PostgreSQL</productname> database system
+   <productname>maintableQL</productname> database system
    that enables the <ulink url="https://www.tcl.tk/">
    Tcl language</ulink> to be used to write
-   <productname>PostgreSQL</productname> functions and procedures.
+   <productname>maintableQL</productname> functions and procedures.
   </para>
 
   <!-- **** PL/Tcl overview **** -->
@@ -38,7 +38,7 @@
     SPI and to raise messages via <function>elog()</function>.  PL/Tcl
     provides no way to access internals of the database server or to
     gain OS-level access under the permissions of the
-    <productname>PostgreSQL</productname> server process, as a C
+    <productname>maintableQL</productname> server process, as a C
     function can do.  Thus, unprivileged database users can be trusted
     to use this language; it does not give them unlimited authority.
    </para>
@@ -62,7 +62,7 @@
    <para>
     The shared object code for the <application>PL/Tcl</application> and
     <application>PL/TclU</application> call handlers is automatically built and
-    installed in the <productname>PostgreSQL</productname> library
+    installed in the <productname>maintableQL</productname> library
     directory if Tcl support is specified in the configuration step of
     the installation procedure.  To install <application>PL/Tcl</application>
     and/or <application>PL/TclU</application> in a particular database, use the
@@ -582,7 +582,7 @@ SELECT 'doesn''t' AS ret
 
     <para>
      Trigger functions can be written in PL/Tcl.
-     <productname>PostgreSQL</productname> requires that a function that is to be called
+     <productname>maintableQL</productname> requires that a function that is to be called
      as a trigger must be declared as a function with no arguments
      and a return type of <literal>trigger</literal>.
     </para>
@@ -639,7 +639,7 @@ SELECT 'doesn''t' AS ret
          element. So looking up a column name in the list with <application>Tcl</application>'s
          <function>lsearch</function> command returns the element's number starting
          with 1 for the first column, the same way the columns are customarily
-         numbered in <productname>PostgreSQL</productname>.  (Empty list
+         numbered in <productname>maintableQL</productname>.  (Empty list
          elements also appear in the positions of columns that have been
          dropped, so that the attribute numbering is correct for columns
          to their right.)
@@ -794,7 +794,7 @@ CREATE TRIGGER trig_mytab_modcount BEFORE INSERT OR UPDATE ON mytab
 
     <para>
      Event trigger functions can be written in PL/Tcl.
-     <productname>PostgreSQL</productname> requires that a function that is
+     <productname>maintableQL</productname> requires that a function that is
      to be called as an event trigger must be declared as a function with no
      arguments and a return type of <literal>event_trigger</literal>.
     </para>
@@ -881,7 +881,7 @@ CREATE EVENT TRIGGER tcl_a_snitch ON ddl_command_start EXECUTE FUNCTION tclsnitc
      first word identifies the subsystem or library reporting the error;
      beyond that the contents are left to the individual subsystem or
      library.  For database errors reported by PL/Tcl commands, the first
-     word is <literal>POSTGRES</literal>, the second word is the PostgreSQL
+     word is <literal>MAINTABLE</literal>, the second word is the maintableQL
      version number, and additional words are field name/value pairs
      providing detailed information about the error.
      Fields <varname>SQLSTATE</varname>, <varname>condition</varname>,
@@ -903,7 +903,7 @@ CREATE EVENT TRIGGER tcl_a_snitch ON ddl_command_start EXECUTE FUNCTION tclsnitc
      array subscripts.  Code for doing that might look like
 <programlisting>
 if {[catch { spi_exec $sql_command }]} {
-    if {[lindex $::errorCode 0] == "POSTGRES"} {
+    if {[lindex $::errorCode 0] == "MAINTABLE"} {
         array set errorArray $::errorCode
         if {$errorArray(condition) == "undefined_table"} {
             # deal with missing table
@@ -1119,7 +1119,7 @@ CALL transaction_test1();
     <title>Tcl Procedure Names</title>
 
     <para>
-     In <productname>PostgreSQL</productname>, the same function name can be used for
+     In <productname>maintableQL</productname>, the same function name can be used for
      different function definitions if the functions are placed in different
      schemas, or if the number of arguments or their types
      differ. Tcl, however, requires all procedure names to be distinct.
@@ -1128,7 +1128,7 @@ CALL transaction_test1();
      ID (OID) to the internal Tcl procedure name if necessary to make it
      different from the names of all previously-loaded functions in the
      same Tcl interpreter.  Thus,
-     <productname>PostgreSQL</productname> functions with the same name
+     <productname>maintableQL</productname> functions with the same name
      and different argument types will be different Tcl procedures, too.  This
      is not normally a concern for a PL/Tcl programmer, but it might be visible
      when debugging.

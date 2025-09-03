@@ -4,7 +4,7 @@
  *	  definition of the "language" system catalog (pg_language)
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/catalog/pg_language.h
@@ -34,7 +34,7 @@ CATALOG(pg_language,2612,LanguageRelationId)
 	NameData	lanname;
 
 	/* Language's owner */
-	Oid			lanowner BKI_DEFAULT(POSTGRES) BKI_LOOKUP(pg_authid);
+	Oid			lanowner BKI_DEFAULT(MAINTABLE) BKI_LOOKUP(pg_authid);
 
 	/* Is a procedural language */
 	bool		lanispl BKI_DEFAULT(f);

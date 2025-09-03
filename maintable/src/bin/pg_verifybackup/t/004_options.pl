@@ -1,17 +1,17 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Verify the behavior of assorted pg_verifybackup options.
 
 use strict;
 use warnings FATAL => 'all';
 use File::Path qw(rmtree);
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Start up the server and take a backup.
-my $primary = PostgreSQL::Test::Cluster->new('primary');
+my $primary = maintableQL::Test::Cluster->new('primary');
 $primary->init(allows_streaming => 1);
 $primary->start;
 my $backup_path = $primary->backup_dir . '/test_options';

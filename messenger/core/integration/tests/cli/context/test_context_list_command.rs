@@ -19,38 +19,38 @@
 use std::collections::HashMap;
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, USAGE_PREFIX,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
-use iggy_binary_protocol::cli::binary_context::common::ContextConfig;
+use messenger::prelude::Client;
+use messenger_binary_protocol::cli::binary_context::common::ContextConfig;
 use predicates::str::contains;
 use serial_test::parallel;
 
-use super::common::TestIggyContext;
+use super::common::TestMessengerContext;
 
 struct TestContextListCmd {
-    test_iggy_context: TestIggyContext,
+    test_messenger_context: TestMessengerContext,
 }
 
 impl TestContextListCmd {
-    fn new(test_iggy_context: TestIggyContext) -> Self {
-        Self { test_iggy_context }
+    fn new(test_messenger_context: TestMessengerContext) -> Self {
+        Self { test_messenger_context }
     }
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestContextListCmd {
+impl MessengerCmdTestCase for TestContextListCmd {
     async fn prepare_server_state(&mut self, _client: &dyn Client) {
-        self.test_iggy_context.prepare().await;
+        self.test_messenger_context.prepare().await;
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .env(
-                "IGGY_HOME",
-                self.test_iggy_context.get_iggy_home().to_str().unwrap(),
+                "MESSENGER_HOME",
+                self.test_messenger_context.get_messenger_home().to_str().unwrap(),
             )
             .arg("context")
             .arg("list")
@@ -58,8 +58,8 @@ impl IggyCmdTestCase for TestContextListCmd {
     }
 
     fn verify_command(&self, command_state: Assert) {
-        let maybe_context_map = self.test_iggy_context.get_contexts();
-        let active_context_key = self.test_iggy_context.get_active_context_key();
+        let maybe_context_map = self.test_messenger_context.get_contexts();
+        let active_context_key = self.test_messenger_context.get_active_context_key();
 
         let mut command_state = command_state.success();
 
@@ -93,11 +93,11 @@ impl IggyCmdTestCase for TestContextListCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
-    iggy_cmd_test.setup().await;
+    let mut messenger_cmd_test = MessengerCmdTest::default();
+    messenger_cmd_test.setup().await;
 
-    iggy_cmd_test
-        .execute_test(TestContextListCmd::new(TestIggyContext::new(
+    messenger_cmd_test
+        .execute_test(TestContextListCmd::new(TestMessengerContext::new(
             Some(HashMap::from([
                 ("default".to_string(), ContextConfig::default()),
                 ("second".to_string(), ContextConfig::default()),
@@ -110,11 +110,11 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_display_active_context() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
-    iggy_cmd_test.setup().await;
+    let mut messenger_cmd_test = MessengerCmdTest::default();
+    messenger_cmd_test.setup().await;
 
-    iggy_cmd_test
-        .execute_test(TestContextListCmd::new(TestIggyContext::new(
+    messenger_cmd_test
+        .execute_test(TestContextListCmd::new(TestMessengerContext::new(
             Some(HashMap::from([
                 (
                     "default".to_string(),
@@ -137,27 +137,27 @@ pub async fn should_display_active_context() {
 #[tokio::test]
 #[parallel]
 pub async fn should_display_default() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
-    iggy_cmd_test.setup().await;
+    let mut messenger_cmd_test = MessengerCmdTest::default();
+    messenger_cmd_test.setup().await;
 
-    iggy_cmd_test
-        .execute_test(TestContextListCmd::new(TestIggyContext::new(None, None)))
+    messenger_cmd_test
+        .execute_test(TestContextListCmd::new(TestMessengerContext::new(None, None)))
         .await;
 }
 
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["context", "list", "--help"],
             format!(
                 r#"List all contexts
 
 Examples
- iggy context list
+ messenger context list
 
 {USAGE_PREFIX} context list [OPTIONS]
 
@@ -179,9 +179,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["context", "list", "-h"],
             format!(

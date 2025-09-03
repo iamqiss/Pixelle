@@ -16,23 +16,23 @@
  * under the License.
  */
 
-use crate::IggyDuration;
+use crate::MessengerDuration;
 use std::str::FromStr;
 
 #[derive(Debug, Clone)]
 pub struct QuicClientReconnectionConfig {
     pub enabled: bool,
     pub max_retries: Option<u32>,
-    pub interval: IggyDuration,
-    pub reestablish_after: IggyDuration,
+    pub interval: MessengerDuration,
+    pub reestablish_after: MessengerDuration,
 }
 
 impl QuicClientReconnectionConfig {
     pub fn new(
         enabled: bool,
         max_retries: Option<u32>,
-        interval: IggyDuration,
-        reestablish_after: IggyDuration,
+        interval: MessengerDuration,
+        reestablish_after: MessengerDuration,
     ) -> Self {
         Self {
             enabled,
@@ -48,8 +48,8 @@ impl Default for QuicClientReconnectionConfig {
         QuicClientReconnectionConfig {
             enabled: true,
             max_retries: None,
-            interval: IggyDuration::from_str("1s").unwrap(),
-            reestablish_after: IggyDuration::from_str("5s").unwrap(),
+            interval: MessengerDuration::from_str("1s").unwrap(),
+            reestablish_after: MessengerDuration::from_str("5s").unwrap(),
         }
     }
 }

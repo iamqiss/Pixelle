@@ -19,28 +19,28 @@
 use super::HeaderValue;
 use super::message_header::*;
 use crate::BytesSerializable;
-use crate::IggyByteSize;
+use crate::MessengerByteSize;
 use crate::Sizeable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::utils::checksum;
-use crate::{HeaderKey, IggyMessageHeaderView};
+use crate::{HeaderKey, MessengerMessageHeaderView};
 use bytes::{Bytes, BytesMut};
 use std::{collections::HashMap, iter::Iterator};
 
 /// A immutable view of a message.
 #[derive(Debug)]
-pub struct IggyMessageView<'a> {
+pub struct MessengerMessageView<'a> {
     buffer: &'a [u8],
     payload_offset: usize,
     user_headers_offset: usize,
 }
 
-impl<'a> IggyMessageView<'a> {
+impl<'a> MessengerMessageView<'a> {
     /// Creates a new immutable message view from a buffer.
     pub fn new(buffer: &'a [u8]) -> Self {
-        let header_view = IggyMessageHeaderView::new(&buffer[IGGY_MESSAGE_HEADER_RANGE]);
+        let header_view = MessengerMessageHeaderView::new(&buffer[MESSENGER_MESSAGE_HEADER_RANGE]);
         let payload_len = header_view.payload_length();
-        let payload_offset = IGGY_MESSAGE_HEADER_SIZE;
+        let payload_offset = MESSENGER_MESSAGE_HEADER_SIZE;
         let headers_offset = payload_offset + payload_len;
 
         Self {
@@ -51,8 +51,8 @@ impl<'a> IggyMessageView<'a> {
     }
 
     /// Returns an immutable header view.
-    pub fn header(&self) -> IggyMessageHeaderView<'_> {
-        IggyMessageHeaderView::new(&self.buffer[0..IGGY_MESSAGE_HEADER_SIZE])
+    pub fn header(&self) -> MessengerMessageHeaderView<'_> {
+        MessengerMessageHeaderView::new(&self.buffer[0..MESSENGER_MESSAGE_HEADER_SIZE])
     }
 
     /// Returns an immutable slice of the user headers.
@@ -77,7 +77,7 @@ impl<'a> IggyMessageView<'a> {
     }
 
     /// Return instantiated user headers map
-    pub fn user_headers_map(&self) -> Result<Option<HashMap<HeaderKey, HeaderValue>>, IggyError> {
+    pub fn user_headers_map(&self) -> Result<Option<HashMap<HeaderKey, HeaderValue>>, MessengerError> {
         if let Some(headers) = self.user_headers() {
             let headers_bytes = Bytes::copy_from_slice(headers);
 
@@ -101,7 +101,7 @@ impl<'a> IggyMessageView<'a> {
     /// Returns the size of the entire message.
     pub fn size(&self) -> usize {
         let header_view = self.header();
-        IGGY_MESSAGE_HEADER_SIZE + header_view.payload_length() + header_view.user_headers_length()
+        MESSENGER_MESSAGE_HEADER_SIZE + header_view.payload_length() + header_view.user_headers_length()
     }
 
     /// Returns a reference to the payload portion.
@@ -112,18 +112,18 @@ impl<'a> IggyMessageView<'a> {
     }
 
     /// Validates that the message view is properly formatted and has valid data.
-    pub fn validate(&self) -> Result<(), IggyError> {
-        if self.buffer.len() < IGGY_MESSAGE_HEADER_SIZE {
-            return Err(IggyError::InvalidMessagePayloadLength);
+    pub fn validate(&self) -> Result<(), MessengerError> {
+        if self.buffer.len() < MESSENGER_MESSAGE_HEADER_SIZE {
+            return Err(MessengerError::InvalidMessagePayloadLength);
         }
 
         let header = self.header();
         let payload_len = header.payload_length();
         let user_headers_len = header.user_headers_length();
-        let total_size = IGGY_MESSAGE_HEADER_SIZE + payload_len + user_headers_len;
+        let total_size = MESSENGER_MESSAGE_HEADER_SIZE + payload_len + user_headers_len;
 
         if self.buffer.len() < total_size {
-            return Err(IggyError::InvalidMessagePayloadLength);
+            return Err(MessengerError::InvalidMessagePayloadLength);
         }
         Ok(())
     }
@@ -141,12 +141,12 @@ impl<'a> IggyMessageView<'a> {
     }
 }
 
-impl BytesSerializable for IggyMessageView<'_> {
+impl BytesSerializable for MessengerMessageView<'_> {
     fn to_bytes(&self) -> Bytes {
         panic!("should not be used")
     }
 
-    fn from_bytes(_bytes: Bytes) -> Result<Self, IggyError> {
+    fn from_bytes(_bytes: Bytes) -> Result<Self, MessengerError> {
         panic!("should not be used")
     }
 
@@ -159,19 +159,19 @@ impl BytesSerializable for IggyMessageView<'_> {
     }
 }
 
-impl Sizeable for IggyMessageView<'_> {
-    fn get_size_bytes(&self) -> IggyByteSize {
-        IggyByteSize::from(self.buffer.len() as u64)
+impl Sizeable for MessengerMessageView<'_> {
+    fn get_size_bytes(&self) -> MessengerByteSize {
+        MessengerByteSize::from(self.buffer.len() as u64)
     }
 }
 
 /// Iterator over immutable message views in a buffer.
-pub struct IggyMessageViewIterator<'a> {
+pub struct MessengerMessageViewIterator<'a> {
     buffer: &'a [u8],
     position: usize,
 }
 
-impl<'a> IggyMessageViewIterator<'a> {
+impl<'a> MessengerMessageViewIterator<'a> {
     pub fn new(buffer: &'a [u8]) -> Self {
         Self {
             buffer,
@@ -180,8 +180,8 @@ impl<'a> IggyMessageViewIterator<'a> {
     }
 }
 
-impl<'a> Iterator for IggyMessageViewIterator<'a> {
-    type Item = IggyMessageView<'a>;
+impl<'a> Iterator for MessengerMessageViewIterator<'a> {
+    type Item = MessengerMessageView<'a>;
 
     fn next(&mut self) -> Option<Self::Item> {
         if self.position >= self.buffer.len() {
@@ -189,7 +189,7 @@ impl<'a> Iterator for IggyMessageViewIterator<'a> {
         }
 
         let remaining = &self.buffer[self.position..];
-        let view = IggyMessageView::new(remaining);
+        let view = MessengerMessageView::new(remaining);
         self.position += view.size();
         Some(view)
     }

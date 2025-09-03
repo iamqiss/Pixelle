@@ -12,12 +12,12 @@
    </indexterm>
 
    <para>
-    PostgreSQL 9.6 and below provided a command named
+    maintableQL 9.6 and below provided a command named
     <command>pg_xlogdump</command>
     <indexterm><primary>pg_xlogdump</primary></indexterm>
     to read write-ahead-log (WAL) files.  This command was renamed to <command>pg_waldump</command>, see
     <xref linkend="pgwaldump"/> for documentation of <command>pg_waldump</command> and see
-    <link linkend="release-prior">the release notes for PostgreSQL 10</link> for details
+    <link linkend="release-prior">the release notes for maintableQL 10</link> for details
     on this change.
    </para>
 

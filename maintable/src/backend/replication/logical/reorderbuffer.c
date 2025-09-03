@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * reorderbuffer.c
- *	  PostgreSQL logical replay/reorder buffer management
+ *	  maintableQL logical replay/reorder buffer management
  *
  *
- * Copyright (c) 2012-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2012-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -19,7 +19,7 @@
  *	  individual changes. The output plugins rely on snapshots built by
  *	  snapbuild.c which hands them to us.
  *
- *	  Transactions and subtransactions/savepoints in postgres are not
+ *	  Transactions and subtransactions/savepoints in maintable are not
  *	  immediately linked to each other from outside the performing
  *	  backend. Only at commit/abort (or special xact_assignment records) they
  *	  are linked together. Which means that we will have to splice together a
@@ -84,7 +84,7 @@
  *
  * -------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 #include <sys/stat.h>

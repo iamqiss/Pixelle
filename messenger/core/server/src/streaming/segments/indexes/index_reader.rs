@@ -16,11 +16,11 @@
  * under the License.
  */
 
-use super::IggyIndexesMut;
+use super::MessengerIndexesMut;
 use crate::streaming::utils::PooledBuffer;
 use bytes::BytesMut;
 use error_set::ErrContext;
-use iggy_common::{INDEX_SIZE, IggyError, IggyIndex, IggyIndexView};
+use messenger_common::{INDEX_SIZE, MessengerError, MessengerIndex, MessengerIndexView};
 use std::{
     fs::File as StdFile,
     io::ErrorKind,
@@ -44,13 +44,13 @@ pub struct IndexReader {
 
 impl IndexReader {
     /// Opens the index file in read-only mode.
-    pub async fn new(file_path: &str, index_size_bytes: Arc<AtomicU64>) -> Result<Self, IggyError> {
+    pub async fn new(file_path: &str, index_size_bytes: Arc<AtomicU64>) -> Result<Self, MessengerError> {
         let file = OpenOptions::new()
             .read(true)
             .open(file_path)
             .await
             .with_error_context(|error| format!("Failed to open index file: {file_path}. {error}"))
-            .map_err(|_| IggyError::CannotReadFile)?;
+            .map_err(|_| MessengerError::CannotReadFile)?;
 
         trace!(
             "Opened index file for reading: {file_path}, size: {}",
@@ -67,27 +67,27 @@ impl IndexReader {
     /// Note that this function does not use the pool, as the messages are not cached.
     /// This is expected - this method is called at startup and we want to preserve
     /// memory pool usage.
-    pub async fn load_all_indexes_from_disk(&self) -> Result<IggyIndexesMut, IggyError> {
+    pub async fn load_all_indexes_from_disk(&self) -> Result<MessengerIndexesMut, MessengerError> {
         let file_size = self.file_size();
         if file_size == 0 {
-            return Ok(IggyIndexesMut::empty());
+            return Ok(MessengerIndexesMut::empty());
         }
 
         let buf = match self.read_at(0, file_size, false).await {
             Ok(buf) => buf,
             Err(error) if error.kind() == ErrorKind::UnexpectedEof => {
-                return Ok(IggyIndexesMut::empty());
+                return Ok(MessengerIndexesMut::empty());
             }
             Err(error) => {
                 error!(
                     "Error reading batch header at offset 0 in file {}: {error}",
                     self.file_path
                 );
-                return Err(IggyError::CannotReadFile);
+                return Err(MessengerError::CannotReadFile);
             }
         };
         let index_count = file_size / INDEX_SIZE as u32;
-        let mut indexes = IggyIndexesMut::from_bytes(buf, 0);
+        let mut indexes = MessengerIndexesMut::from_bytes(buf, 0);
         if indexes.count() != index_count {
             error!(
                 "Loaded {} indexes from disk, expected {}, file {} is probably corrupted!",
@@ -108,7 +108,7 @@ impl IndexReader {
         &self,
         relative_start_offset: u32,
         count: u32,
-    ) -> Result<Option<IggyIndexesMut>, IggyError> {
+    ) -> Result<Option<MessengerIndexesMut>, MessengerError> {
         let file_size = self.file_size();
         let total_indexes = file_size / INDEX_SIZE as u32;
 
@@ -155,7 +155,7 @@ impl IndexReader {
                     "Error reading {actual_count} indexes at position {relative_start_offset} in file {} of size {file_size}: {error}",
                     self.file_path
                 );
-                return Err(IggyError::CannotReadFile);
+                return Err(MessengerError::CannotReadFile);
             }
         };
 
@@ -174,7 +174,7 @@ impl IndexReader {
             0
         };
 
-        let indexes = IggyIndexesMut::from_bytes(indexes_bytes, base_position);
+        let indexes = MessengerIndexesMut::from_bytes(indexes_bytes, base_position);
 
         trace!(
             "Loaded {actual_count} indexes from disk starting at offset {relative_start_offset}, base position: {base_position}, last position: {}",
@@ -192,7 +192,7 @@ impl IndexReader {
         &self,
         timestamp: u64,
         count: u32,
-    ) -> Result<Option<IggyIndexesMut>, IggyError> {
+    ) -> Result<Option<MessengerIndexesMut>, MessengerError> {
         let file_size = self.file_size();
         let total_indexes = file_size / INDEX_SIZE as u32;
 
@@ -234,7 +234,7 @@ impl IndexReader {
                     "Error reading {actual_count} indexes at position {start_index_pos} in file {}: {error}",
                     self.file_path
                 );
-                return Err(IggyError::CannotReadFile);
+                return Err(MessengerError::CannotReadFile);
             }
         };
 
@@ -258,7 +258,7 @@ impl IndexReader {
             actual_count, timestamp, base_position
         );
 
-        Ok(Some(IggyIndexesMut::from_bytes(
+        Ok(Some(MessengerIndexesMut::from_bytes(
             indexes_bytes,
             base_position,
         )))
@@ -268,7 +268,7 @@ impl IndexReader {
     async fn binary_search_position_for_timestamp_async(
         &self,
         target_timestamp: u64,
-    ) -> Result<Option<u32>, IggyError> {
+    ) -> Result<Option<u32>, MessengerError> {
         let file_size = self.file_size();
         if file_size == 0 {
             return Ok(None);
@@ -355,7 +355,7 @@ impl IndexReader {
     ///
     /// The index position is 0-based (first index is at position 0).
     /// Returns None if the specified position is out of bounds.
-    async fn load_nth_index(&self, position: u32) -> Result<Option<IggyIndex>, IggyError> {
+    async fn load_nth_index(&self, position: u32) -> Result<Option<MessengerIndex>, MessengerError> {
         let file_size = self.file_size();
         let total_indexes = file_size / INDEX_SIZE as u32;
 
@@ -379,11 +379,11 @@ impl IndexReader {
                     "Error reading index at position {} (offset {}) in file {}: {error}",
                     position, offset, self.file_path
                 );
-                return Err(IggyError::CannotReadFile);
+                return Err(MessengerError::CannotReadFile);
             }
         };
 
-        let index = IggyIndexView::new(&buf).to_index();
+        let index = MessengerIndexView::new(&buf).to_index();
 
         Ok(Some(index))
     }

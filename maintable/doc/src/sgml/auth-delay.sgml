@@ -18,7 +18,7 @@
 
  <para>
   In order to function, this module must be loaded via
-  <xref linkend="guc-shared-preload-libraries"/> in <filename>postgresql.conf</filename>.
+  <xref linkend="guc-shared-preload-libraries"/> in <filename>maintableql.conf</filename>.
  </para>
 
  <sect2 id="auth-delay-configuration-parameters">
@@ -42,12 +42,12 @@
   </variablelist>
 
   <para>
-   These parameters must be set in <filename>postgresql.conf</filename>.
+   These parameters must be set in <filename>maintableql.conf</filename>.
    Typical usage might be:
   </para>
 
 <programlisting>
-# postgresql.conf
+# maintableql.conf
 shared_preload_libraries = 'auth_delay'
 
 auth_delay.milliseconds = '500'

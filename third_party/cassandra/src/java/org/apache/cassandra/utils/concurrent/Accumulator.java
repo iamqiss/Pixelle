@@ -67,7 +67,7 @@ public class Accumulator<E>
         // this should hopefully extend past us, but if it doesn't this behaviour means the lagging write will fix up
         // our state for us.
         //
-        // we piggyback off presentCountUpdater to get volatile write semantics for our update to values
+        // we pmessengerback off presentCountUpdater to get volatile write semantics for our update to values
         boolean volatileWrite = false;
         while (true)
         {

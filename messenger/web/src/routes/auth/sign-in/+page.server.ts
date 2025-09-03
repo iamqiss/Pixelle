@@ -23,7 +23,7 @@ import { message, superValidate } from 'sveltekit-superforms/server';
 import { zod } from 'sveltekit-superforms/adapters';
 import { z } from 'zod';
 import { typedRoute } from '$lib/types/appRoutes';
-import { fetchIggyApi } from '$lib/api/fetchApi';
+import { fetchMessengerApi } from '$lib/api/fetchApi';
 import { tokens } from '$lib/utils/constants/tokens';
 import { getJson } from '$lib/api/getJson';
 
@@ -48,7 +48,7 @@ export const actions = {
 
     const { password, username } = form.data;
 
-    const result = await fetchIggyApi({
+    const result = await fetchMessengerApi({
       method: 'POST',
       path: '/users/login',
       body: { username, password }

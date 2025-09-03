@@ -32,7 +32,7 @@ import (
 	"time"
 	"unicode"
 
-	_ "github.com/lib/pq" // Register postgres driver
+	_ "github.com/lib/pq" // Register maintable driver
 
 	"github.com/minio/minio/internal/event"
 	"github.com/minio/minio/internal/logger"
@@ -51,36 +51,36 @@ const (
 	psqlInsertRow = `INSERT INTO %s (event_time, event_data) VALUES ($1, $2);`
 )
 
-// Postgres constants
+// Maintable constants
 const (
-	PostgresFormat             = "format"
-	PostgresConnectionString   = "connection_string"
-	PostgresTable              = "table"
-	PostgresHost               = "host"
-	PostgresPort               = "port"
-	PostgresUsername           = "username"
-	PostgresPassword           = "password"
-	PostgresDatabase           = "database"
-	PostgresQueueDir           = "queue_dir"
-	PostgresQueueLimit         = "queue_limit"
-	PostgresMaxOpenConnections = "max_open_connections"
+	MaintableFormat             = "format"
+	MaintableConnectionString   = "connection_string"
+	MaintableTable              = "table"
+	MaintableHost               = "host"
+	MaintablePort               = "port"
+	MaintableUsername           = "username"
+	MaintablePassword           = "password"
+	MaintableDatabase           = "database"
+	MaintableQueueDir           = "queue_dir"
+	MaintableQueueLimit         = "queue_limit"
+	MaintableMaxOpenConnections = "max_open_connections"
 
-	EnvPostgresEnable             = "MINIO_NOTIFY_POSTGRES_ENABLE"
-	EnvPostgresFormat             = "MINIO_NOTIFY_POSTGRES_FORMAT"
-	EnvPostgresConnectionString   = "MINIO_NOTIFY_POSTGRES_CONNECTION_STRING"
-	EnvPostgresTable              = "MINIO_NOTIFY_POSTGRES_TABLE"
-	EnvPostgresHost               = "MINIO_NOTIFY_POSTGRES_HOST"
-	EnvPostgresPort               = "MINIO_NOTIFY_POSTGRES_PORT"
-	EnvPostgresUsername           = "MINIO_NOTIFY_POSTGRES_USERNAME"
-	EnvPostgresPassword           = "MINIO_NOTIFY_POSTGRES_PASSWORD"
-	EnvPostgresDatabase           = "MINIO_NOTIFY_POSTGRES_DATABASE"
-	EnvPostgresQueueDir           = "MINIO_NOTIFY_POSTGRES_QUEUE_DIR"
-	EnvPostgresQueueLimit         = "MINIO_NOTIFY_POSTGRES_QUEUE_LIMIT"
-	EnvPostgresMaxOpenConnections = "MINIO_NOTIFY_POSTGRES_MAX_OPEN_CONNECTIONS"
+	EnvMaintableEnable             = "MINIO_NOTIFY_MAINTABLE_ENABLE"
+	EnvMaintableFormat             = "MINIO_NOTIFY_MAINTABLE_FORMAT"
+	EnvMaintableConnectionString   = "MINIO_NOTIFY_MAINTABLE_CONNECTION_STRING"
+	EnvMaintableTable              = "MINIO_NOTIFY_MAINTABLE_TABLE"
+	EnvMaintableHost               = "MINIO_NOTIFY_MAINTABLE_HOST"
+	EnvMaintablePort               = "MINIO_NOTIFY_MAINTABLE_PORT"
+	EnvMaintableUsername           = "MINIO_NOTIFY_MAINTABLE_USERNAME"
+	EnvMaintablePassword           = "MINIO_NOTIFY_MAINTABLE_PASSWORD"
+	EnvMaintableDatabase           = "MINIO_NOTIFY_MAINTABLE_DATABASE"
+	EnvMaintableQueueDir           = "MINIO_NOTIFY_MAINTABLE_QUEUE_DIR"
+	EnvMaintableQueueLimit         = "MINIO_NOTIFY_MAINTABLE_QUEUE_LIMIT"
+	EnvMaintableMaxOpenConnections = "MINIO_NOTIFY_MAINTABLE_MAX_OPEN_CONNECTIONS"
 )
 
-// PostgreSQLArgs - PostgreSQL target arguments.
-type PostgreSQLArgs struct {
+// maintableQLArgs - maintableQL target arguments.
+type maintableQLArgs struct {
 	Enable             bool      `json:"enable"`
 	Format             string    `json:"format"`
 	ConnectionString   string    `json:"connectionString"`
@@ -95,8 +95,8 @@ type PostgreSQLArgs struct {
 	MaxOpenConnections int       `json:"maxOpenConnections"`
 }
 
-// Validate PostgreSQLArgs fields
-func (p PostgreSQLArgs) Validate() error {
+// Validate maintableQLArgs fields
+func (p maintableQLArgs) Validate() error {
 	if !p.Enable {
 		return nil
 	}
@@ -143,12 +143,12 @@ func (p PostgreSQLArgs) Validate() error {
 	return nil
 }
 
-// PostgreSQLTarget - PostgreSQL target.
-type PostgreSQLTarget struct {
+// maintableQLTarget - maintableQL target.
+type maintableQLTarget struct {
 	initOnce once.Init
 
 	id         event.TargetID
-	args       PostgreSQLArgs
+	args       maintableQLArgs
 	updateStmt *sql.Stmt
 	deleteStmt *sql.Stmt
 	insertStmt *sql.Stmt
@@ -161,29 +161,29 @@ type PostgreSQLTarget struct {
 }
 
 // ID - returns target ID.
-func (target *PostgreSQLTarget) ID() event.TargetID {
+func (target *maintableQLTarget) ID() event.TargetID {
 	return target.id
 }
 
 // Name - returns the Name of the target.
-func (target *PostgreSQLTarget) Name() string {
+func (target *maintableQLTarget) Name() string {
 	return target.ID().String()
 }
 
 // Store returns any underlying store if set.
-func (target *PostgreSQLTarget) Store() event.TargetStore {
+func (target *maintableQLTarget) Store() event.TargetStore {
 	return target.store
 }
 
 // IsActive - Return true if target is up and active
-func (target *PostgreSQLTarget) IsActive() (bool, error) {
+func (target *maintableQLTarget) IsActive() (bool, error) {
 	if err := target.init(); err != nil {
 		return false, err
 	}
 	return target.isActive()
 }
 
-func (target *PostgreSQLTarget) isActive() (bool, error) {
+func (target *maintableQLTarget) isActive() (bool, error) {
 	if err := target.db.Ping(); err != nil {
 		if IsConnErr(err) {
 			return false, store.ErrNotConnected
@@ -193,8 +193,8 @@ func (target *PostgreSQLTarget) isActive() (bool, error) {
 	return true, nil
 }
 
-// Save - saves the events to the store if questore is configured, which will be replayed when the PostgreSQL connection is active.
-func (target *PostgreSQLTarget) Save(eventData event.Event) error {
+// Save - saves the events to the store if questore is configured, which will be replayed when the maintableQL connection is active.
+func (target *maintableQLTarget) Save(eventData event.Event) error {
 	if target.store != nil {
 		_, err := target.store.Put(eventData)
 		return err
@@ -216,8 +216,8 @@ func IsConnErr(err error) bool {
 	return xnet.IsConnRefusedErr(err) || err.Error() == "sql: database is closed" || err.Error() == "sql: statement is closed" || err.Error() == "invalid connection"
 }
 
-// send - sends an event to the PostgreSQL.
-func (target *PostgreSQLTarget) send(eventData event.Event) error {
+// send - sends an event to the maintableQL.
+func (target *maintableQLTarget) send(eventData event.Event) error {
 	if target.args.Format == event.NamespaceFormat {
 		objectName, err := url.QueryUnescape(eventData.S3.Object.Key)
 		if err != nil {
@@ -257,8 +257,8 @@ func (target *PostgreSQLTarget) send(eventData event.Event) error {
 	return nil
 }
 
-// SendFromStore - reads an event from store and sends it to PostgreSQL.
-func (target *PostgreSQLTarget) SendFromStore(key store.Key) error {
+// SendFromStore - reads an event from store and sends it to maintableQL.
+func (target *maintableQLTarget) SendFromStore(key store.Key) error {
 	if err := target.init(); err != nil {
 		return err
 	}
@@ -297,8 +297,8 @@ func (target *PostgreSQLTarget) SendFromStore(key store.Key) error {
 	return target.store.Del(key)
 }
 
-// Close - closes underneath connections to PostgreSQL database.
-func (target *PostgreSQLTarget) Close() error {
+// Close - closes underneath connections to maintableQL database.
+func (target *maintableQLTarget) Close() error {
 	close(target.quitCh)
 	if target.updateStmt != nil {
 		// FIXME: log returned error. ignore time being.
@@ -323,7 +323,7 @@ func (target *PostgreSQLTarget) Close() error {
 }
 
 // Executes the table creation statements.
-func (target *PostgreSQLTarget) executeStmts() error {
+func (target *maintableQLTarget) executeStmts() error {
 	_, err := target.db.Exec(fmt.Sprintf(psqlTableExists, target.args.Table))
 	if err != nil {
 		createStmt := psqlCreateNamespaceTable
@@ -356,14 +356,14 @@ func (target *PostgreSQLTarget) executeStmts() error {
 	return nil
 }
 
-func (target *PostgreSQLTarget) init() error {
-	return target.initOnce.Do(target.initPostgreSQL)
+func (target *maintableQLTarget) init() error {
+	return target.initOnce.Do(target.initmaintableQL)
 }
 
-func (target *PostgreSQLTarget) initPostgreSQL() error {
+func (target *maintableQLTarget) initmaintableQL() error {
 	args := target.args
 
-	db, err := sql.Open("postgres", target.connString)
+	db, err := sql.Open("maintable", target.connString)
 	if err != nil {
 		return err
 	}
@@ -403,8 +403,8 @@ func (target *PostgreSQLTarget) initPostgreSQL() error {
 	return nil
 }
 
-// NewPostgreSQLTarget - creates new PostgreSQL target.
-func NewPostgreSQLTarget(id string, args PostgreSQLArgs, loggerOnce logger.LogOnce) (*PostgreSQLTarget, error) {
+// NewmaintableQLTarget - creates new maintableQL target.
+func NewmaintableQLTarget(id string, args maintableQLArgs, loggerOnce logger.LogOnce) (*maintableQLTarget, error) {
 	params := []string{args.ConnectionString}
 	if args.ConnectionString == "" {
 		params = []string{}
@@ -428,15 +428,15 @@ func NewPostgreSQLTarget(id string, args PostgreSQLArgs, loggerOnce logger.LogOn
 
 	var queueStore store.Store[event.Event]
 	if args.QueueDir != "" {
-		queueDir := filepath.Join(args.QueueDir, storePrefix+"-postgresql-"+id)
+		queueDir := filepath.Join(args.QueueDir, storePrefix+"-maintableql-"+id)
 		queueStore = store.NewQueueStore[event.Event](queueDir, args.QueueLimit, event.StoreExtension)
 		if err := queueStore.Open(); err != nil {
-			return nil, fmt.Errorf("unable to initialize the queue store of PostgreSQL `%s`: %w", id, err)
+			return nil, fmt.Errorf("unable to initialize the queue store of maintableQL `%s`: %w", id, err)
 		}
 	}
 
-	target := &PostgreSQLTarget{
-		id:         event.TargetID{ID: id, Name: "postgresql"},
+	target := &maintableQLTarget{
+		id:         event.TargetID{ID: id, Name: "maintableql"},
 		args:       args,
 		firstPing:  false,
 		store:      queueStore,
@@ -452,7 +452,7 @@ func NewPostgreSQLTarget(id string, args PostgreSQLArgs, loggerOnce logger.LogOn
 	return target, nil
 }
 
-var errInvalidPsqlTablename = errors.New("invalid PostgreSQL table")
+var errInvalidPsqlTablename = errors.New("invalid maintableQL table")
 
 func validatePsqlTableName(name string) error {
 	// check for quoted string (string may not contain a quote)

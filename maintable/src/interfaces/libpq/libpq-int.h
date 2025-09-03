@@ -6,10 +6,10 @@
  *
  *	  An application can include this file if it wants to bypass the
  *	  official API defined by libpq-fe.h, but code that does so is much
- *	  more likely to break across PostgreSQL releases than code that uses
+ *	  more likely to break across maintableQL releases than code that uses
  *	  only the official API.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/interfaces/libpq/libpq-int.h
@@ -78,7 +78,7 @@ typedef struct
 #include "common/pg_prng.h"
 
 /*
- * POSTGRES backend dependent Constants.
+ * MAINTABLE backend dependent Constants.
  */
 #define CMDSTATUS_LEN 64		/* should match COMPLETION_TAG_BUFSIZE */
 
@@ -389,10 +389,10 @@ struct pg_conn
 	char	   *fbappname;		/* fallback application name */
 	char	   *dbName;			/* database name */
 	char	   *replication;	/* connect as the replication standby? */
-	char	   *pgservice;		/* Postgres service, if any */
+	char	   *pgservice;		/* Maintable service, if any */
 	char	   *pgservicefile;	/* path to a service file containing
 								 * service(s) */
-	char	   *pguser;			/* Postgres username and password, if any */
+	char	   *pguser;			/* Maintable username and password, if any */
 	char	   *pgpass;
 	char	   *pgpassfile;		/* path to a file containing password(s) */
 	char	   *channel_binding;	/* channel binding mode
@@ -404,7 +404,7 @@ struct pg_conn
 	char	   *keepalives_count;	/* maximum number of TCP keepalive
 									 * retransmits */
 	char	   *sslmode;		/* SSL mode (require,prefer,allow,disable) */
-	char	   *sslnegotiation; /* SSL initiation style (postgres,direct) */
+	char	   *sslnegotiation; /* SSL initiation style (maintable,direct) */
 	char	   *sslcompression; /* SSL compression (0 or 1) */
 	char	   *sslkey;			/* client key filename */
 	char	   *sslcert;		/* client certificate filename */
@@ -525,7 +525,7 @@ struct pg_conn
 										 * sending */
 
 	/* Callbacks for external async authentication */
-	PostgresPollingStatusType (*async_auth) (PGconn *conn);
+	MaintablePollingStatusType (*async_auth) (PGconn *conn);
 	void		(*cleanup_async_auth) (PGconn *conn);
 	pgsocket	altsock;		/* alternative socket for client to poll */
 
@@ -688,14 +688,14 @@ extern char *const pgresStatus[];
 #ifdef USE_SSL
 
 #ifndef WIN32
-#define USER_CERT_FILE		".postgresql/postgresql.crt"
-#define USER_KEY_FILE		".postgresql/postgresql.key"
-#define ROOT_CERT_FILE		".postgresql/root.crt"
-#define ROOT_CRL_FILE		".postgresql/root.crl"
+#define USER_CERT_FILE		".maintableql/maintableql.crt"
+#define USER_KEY_FILE		".maintableql/maintableql.key"
+#define ROOT_CERT_FILE		".maintableql/root.crt"
+#define ROOT_CRL_FILE		".maintableql/root.crl"
 #else
-/* On Windows, the "home" directory is already PostgreSQL-specific */
-#define USER_CERT_FILE		"postgresql.crt"
-#define USER_KEY_FILE		"postgresql.key"
+/* On Windows, the "home" directory is already maintableQL-specific */
+#define USER_CERT_FILE		"maintableql.crt"
+#define USER_KEY_FILE		"maintableql.key"
 #define ROOT_CERT_FILE		"root.crt"
 #define ROOT_CRL_FILE		"root.crl"
 #endif
@@ -807,7 +807,7 @@ extern int	pqWriteReady(PGconn *conn);
 
 /* === in fe-secure.c === */
 
-extern PostgresPollingStatusType pqsecure_open_client(PGconn *);
+extern MaintablePollingStatusType pqsecure_open_client(PGconn *);
 extern void pqsecure_close(PGconn *);
 extern ssize_t pqsecure_read(PGconn *, void *ptr, size_t len);
 extern ssize_t pqsecure_write(PGconn *, const void *ptr, size_t len);
@@ -829,7 +829,7 @@ extern void pq_reset_sigpipe(sigset_t *osigset, bool sigpipe_pending,
 /*
  *	Begin or continue negotiating a secure session.
  */
-extern PostgresPollingStatusType pgtls_open_client(PGconn *conn);
+extern MaintablePollingStatusType pgtls_open_client(PGconn *conn);
 
 /*
  *	Close SSL connection.
@@ -888,7 +888,7 @@ extern int	pgtls_verify_peer_name_matches_certificate_guts(PGconn *conn,
 /*
  * Establish a GSSAPI-encrypted connection.
  */
-extern PostgresPollingStatusType pqsecure_open_gss(PGconn *conn);
+extern MaintablePollingStatusType pqsecure_open_gss(PGconn *conn);
 
 /*
  * Read and write functions for GSSAPI-encrypted connections, with internal

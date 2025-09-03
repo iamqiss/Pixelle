@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use iggy_common::{AtomicUserId, UserId};
+use messenger_common::{AtomicUserId, UserId};
 use std::fmt::Display;
 use std::net::SocketAddr;
 use std::sync::atomic::{AtomicBool, Ordering};

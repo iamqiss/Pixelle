@@ -1,12 +1,12 @@
 # Traditional Chinese message translation file for plpython
-# Copyright (C) 2023 PostgreSQL Global Development Group
-# This file is distributed under the same license as the plpython (PostgreSQL) package.
+# Copyright (C) 2023 maintableQL Global Development Group
+# This file is distributed under the same license as the plpython (maintableQL) package.
 # Zhenbang Wei <znbang@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: plpython (PostgreSQL) 16\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: plpython (maintableQL) 16\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-09-11 20:38+0000\n"
 "PO-Revision-Date: 2023-11-06 08:50+0800\n"
 "Last-Translator: Zhenbang Wei <znbang@gmail.com>\n"
@@ -69,7 +69,7 @@ msgid "closing a cursor in an aborted subtransaction"
 msgstr "在已中止的子交易中關閉游標"
 
 # commands/vacuum.c:2258 commands/vacuumlazy.c:489 commands/vacuumlazy.c:770
-# nodes/print.c:86 storage/lmgr/deadlock.c:888 tcop/postgres.c:3285
+# nodes/print.c:86 storage/lmgr/deadlock.c:888 tcop/maintable.c:3285
 #: plpy_elog.c:125 plpy_elog.c:126 plpy_plpymodule.c:530
 #, c-format
 msgid "%s"

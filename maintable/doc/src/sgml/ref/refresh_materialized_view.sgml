@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/refresh_materialized_view.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-refreshmaterializedview">
@@ -133,7 +133,7 @@ REFRESH MATERIALIZED VIEW annual_statistics_basis WITH NO DATA;
 
   <para>
    <command>REFRESH MATERIALIZED VIEW</command> is a
-   <productname>PostgreSQL</productname> extension.
+   <productname>maintableQL</productname> extension.
   </para>
  </refsect1>
 

@@ -17,17 +17,17 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, TestStreamId,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, TestStreamId,
     USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
 use humantime::Duration as HumanDuration;
-use iggy::prelude::Client;
-use iggy::prelude::CompressionAlgorithm;
-use iggy::prelude::IggyByteSize;
-use iggy::prelude::IggyExpiry;
-use iggy::prelude::MaxTopicSize;
+use messenger::prelude::Client;
+use messenger::prelude::CompressionAlgorithm;
+use messenger::prelude::MessengerByteSize;
+use messenger::prelude::MessengerExpiry;
+use messenger::prelude::MaxTopicSize;
 use predicates::str::diff;
 use serial_test::parallel;
 use std::str::FromStr;
@@ -99,7 +99,7 @@ impl TestTopicCreateCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestTopicCreateCmd {
+impl MessengerCmdTestCase for TestTopicCreateCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let stream = client
             .create_stream(&self.stream_name, Some(self.stream_id))
@@ -107,8 +107,8 @@ impl IggyCmdTestCase for TestTopicCreateCmd {
         assert!(stream.is_ok());
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("topic")
             .arg("create")
             .args(self.to_args())
@@ -129,7 +129,7 @@ impl IggyCmdTestCase for TestTopicCreateCmd {
         let compression_algorithm = &self.compression_algorithm;
         let message_expiry = (match &self.message_expiry {
             Some(value) => value.join(" "),
-            None => IggyExpiry::ServerDefault.to_string(),
+            None => MessengerExpiry::ServerDefault.to_string(),
         })
         .to_string();
 
@@ -173,7 +173,7 @@ impl IggyCmdTestCase for TestTopicCreateCmd {
                 .unwrap();
             assert_eq!(
                 topic_details.message_expiry,
-                IggyExpiry::ExpireDuration(duration.into())
+                MessengerExpiry::ExpireDuration(duration.into())
             );
         }
 
@@ -195,10 +195,10 @@ impl IggyCmdTestCase for TestTopicCreateCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestTopicCreateCmd::new(
             1,
             String::from("main"),
@@ -212,7 +212,7 @@ pub async fn should_be_successful() {
             TestStreamId::Numeric,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestTopicCreateCmd::new(
             2,
             String::from("testing"),
@@ -226,7 +226,7 @@ pub async fn should_be_successful() {
             TestStreamId::Named,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestTopicCreateCmd::new(
             3,
             String::from("prod"),
@@ -240,7 +240,7 @@ pub async fn should_be_successful() {
             TestStreamId::Named,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestTopicCreateCmd::new(
             4,
             String::from("big"),
@@ -254,7 +254,7 @@ pub async fn should_be_successful() {
                 String::from("1m"),
                 String::from("1s"),
             ]),
-            MaxTopicSize::Custom(IggyByteSize::from_str("2GiB").unwrap()),
+            MaxTopicSize::Custom(MessengerByteSize::from_str("2GiB").unwrap()),
             1,
             TestStreamId::Numeric,
         ))
@@ -264,9 +264,9 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["topic", "create", "--help"],
             format!(
@@ -276,10 +276,10 @@ Stream ID can be specified as a stream name or ID
 If topic ID is not provided then the server will automatically assign it
 
 Examples
- iggy topic create 1 sensor1 2 gzip 15days
- iggy topic create prod sensor2 2 none
- iggy topic create test debugs 2 gzip 1day 1hour 1min 1sec
- iggy topic create -t 3 1 sensor3 2 none unlimited
+ messenger topic create 1 sensor1 2 gzip 15days
+ messenger topic create prod sensor2 2 none
+ messenger topic create test debugs 2 gzip 1day 1hour 1min 1sec
+ messenger topic create -t 3 1 sensor3 2 none unlimited
 
 {USAGE_PREFIX} topic create [OPTIONS] <STREAM_ID> <NAME> <PARTITIONS_COUNT> <COMPRESSION_ALGORITHM> [MESSAGE_EXPIRY]...
 
@@ -332,9 +332,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["topic", "create", "-h"],
             format!(

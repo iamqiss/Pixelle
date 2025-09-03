@@ -27,21 +27,21 @@ use tokio::{fs, process::Command};
 use tracing::{error, info};
 
 pub struct LocalBenchmarkRunner {
-    iggy_repository_path: PathBuf,
+    messenger_repository_path: PathBuf,
     repo: Repository,
     temp_dir: TempDir,
 }
 
 impl LocalBenchmarkRunner {
-    pub fn new(iggy_repository_path: &str) -> Result<Self> {
+    pub fn new(messenger_repository_path: &str) -> Result<Self> {
         let temp_dir = TempDir::new()?;
-        let repo = Repository::open(iggy_repository_path)
-            .with_context(|| format!("Failed to open repository at '{iggy_repository_path}'"))?;
+        let repo = Repository::open(messenger_repository_path)
+            .with_context(|| format!("Failed to open repository at '{messenger_repository_path}'"))?;
 
-        let iggy_repository_path = PathBuf::from(iggy_repository_path).canonicalize()?;
-        info!("Opened repository at '{}'", iggy_repository_path.display());
+        let messenger_repository_path = PathBuf::from(messenger_repository_path).canonicalize()?;
+        info!("Opened repository at '{}'", messenger_repository_path.display());
         Ok(Self {
-            iggy_repository_path,
+            messenger_repository_path,
             repo,
             temp_dir,
         })
@@ -89,8 +89,8 @@ impl LocalBenchmarkRunner {
             .arg("build")
             .arg("--release")
             .arg("--bin")
-            .arg("iggy-bench")
-            .current_dir(&self.iggy_repository_path)
+            .arg("messenger-bench")
+            .current_dir(&self.messenger_repository_path)
             .output()
             .await
             .with_context(|| "Failed to execute cargo build command")?;
@@ -119,9 +119,9 @@ impl LocalBenchmarkRunner {
             .repo
             .workdir()
             .unwrap()
-            .join("target/release/iggy-bench");
+            .join("target/release/messenger-bench");
 
-        let temp_bench_bin = self.temp_dir.path().join("iggy-bench");
+        let temp_bench_bin = self.temp_dir.path().join("messenger-bench");
 
         info!(
             "Copying {} to {}...",
@@ -252,7 +252,7 @@ impl LocalBenchmarkRunner {
     }
 
     pub async fn run_benchmark(&self) -> Result<()> {
-        let bench_bin_path = self.temp_dir.path().join("iggy-bench");
+        let bench_bin_path = self.temp_dir.path().join("messenger-bench");
         let script_path = self
             .temp_dir
             .path()
@@ -266,11 +266,11 @@ impl LocalBenchmarkRunner {
             "Running benchmark script: {} {} in {}",
             script_path.display(),
             bench_bin_path.display(),
-            self.iggy_repository_path.display()
+            self.messenger_repository_path.display()
         );
 
         let status = Command::new(&script_path)
-            .current_dir(&self.iggy_repository_path)
+            .current_dir(&self.messenger_repository_path)
             .arg(&bench_bin_path)
             .status()
             .await

@@ -1,18 +1,18 @@
 # Spanish message translation file for pg_waldump
 #
-# Copyright (c) 2017-2021, PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (c) 2017-2021, maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Carlos Chapi <carlos.chapi@2ndquadrant.com>, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_waldump (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_waldump (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-02-16 19:48+0000\n"
 "PO-Revision-Date: 2024-11-16 14:24+0100\n"
 "Last-Translator: Carlos Chapi <carlos.chapi@2ndquadrant.com>\n"
-"Language-Team: PgSQL-es-Ayuda <pgsql-es-ayuda@lists.postgresql.org>\n"
+"Language-Team: PgSQL-es-Ayuda <pgsql-es-ayuda@lists.maintableql.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -179,10 +179,10 @@ msgstr "no se pudo cerrar el archivo «%s»: %m"
 #: pg_waldump.c:758
 #, c-format
 msgid ""
-"%s decodes and displays PostgreSQL write-ahead logs for debugging.\n"
+"%s decodes and displays maintableQL write-ahead logs for debugging.\n"
 "\n"
 msgstr ""
-"%s decodifica y muestra segmentos de WAL de PostgreSQL para depuración.\n"
+"%s decodifica y muestra segmentos de WAL de maintableQL para depuración.\n"
 "\n"
 
 #: pg_waldump.c:760

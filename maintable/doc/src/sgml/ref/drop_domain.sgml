@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_domain.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-dropdomain">
@@ -97,7 +97,7 @@ DROP DOMAIN box;
 
   <para>
    This command conforms to the SQL standard, except for the
-   <literal>IF EXISTS</literal> option, which is a <productname>PostgreSQL</productname>
+   <literal>IF EXISTS</literal> option, which is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

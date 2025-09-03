@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 btree_gist_sources = files(
   'btree_bit.c',
@@ -35,7 +35,7 @@ endif
 
 btree_gist = shared_module('btree_gist',
   btree_gist_sources,
-  c_pch: pch_postgres_h,
+  c_pch: pch_maintable_h,
   kwargs: contrib_mod_args,
 )
 contrib_targets += btree_gist

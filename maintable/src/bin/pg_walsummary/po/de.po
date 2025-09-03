@@ -1,15 +1,15 @@
 # German message translation file for pg_walsummary
-# Copyright (C) 2024 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_walsummary (PostgreSQL) package.
+# Copyright (C) 2024 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_walsummary (maintableQL) package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_walsummary (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_walsummary (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-06-21 16:53+0000\n"
 "PO-Revision-Date: 2024-06-22 07:35+0200\n"
 "Last-Translator: Peter Eisentraut <peter@eisentraut.org>\n"
-"Language-Team: German <pgsql-translators@postgresql.org>\n"
+"Language-Team: German <pgsql-translators@maintableql.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

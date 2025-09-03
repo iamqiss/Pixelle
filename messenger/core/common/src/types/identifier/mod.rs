@@ -19,8 +19,8 @@
 use crate::BytesSerializable;
 use crate::Sizeable;
 use crate::Validatable;
-use crate::error::IggyError;
-use crate::utils::byte_size::IggyByteSize;
+use crate::error::MessengerError;
+use crate::utils::byte_size::MessengerByteSize;
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
 use serde_with::base64::Base64;
@@ -69,23 +69,23 @@ impl Default for Identifier {
     }
 }
 
-impl Validatable<IggyError> for Identifier {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for Identifier {
+    fn validate(&self) -> Result<(), MessengerError> {
         if self.length == 0 {
-            return Err(IggyError::InvalidIdentifier);
+            return Err(MessengerError::InvalidIdentifier);
         }
 
         if self.value.is_empty() {
-            return Err(IggyError::InvalidIdentifier);
+            return Err(MessengerError::InvalidIdentifier);
         }
 
         #[allow(clippy::cast_possible_truncation)]
         if self.length != self.value.len() as u8 {
-            return Err(IggyError::InvalidIdentifier);
+            return Err(MessengerError::InvalidIdentifier);
         }
 
         if self.kind == IdKind::Numeric && self.length != 4 {
-            return Err(IggyError::InvalidIdentifier);
+            return Err(MessengerError::InvalidIdentifier);
         }
 
         Ok(())
@@ -94,27 +94,27 @@ impl Validatable<IggyError> for Identifier {
 
 impl Identifier {
     /// Returns the numeric value of the identifier.
-    pub fn get_u32_value(&self) -> Result<u32, IggyError> {
+    pub fn get_u32_value(&self) -> Result<u32, MessengerError> {
         if self.kind != IdKind::Numeric {
-            return Err(IggyError::InvalidIdentifier);
+            return Err(MessengerError::InvalidIdentifier);
         }
 
         if self.length != 4 {
-            return Err(IggyError::InvalidIdentifier);
+            return Err(MessengerError::InvalidIdentifier);
         }
 
         Ok(u32::from_le_bytes(self.value.clone().try_into().unwrap()))
     }
 
     /// Returns the string value of the identifier.
-    pub fn get_string_value(&self) -> Result<String, IggyError> {
+    pub fn get_string_value(&self) -> Result<String, MessengerError> {
         self.get_cow_str_value().map(|cow| cow.to_string())
     }
 
     /// Returns the `Cow<str>` value of the identifier.
-    pub fn get_cow_str_value(&self) -> Result<Cow<'_, str>, IggyError> {
+    pub fn get_cow_str_value(&self) -> Result<Cow<'_, str>, MessengerError> {
         if self.kind != IdKind::String {
-            return Err(IggyError::InvalidIdentifier);
+            return Err(MessengerError::InvalidIdentifier);
         }
 
         Ok(String::from_utf8_lossy(&self.value))
@@ -143,10 +143,10 @@ impl Identifier {
     }
 
     /// Creates a new identifier from the given string value, either numeric or string.
-    pub fn from_str_value(value: &str) -> Result<Self, IggyError> {
+    pub fn from_str_value(value: &str) -> Result<Self, MessengerError> {
         let length = value.len();
         if length == 0 || length > 255 {
-            return Err(IggyError::InvalidIdentifier);
+            return Err(MessengerError::InvalidIdentifier);
         }
 
         match value.parse::<u32>() {
@@ -156,9 +156,9 @@ impl Identifier {
     }
 
     /// Creates a new identifier from the given numeric value.
-    pub fn numeric(value: u32) -> Result<Self, IggyError> {
+    pub fn numeric(value: u32) -> Result<Self, MessengerError> {
         if value == 0 {
-            return Err(IggyError::InvalidIdentifier);
+            return Err(MessengerError::InvalidIdentifier);
         }
 
         Ok(Self {
@@ -169,10 +169,10 @@ impl Identifier {
     }
 
     /// Creates a new identifier from the given string value.
-    pub fn named(value: &str) -> Result<Self, IggyError> {
+    pub fn named(value: &str) -> Result<Self, MessengerError> {
         let length = value.len();
         if length == 0 || length > 255 {
-            return Err(IggyError::InvalidIdentifier);
+            return Err(MessengerError::InvalidIdentifier);
         }
 
         Ok(Self {
@@ -184,12 +184,12 @@ impl Identifier {
     }
 
     /// Creates identifier from raw bytes
-    pub fn from_raw_bytes(bytes: &[u8]) -> Result<Self, IggyError> {
+    pub fn from_raw_bytes(bytes: &[u8]) -> Result<Self, MessengerError> {
         let kind = IdKind::from_code(bytes[0])?;
         let length = bytes[1];
         let value = bytes[2..2 + length as usize].to_vec();
         if value.len() != length as usize {
-            return Err(IggyError::InvalidIdentifier);
+            return Err(MessengerError::InvalidIdentifier);
         }
 
         let identifier = Identifier {
@@ -208,8 +208,8 @@ impl Identifier {
 }
 
 impl Sizeable for Identifier {
-    fn get_size_bytes(&self) -> IggyByteSize {
-        IggyByteSize::from(u64::from(self.length) + 2)
+    fn get_size_bytes(&self) -> MessengerByteSize {
+        MessengerByteSize::from(u64::from(self.length) + 2)
     }
 }
 
@@ -222,19 +222,19 @@ impl BytesSerializable for Identifier {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError>
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         if bytes.len() < 3 {
-            return Err(IggyError::InvalidIdentifier);
+            return Err(MessengerError::InvalidIdentifier);
         }
 
         let kind = IdKind::from_code(bytes[0])?;
         let length = bytes[1];
         let value = bytes[2..2 + length as usize].to_vec();
         if value.len() != length as usize {
-            return Err(IggyError::InvalidIdentifier);
+            return Err(MessengerError::InvalidIdentifier);
         }
 
         let identifier = Identifier {
@@ -267,28 +267,28 @@ impl IdKind {
     }
 
     /// Returns the identifier kind from the code.
-    pub fn from_code(code: u8) -> Result<Self, IggyError> {
+    pub fn from_code(code: u8) -> Result<Self, MessengerError> {
         match code {
             1 => Ok(IdKind::Numeric),
             2 => Ok(IdKind::String),
-            _ => Err(IggyError::InvalidIdentifier),
+            _ => Err(MessengerError::InvalidIdentifier),
         }
     }
 }
 
 impl FromStr for IdKind {
-    type Err = IggyError;
+    type Err = MessengerError;
     fn from_str(input: &str) -> Result<Self, Self::Err> {
         match input {
             "n" | "numeric" => Ok(IdKind::Numeric),
             "s" | "string" => Ok(IdKind::String),
-            _ => Err(IggyError::InvalidIdentifier),
+            _ => Err(MessengerError::InvalidIdentifier),
         }
     }
 }
 
 impl FromStr for Identifier {
-    type Err = IggyError;
+    type Err = MessengerError;
     fn from_str(input: &str) -> Result<Self, Self::Err> {
         if let Ok(value) = input.parse::<u32>() {
             return Identifier::numeric(value);
@@ -301,21 +301,21 @@ impl FromStr for Identifier {
 }
 
 impl TryFrom<u32> for Identifier {
-    type Error = IggyError;
+    type Error = MessengerError;
     fn try_from(value: u32) -> Result<Self, Self::Error> {
         Identifier::numeric(value)
     }
 }
 
 impl TryFrom<String> for Identifier {
-    type Error = IggyError;
+    type Error = MessengerError;
     fn try_from(value: String) -> Result<Self, Self::Error> {
         Identifier::from_str(&value)
     }
 }
 
 impl TryFrom<&str> for Identifier {
-    type Error = IggyError;
+    type Error = MessengerError;
     fn try_from(value: &str) -> Result<Self, Self::Error> {
         Identifier::from_str(value)
     }

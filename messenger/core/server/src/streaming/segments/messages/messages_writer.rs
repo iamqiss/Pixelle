@@ -17,9 +17,9 @@
  */
 
 use super::PersisterTask;
-use crate::streaming::segments::{IggyMessagesBatchSet, messages::write_batch};
+use crate::streaming::segments::{MessengerMessagesBatchSet, messages::write_batch};
 use error_set::ErrContext;
-use iggy_common::{Confirmation, IggyByteSize, IggyError};
+use messenger_common::{Confirmation, MessengerByteSize, MessengerError};
 use std::sync::{
     Arc,
     atomic::{AtomicU64, Ordering},
@@ -51,14 +51,14 @@ impl MessagesWriter {
         fsync: bool,
         server_confirmation: Confirmation,
         file_exists: bool,
-    ) -> Result<Self, IggyError> {
+    ) -> Result<Self, MessengerError> {
         let file = OpenOptions::new()
             .write(true)
             .create(true)
             .append(true)
             .open(file_path)
             .await
-            .map_err(|_| IggyError::CannotReadFile)?;
+            .map_err(|_| MessengerError::CannotReadFile)?;
 
         if file_exists {
             let _ = file.sync_all().await.with_error_context(|error| {
@@ -71,7 +71,7 @@ impl MessagesWriter {
                 .with_error_context(|error| {
                     format!("Failed to get metadata of messages file: {file_path}, error: {error}")
                 })
-                .map_err(|_| IggyError::CannotReadFileMetadata)?
+                .map_err(|_| MessengerError::CannotReadFileMetadata)?
                 .len();
 
             messages_size_bytes.store(actual_messages_size, Ordering::Release);
@@ -107,9 +107,9 @@ impl MessagesWriter {
     /// Append a batch of messages to the messages file.
     pub async fn save_batch_set(
         &mut self,
-        batch_set: IggyMessagesBatchSet,
+        batch_set: MessengerMessagesBatchSet,
         confirmation: Confirmation,
-    ) -> Result<IggyByteSize, IggyError> {
+    ) -> Result<MessengerByteSize, MessengerError> {
         let messages_size = batch_set.size();
         let messages_count = batch_set.count();
         let containers_count = batch_set.containers_count();
@@ -128,10 +128,10 @@ impl MessagesWriter {
                                 self.file_path
                             )
                         })
-                        .map_err(|_| IggyError::CannotWriteToFile)?;
+                        .map_err(|_| MessengerError::CannotWriteToFile)?;
                 } else {
                     error!("File handle is not available for synchronous write.");
-                    return Err(IggyError::CannotWriteToFile);
+                    return Err(MessengerError::CannotWriteToFile);
                 }
 
                 if self.fsync {
@@ -157,17 +157,17 @@ impl MessagesWriter {
             }
         }
 
-        Ok(IggyByteSize::from(messages_size as u64))
+        Ok(MessengerByteSize::from(messages_size as u64))
     }
 
-    pub async fn fsync(&self) -> Result<(), IggyError> {
+    pub async fn fsync(&self) -> Result<(), MessengerError> {
         if let Some(file) = self.file.as_ref() {
             file.sync_all()
                 .await
                 .with_error_context(|error| {
                     format!("Failed to fsync messages file: {}. {error}", self.file_path)
                 })
-                .map_err(|_| IggyError::CannotWriteToFile)?;
+                .map_err(|_| MessengerError::CannotWriteToFile)?;
         }
 
         Ok(())

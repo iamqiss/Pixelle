@@ -1,20 +1,20 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 #
 # Tests related to WAL archiving and recovery.
 #
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $primary = PostgreSQL::Test::Cluster->new('primary');
+my $primary = maintableQL::Test::Cluster->new('primary');
 $primary->init(
 	has_archiving => 1,
 	allows_streaming => 1);
-$primary->append_conf('postgresql.conf', 'autovacuum = off');
+$primary->append_conf('maintableql.conf', 'autovacuum = off');
 $primary->start;
 my $primary_data = $primary->data_dir;
 
@@ -26,31 +26,31 @@ my $primary_data = $primary->data_dir;
 # a portable solution, use an archive command based on a command known to
 # work but will fail: copy with an incorrect original path.
 my $incorrect_command =
-  $PostgreSQL::Test::Utils::windows_os
+  $maintableQL::Test::Utils::windows_os
   ? qq{copy "%p_does_not_exist" "%f_does_not_exist"}
   : qq{cp "%p_does_not_exist" "%f_does_not_exist"};
 $primary->safe_psql(
-	'postgres', qq{
+	'maintable', qq{
     ALTER SYSTEM SET archive_command TO '$incorrect_command';
     SELECT pg_reload_conf();
 });
 
 # Save the WAL segment currently in use and switch to a new segment.
 # This will be used to track the activity of the archiver.
-my $segment_name_1 = $primary->safe_psql('postgres',
+my $segment_name_1 = $primary->safe_psql('maintable',
 	q{SELECT pg_walfile_name(pg_current_wal_lsn())});
 my $segment_path_1 = "pg_wal/archive_status/$segment_name_1";
 my $segment_path_1_ready = "$segment_path_1.ready";
 my $segment_path_1_done = "$segment_path_1.done";
 $primary->safe_psql(
-	'postgres', q{
+	'maintable', q{
 	CREATE TABLE mine AS SELECT generate_series(1,10) AS x;
 	SELECT pg_switch_wal();
 	CHECKPOINT;
 });
 
 # Wait for an archive failure.
-$primary->poll_query_until('postgres',
+$primary->poll_query_until('maintable',
 	q{SELECT failed_count > 0 FROM pg_stat_archiver}, 't')
   or die "Timed out while waiting for archiving to fail";
 ok( -f "$primary_data/$segment_path_1_ready",
@@ -61,7 +61,7 @@ ok( !-f "$primary_data/$segment_path_1_done",
 );
 
 is( $primary->safe_psql(
-		'postgres', q{
+		'maintable', q{
 		SELECT archived_count, last_failed_wal
 		FROM pg_stat_archiver
 	}),
@@ -88,12 +88,12 @@ ok( -f "$primary_data/$segment_path_1_ready",
 
 # Allow WAL archiving again and wait for a success.
 $primary->safe_psql(
-	'postgres', q{
+	'maintable', q{
 	ALTER SYSTEM RESET archive_command;
 	SELECT pg_reload_conf();
 });
 
-$primary->poll_query_until('postgres',
+$primary->poll_query_until('maintable',
 	q{SELECT archived_count FROM pg_stat_archiver}, '1')
   or die "Timed out while waiting for archiving to finish";
 
@@ -104,7 +104,7 @@ ok(-f "$primary_data/$segment_path_1_done",
 	".done file for archived WAL segment $segment_name_1 exists");
 
 is( $primary->safe_psql(
-		'postgres', q{ SELECT last_archived_wal FROM pg_stat_archiver }),
+		'maintable', q{ SELECT last_archived_wal FROM pg_stat_archiver }),
 	$segment_name_1,
 	"archive success reported in pg_stat_archiver for WAL segment $segment_name_1"
 );
@@ -113,13 +113,13 @@ is( $primary->safe_psql(
 # create a restartpoint.  As this standby starts in crash recovery because
 # of the cold backup taken previously, it needs a clean restartpoint to deal
 # with existing status files.
-my $segment_name_2 = $primary->safe_psql('postgres',
+my $segment_name_2 = $primary->safe_psql('maintable',
 	q{SELECT pg_walfile_name(pg_current_wal_lsn())});
 my $segment_path_2 = "pg_wal/archive_status/$segment_name_2";
 my $segment_path_2_ready = "$segment_path_2.ready";
 my $segment_path_2_done = "$segment_path_2.done";
 $primary->safe_psql(
-	'postgres', q{
+	'maintable', q{
 	INSERT INTO mine SELECT generate_series(10,20) AS x;
 	CHECKPOINT;
 });
@@ -127,29 +127,29 @@ $primary->safe_psql(
 # Switch to a new segment and use the returned LSN to make sure that
 # standbys have caught up to this point.
 my $primary_lsn = $primary->safe_psql(
-	'postgres', q{
+	'maintable', q{
 	SELECT pg_switch_wal();
 });
 
-$primary->poll_query_until('postgres',
+$primary->poll_query_until('maintable',
 	q{ SELECT last_archived_wal FROM pg_stat_archiver },
 	$segment_name_2)
   or die "Timed out while waiting for archiving to finish";
 
 # Test standby with archive_mode = on.
-my $standby1 = PostgreSQL::Test::Cluster->new('standby');
+my $standby1 = maintableQL::Test::Cluster->new('standby');
 $standby1->init_from_backup($primary, 'backup', has_restoring => 1);
-$standby1->append_conf('postgresql.conf', "archive_mode = on");
+$standby1->append_conf('maintableql.conf', "archive_mode = on");
 my $standby1_data = $standby1->data_dir;
 $standby1->start;
 
 # Wait for the replay of the segment switch done previously, ensuring
 # that all segments needed are restored from the archives.
-$standby1->poll_query_until('postgres',
+$standby1->poll_query_until('maintable',
 	qq{ SELECT pg_wal_lsn_diff(pg_last_wal_replay_lsn(), '$primary_lsn') >= 0 }
 ) or die "Timed out while waiting for xlog replay on standby1";
 
-$standby1->safe_psql('postgres', q{CHECKPOINT});
+$standby1->safe_psql('maintable', q{CHECKPOINT});
 
 # Recovery with archive_mode=on does not keep .ready signal files inherited
 # from backup.  Note that this WAL segment existed in the backup.
@@ -173,19 +173,19 @@ ok( -f "$standby1_data/$segment_path_2_done",
 # command to fail to persist the .ready files.  Note that this node
 # has inherited the archive command of the previous cold backup that
 # will cause archiving failures.
-my $standby2 = PostgreSQL::Test::Cluster->new('standby2');
+my $standby2 = maintableQL::Test::Cluster->new('standby2');
 $standby2->init_from_backup($primary, 'backup', has_restoring => 1);
-$standby2->append_conf('postgresql.conf', 'archive_mode = always');
+$standby2->append_conf('maintableql.conf', 'archive_mode = always');
 my $standby2_data = $standby2->data_dir;
 $standby2->start;
 
 # Wait for the replay of the segment switch done previously, ensuring
 # that all segments needed are restored from the archives.
-$standby2->poll_query_until('postgres',
+$standby2->poll_query_until('maintable',
 	qq{ SELECT pg_wal_lsn_diff(pg_last_wal_replay_lsn(), '$primary_lsn') >= 0 }
 ) or die "Timed out while waiting for xlog replay on standby2";
 
-$standby2->safe_psql('postgres', q{CHECKPOINT});
+$standby2->safe_psql('maintable', q{CHECKPOINT});
 
 ok( -f "$standby2_data/$segment_path_1_ready",
 	".ready file for WAL segment $segment_name_1 existing in backup is kept with archive_mode=always on standby"
@@ -196,7 +196,7 @@ ok( -f "$standby2_data/$segment_path_2_ready",
 );
 
 # Reset statistics of the archiver for the next checks.
-$standby2->safe_psql('postgres', q{SELECT pg_stat_reset_shared('archiver')});
+$standby2->safe_psql('maintable', q{SELECT pg_stat_reset_shared('archiver')});
 
 # Now crash the cluster to check that recovery step does not
 # remove non-archived WAL segments on a standby where archiving
@@ -210,17 +210,17 @@ ok( -f "$standby2_data/$segment_path_1_ready",
 
 # Allow WAL archiving again, and wait for the segments to be archived.
 $standby2->safe_psql(
-	'postgres', q{
+	'maintable', q{
 	ALTER SYSTEM RESET archive_command;
 	SELECT pg_reload_conf();
 });
-$standby2->poll_query_until('postgres',
+$standby2->poll_query_until('maintable',
 	q{SELECT last_archived_wal FROM pg_stat_archiver},
 	$segment_name_2)
   or die "Timed out while waiting for archiving to finish";
 
 is( $standby2->safe_psql(
-		'postgres', q{SELECT archived_count FROM pg_stat_archiver}),
+		'maintable', q{SELECT archived_count FROM pg_stat_archiver}),
 	'2',
 	"correct number of WAL segments archived from standby");
 
@@ -236,11 +236,11 @@ ok( -f "$standby2_data/$segment_path_1_done"
 
 # Check that the archiver process calls the shell archive module's shutdown
 # callback.
-$standby2->append_conf('postgresql.conf', "log_min_messages = debug1");
+$standby2->append_conf('maintableql.conf', "log_min_messages = debug1");
 $standby2->reload;
 
 # Run a query to make sure that the reload has taken effect.
-$standby2->safe_psql('postgres', q{SELECT 1});
+$standby2->safe_psql('maintable', q{SELECT 1});
 my $log_location = -s $standby2->logfile;
 
 $standby2->stop;
@@ -251,15 +251,15 @@ ok( $logfile =~ qr/archiver process shutting down/,
 # Test that we can enter and leave backup mode without crashes
 my ($stderr, $cmdret);
 $cmdret = $primary->psql(
-	'postgres',
+	'maintable',
 	"SELECT pg_backup_start('onebackup'); "
 	  . "SELECT pg_backup_stop();"
 	  . "SELECT pg_backup_start(repeat('x', 1026))",
 	stderr => \$stderr);
 is($cmdret, 3, "psql fails correctly");
 like($stderr, qr/backup label too long/, "pg_backup_start fails gracefully");
-$primary->safe_psql('postgres',
+$primary->safe_psql('maintable',
 	"SELECT pg_backup_start('onebackup'); SELECT pg_backup_stop();");
-$primary->safe_psql('postgres', "SELECT pg_backup_start('twobackup')");
+$primary->safe_psql('maintable', "SELECT pg_backup_start('twobackup')");
 
 done_testing();

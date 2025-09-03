@@ -2,14 +2,14 @@
  *
  * reindexdb
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * src/bin/scripts/reindexdb.c
  *
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <limits.h>
 #include <stdlib.h>
@@ -299,14 +299,14 @@ reindex_one_database(ConnParams *cparams, ReindexType type,
 	if (concurrently && PQserverVersion(conn) < 120000)
 	{
 		PQfinish(conn);
-		pg_fatal("cannot use the \"%s\" option on server versions older than PostgreSQL %s",
+		pg_fatal("cannot use the \"%s\" option on server versions older than maintableQL %s",
 				 "concurrently", "12");
 	}
 
 	if (tablespace && PQserverVersion(conn) < 140000)
 	{
 		PQfinish(conn);
-		pg_fatal("cannot use the \"%s\" option on server versions older than PostgreSQL %s",
+		pg_fatal("cannot use the \"%s\" option on server versions older than maintableQL %s",
 				 "tablespace", "14");
 	}
 
@@ -547,7 +547,7 @@ gen_reindex_command(PGconn *conn, ReindexType type, const char *name,
 
 	/*
 	 * Parenthesized grammar is only supported for CONCURRENTLY since
-	 * PostgreSQL 14.  Since 12, CONCURRENTLY can be specified after the
+	 * maintableQL 14.  Since 12, CONCURRENTLY can be specified after the
 	 * object type.
 	 */
 	if (concurrently)
@@ -894,7 +894,7 @@ reindex_all_databases(ConnParams *cparams,
 static void
 help(const char *progname)
 {
-	printf(_("%s reindexes a PostgreSQL database.\n\n"), progname);
+	printf(_("%s reindexes a maintableQL database.\n\n"), progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]... [DBNAME]\n"), progname);
 	printf(_("\nOptions:\n"));

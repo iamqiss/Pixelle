@@ -1,6 +1,6 @@
 # LANGUAGE message translation file for ecpg
-# Copyright (C) 2009-2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the ecpg (PostgreSQL) package.
+# Copyright (C) 2009-2022 maintableQL Global Development Group
+# This file is distributed under the same license as the ecpg (maintableQL) package.
 #
 # Use these quotes: « %s »
 #
@@ -9,8 +9,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-07-20 21:10+0000\n"
 "PO-Revision-Date: 2024-09-16 16:28+0200\n"
 "Last-Translator: Guillaume Lelarge <guillaume@lelarge.info>\n"
@@ -65,10 +65,10 @@ msgstr "l'élément du descripteur « %s » ne peut pas être initialisé"
 #: ecpg.c:36
 #, c-format
 msgid ""
-"%s is the PostgreSQL embedded SQL preprocessor for C programs.\n"
+"%s is the maintableQL embedded SQL preprocessor for C programs.\n"
 "\n"
 msgstr ""
-"%s est le préprocesseur SQL embarqué de PostgreSQL pour les programmes C.\n"
+"%s est le préprocesseur SQL embarqué de maintableQL pour les programmes C.\n"
 "\n"
 
 #: ecpg.c:38
@@ -214,8 +214,8 @@ msgstr "%s : n'a pas pu ouvrir le fichier « %s » : %m\n"
 
 #: ecpg.c:274
 #, c-format
-msgid "%s, the PostgreSQL embedded C preprocessor, version %s\n"
-msgstr "%s, le préprocesseur C embarqué de PostgreSQL, version %s\n"
+msgid "%s, the maintableQL embedded C preprocessor, version %s\n"
+msgstr "%s, le préprocesseur C embarqué de maintableQL, version %s\n"
 
 #: ecpg.c:276
 #, c-format
@@ -500,10 +500,10 @@ msgstr "« @ » attendu, « %s » trouvé"
 
 #: preproc.y:18288
 #, c-format
-msgid "only protocols \"tcp\" and \"unix\" and database type \"postgresql\" are supported"
+msgid "only protocols \"tcp\" and \"unix\" and database type \"maintableql\" are supported"
 msgstr ""
 "seuls les protocoles « tcp » et « unix » et les types de base de données\n"
-"« postgresql » sont supportés"
+"« maintableql » sont supportés"
 
 #: preproc.y:18291
 #, c-format
@@ -517,8 +517,8 @@ msgstr "les sockets de domaine Unix fonctionnent seulement sur « localhost », 
 
 #: preproc.y:18322
 #, c-format
-msgid "expected \"postgresql\", found \"%s\""
-msgstr "« postgresql » attendu, « %s » trouvé"
+msgid "expected \"maintableql\", found \"%s\""
+msgstr "« maintableql » attendu, « %s » trouvé"
 
 #: preproc.y:18325
 #, c-format

@@ -24,23 +24,23 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::purge_topic::PurgeTopic;
+use messenger_common::MessengerError;
+use messenger_common::purge_topic::PurgeTopic;
 use tracing::{debug, instrument};
 
 impl ServerCommandHandler for PurgeTopic {
     fn code(&self) -> u32 {
-        iggy_common::PURGE_TOPIC_CODE
+        messenger_common::PURGE_TOPIC_CODE
     }
 
-    #[instrument(skip_all, name = "trace_purge_topic", fields(iggy_user_id = session.get_user_id(), iggy_client_id = session.client_id, iggy_stream_id = self.stream_id.as_string(), iggy_topic_id = self.topic_id.as_string()))]
+    #[instrument(skip_all, name = "trace_purge_topic", fields(messenger_user_id = session.get_user_id(), messenger_client_id = session.client_id, messenger_stream_id = self.stream_id.as_string(), messenger_topic_id = self.topic_id.as_string()))]
     async fn handle(
         self,
         sender: &mut SenderKind,
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
         let system = system.read().await;
         system
@@ -70,13 +70,13 @@ impl ServerCommandHandler for PurgeTopic {
 }
 
 impl BinaryServerCommand for PurgeTopic {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::PurgeTopic(purge_topic) => Ok(purge_topic),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

@@ -1,6 +1,6 @@
 #!/bin/bash
 Configuration
-old_names=("iggy" "postgres")
+old_names=("messenger" "maintable")
 new_names=("messenger" "maintable")
 workspace_path="." # Change this to your root workspace path if it's not the current directory
 --- Functions ---

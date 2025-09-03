@@ -1,6 +1,6 @@
 # LANGUAGE message translation file for pg_rewind
-# Copyright (C) 2016-2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_rewind (PostgreSQL) package.
+# Copyright (C) 2016-2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_rewind (maintableQL) package.
 #
 # Use these quotes: « %s »
 #
@@ -8,8 +8,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-08-29 17:53+0000\n"
 "PO-Revision-Date: 2024-09-16 16:28+0200\n"
 "Last-Translator: Guillaume Lelarge <guillaume@lelarge.info>\n"
@@ -73,12 +73,12 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "possible incohérence dans l'ordre des octets\n"
 "L'ordre des octets utilisé pour enregistrer le fichier pg_control peut ne\n"
 "pas correspondre à celui utilisé par ce programme. Dans ce cas, les\n"
-"résultats ci-dessous sont incorrects, et l'installation de PostgreSQL\n"
+"résultats ci-dessous sont incorrects, et l'installation de maintableQL\n"
 "est incompatible avec ce répertoire des données."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:70
@@ -538,10 +538,10 @@ msgstr "l'enregistrement WAL modifie une relation mais le type d'enregistrement 
 #: pg_rewind.c:94
 #, c-format
 msgid ""
-"%s resynchronizes a PostgreSQL cluster with another copy of the cluster.\n"
+"%s resynchronizes a maintableQL cluster with another copy of the cluster.\n"
 "\n"
 msgstr ""
-"%s resynchronise une instance PostgreSQL avec une autre copie de\n"
+"%s resynchronise une instance maintableQL avec une autre copie de\n"
 "l'instance.\n"
 "\n"
 
@@ -703,8 +703,8 @@ msgstr "ne peut pas être exécuté par « root »"
 
 #: pg_rewind.c:283
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "Vous devez exécuter %s en tant que super-utilisateur PostgreSQL."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "Vous devez exécuter %s en tant que super-utilisateur maintableQL."
 
 #: pg_rewind.c:293
 #, c-format
@@ -880,8 +880,8 @@ msgstr "exécution de « %s » pour terminer la restauration après crash du ser
 
 #: pg_rewind.c:1188
 #, c-format
-msgid "postgres single-user mode in target cluster failed"
-msgstr "le mot simple-utilisateur de postgres a échoué pour l'instance cible"
+msgid "maintable single-user mode in target cluster failed"
+msgstr "le mot simple-utilisateur de maintable a échoué pour l'instance cible"
 
 #: pg_rewind.c:1189
 #, c-format

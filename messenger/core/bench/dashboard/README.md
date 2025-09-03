@@ -1,6 +1,6 @@
-# Apache Iggy Benchmarks Dashboard
+# Apache Messenger Benchmarks Dashboard
 
-A modern, high-performance benchmark results dashboard for Iggy, built with Rust. This application provides a responsive web interface for visualizing and analyzing benchmark results.
+A modern, high-performance benchmark results dashboard for Messenger, built with Rust. This application provides a responsive web interface for visualizing and analyzing benchmark results.
 
 ## Features
 
@@ -164,7 +164,7 @@ All endpoints return JSON responses (except artifacts which returns a ZIP file) 
 2. Start the server:
 
    ```bash
-   ./target/release/iggy-bench-dashboard-server --host 127.0.0.1 --port 8061
+   ./target/release/messenger-bench-dashboard-server --host 127.0.0.1 --port 8061
    ```
 
 ### Development Mode
@@ -184,14 +184,14 @@ Access the development version at <http://localhost:8060>
 
 ## Running with Docker
 
-The [docker image](https://hub.docker.com/r/apache/iggy-bench-dashboard) is available, and can be fetched via `docker pull apache/iggy-bench-dashboard`.
+The [docker image](https://hub.docker.com/r/apache/messenger-bench-dashboard) is available, and can be fetched via `docker pull apache/messenger-bench-dashboard`.
 
 ### Building the Image
 
 Call this from the root of the repository:
 
 ```bash
-docker build -t iggy-bench-dashboard -f core/bench/dashboard/server/Dockerfile .
+docker build -t messenger-bench-dashboard -f core/bench/dashboard/server/Dockerfile .
 ```
 
 ### Running the Container
@@ -209,7 +209,7 @@ Basic usage (recommended):
   docker run -p 8061:8061 \
      -v "$(pwd)/performance_results:/data/performance_results" \
      --user "$(id -u):$(id -g)" \
-     apache/iggy-bench-dashboard
+     apache/messenger-bench-dashboard
   ```
 
 With custom configuration:
@@ -221,19 +221,19 @@ With custom configuration:
         -e HOST=0.0.0.0 \
         -e PORT=8061 \
         -e RESULTS_DIR=/data/performance_results \
-        apache/iggy-bench-dashboard
+        apache/messenger-bench-dashboard
   ```
 
 Using a named volume:
 
   ```bash
   # Create a named volume
-  docker volume create iggy-results
+  docker volume create messenger-results
 
   # Run with named volume
   docker run -p 8061:8061 \
-     -v iggy-results:/data/performance_results \
-     apache/iggy-bench-dashboard
+     -v messenger-results:/data/performance_results \
+     apache/messenger-bench-dashboard
   ```
 
 ## Configuration
@@ -263,7 +263,7 @@ The container is configured to run as a non-root user for security. When mountin
 The server can be configured using command-line arguments:
 
 ```bash
-iggy-bench-dashboard-server [OPTIONS]
+messenger-bench-dashboard-server [OPTIONS]
 
 Options:
       --host <HOST>                  Server host address [default: 127.0.0.1]

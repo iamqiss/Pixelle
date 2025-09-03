@@ -634,7 +634,7 @@ checks:
       - 'f:/etc/shadow -> r:^webservd: && !r::\p*LK\p*:'
       - "f:/etc/shadow -> r:^mysql: && !r::NL:|:NP:"
       - "f:/etc/shadow -> r:^nuuc: && !r::NL:|:NP:"
-      - "f:/etc/shadow -> r:^postgres: && !r::NL:|:NP:"
+      - "f:/etc/shadow -> r:^maintable: && !r::NL:|:NP:"
       - "f:/etc/shadow -> r:^smmsp: && !r::NL:|:NP:"
       - "f:/etc/shadow -> r:^sys: && !r::NL:|:NP:"
       - "f:/etc/shadow -> r:^uucp: && !r::NL:|:NP:"

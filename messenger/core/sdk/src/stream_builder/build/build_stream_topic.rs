@@ -17,33 +17,33 @@
  */
 
 use crate::prelude::{
-    CompressionAlgorithm, IdKind, Identifier, IggyClient, IggyError, IggyExpiry, MaxTopicSize,
+    CompressionAlgorithm, IdKind, Identifier, MessengerClient, MessengerError, MessengerExpiry, MaxTopicSize,
     StreamClient, TopicClient,
 };
 
-use crate::stream_builder::IggyConsumerConfig;
+use crate::stream_builder::MessengerConsumerConfig;
 use tracing::{trace, warn};
 
-/// Builds an `IggyStream` and `IggyTopic` if any of them does not exists
+/// Builds an `MessengerStream` and `MessengerTopic` if any of them does not exists
 /// and if the boolean flags to create them are set to true. In that case it will build
-/// them using the given `IggyClient` and `IggyProducerConfig`.
+/// them using the given `MessengerClient` and `MessengerProducerConfig`.
 ///
 /// If the boolean flags to create them are set to false, it will not build them and will return
 /// and return Ok(()) since this is expected behavior.d
 ///
 /// # Arguments
 ///
-/// * `client` - The `IggyClient` to use.
-/// * `config` - The `IggyProducerConfig` to use.
+/// * `client` - The `MessengerClient` to use.
+/// * `config` - The `MessengerProducerConfig` to use.
 ///
 /// # Errors
 ///
-/// * `IggyError` - If the iggy stream topic cannot be build.
+/// * `MessengerError` - If the messenger stream topic cannot be build.
 ///
-pub(crate) async fn build_iggy_stream_topic_if_not_exists(
-    client: &IggyClient,
-    config: &IggyConsumerConfig,
-) -> Result<(), IggyError> {
+pub(crate) async fn build_messenger_stream_topic_if_not_exists(
+    client: &MessengerClient,
+    config: &MessengerConsumerConfig,
+) -> Result<(), MessengerError> {
     let stream_id = config.stream_id();
     let stream_name = config.stream_name();
     let topic_id = config.topic_id();
@@ -95,7 +95,7 @@ pub(crate) async fn build_iggy_stream_topic_if_not_exists(
                 CompressionAlgorithm::None,
                 topic_replication_factor,
                 id,
-                IggyExpiry::ServerDefault,
+                MessengerExpiry::ServerDefault,
                 MaxTopicSize::ServerDefault,
             )
             .await?;
@@ -107,7 +107,7 @@ pub(crate) async fn build_iggy_stream_topic_if_not_exists(
 fn extract_name_id_from_identifier(
     stream_id: &Identifier,
     stream_name: &str,
-) -> Result<(String, Option<u32>), IggyError> {
+) -> Result<(String, Option<u32>), MessengerError> {
     let (name, id) = match stream_id.kind {
         IdKind::Numeric => (stream_name.to_owned(), Some(stream_id.get_u32_value()?)),
         IdKind::String => (stream_id.get_string_value()?, None),

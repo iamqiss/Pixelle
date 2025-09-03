@@ -27,7 +27,7 @@ import type {
 import { handleResponse } from './client.utils.js';
 import { responseError } from '../wire/error.utils.js';
 import { debug } from './client.debug.js';
-import { IggyConnection } from './client.connection.js';
+import { MessengerConnection } from './client.connection.js';
 import { LOGIN, LOGIN_WITH_TOKEN, PING } from '../wire/index.js';
 
 
@@ -47,7 +47,7 @@ type Job = {
 
 export class CommandResponseStream extends EventEmitter {
   private options: ClientConfig;
-  private connection: IggyConnection;
+  private connection: MessengerConnection;
   private _execQueue: Job[];
   public busy: boolean;
   isAuthenticated: boolean;
@@ -57,7 +57,7 @@ export class CommandResponseStream extends EventEmitter {
   constructor(options: ClientConfig) {
     super();
     this.options = options;
-    this.connection = new IggyConnection(options);
+    this.connection = new MessengerConnection(options);
     this.busy = false;
     this.isAuthenticated = false;
     this._execQueue = [];

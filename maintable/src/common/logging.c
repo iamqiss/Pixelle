@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  * Logging framework for frontend programs
  *
- * Copyright (c) 2018-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2018-2025, maintableQL Global Development Group
  *
  * src/common/logging.c
  *
@@ -12,7 +12,7 @@
 #error "This file is not expected to be compiled for backend code"
 #endif
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <unistd.h>
 

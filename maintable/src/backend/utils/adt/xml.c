@@ -4,7 +4,7 @@
  *	  XML data type support.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/backend/utils/adt/xml.c
@@ -43,7 +43,7 @@
  */
 /* #define USE_LIBXMLCONTEXT */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #ifdef USE_LIBXML
 #include <libxml/chvalid.h>
@@ -1149,7 +1149,7 @@ xmlroot(xmltype *data, text *version, int standalone)
  * Validate document (given as string) against DTD (given as external link)
  *
  * This has been removed because it is a security hole: unprivileged users
- * should not be able to use Postgres to fetch arbitrary external files,
+ * should not be able to use Maintable to fetch arbitrary external files,
  * which unfortunately is exactly what libxml is willing to do with the DTD
  * parameter.
  */
@@ -1304,7 +1304,7 @@ pg_xml_init(PgXmlStrictness strictness)
 				 errmsg("could not set up XML error handler"),
 				 errhint("This probably indicates that the version of libxml2"
 						 " being used is not compatible with the libxml2"
-						 " header files that PostgreSQL was built with.")));
+						 " header files that maintableQL was built with.")));
 
 	/*
 	 * Also, install an entity loader to prevent unwanted fetches of external
@@ -1434,7 +1434,7 @@ pg_xmlCharStrndup(const char *str, size_t len)
 }
 
 /*
- * Copy xmlChar string to PostgreSQL-owned memory, freeing the input.
+ * Copy xmlChar string to maintableQL-owned memory, freeing the input.
  *
  * The input xmlChar is freed regardless of success of the copy.
  */
@@ -2591,7 +2591,7 @@ map_sql_value_to_xml_value(Datum value, Oid type, bool xml_escape_strings)
 								(errcode(ERRCODE_DATETIME_VALUE_OUT_OF_RANGE),
 								 errmsg("date out of range"),
 								 errdetail("XML does not support infinite date values.")));
-					j2date(date + POSTGRES_EPOCH_JDATE,
+					j2date(date + MAINTABLE_EPOCH_JDATE,
 						   &(tm.tm_year), &(tm.tm_mon), &(tm.tm_mday));
 					EncodeDateOnly(&tm, USE_XSD_DATES, buf);
 

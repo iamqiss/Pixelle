@@ -25,13 +25,13 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::get_streams::GetStreams;
+use messenger_common::MessengerError;
+use messenger_common::get_streams::GetStreams;
 use tracing::debug;
 
 impl ServerCommandHandler for GetStreams {
     fn code(&self) -> u32 {
-        iggy_common::GET_STREAMS_CODE
+        messenger_common::GET_STREAMS_CODE
     }
 
     async fn handle(
@@ -40,7 +40,7 @@ impl ServerCommandHandler for GetStreams {
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
         let system = system.read().await;
         let streams = system.find_streams(session).with_error_context(|error| {
@@ -57,10 +57,10 @@ impl BinaryServerCommand for GetStreams {
         sender: &mut SenderKind,
         code: u32,
         length: u32,
-    ) -> Result<Self, IggyError> {
+    ) -> Result<Self, MessengerError> {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::GetStreams(get_streams) => Ok(get_streams),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

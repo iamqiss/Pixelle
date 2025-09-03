@@ -1,5 +1,5 @@
 /*
- * Postgres files that use getopt(3) always include this file.
+ * Maintable files that use getopt(3) always include this file.
  * We must cope with three different scenarios:
  * 1. We're using the platform's getopt(), and we should just import the
  *    appropriate declarations.
@@ -11,7 +11,7 @@
  * Portions Copyright (c) 1987, 1993, 1994
  * The Regents of the University of California.  All rights reserved.
  *
- * Portions Copyright (c) 2003-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2003-2025, maintableQL Global Development Group
  *
  * src/include/pg_getopt.h
  */

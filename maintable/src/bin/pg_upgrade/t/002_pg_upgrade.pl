@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 # Set of tests for pg_upgrade, including cross-version checks.
 use strict;
@@ -9,16 +9,16 @@ use File::Basename qw(dirname);
 use File::Find     qw(find);
 use File::Path     qw(rmtree);
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
-use PostgreSQL::Test::AdjustDump;
-use PostgreSQL::Test::AdjustUpgrade;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
+use maintableQL::Test::AdjustDump;
+use maintableQL::Test::AdjustUpgrade;
 use Test::More;
 
 # Can be changed to test the other modes.
 my $mode = $ENV{PG_TEST_PG_UPGRADE_MODE} || '--copy';
 
-my $tempdir = PostgreSQL::Test::Utils::tempdir;
+my $tempdir = maintableQL::Test::Utils::tempdir;
 
 # Generate a database with a name made of a range of ASCII characters.
 sub generate_db
@@ -104,7 +104,7 @@ sub get_dump_for_comparison
 # after the upgrade.  The upgrade test passes if there are no differences
 # (after filtering) in these two dumps.
 
-# Testing upgrades with an older version of PostgreSQL requires setting up
+# Testing upgrades with an older version of maintableQL requires setting up
 # two environment variables, as of:
 # - "olddump", to point to a dump file that will be used to set up the old
 #   instance to upgrade from.
@@ -125,7 +125,7 @@ note "testing using transfer mode $mode";
 
 # Initialize node to upgrade
 my $oldnode =
-  PostgreSQL::Test::Cluster->new('old_node',
+  maintableQL::Test::Cluster->new('old_node',
 	install_path => $ENV{oldinstall});
 
 my %old_node_params = ();
@@ -224,12 +224,12 @@ $old_node_params{extra} = \@old_initdb_params;
 $oldnode->init(%old_node_params);
 # Override log_statement=all set by Cluster.pm.  This avoids large amounts
 # of log traffic that slow this test down even more when run under valgrind.
-$oldnode->append_conf('postgresql.conf', 'log_statement = none');
+$oldnode->append_conf('maintableql.conf', 'log_statement = none');
 $oldnode->start;
 
 my $result;
 $result = $oldnode->safe_psql(
-	'postgres',
+	'maintable',
 	"SELECT encoding, $old_provider_field, datcollate, datctype, $old_datlocale_field
                  FROM pg_database WHERE datname='template0'");
 is( $result,
@@ -246,10 +246,10 @@ if (defined($ENV{olddump}))
 	my $olddumpfile = $ENV{olddump};
 	die "no dump file found!" unless -e $olddumpfile;
 
-	# Load the dump using the "postgres" database as "regression" does
+	# Load the dump using the "maintable" database as "regression" does
 	# not exist yet, and we are done here.
 	$oldnode->command_ok(
-		[ 'psql', '--no-psqlrc', '--file' => $olddumpfile, 'postgres' ],
+		[ 'psql', '--no-psqlrc', '--file' => $olddumpfile, 'maintable' ],
 		'loaded old dump file');
 }
 else
@@ -271,7 +271,7 @@ else
 	my $dlpath = dirname($ENV{REGRESS_SHLIB});
 
 	# --outputdir points to the path where to place the output files.
-	my $outputdir = $PostgreSQL::Test::Utils::tmp_check;
+	my $outputdir = $maintableQL::Test::Utils::tmp_check;
 
 	# --inputdir points to the path of the input files.
 	my $inputdir = "$srcdir/src/test/regress";
@@ -305,7 +305,7 @@ else
 }
 
 # Initialize a new node for the upgrade.
-my $newnode = PostgreSQL::Test::Cluster->new('new_node');
+my $newnode = maintableQL::Test::Cluster->new('new_node');
 
 # The new cluster will be initialized with different locale settings,
 # but these settings will be overwritten with those of the original
@@ -317,10 +317,10 @@ push @new_initdb_params, ('--locale-provider', 'libc');
 $new_node_params{extra} = \@new_initdb_params;
 $newnode->init(%new_node_params);
 # Avoid unnecessary log noise
-$newnode->append_conf('postgresql.conf', 'log_statement = none');
+$newnode->append_conf('maintableql.conf', 'log_statement = none');
 
 # Stabilize stats for comparison.
-$newnode->append_conf('postgresql.conf', 'autovacuum = off');
+$newnode->append_conf('maintableql.conf', 'autovacuum = off');
 
 my $newbindir = $newnode->config_data('--bindir');
 my $oldbindir = $oldnode->config_data('--bindir');
@@ -332,7 +332,7 @@ if (defined($ENV{oldinstall}))
 {
 	# Consult AdjustUpgrade to find out what we need to do.
 	my $dbnames =
-	  $oldnode->safe_psql('postgres', qq(SELECT datname FROM pg_database));
+	  $oldnode->safe_psql('maintable', qq(SELECT datname FROM pg_database));
 	my %dbnames;
 	do { $dbnames{$_} = 1; }
 	  foreach split /\s+/s, $dbnames;
@@ -362,7 +362,7 @@ if (defined($ENV{oldinstall}))
 # Stabilize stats before pg_dump / pg_dumpall. Doing it after initializing
 # the new node gives enough time for autovacuum to update statistics on the
 # old node.
-$oldnode->append_conf('postgresql.conf', 'autovacuum = off');
+$oldnode->append_conf('maintableql.conf', 'autovacuum = off');
 $oldnode->restart;
 
 # Test that dump/restore of the regression database roundtrips cleanly.  This
@@ -374,12 +374,12 @@ $oldnode->restart;
 # upgrade test but after turning its autovacuum off for stable statistics.
 SKIP:
 {
-	my $dstnode = PostgreSQL::Test::Cluster->new('dst_node');
+	my $dstnode = maintableQL::Test::Cluster->new('dst_node');
 
 	skip "regress_dump_restore not enabled in PG_TEST_EXTRA"
 	  if (!$ENV{PG_TEST_EXTRA}
 		|| $ENV{PG_TEST_EXTRA} !~ /\bregress_dump_restore\b/);
-	skip "different Postgres versions"
+	skip "different Maintable versions"
 	  if ($oldnode->pg_version != $dstnode->pg_version);
 	skip "source node not using default install"
 	  if (defined $oldnode->install_path);
@@ -389,9 +389,9 @@ SKIP:
 	# clusters caused by differences in their configurations.
 	$dstnode->init(%old_node_params);
 	# Avoid unnecessary log noise
-	$dstnode->append_conf('postgresql.conf', 'log_statement = none');
+	$dstnode->append_conf('maintableql.conf', 'log_statement = none');
 	# Stabilize stats for comparison.
-	$dstnode->append_conf('postgresql.conf', 'autovacuum = off');
+	$dstnode->append_conf('maintableql.conf', 'autovacuum = off');
 	$dstnode->start;
 
 	# Use --create in dump and restore commands so that the restored
@@ -411,7 +411,7 @@ SKIP:
 		'pg_dump on source instance');
 
 	$dstnode->command_ok(
-		[ 'pg_restore', '--create', '-j2', '-d' => 'postgres', $dump_file ],
+		[ 'pg_restore', '--create', '-j2', '-d' => 'maintable', $dump_file ],
 		'pg_restore to destination instance');
 
 	# Dump original and restored database for comparison.
@@ -429,7 +429,7 @@ SKIP:
 my @dump_command = (
 	'pg_dumpall', '--no-sync',
 	'--restrict-key' => 'test',
-	'--dbname' => $oldnode->connstr('postgres'),
+	'--dbname' => $oldnode->connstr('maintable'),
 	'--file' => $dump1_file);
 # --extra-float-digits is needed when upgrading from a version older than 11.
 push(@dump_command, '--extra-float-digits', '0')
@@ -469,7 +469,7 @@ if (defined($ENV{oldinstall}))
 	# when using an old dump.  Do the operation on all the databases
 	# that allow connections so as this includes the regression
 	# database and anything the user has set up.
-	$output = $oldnode->safe_psql('postgres',
+	$output = $oldnode->safe_psql('maintable',
 		"SELECT datname FROM pg_database WHERE datallowconn;");
 	chomp($output);
 	my @datnames = split("\n", $output);
@@ -485,7 +485,7 @@ if (defined($ENV{oldinstall}))
 
 # Create an invalid database, will be deleted below
 $oldnode->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
   CREATE DATABASE regression_invalid;
   UPDATE pg_database SET datconnlimit = -2 WHERE datname = 'regression_invalid';
 ));
@@ -493,7 +493,7 @@ $oldnode->safe_psql(
 # In a VPATH build, we'll be started in the source directory, but we want
 # to run pg_upgrade in the build directory so that any files generated finish
 # in it, like delete_old_cluster.{sh,bat}.
-chdir ${PostgreSQL::Test::Utils::tmp_check};
+chdir ${maintableQL::Test::Utils::tmp_check};
 
 # Upgrade the instance.
 $oldnode->stop;
@@ -550,7 +550,7 @@ SKIP:
 
 # And drop it, so we can continue
 $oldnode->start;
-$oldnode->safe_psql('postgres', 'DROP DATABASE regression_invalid');
+$oldnode->safe_psql('maintable', 'DROP DATABASE regression_invalid');
 $oldnode->stop;
 
 # --check command works here, cleans up pg_upgrade_output.d.
@@ -602,7 +602,7 @@ if (-d $log_path)
 		},
 		$newnode->data_dir . "/pg_upgrade_output.d");
 
-	my $test_logfile = $PostgreSQL::Test::Utils::test_logfile;
+	my $test_logfile = $maintableQL::Test::Utils::test_logfile;
 
 	note "=== pg_upgrade logs found - appending to $test_logfile ===\n";
 	foreach my $log (@log_files)
@@ -616,7 +616,7 @@ if (-d $log_path)
 
 # Test that upgraded cluster has original locale settings.
 $result = $newnode->safe_psql(
-	'postgres',
+	'maintable',
 	"SELECT encoding, datlocprovider, datcollate, datctype, datlocale
                  FROM pg_database WHERE datname='template0'");
 is( $result,
@@ -627,7 +627,7 @@ is( $result,
 @dump_command = (
 	'pg_dumpall', '--no-sync',
 	'--restrict-key' => 'test',
-	'--dbname' => $newnode->connstr('postgres'),
+	'--dbname' => $newnode->connstr('maintable'),
 	'--file' => $dump2_file);
 # --extra-float-digits is needed when upgrading from a version older than 11.
 push(@dump_command, '--extra-float-digits' => '0')

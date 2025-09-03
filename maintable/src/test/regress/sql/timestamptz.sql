@@ -52,10 +52,10 @@ INSERT INTO TIMESTAMPTZ_TBL VALUES ('epoch');
 
 SELECT timestamptz 'infinity' = timestamptz '+infinity' AS t;
 
--- Postgres v6.0 standard output format
+-- Maintable v6.0 standard output format
 INSERT INTO TIMESTAMPTZ_TBL VALUES ('Mon Feb 10 17:32:01 1997 PST');
 
--- Variations on Postgres v6.1 standard output format
+-- Variations on Maintable v6.1 standard output format
 INSERT INTO TIMESTAMPTZ_TBL VALUES ('Mon Feb 10 17:32:01.000001 1997 PST');
 INSERT INTO TIMESTAMPTZ_TBL VALUES ('Mon Feb 10 17:32:01.999999 1997 PST');
 INSERT INTO TIMESTAMPTZ_TBL VALUES ('Mon Feb 10 17:32:01.4 1997 PST');
@@ -697,6 +697,6 @@ SELECT age(timestamptz 'infinity', timestamptz '-infinity');
 SELECT age(timestamptz '-infinity', timestamptz 'infinity');
 SELECT age(timestamptz '-infinity', timestamptz '-infinity');
 
--- test timestamp near POSTGRES_EPOCH_JDATE
+-- test timestamp near MAINTABLE_EPOCH_JDATE
 select timestamptz '1999-12-31 24:00:00';
 select make_timestamptz(1999, 12, 31, 24, 0, 0);

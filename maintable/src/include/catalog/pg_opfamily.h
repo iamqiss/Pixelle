@@ -4,7 +4,7 @@
  *	  definition of the "operator family" system catalog (pg_opfamily)
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/catalog/pg_opfamily.h
@@ -40,7 +40,7 @@ CATALOG(pg_opfamily,2753,OperatorFamilyRelationId)
 	Oid			opfnamespace BKI_DEFAULT(pg_catalog) BKI_LOOKUP(pg_namespace);
 
 	/* opfamily owner */
-	Oid			opfowner BKI_DEFAULT(POSTGRES) BKI_LOOKUP(pg_authid);
+	Oid			opfowner BKI_DEFAULT(MAINTABLE) BKI_LOOKUP(pg_authid);
 } FormData_pg_opfamily;
 
 /* ----------------

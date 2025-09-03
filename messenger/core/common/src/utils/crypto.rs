@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::IggyError;
+use crate::MessengerError;
 use crate::text;
 use aes_gcm::aead::generic_array::GenericArray;
 use aes_gcm::aead::{Aead, OsRng};
@@ -29,12 +29,12 @@ pub enum EncryptorKind {
 }
 
 impl EncryptorKind {
-    pub fn encrypt(&self, data: &[u8]) -> Result<Vec<u8>, IggyError> {
+    pub fn encrypt(&self, data: &[u8]) -> Result<Vec<u8>, MessengerError> {
         match self {
             EncryptorKind::Aes256Gcm(e) => e.encrypt(data),
         }
     }
-    pub fn decrypt(&self, data: &[u8]) -> Result<Vec<u8>, IggyError> {
+    pub fn decrypt(&self, data: &[u8]) -> Result<Vec<u8>, MessengerError> {
         match self {
             EncryptorKind::Aes256Gcm(e) => e.decrypt(data),
         }
@@ -42,8 +42,8 @@ impl EncryptorKind {
 }
 
 pub trait Encryptor {
-    fn encrypt(&self, data: &[u8]) -> Result<Vec<u8>, IggyError>;
-    fn decrypt(&self, data: &[u8]) -> Result<Vec<u8>, IggyError>;
+    fn encrypt(&self, data: &[u8]) -> Result<Vec<u8>, MessengerError>;
+    fn decrypt(&self, data: &[u8]) -> Result<Vec<u8>, MessengerError>;
 }
 
 pub struct Aes256GcmEncryptor {
@@ -57,36 +57,36 @@ impl Debug for Aes256GcmEncryptor {
 }
 
 impl Aes256GcmEncryptor {
-    pub fn new(key: &[u8]) -> Result<Self, IggyError> {
+    pub fn new(key: &[u8]) -> Result<Self, MessengerError> {
         if key.len() != 32 {
-            return Err(IggyError::InvalidEncryptionKey);
+            return Err(MessengerError::InvalidEncryptionKey);
         }
         Ok(Self {
             cipher: Aes256Gcm::new(GenericArray::from_slice(key)),
         })
     }
 
-    pub fn from_base64_key(key: &str) -> Result<Self, IggyError> {
+    pub fn from_base64_key(key: &str) -> Result<Self, MessengerError> {
         Self::new(&text::from_base64_as_bytes(key)?)
     }
 }
 
 impl Encryptor for Aes256GcmEncryptor {
-    fn encrypt(&self, data: &[u8]) -> Result<Vec<u8>, IggyError> {
+    fn encrypt(&self, data: &[u8]) -> Result<Vec<u8>, MessengerError> {
         let nonce = Aes256Gcm::generate_nonce(&mut OsRng);
         let encrypted_data = self.cipher.encrypt(&nonce, data);
         if encrypted_data.is_err() {
-            return Err(IggyError::CannotEncryptData);
+            return Err(MessengerError::CannotEncryptData);
         }
         let payload = [&nonce, encrypted_data.unwrap().as_slice()].concat();
         Ok(payload)
     }
 
-    fn decrypt(&self, data: &[u8]) -> Result<Vec<u8>, IggyError> {
+    fn decrypt(&self, data: &[u8]) -> Result<Vec<u8>, MessengerError> {
         let nonce = GenericArray::from_slice(&data[0..12]);
         let payload = self.cipher.decrypt(nonce, &data[12..]);
         if payload.is_err() {
-            return Err(IggyError::CannotDecryptData);
+            return Err(MessengerError::CannotDecryptData);
         }
         Ok(payload.unwrap())
     }
@@ -123,6 +123,6 @@ mod tests {
         let decrypted_data = second_encryptor.decrypt(&encrypted_data);
         assert!(decrypted_data.is_err());
         let error = decrypted_data.err().unwrap();
-        assert_eq!(error.as_code(), IggyError::CannotDecryptData.as_code());
+        assert_eq!(error.as_code(), MessengerError::CannotDecryptData.as_code());
     }
 }

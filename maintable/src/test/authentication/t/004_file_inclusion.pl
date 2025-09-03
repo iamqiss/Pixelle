@@ -1,13 +1,13 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Tests for include directives in HBA and ident files.  This test can
 # only run with Unix-domain sockets.
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use File::Basename qw(basename);
 use Test::More;
 use Data::Dumper;
@@ -139,7 +139,7 @@ sub add_ident_line
 my $hba_file = 'subdir1/pg_hba_custom.conf';
 my $ident_file = 'subdir2/pg_ident_custom.conf';
 
-my $node = PostgreSQL::Test::Cluster->new('primary');
+my $node = maintableQL::Test::Cluster->new('primary');
 $node->init;
 $node->start;
 
@@ -151,9 +151,9 @@ my $hba_expected = '';
 my $ident_expected = '';
 
 # customise main auth file names
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"ALTER SYSTEM SET hba_file = '$data_dir/$hba_file'");
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"ALTER SYSTEM SET ident_file = '$data_dir/$ident_file'");
 
 # Remove the original ones, this node links to non-default ones now.
@@ -270,7 +270,7 @@ $node->restart;
 # to bypass portability issues.  The configuration files had better
 # have unique names.
 my $contents = $node->safe_psql(
-	'postgres',
+	'maintable',
 	qq(SELECT rule_number,
   regexp_replace(file_name, '.*/', ''),
   line_number,
@@ -284,7 +284,7 @@ my $contents = $node->safe_psql(
 is($contents, $hba_expected, 'check contents of pg_hba_file_rules');
 
 $contents = $node->safe_psql(
-	'postgres',
+	'maintable',
 	qq(SELECT map_number,
   regexp_replace(file_name, '.*/', ''),
   line_number,

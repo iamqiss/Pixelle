@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/declare.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-declare">
@@ -92,8 +92,8 @@ DECLARE <replaceable class="parameter">name</replaceable> [ BINARY ] [ ASENSITIV
       means they are not visible, <literal>ASENSITIVE</literal> means the
       behavior is implementation-dependent.  A third behavior,
       <literal>SENSITIVE</literal>, meaning that such changes are visible in
-      the cursor, is not available in <productname>PostgreSQL</productname>.
-      In <productname>PostgreSQL</productname>, all cursors are insensitive;
+      the cursor, is not available in <productname>maintableQL</productname>.
+      In <productname>maintableQL</productname>, all cursors are insensitive;
       so these key words have no effect and are only accepted for
       compatibility with the SQL standard.
      </para>
@@ -198,7 +198,7 @@ DECLARE <replaceable class="parameter">name</replaceable> [ BINARY ] [ ASENSITIV
     transaction.  Thus, <command>DECLARE</command> without <literal>WITH
     HOLD</literal> is useless outside a transaction block: the cursor would
     survive only to the completion of the statement.  Therefore
-    <productname>PostgreSQL</productname> reports an error if such a
+    <productname>maintableQL</productname> reports an error if such a
     command is used outside a transaction block.
     Use
     <link linkend="sql-begin"><command>BEGIN</command></link> and
@@ -229,7 +229,7 @@ DECLARE <replaceable class="parameter">name</replaceable> [ BINARY ] [ ASENSITIV
     The <literal>SCROLL</literal> option should be specified when defining a
     cursor that will be used to fetch backwards.  This is required by
     the SQL standard.  However, for compatibility with earlier
-    versions, <productname>PostgreSQL</productname> will allow
+    versions, <productname>maintableQL</productname> will allow
     backward fetches without <literal>SCROLL</literal>, if the cursor's query
     plan is simple enough that no extra overhead is needed to support
     it. However, application developers are advised not to rely on
@@ -303,11 +303,11 @@ DECLARE <replaceable class="parameter">name</replaceable> [ BINARY ] [ ASENSITIV
 
    <para>
     The SQL standard only makes provisions for cursors in embedded
-    <acronym>SQL</acronym>.  The <productname>PostgreSQL</productname>
+    <acronym>SQL</acronym>.  The <productname>maintableQL</productname>
     server does not implement an <command>OPEN</command> statement for
     cursors; a cursor is considered to be open when it is declared.
     However, <application>ECPG</application>, the embedded SQL
-    preprocessor for <productname>PostgreSQL</productname>, supports
+    preprocessor for <productname>maintableQL</productname>, supports
     the standard SQL cursor conventions, including those involving
     <command>DECLARE</command> and <command>OPEN</command> statements.
    </para>
@@ -346,7 +346,7 @@ DECLARE liahona CURSOR FOR SELECT * FROM films;
 
   <para>
    The SQL standard allows cursors only in embedded
-   <acronym>SQL</acronym> and in modules. <productname>PostgreSQL</productname>
+   <acronym>SQL</acronym> and in modules. <productname>maintableQL</productname>
    permits cursors to be used interactively.
   </para>
 
@@ -354,13 +354,13 @@ DECLARE liahona CURSOR FOR SELECT * FROM films;
    According to the SQL standard, changes made to insensitive cursors by
    <literal>UPDATE ... WHERE CURRENT OF</literal> and <literal>DELETE
    ... WHERE CURRENT OF</literal> statements are visible in that same
-   cursor.  <productname>PostgreSQL</productname> treats these statements like
+   cursor.  <productname>maintableQL</productname> treats these statements like
    all other data changing statements in that they are not visible in
    insensitive cursors.
   </para>
 
   <para>
-   Binary cursors are a <productname>PostgreSQL</productname>
+   Binary cursors are a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

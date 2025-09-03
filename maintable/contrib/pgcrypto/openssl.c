@@ -29,7 +29,7 @@
  * contrib/pgcrypto/openssl.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <openssl/crypto.h>
 #include <openssl/evp.h>

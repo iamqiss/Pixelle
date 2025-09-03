@@ -1,12 +1,12 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Tests targeting SSPI on Windows.
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 if (!$windows_os || $use_unix_sockets)
@@ -16,13 +16,13 @@ if (!$windows_os || $use_unix_sockets)
 }
 
 # Initialize primary node
-my $node = PostgreSQL::Test::Cluster->new('primary');
+my $node = maintableQL::Test::Cluster->new('primary');
 $node->init;
-$node->append_conf('postgresql.conf', "log_connections = authentication\n");
+$node->append_conf('maintableql.conf', "log_connections = authentication\n");
 $node->start;
 
 my $huge_pages_status =
-  $node->safe_psql('postgres', q(SHOW huge_pages_status;));
+  $node->safe_psql('maintable', q(SHOW huge_pages_status;));
 isnt($huge_pages_status, 'unknown', "check huge_pages_status");
 
 # SSPI is set up by default.  Make sure it interacts correctly with

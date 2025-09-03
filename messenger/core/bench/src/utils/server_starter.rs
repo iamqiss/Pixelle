@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::args::common::IggyBenchArgs;
+use crate::args::common::MessengerBenchArgs;
 use integration::test_server::{IpAddrKind, SYSTEM_PATH_ENV_VAR, TestServer, Transport};
 use serde::Deserialize;
 use std::net::SocketAddr;
@@ -37,9 +37,9 @@ struct ConfigAddress {
 }
 
 #[allow(clippy::cognitive_complexity)]
-pub async fn start_server_if_needed(args: &IggyBenchArgs) -> Option<TestServer> {
+pub async fn start_server_if_needed(args: &MessengerBenchArgs) -> Option<TestServer> {
     if args.skip_server_start {
-        info!("Skipping iggy-server start");
+        info!("Skipping messenger-server start");
         return None;
     }
 
@@ -49,10 +49,10 @@ pub async fn start_server_if_needed(args: &IggyBenchArgs) -> Option<TestServer> 
         envs.insert(SYSTEM_PATH_ENV_VAR.to_owned(), "local_data".to_owned());
 
         if args.verbose {
-            envs.insert("IGGY_TEST_VERBOSE".to_owned(), "true".to_owned());
-            info!("Enabling verbose output - iggy-server will logs print to stdout");
+            envs.insert("MESSENGER_TEST_VERBOSE".to_owned(), "true".to_owned());
+            info!("Enabling verbose output - messenger-server will logs print to stdout");
         } else {
-            info!("Disabling verbose output - iggy-server will print logs to files");
+            info!("Disabling verbose output - messenger-server will print logs to files");
         }
 
         info!(
@@ -72,13 +72,13 @@ pub async fn start_server_if_needed(args: &IggyBenchArgs) -> Option<TestServer> 
         let elapsed = now.elapsed();
         if elapsed.as_millis() > 1000 {
             warn!(
-                "Test iggy-server started, pid: {}, startup took {} ms because it had to load messages from disk to cache",
+                "Test messenger-server started, pid: {}, startup took {} ms because it had to load messages from disk to cache",
                 test_server.pid(),
                 elapsed.as_millis()
             );
         } else {
             info!(
-                "Test iggy-server started, pid: {}, startup time: {} ms",
+                "Test messenger-server started, pid: {}, startup time: {} ms",
                 test_server.pid(),
                 elapsed.as_millis()
             );
@@ -86,12 +86,12 @@ pub async fn start_server_if_needed(args: &IggyBenchArgs) -> Option<TestServer> 
 
         Some(test_server)
     } else {
-        info!("Skipping iggy-server start");
+        info!("Skipping messenger-server start");
         None
     }
 }
 
-async fn evaluate_server_start_condition(args: &IggyBenchArgs) -> (bool, HashMap<String, String>) {
+async fn evaluate_server_start_condition(args: &MessengerBenchArgs) -> (bool, HashMap<String, String>) {
     let default_config: ServerConfig =
         toml::from_str(include_str!("../../../configs/server.toml")).unwrap();
 
@@ -101,11 +101,11 @@ async fn evaluate_server_start_condition(args: &IggyBenchArgs) -> (bool, HashMap
             let config_http_address = default_config.http.address.parse::<SocketAddr>().unwrap();
             let envs = HashMap::from([
                 (
-                    "IGGY_HTTP_ADDRESS".to_owned(),
+                    "MESSENGER_HTTP_ADDRESS".to_owned(),
                     default_config.http.address.clone(),
                 ),
-                ("IGGY_TCP_ENABLED".to_owned(), "false".to_owned()),
-                ("IGGY_QUIC_ENABLED".to_owned(), "false".to_owned()),
+                ("MESSENGER_TCP_ENABLED".to_owned(), "false".to_owned()),
+                ("MESSENGER_QUIC_ENABLED".to_owned(), "false".to_owned()),
             ]);
             (
                 addresses_are_equivalent(&args_http_address, &config_http_address)
@@ -119,11 +119,11 @@ async fn evaluate_server_start_condition(args: &IggyBenchArgs) -> (bool, HashMap
 
             let envs = HashMap::from([
                 (
-                    "IGGY_TCP_ADDRESS".to_owned(),
+                    "MESSENGER_TCP_ADDRESS".to_owned(),
                     default_config.tcp.address.clone(),
                 ),
-                ("IGGY_HTTP_ENABLED".to_owned(), "false".to_owned()),
-                ("IGGY_QUIC_ENABLED".to_owned(), "false".to_owned()),
+                ("MESSENGER_HTTP_ENABLED".to_owned(), "false".to_owned()),
+                ("MESSENGER_QUIC_ENABLED".to_owned(), "false".to_owned()),
             ]);
             (
                 addresses_are_equivalent(&args_tcp_address, &config_tcp_address)
@@ -136,11 +136,11 @@ async fn evaluate_server_start_condition(args: &IggyBenchArgs) -> (bool, HashMap
             let config_quic_address = default_config.quic.address.parse::<SocketAddr>().unwrap();
             let envs = HashMap::from([
                 (
-                    "IGGY_QUIC_ADDRESS".to_owned(),
+                    "MESSENGER_QUIC_ADDRESS".to_owned(),
                     default_config.quic.address.clone(),
                 ),
-                ("IGGY_HTTP_ENABLED".to_owned(), "false".to_owned()),
-                ("IGGY_TCP_ENABLED".to_owned(), "false".to_owned()),
+                ("MESSENGER_HTTP_ENABLED".to_owned(), "false".to_owned()),
+                ("MESSENGER_TCP_ENABLED".to_owned(), "false".to_owned()),
             ]);
 
             (

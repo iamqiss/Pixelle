@@ -16,7 +16,7 @@ SELECT * FROM foo(); -- used to cause backend crash (after switching to plperlu)
 ERROR:  syntax error at or near "invalid" at line 4. at line 2.
 CONTEXT:  PL/Perl function "foo"
 -- test redefinition of specific SP switching languages
--- http://archives.postgresql.org/pgsql-bugs/2010-01/msg00116.php
+-- http://archives.maintableql.org/pgsql-bugs/2010-01/msg00116.php
 -- plperl first
 create or replace function foo(text) returns text language plperl  as 'shift';
 select foo('hey');

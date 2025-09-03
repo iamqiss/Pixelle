@@ -18,25 +18,25 @@
 
 use crate::client_wrappers::client_wrapper::ClientWrapper;
 use async_trait::async_trait;
-use iggy_binary_protocol::UserClient;
-use iggy_common::{
-    Identifier, IdentityInfo, IggyError, Permissions, UserInfo, UserInfoDetails, UserStatus,
+use messenger_binary_protocol::UserClient;
+use messenger_common::{
+    Identifier, IdentityInfo, MessengerError, Permissions, UserInfo, UserInfoDetails, UserStatus,
 };
 
 #[async_trait]
 impl UserClient for ClientWrapper {
-    async fn get_user(&self, user_id: &Identifier) -> Result<Option<UserInfoDetails>, IggyError> {
+    async fn get_user(&self, user_id: &Identifier) -> Result<Option<UserInfoDetails>, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.get_user(user_id).await,
+            ClientWrapper::Messenger(client) => client.get_user(user_id).await,
             ClientWrapper::Http(client) => client.get_user(user_id).await,
             ClientWrapper::Tcp(client) => client.get_user(user_id).await,
             ClientWrapper::Quic(client) => client.get_user(user_id).await,
         }
     }
 
-    async fn get_users(&self) -> Result<Vec<UserInfo>, IggyError> {
+    async fn get_users(&self) -> Result<Vec<UserInfo>, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.get_users().await,
+            ClientWrapper::Messenger(client) => client.get_users().await,
             ClientWrapper::Http(client) => client.get_users().await,
             ClientWrapper::Tcp(client) => client.get_users().await,
             ClientWrapper::Quic(client) => client.get_users().await,
@@ -49,7 +49,7 @@ impl UserClient for ClientWrapper {
         password: &str,
         status: UserStatus,
         permissions: Option<Permissions>,
-    ) -> Result<UserInfoDetails, IggyError> {
+    ) -> Result<UserInfoDetails, MessengerError> {
         match self {
             ClientWrapper::Http(client) => {
                 client
@@ -66,7 +66,7 @@ impl UserClient for ClientWrapper {
                     .create_user(username, password, status, permissions)
                     .await
             }
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .create_user(username, password, status, permissions)
                     .await
@@ -74,12 +74,12 @@ impl UserClient for ClientWrapper {
         }
     }
 
-    async fn delete_user(&self, user_id: &Identifier) -> Result<(), IggyError> {
+    async fn delete_user(&self, user_id: &Identifier) -> Result<(), MessengerError> {
         match self {
             ClientWrapper::Http(client) => client.delete_user(user_id).await,
             ClientWrapper::Tcp(client) => client.delete_user(user_id).await,
             ClientWrapper::Quic(client) => client.delete_user(user_id).await,
-            ClientWrapper::Iggy(client) => client.delete_user(user_id).await,
+            ClientWrapper::Messenger(client) => client.delete_user(user_id).await,
         }
     }
 
@@ -88,12 +88,12 @@ impl UserClient for ClientWrapper {
         user_id: &Identifier,
         username: Option<&str>,
         status: Option<UserStatus>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         match self {
             ClientWrapper::Http(client) => client.update_user(user_id, username, status).await,
             ClientWrapper::Tcp(client) => client.update_user(user_id, username, status).await,
             ClientWrapper::Quic(client) => client.update_user(user_id, username, status).await,
-            ClientWrapper::Iggy(client) => client.update_user(user_id, username, status).await,
+            ClientWrapper::Messenger(client) => client.update_user(user_id, username, status).await,
         }
     }
 
@@ -101,9 +101,9 @@ impl UserClient for ClientWrapper {
         &self,
         user_id: &Identifier,
         permissions: Option<Permissions>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.update_permissions(user_id, permissions).await,
+            ClientWrapper::Messenger(client) => client.update_permissions(user_id, permissions).await,
             ClientWrapper::Http(client) => client.update_permissions(user_id, permissions).await,
             ClientWrapper::Tcp(client) => client.update_permissions(user_id, permissions).await,
             ClientWrapper::Quic(client) => client.update_permissions(user_id, permissions).await,
@@ -115,7 +115,7 @@ impl UserClient for ClientWrapper {
         user_id: &Identifier,
         current_password: &str,
         new_password: &str,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         match self {
             ClientWrapper::Http(client) => {
                 client
@@ -132,7 +132,7 @@ impl UserClient for ClientWrapper {
                     .change_password(user_id, current_password, new_password)
                     .await
             }
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .change_password(user_id, current_password, new_password)
                     .await
@@ -140,18 +140,18 @@ impl UserClient for ClientWrapper {
         }
     }
 
-    async fn login_user(&self, username: &str, password: &str) -> Result<IdentityInfo, IggyError> {
+    async fn login_user(&self, username: &str, password: &str) -> Result<IdentityInfo, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.login_user(username, password).await,
+            ClientWrapper::Messenger(client) => client.login_user(username, password).await,
             ClientWrapper::Http(client) => client.login_user(username, password).await,
             ClientWrapper::Tcp(client) => client.login_user(username, password).await,
             ClientWrapper::Quic(client) => client.login_user(username, password).await,
         }
     }
 
-    async fn logout_user(&self) -> Result<(), IggyError> {
+    async fn logout_user(&self) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.logout_user().await,
+            ClientWrapper::Messenger(client) => client.logout_user().await,
             ClientWrapper::Http(client) => client.logout_user().await,
             ClientWrapper::Tcp(client) => client.logout_user().await,
             ClientWrapper::Quic(client) => client.logout_user().await,

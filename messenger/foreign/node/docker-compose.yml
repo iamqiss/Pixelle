@@ -16,23 +16,23 @@
 # under the License.
 
 services:
-  iggy-server:
-    image: apache/iggy:latest
-    container_name: iggy-server
+  messenger-server:
+    image: apache/messenger:latest
+    container_name: messenger-server
     restart: unless-stopped
     networks:
-      - iggy
+      - messenger
     ports:
       - 3000:3000
       - 8080:8080
       - 8090:8090
     volumes:
-      - iggy-server:/local_data
+      - messenger-server:/local_data
 
 volumes:
-  iggy-server:
+  messenger-server:
     driver: local
 
 networks:
-  iggy:
-    name: iggy-network
+  messenger:
+    name: messenger-network

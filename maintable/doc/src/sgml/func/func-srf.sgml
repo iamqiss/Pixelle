@@ -284,7 +284,7 @@ SELECT * FROM pg_ls_dir('.') WITH ORDINALITY AS t(ls,n);
  pg_twophase     |  2
  postmaster.opts |  3
  pg_notify       |  4
- postgresql.conf |  5
+ maintableql.conf |  5
  pg_tblspc       |  6
  logfile         |  7
  base            |  8

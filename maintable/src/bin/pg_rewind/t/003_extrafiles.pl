@@ -1,12 +1,12 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test how pg_rewind reacts to extra files and directories in the data dirs.
 
 use strict;
 use warnings FATAL => 'all';
 use Config;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use Test::More;
 
 use File::Find;

@@ -22,10 +22,10 @@ use crate::{
 };
 use async_broadcast::Receiver;
 use async_trait::async_trait;
-use iggy_common::{DiagnosticEvent, IggyError};
+use messenger_common::{DiagnosticEvent, MessengerError};
 use std::fmt::Debug;
 
-/// The client trait which is the main interface to the Iggy server.
+/// The client trait which is the main interface to the Messenger server.
 /// It consists of multiple modules, each of which is responsible for a specific set of commands.
 /// Except the ping, login and get me, all the other methods require authentication.
 #[async_trait]
@@ -46,13 +46,13 @@ pub trait Client:
 {
     /// Connect to the server. Depending on the selected transport and provided configuration it might also perform authentication, retry logic etc.
     /// If the client is already connected, it will do nothing.
-    async fn connect(&self) -> Result<(), IggyError>;
+    async fn connect(&self) -> Result<(), MessengerError>;
 
     /// Disconnect from the server. If the client is not connected, it will do nothing.
-    async fn disconnect(&self) -> Result<(), IggyError>;
+    async fn disconnect(&self) -> Result<(), MessengerError>;
 
     // Shutdown the client and release all the resources.
-    async fn shutdown(&self) -> Result<(), IggyError>;
+    async fn shutdown(&self) -> Result<(), MessengerError>;
 
     /// Subscribe to diagnostic events.
     async fn subscribe_events(&self) -> Receiver<DiagnosticEvent>;

@@ -4,7 +4,7 @@
  *	  Resource usage measurement support routines.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 
@@ -33,7 +33,7 @@ pg_rusage_init(PGRUsage *ru0)
 /*
  * Compute elapsed time since ru0 usage snapshot, and format into
  * a displayable string.  Result is in a static string, which is
- * tacky, but no one ever claimed that the Postgres backend is
+ * tacky, but no one ever claimed that the Maintable backend is
  * threadable...
  */
 const char *

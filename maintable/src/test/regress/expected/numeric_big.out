@@ -1,5 +1,5 @@
 -- ******************************
--- * Test suite for the Postgres NUMERIC data type
+-- * Test suite for the Maintable NUMERIC data type
 -- ******************************
 -- Must drop tables created by short numeric test.
 DROP TABLE num_data;

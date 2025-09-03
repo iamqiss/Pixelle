@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 =pod
 
@@ -18,7 +18,7 @@ SSL::Backend::OpenSSL
 =head1 DESCRIPTION
 
 SSL::Backend::OpenSSL implements the library specific parts in SSL::Server
-for a PostgreSQL cluster compiled against OpenSSL.
+for a maintableQL cluster compiled against OpenSSL.
 
 =cut
 
@@ -26,7 +26,7 @@ package SSL::Backend::OpenSSL;
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use File::Basename;
 use File::Copy;
 
@@ -84,7 +84,7 @@ sub init
 	# This changes to using keys stored in a temporary path for the rest of
 	# the tests. To get the full path for inclusion in connection strings, the
 	# %key hash can be interrogated.
-	my $cert_tempdir = PostgreSQL::Test::Utils::tempdir();
+	my $cert_tempdir = maintableQL::Test::Utils::tempdir();
 	my @keys = (
 		"client.key", "client-revoked.key",
 		"client-der.key", "client-encrypted-pem.key",
@@ -100,7 +100,7 @@ sub init
 		  or die "failed to change permissions on $cert_tempdir/$keyfile: $!";
 		$self->{key}->{$keyfile} = "$cert_tempdir/$keyfile";
 		$self->{key}->{$keyfile} =~ s!\\!/!g
-		  if $PostgreSQL::Test::Utils::windows_os;
+		  if $maintableQL::Test::Utils::windows_os;
 	}
 
 	# Also make a copy of client.key explicitly world-readable in order to be
@@ -115,7 +115,7 @@ sub init
 	$self->{key}->{'client_wrongperms.key'} =
 	  "$cert_tempdir/client_wrongperms.key";
 	$self->{key}->{'client_wrongperms.key'} =~ s!\\!/!g
-	  if $PostgreSQL::Test::Utils::windows_os;
+	  if $maintableQL::Test::Utils::windows_os;
 }
 
 =pod

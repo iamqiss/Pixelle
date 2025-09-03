@@ -17,17 +17,17 @@
  */
 
 use cucumber::World;
-use iggy::clients::client::IggyClient;
-use iggy::prelude::{IggyMessage, PolledMessages};
+use messenger::clients::client::MessengerClient;
+use messenger::prelude::{MessengerMessage, PolledMessages};
 
-#[cfg(not(feature = "iggy-server-in-docker"))]
+#[cfg(not(feature = "messenger-server-in-docker"))]
 use integration::test_server::TestServer;
 
 #[derive(Debug, World, Default)]
 pub struct GlobalContext {
-    #[cfg(not(feature = "iggy-server-in-docker"))]
+    #[cfg(not(feature = "messenger-server-in-docker"))]
     pub server: Option<TestServer>,
-    pub client: Option<IggyClient>,
+    pub client: Option<MessengerClient>,
     pub server_addr: Option<String>,
     pub last_stream_id: Option<u32>,
     pub last_stream_name: Option<String>,
@@ -35,5 +35,5 @@ pub struct GlobalContext {
     pub last_topic_name: Option<String>,
     pub last_topic_partitions: Option<u32>,
     pub last_polled_messages: Option<PolledMessages>,
-    pub last_sent_message: Option<IggyMessage>,
+    pub last_sent_message: Option<MessengerMessage>,
 }

@@ -19,22 +19,22 @@
 Test configuration and fixtures for the Python SDK test suite.
 
 This module provides pytest fixtures for setting up test environments
-and connecting to Iggy servers in various configurations.
+and connecting to Messenger servers in various configurations.
 """
 
 import asyncio
 import os
 
 import pytest
-from apache_iggy import IggyClient
+from apache_messenger import MessengerClient
 
 from .utils import get_server_config, wait_for_ping, wait_for_server
 
 
 @pytest.fixture(scope="session")
-async def iggy_client() -> IggyClient:
+async def messenger_client() -> MessengerClient:
     """
-    Create and configure an Iggy client for testing.
+    Create and configure an Messenger client for testing.
 
     This fixture:
     1. Gets server configuration from environment
@@ -44,7 +44,7 @@ async def iggy_client() -> IggyClient:
     5. Verifies connectivity with ping
 
     Returns:
-        IggyClient: Authenticated client ready for testing
+        MessengerClient: Authenticated client ready for testing
     """
     host, port = get_server_config()
 
@@ -52,14 +52,14 @@ async def iggy_client() -> IggyClient:
     wait_for_server(host, port)
 
     # Create and connect client
-    client = IggyClient(f"{host}:{port}")
+    client = MessengerClient(f"{host}:{port}")
     await client.connect()
 
     # Wait for server to be fully ready
     await wait_for_ping(client)
 
     # Authenticate
-    await client.login_user("iggy", "iggy")
+    await client.login_user("messenger", "messenger")
 
     return client
 
@@ -84,6 +84,6 @@ def pytest_configure(config):
 def pytest_collection_modifyitems(config, items):
     """Modify test collection to add markers automatically."""
     for item in items:
-        # Mark all tests in test_iggy_sdk.py as integration tests
-        if "test_iggy_sdk" in item.nodeid:
+        # Mark all tests in test_messenger_sdk.py as integration tests
+        if "test_messenger_sdk" in item.nodeid:
             item.add_marker(pytest.mark.integration)

@@ -1,16 +1,16 @@
 # LANGUAGE message translation file for pg_basebackup
-# Copyright (C) 2011 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2011 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 9.2\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 9.2\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2019-04-26 13:46+0000\n"
 "PO-Revision-Date: 2019-05-28 13:56+0300\n"
 "Last-Translator: Abdullah G. GÜLNER <agulner@gmail.com>\n"
-"Language-Team: Turkish <ceviri@postgresql.org.tr>\n"
+"Language-Team: Turkish <ceviri@maintableql.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -160,10 +160,10 @@ msgstr "tablespace eşleştirmesinde yeni dizin mutlak bir yol değil: %s"
 #: pg_basebackup.c:326
 #, c-format
 msgid ""
-"%s takes a base backup of a running PostgreSQL server.\n"
+"%s takes a base backup of a running maintableQL server.\n"
 "\n"
 msgstr ""
-"%s çalışan bir PostgreSQL sunucusunun temel yedeğini (base backup) alır. \n"
+"%s çalışan bir maintableQL sunucusunun temel yedeğini (base backup) alır. \n"
 "\n"
 
 #: pg_basebackup.c:328 pg_receivewal.c:81 pg_recvlogical.c:78
@@ -377,10 +377,10 @@ msgstr "  -W, --password         şifre sor (otomatik olarak her zaman açık)\n
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 msgstr ""
 "\n"
-"Hataları <pgsql-bugs@lists.postgresql.org> adresine bildirebilirsiniz.\n"
+"Hataları <pgsql-bugs@lists.maintableql.org> adresine bildirebilirsiniz.\n"
 
 #: pg_basebackup.c:411
 #, c-format
@@ -812,10 +812,10 @@ msgstr "bu platformda sembolik bağlantı (symlink) desteklenmemektedir"
 #: pg_receivewal.c:79
 #, c-format
 msgid ""
-"%s receives PostgreSQL streaming write-ahead logs.\n"
+"%s receives maintableQL streaming write-ahead logs.\n"
 "\n"
 msgstr ""
-"%s stream eden PostgreSQL write-ahead loglarını alır.\n"
+"%s stream eden maintableQL write-ahead loglarını alır.\n"
 "\n"
 
 #: pg_receivewal.c:83 pg_recvlogical.c:84
@@ -1006,9 +1006,9 @@ msgstr "bağlantı kesildi; tekrar denemek için %d saniye bekleniyor"
 #: pg_recvlogical.c:76
 #, c-format
 msgid ""
-"%s controls PostgreSQL logical decoding streams.\n"
+"%s controls maintableQL logical decoding streams.\n"
 "\n"
-msgstr "%s PostgreSQL mantıksal kod çözme akımlarını (stream) kontrol eder\n"
+msgstr "%s maintableQL mantıksal kod çözme akımlarını (stream) kontrol eder\n"
 
 #: pg_recvlogical.c:80
 #, c-format

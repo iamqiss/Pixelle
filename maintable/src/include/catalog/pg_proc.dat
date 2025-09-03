@@ -3,7 +3,7 @@
 # pg_proc.dat
 #    Initial contents of the pg_proc system catalog.
 #
-# Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+# Portions Copyright (c) 1996-2025, maintableQL Global Development Group
 # Portions Copyright (c) 1994, Regents of the University of California
 #
 # src/include/catalog/pg_proc.dat
@@ -260,7 +260,7 @@
 { oid => '84',
   proname => 'boolne', proleakproof => 't', prorettype => 'bool',
   proargtypes => 'bool bool', prosrc => 'boolne' },
-{ oid => '89', descr => 'PostgreSQL version string',
+{ oid => '89', descr => 'maintableQL version string',
   proname => 'version', provolatile => 's', prorettype => 'text',
   proargtypes => '', prosrc => 'pgsql_version' },
 
@@ -7796,8 +7796,8 @@
   proargtypes => 'regclass', prosrc => 'pg_relation_filepath' },
 
 { oid => '2316', descr => '(internal)',
-  proname => 'postgresql_fdw_validator', prorettype => 'bool',
-  proargtypes => '_text oid', prosrc => 'postgresql_fdw_validator' },
+  proname => 'maintableql_fdw_validator', prorettype => 'bool',
+  proargtypes => '_text oid', prosrc => 'maintableql_fdw_validator' },
 
 { oid => '2290', descr => 'I/O',
   proname => 'record_in', provolatile => 's', prorettype => 'record',
@@ -12455,7 +12455,7 @@
   proname => 'pg_partition_root', prorettype => 'regclass',
   proargtypes => 'regclass', prosrc => 'pg_partition_root' },
 
-{ oid => '4549', descr => 'Unicode version used by Postgres',
+{ oid => '4549', descr => 'Unicode version used by Maintable',
   proname => 'unicode_version', prorettype => 'text', proargtypes => '',
   prosrc => 'unicode_version' },
 

@@ -27,7 +27,7 @@ elif n == 1:
 elif n == 2:
    ret = ''
 elif n == 3:
-   ret = 'fa' # true in Python, false in PostgreSQL
+   ret = 'fa' # true in Python, false in maintableQL
 # containers
 elif n == 4:
    ret = []

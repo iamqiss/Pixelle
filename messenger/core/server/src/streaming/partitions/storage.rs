@@ -26,8 +26,8 @@ use crate::streaming::segments::*;
 use crate::streaming::storage::PartitionStorage;
 use crate::streaming::utils::file;
 use error_set::ErrContext;
-use iggy_common::ConsumerKind;
-use iggy_common::IggyError;
+use messenger_common::ConsumerKind;
+use messenger_common::MessengerError;
 use std::path::Path;
 use std::sync::Arc;
 use std::sync::atomic::Ordering;
@@ -52,7 +52,7 @@ impl PartitionStorage for FilePartitionStorage {
         &self,
         partition: &mut Partition,
         state: PartitionState,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         info!(
             "Loading partition with ID: {} for stream with ID: {} and topic with ID: {}, for path: {} from disk...",
             partition.partition_id,
@@ -69,7 +69,7 @@ impl PartitionStorage for FilePartitionStorage {
                     partition.partition_id, partition.stream_id, partition.topic_id, partition.partition_path,
                 )).is_err()
             {
-                return Err(IggyError::CannotReadPartitions);
+                return Err(MessengerError::CannotReadPartitions);
             }
 
         let mut dir_entries = dir_entries.unwrap();
@@ -254,7 +254,7 @@ impl PartitionStorage for FilePartitionStorage {
         Ok(())
     }
 
-    async fn save(&self, partition: &mut Partition) -> Result<(), IggyError> {
+    async fn save(&self, partition: &mut Partition) -> Result<(), MessengerError> {
         info!(
             "Saving partition with start ID: {} for stream with ID: {} and topic with ID: {}...",
             partition.partition_id, partition.stream_id, partition.topic_id
@@ -262,7 +262,7 @@ impl PartitionStorage for FilePartitionStorage {
         if !Path::new(&partition.partition_path).exists()
             && create_dir_all(&partition.partition_path).await.is_err()
         {
-            return Err(IggyError::CannotCreatePartitionDirectory(
+            return Err(MessengerError::CannotCreatePartitionDirectory(
                 partition.partition_id,
                 partition.stream_id,
                 partition.topic_id,
@@ -276,7 +276,7 @@ impl PartitionStorage for FilePartitionStorage {
                 "Failed to create offsets directory for partition with ID: {} for stream with ID: {} and topic with ID: {}.",
                 partition.partition_id, partition.stream_id, partition.topic_id
             );
-            return Err(IggyError::CannotCreatePartition(
+            return Err(MessengerError::CannotCreatePartition(
                 partition.partition_id,
                 partition.stream_id,
                 partition.topic_id,
@@ -292,7 +292,7 @@ impl PartitionStorage for FilePartitionStorage {
                 "Failed to create consumer offsets directory for partition with ID: {} for stream with ID: {} and topic with ID: {}.",
                 partition.partition_id, partition.stream_id, partition.topic_id
             );
-            return Err(IggyError::CannotCreatePartition(
+            return Err(MessengerError::CannotCreatePartition(
                 partition.partition_id,
                 partition.stream_id,
                 partition.topic_id,
@@ -308,7 +308,7 @@ impl PartitionStorage for FilePartitionStorage {
                 "Failed to create consumer group offsets directory for partition with ID: {} for stream with ID: {} and topic with ID: {}.",
                 partition.partition_id, partition.stream_id, partition.topic_id
             );
-            return Err(IggyError::CannotCreatePartition(
+            return Err(MessengerError::CannotCreatePartition(
                 partition.partition_id,
                 partition.stream_id,
                 partition.topic_id,
@@ -332,7 +332,7 @@ impl PartitionStorage for FilePartitionStorage {
         Ok(())
     }
 
-    async fn delete(&self, partition: &Partition) -> Result<(), IggyError> {
+    async fn delete(&self, partition: &Partition) -> Result<(), MessengerError> {
         info!(
             "Deleting partition with ID: {} for stream with ID: {} and topic with ID: {}...",
             partition.partition_id, partition.stream_id, partition.topic_id,
@@ -346,7 +346,7 @@ impl PartitionStorage for FilePartitionStorage {
                 "Cannot delete consumer offsets for partition with ID: {} for topic with ID: {} for stream with ID: {}. Error: {}",
                 partition.partition_id, partition.topic_id, partition.stream_id, err
             );
-            return Err(IggyError::CannotDeletePartition(
+            return Err(MessengerError::CannotDeletePartition(
                 partition.partition_id,
                 partition.topic_id,
                 partition.stream_id,
@@ -361,7 +361,7 @@ impl PartitionStorage for FilePartitionStorage {
                 "Cannot delete consumer group offsets for partition with ID: {} for topic with ID: {} for stream with ID: {}. Error: {}",
                 partition.partition_id, partition.topic_id, partition.stream_id, err
             );
-            return Err(IggyError::CannotDeletePartition(
+            return Err(MessengerError::CannotDeletePartition(
                 partition.partition_id,
                 partition.topic_id,
                 partition.stream_id,
@@ -376,7 +376,7 @@ impl PartitionStorage for FilePartitionStorage {
                 partition.topic_id,
                 partition.stream_id
             );
-            return Err(IggyError::CannotDeletePartitionDirectory(
+            return Err(MessengerError::CannotDeletePartitionDirectory(
                 partition.partition_id,
                 partition.stream_id,
                 partition.topic_id,
@@ -389,7 +389,7 @@ impl PartitionStorage for FilePartitionStorage {
         Ok(())
     }
 
-    async fn save_consumer_offset(&self, offset: u64, path: &str) -> Result<(), IggyError> {
+    async fn save_consumer_offset(&self, offset: u64, path: &str) -> Result<(), MessengerError> {
         self.persister
             .overwrite(path, &offset.to_le_bytes())
             .await
@@ -404,11 +404,11 @@ impl PartitionStorage for FilePartitionStorage {
         &self,
         kind: ConsumerKind,
         path: &str,
-    ) -> Result<Vec<ConsumerOffset>, IggyError> {
+    ) -> Result<Vec<ConsumerOffset>, MessengerError> {
         trace!("Loading consumer offsets from path: {path}...");
         let dir_entries = fs::read_dir(&path).await;
         if dir_entries.is_err() {
-            return Err(IggyError::CannotReadConsumerOffsets(path.to_owned()));
+            return Err(MessengerError::CannotReadConsumerOffsets(path.to_owned()));
         }
 
         let mut consumer_offsets = Vec::new();
@@ -446,14 +446,14 @@ impl PartitionStorage for FilePartitionStorage {
                         "{COMPONENT} (error: {error}) - failed to open offset file, path: {path}"
                     )
                 })
-                .map_err(|_| IggyError::CannotReadFile)?;
+                .map_err(|_| MessengerError::CannotReadFile)?;
             let offset = file
                 .read_u64_le()
                 .await
                 .with_error_context(|error| {
                     format!("{COMPONENT} (error: {error}) - failed to read consumer offset from file, path: {path}")
                 })
-                .map_err(|_| IggyError::CannotReadFile)?;
+                .map_err(|_| MessengerError::CannotReadFile)?;
 
             consumer_offsets.push(ConsumerOffset {
                 kind,
@@ -467,7 +467,7 @@ impl PartitionStorage for FilePartitionStorage {
         Ok(consumer_offsets)
     }
 
-    async fn delete_consumer_offsets(&self, path: &str) -> Result<(), IggyError> {
+    async fn delete_consumer_offsets(&self, path: &str) -> Result<(), MessengerError> {
         if !Path::new(path).exists() {
             trace!("Consumer offsets directory does not exist: {path}.");
             return Ok(());
@@ -475,14 +475,14 @@ impl PartitionStorage for FilePartitionStorage {
 
         if fs::remove_dir_all(path).await.is_err() {
             error!("Cannot delete consumer offsets directory: {}.", path);
-            return Err(IggyError::CannotDeleteConsumerOffsetsDirectory(
+            return Err(MessengerError::CannotDeleteConsumerOffsetsDirectory(
                 path.to_owned(),
             ));
         }
         Ok(())
     }
 
-    async fn delete_consumer_offset(&self, path: &str) -> Result<(), IggyError> {
+    async fn delete_consumer_offset(&self, path: &str) -> Result<(), MessengerError> {
         if !Path::new(path).exists() {
             trace!("Consumer offset file does not exist: {path}.");
             return Ok(());
@@ -490,7 +490,7 @@ impl PartitionStorage for FilePartitionStorage {
 
         if fs::remove_file(path).await.is_err() {
             error!("Cannot delete consumer offset file: {path}.");
-            return Err(IggyError::CannotDeleteConsumerOffsetFile(path.to_owned()));
+            return Err(MessengerError::CannotDeleteConsumerOffsetFile(path.to_owned()));
         }
         Ok(())
     }

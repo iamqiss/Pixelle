@@ -3,7 +3,7 @@
  * logicalmsgdesc.c
  *	  rmgr descriptor routines for replication/logical/message.c
  *
- * Portions Copyright (c) 2015-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2015-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -11,7 +11,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "replication/message.h"
 

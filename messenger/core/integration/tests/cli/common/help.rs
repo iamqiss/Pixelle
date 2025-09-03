@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::cli::common::command::IggyCmdCommand;
+use crate::cli::common::command::MessengerCmdCommand;
 use assert_cmd::assert::Assert;
 use predicates::str::diff;
 
@@ -26,10 +26,10 @@ use predicates::str::diff;
 pub(crate) const CLAP_INDENT: &str = "          ";
 
 #[cfg(windows)]
-pub(crate) const USAGE_PREFIX: &str = "Usage: iggy.exe";
+pub(crate) const USAGE_PREFIX: &str = "Usage: messenger.exe";
 
 #[cfg(not(windows))]
-pub(crate) const USAGE_PREFIX: &str = "Usage: iggy";
+pub(crate) const USAGE_PREFIX: &str = "Usage: messenger";
 
 pub(crate) struct TestHelpCmd {
     help_command: Vec<String>,
@@ -45,8 +45,8 @@ impl TestHelpCmd {
         }
     }
 
-    pub(super) fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new().args(self.help_command.clone())
+    pub(super) fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new().args(self.help_command.clone())
     }
 
     pub(super) fn verify_command(&self, command_state: Assert) {

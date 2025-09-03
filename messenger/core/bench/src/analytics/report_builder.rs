@@ -30,7 +30,7 @@ use bench_report::{
     server_stats::{BenchmarkCacheMetrics, BenchmarkCacheMetricsKey, BenchmarkServerStats},
 };
 use chrono::{DateTime, Utc};
-use iggy::prelude::{CacheMetrics, CacheMetricsKey, IggyTimestamp, Stats};
+use messenger::prelude::{CacheMetrics, CacheMetricsKey, MessengerTimestamp, Stats};
 use integration::test_server::ClientFactory;
 use std::sync::Arc;
 
@@ -48,7 +48,7 @@ impl BenchmarkReportBuilder {
         let uuid = uuid::Uuid::new_v4();
 
         let timestamp =
-            DateTime::<Utc>::from_timestamp_micros(IggyTimestamp::now().as_micros() as i64)
+            DateTime::<Utc>::from_timestamp_micros(MessengerTimestamp::now().as_micros() as i64)
                 .map_or_else(|| String::from("unknown"), |dt| dt.to_rfc3339());
 
         let server_stats = get_server_stats(client_factory)
@@ -56,7 +56,7 @@ impl BenchmarkReportBuilder {
             .expect("Failed to get server stats");
 
         if params.gitref.is_none() {
-            params.gitref = Some(server_stats.iggy_server_version.clone());
+            params.gitref = Some(server_stats.messenger_server_version.clone());
         }
 
         if params.gitref_date.is_none() {
@@ -167,8 +167,8 @@ fn stats_to_benchmark_server_stats(stats: Stats) -> BenchmarkServerStats {
         os_name: stats.os_name,
         os_version: stats.os_version,
         kernel_version: stats.kernel_version,
-        iggy_server_version: stats.iggy_server_version,
-        iggy_server_semver: stats.iggy_server_semver,
+        messenger_server_version: stats.messenger_server_version,
+        messenger_server_semver: stats.messenger_server_semver,
         cache_metrics: cache_metrics_to_benchmark_cache_metrics(stats.cache_metrics),
     }
 }

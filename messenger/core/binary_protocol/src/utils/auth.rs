@@ -17,17 +17,17 @@
  */
 
 use crate::BinaryTransport;
-use iggy_common::{ClientState, IggyError};
+use messenger_common::{ClientState, MessengerError};
 
 pub(crate) async fn fail_if_not_authenticated<T: BinaryTransport>(
     transport: &T,
-) -> Result<(), IggyError> {
+) -> Result<(), MessengerError> {
     match transport.get_state().await {
-        ClientState::Shutdown => Err(IggyError::ClientShutdown),
+        ClientState::Shutdown => Err(MessengerError::ClientShutdown),
         ClientState::Disconnected | ClientState::Connecting | ClientState::Authenticating => {
-            Err(IggyError::Disconnected)
+            Err(MessengerError::Disconnected)
         }
-        ClientState::Connected => Err(IggyError::Unauthenticated),
+        ClientState::Connected => Err(MessengerError::Unauthenticated),
         ClientState::Authenticated => Ok(()),
     }
 }

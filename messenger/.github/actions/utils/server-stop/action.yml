@@ -16,7 +16,7 @@
 # under the License.
 
 name: server-stop
-description: Stop Iggy server by PID or PID file
+description: Stop Messenger server by PID or PID file
 inputs:
   pid:
     description: "PID to stop (optional if pid-file is provided)"

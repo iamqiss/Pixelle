@@ -18,17 +18,17 @@
 
 use crate::client_wrappers::client_wrapper::ClientWrapper;
 use async_trait::async_trait;
-use iggy_binary_protocol::PersonalAccessTokenClient;
-use iggy_common::{
-    IdentityInfo, IggyError, PersonalAccessTokenExpiry, PersonalAccessTokenInfo,
+use messenger_binary_protocol::PersonalAccessTokenClient;
+use messenger_common::{
+    IdentityInfo, MessengerError, PersonalAccessTokenExpiry, PersonalAccessTokenInfo,
     RawPersonalAccessToken,
 };
 
 #[async_trait]
 impl PersonalAccessTokenClient for ClientWrapper {
-    async fn get_personal_access_tokens(&self) -> Result<Vec<PersonalAccessTokenInfo>, IggyError> {
+    async fn get_personal_access_tokens(&self) -> Result<Vec<PersonalAccessTokenInfo>, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.get_personal_access_tokens().await,
+            ClientWrapper::Messenger(client) => client.get_personal_access_tokens().await,
             ClientWrapper::Http(client) => client.get_personal_access_tokens().await,
             ClientWrapper::Tcp(client) => client.get_personal_access_tokens().await,
             ClientWrapper::Quic(client) => client.get_personal_access_tokens().await,
@@ -39,18 +39,18 @@ impl PersonalAccessTokenClient for ClientWrapper {
         &self,
         name: &str,
         expiry: PersonalAccessTokenExpiry,
-    ) -> Result<RawPersonalAccessToken, IggyError> {
+    ) -> Result<RawPersonalAccessToken, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.create_personal_access_token(name, expiry).await,
+            ClientWrapper::Messenger(client) => client.create_personal_access_token(name, expiry).await,
             ClientWrapper::Http(client) => client.create_personal_access_token(name, expiry).await,
             ClientWrapper::Tcp(client) => client.create_personal_access_token(name, expiry).await,
             ClientWrapper::Quic(client) => client.create_personal_access_token(name, expiry).await,
         }
     }
 
-    async fn delete_personal_access_token(&self, name: &str) -> Result<(), IggyError> {
+    async fn delete_personal_access_token(&self, name: &str) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.delete_personal_access_token(name).await,
+            ClientWrapper::Messenger(client) => client.delete_personal_access_token(name).await,
             ClientWrapper::Http(client) => client.delete_personal_access_token(name).await,
             ClientWrapper::Tcp(client) => client.delete_personal_access_token(name).await,
             ClientWrapper::Quic(client) => client.delete_personal_access_token(name).await,
@@ -60,9 +60,9 @@ impl PersonalAccessTokenClient for ClientWrapper {
     async fn login_with_personal_access_token(
         &self,
         token: &str,
-    ) -> Result<IdentityInfo, IggyError> {
+    ) -> Result<IdentityInfo, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.login_with_personal_access_token(token).await,
+            ClientWrapper::Messenger(client) => client.login_with_personal_access_token(token).await,
             ClientWrapper::Http(client) => client.login_with_personal_access_token(token).await,
             ClientWrapper::Tcp(client) => client.login_with_personal_access_token(token).await,
             ClientWrapper::Quic(client) => client.login_with_personal_access_token(token).await,

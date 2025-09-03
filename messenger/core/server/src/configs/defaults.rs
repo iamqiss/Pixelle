@@ -34,13 +34,13 @@ use crate::configs::system::{
     StateConfig, StreamConfig, SystemConfig, TopicConfig,
 };
 use crate::configs::tcp::{TcpConfig, TcpTlsConfig};
-use iggy_common::IggyByteSize;
-use iggy_common::IggyDuration;
+use messenger_common::MessengerByteSize;
+use messenger_common::MessengerDuration;
 use std::sync::Arc;
 use std::time::Duration;
 
 static_toml::static_toml! {
-    // static_toml crate always starts from CARGO_MANIFEST_DIR (in this case iggy-server root directory)
+    // static_toml crate always starts from CARGO_MANIFEST_DIR (in this case messenger-server root directory)
     static SERVER_CONFIG = include_toml!("../configs/server.toml");
 }
 
@@ -164,11 +164,11 @@ impl Default for TcpSocketConfig {
     fn default() -> TcpSocketConfig {
         TcpSocketConfig {
             override_defaults: false,
-            recv_buffer_size: IggyByteSize::from(100_000_u64),
-            send_buffer_size: IggyByteSize::from(100_000_u64),
+            recv_buffer_size: MessengerByteSize::from(100_000_u64),
+            send_buffer_size: MessengerByteSize::from(100_000_u64),
             keepalive: false,
             nodelay: false,
-            linger: IggyDuration::new(Duration::new(0, 0)),
+            linger: MessengerDuration::new(Duration::new(0, 0)),
         }
     }
 }

@@ -16,19 +16,19 @@
 // under the License.
 
 use crate::cache::BenchmarkCache;
-use crate::{error::IggyBenchDashboardServerError, github::client::IggyBenchDashboardGithubClient};
+use crate::{error::MessengerBenchDashboardServerError, github::client::MessengerBenchDashboardGithubClient};
 use file_operation::async_copy_dir_files;
 use std::{path::PathBuf, sync::Arc, time::Duration};
 use tokio::{fs, sync::watch, task::JoinHandle, time::sleep};
 use tracing::{info, trace};
 
 /// A long-running background task that polls GitHub for workflow runs.
-pub struct IggyBenchDashboardGithubPoller {
+pub struct MessengerBenchDashboardGithubPoller {
     shutdown_tx: watch::Sender<bool>,
     join_handle: JoinHandle<()>,
 }
 
-impl IggyBenchDashboardGithubPoller {
+impl MessengerBenchDashboardGithubPoller {
     pub fn start(
         output_dir: PathBuf,
         branch: String,
@@ -68,8 +68,8 @@ async fn poll_github_with_shutdown(
     interval_seconds: u64,
     mut shutdown_rx: watch::Receiver<bool>,
     cache: Arc<BenchmarkCache>,
-) -> Result<(), IggyBenchDashboardServerError> {
-    let gh = IggyBenchDashboardGithubClient::new()?;
+) -> Result<(), MessengerBenchDashboardServerError> {
+    let gh = MessengerBenchDashboardGithubClient::new()?;
 
     info!(
         "Polling GitHub for successful workflow runs on branch {} every {} seconds, copying artifacts to {:?}...",
@@ -103,7 +103,7 @@ async fn poll_github_with_shutdown(
             }
 
             let sha1 = &workflow.head_sha;
-            let gitref = IggyBenchDashboardGithubClient::get_tag_for_commit(&tags, sha1)
+            let gitref = MessengerBenchDashboardGithubClient::get_tag_for_commit(&tags, sha1)
                 .map(|tag| tag.name)
                 .unwrap_or_else(|| sha1.chars().take(8).collect());
 
@@ -125,16 +125,16 @@ async fn poll_github_with_shutdown(
                 let path = entry.path();
                 if path.is_dir() {
                     let dir_name = path.file_name().and_then(|n| n.to_str()).ok_or_else(|| {
-                        IggyBenchDashboardServerError::InvalidPath("Invalid directory name".into())
+                        MessengerBenchDashboardServerError::InvalidPath("Invalid directory name".into())
                     })?;
                     let bench_destination_dir = performance_results_dir.join(dir_name);
                     info!("Copying {} to {:?}", path.display(), bench_destination_dir);
 
                     let source = path.to_str().ok_or_else(|| {
-                        IggyBenchDashboardServerError::InvalidPath("Invalid source path".into())
+                        MessengerBenchDashboardServerError::InvalidPath("Invalid source path".into())
                     })?;
                     let destination = bench_destination_dir.to_str().ok_or_else(|| {
-                        IggyBenchDashboardServerError::InvalidPath(
+                        MessengerBenchDashboardServerError::InvalidPath(
                             "Invalid destination path".into(),
                         )
                     })?;

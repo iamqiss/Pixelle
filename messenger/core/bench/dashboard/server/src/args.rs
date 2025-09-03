@@ -37,7 +37,7 @@ pub struct PollGithubArgs {
 
 #[derive(Debug, Deserialize, Parser)]
 #[command(author, version, about, long_about = None)]
-pub struct IggyBenchDashboardServerArgs {
+pub struct MessengerBenchDashboardServerArgs {
     /// Server host address
     #[arg(long, default_value = "127.0.0.1")]
     pub host: String,
@@ -63,13 +63,13 @@ pub struct IggyBenchDashboardServerArgs {
     pub github: Option<PollGithub>,
 }
 
-impl IggyBenchDashboardServerArgs {
+impl MessengerBenchDashboardServerArgs {
     pub fn parse() -> Self {
         Self::parse_from(std::env::args())
     }
 
     pub fn validate(&self) {
-        let mut cmd = IggyBenchDashboardServerArgs::command();
+        let mut cmd = MessengerBenchDashboardServerArgs::command();
         if !self.results_dir.exists() {
             cmd.error(
                 ErrorKind::InvalidValue,

@@ -3161,9 +3161,9 @@ REINDEX TABLE CONCURRENTLY pg_toast.pg_toast_1262; -- no catalog toast table
 ERROR:  cannot reindex system catalogs concurrently
 REINDEX INDEX CONCURRENTLY pg_toast.pg_toast_1262_index; -- no catalog toast index
 ERROR:  cannot reindex system catalogs concurrently
-REINDEX SYSTEM CONCURRENTLY postgres; -- not allowed for SYSTEM
+REINDEX SYSTEM CONCURRENTLY maintable; -- not allowed for SYSTEM
 ERROR:  cannot reindex system catalogs concurrently
-REINDEX (CONCURRENTLY) SYSTEM postgres; -- ditto
+REINDEX (CONCURRENTLY) SYSTEM maintable; -- ditto
 ERROR:  cannot reindex system catalogs concurrently
 REINDEX (CONCURRENTLY) SYSTEM;  -- ditto
 ERROR:  cannot reindex system catalogs concurrently

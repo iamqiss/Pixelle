@@ -17,7 +17,7 @@
  */
 
 use crate::{
-    BytesSerializable, IGGY_MESSAGE_HEADER_SIZE, IggyMessage, IggyMessageHeader, error::IggyError,
+    BytesSerializable, MESSENGER_MESSAGE_HEADER_SIZE, MessengerMessage, MessengerMessageHeader, error::MessengerError,
 };
 use bytes::Bytes;
 use serde::{Deserialize, Serialize};
@@ -38,7 +38,7 @@ pub struct PolledMessages {
     /// The count of messages.
     pub count: u32,
     /// The collection of messages.
-    pub messages: Vec<IggyMessage>,
+    pub messages: Vec<MessengerMessage>,
 }
 
 impl PolledMessages {
@@ -57,21 +57,21 @@ impl BytesSerializable for PolledMessages {
         panic!("should not be used")
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError> {
         let partition_id = u32::from_le_bytes(
             bytes[0..4]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let current_offset = u64::from_le_bytes(
             bytes[4..12]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let count = u32::from_le_bytes(
             bytes[12..16]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
 
         let messages = messages_from_bytes_and_count(bytes.slice(16..), count)?;
@@ -86,23 +86,23 @@ impl BytesSerializable for PolledMessages {
 }
 
 /// Convert Bytes to messages
-fn messages_from_bytes_and_count(buffer: Bytes, count: u32) -> Result<Vec<IggyMessage>, IggyError> {
+fn messages_from_bytes_and_count(buffer: Bytes, count: u32) -> Result<Vec<MessengerMessage>, MessengerError> {
     let mut messages = Vec::with_capacity(count as usize);
     let mut position = 0;
     let buf_len = buffer.len();
     while position < buf_len {
-        if position + IGGY_MESSAGE_HEADER_SIZE > buf_len {
+        if position + MESSENGER_MESSAGE_HEADER_SIZE > buf_len {
             break;
         }
-        let header_bytes = buffer.slice(position..position + IGGY_MESSAGE_HEADER_SIZE);
-        let header = match IggyMessageHeader::from_bytes(header_bytes) {
+        let header_bytes = buffer.slice(position..position + MESSENGER_MESSAGE_HEADER_SIZE);
+        let header = match MessengerMessageHeader::from_bytes(header_bytes) {
             Ok(h) => h,
             Err(e) => {
                 error!("Failed to deserialize message header: {}", e);
                 return Err(e);
             }
         };
-        position += IGGY_MESSAGE_HEADER_SIZE;
+        position += MESSENGER_MESSAGE_HEADER_SIZE;
 
         let payload_end = position + header.payload_length as usize;
         if payload_end > buf_len {
@@ -118,7 +118,7 @@ fn messages_from_bytes_and_count(buffer: Bytes, count: u32) -> Result<Vec<IggyMe
         };
         position += header.user_headers_length as usize;
 
-        messages.push(IggyMessage {
+        messages.push(MessengerMessage {
             header,
             payload,
             user_headers,

@@ -16,10 +16,10 @@
  * under the License.
  */
 
-use crate::cli::common::IggyCmdTest;
+use crate::cli::common::MessengerCmdTest;
 use crate::cli::message::test_message_poll_to_file_command::TestMessagePollToFileCmd;
 use crate::cli::message::test_message_send_from_file_command::TestMessageSendFromFileCmd;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use serial_test::parallel;
 use std::collections::HashMap;
 use std::str::FromStr;
@@ -27,7 +27,7 @@ use std::str::FromStr;
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
     let test_messages: Vec<&str> = vec![
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
@@ -57,7 +57,7 @@ pub async fn should_be_successful() {
         ),
     ]);
 
-    iggy_cmd_test.setup().await;
+    messenger_cmd_test.setup().await;
 
     let temp_file = tempfile::Builder::new().tempfile().unwrap();
     let temp_path = temp_file.path().to_path_buf();
@@ -66,7 +66,7 @@ pub async fn should_be_successful() {
 
     let message_count = test_messages.len();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestMessagePollToFileCmd::new(
             "input_stream",
             "input_topic",
@@ -79,7 +79,7 @@ pub async fn should_be_successful() {
         ))
         .await;
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestMessageSendFromFileCmd::new(
             false,
             temp_path_str,

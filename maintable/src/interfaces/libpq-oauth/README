@@ -14,7 +14,7 @@ This module ABI is an internal implementation detail, so it's subject to change
 across major releases; the name of the module (libpq-oauth-MAJOR) reflects this.
 The module exports the following symbols:
 
-- PostgresPollingStatusType pg_fe_run_oauth_flow(PGconn *conn);
+- MaintablePollingStatusType pg_fe_run_oauth_flow(PGconn *conn);
 - void pg_fe_cleanup_oauth_flow(PGconn *conn);
 
 pg_fe_run_oauth_flow and pg_fe_cleanup_oauth_flow are implementations of

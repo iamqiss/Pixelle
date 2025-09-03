@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 pg_ctl_sources = files(
   'pg_ctl.c',
@@ -7,7 +7,7 @@ pg_ctl_sources = files(
 if host_system == 'windows'
   pg_ctl_sources += rc_bin_gen.process(win32ver_rc, extra_args: [
     '--NAME', 'pg_ctl',
-    '--FILEDESC', 'pg_ctl - starts/stops/restarts the PostgreSQL server',])
+    '--FILEDESC', 'pg_ctl - starts/stops/restarts the maintableQL server',])
 endif
 
 pg_ctl = executable('pg_ctl',

@@ -42,10 +42,10 @@
   description: Basic configuration log format
   configuration_parameters:
     LOCATION: 'to_replace'
-    LOG_FORMAT: 'postgresql_log'
+    LOG_FORMAT: 'maintableql_log'
   metadata:
     location: 'to_replace'
-    log_format: 'postgresql_log'
+    log_format: 'maintableql_log'
     valid_value: True
 
 - name: Basic configuration log format

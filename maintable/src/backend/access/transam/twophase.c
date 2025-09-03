@@ -3,7 +3,7 @@
  * twophase.c
  *		Two-phase commit support functions.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -11,7 +11,7 @@
  *
  * NOTES
  *		Each global transaction is associated with a global transaction
- *		identifier (GID). The client assigns a GID to a postgres
+ *		identifier (GID). The client assigns a GID to a maintable
  *		transaction with the PREPARE TRANSACTION command.
  *
  *		We keep all active global transactions in a shared memory array.
@@ -69,7 +69,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -1826,7 +1826,7 @@ CheckPointTwoPhase(XLogRecPtr redo_horizon)
 	if (max_prepared_xacts <= 0)
 		return;					/* nothing to do */
 
-	TRACE_POSTGRESQL_TWOPHASE_CHECKPOINT_START();
+	TRACE_MAINTABLEQL_TWOPHASE_CHECKPOINT_START();
 
 	/*
 	 * We are expecting there to be zero GXACTs that need to be copied to
@@ -1879,7 +1879,7 @@ CheckPointTwoPhase(XLogRecPtr redo_horizon)
 	 */
 	fsync_fname(TWOPHASE_DIR, true);
 
-	TRACE_POSTGRESQL_TWOPHASE_CHECKPOINT_DONE();
+	TRACE_MAINTABLEQL_TWOPHASE_CHECKPOINT_DONE();
 
 	if (log_checkpoints && serialized_xacts > 0)
 		ereport(LOG,

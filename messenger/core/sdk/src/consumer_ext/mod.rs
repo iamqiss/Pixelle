@@ -19,8 +19,8 @@
 mod consumer_message_ext;
 mod consumer_message_trait;
 
-use crate::{clients::consumer::ReceivedMessage, prelude::IggyError};
-pub use consumer_message_trait::IggyConsumerMessageExt;
+use crate::{clients::consumer::ReceivedMessage, prelude::MessengerError};
+pub use consumer_message_trait::MessengerConsumerMessageExt;
 
 /// Trait for message consumer
 #[allow(dead_code)] // Clippy can't see that the trait is used
@@ -34,8 +34,8 @@ pub trait LocalMessageConsumer {
     ///
     /// # Errors
     ///
-    /// * `IggyError` - If the message consumer fails to consume the message
-    async fn consume(&self, message: ReceivedMessage) -> Result<(), IggyError>;
+    /// * `MessengerError` - If the message consumer fails to consume the message
+    async fn consume(&self, message: ReceivedMessage) -> Result<(), MessengerError>;
 }
 
 // Default implementation for `&T`
@@ -49,8 +49,8 @@ impl<T: MessageConsumer + Send + Sync> MessageConsumer for &T {
     ///
     /// # Errors
     ///
-    /// * `IggyError` - If the message consumer fails to consume the message
-    async fn consume(&self, message: ReceivedMessage) -> Result<(), IggyError> {
+    /// * `MessengerError` - If the message consumer fails to consume the message
+    async fn consume(&self, message: ReceivedMessage) -> Result<(), MessengerError> {
         (**self).consume(message).await
     }
 }

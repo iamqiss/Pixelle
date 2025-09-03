@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * array.h
- *	  Declarations for Postgres arrays.
+ *	  Declarations for Maintable arrays.
  *
  * A standard varlena array has the following internal structure:
  *	  <vl_len_>		- standard varlena header word
@@ -51,7 +51,7 @@
  * arrays holding the elements.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/utils/array.h

@@ -1,12 +1,12 @@
 # Czech message translation file for pg_basebackup
-# Copyright (C) 2012 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2012 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Tomas Vondra <tv@fuzzy.cz>, 2012, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_basebackup-cs (PostgreSQL 9.3)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_basebackup-cs (maintableQL 9.3)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2020-10-31 16:15+0000\n"
 "PO-Revision-Date: 2020-10-31 21:35+0100\n"
 "Last-Translator: Tomas Vondra <tv@fuzzy.cz>\n"
@@ -179,10 +179,10 @@ msgstr "nový adresář v tablespace mapování není zadán jako absolutní ces
 #: pg_basebackup.c:379
 #, c-format
 msgid ""
-"%s takes a base backup of a running PostgreSQL server.\n"
+"%s takes a base backup of a running maintableQL server.\n"
 "\n"
 msgstr ""
-"%s vytvoří base backup běžícího PostgreSQL serveru.\n"
+"%s vytvoří base backup běžícího maintableQL serveru.\n"
 "\n"
 
 #: pg_basebackup.c:381 pg_receivewal.c:79 pg_recvlogical.c:75
@@ -890,10 +890,10 @@ msgstr "na této platformě nejsou symbolické linky podporovány"
 #: pg_receivewal.c:77
 #, c-format
 msgid ""
-"%s receives PostgreSQL streaming write-ahead logs.\n"
+"%s receives maintableQL streaming write-ahead logs.\n"
 "\n"
 msgstr ""
-"%s přijímá PostgreSQL streamované transakční logy\n"
+"%s přijímá maintableQL streamované transakční logy\n"
 "\n"
 
 #: pg_receivewal.c:81 pg_recvlogical.c:81
@@ -1077,10 +1077,10 @@ msgstr "odpojeno; čekám %d vteřin pro další pokus"
 #: pg_recvlogical.c:73
 #, c-format
 msgid ""
-"%s controls PostgreSQL logical decoding streams.\n"
+"%s controls maintableQL logical decoding streams.\n"
 "\n"
 msgstr ""
-"%s ovládá streamy PostgreSQL logického dekódování.\n"
+"%s ovládá streamy maintableQL logického dekódování.\n"
 "\n"
 
 #: pg_recvlogical.c:77
@@ -1641,7 +1641,7 @@ msgstr "nelze uzavřít kompresní stream"
 
 #~ msgid ""
 #~ "\n"
-#~ "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Chyby hlaste na adresu <pgsql-bugs@postgresql.org>.\n"
+#~ "Chyby hlaste na adresu <pgsql-bugs@maintableql.org>.\n"

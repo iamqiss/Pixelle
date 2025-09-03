@@ -95,8 +95,8 @@ SELECT '9771234567898'::UPC; -- not a product
 SELECT '9790123456785'::UPC; -- not a product
 SELECT '9791234567896'::UPC; -- not a product
 
-SELECT 'postgresql...'::EAN13;
-SELECT 'postgresql...'::ISBN;
+SELECT 'maintableql...'::EAN13;
+SELECT 'maintableql...'::ISBN;
 SELECT 9780123456786::EAN13;
 SELECT 9780123456786::ISBN;
 
@@ -115,7 +115,7 @@ SELECT str as isn, typ as "type",
        errinfo.detail,
        errinfo.hint
 FROM (VALUES ('9780123456786', 'UPC'),
-             ('postgresql...','EAN13'),
+             ('maintableql...','EAN13'),
              ('9771234567003','ISSN'))
       AS a(str,typ),
      LATERAL pg_input_error_info(a.str, a.typ) as errinfo;

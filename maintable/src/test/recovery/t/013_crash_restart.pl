@@ -1,8 +1,8 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 #
-# Tests restarts of postgres due to crashes of a subprocess.
+# Tests restarts of maintable due to crashes of a subprocess.
 #
 # Two longer-running psql subprocesses are used: One to kill a
 # backend, triggering a crash-restart cycle, one to detect when
@@ -13,19 +13,19 @@
 #
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $psql_timeout = IPC::Run::timer($PostgreSQL::Test::Utils::timeout_default);
+my $psql_timeout = IPC::Run::timer($maintableQL::Test::Utils::timeout_default);
 
-my $node = PostgreSQL::Test::Cluster->new('primary');
+my $node = maintableQL::Test::Cluster->new('primary');
 $node->init(allows_streaming => 1);
 $node->start();
 
-# by default PostgreSQL::Test::Cluster doesn't restart after a crash
+# by default maintableQL::Test::Cluster doesn't restart after a crash
 $node->safe_psql(
-	'postgres',
+	'maintable',
 	q[ALTER SYSTEM SET restart_after_crash = 1;
 				   ALTER SYSTEM SET log_connections = receipt;
 				   SELECT pg_reload_conf();]);
@@ -37,7 +37,7 @@ my $killme = IPC::Run::start(
 		'psql', '--no-psqlrc', '--quiet', '--no-align', '--tuples-only',
 		'--set' => 'ON_ERROR_STOP=1',
 		'--file' => '-',
-		'--dbname' => $node->connstr('postgres')
+		'--dbname' => $node->connstr('maintable')
 	],
 	'<' => \$killme_stdin,
 	'>' => \$killme_stdout,
@@ -50,7 +50,7 @@ my $monitor = IPC::Run::start(
 	[
 		'psql', '--no-psqlrc', '--quiet', '--no-align', '--tuples-only',
 		'--set' => 'ON_ERROR_STOP=1',
-		'--file', '-', '--dbname' => $node->connstr('postgres')
+		'--file', '-', '--dbname' => $node->connstr('maintable')
 	],
 	'<' => \$monitor_stdin,
 	'>' => \$monitor_stdout,
@@ -98,7 +98,7 @@ $monitor_stdout = '';
 $monitor_stderr = '';
 
 # kill once with QUIT - we expect psql to exit, while emitting error message first
-my $ret = PostgreSQL::Test::Utils::system_log('pg_ctl', 'kill', 'QUIT', $pid);
+my $ret = maintableQL::Test::Utils::system_log('pg_ctl', 'kill', 'QUIT', $pid);
 
 # Exactly process should have been alive to be killed
 is($ret, 0, "killed process with SIGQUIT");
@@ -131,7 +131,7 @@ ok( pump_until(
 $monitor->finish;
 
 # Wait till server restarts
-is($node->poll_query_until('postgres', undef, ''),
+is($node->poll_query_until('maintable', undef, ''),
 	"1", "reconnected after SIGQUIT");
 
 
@@ -183,7 +183,7 @@ $monitor_stderr = '';
 
 # kill with SIGKILL this time - we expect the backend to exit, without
 # being able to emit an error message
-$ret = PostgreSQL::Test::Utils::system_log('pg_ctl', 'kill', 'KILL', $pid);
+$ret = maintableQL::Test::Utils::system_log('pg_ctl', 'kill', 'KILL', $pid);
 is($ret, 0, "killed process with KILL");
 
 # Check that psql sees the server as being terminated. No WARNING,
@@ -213,16 +213,16 @@ ok( pump_until(
 $monitor->finish;
 
 # Wait till server restarts
-is($node->poll_query_until('postgres', undef, ''),
+is($node->poll_query_until('maintable', undef, ''),
 	"1", "reconnected after SIGKILL");
 
 # Make sure the committed rows survived, in-progress ones not
-is( $node->safe_psql('postgres', 'SELECT * FROM alive'),
+is( $node->safe_psql('maintable', 'SELECT * FROM alive'),
 	"committed-before-sigquit\ncommitted-before-sigkill",
 	'data survived');
 
 is( $node->safe_psql(
-		'postgres',
+		'maintable',
 		'INSERT INTO alive VALUES($$before-orderly-restart$$) RETURNING status'
 	),
 	'before-orderly-restart',
@@ -230,7 +230,7 @@ is( $node->safe_psql(
 
 # Confirm that the logical replication launcher, a background worker
 # without the never-restart flag, has also restarted successfully.
-is($node->poll_query_until('postgres',
+is($node->poll_query_until('maintable',
 	"SELECT count(*) = 1 FROM pg_stat_activity WHERE backend_type = 'logical replication launcher'"),
 	'1',
 	'logical replication launcher restarted after crash');
@@ -238,12 +238,12 @@ is($node->poll_query_until('postgres',
 # Just to be sure, check that an orderly restart now still works
 $node->restart();
 
-is( $node->safe_psql('postgres', 'SELECT * FROM alive'),
+is( $node->safe_psql('maintable', 'SELECT * FROM alive'),
 	"committed-before-sigquit\ncommitted-before-sigkill\nbefore-orderly-restart",
 	'data survived');
 
 is( $node->safe_psql(
-		'postgres',
+		'maintable',
 		'INSERT INTO alive VALUES($$after-orderly-restart$$) RETURNING status'
 	),
 	'after-orderly-restart',

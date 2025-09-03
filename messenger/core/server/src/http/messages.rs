@@ -20,7 +20,7 @@ use crate::http::COMPONENT;
 use crate::http::error::CustomError;
 use crate::http::jwt::json_web_token::Identity;
 use crate::http::shared::AppState;
-use crate::streaming::segments::{IggyIndexesMut, IggyMessagesBatchMut};
+use crate::streaming::segments::{MessengerIndexesMut, MessengerMessagesBatchMut};
 use crate::streaming::session::Session;
 use crate::streaming::systems::messages::PollingArgs;
 use crate::streaming::utils::PooledBuffer;
@@ -29,10 +29,10 @@ use axum::http::StatusCode;
 use axum::routing::get;
 use axum::{Extension, Json, Router};
 use error_set::ErrContext;
-use iggy_common::Identifier;
-use iggy_common::IggyMessagesBatch;
-use iggy_common::Validatable;
-use iggy_common::{Consumer, PollMessages, PolledMessages, SendMessages};
+use messenger_common::Identifier;
+use messenger_common::MessengerMessagesBatch;
+use messenger_common::Validatable;
+use messenger_common::{Consumer, PollMessages, PolledMessages, SendMessages};
 use std::sync::Arc;
 use tracing::instrument;
 
@@ -116,7 +116,7 @@ async fn send_messages(
     Ok(StatusCode::CREATED)
 }
 
-#[instrument(skip_all, name = "trace_flush_unsaved_buffer", fields(iggy_user_id = identity.user_id, iggy_stream_id = stream_id, iggy_topic_id = topic_id, iggy_partition_id = partition_id, iggy_fsync = fsync))]
+#[instrument(skip_all, name = "trace_flush_unsaved_buffer", fields(messenger_user_id = identity.user_id, messenger_stream_id = stream_id, messenger_topic_id = topic_id, messenger_partition_id = partition_id, messenger_fsync = fsync))]
 async fn flush_unsaved_buffer(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,
@@ -137,12 +137,12 @@ async fn flush_unsaved_buffer(
     Ok(StatusCode::OK)
 }
 
-fn make_mutable(batch: IggyMessagesBatch) -> IggyMessagesBatchMut {
+fn make_mutable(batch: MessengerMessagesBatch) -> MessengerMessagesBatchMut {
     let (_, indexes, messages) = batch.decompose();
     let (_, indexes_buffer) = indexes.decompose();
     let indexes_buffer_mut = PooledBuffer::from_existing(indexes_buffer.into());
-    let indexes_mut = IggyIndexesMut::from_bytes(indexes_buffer_mut, 0);
+    let indexes_mut = MessengerIndexesMut::from_bytes(indexes_buffer_mut, 0);
     let count = indexes_mut.count();
     let messages_buffer_mut = PooledBuffer::from_existing(messages.into());
-    IggyMessagesBatchMut::from_indexes_and_messages(count, indexes_mut, messages_buffer_mut)
+    MessengerMessagesBatchMut::from_indexes_and_messages(count, indexes_mut, messages_buffer_mut)
 }

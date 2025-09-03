@@ -62,7 +62,7 @@
  * except the root.  For the root node, we are setting the boundaries
  * that we don't yet have as infinity.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -71,7 +71,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/spgist.h"
 #include "access/spgist_private.h"

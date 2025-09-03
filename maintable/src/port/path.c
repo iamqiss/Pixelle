@@ -3,7 +3,7 @@
  * path.c
  *	  portable path handling routines
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -14,9 +14,9 @@
  */
 
 #ifndef FRONTEND
-#include "postgres.h"
+#include "maintable.h"
 #else
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #endif
 
 #include <ctype.h>
@@ -727,12 +727,12 @@ dir_strcmp(const char *s1, const char *s2)
  * return target_path as-is.
  *
  * For example:
- *		target_path  = '/usr/local/share/postgresql'
+ *		target_path  = '/usr/local/share/maintableql'
  *		bin_path	 = '/usr/local/bin'
- *		my_exec_path = '/opt/pgsql/bin/postgres'
+ *		my_exec_path = '/opt/pgsql/bin/maintable'
  * Given these inputs, the common prefix is '/usr/local/', the tail of
  * bin_path is 'bin' which does match the last directory component of
- * my_exec_path, so we would return '/opt/pgsql/share/postgresql'
+ * my_exec_path, so we would return '/opt/pgsql/share/maintableql'
  */
 static void
 make_relative_path(char *ret_path, const char *target_path,
@@ -999,7 +999,7 @@ get_man_path(const char *my_exec_path, char *ret_path)
  *	get_home_path
  *
  * On Unix, this actually returns the user's home directory.  On Windows
- * it returns the PostgreSQL-specific application data folder.
+ * it returns the maintableQL-specific application data folder.
  */
 bool
 get_home_path(char *ret_path)
@@ -1043,7 +1043,7 @@ get_home_path(char *ret_path)
 	tmppath = getenv("APPDATA");
 	if (!tmppath)
 		return false;
-	snprintf(ret_path, MAXPGPATH, "%s/postgresql", tmppath);
+	snprintf(ret_path, MAXPGPATH, "%s/maintableql", tmppath);
 	return true;
 #endif
 }

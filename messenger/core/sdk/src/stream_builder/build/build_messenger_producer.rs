@@ -16,33 +16,33 @@
  * under the License.
  */
 
-use crate::clients::client::IggyClient;
-use crate::clients::producer::IggyProducer;
+use crate::clients::client::MessengerClient;
+use crate::clients::producer::MessengerProducer;
 use crate::clients::producer_config::DirectConfig;
-use crate::prelude::{IggyError, IggyExpiry, MaxTopicSize};
-use crate::stream_builder::IggyProducerConfig;
+use crate::prelude::{MessengerError, MessengerExpiry, MaxTopicSize};
+use crate::stream_builder::MessengerProducerConfig;
 use tracing::{error, trace};
 
 /// Build a producer from the stream configuration.
 ///
 /// # Arguments
 ///
-/// * `client` - The Iggy client.
+/// * `client` - The Messenger client.
 /// * `config` - The configuration.
 ///
 /// # Errors
 ///
-/// * `IggyError` - If the iggy producer cannot be build.
+/// * `MessengerError` - If the messenger producer cannot be build.
 ///
 /// # Details
 ///
-/// This function will create a new `IggyProducer` with the given `IggyClient` and `IggyProducerConfig`.
-/// The `IggyProducerConfig` fields are used to configure the `IggyProducer`.
+/// This function will create a new `MessengerProducer` with the given `MessengerClient` and `MessengerProducerConfig`.
+/// The `MessengerProducerConfig` fields are used to configure the `MessengerProducer`.
 ///
-pub(crate) async fn build_iggy_producer(
-    client: &IggyClient,
-    config: &IggyProducerConfig,
-) -> Result<IggyProducer, IggyError> {
+pub(crate) async fn build_messenger_producer(
+    client: &MessengerClient,
+    config: &MessengerProducerConfig,
+) -> Result<MessengerProducer, MessengerError> {
     trace!("Extract config fields.");
     let stream = config.stream_name();
     let topic = config.topic_name();
@@ -54,7 +54,7 @@ pub(crate) async fn build_iggy_producer(
     let send_retries = config.send_retries_count();
     let send_retries_interval = config.send_retries_interval();
 
-    trace!("Build iggy producer");
+    trace!("Build messenger producer");
     let mut builder = client
         .producer(stream, topic)?
         .partitioning(partitioning)
@@ -63,7 +63,7 @@ pub(crate) async fn build_iggy_producer(
         .create_topic_if_not_exists(
             topic_partitions_count,
             topic_replication_factor,
-            IggyExpiry::ServerDefault,
+            MessengerExpiry::ServerDefault,
             MaxTopicSize::ServerDefault,
         )
         .direct(
@@ -77,7 +77,7 @@ pub(crate) async fn build_iggy_producer(
         builder = builder.encryptor(encryptor);
     }
 
-    trace!("Initialize iggy producer");
+    trace!("Initialize messenger producer");
     let producer = builder.build();
     producer.init().await.map_err(|err| {
         error!("Failed to initialize consumer: {err}");

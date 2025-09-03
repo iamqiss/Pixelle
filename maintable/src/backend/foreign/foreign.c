@@ -3,14 +3,14 @@
  * foreign.c
  *		  support for foreign-data wrappers, servers and user mappings.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  src/backend/foreign/foreign.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "access/reloptions.h"
@@ -560,7 +560,7 @@ pg_options_to_table(PG_FUNCTION_ARGS)
 
 
 /*
- * Describes the valid options for postgresql FDW, server, and user mapping.
+ * Describes the valid options for maintableql FDW, server, and user mapping.
  */
 struct ConnectionOption
 {
@@ -623,7 +623,7 @@ is_conninfo_option(const char *option, Oid context)
  * Inquire of libpq itself, instead.
  */
 Datum
-postgresql_fdw_validator(PG_FUNCTION_ARGS)
+maintableql_fdw_validator(PG_FUNCTION_ARGS)
 {
 	List	   *options_list = untransformRelOptions(PG_GETARG_DATUM(0));
 	Oid			catalog = PG_GETARG_OID(1);

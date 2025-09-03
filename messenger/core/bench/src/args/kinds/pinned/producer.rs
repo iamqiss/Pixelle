@@ -17,11 +17,11 @@
  */
 
 use crate::args::{
-    common::IggyBenchArgs, defaults::DEFAULT_NUMBER_OF_PRODUCERS, props::BenchmarkKindProps,
+    common::MessengerBenchArgs, defaults::DEFAULT_NUMBER_OF_PRODUCERS, props::BenchmarkKindProps,
     transport::BenchmarkTransportCommand,
 };
 use clap::{CommandFactory, Parser, error::ErrorKind};
-use iggy::prelude::IggyByteSize;
+use messenger::prelude::MessengerByteSize;
 use std::num::NonZeroU32;
 
 #[derive(Parser, Debug, Clone)]
@@ -40,7 +40,7 @@ pub struct PinnedProducerArgs {
 
     /// Max topic size in human readable format, e.g. "1GiB", "2MiB", "1GiB". If not provided then the server default will be used.
     #[arg(long, short = 'T')]
-    pub max_topic_size: Option<IggyByteSize>,
+    pub max_topic_size: Option<MessengerByteSize>,
 }
 
 impl BenchmarkKindProps for PinnedProducerArgs {
@@ -68,12 +68,12 @@ impl BenchmarkKindProps for PinnedProducerArgs {
         0
     }
 
-    fn max_topic_size(&self) -> Option<IggyByteSize> {
+    fn max_topic_size(&self) -> Option<MessengerByteSize> {
         self.max_topic_size
     }
 
     fn validate(&self) {
-        let mut cmd = IggyBenchArgs::command();
+        let mut cmd = MessengerBenchArgs::command();
         let streams = self.streams();
         let producers = self.producers();
         if streams != producers {

@@ -27,13 +27,13 @@ import {
   PollingStrategy, Partitioning,
   type PollMessagesResponse
 } from '../wire/index.js';
-import { sendSomeMessages, getIggyAddress } from '../tcp.sm.utils.js';
+import { sendSomeMessages, getMessengerAddress } from '../tcp.sm.utils.js';
 
 
 describe('e2e -> consumer-stream', async () => {
 
-  const [host, port] = getIggyAddress();
-  const credentials = { username: 'iggy', password: 'iggy' };
+  const [host, port] = getMessengerAddress();
+  const credentials = { username: 'messenger', password: 'messenger' };
 
   const opt = {
     transport: 'TCP' as const,

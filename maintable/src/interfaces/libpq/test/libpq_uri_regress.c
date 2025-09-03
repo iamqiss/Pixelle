@@ -7,13 +7,13 @@
  * prints out the values from the parsed PQconninfoOption struct that differ
  * from the defaults (obtained from PQconndefaults).
  *
- * Portions Copyright (c) 2012-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2012-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/interfaces/libpq/test/libpq_uri_regress.c
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "libpq-fe.h"
 

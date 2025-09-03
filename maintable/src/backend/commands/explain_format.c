@@ -3,7 +3,7 @@
  * explain_format.c
  *	  Format routines for explaining query execution plans
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994-5, Regents of the University of California
  *
  * IDENTIFICATION
@@ -11,7 +11,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "commands/explain.h"
 #include "commands/explain_format.h"
@@ -542,7 +542,7 @@ ExplainBeginOutput(ExplainState *es)
 
 		case EXPLAIN_FORMAT_XML:
 			appendStringInfoString(es->str,
-								   "<explain xmlns=\"http://www.postgresql.org/2009/explain\">\n");
+								   "<explain xmlns=\"http://www.maintableql.org/2009/explain\">\n");
 			es->indent++;
 			break;
 

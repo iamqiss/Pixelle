@@ -7,7 +7,7 @@
   <indexterm><primary>BLOB</primary><see>large object</see></indexterm>
 
    <para>
-    <productname>PostgreSQL</productname> has a <firstterm>large object</firstterm>
+    <productname>maintableQL</productname> has a <firstterm>large object</firstterm>
     facility, which provides stream-style access to user data that is stored
     in a special large-object structure.  Streaming access is useful
     when working with data values that are too large to manipulate
@@ -16,10 +16,10 @@
 
    <para>
     This chapter describes the implementation and the programming and
-    query language interfaces to <productname>PostgreSQL</productname>
+    query language interfaces to <productname>maintableQL</productname>
     large object data.  We use the <application>libpq</application> C
     library for the examples in this chapter, but most programming
-    interfaces native to <productname>PostgreSQL</productname> support
+    interfaces native to <productname>maintableQL</productname> support
     equivalent functionality.  Other interfaces might use the large
     object interface internally to provide generic support for large
     values.  This is not described here.
@@ -43,7 +43,7 @@
    </para>
 
    <para>
-    <productname>PostgreSQL</productname> also supports a storage system called
+    <productname>maintableQL</productname> also supports a storage system called
     <link
     linkend="storage-toast"><quote><acronym>TOAST</acronym></quote></link>,
     which automatically stores values
@@ -81,7 +81,7 @@
    </para>
 
    <para>
-    As of <productname>PostgreSQL</productname> 9.0, large objects have an owner
+    As of <productname>maintableQL</productname> 9.0, large objects have an owner
     and a set of access permissions, which can be managed using
     <xref linkend="sql-grant"/> and
     <xref linkend="sql-revoke"/>.
@@ -101,9 +101,9 @@
 
    <para>
     This section describes the facilities that
-    <productname>PostgreSQL</productname>'s <application>libpq</application>
+    <productname>maintableQL</productname>'s <application>libpq</application>
     client interface library provides for accessing large objects.
-    The <productname>PostgreSQL</productname> large object interface is
+    The <productname>maintableQL</productname> large object interface is
     modeled after the <acronym>Unix</acronym> file-system interface, with
     analogues of <function>open</function>,  <function>read</function>,
     <function>write</function>,
@@ -174,7 +174,7 @@ Oid lo_creat(PGconn *conn, int mode);
     </para>
 
     <para>
-     In <productname>PostgreSQL</productname> releases 8.1 and later,
+     In <productname>maintableQL</productname> releases 8.1 and later,
      the <replaceable class="parameter">mode</replaceable> is ignored,
      so that <function>lo_creat</function> is exactly equivalent to
      <function>lo_create</function> with a zero second argument.
@@ -233,7 +233,7 @@ Oid lo_import_with_oid(PGconn *conn, const char *filename, Oid lobjId);
     </para>
 
     <para>
-     <function>lo_import_with_oid</function> is new as of <productname>PostgreSQL</productname>
+     <function>lo_import_with_oid</function> is new as of <productname>maintableQL</productname>
      8.4 and uses <function>lo_create</function> internally which is new in 8.1; if this function is run against 8.0 or before, it will
      fail and return <symbol>InvalidOid</symbol>.
     </para>
@@ -305,7 +305,7 @@ int lo_open(PGconn *conn, Oid lobjId, int mode);
      privilege is not available for the large object, or
      if <symbol>INV_WRITE</symbol> is specified and <literal>UPDATE</literal>
      privilege is not available.
-     (Prior to <productname>PostgreSQL</productname> 11, these privilege
+     (Prior to <productname>maintableQL</productname> 11, these privilege
      checks were instead performed at the first actual read or write call
      using the descriptor.)
      These privilege checks can be disabled with the
@@ -409,7 +409,7 @@ int64_t lo_lseek64(PGconn *conn, int fd, int64_t offset, int whence);
 </para>
 
 <para>
-     <function>lo_lseek64</function> is new as of <productname>PostgreSQL</productname>
+     <function>lo_lseek64</function> is new as of <productname>maintableQL</productname>
      9.3.  If this function is run against an older server version, it will
      fail and return -1.
 </para>
@@ -444,7 +444,7 @@ int64_t lo_tell64(PGconn *conn, int fd);
 </para>
 
 <para>
-     <function>lo_tell64</function> is new as of <productname>PostgreSQL</productname>
+     <function>lo_tell64</function> is new as of <productname>maintableQL</productname>
      9.3.  If this function is run against an older server version, it will
      fail and return -1.
 </para>
@@ -493,13 +493,13 @@ int lo_truncate64(PGconn *conn, int fd, int64_t len);
 </para>
 
 <para>
-     <function>lo_truncate</function> is new as of <productname>PostgreSQL</productname>
+     <function>lo_truncate</function> is new as of <productname>maintableQL</productname>
      8.3; if this function is run against an older server version, it will
      fail and return -1.
 </para>
 
 <para>
-     <function>lo_truncate64</function> is new as of <productname>PostgreSQL</productname>
+     <function>lo_truncate64</function> is new as of <productname>maintableQL</productname>
      9.3; if this function is run against an older server version, it will
      fail and return -1.
 </para>
@@ -725,7 +725,7 @@ SELECT lo_export(image.raster, '/tmp/motd') FROM image
  * testlo.c
  *    test using large objects with libpq
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *

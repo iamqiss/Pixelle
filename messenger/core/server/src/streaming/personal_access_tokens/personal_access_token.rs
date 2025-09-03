@@ -16,10 +16,10 @@
  * under the License.
  */
 use crate::streaming::utils::hash;
-use iggy_common::IggyExpiry;
-use iggy_common::IggyTimestamp;
-use iggy_common::UserId;
-use iggy_common::text::as_base64;
+use messenger_common::MessengerExpiry;
+use messenger_common::MessengerTimestamp;
+use messenger_common::UserId;
+use messenger_common::text::as_base64;
 use ring::rand::SecureRandom;
 use std::sync::Arc;
 
@@ -30,7 +30,7 @@ pub struct PersonalAccessToken {
     pub user_id: UserId,
     pub name: Arc<String>,
     pub token: Arc<String>,
-    pub expiry_at: Option<IggyTimestamp>,
+    pub expiry_at: Option<MessengerTimestamp>,
 }
 
 impl PersonalAccessToken {
@@ -38,8 +38,8 @@ impl PersonalAccessToken {
     pub fn new(
         user_id: UserId,
         name: &str,
-        now: IggyTimestamp,
-        expiry: IggyExpiry,
+        now: MessengerTimestamp,
+        expiry: MessengerExpiry,
     ) -> (Self, String) {
         let mut buffer: [u8; SIZE] = [0; SIZE];
         let system_random = ring::rand::SystemRandom::new();
@@ -61,7 +61,7 @@ impl PersonalAccessToken {
         user_id: UserId,
         name: &str,
         token_hash: &str,
-        expiry_at: Option<IggyTimestamp>,
+        expiry_at: Option<MessengerTimestamp>,
     ) -> Self {
         Self {
             user_id,
@@ -71,7 +71,7 @@ impl PersonalAccessToken {
         }
     }
 
-    pub fn is_expired(&self, now: IggyTimestamp) -> bool {
+    pub fn is_expired(&self, now: MessengerTimestamp) -> bool {
         match self.expiry_at {
             None => false,
             Some(expiry_at) => expiry_at.as_micros() <= now.as_micros(),
@@ -82,13 +82,13 @@ impl PersonalAccessToken {
         hash::calculate_256(token.as_bytes())
     }
 
-    pub fn calculate_expiry_at(now: IggyTimestamp, expiry: IggyExpiry) -> Option<IggyTimestamp> {
+    pub fn calculate_expiry_at(now: MessengerTimestamp, expiry: MessengerExpiry) -> Option<MessengerTimestamp> {
         match expiry {
-            IggyExpiry::ExpireDuration(expiry) => {
-                Some(IggyTimestamp::from(now.as_micros() + expiry.as_micros()))
+            MessengerExpiry::ExpireDuration(expiry) => {
+                Some(MessengerTimestamp::from(now.as_micros() + expiry.as_micros()))
             }
-            IggyExpiry::NeverExpire => None,
-            IggyExpiry::ServerDefault => None, // This will
+            MessengerExpiry::NeverExpire => None,
+            MessengerExpiry::ServerDefault => None, // This will
         }
     }
 }
@@ -96,16 +96,16 @@ impl PersonalAccessToken {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use iggy_common::IggyDuration;
-    use iggy_common::IggyTimestamp;
+    use messenger_common::MessengerDuration;
+    use messenger_common::MessengerTimestamp;
 
     #[test]
     fn personal_access_token_should_be_created_with_random_secure_value_and_hashed_successfully() {
         let user_id = 1;
-        let now = IggyTimestamp::now();
+        let now = MessengerTimestamp::now();
         let name = "test_token";
         let (personal_access_token, raw_token) =
-            PersonalAccessToken::new(user_id, name, now, IggyExpiry::NeverExpire);
+            PersonalAccessToken::new(user_id, name, now, MessengerExpiry::NeverExpire);
         assert_eq!(personal_access_token.name.as_str(), name);
         assert!(!personal_access_token.token.is_empty());
         assert!(!raw_token.is_empty());
@@ -119,12 +119,12 @@ mod tests {
     #[test]
     fn personal_access_token_should_be_expired_given_passed_expiry() {
         let user_id = 1;
-        let now = IggyTimestamp::now();
+        let now = MessengerTimestamp::now();
         let expiry_ms = 10;
-        let expiry = IggyExpiry::ExpireDuration(IggyDuration::from(expiry_ms));
+        let expiry = MessengerExpiry::ExpireDuration(MessengerDuration::from(expiry_ms));
         let name = "test_token";
         let (personal_access_token, _) = PersonalAccessToken::new(user_id, name, now, expiry);
-        let later = IggyTimestamp::from(now.as_micros() + expiry_ms + 1);
+        let later = MessengerTimestamp::from(now.as_micros() + expiry_ms + 1);
         assert!(personal_access_token.is_expired(later));
     }
 }

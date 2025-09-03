@@ -82,7 +82,7 @@ SELECT * FROM perl_set();
 CREATE OR REPLACE FUNCTION perl_set() RETURNS SETOF testrowperl AS $$
     return [
         { f1 => 1, f2 => 'Hello', f3 =>  'World' },
-        { f1 => 2, f2 => 'Hello', f3 =>  'PostgreSQL', 'f4' => undef },
+        { f1 => 2, f2 => 'Hello', f3 =>  'maintableQL', 'f4' => undef },
         { f1 => 3, f2 => 'Hello', f3 =>  'PL/Perl', 'f4' => {} },
         { f1 => 4, f2 => 'Hello', f3 =>  'PL/Perl', 'f4' => { 'f5' => undef }},
         { f1 => 5, f2 => 'Hello', f3 =>  'PL/Perl', 'f4' => { 'f5' => '{1}' }},
@@ -134,7 +134,7 @@ SELECT * FROM perl_record_set() AS (f1 integer, f2 text, f3 text);
 CREATE OR REPLACE FUNCTION perl_record_set() RETURNS SETOF record AS $$
     return [
         { f1 => 1, f2 => 'Hello', f3 =>  'World' },
-        { f1 => 2, f2 => 'Hello', f3 =>  'PostgreSQL' },
+        { f1 => 2, f2 => 'Hello', f3 =>  'maintableQL' },
         { f1 => 3, f2 => 'Hello', f3 =>  'PL/Perl' }
     ];
 $$  LANGUAGE plperl;
@@ -157,7 +157,7 @@ perl_out_params_set(out f1 integer, out f2 text, out f3 text)
 RETURNS SETOF record AS $$
     return [
         { f1 => 1, f2 => 'Hello', f3 =>  'World' },
-        { f1 => 2, f2 => 'Hello', f3 =>  'PostgreSQL' },
+        { f1 => 2, f2 => 'Hello', f3 =>  'maintableQL' },
         { f1 => 3, f2 => 'Hello', f3 =>  'PL/Perl' }
     ];
 $$  LANGUAGE plperl;
@@ -298,7 +298,7 @@ SELECT perl_get_rfield((12,11)::orderedfootype, 'x');  -- fail
 
 CREATE OR REPLACE FUNCTION perl_srf_rn() RETURNS SETOF RECORD AS $$
 my $i = 0;
-for ("World", "PostgreSQL", "PL/Perl") {
+for ("World", "maintableQL", "PL/Perl") {
     return_next({f1=>++$i, f2=>'Hello', f3=>$_});
 }
 return;

@@ -1,12 +1,12 @@
 /*-------------------------------------------------------------------------
  * attribute_stats.c
  *
- *	  PostgreSQL relation attribute statistics manipulation.
+ *	  maintableQL relation attribute statistics manipulation.
  *
  * Code supporting the direct import of relation attribute statistics, similar
  * to what is done by the ANALYZE command.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -15,7 +15,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/heapam.h"
 #include "catalog/indexing.h"

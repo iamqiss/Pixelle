@@ -18,7 +18,7 @@
 
 use crate::{
     BytesSerializable, Identifier, Validatable,
-    error::IggyError,
+    error::MessengerError,
     {Command, FLUSH_UNSAVED_BUFFER_CODE},
 };
 use bytes::{BufMut, Bytes, BytesMut};
@@ -76,7 +76,7 @@ impl BytesSerializable for FlushUnsavedBuffer {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError>
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
@@ -88,7 +88,7 @@ impl BytesSerializable for FlushUnsavedBuffer {
         let partition_id = u32::from_le_bytes(
             bytes[position..position + 4]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         position += 4;
         let fsync = bytes[position] == 1;
@@ -101,8 +101,8 @@ impl BytesSerializable for FlushUnsavedBuffer {
     }
 }
 
-impl Validatable<IggyError> for FlushUnsavedBuffer {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for FlushUnsavedBuffer {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }

@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_statistics.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-alterstatistics">
@@ -107,7 +107,7 @@ ALTER STATISTICS <replaceable class="parameter">name</replaceable> SET STATISTIC
         (Setting to a value of -1 is an obsolete way spelling to get the same
         outcome.)
         For more information on the use of statistics by the
-        <productname>PostgreSQL</productname> query planner, refer to
+        <productname>maintableQL</productname> query planner, refer to
         <xref linkend="planner-stats"/>.
        </para>
       </listitem>

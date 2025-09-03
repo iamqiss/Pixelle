@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/update.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-update">
@@ -486,7 +486,7 @@ UPDATE films SET kind = 'Dramatic' WHERE CURRENT OF c_films;
    no <literal>LIMIT</literal> clause for <command>UPDATE</command>, it is
    possible to get a similar effect through the use of
    a <link linkend="queries-with">Common Table Expression</link> and a
-   self-join.  With the standard <productname>PostgreSQL</productname>
+   self-join.  With the standard <productname>maintableQL</productname>
    table access method, a self-join on the system
    column <link linkend="ddl-system-columns-ctid">ctid</link> is very
    efficient:
@@ -521,14 +521,14 @@ UPDATE work_item SET status = 'failed'
   <para>
    This command conforms to the <acronym>SQL</acronym> standard, except
    that the <literal>FROM</literal> and <literal>RETURNING</literal> clauses
-   are <productname>PostgreSQL</productname> extensions, as is the ability
+   are <productname>maintableQL</productname> extensions, as is the ability
    to use <literal>WITH</literal> with <command>UPDATE</command>.
   </para>
 
   <para>
    Some other database systems offer a <literal>FROM</literal> option in which
    the target table is supposed to be listed again within <literal>FROM</literal>.
-   That is not how <productname>PostgreSQL</productname> interprets
+   That is not how <productname>maintableQL</productname> interprets
    <literal>FROM</literal>.  Be careful when porting applications that use this
    extension.
   </para>
@@ -536,7 +536,7 @@ UPDATE work_item SET status = 'failed'
   <para>
    According to the standard, the source value for a parenthesized sub-list of
    target column names can be any row-valued expression yielding the correct
-   number of columns.  <productname>PostgreSQL</productname> only allows the
+   number of columns.  <productname>maintableQL</productname> only allows the
    source value to be a <link linkend="sql-syntax-row-constructors">row
    constructor</link> or a sub-<literal>SELECT</literal>.  An individual column's
    updated value can be specified as <literal>DEFAULT</literal> in the

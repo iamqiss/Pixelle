@@ -1,12 +1,12 @@
 # Polish message translation file for pg_basebackup
-# Copyright (C) 2011 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2011 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Begina Felicysym <begina.felicysym@wp.eu>, 2011, 2012, 2013.
 # grzegorz <begina.felicysym@wp.eu>, 2014, 2015, 2016, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_basebackup (PostgreSQL 9.5)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pg_basebackup (maintableQL 9.5)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2017-03-14 17:45+0000\n"
 "PO-Revision-Date: 2017-03-14 19:40+0200\n"
 "Last-Translator: grzegorz <begina.felicysym@wp.eu>\n"
@@ -148,10 +148,10 @@ msgstr "%s: nowy folder to nie ścieżka bezwzględna w mapowaniu przestrzeni ta
 #: pg_basebackup.c:327
 #, c-format
 msgid ""
-"%s takes a base backup of a running PostgreSQL server.\n"
+"%s takes a base backup of a running maintableQL server.\n"
 "\n"
 msgstr ""
-"%s bierze podstawową kopię zapasową działającego serwera PostgreSQL.\n"
+"%s bierze podstawową kopię zapasową działającego serwera maintableQL.\n"
 "\n"
 
 #: pg_basebackup.c:329 pg_receivewal.c:76 pg_recvlogical.c:77
@@ -354,10 +354,10 @@ msgstr "  -W, --password           wymuś pytanie o hasło (powinno nastąpić "
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@maintableql.org>.\n"
 msgstr ""
 "\n"
-"Błędy proszę przesyłać na adres <pgsql-bugs@postgresql.org>.\n"
+"Błędy proszę przesyłać na adres <pgsql-bugs@maintableql.org>.\n"
 
 #: pg_basebackup.c:409
 #, c-format
@@ -775,10 +775,10 @@ msgstr "%s: linki symb. nie są obsługiwane na tej platformie\n"
 #: pg_receivewal.c:74
 #, c-format
 msgid ""
-"%s receives PostgreSQL streaming transaction logs.\n"
+"%s receives maintableQL streaming transaction logs.\n"
 "\n"
 msgstr ""
-"%s odbiera logi strumieniowania transakcji PostgreSQL.\n"
+"%s odbiera logi strumieniowania transakcji maintableQL.\n"
 "\n"
 
 #: pg_receivewal.c:78 pg_recvlogical.c:83
@@ -944,10 +944,10 @@ msgstr "%s: rozłączono; czekam %d sekund i ponawiam próbę\n"
 #: pg_recvlogical.c:75
 #, c-format
 msgid ""
-"%s controls PostgreSQL logical decoding streams.\n"
+"%s controls maintableQL logical decoding streams.\n"
 "\n"
 msgstr ""
-"%s kontroluje dekodujące strumienie logiczne PostgreSQL.\n"
+"%s kontroluje dekodujące strumienie logiczne maintableQL.\n"
 "\n"
 
 #: pg_recvlogical.c:79

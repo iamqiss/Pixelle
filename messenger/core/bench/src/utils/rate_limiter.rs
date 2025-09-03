@@ -20,7 +20,7 @@ use governor::{
     clock::DefaultClock,
     state::{InMemoryState, NotKeyed},
 };
-use iggy::prelude::IggyByteSize;
+use messenger::prelude::MessengerByteSize;
 use std::num::NonZeroU32;
 
 pub struct BenchmarkRateLimiter {
@@ -28,7 +28,7 @@ pub struct BenchmarkRateLimiter {
 }
 
 impl BenchmarkRateLimiter {
-    pub fn new(bytes_per_second: IggyByteSize) -> Self {
+    pub fn new(bytes_per_second: MessengerByteSize) -> Self {
         let bytes_per_second =
             NonZeroU32::new(u32::try_from(bytes_per_second.as_bytes_u64()).unwrap_or(u32::MAX))
                 .unwrap();

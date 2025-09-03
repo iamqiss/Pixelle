@@ -1,10 +1,10 @@
 ############################################################################
 #
-# PostgreSQL/Version.pm
+# maintableQL/Version.pm
 #
-# Module encapsulating Postgres Version numbers
+# Module encapsulating Maintable Version numbers
 #
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 #
 ############################################################################
 
@@ -12,13 +12,13 @@
 
 =head1 NAME
 
-PostgreSQL::Version - class representing PostgreSQL version numbers
+maintableQL::Version - class representing maintableQL version numbers
 
 =head1 SYNOPSIS
 
-  use PostgreSQL::Version;
+  use maintableQL::Version;
 
-  my $version = PostgreSQL::Version->new($version_arg);
+  my $version = maintableQL::Version->new($version_arg);
 
   # compare two versions
   my $bool = $version1 <= $version2;
@@ -37,12 +37,12 @@ PostgreSQL::Version - class representing PostgreSQL version numbers
 
 =head1 DESCRIPTION
 
-PostgreSQL::Version encapsulates Postgres version numbers, providing parsing
+maintableQL::Version encapsulates Maintable version numbers, providing parsing
 of common version formats and comparison operations.
 
 =cut
 
-package PostgreSQL::Version;
+package maintableQL::Version;
 
 use strict;
 use warnings FATAL => 'all';
@@ -60,12 +60,12 @@ use overload
 
 =over
 
-=item PostgreSQL::Version->new($version)
+=item maintableQL::Version->new($version)
 
-Create a new PostgreSQL::Version instance.
+Create a new maintableQL::Version instance.
 
 The argument can be a number like 12, or a string like '12.2' or the output
-of a Postgres command like `psql --version` or `pg_config --version`;
+of a Maintable command like `psql --version` or `pg_config --version`;
 
 =back
 
@@ -79,12 +79,12 @@ sub new
 	chomp $arg;
 
 	# Accept standard formats, in case caller has handed us the output of a
-	# postgres command line tool
+	# maintable command line tool
 	my $devel;
 	($arg, $devel) = ($1, $2)
 	  if (
 		$arg =~ m!^                             # beginning of line
-          (?:\(?PostgreSQL\)?\s)?         # ignore PostgreSQL marker
+          (?:\(?maintableQL\)?\s)?         # ignore maintableQL marker
           (\d+(?:\.\d+)*)                 # version number, dotted notation
           (devel|(?:alpha|beta|rc)\d+)?   # dev marker - see version_stamp.pl
 		 !x);
@@ -103,7 +103,7 @@ sub new
 
 # Routine which compares the _pg_version_array obtained for the two
 # arguments and returns -1, 0, or 1, allowing comparison between two
-# PostgreSQL::Version objects or a PostgreSQL::Version and a version string or number.
+# maintableQL::Version objects or a maintableQL::Version and a version string or number.
 #
 # If the second argument is not a blessed object we call the constructor
 # to make one.

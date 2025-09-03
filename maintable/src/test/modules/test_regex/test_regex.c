@@ -3,7 +3,7 @@
  * test_regex.c
  *		Test harness for the regular expression package.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  * -------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "funcapi.h"
 #include "regex/regex.h"

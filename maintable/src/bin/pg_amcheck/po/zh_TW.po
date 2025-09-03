@@ -1,12 +1,12 @@
 # Traditional Chinese message translation file for pg_amcheck
-# Copyright (C) 2023 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_amcheck (PostgreSQL) package.
+# Copyright (C) 2023 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_amcheck (maintableQL) package.
 # Zhenbang Wei <znbang@gmail.com>, 2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_amcheck (PostgreSQL) 16\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_amcheck (maintableQL) 16\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-09-11 20:51+0000\n"
 "PO-Revision-Date: 2023-11-06 08:49+0800\n"
 "Last-Translator: Zhenbang Wei <znbang@gmail.com>\n"
@@ -53,7 +53,7 @@ msgid "could not connect to database %s: out of memory"
 msgstr "無法連線至資料庫 %s: 記憶體不足"
 
 # commands/vacuum.c:2258 commands/vacuumlazy.c:489 commands/vacuumlazy.c:770
-# nodes/print.c:86 storage/lmgr/deadlock.c:888 tcop/postgres.c:3285
+# nodes/print.c:86 storage/lmgr/deadlock.c:888 tcop/maintable.c:3285
 #: ../../fe_utils/connect_utils.c:116
 #, c-format
 msgid "%s"
@@ -107,7 +107,7 @@ msgstr "結束區塊無效"
 msgid "end block out of bounds"
 msgstr "結束區塊超出範圍"
 
-# tcop/postgres.c:2636 tcop/postgres.c:2652
+# tcop/maintable.c:2636 tcop/maintable.c:2652
 #: pg_amcheck.c:439 pg_amcheck.c:461
 #, c-format
 msgid "Try \"%s --help\" for more information."
@@ -241,9 +241,9 @@ msgstr "btree 索引 \"%s.%s.%s\":\n"
 #: pg_amcheck.c:1138
 #, c-format
 msgid ""
-"%s checks objects in a PostgreSQL database for corruption.\n"
+"%s checks objects in a maintableQL database for corruption.\n"
 "\n"
-msgstr "%s 檢查 PostgreSQL 資料庫中的物件是否損壞。\n"
+msgstr "%s 檢查 maintableQL 資料庫中的物件是否損壞。\n"
 
 #: pg_amcheck.c:1139
 #, c-format

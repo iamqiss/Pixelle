@@ -20,14 +20,14 @@ use crate::server::scenarios::{
     CONSUMER_GROUP_ID, CONSUMER_GROUP_NAME, PARTITIONS_COUNT, STREAM_ID, STREAM_NAME, TOPIC_ID,
     TOPIC_NAME, USERNAME_1, USERNAME_2, USERNAME_3, cleanup, create_client, join_consumer_group,
 };
-use iggy::clients::client::IggyClient;
-use iggy::prelude::ClientInfoDetails;
-use iggy::prelude::CompressionAlgorithm;
-use iggy::prelude::ConsumerGroupDetails;
-use iggy::prelude::Identifier;
-use iggy::prelude::IggyExpiry;
-use iggy::prelude::MaxTopicSize;
-use iggy::prelude::{ConsumerGroupClient, StreamClient, SystemClient, TopicClient};
+use messenger::clients::client::MessengerClient;
+use messenger::prelude::ClientInfoDetails;
+use messenger::prelude::CompressionAlgorithm;
+use messenger::prelude::ConsumerGroupDetails;
+use messenger::prelude::Identifier;
+use messenger::prelude::MessengerExpiry;
+use messenger::prelude::MaxTopicSize;
+use messenger::prelude::{ConsumerGroupClient, StreamClient, SystemClient, TopicClient};
 use integration::test_server::{
     ClientFactory, assert_clean_system, create_user, login_root, login_user,
 };
@@ -56,7 +56,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
             CompressionAlgorithm::default(),
             None,
             Some(TOPIC_ID),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await
@@ -135,7 +135,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
     assert_clean_system(&system_client).await;
 }
 
-async fn get_me_and_validate_consumer_groups(client: &IggyClient) -> ClientInfoDetails {
+async fn get_me_and_validate_consumer_groups(client: &MessengerClient) -> ClientInfoDetails {
     let client_info = client.get_me().await.unwrap();
 
     assert!(client_info.client_id > 0);
@@ -151,7 +151,7 @@ async fn get_me_and_validate_consumer_groups(client: &IggyClient) -> ClientInfoD
 }
 
 async fn get_consumer_group_and_validate_members(
-    client: &IggyClient,
+    client: &MessengerClient,
     members_count: u32,
 ) -> ConsumerGroupDetails {
     let consumer_group = client

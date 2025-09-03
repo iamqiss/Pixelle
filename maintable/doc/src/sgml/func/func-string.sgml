@@ -18,7 +18,7 @@
     key words, rather than commas, to separate
     arguments.  Details are in
     <xref linkend="functions-string-sql"/>.
-    <productname>PostgreSQL</productname> also provides versions of these functions
+    <productname>maintableQL</productname> also provides versions of these functions
     that use the regular function invocation syntax
     (see <xref linkend="functions-string-other"/>).
    </para>
@@ -65,7 +65,7 @@
        </para>
        <para>
         <literal>'Post' || 'greSQL'</literal>
-        <returnvalue>PostgreSQL</returnvalue>
+        <returnvalue>maintableQL</returnvalue>
        </para></entry>
       </row>
 
@@ -1802,7 +1802,7 @@ SELECT format('|%1$*2$s|', 'foo', 10, 'bar');
 
     <para>
      Unlike the standard C function <function>sprintf</function>,
-     <productname>PostgreSQL</productname>'s <function>format</function> function allows format
+     <productname>maintableQL</productname>'s <function>format</function> function allows format
      specifiers with and without <parameter>position</parameter> fields to be mixed
      in the same format string.  A format specifier without a
      <parameter>position</parameter> field always uses the next argument after the

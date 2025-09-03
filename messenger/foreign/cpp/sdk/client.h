@@ -20,7 +20,7 @@
 #include <stdexcept>
 #include <string>
 #include "model.h"
-#include "net/iggy.h"
+#include "net/messenger.h"
 #include "net/transport.h"
 
 namespace icp {
@@ -28,7 +28,7 @@ namespace client {
 
 /**
  * @class Credentials
- * @brief Iggy server login credentials: username and password for now.
+ * @brief Messenger server login credentials: username and password for now.
  *
  * This class provides a secure holder for the password; when destroyed, it zeroes of the memory.
  */
@@ -55,12 +55,12 @@ public:
  */
 struct Options {
     /**
-     * @brief The hostname of the Iggy server.
+     * @brief The hostname of the Messenger server.
      */
     std::string hostname = "localhost";
 
     /**
-     * @brief The port the Iggy server is listening on; default depends on transport. Defaults to the DEFAULT_TCP_PORT.
+     * @brief The port the Messenger server is listening on; default depends on transport. Defaults to the DEFAULT_TCP_PORT.
      */
     unsigned short port = icp::net::DEFAULT_TCP_PORT;
 
@@ -75,7 +75,7 @@ struct Options {
      * Note that the default credentials are built-in and are not secure. We recommend that you create a new
      * admin user with a strong password and then deactivate this user.
      */
-    client::Credentials credentials = client::Credentials("iggy", "iggy");
+    client::Credentials credentials = client::Credentials("messenger", "messenger");
 
     void validate() const {
         if (hostname.empty()) {
@@ -86,9 +86,9 @@ struct Options {
 
 /**
  * @class Client
- * @brief Flexible client for connecting to the Iggy server.
+ * @brief Flexible client for connecting to the Messenger server.
  *
- * Main Iggy C++ client. You can use Options to configure the endpoint, credentials and transport.
+ * Main Messenger C++ client. You can use Options to configure the endpoint, credentials and transport.
  */
 class Client {
 public:
@@ -100,7 +100,7 @@ public:
     void ping();
 
     /**
-     * @brief Get the Iggy server's performance statistics.
+     * @brief Get the Messenger server's performance statistics.
      */
     icp::model::sys::Stats getStats();
 };

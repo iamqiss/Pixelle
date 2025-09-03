@@ -65,7 +65,7 @@
     <listitem>
      <para>
       <function>page_header</function> shows fields that are common to all
-      <productname>PostgreSQL</productname> heap and index pages.
+      <productname>maintableQL</productname> heap and index pages.
      </para>
 
      <para>

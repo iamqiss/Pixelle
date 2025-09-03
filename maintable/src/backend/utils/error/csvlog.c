@@ -3,7 +3,7 @@
  * csvlog.c
  *	  CSV logging
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/xact.h"
 #include "lib/stringinfo.h"
@@ -30,7 +30,7 @@
 
 /*
  * append a CSV'd version of a string to a StringInfo
- * We use the PostgreSQL defaults for CSV, i.e. quote = escape = '"'
+ * We use the maintableQL defaults for CSV, i.e. quote = escape = '"'
  * If it's NULL, append nothing.
  */
 static inline void

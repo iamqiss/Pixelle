@@ -17,7 +17,7 @@
  */
 
 use bytes::Bytes;
-use iggy::prelude::IggyMessage;
+use messenger::prelude::MessengerMessage;
 
 mod common;
 mod consumer_offset;
@@ -32,7 +32,7 @@ mod system;
 mod topic;
 mod topic_messages;
 
-fn create_messages() -> Vec<IggyMessage> {
+fn create_messages() -> Vec<MessengerMessage> {
     vec![
         create_message(1, "message 1"),
         create_message(2, "message 2"),
@@ -43,9 +43,9 @@ fn create_messages() -> Vec<IggyMessage> {
     ]
 }
 
-fn create_message(id: u128, payload: &str) -> IggyMessage {
+fn create_message(id: u128, payload: &str) -> MessengerMessage {
     let payload = Bytes::from(payload.to_string());
-    IggyMessage::builder()
+    MessengerMessage::builder()
         .id(id)
         .payload(payload)
         .build()

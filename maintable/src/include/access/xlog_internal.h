@@ -1,7 +1,7 @@
 /*
  * xlog_internal.h
  *
- * PostgreSQL write-ahead log internal declarations
+ * maintableQL write-ahead log internal declarations
  *
  * NOTE: this file is intended to contain declarations useful for
  * manipulating the XLOG files directly, but it is not supposed to be
@@ -11,7 +11,7 @@
  * Note: This file must be includable in both frontend and backend contexts,
  * to allow stand-alone tools like pg_receivewal to deal with WAL files.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/access/xlog_internal.h

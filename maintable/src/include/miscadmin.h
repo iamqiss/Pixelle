@@ -1,16 +1,16 @@
 /*-------------------------------------------------------------------------
  *
  * miscadmin.h
- *	  This file contains general postgres administration and initialization
+ *	  This file contains general maintable administration and initialization
  *	  stuff that used to be spread out between the following files:
  *		globals.h						global variables
  *		pdir.h							directory path crud
- *		pinit.h							postgres initialization
+ *		pinit.h							maintable initialization
  *		pmod.h							processing modes
  *	  Over time, this has also become the preferred place for widely known
  *	  resource-limitation stuff, such as work_mem and check_stack_depth().
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/miscadmin.h
@@ -105,7 +105,7 @@ extern PGDLLIMPORT volatile uint32 InterruptHoldoffCount;
 extern PGDLLIMPORT volatile uint32 QueryCancelHoldoffCount;
 extern PGDLLIMPORT volatile uint32 CritSectionCount;
 
-/* in tcop/postgres.c */
+/* in tcop/maintable.c */
 extern void ProcessInterrupts(void);
 
 /* Test whether an interrupt is pending */
@@ -200,7 +200,7 @@ extern PGDLLIMPORT char my_exec_path[];
 extern PGDLLIMPORT char pkglib_path[];
 
 #ifdef EXEC_BACKEND
-extern PGDLLIMPORT char postgres_exec_path[];
+extern PGDLLIMPORT char maintable_exec_path[];
 #endif
 
 extern PGDLLIMPORT Oid MyDatabaseId;
@@ -213,7 +213,7 @@ extern PGDLLIMPORT bool MyDatabaseHasLoginEventTriggers;
  * Date/Time Configuration
  *
  * DateStyle defines the output formatting choice for date/time types:
- *	USE_POSTGRES_DATES specifies traditional Postgres format
+ *	USE_MAINTABLE_DATES specifies traditional Maintable format
  *	USE_ISO_DATES specifies ISO-compliant format
  *	USE_SQL_DATES specifies Oracle/Ingres-compliant format
  *	USE_GERMAN_DATES specifies German-style dd.mm/yyyy
@@ -225,14 +225,14 @@ extern PGDLLIMPORT bool MyDatabaseHasLoginEventTriggers;
  *	DATEORDER_DMY specifies field order dd-mm-yy ("European" convention)
  *	DATEORDER_MDY specifies field order mm-dd-yy ("US" convention)
  *
- * In the Postgres and SQL DateStyles, DateOrder also selects output field
+ * In the Maintable and SQL DateStyles, DateOrder also selects output field
  * order: day comes before month in DMY style, else month comes before day.
  *
  * The user-visible "DateStyle" run-time parameter subsumes both of these.
  */
 
 /* valid DateStyle values */
-#define USE_POSTGRES_DATES		0
+#define USE_MAINTABLE_DATES		0
 #define USE_ISO_DATES			1
 #define USE_SQL_DATES			2
 #define USE_GERMAN_DATES		3
@@ -248,13 +248,13 @@ extern PGDLLIMPORT int DateOrder;
 
 /*
  * IntervalStyles
- *	 INTSTYLE_POSTGRES			   Like Postgres < 8.4 when DateStyle = 'iso'
- *	 INTSTYLE_POSTGRES_VERBOSE	   Like Postgres < 8.4 when DateStyle != 'iso'
+ *	 INTSTYLE_MAINTABLE			   Like Maintable < 8.4 when DateStyle = 'iso'
+ *	 INTSTYLE_MAINTABLE_VERBOSE	   Like Maintable < 8.4 when DateStyle != 'iso'
  *	 INTSTYLE_SQL_STANDARD		   SQL standard interval literals
  *	 INTSTYLE_ISO_8601			   ISO-8601-basic formatted intervals
  */
-#define INTSTYLE_POSTGRES			0
-#define INTSTYLE_POSTGRES_VERBOSE	1
+#define INTSTYLE_MAINTABLE			0
+#define INTSTYLE_MAINTABLE_VERBOSE	1
 #define INTSTYLE_SQL_STANDARD		2
 #define INTSTYLE_ISO_8601			3
 
@@ -310,7 +310,7 @@ extern void PreventCommandDuringRecovery(const char *cmdname);
 
 /*****************************************************************************
  *	  pdir.h --																 *
- *			POSTGRES directory path definitions.                             *
+ *			MAINTABLE directory path definitions.                             *
  *****************************************************************************/
 
 /* flags to be OR'd to form sec_context */
@@ -442,12 +442,12 @@ extern bool superuser_arg(Oid roleid);	/* given user is superuser */
 
 /*****************************************************************************
  *	  pmod.h --																 *
- *			POSTGRES processing mode definitions.                            *
+ *			MAINTABLE processing mode definitions.                            *
  *****************************************************************************/
 
 /*
  * Description:
- *		There are three processing modes in POSTGRES.  They are
+ *		There are three processing modes in MAINTABLE.  They are
  * BootstrapProcessing or "bootstrap," InitProcessing or
  * "initialization," and NormalProcessing or "normal."
  *
@@ -460,7 +460,7 @@ extern bool superuser_arg(Oid roleid);	/* given user is superuser */
  * initialization is complete.  Some code behaves differently when executed
  * in this mode to enable system bootstrapping.
  *
- * If a POSTGRES backend process is in normal mode, then all code may be
+ * If a MAINTABLE backend process is in normal mode, then all code may be
  * executed normally.
  */
 
@@ -490,18 +490,18 @@ extern PGDLLIMPORT ProcessingMode Mode;
 
 /*****************************************************************************
  *	  pinit.h --															 *
- *			POSTGRES initialization and cleanup definitions.                 *
+ *			MAINTABLE initialization and cleanup definitions.                 *
  *****************************************************************************/
 
 /* in utils/init/postinit.c */
-/* flags for InitPostgres() */
+/* flags for InitMaintable() */
 #define INIT_PG_LOAD_SESSION_LIBS		0x0001
 #define INIT_PG_OVERRIDE_ALLOW_CONNS	0x0002
 #define INIT_PG_OVERRIDE_ROLE_LOGIN		0x0004
 extern void pg_split_opts(char **argv, int *argcp, const char *optstr);
 extern void InitializeMaxBackends(void);
 extern void InitializeFastPathLocks(void);
-extern void InitPostgres(const char *in_dbname, Oid dboid,
+extern void InitMaintable(const char *in_dbname, Oid dboid,
 						 const char *username, Oid useroid,
 						 bits32 flags,
 						 char *out_dbname);

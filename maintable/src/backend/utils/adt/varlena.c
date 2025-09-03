@@ -3,7 +3,7 @@
  * varlena.c
  *	  Functions for the variable-length built-in types.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <limits.h>
@@ -588,7 +588,7 @@ text_substring(Datum str, int32 start, int32 length, bool length_not_specified)
 	/*
 	 * SQL99 says S can be zero or negative (which we don't document), but we
 	 * still must fetch from the start of the string.
-	 * https://www.postgresql.org/message-id/170905442373.643.11536838320909376197%40wrigleys.postgresql.org
+	 * https://www.maintableql.org/message-id/170905442373.643.11536838320909376197%40wrigleys.maintableql.org
 	 */
 	S1 = Max(S, 1);
 
@@ -5378,7 +5378,7 @@ unicode_norm_form_from_string(const char *formstr)
 }
 
 /*
- * Returns version of Unicode used by Postgres in "major.minor" format (the
+ * Returns version of Unicode used by Maintable in "major.minor" format (the
  * same format as the Unicode version reported by ICU). The third component
  * ("update version") never involves additions to the character repertoire and
  * is unimportant for most purposes.

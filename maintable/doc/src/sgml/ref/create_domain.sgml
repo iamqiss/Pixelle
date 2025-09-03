@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_domain.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createdomain">
@@ -182,7 +182,7 @@ CREATE DOMAIN <replaceable class="parameter">name</replaceable> [ AS ] <replacea
      <para>
       When a domain has multiple <literal>CHECK</literal> constraints,
       they will be tested in alphabetical order by name.
-      (<productname>PostgreSQL</productname> versions before 9.5 did not honor any
+      (<productname>maintableQL</productname> versions before 9.5 did not honor any
       particular firing order for <literal>CHECK</literal> constraints.)
      </para>
     </listitem>
@@ -217,7 +217,7 @@ INSERT INTO tab (domcol) VALUES ((SELECT domcol FROM tab WHERE false));
   </para>
 
   <para>
-   <productname>PostgreSQL</productname> assumes that
+   <productname>maintableQL</productname> assumes that
    <literal>CHECK</literal> constraints' conditions are immutable, that is,
    they will always give the same result for the same input value.  This
    assumption is what justifies examining <literal>CHECK</literal>
@@ -231,7 +231,7 @@ INSERT INTO tab (domcol) VALUES ((SELECT domcol FROM tab WHERE false));
    An example of a common way to break this assumption is to reference a
    user-defined function in a <literal>CHECK</literal> expression, and then
    change the behavior of that
-   function.  <productname>PostgreSQL</productname> does not disallow that,
+   function.  <productname>maintableQL</productname> does not disallow that,
    but it will not notice if there are stored values of the domain type that
    now violate the <literal>CHECK</literal> constraint. That would cause a
    subsequent database dump and restore to fail.  The recommended way to
@@ -282,13 +282,13 @@ CREATE TABLE us_snail_addy (
 
   <para>
    The syntax <literal>NOT NULL</literal> in this command is a
-   <productname>PostgreSQL</productname> extension.  (A standard-conforming
+   <productname>maintableQL</productname> extension.  (A standard-conforming
    way to write the same for non-composite data types would be
    <literal>CHECK (VALUE IS NOT
    NULL)</literal>.  However, per <xref linkend="sql-createdomain-notes"/>,
    such constraints are best avoided in practice anyway.)  The
    <literal>NULL</literal> <quote>constraint</quote> is a
-   <productname>PostgreSQL</productname> extension (see also <xref
+   <productname>maintableQL</productname> extension (see also <xref
    linkend="sql-createtable-compatibility"/>).
   </para>
  </refsect1>

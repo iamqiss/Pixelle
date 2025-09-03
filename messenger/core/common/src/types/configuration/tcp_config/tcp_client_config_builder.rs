@@ -15,7 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
-use crate::{AutoLogin, IggyDuration, IggyError, TcpClientConfig};
+use crate::{AutoLogin, MessengerDuration, MessengerError, TcpClientConfig};
 use std::net::SocketAddr;
 
 /// Builder for the TCP client configuration.
@@ -60,7 +60,7 @@ impl TcpClientConfigBuilder {
     }
 
     /// Sets the interval between retries when connecting to the server.
-    pub fn with_reconnection_interval(mut self, interval: IggyDuration) -> Self {
+    pub fn with_reconnection_interval(mut self, interval: MessengerDuration) -> Self {
         self.config.reconnection.interval = interval;
         self
     }
@@ -96,12 +96,12 @@ impl TcpClientConfigBuilder {
     }
 
     /// Builds the TCP client configuration.
-    pub fn build(self) -> Result<TcpClientConfig, IggyError> {
+    pub fn build(self) -> Result<TcpClientConfig, MessengerError> {
         let addr = self.config.server_address.trim();
 
         if addr.parse::<SocketAddr>().is_err() {
             let (ip, port) = addr.rsplit_once(':').unwrap_or((addr, ""));
-            return Err(IggyError::InvalidIpAddress(ip.to_owned(), port.to_owned()));
+            return Err(MessengerError::InvalidIpAddress(ip.to_owned(), port.to_owned()));
         }
 
         Ok(self.config)
@@ -111,7 +111,7 @@ impl TcpClientConfigBuilder {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::IggyError;
+    use crate::MessengerError;
 
     fn builder_with_address(addr: &str) -> TcpClientConfigBuilder {
         let mut builder = TcpClientConfigBuilder::default();
@@ -136,7 +136,7 @@ mod tests {
         let builder = builder_with_address("::1:8080");
         assert!(matches!(
             builder.build(),
-            Err(IggyError::InvalidIpAddress(_, _))
+            Err(MessengerError::InvalidIpAddress(_, _))
         ));
     }
 
@@ -145,7 +145,7 @@ mod tests {
         let builder = builder_with_address("invalid.ip:8080");
         assert!(matches!(
             builder.build(),
-            Err(IggyError::InvalidIpAddress(_, _))
+            Err(MessengerError::InvalidIpAddress(_, _))
         ));
     }
 
@@ -154,7 +154,7 @@ mod tests {
         let builder = builder_with_address("127.0.0.1:invalid");
         assert!(matches!(
             builder.build(),
-            Err(IggyError::InvalidIpAddress(_, _))
+            Err(MessengerError::InvalidIpAddress(_, _))
         ));
     }
 
@@ -163,7 +163,7 @@ mod tests {
         let builder = builder_with_address("[::1:8080");
         assert!(matches!(
             builder.build(),
-            Err(IggyError::InvalidIpAddress(_, _))
+            Err(MessengerError::InvalidIpAddress(_, _))
         ));
     }
 
@@ -172,7 +172,7 @@ mod tests {
         let builder = builder_with_address("127.0.0.1");
         assert!(matches!(
             builder.build(),
-            Err(IggyError::InvalidIpAddress(_, _))
+            Err(MessengerError::InvalidIpAddress(_, _))
         ));
     }
 }

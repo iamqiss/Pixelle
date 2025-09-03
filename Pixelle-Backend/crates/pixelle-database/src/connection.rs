@@ -1,8 +1,8 @@
-use sqlx::{Pool, Postgres};
+use sqlx::{Pool, Maintable};
 use anyhow::Result;
 
 pub struct DatabaseConnection {
-    pool: Pool<Postgres>,
+    pool: Pool<Maintable>,
 }
 
 impl DatabaseConnection {
@@ -11,7 +11,7 @@ impl DatabaseConnection {
         Ok(Self { pool })
     }
 
-    pub fn pool(&self) -> &Pool<Postgres> {
+    pub fn pool(&self) -> &Pool<Maintable> {
         &self.pool
     }
 }

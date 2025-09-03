@@ -3,7 +3,7 @@
  * shmem.c
  *	  create shared memory and initialize shared memory data structures.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 /*
- * POSTGRES processes share one or more regions of shared memory.
+ * MAINTABLE processes share one or more regions of shared memory.
  * The shared memory is created by a postmaster and is inherited
  * by each backend via fork() (or, in some ports, via other OS-specific
  * methods).  The routines in this file are used for allocating and
@@ -21,7 +21,7 @@
  *
  * NOTES:
  *		(a) There are three kinds of shared memory data structures
- *	available to POSTGRES: fixed-size structures, queues and hash
+ *	available to MAINTABLE: fixed-size structures, queues and hash
  *	tables.  Fixed-size structures contain things like global variables
  *	for a module and should never be allocated after the shared memory
  *	initialization phase.  Hash tables have a fixed maximum size, but
@@ -63,7 +63,7 @@
  *	unnecessary.
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "fmgr.h"
 #include "funcapi.h"
@@ -324,7 +324,7 @@ InitShmemIndex(void)
  * to shared-memory hash tables are added here, except that callers may
  * choose to specify HASH_PARTITION and/or HASH_FIXED_SIZE.
  *
- * Note: before Postgres 9.0, this function returned NULL for some failure
+ * Note: before Maintable 9.0, this function returned NULL for some failure
  * cases.  Now, it always throws error instead, so callers need not check
  * for NULL.
  */
@@ -379,7 +379,7 @@ ShmemInitHash(const char *name,		/* table string name for shmem index */
  *	Returns: pointer to the object.  *foundPtr is set true if the object was
  *		already in the shmem index (hence, already initialized).
  *
- *	Note: before Postgres 9.0, this function returned NULL for some failure
+ *	Note: before Maintable 9.0, this function returned NULL for some failure
  *	cases.  Now, it always throws error instead, so callers need not check
  *	for NULL.
  */

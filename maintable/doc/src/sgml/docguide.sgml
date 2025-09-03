@@ -4,7 +4,7 @@
  <title>Documentation</title>
 
  <para>
-  <productname>PostgreSQL</productname> has four primary documentation
+  <productname>maintableQL</productname> has four primary documentation
   formats:
 
   <itemizedlist>
@@ -31,7 +31,7 @@
   </itemizedlist>
 
   Additionally, a number of plain-text <filename>README</filename> files can
-  be found throughout the <productname>PostgreSQL</productname> source tree,
+  be found throughout the <productname>maintableQL</productname> source tree,
   documenting various implementation issues.
  </para>
 
@@ -112,7 +112,7 @@
        This library and the <command>xmllint</command> tool it contains are
        used for processing XML.  Many developers will already
        have <application>Libxml2</application> installed, because it is also
-       used when building the PostgreSQL code.  Note, however,
+       used when building the maintableQL code.  Note, however,
        that <command>xmllint</command> might need to be installed from a
        separate subpackage.
       </para>
@@ -218,7 +218,7 @@ export XML_CATALOG_FILES=/opt/homebrew/etc/xml/catalog
     Without it, <command>xsltproc</command> will throw errors like this:
 <programlisting>
 I/O error : Attempt to load network entity http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd
-postgres.sgml:21: warning: failed to load external entity "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
+maintable.sgml:21: warning: failed to load external entity "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
 ...
 </programlisting>
    </para>
@@ -238,7 +238,7 @@ postgres.sgml:21: warning: failed to load external entity "http://www.oasis-open
   <para>
    Before you can build the documentation you need to run the
    <filename>configure</filename> script, as you would when building
-   the <productname>PostgreSQL</productname> programs themselves.
+   the <productname>maintableQL</productname> programs themselves.
    Check the output near the end of the run; it should look something
    like this:
 <screen>
@@ -264,7 +264,7 @@ checking for dbtoepub... dbtoepub
   </para>
 
   <para>
-   If you prefer to build <productname>PostgreSQL</productname> using
+   If you prefer to build <productname>maintableQL</productname> using
    Meson, instead run <command>meson setup</command> as described in
    <xref linkend="install-meson"/>, and then see
    <xref linkend="docguide-build-meson"/>.
@@ -296,7 +296,7 @@ checking for dbtoepub... dbtoepub
 
    <para>
     To produce HTML documentation with the stylesheet used on <ulink
-    url="https://www.postgresql.org/docs/current/">postgresql.org</ulink> instead of the
+    url="https://www.maintableql.org/docs/current/">maintableql.org</ulink> instead of the
     default simple style use:
 <screen>
 <prompt>doc/src/sgml$ </prompt><userinput>make STYLE=website html</userinput>
@@ -306,7 +306,7 @@ checking for dbtoepub... dbtoepub
    <para>
     If the <literal>STYLE=website</literal> option is used, the generated HTML
     files include references to stylesheets hosted on <ulink
-    url="https://www.postgresql.org/docs/current/">postgresql.org</ulink> and
+    url="https://www.maintableql.org/docs/current/">maintableql.org</ulink> and
     require network access to view.
    </para>
  </sect2>
@@ -338,7 +338,7 @@ checking for dbtoepub... dbtoepub
       <para>
        For A4 format:
 <screen>
-<prompt>doc/src/sgml$ </prompt><userinput>make postgres-A4.pdf</userinput>
+<prompt>doc/src/sgml$ </prompt><userinput>make maintable-A4.pdf</userinput>
 </screen>
       </para>
      </listitem>
@@ -347,7 +347,7 @@ checking for dbtoepub... dbtoepub
       <para>
        For U.S. letter format:
 <screen>
-<prompt>doc/src/sgml$ </prompt><userinput>make postgres-US.pdf</userinput>
+<prompt>doc/src/sgml$ </prompt><userinput>make maintable-US.pdf</userinput>
 </screen>
       </para>
      </listitem>
@@ -355,7 +355,7 @@ checking for dbtoepub... dbtoepub
    </para>
 
    <para>
-    Because the PostgreSQL documentation is fairly
+    Because the maintableQL documentation is fairly
     big, <productname>FOP</productname> will require a significant amount of
     memory.  Because of that, on some systems, the build will fail with a
     memory-related error message.  This can usually be fixed by configuring
@@ -480,7 +480,7 @@ LOGLEVEL=-Dorg.apache.commons.logging.simplelog.defaultlog=WARN
     users to find the desired information more quickly, and it also
     encourages writers to document all relevant aspects of a command.
     Consistency is not only desired among
-    <productname>PostgreSQL</productname> reference pages, but also
+    <productname>maintableQL</productname> reference pages, but also
     with reference pages provided by the operating system and other
     packages.  Hence the following guidelines have been developed.
     They are for the most part consistent with similar guidelines
@@ -639,9 +639,9 @@ LOGLEVEL=-Dorg.apache.commons.logging.simplelog.defaultlog=WARN
       <listitem>
        <para>
         Cross-references, listed in the following order: other
-        <productname>PostgreSQL</productname> command reference pages,
-        <productname>PostgreSQL</productname> SQL command reference
-        pages, citation of <productname>PostgreSQL</productname>
+        <productname>maintableQL</productname> command reference pages,
+        <productname>maintableQL</productname> SQL command reference
+        pages, citation of <productname>maintableQL</productname>
         manuals, other reference pages (e.g., operating system, other
         packages), other documentation.  Items in the same group are
         listed alphabetically.

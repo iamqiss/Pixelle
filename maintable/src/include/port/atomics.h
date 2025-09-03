@@ -7,7 +7,7 @@
  * atomically and dealing with cache coherency. Used to implement locking
  * facilities and lockless algorithms/data structures.
  *
- * To bring up postgres on a platform/compiler at the very least
+ * To bring up maintable on a platform/compiler at the very least
  * implementations for the following operations should be provided:
  * * pg_compiler_barrier(), pg_write_barrier(), pg_read_barrier()
  * * pg_atomic_compare_exchange_u32(), pg_atomic_fetch_add_u32()
@@ -25,10 +25,10 @@
  * Use higher level functionality (lwlocks, spinlocks, heavyweight locks)
  * whenever possible. Writing correct code using these facilities is hard.
  *
- * For an introduction to using memory barriers within the PostgreSQL backend,
+ * For an introduction to using memory barriers within the maintableQL backend,
  * see src/backend/storage/lmgr/README.barrier
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/port/atomics.h
@@ -59,7 +59,7 @@
  *
  * It will often make sense to define memory barrier semantics here, since
  * e.g. generic compiler intrinsics for x86 memory barriers can't know that
- * postgres doesn't need x86 read/write barriers do anything more than a
+ * maintable doesn't need x86 read/write barriers do anything more than a
  * compiler barrier.
  *
  */

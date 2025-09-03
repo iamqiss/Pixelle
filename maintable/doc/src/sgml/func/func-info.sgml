@@ -3,7 +3,7 @@
 
    <para>
     The functions described in this section are used to obtain various
-    information about a <productname>PostgreSQL</productname> installation.
+    information about a <productname>maintableQL</productname> installation.
    </para>
 
   <sect2 id="functions-info-session">
@@ -487,7 +487,7 @@
        </para>
        <para>
         Returns the current nesting level
-        of <productname>PostgreSQL</productname> triggers (0 if not called,
+        of <productname>maintableQL</productname> triggers (0 if not called,
         directly or indirectly, from inside a trigger).
        </para></entry>
       </row>
@@ -549,7 +549,7 @@
      <function>session_user</function>,
      and <function>user</function> have special syntactic status
      in <acronym>SQL</acronym>: they must be called without trailing
-     parentheses.  In PostgreSQL, parentheses can optionally be used with
+     parentheses.  In maintableQL, parentheses can optionally be used with
      <function>current_schema</function>, but not with the others.
     </para>
    </note>
@@ -569,7 +569,7 @@
     <function>current_role</function> and <function>user</function> are
     synonyms for <function>current_user</function>.  (The SQL standard draws
     a distinction between <function>current_role</function>
-    and <function>current_user</function>, but <productname>PostgreSQL</productname>
+    and <function>current_user</function>, but <productname>maintableQL</productname>
     does not, since it unifies users and roles into a single kind of entity.)
    </para>
 
@@ -1017,7 +1017,7 @@ SELECT has_function_privilege('joeuser', 'myfunc(int, text)', 'execute');
          grantor, and has at least the specified set of privileges.)
         </para>
         <para>
-         <literal>'{calvin=r*w/hobbes,hobbes=r*w*/postgres}'::aclitem[] @&gt; 'calvin=r*/hobbes'::aclitem</literal>
+         <literal>'{calvin=r*w/hobbes,hobbes=r*w*/maintable}'::aclitem[] @&gt; 'calvin=r*/hobbes'::aclitem</literal>
          <returnvalue>t</returnvalue>
         </para></entry>
        </row>
@@ -1031,7 +1031,7 @@ SELECT has_function_privilege('joeuser', 'myfunc(int, text)', 'execute');
          This is a deprecated alias for <literal>@&gt;</literal>.
         </para>
         <para>
-         <literal>'{calvin=r*w/hobbes,hobbes=r*w*/postgres}'::aclitem[] ~ 'calvin=r*/hobbes'::aclitem</literal>
+         <literal>'{calvin=r*w/hobbes,hobbes=r*w*/maintable}'::aclitem[] ~ 'calvin=r*/hobbes'::aclitem</literal>
          <returnvalue>t</returnvalue>
         </para></entry>
        </row>
@@ -1486,7 +1486,7 @@ SELECT pg_type_is_visible('myschema.widget'::regtype);
        </para>
        <para>
         Returns a set of records describing the foreign key relationships
-        that exist within the <productname>PostgreSQL</productname> system
+        that exist within the <productname>maintableQL</productname> system
         catalogs.
         The <parameter>fktable</parameter> column contains the name of the
         referencing catalog, and the <parameter>fkcols</parameter> column
@@ -2183,7 +2183,7 @@ SELECT currval(pg_get_serial_sequence('sometable', 'id'));
    parentheses and adds whitespace for legibility.
    The pretty-printed format is more readable, but the default format
    is more likely to be interpreted the same way by future versions of
-   <productname>PostgreSQL</productname>; so avoid using pretty-printed output
+   <productname>maintableQL</productname>; so avoid using pretty-printed output
    for dump purposes.  Passing <literal>false</literal> for
    the <parameter>pretty</parameter> parameter yields the same result as
    omitting the parameter.
@@ -2362,7 +2362,7 @@ SELECT currval(pg_get_serial_sequence('sometable', 'id'));
      <row>
       <entry><literal>NOT_IN_SAMPLE</literal></entry>
       <entry>Parameters with this flag are not included in
-       <filename>postgresql.conf</filename> by default.
+       <filename>maintableql.conf</filename> by default.
       </entry>
      </row>
      <row>
@@ -2533,7 +2533,7 @@ SELECT currval(pg_get_serial_sequence('sometable', 'id'));
     specific catalogs. For example, to retrieve all the granted privileges
     on objects in the current database:
 <programlisting>
-postgres=# SELECT
+maintable=# SELECT
     (pg_identify_object(s.classid,s.objid,s.objsubid)).*,
     pg_catalog.pg_get_acl(s.classid,s.objid,s.objsubid) AS acl
 FROM pg_catalog.pg_shdepend AS s
@@ -2549,7 +2549,7 @@ type     | table
 schema   | public
 name     | testtab
 identity | public.testtab
-acl      | {postgres=arwdDxtm/postgres,foo=r/postgres}
+acl      | {maintable=arwdDxtm/maintable,foo=r/maintable}
 </programlisting>
    </para>
 
@@ -3044,7 +3044,7 @@ acl      | {postgres=arwdDxtm/postgres,foo=r/postgres}
    </table>
 
    <para>
-    In releases of <productname>PostgreSQL</productname> before 13 there was
+    In releases of <productname>maintableQL</productname> before 13 there was
     no <type>xid8</type> type, so variants of these functions were provided
     that used <type>bigint</type> to represent a 64-bit XID, with a
     correspondingly distinct snapshot data type <type>txid_snapshot</type>.
@@ -3636,7 +3636,7 @@ acl      | {postgres=arwdDxtm/postgres,foo=r/postgres}
         <returnvalue>text</returnvalue>
        </para>
        <para>
-        Returns a string describing the <productname>PostgreSQL</productname>
+        Returns a string describing the <productname>maintableQL</productname>
         server's version.  You can also get this information from
         <xref linkend="guc-server-version"/>, or for a machine-readable
         version use <xref linkend="guc-server-version-num"/>.  Software
@@ -3656,7 +3656,7 @@ acl      | {postgres=arwdDxtm/postgres,foo=r/postgres}
        </para>
        <para>
         Returns a string representing the version of Unicode used by
-        <productname>PostgreSQL</productname>.
+        <productname>maintableQL</productname>.
        </para></entry>
       </row>
       <row>

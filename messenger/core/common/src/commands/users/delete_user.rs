@@ -19,7 +19,7 @@
 use crate::BytesSerializable;
 use crate::Identifier;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, DELETE_USER_CODE};
 use bytes::Bytes;
 use serde::{Deserialize, Serialize};
@@ -41,8 +41,8 @@ impl Command for DeleteUser {
     }
 }
 
-impl Validatable<IggyError> for DeleteUser {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for DeleteUser {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -52,9 +52,9 @@ impl BytesSerializable for DeleteUser {
         self.user_id.to_bytes()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<DeleteUser, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<DeleteUser, MessengerError> {
         if bytes.len() < 3 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let user_id = Identifier::from_bytes(bytes)?;

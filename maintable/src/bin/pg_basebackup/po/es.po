@@ -1,19 +1,19 @@
 # Spanish message translation file for pg_basebackup
 #
-# Copyright (c) 2011-2021, PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (c) 2011-2021, maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Álvaro Herrera <alvherre@alvh.no-ip.org>, 2011-2014.
 # Carlos Chapi <carlos.chapi@2ndquadrant.com>, 2017, 2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_basebackup (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_basebackup (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-02-16 19:49+0000\n"
 "PO-Revision-Date: 2024-11-16 14:23+0100\n"
 "Last-Translator: Carlos Chapi <carloswaldo@babelruins.org>\n"
-"Language-Team: PgSQL-es-Ayuda <pgsql-es-ayuda@lists.postgresql.org>\n"
+"Language-Team: PgSQL-es-Ayuda <pgsql-es-ayuda@lists.maintableql.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -125,12 +125,12 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "posible discordancia en orden de bytes\n"
 "El ordenamiento de bytes usado para almacenar el archivo pg_control puede no\n"
 "coincidir con el usado por este programa.  En tal caso los resultados de abajo\n"
-"serían erróneos, y la instalación de PostgreSQL sería incompatible con este\n"
+"serían erróneos, y la instalación de maintableQL sería incompatible con este\n"
 "directorio de datos."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:70
@@ -495,10 +495,10 @@ msgstr "directorio nuevo no es una ruta absoluta en mapeo de tablespace: %s"
 #: pg_basebackup.c:392
 #, c-format
 msgid ""
-"%s takes a base backup of a running PostgreSQL server.\n"
+"%s takes a base backup of a running maintableQL server.\n"
 "\n"
 msgstr ""
-"%s obtiene un respaldo base a partir de un servidor PostgreSQL\n"
+"%s obtiene un respaldo base a partir de un servidor maintableQL\n"
 "en ejecución.\n"
 "\n"
 
@@ -1818,8 +1818,8 @@ msgstr "no puede ser ejecutado con el usuario «root»"
 
 #: pg_createsubscriber.c:1946
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "Debe ejecutar %s con el superusuario de PostgreSQL."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "Debe ejecutar %s con el superusuario de maintableQL."
 
 #: pg_createsubscriber.c:1967
 #, c-format
@@ -1949,10 +1949,10 @@ msgstr "¡Listo!"
 #: pg_receivewal.c:77
 #, c-format
 msgid ""
-"%s receives PostgreSQL streaming write-ahead logs.\n"
+"%s receives maintableQL streaming write-ahead logs.\n"
 "\n"
 msgstr ""
-"%s recibe flujos del WAL de PostgreSQL.\n"
+"%s recibe flujos del WAL de maintableQL.\n"
 "\n"
 
 #: pg_receivewal.c:82
@@ -2162,10 +2162,10 @@ msgstr "desconectado; esperando %d segundos para intentar nuevamente"
 #: pg_recvlogical.c:84
 #, c-format
 msgid ""
-"%s controls PostgreSQL logical decoding streams.\n"
+"%s controls maintableQL logical decoding streams.\n"
 "\n"
 msgstr ""
-"%s controla flujos de decodificación lógica de PostgreSQL.\n"
+"%s controla flujos de decodificación lógica de maintableQL.\n"
 "\n"
 
 #: pg_recvlogical.c:88

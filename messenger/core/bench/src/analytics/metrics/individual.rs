@@ -30,14 +30,14 @@ use bench_report::individual_metrics::BenchmarkIndividualMetrics;
 use bench_report::individual_metrics_summary::BenchmarkIndividualMetricsSummary;
 use bench_report::time_series::TimeSeries;
 use bench_report::utils::{max, min, std_dev};
-use iggy::prelude::IggyDuration;
+use messenger::prelude::MessengerDuration;
 
 pub fn from_records(
     records: &[BenchmarkRecord],
     benchmark_kind: BenchmarkKind,
     actor_kind: ActorKind,
     actor_id: u32,
-    sampling_time: IggyDuration,
+    sampling_time: MessengerDuration,
     moving_average_window: u32,
 ) -> BenchmarkIndividualMetrics {
     if records.is_empty() {
@@ -144,7 +144,7 @@ fn extract_totals(records: &[BenchmarkRecord]) -> (f64, u64, u64, u64, u64) {
 
 fn calculate_time_series(
     records: &[BenchmarkRecord],
-    sampling_time: IggyDuration,
+    sampling_time: MessengerDuration,
     moving_average_window: u32,
 ) -> (TimeSeries, TimeSeries, TimeSeries) {
     let throughput_mb_ts = TimeSeriesCalculator::throughput_mb(records, sampling_time);

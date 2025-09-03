@@ -24,8 +24,8 @@ import (
 	"sort"
 	"time"
 
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	ierror "github.com/apache/iggy/foreign/go/errors"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	ierror "github.com/apache/messenger/foreign/go/errors"
 	"github.com/klauspost/compress/s2"
 )
 
@@ -112,12 +112,12 @@ func DeserializeToStream(payload []byte, position int) (iggcon.Stream, int) {
 	}, readBytes
 }
 
-func DeserializeFetchMessagesResponse(payload []byte, compression iggcon.IggyMessageCompression) (*iggcon.PolledMessage, error) {
+func DeserializeFetchMessagesResponse(payload []byte, compression iggcon.MessengerMessageCompression) (*iggcon.PolledMessage, error) {
 	if len(payload) == 0 {
 		return &iggcon.PolledMessage{
 			PartitionId:   0,
 			CurrentOffset: 0,
-			Messages:      make([]iggcon.IggyMessage, 0),
+			Messages:      make([]iggcon.MessengerMessage, 0),
 		}, nil
 	}
 
@@ -126,7 +126,7 @@ func DeserializeFetchMessagesResponse(payload []byte, compression iggcon.IggyMes
 	currentOffset := binary.LittleEndian.Uint64(payload[4:12])
 	messagesCount := binary.LittleEndian.Uint32(payload[12:16])
 	position := 16
-	var messages = make([]iggcon.IggyMessage, 0)
+	var messages = make([]iggcon.MessengerMessage, 0)
 	for position < length {
 		if position+iggcon.MessageHeaderSize >= length {
 			// body needs to be at least 1 byte
@@ -157,11 +157,11 @@ func DeserializeFetchMessagesResponse(payload []byte, compression iggcon.IggyMes
 			}
 			payloadSlice, err = s2.Decode(nil, payloadSlice)
 			if err != nil {
-				panic("iggy: failed to decode s2 payload: " + err.Error())
+				panic("messenger: failed to decode s2 payload: " + err.Error())
 			}
 		}
 
-		messages = append(messages, iggcon.IggyMessage{
+		messages = append(messages, iggcon.MessengerMessage{
 			Header:      *header,
 			Payload:     payloadSlice,
 			UserHeaders: user_headers,

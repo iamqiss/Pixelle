@@ -1,15 +1,15 @@
-# Copyright (c) 2025, PostgreSQL Global Development Group
+# Copyright (c) 2025, maintableQL Global Development Group
 use strict;
 use warnings FATAL => 'all';
 use File::Copy;
-use PostgreSQL::Test::Utils;
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Utils;
+use maintableQL::Test::Cluster;
 use Test::More;
 
 # This tests scenarios related to the service name and the service file,
 # for the connection options and their environment variables.
 
-my $node = PostgreSQL::Test::Cluster->new('node');
+my $node = maintableQL::Test::Cluster->new('node');
 $node->init;
 $node->start;
 
@@ -17,10 +17,10 @@ $node->start;
 # This ensures that the environment variables used for the connection do
 # not interfere with the connection attempts, and that the service file's
 # contents are used.
-my $dummy_node = PostgreSQL::Test::Cluster->new('dummy_node');
+my $dummy_node = maintableQL::Test::Cluster->new('dummy_node');
 $dummy_node->init;
 
-my $td = PostgreSQL::Test::Utils::tempdir;
+my $td = maintableQL::Test::Utils::tempdir;
 
 # Windows vs non-Windows: CRLF vs LF for the file's newline, relying on
 # the fact that libpq uses fgets() when reading the lines of a service file.
@@ -81,7 +81,7 @@ local $ENV{PGSERVICEFILE} = "$srvfile_empty";
 		expected_stdout => qr/connect1_1/);
 
 	$dummy_node->connect_ok(
-		'postgres://?service=my_srv',
+		'maintable://?service=my_srv',
 		'connection with correct "service" URI and PGSERVICEFILE',
 		sql => "SELECT 'connect1_2'",
 		expected_stdout => qr/connect1_2/);
@@ -130,7 +130,7 @@ local $ENV{PGSERVICEFILE} = "$srvfile_empty";
 		expected_stdout => qr/connect2_1/);
 
 	$dummy_node->connect_ok(
-		'postgres://?service=my_srv',
+		'maintable://?service=my_srv',
 		'connection with correct "service" URI and default pg_service.conf',
 		sql => "SELECT 'connect2_2'",
 		expected_stdout => qr/connect2_2/);
@@ -201,7 +201,7 @@ $srvfile_win_cared =~ s/\\/\\\\/g;
 	$encoded_srvfile =~ s/:/%3A/g;
 
 	$dummy_node->connect_ok(
-		'postgresql:///?service=my_srv&servicefile=' . $encoded_srvfile,
+		'maintableql:///?service=my_srv&servicefile=' . $encoded_srvfile,
 		'connection with valid servicefile in URI',
 		sql => "SELECT 'connect3_2'",
 		expected_stdout => qr/connect3_2/);
@@ -214,7 +214,7 @@ $srvfile_win_cared =~ s/\\/\\\\/g;
 		expected_stdout => qr/connect3_3/);
 
 	$dummy_node->connect_ok(
-		'postgresql://?servicefile=' . $encoded_srvfile,
+		'maintableql://?servicefile=' . $encoded_srvfile,
 		'connection with PGSERVICE and servicefile in URI',
 		sql => "SELECT 'connect3_4'",
 		expected_stdout => qr/connect3_4/);

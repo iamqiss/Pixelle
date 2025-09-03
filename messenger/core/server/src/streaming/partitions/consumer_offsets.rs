@@ -21,15 +21,15 @@ use crate::streaming::partitions::partition::{ConsumerOffset, Partition};
 use crate::streaming::polling_consumer::PollingConsumer;
 use dashmap::DashMap;
 use error_set::ErrContext;
-use iggy_common::ConsumerKind;
-use iggy_common::IggyError;
+use messenger_common::ConsumerKind;
+use messenger_common::MessengerError;
 use tracing::trace;
 
 impl Partition {
     pub async fn get_consumer_offset(
         &self,
         consumer: PollingConsumer,
-    ) -> Result<Option<u64>, IggyError> {
+    ) -> Result<Option<u64>, MessengerError> {
         trace!(
             "Getting consumer offset for {}, partition: {}, current: {}...",
             consumer, self.partition_id, self.current_offset
@@ -57,13 +57,13 @@ impl Partition {
         &self,
         consumer: PollingConsumer,
         offset: u64,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         trace!(
             "Storing offset: {} for {}, partition: {}, current: {}...",
             offset, consumer, self.partition_id, self.current_offset
         );
         if offset > self.current_offset {
-            return Err(IggyError::InvalidOffset(offset));
+            return Err(MessengerError::InvalidOffset(offset));
         }
 
         match consumer {
@@ -87,7 +87,7 @@ impl Partition {
         kind: ConsumerKind,
         consumer_id: u32,
         offset: u64,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let consumer_offsets = self.get_consumer_offsets(kind);
         if let Some(mut consumer_offset) = consumer_offsets.get_mut(&consumer_id) {
             consumer_offset.offset = offset;
@@ -123,7 +123,7 @@ impl Partition {
         Ok(())
     }
 
-    pub async fn load_consumer_offsets(&mut self) -> Result<(), IggyError> {
+    pub async fn load_consumer_offsets(&mut self) -> Result<(), MessengerError> {
         trace!(
             "Loading consumer offsets for partition with ID: {} for topic with ID: {} and stream with ID: {}...",
             self.partition_id, self.topic_id, self.stream_id
@@ -142,7 +142,7 @@ impl Partition {
     async fn load_consumer_offsets_from_storage(
         &self,
         kind: ConsumerKind,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let path = match kind {
             ConsumerKind::Consumer => &self.consumer_offsets_path,
             ConsumerKind::ConsumerGroup => &self.consumer_group_offsets_path,
@@ -185,7 +185,7 @@ impl Partition {
     pub async fn delete_consumer_offset(
         &mut self,
         consumer: PollingConsumer,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let partition_id = self.partition_id;
         trace!(
             "Deleting consumer offset for consumer: {consumer}, partition ID: {partition_id}..."
@@ -195,7 +195,7 @@ impl Partition {
                 let (_, offset) = self
                     .consumer_offsets
                     .remove(&consumer_id)
-                    .ok_or(IggyError::ConsumerOffsetNotFound(consumer_id))?;
+                    .ok_or(MessengerError::ConsumerOffsetNotFound(consumer_id))?;
                 self.storage.partition.delete_consumer_offset(&offset.path).await
                     .with_error_context(|error| format!("{COMPONENT} (error: {error}) - failed to delete consumer offset, consumer ID: {consumer_id}, partition ID: {partition_id}"))?;
             }
@@ -203,7 +203,7 @@ impl Partition {
                 let (_, offset) = self
                     .consumer_group_offsets
                     .remove(&consumer_id)
-                    .ok_or(IggyError::ConsumerOffsetNotFound(consumer_id))?;
+                    .ok_or(MessengerError::ConsumerOffsetNotFound(consumer_id))?;
                 self.storage.partition.delete_consumer_offset(&offset.path).await
                     .with_error_context(|error| format!("{COMPONENT} (error: {error}) - failed to delete consumer group offset, consumer ID: {consumer_id}, partition ID: {partition_id}"))?;
             }

@@ -1,11 +1,11 @@
 /* ----------
  *	pgstat_kind.h
  *
- *	Definitions related to the statistics kinds for the PostgreSQL
+ *	Definitions related to the statistics kinds for the maintableQL
  *	cumulative statistics system.  Can be included in backend or
  *	frontend code.
  *
- *	Copyright (c) 2001-2025, PostgreSQL Global Development Group
+ *	Copyright (c) 2001-2025, maintableQL Global Development Group
  *
  *	src/include/utils/pgstat_kind.h
  * ----------
@@ -53,7 +53,7 @@
 /*
  * PgStat_Kind to use for extensions that require an ID, but are still in
  * development and have not reserved their own unique kind ID yet. See:
- * https://wiki.postgresql.org/wiki/CustomCumulativeStats
+ * https://wiki.maintableql.org/wiki/CustomCumulativeStats
  */
 #define PGSTAT_KIND_EXPERIMENTAL	24
 

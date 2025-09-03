@@ -2,7 +2,7 @@
  *
  * checkpointer.c
  *
- * The checkpointer is new as of Postgres 9.2.  It handles all checkpoints.
+ * The checkpointer is new as of Maintable 9.2.  It handles all checkpoints.
  * Checkpoints are automatically dispatched after a certain amount of time has
  * elapsed since the last one, and it can be signaled to perform requested
  * checkpoints as well.  (The GUC parameter that mandates a checkpoint every
@@ -26,7 +26,7 @@
  * restart needs to be forced.)
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -34,7 +34,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/time.h>
 #include <time.h>

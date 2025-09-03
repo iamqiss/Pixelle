@@ -4,7 +4,7 @@
  * contrib/cube/cubescan.l
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "cubedata.h"
 #include "cubeparse.h"	/* must be after cubedata.h for YYSTYPE and NDBOX */

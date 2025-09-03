@@ -71,9 +71,9 @@ export const formatPolledMessages = (msgs: Message[]) =>
     };
   });
 
-export const getIggyAddress = (host = '127.0.0.1', port = 8090): [string, number] => {
-  if (process.env.IGGY_TCP_ADDRESS) {
-    const s = (process.env.IGGY_TCP_ADDRESS || '').split(':');
+export const getMessengerAddress = (host = '127.0.0.1', port = 8090): [string, number] => {
+  if (process.env.MESSENGER_TCP_ADDRESS) {
+    const s = (process.env.MESSENGER_TCP_ADDRESS || '').split(':');
     [host, port] = [s[0], s[1] ? parseInt(s[1].toString(), 10) : port];
   }
   return [host, port];

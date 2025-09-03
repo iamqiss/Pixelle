@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_subscription.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createsubscription">
@@ -219,7 +219,7 @@ CREATE SUBSCRIPTION <replaceable class="parameter">subscription_name</replaceabl
           <literal>false</literal>. Any initial table synchronization copy
           (see <literal>copy_data</literal>) also uses the same format. Binary
           format can be faster than the text format, but it is less portable
-          across machine architectures and <productname>PostgreSQL</productname>
+          across machine architectures and <productname>maintableQL</productname>
           versions. Binary format is very data type specific; for example, it
           will not allow copying from a <type>smallint</type> column to an
           <type>integer</type> column, even though that would work fine in text
@@ -240,7 +240,7 @@ CREATE SUBSCRIPTION <replaceable class="parameter">subscription_name</replaceabl
          </para>
 
          <para>
-          If the publisher is a <productname>PostgreSQL</productname> version
+          If the publisher is a <productname>maintableQL</productname> version
           before 16, then any initial table synchronization will use text format
           even if <literal>binary = true</literal>.
          </para>
@@ -578,7 +578,7 @@ CREATE SUBSCRIPTION <replaceable class="parameter">subscription_name</replaceabl
    <link linkend="sql-createpublication-params-for-all-tables"><literal>FOR ALL TABLES</literal></link>
    or <link linkend="sql-createpublication-params-for-tables-in-schema"><literal>FOR TABLES IN SCHEMA</literal></link>,
    rows are always published regardless of the definition of the other
-   expressions. If the subscriber is a <productname>PostgreSQL</productname>
+   expressions. If the subscriber is a <productname>maintableQL</productname>
    version before 15, then any row filtering is ignored during the initial data
    synchronization phase. For this case, the user might want to consider
    deleting any initially copied data that would be incompatible with
@@ -664,7 +664,7 @@ CREATE SUBSCRIPTION mysub
   <title>Compatibility</title>
 
   <para>
-   <command>CREATE SUBSCRIPTION</command> is a <productname>PostgreSQL</productname>
+   <command>CREATE SUBSCRIPTION</command> is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

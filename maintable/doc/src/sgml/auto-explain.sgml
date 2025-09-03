@@ -27,7 +27,7 @@ LOAD 'auto_explain';
   it into some or all sessions by including <literal>auto_explain</literal> in
   <xref linkend="guc-session-preload-libraries"/> or
   <xref linkend="guc-shared-preload-libraries"/> in
-  <filename>postgresql.conf</filename>.  Then you can track unexpectedly slow queries
+  <filename>maintableql.conf</filename>.  Then you can track unexpectedly slow queries
   no matter when they happen.  Of course there is a price in overhead for
   that.
  </para>
@@ -303,13 +303,13 @@ LOAD 'auto_explain';
 
   <para>
    In ordinary usage, these parameters are set
-   in <filename>postgresql.conf</filename>, although superusers can alter them
+   in <filename>maintableql.conf</filename>, although superusers can alter them
    on-the-fly within their own sessions.
    Typical usage might be:
   </para>
 
 <programlisting>
-# postgresql.conf
+# maintableql.conf
 session_preload_libraries = 'auto_explain'
 
 auto_explain.log_min_duration = '3s'
@@ -320,10 +320,10 @@ auto_explain.log_min_duration = '3s'
   <title>Example</title>
 
 <programlisting>
-postgres=# LOAD 'auto_explain';
-postgres=# SET auto_explain.log_min_duration = 0;
-postgres=# SET auto_explain.log_analyze = true;
-postgres=# SELECT count(*)
+maintable=# LOAD 'auto_explain';
+maintable=# SET auto_explain.log_min_duration = 0;
+maintable=# SET auto_explain.log_analyze = true;
+maintable=# SELECT count(*)
            FROM pg_class, pg_index
            WHERE oid = indrelid AND indisunique;
 </programlisting>

@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 pg_config_os = configure_file(
   output: 'pg_config_os.h',
@@ -53,7 +53,7 @@ var_ldflags = ' '.join(
 var_ldflags_sl = ''.join(ldflags_sl)
 var_ldflags_ex = '' # FIXME
 # FIXME - some extensions might directly use symbols from one of libs. If
-# that symbol isn't used by postgres, and statically linked, it'll cause an
+# that symbol isn't used by maintable, and statically linked, it'll cause an
 # undefined symbol at runtime. And obviously it'll cause problems for
 # executables, although those are probably less common.
 var_libs = ''
@@ -68,7 +68,7 @@ configure_files += pg_config_paths
 
 install_headers(
   'pg_config_manual.h',
-  'postgres_ext.h',
+  'maintable_ext.h',
 )
 
 install_headers(
@@ -79,7 +79,7 @@ install_headers(
 install_headers(
   'c.h',
   'port.h',
-  'postgres_fe.h',
+  'maintable_fe.h',
   install_dir: dir_include_internal,
 )
 
@@ -102,9 +102,9 @@ install_headers(
   'pgtar.h',
   'pgtime.h',
   'port.h',
-  'postgres.h',
-  'postgres_ext.h',
-  'postgres_fe.h',
+  'maintable.h',
+  'maintable_ext.h',
+  'maintable_fe.h',
   'varatt.h',
   'windowapi.h',
   pg_config_os,

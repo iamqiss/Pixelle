@@ -16,7 +16,7 @@
 // under the License.
 
 use super::{BenchmarkCache, Result};
-use crate::error::IggyBenchDashboardServerError;
+use crate::error::MessengerBenchDashboardServerError;
 use bench_dashboard_shared::BenchmarkReportLight;
 use std::path::Path;
 use tokio::io::AsyncReadExt;
@@ -32,7 +32,7 @@ impl BenchmarkCache {
         self.load_gh_workflows().await;
 
         let entries: Vec<_> = std::fs::read_dir(&self.results_dir)
-            .map_err(IggyBenchDashboardServerError::Io)?
+            .map_err(MessengerBenchDashboardServerError::Io)?
             .filter_map(|r: std::result::Result<std::fs::DirEntry, std::io::Error>| r.ok())
             .filter(|entry| entry.file_type().map(|t| t.is_dir()).unwrap_or(false))
             .collect();
@@ -116,7 +116,7 @@ impl BenchmarkCache {
     pub fn load_light_report(&self, path: &Path) -> Result<BenchmarkReportLight> {
         let data = std::fs::read_to_string(path).map_err(|e| {
             error!("Failed to read benchmark file {:?}: {}", path, e);
-            IggyBenchDashboardServerError::Io(e)
+            MessengerBenchDashboardServerError::Io(e)
         })?;
 
         serde_json::from_str(&data).map_err(|e| {
@@ -130,7 +130,7 @@ impl BenchmarkCache {
                     data
                 }
             );
-            IggyBenchDashboardServerError::InvalidJson(e.to_string())
+            MessengerBenchDashboardServerError::InvalidJson(e.to_string())
         })
     }
 

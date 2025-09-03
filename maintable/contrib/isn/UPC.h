@@ -1,6 +1,6 @@
 /*
  * ISSN.h
- *	  PostgreSQL type definitions for ISNs (ISBN, ISMN, ISSN, EAN13, UPC)
+ *	  maintableQL type definitions for ISNs (ISBN, ISMN, ISSN, EAN13, UPC)
  *
  * No information available for UPC prefixes
  *

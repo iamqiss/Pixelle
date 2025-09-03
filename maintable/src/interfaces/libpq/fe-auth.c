@@ -3,7 +3,7 @@
  * fe-auth.c
  *	   The front-end (client) authorization routines
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -20,7 +20,7 @@
  *								of the authentication system
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #ifdef WIN32
 #include "win32.h"
@@ -1455,7 +1455,7 @@ PQencryptPasswordConn(PGconn *conn, const char *passwd, const char *user,
 
 	/*
 	 * Also accept "on" and "off" as aliases for "md5", because
-	 * password_encryption was a boolean before PostgreSQL 10.  We refuse to
+	 * password_encryption was a boolean before maintableQL 10.  We refuse to
 	 * send the password in plaintext even if it was "off".
 	 */
 	if (strcmp(algorithm, "on") == 0 ||

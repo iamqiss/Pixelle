@@ -1,13 +1,13 @@
 /*-------------------------------------------------------------------------
  * A stack of automaton states to handle nested conditionals.
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  *
  * src/fe_utils/conditional.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "fe_utils/conditional.h"
 

@@ -5,7 +5,7 @@
  * This implements Unicode normalization, per the documentation at
  * https://www.unicode.org/reports/tr15/.
  *
- * Portions Copyright (c) 2017-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2017-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/common/unicode_norm.c
@@ -13,9 +13,9 @@
  *-------------------------------------------------------------------------
  */
 #ifndef FRONTEND
-#include "postgres.h"
+#include "maintable.h"
 #else
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #endif
 
 #include "common/unicode_norm.h"

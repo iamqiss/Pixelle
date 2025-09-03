@@ -17,7 +17,7 @@
  */
 
 use crate::shared::messages::{OrderConfirmed, OrderCreated, OrderRejected, SerializableMessage};
-use iggy::prelude::IggyTimestamp;
+use messenger::prelude::MessengerTimestamp;
 use rand::Rng;
 use rand::rngs::ThreadRng;
 
@@ -50,7 +50,7 @@ impl MessagesGenerator {
         self.order_id += 1;
         Box::new(OrderCreated {
             order_id: self.order_id,
-            timestamp: IggyTimestamp::now(),
+            timestamp: MessengerTimestamp::now(),
             currency_pair: CURRENCY_PAIRS[self.rng.random_range(0..CURRENCY_PAIRS.len())]
                 .to_string(),
             price: self.rng.random_range(10.0..=1000.0),
@@ -66,7 +66,7 @@ impl MessagesGenerator {
     fn generate_order_confirmed(&mut self) -> Box<dyn SerializableMessage> {
         Box::new(OrderConfirmed {
             order_id: self.order_id,
-            timestamp: IggyTimestamp::now(),
+            timestamp: MessengerTimestamp::now(),
             price: self.rng.random_range(10.0..=1000.0),
         })
     }
@@ -74,7 +74,7 @@ impl MessagesGenerator {
     fn generate_order_rejected(&mut self) -> Box<dyn SerializableMessage> {
         Box::new(OrderRejected {
             order_id: self.order_id,
-            timestamp: IggyTimestamp::now(),
+            timestamp: MessengerTimestamp::now(),
             reason: match self.rng.random_range(0..=1) {
                 0 => "cancelled_by_user",
                 _ => "other",

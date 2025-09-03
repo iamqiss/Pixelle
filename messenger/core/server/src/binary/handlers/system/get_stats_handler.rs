@@ -24,13 +24,13 @@ use crate::binary::sender::SenderKind;
 use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::get_stats::GetStats;
+use messenger_common::MessengerError;
+use messenger_common::get_stats::GetStats;
 use tracing::debug;
 
 impl ServerCommandHandler for GetStats {
     fn code(&self) -> u32 {
-        iggy_common::GET_STATS_CODE
+        messenger_common::GET_STATS_CODE
     }
 
     async fn handle(
@@ -39,7 +39,7 @@ impl ServerCommandHandler for GetStats {
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
 
         let system = system.read().await;
@@ -53,14 +53,14 @@ impl ServerCommandHandler for GetStats {
 }
 
 impl BinaryServerCommand for GetStats {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         let server_command = receive_and_validate(sender, code, length).await?;
         match server_command {
             ServerCommand::GetStats(get_stats) => Ok(get_stats),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

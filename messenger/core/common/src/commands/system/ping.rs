@@ -18,7 +18,7 @@
 
 use crate::BytesSerializable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, PING_CODE};
 use bytes::Bytes;
 use serde::{Deserialize, Serialize};
@@ -35,8 +35,8 @@ impl Command for Ping {
     }
 }
 
-impl Validatable<IggyError> for Ping {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for Ping {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -46,9 +46,9 @@ impl BytesSerializable for Ping {
         Bytes::new()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Ping, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<Ping, MessengerError> {
         if !bytes.is_empty() {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let command = Ping {};

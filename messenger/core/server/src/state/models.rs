@@ -19,15 +19,15 @@
 use crate::state::COMPONENT;
 use bytes::{BufMut, Bytes, BytesMut};
 use error_set::ErrContext;
-use iggy_common::BytesSerializable;
-use iggy_common::Command;
-use iggy_common::IggyError;
-use iggy_common::Validatable;
-use iggy_common::create_consumer_group::CreateConsumerGroup;
-use iggy_common::create_personal_access_token::CreatePersonalAccessToken;
-use iggy_common::create_stream::CreateStream;
-use iggy_common::create_topic::CreateTopic;
-use iggy_common::create_user::CreateUser;
+use messenger_common::BytesSerializable;
+use messenger_common::Command;
+use messenger_common::MessengerError;
+use messenger_common::Validatable;
+use messenger_common::create_consumer_group::CreateConsumerGroup;
+use messenger_common::create_personal_access_token::CreatePersonalAccessToken;
+use messenger_common::create_stream::CreateStream;
+use messenger_common::create_topic::CreateTopic;
+use messenger_common::create_user::CreateUser;
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::fmt::{Display, Formatter};
@@ -63,8 +63,8 @@ pub struct CreatePersonalAccessTokenWithHash {
     pub command: CreatePersonalAccessToken,
 }
 
-impl Validatable<IggyError> for CreateStreamWithId {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for CreateStreamWithId {
+    fn validate(&self) -> Result<(), MessengerError> {
         self.command.validate()
     }
 }
@@ -75,8 +75,8 @@ impl Command for CreateStreamWithId {
     }
 }
 
-impl Validatable<IggyError> for CreateTopicWithId {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for CreateTopicWithId {
+    fn validate(&self) -> Result<(), MessengerError> {
         self.command.validate()
     }
 }
@@ -87,8 +87,8 @@ impl Command for CreateTopicWithId {
     }
 }
 
-impl Validatable<IggyError> for CreateConsumerGroupWithId {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for CreateConsumerGroupWithId {
+    fn validate(&self) -> Result<(), MessengerError> {
         self.command.validate()
     }
 }
@@ -99,8 +99,8 @@ impl Command for CreateConsumerGroupWithId {
     }
 }
 
-impl Validatable<IggyError> for CreateUserWithId {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for CreateUserWithId {
+    fn validate(&self) -> Result<(), MessengerError> {
         self.command.validate()
     }
 }
@@ -111,8 +111,8 @@ impl Command for CreateUserWithId {
     }
 }
 
-impl Validatable<IggyError> for CreatePersonalAccessTokenWithHash {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for CreatePersonalAccessTokenWithHash {
+    fn validate(&self) -> Result<(), MessengerError> {
         self.command.validate()
     }
 }
@@ -183,7 +183,7 @@ impl BytesSerializable for CreateStreamWithId {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError>
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
@@ -194,7 +194,7 @@ impl BytesSerializable for CreateStreamWithId {
                 .with_error_context(|error| {
                     format!("{COMPONENT} (error: {error}) - failed to parse stream ID")
                 })
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         position += 4;
         let command_length = u32::from_le_bytes(
@@ -203,7 +203,7 @@ impl BytesSerializable for CreateStreamWithId {
                 .with_error_context(|error| {
                     format!("{COMPONENT} (error: {error}) - failed to parse stream command length")
                 })
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         position += 4;
         let command_bytes = bytes.slice(position..position + command_length as usize);
@@ -224,7 +224,7 @@ impl BytesSerializable for CreateTopicWithId {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError>
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
@@ -235,7 +235,7 @@ impl BytesSerializable for CreateTopicWithId {
                 .with_error_context(|error| {
                     format!("{COMPONENT} (error: {error}) - failed to parse topic ID")
                 })
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         position += 4;
         let command_length = u32::from_le_bytes(
@@ -244,7 +244,7 @@ impl BytesSerializable for CreateTopicWithId {
                 .with_error_context(|error| {
                     format!("{COMPONENT} (error: {error}) - failed to parse topic command length")
                 })
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         position += 4;
         let command_bytes = bytes.slice(position..position + command_length as usize);
@@ -265,7 +265,7 @@ impl BytesSerializable for CreateConsumerGroupWithId {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError>
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
@@ -276,7 +276,7 @@ impl BytesSerializable for CreateConsumerGroupWithId {
                 .with_error_context(|error| {
                     format!("{COMPONENT} (error: {error}) - failed to parse consumer group ID")
                 })
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         position += 4;
         let command_length = u32::from_le_bytes(
@@ -285,7 +285,7 @@ impl BytesSerializable for CreateConsumerGroupWithId {
                 .with_error_context(|error| {
                     format!("{COMPONENT} (error: {error}) - failed to parse consumer group command length")
                 })
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         position += 4;
         let command_bytes = bytes.slice(position..position + command_length as usize);
@@ -307,7 +307,7 @@ impl BytesSerializable for CreateUserWithId {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError>
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
@@ -318,7 +318,7 @@ impl BytesSerializable for CreateUserWithId {
                 .with_error_context(|error| {
                     format!("{COMPONENT} (error: {error}) - failed to parse user ID")
                 })
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         position += 4;
         let command_length = u32::from_le_bytes(
@@ -327,7 +327,7 @@ impl BytesSerializable for CreateUserWithId {
                 .with_error_context(|error| {
                     format!("{COMPONENT} (error: {error}) - failed to parse user command length")
                 })
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         position += 4;
         let command_bytes = bytes.slice(position..position + command_length as usize);
@@ -349,7 +349,7 @@ impl BytesSerializable for CreatePersonalAccessTokenWithHash {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError>
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
@@ -360,11 +360,11 @@ impl BytesSerializable for CreatePersonalAccessTokenWithHash {
                 .with_error_context(|error| {
                     format!("{COMPONENT} (error: {error}) - failed to parse hash length")
                 })
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         position += 4;
         let hash = from_utf8(&bytes[position..position + hash_length as usize])
-            .map_err(|_| IggyError::InvalidUtf8)?
+            .map_err(|_| MessengerError::InvalidUtf8)?
             .to_string();
 
         position += hash_length as usize;
@@ -374,7 +374,7 @@ impl BytesSerializable for CreatePersonalAccessTokenWithHash {
                 .with_error_context(|error| {
                     format!("{COMPONENT} (error: {error}) - failed to parse personal access token command length")
                 })
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         position += 4;
         let command_bytes = bytes.slice(position..position + command_length as usize);

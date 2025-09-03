@@ -3,7 +3,7 @@
  * parse_clause.c
  *	  handle clauses in parser
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "access/nbtree.h"
@@ -1872,7 +1872,7 @@ transformWhereClause(ParseState *pstate, Node *clause,
  *	  Transform the expression and make sure it is of type bigint.
  *	  Used for LIMIT and allied clauses.
  *
- * Note: as of Postgres 8.2, LIMIT expressions are expected to yield int8,
+ * Note: as of Maintable 8.2, LIMIT expressions are expected to yield int8,
  * rather than int4 as before.
  *
  * constructName does not affect the semantics, but is used in error messages
@@ -1994,7 +1994,7 @@ checkTargetlistEntrySQL92(ParseState *pstate, TargetEntry *tle,
  * This function supports the old SQL92 ORDER BY interpretation, where the
  * expression is an output column name or number.  If we fail to find a
  * match of that sort, we fall through to the SQL99 rules.  For historical
- * reasons, Postgres also allows this interpretation for GROUP BY, though
+ * reasons, Maintable also allows this interpretation for GROUP BY, though
  * the standard never did.  However, for GROUP BY we prefer a SQL99 match.
  * This function is *not* used for WINDOW definitions.
  *
@@ -2023,7 +2023,7 @@ findTargetlistEntrySQL92(ParseState *pstate, Node *node, List **tlist,
 	 *	  targetlist entries: according to SQL92, an identifier in GROUP BY
 	 *	  is a reference to a column name exposed by FROM, not to a target
 	 *	  list column.  However, many implementations (including pre-7.0
-	 *	  PostgreSQL) accept this anyway.  So for GROUP BY, we look first
+	 *	  maintableQL) accept this anyway.  So for GROUP BY, we look first
 	 *	  to see if the identifier matches any FROM column name, and only
 	 *	  try for a targetlist name if it doesn't.  This ensures that we
 	 *	  adhere to the spec in the case where the name could be both.

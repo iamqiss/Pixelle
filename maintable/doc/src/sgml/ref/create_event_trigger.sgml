@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_event_trigger.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createeventtrigger">
@@ -121,7 +121,7 @@ CREATE EVENT TRIGGER <replaceable class="parameter">name</replaceable>
 
   <para>
    Event triggers are disabled in single-user mode (see <xref
-   linkend="app-postgres"/>) as well as when
+   linkend="app-maintable"/>) as well as when
    <xref linkend="guc-event-triggers"/> is set to <literal>false</literal>.
    If an erroneous event trigger disables the database so much that you can't
    even drop the trigger, restart with <xref linkend="guc-event-triggers"/>

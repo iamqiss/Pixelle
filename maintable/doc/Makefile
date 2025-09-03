@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------
 #
-# PostgreSQL documentation top-level makefile
+# maintableQL documentation top-level makefile
 #
 # Copyright (c) 1994, Regents of the University of California
 #

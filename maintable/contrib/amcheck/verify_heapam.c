@@ -1,14 +1,14 @@
 /*-------------------------------------------------------------------------
  *
  * verify_heapam.c
- *	  Functions to check postgresql heap relations for corruption
+ *	  Functions to check maintableql heap relations for corruption
  *
- * Copyright (c) 2016-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2016-2025, maintableQL Global Development Group
  *
  *	  contrib/amcheck/verify_heapam.c
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/detoast.h"
 #include "access/genam.h"

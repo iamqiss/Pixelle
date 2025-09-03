@@ -49,7 +49,7 @@
  * we calculate operands first.  Then we check that results are numeric
  * singleton lists, calculate the result and pass it to the next path item.
  *
- * Copyright (c) 2019-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2019-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	src/backend/utils/adt/jsonpath_exec.c
@@ -57,7 +57,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_collation.h"
 #include "catalog/pg_type.h"
@@ -1855,7 +1855,7 @@ executeBoolItem(JsonPathExecContext *cxt, JsonPathItem *jsp,
 				/*
 				 * 'expr' is a sequence-returning expression.  'pattern' is a
 				 * regex string literal.  SQL/JSON standard requires XQuery
-				 * regexes, but we use Postgres regexes here.  'flags' is a
+				 * regexes, but we use Maintable regexes here.  'flags' is a
 				 * string literal converted to integer flags at compile-time.
 				 */
 				JsonLikeRegexContext lrcxt = {0};
@@ -2702,7 +2702,7 @@ executeDateTimeMethod(JsonPathExecContext *cxt, JsonPathItem *jsp,
 						 * Get the timezone value explicitly since JsonbValue
 						 * keeps that separate.
 						 */
-						j2date(DatumGetDateADT(value) + POSTGRES_EPOCH_JDATE,
+						j2date(DatumGetDateADT(value) + MAINTABLE_EPOCH_JDATE,
 							   &(tm.tm_year), &(tm.tm_mon), &(tm.tm_mday));
 						tm.tm_hour = 0;
 						tm.tm_min = 0;

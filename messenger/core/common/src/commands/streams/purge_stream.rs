@@ -19,7 +19,7 @@
 use crate::BytesSerializable;
 use crate::Identifier;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, PURGE_STREAM_CODE};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -41,8 +41,8 @@ impl Command for PurgeStream {
     }
 }
 
-impl Validatable<IggyError> for PurgeStream {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for PurgeStream {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -55,9 +55,9 @@ impl BytesSerializable for PurgeStream {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<PurgeStream, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<PurgeStream, MessengerError> {
         if bytes.len() < 5 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let stream_id = Identifier::from_bytes(bytes)?;

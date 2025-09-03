@@ -3,7 +3,7 @@
  * nodeAppend.c
  *	  routines to handle append nodes.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -55,7 +55,7 @@
  *							person employee student student-emp
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "executor/execAsync.h"
 #include "executor/execPartition.h"
@@ -1072,9 +1072,9 @@ ExecAppendAsyncEventWait(AppendState *node)
 	 *
 	 * NOTE: For historical reasons, it's important that this is added to the
 	 * WaitEventSet after the ExecAsyncConfigureWait() calls.  Namely,
-	 * postgres_fdw calls "GetNumRegisteredWaitEvents(set) == 1" to check if
+	 * maintable_fdw calls "GetNumRegisteredWaitEvents(set) == 1" to check if
 	 * any other events are in the set.  That's a poor design, it's
-	 * questionable for postgres_fdw to be doing that in the first place, but
+	 * questionable for maintable_fdw to be doing that in the first place, but
 	 * we cannot change it now.  The pattern has possibly been copied to other
 	 * extensions too.
 	 */

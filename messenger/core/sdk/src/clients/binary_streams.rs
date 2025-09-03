@@ -16,19 +16,19 @@
  * under the License.
  */
 
-use crate::prelude::IggyClient;
+use crate::prelude::MessengerClient;
 use async_trait::async_trait;
-use iggy_binary_protocol::StreamClient;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{Identifier, IggyError, Stream, StreamDetails};
+use messenger_binary_protocol::StreamClient;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{Identifier, MessengerError, Stream, StreamDetails};
 
 #[async_trait]
-impl StreamClient for IggyClient {
-    async fn get_stream(&self, stream_id: &Identifier) -> Result<Option<StreamDetails>, IggyError> {
+impl StreamClient for MessengerClient {
+    async fn get_stream(&self, stream_id: &Identifier) -> Result<Option<StreamDetails>, MessengerError> {
         self.client.read().await.get_stream(stream_id).await
     }
 
-    async fn get_streams(&self) -> Result<Vec<Stream>, IggyError> {
+    async fn get_streams(&self) -> Result<Vec<Stream>, MessengerError> {
         self.client.read().await.get_streams().await
     }
 
@@ -36,7 +36,7 @@ impl StreamClient for IggyClient {
         &self,
         name: &str,
         stream_id: Option<u32>,
-    ) -> Result<StreamDetails, IggyError> {
+    ) -> Result<StreamDetails, MessengerError> {
         self.client
             .read()
             .await
@@ -44,7 +44,7 @@ impl StreamClient for IggyClient {
             .await
     }
 
-    async fn update_stream(&self, stream_id: &Identifier, name: &str) -> Result<(), IggyError> {
+    async fn update_stream(&self, stream_id: &Identifier, name: &str) -> Result<(), MessengerError> {
         self.client
             .read()
             .await
@@ -52,11 +52,11 @@ impl StreamClient for IggyClient {
             .await
     }
 
-    async fn delete_stream(&self, stream_id: &Identifier) -> Result<(), IggyError> {
+    async fn delete_stream(&self, stream_id: &Identifier) -> Result<(), MessengerError> {
         self.client.read().await.delete_stream(stream_id).await
     }
 
-    async fn purge_stream(&self, stream_id: &Identifier) -> Result<(), IggyError> {
+    async fn purge_stream(&self, stream_id: &Identifier) -> Result<(), MessengerError> {
         self.client.read().await.purge_stream(stream_id).await
     }
 }

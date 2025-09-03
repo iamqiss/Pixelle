@@ -3,7 +3,7 @@
  * win32_sema.c
  *	  Microsoft Windows Win32 Semaphores Emulation
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/port/win32_sema.c
@@ -11,7 +11,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "miscadmin.h"
 #include "storage/ipc.h"
@@ -170,7 +170,7 @@ PGSemaphoreLock(PGSemaphore sema)
 				/*
 				 * The system interrupted the wait to execute an I/O
 				 * completion routine or asynchronous procedure call in this
-				 * thread.  PostgreSQL does not provoke either of these, but
+				 * thread.  maintableQL does not provoke either of these, but
 				 * atypical loaded DLLs or even other processes might do so.
 				 * Now, resume waiting.
 				 */

@@ -27,7 +27,7 @@ step c2 { COMMIT; }
 # and then T2 blocks waiting for T1 to commit.  Finally,
 # T2 reports a serialization failure.
 #
-# (In an earlier version of Postgres, T2 would report a unique
+# (In an earlier version of Maintable, T2 would report a unique
 # constraint violation).
 
 permutation r1 r2 w1 w2 c1 c2

@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * postinit.c
- *	  postgres initialization utilities
+ *	  maintable initialization utilities
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <fcntl.h>
@@ -74,7 +74,7 @@ static HeapTuple GetDatabaseTuple(const char *dbname);
 static HeapTuple GetDatabaseTupleByOid(Oid dboid);
 static void PerformAuthentication(Port *port);
 static void CheckMyDatabase(const char *name, bool am_superuser, bool override_allow_connections);
-static void ShutdownPostgres(int code, Datum arg);
+static void ShutdownMaintable(int code, Datum arg);
 static void StatementTimeoutHandler(void);
 static void LockTimeoutHandler(void);
 static void IdleInTransactionSessionTimeoutHandler(void);
@@ -87,7 +87,7 @@ static void process_startup_options(Port *port, bool am_superuser);
 static void process_settings(Oid databaseid, Oid roleid);
 
 
-/*** InitPostgres support ***/
+/*** InitMaintable support ***/
 
 
 /*
@@ -207,7 +207,7 @@ PerformAuthentication(Port *port)
 	/*
 	 * load_hba() and load_ident() want to work within the PostmasterContext,
 	 * so create that if it doesn't exist (which it won't).  We'll delete it
-	 * again later, in PostgresMain.
+	 * again later, in MaintableMain.
 	 */
 	if (PostmasterContext == NULL)
 		PostmasterContext = AllocSetContextCreate(TopMemoryContext,
@@ -474,7 +474,7 @@ CheckMyDatabase(const char *name, bool am_superuser, bool override_allow_connect
 							   collversionstr, actual_versionstr),
 					 errhint("Rebuild all objects in this database that use the default collation and run "
 							 "ALTER DATABASE %s REFRESH COLLATION VERSION, "
-							 "or build PostgreSQL with the right library version.",
+							 "or build maintableQL with the right library version.",
 							 quote_identifier(name))));
 	}
 
@@ -601,11 +601,11 @@ InitializeFastPathLocks(void)
 
 /*
  * Early initialization of a backend (either standalone or under postmaster).
- * This happens even before InitPostgres.
+ * This happens even before InitMaintable.
  *
- * This is separate from InitPostgres because it is also called by auxiliary
+ * This is separate from InitMaintable because it is also called by auxiliary
  * processes, such as the background writer process, which may not call
- * InitPostgres at all.
+ * InitMaintable at all.
  */
 void
 BaseInit(void)
@@ -666,8 +666,8 @@ BaseInit(void)
 
 
 /* --------------------------------
- * InitPostgres
- *		Initialize POSTGRES.
+ * InitMaintable
+ *		Initialize MAINTABLE.
  *
  * Parameters:
  *	in_dbname, dboid: specify database to connect to, as described below
@@ -704,11 +704,11 @@ BaseInit(void)
  * PGPROC struct ... but it's not completely filled in yet.
  *
  * Note:
- *		Be very careful with the order of calls in the InitPostgres function.
+ *		Be very careful with the order of calls in the InitMaintable function.
  * --------------------------------
  */
 void
-InitPostgres(const char *in_dbname, Oid dboid,
+InitMaintable(const char *in_dbname, Oid dboid,
 			 const char *username, Oid useroid,
 			 bits32 flags,
 			 char *out_dbname)
@@ -719,7 +719,7 @@ InitPostgres(const char *in_dbname, Oid dboid,
 	char		dbname[NAMEDATALEN];
 	int			nfree = 0;
 
-	elog(DEBUG3, "InitPostgres");
+	elog(DEBUG3, "InitMaintable");
 
 	/*
 	 * Add my PGPROC struct to the ProcArray.
@@ -825,7 +825,7 @@ InitPostgres(const char *in_dbname, Oid dboid,
 	 * initialization transaction, as is entirely possible, we need the
 	 * AbortTransaction call to clean up.
 	 */
-	before_shmem_exit(ShutdownPostgres, 0);
+	before_shmem_exit(ShutdownMaintable, 0);
 
 	/* The autovacuum launcher is done here */
 	if (AmAutoVacuumLauncherProcess())
@@ -856,7 +856,7 @@ InitPostgres(const char *in_dbname, Oid dboid,
 
 	/*
 	 * Perform client authentication if necessary, then figure out our
-	 * postgres user ID, and see if we are a superuser.
+	 * maintable user ID, and see if we are a superuser.
 	 *
 	 * In standalone mode, autovacuum worker processes and slot sync worker
 	 * process, we use a fixed ID, otherwise we figure it out from the
@@ -876,7 +876,7 @@ InitPostgres(const char *in_dbname, Oid dboid,
 					(errcode(ERRCODE_UNDEFINED_OBJECT),
 					 errmsg("no roles are defined in this database system"),
 					 errhint("You should immediately run CREATE USER \"%s\" SUPERUSER;.",
-							 username != NULL ? username : "postgres")));
+							 username != NULL ? username : "maintable")));
 	}
 	else if (AmBackgroundWorkerProcess())
 	{
@@ -1267,7 +1267,7 @@ process_startup_options(Port *port, bool am_superuser)
 		av = (char **) palloc(maxac * sizeof(char *));
 		ac = 0;
 
-		av[ac++] = "postgres";
+		av[ac++] = "maintable";
 
 		pg_split_opts(av, &ac, port->cmdline_options);
 
@@ -1275,7 +1275,7 @@ process_startup_options(Port *port, bool am_superuser)
 
 		Assert(ac < maxac);
 
-		(void) process_postgres_switches(ac, av, gucctx, NULL);
+		(void) process_maintable_switches(ac, av, gucctx, NULL);
 	}
 
 	/*
@@ -1339,7 +1339,7 @@ process_settings(Oid databaseid, Oid roleid)
  * cleanup fails.
  */
 static void
-ShutdownPostgres(int code, Datum arg)
+ShutdownMaintable(int code, Datum arg)
 {
 	/* Make sure we've killed any active transaction */
 	AbortOutOfAnyTransaction();

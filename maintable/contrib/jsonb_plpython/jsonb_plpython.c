@@ -1,4 +1,4 @@
-#include "postgres.h"
+#include "maintable.h"
 
 #include "plpy_elog.h"
 #include "plpy_typeio.h"

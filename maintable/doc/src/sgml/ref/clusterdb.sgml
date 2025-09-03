@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/clusterdb.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-clusterdb">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>clusterdb</refname>
-  <refpurpose>cluster a <productname>PostgreSQL</productname> database</refpurpose>
+  <refpurpose>cluster a <productname>maintableQL</productname> database</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -51,7 +51,7 @@ PostgreSQL documentation
 
   <para>
    <application>clusterdb</application> is a utility for reclustering tables
-   in a <productname>PostgreSQL</productname> database.  It finds tables
+   in a <productname>maintableQL</productname> database.  It finds tables
    that have previously been clustered, and clusters them again on the same
    index that was last used.  Tables that have never been clustered are not
    affected.
@@ -250,7 +250,7 @@ PostgreSQL documentation
        <para>
         When the <option>-a</option>/<option>--all</option> is used, connect
         to this database to gather the list of databases to cluster.
-        If not specified, the <literal>postgres</literal> database will be used,
+        If not specified, the <literal>maintable</literal> database will be used,
         or if that does not exist, <literal>template1</literal> will be used.
         This can be a <link linkend="libpq-connstring">connection
         string</link>.  If so, connection string parameters will override any
@@ -295,7 +295,7 @@ PostgreSQL documentation
   </variablelist>
 
   <para>
-   This utility, like most other <productname>PostgreSQL</productname> utilities,
+   This utility, like most other <productname>maintableQL</productname> utilities,
    also uses the environment variables supported by <application>libpq</application>
    (see <xref linkend="libpq-envars"/>).
   </para>

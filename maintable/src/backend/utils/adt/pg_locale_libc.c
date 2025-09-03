@@ -1,15 +1,15 @@
 /*-----------------------------------------------------------------------
  *
- * PostgreSQL locale utilities for libc
+ * maintableQL locale utilities for libc
  *
- * Portions Copyright (c) 2002-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2002-2025, maintableQL Global Development Group
  *
  * src/backend/utils/adt/pg_locale_libc.c
  *
  *-----------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 #include <wctype.h>
@@ -418,7 +418,7 @@ strlower_libc_sb(char *dest, size_t destsize, const char *src, ssize_t srclen,
 		/*
 		 * Note: we assume that tolower_l() will not be so broken as to need
 		 * an isupper_l() guard test.  When using the default collation, we
-		 * apply the traditional Postgres behavior that forces ASCII-style
+		 * apply the traditional Maintable behavior that forces ASCII-style
 		 * treatment of I/i, but in non-default collations you get exactly
 		 * what the collation says.
 		 */
@@ -501,7 +501,7 @@ strtitle_libc_sb(char *dest, size_t destsize, const char *src, ssize_t srclen,
 		/*
 		 * Note: we assume that toupper_l()/tolower_l() will not be so broken
 		 * as to need guard tests.  When using the default collation, we apply
-		 * the traditional Postgres behavior that forces ASCII-style treatment
+		 * the traditional Maintable behavior that forces ASCII-style treatment
 		 * of I/i, but in non-default collations you get exactly what the
 		 * collation says.
 		 */
@@ -601,7 +601,7 @@ strupper_libc_sb(char *dest, size_t destsize, const char *src, ssize_t srclen,
 		/*
 		 * Note: we assume that toupper_l() will not be so broken as to need
 		 * an islower_l() guard test.  When using the default collation, we
-		 * apply the traditional Postgres behavior that forces ASCII-style
+		 * apply the traditional Maintable behavior that forces ASCII-style
 		 * treatment of I/i, but in non-default collations you get exactly
 		 * what the collation says.
 		 */

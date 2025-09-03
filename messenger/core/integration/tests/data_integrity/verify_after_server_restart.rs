@@ -16,8 +16,8 @@
  * under the License.
  */
 
-use iggy::clients::client::IggyClient;
-use iggy::prelude::{Identifier, IggyByteSize, MessageClient, SystemClient};
+use messenger::clients::client::MessengerClient;
+use messenger::prelude::{Identifier, MessengerByteSize, MessageClient, SystemClient};
 use integration::bench_utils::run_bench_and_wait_for_finish;
 use integration::{
     tcp_client::TcpClientFactory,
@@ -59,7 +59,7 @@ async fn should_fill_data_and_verify_after_restart(cache_setting: &'static str) 
             TestServer::get_random_path(),
         ),
         (
-            "IGGY_SEGMENT_CACHE_INDEXES".to_string(),
+            "MESSENGER_SEGMENT_CACHE_INDEXES".to_string(),
             cache_setting.to_string(),
         ),
     ]);
@@ -70,7 +70,7 @@ async fn should_fill_data_and_verify_after_restart(cache_setting: &'static str) 
     let local_data_path = test_server.get_local_data_path().to_owned();
 
     // 2. Run send bench to fill 5 MB of data
-    let amount_of_data_to_process = IggyByteSize::from_str("5 MB").unwrap();
+    let amount_of_data_to_process = MessengerByteSize::from_str("5 MB").unwrap();
     run_bench_and_wait_for_finish(
         &server_addr,
         &Transport::Tcp,
@@ -104,7 +104,7 @@ async fn should_fill_data_and_verify_after_restart(cache_setting: &'static str) 
     }
     .create_client()
     .await;
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
     login_root(&client).await;
     let topic_id = Identifier::numeric(1).unwrap();
     for stream_id in default_bench_stream_identifiers {
@@ -147,11 +147,11 @@ async fn should_fill_data_and_verify_after_restart(cache_setting: &'static str) 
         &server_addr,
         &Transport::Tcp,
         "pinned-consumer",
-        IggyByteSize::from(amount_of_data_to_process.as_bytes_u64() * 2),
+        MessengerByteSize::from(amount_of_data_to_process.as_bytes_u64() * 2),
     );
 
     // 10. Connect and login to newly started server
-    let client = IggyClient::create(
+    let client = MessengerClient::create(
         TcpClientFactory {
             server_addr: server_addr.clone(),
             ..Default::default()
@@ -212,7 +212,7 @@ async fn should_fill_data_and_verify_after_restart(cache_setting: &'static str) 
         &server_addr,
         &Transport::Tcp,
         "pinned-consumer",
-        IggyByteSize::from(amount_of_data_to_process.as_bytes_u64() * 2),
+        MessengerByteSize::from(amount_of_data_to_process.as_bytes_u64() * 2),
     );
 
     // 14. Manual cleanup

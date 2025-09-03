@@ -18,7 +18,7 @@
 
 use crate::BytesSerializable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, GET_USERS_CODE};
 use bytes::Bytes;
 use serde::{Deserialize, Serialize};
@@ -35,8 +35,8 @@ impl Command for GetUsers {
     }
 }
 
-impl Validatable<IggyError> for GetUsers {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for GetUsers {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -46,9 +46,9 @@ impl BytesSerializable for GetUsers {
         Bytes::new()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<GetUsers, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<GetUsers, MessengerError> {
         if !bytes.is_empty() {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         Ok(GetUsers {})

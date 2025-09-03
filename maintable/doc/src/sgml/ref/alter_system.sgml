@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_system.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-altersystem">
@@ -35,13 +35,13 @@ ALTER SYSTEM RESET ALL
    <command>ALTER SYSTEM</command> is used for changing server configuration
    parameters across the entire database cluster.  It can be more convenient
    than the traditional method of manually editing
-   the <filename>postgresql.conf</filename> file.
+   the <filename>maintableql.conf</filename> file.
    <command>ALTER SYSTEM</command> writes the given parameter setting to
-   the <filename>postgresql.auto.conf</filename> file, which is read in
-   addition to <filename>postgresql.conf</filename>.
+   the <filename>maintableql.auto.conf</filename> file, which is read in
+   addition to <filename>maintableql.conf</filename>.
    Setting a parameter to <literal>DEFAULT</literal>, or using the
    <command>RESET</command> variant, removes that configuration entry from the
-   <filename>postgresql.auto.conf</filename> file. Use <literal>RESET
+   <filename>maintableql.auto.conf</filename> file. Use <literal>RESET
    ALL</literal> to remove all such configuration entries.
   </para>
 
@@ -85,7 +85,7 @@ ALTER SYSTEM RESET ALL
       these, as appropriate for the particular parameter.
       Values that are neither numbers nor valid identifiers must be quoted.
       <literal>DEFAULT</literal> can be written to specify removing the
-      parameter and its value from <filename>postgresql.auto.conf</filename>.
+      parameter and its value from <filename>maintableql.auto.conf</filename>.
      </para>
 
      <para>
@@ -105,7 +105,7 @@ ALTER SYSTEM RESET ALL
   <para>
    This command can't be used to set <xref linkend="guc-data-directory"/>,
    <xref linkend="guc-allow-alter-system"/>,
-   nor parameters that are not allowed in <filename>postgresql.conf</filename>
+   nor parameters that are not allowed in <filename>maintableql.conf</filename>
    (e.g., <link linkend="runtime-config-preset">preset options</link>).
   </para>
 
@@ -133,7 +133,7 @@ ALTER SYSTEM SET wal_level = replica;
 
   <para>
    Undo that, restoring whatever setting was effective
-   in <filename>postgresql.conf</filename>:
+   in <filename>maintableql.conf</filename>:
 <programlisting>
 ALTER SYSTEM RESET wal_level;
 </programlisting></para>
@@ -144,7 +144,7 @@ ALTER SYSTEM RESET wal_level;
 
   <para>
    The <command>ALTER SYSTEM</command> statement is a
-   <productname>PostgreSQL</productname> extension.
+   <productname>maintableQL</productname> extension.
   </para>
  </refsect1>
 

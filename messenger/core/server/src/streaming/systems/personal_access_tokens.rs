@@ -22,16 +22,16 @@ use crate::streaming::systems::COMPONENT;
 use crate::streaming::systems::system::System;
 use crate::streaming::users::user::User;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::IggyExpiry;
-use iggy_common::IggyTimestamp;
+use messenger_common::MessengerError;
+use messenger_common::MessengerExpiry;
+use messenger_common::MessengerTimestamp;
 use tracing::{error, info};
 
 impl System {
     pub async fn get_personal_access_tokens(
         &self,
         session: &Session,
-    ) -> Result<Vec<PersonalAccessToken>, IggyError> {
+    ) -> Result<Vec<PersonalAccessToken>, MessengerError> {
         self.ensure_authenticated(session)?;
         let user_id = session.get_user_id();
         let user = self
@@ -57,8 +57,8 @@ impl System {
         &self,
         session: &Session,
         name: &str,
-        expiry: IggyExpiry,
-    ) -> Result<String, IggyError> {
+        expiry: MessengerExpiry,
+    ) -> Result<String, MessengerError> {
         self.ensure_authenticated(session)?;
         let user_id = session.get_user_id();
         let identifier = user_id.try_into()?;
@@ -71,7 +71,7 @@ impl System {
                 error!(
                     "User with ID: {user_id} has reached the maximum number of personal access tokens: {max_token_per_user}.",
                 );
-                return Err(IggyError::PersonalAccessTokensLimitReached(
+                return Err(MessengerError::PersonalAccessTokensLimitReached(
                     user_id,
                     max_token_per_user,
                 ));
@@ -88,7 +88,7 @@ impl System {
             .any(|pat| pat.name.as_str() == name)
         {
             error!("Personal access token: {name} for user with ID: {user_id} already exists.");
-            return Err(IggyError::PersonalAccessTokenAlreadyExists(
+            return Err(MessengerError::PersonalAccessTokenAlreadyExists(
                 name.to_owned(),
                 user_id,
             ));
@@ -96,7 +96,7 @@ impl System {
 
         info!("Creating personal access token: {name} for user with ID: {user_id}...");
         let (personal_access_token, token) =
-            PersonalAccessToken::new(user_id, name, IggyTimestamp::now(), expiry);
+            PersonalAccessToken::new(user_id, name, MessengerTimestamp::now(), expiry);
         user.personal_access_tokens
             .insert(personal_access_token.token.clone(), personal_access_token);
         info!("Created personal access token: {name} for user with ID: {user_id}.");
@@ -107,7 +107,7 @@ impl System {
         &mut self,
         session: &Session,
         name: &str,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.ensure_authenticated(session)?;
         let user_id = session.get_user_id();
         let user = self
@@ -126,7 +126,7 @@ impl System {
             pat.token.clone()
         } else {
             error!("Personal access token: {name} for user with ID: {user_id} does not exist.",);
-            return Err(IggyError::ResourceNotFound(name.to_owned()));
+            return Err(MessengerError::ResourceNotFound(name.to_owned()));
         };
 
         info!("Deleting personal access token: {name} for user with ID: {user_id}...");
@@ -139,7 +139,7 @@ impl System {
         &self,
         token: &str,
         session: Option<&Session>,
-    ) -> Result<&User, IggyError> {
+    ) -> Result<&User, MessengerError> {
         let token_hash = PersonalAccessToken::hash_token(token);
         let mut personal_access_token = None;
         for user in self.users.values() {
@@ -151,16 +151,16 @@ impl System {
 
         if personal_access_token.is_none() {
             error!("Personal access token: {} does not exist.", token);
-            return Err(IggyError::ResourceNotFound(token.to_owned()));
+            return Err(MessengerError::ResourceNotFound(token.to_owned()));
         }
 
         let personal_access_token = personal_access_token.unwrap();
-        if personal_access_token.is_expired(IggyTimestamp::now()) {
+        if personal_access_token.is_expired(MessengerTimestamp::now()) {
             error!(
                 "Personal access token: {} for user with ID: {} has expired.",
                 personal_access_token.name, personal_access_token.user_id
             );
-            return Err(IggyError::PersonalAccessTokenExpired(
+            return Err(MessengerError::PersonalAccessTokenExpired(
                 personal_access_token.name.as_str().to_owned(),
                 personal_access_token.user_id,
             ));

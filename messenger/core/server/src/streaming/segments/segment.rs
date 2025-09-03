@@ -22,11 +22,11 @@ use super::messages_accumulator::MessagesAccumulator;
 use crate::configs::system::SystemConfig;
 use crate::streaming::segments::*;
 use error_set::ErrContext;
-use iggy_common::INDEX_SIZE;
-use iggy_common::IggyByteSize;
-use iggy_common::IggyError;
-use iggy_common::IggyExpiry;
-use iggy_common::IggyTimestamp;
+use messenger_common::INDEX_SIZE;
+use messenger_common::MessengerByteSize;
+use messenger_common::MessengerError;
+use messenger_common::MessengerExpiry;
+use messenger_common::MessengerTimestamp;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicU64, Ordering};
 use tokio::fs::remove_file;
@@ -46,7 +46,7 @@ pub struct Segment {
     pub(super) index_path: String,
     pub(super) messages_path: String,
     pub(super) last_index_position: u32,
-    pub(super) max_size_bytes: IggyByteSize,
+    pub(super) max_size_bytes: MessengerByteSize,
     pub(super) size_of_parent_stream: Arc<AtomicU64>,
     pub(super) size_of_parent_topic: Arc<AtomicU64>,
     pub(super) size_of_parent_partition: Arc<AtomicU64>,
@@ -58,10 +58,10 @@ pub struct Segment {
     pub(super) messages_reader: Option<MessagesReader>,
     pub(super) index_writer: Option<IndexWriter>,
     pub(super) index_reader: Option<IndexReader>,
-    pub(super) message_expiry: IggyExpiry,
+    pub(super) message_expiry: MessengerExpiry,
     pub(super) accumulator: MessagesAccumulator,
     pub(super) config: Arc<SystemConfig>,
-    pub(super) indexes: IggyIndexesMut,
+    pub(super) indexes: MessengerIndexesMut,
     pub(super) messages_size: Arc<AtomicU64>,
     pub(super) indexes_size: Arc<AtomicU64>,
 }
@@ -74,7 +74,7 @@ impl Segment {
         partition_id: u32,
         start_offset: u64,
         config: Arc<SystemConfig>,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         size_of_parent_stream: Arc<AtomicU64>,
         size_of_parent_topic: Arc<AtomicU64>,
         size_of_parent_partition: Arc<AtomicU64>,
@@ -87,7 +87,7 @@ impl Segment {
         let messages_path = Self::get_messages_file_path(&path);
         let index_path = Self::get_index_path(&path);
         let message_expiry = match message_expiry {
-            IggyExpiry::ServerDefault => config.segment.message_expiry,
+            MessengerExpiry::ServerDefault => config.segment.message_expiry,
             _ => message_expiry,
         };
 
@@ -100,15 +100,15 @@ impl Segment {
             topic_id,
             partition_id,
             start_offset,
-            start_timestamp: IggyTimestamp::now().as_micros(),
-            end_timestamp: IggyTimestamp::now().as_micros(),
+            start_timestamp: MessengerTimestamp::now().as_micros(),
+            end_timestamp: MessengerTimestamp::now().as_micros(),
             end_offset: start_offset,
             messages_path,
             index_path,
             last_index_position: 0,
             max_size_bytes: config.segment.size,
             message_expiry,
-            indexes: IggyIndexesMut::with_capacity(indexes_capacity, 0),
+            indexes: MessengerIndexesMut::with_capacity(indexes_capacity, 0),
             accumulator: MessagesAccumulator::default(),
             is_closed: false,
             messages_writer: None,
@@ -128,7 +128,7 @@ impl Segment {
     }
 
     /// Load the segment state from disk.
-    pub async fn load_from_disk(&mut self) -> Result<(), IggyError> {
+    pub async fn load_from_disk(&mut self) -> Result<(), MessengerError> {
         if self.messages_reader.is_none() || self.index_reader.is_none() {
             self.initialize_writing(true).await?;
             self.initialize_reading().await?;
@@ -139,7 +139,7 @@ impl Segment {
             "Loading segment from disk: messages_file_path: {}, index_path: {}, log_size: {}",
             self.messages_path,
             self.index_path,
-            IggyByteSize::from(log_size_bytes)
+            MessengerByteSize::from(log_size_bytes)
         );
 
         self.last_index_position = log_size_bytes as _;
@@ -151,7 +151,7 @@ impl Segment {
             .load_all_indexes_from_disk()
             .await
             .with_error_context(|error| format!("Failed to load indexes for {self}. {error}"))
-            .map_err(|_| IggyError::CannotReadFile)?;
+            .map_err(|_| MessengerError::CannotReadFile)?;
 
         let last_index_offset = if self.indexes.is_empty() {
             0_u64
@@ -179,7 +179,7 @@ impl Segment {
 
         info!(
             "Loaded segment with log file of size {} ({} messages) for start offset {}, end offset: {}, and partition with ID: {} for topic with ID: {} and stream with ID: {}.",
-            IggyByteSize::from(log_size_bytes),
+            MessengerByteSize::from(log_size_bytes),
             messages_count,
             self.start_offset,
             self.end_offset,
@@ -205,7 +205,7 @@ impl Segment {
     }
 
     /// Save the segment state to disk.
-    pub async fn persist(&mut self) -> Result<(), IggyError> {
+    pub async fn persist(&mut self) -> Result<(), MessengerError> {
         info!(
             "Saving segment with start offset: {} for partition with ID: {} for topic with ID: {} and stream with ID: {}",
             self.start_offset, self.partition_id, self.topic_id, self.stream_id
@@ -219,7 +219,7 @@ impl Segment {
         Ok(())
     }
 
-    pub async fn initialize_writing(&mut self, file_exists: bool) -> Result<(), IggyError> {
+    pub async fn initialize_writing(&mut self, file_exists: bool) -> Result<(), MessengerError> {
         let log_fsync = self.config.partition.enforce_fsync;
         let index_fsync = self.config.partition.enforce_fsync;
 
@@ -247,7 +247,7 @@ impl Segment {
         Ok(())
     }
 
-    pub async fn initialize_reading(&mut self) -> Result<(), IggyError> {
+    pub async fn initialize_reading(&mut self) -> Result<(), MessengerError> {
         let messages_reader =
             MessagesReader::new(&self.messages_path, self.messages_size.clone()).await?;
         self.messages_reader = Some(messages_reader);
@@ -263,18 +263,18 @@ impl Segment {
             return true;
         }
 
-        self.is_expired(IggyTimestamp::now()).await
+        self.is_expired(MessengerTimestamp::now()).await
     }
 
-    pub async fn is_expired(&self, now: IggyTimestamp) -> bool {
+    pub async fn is_expired(&self, now: MessengerTimestamp) -> bool {
         if !self.is_closed {
             return false;
         }
 
         match self.message_expiry {
-            IggyExpiry::NeverExpire => false,
-            IggyExpiry::ServerDefault => false,
-            IggyExpiry::ExpireDuration(expiry) => {
+            MessengerExpiry::NeverExpire => false,
+            MessengerExpiry::ServerDefault => false,
+            MessengerExpiry::ExpireDuration(expiry) => {
                 let last_messages = self.get_messages_by_offset(self.end_offset, 1).await;
                 if last_messages.is_err() {
                     return false;
@@ -324,7 +324,7 @@ impl Segment {
         }
     }
 
-    pub async fn delete(&mut self) -> Result<(), IggyError> {
+    pub async fn delete(&mut self) -> Result<(), MessengerError> {
         let segment_size = self.get_messages_size();
         let segment_count_of_messages = self.get_messages_count() as u64;
         info!(
@@ -379,7 +379,7 @@ impl Segment {
         format!("{path}.{INDEX_EXTENSION}")
     }
 
-    pub fn update_message_expiry(&mut self, message_expiry: IggyExpiry) {
+    pub fn update_message_expiry(&mut self, message_expiry: MessengerExpiry) {
         self.message_expiry = message_expiry;
     }
 
@@ -413,7 +413,7 @@ impl Segment {
 
     /// Explicitly drop the old indexes to ensure memory is freed
     pub fn drop_indexes(&mut self) {
-        let old_indexes = std::mem::replace(&mut self.indexes, IggyIndexesMut::empty());
+        let old_indexes = std::mem::replace(&mut self.indexes, MessengerIndexesMut::empty());
         drop(old_indexes);
     }
 }
@@ -442,7 +442,7 @@ mod tests {
     use crate::configs::cache_indexes::CacheIndexesConfig;
     use crate::configs::system::SegmentConfig;
     use crate::streaming::utils::MemoryPool;
-    use iggy_common::IggyDuration;
+    use messenger_common::MessengerDuration;
 
     #[tokio::test]
     async fn should_be_created_given_valid_parameters() {
@@ -454,7 +454,7 @@ mod tests {
         let path = config.get_segment_path(stream_id, topic_id, partition_id, start_offset);
         let messages_file_path = Segment::get_messages_file_path(&path);
         let index_path = Segment::get_index_path(&path);
-        let message_expiry = IggyExpiry::ExpireDuration(IggyDuration::from(10));
+        let message_expiry = MessengerExpiry::ExpireDuration(MessengerDuration::from(10));
         let size_of_parent_stream = Arc::new(AtomicU64::new(0));
         let size_of_parent_topic = Arc::new(AtomicU64::new(0));
         let size_of_parent_partition = Arc::new(AtomicU64::new(0));
@@ -506,7 +506,7 @@ mod tests {
             },
             ..Default::default()
         });
-        let message_expiry = IggyExpiry::NeverExpire;
+        let message_expiry = MessengerExpiry::NeverExpire;
         let size_of_parent_stream = Arc::new(AtomicU64::new(0));
         let size_of_parent_topic = Arc::new(AtomicU64::new(0));
         let size_of_parent_partition = Arc::new(AtomicU64::new(0));

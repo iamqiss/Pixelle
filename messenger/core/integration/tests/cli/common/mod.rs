@@ -18,14 +18,14 @@
 
 pub(crate) mod command;
 pub(crate) mod help;
-pub(crate) use crate::cli::common::command::IggyCmdCommand;
+pub(crate) use crate::cli::common::command::MessengerCmdCommand;
 pub(crate) use crate::cli::common::help::{CLAP_INDENT, TestHelpCmd, USAGE_PREFIX};
 use assert_cmd::assert::{Assert, OutputAssertExt};
 use assert_cmd::prelude::CommandCargoExt;
 use async_trait::async_trait;
-use iggy::clients::client::IggyClient;
-use iggy::prelude::defaults::*;
-use iggy::prelude::{Client, ClientWrapper, SystemClient, TcpClient, TcpClientConfig, UserClient};
+use messenger::clients::client::MessengerClient;
+use messenger::prelude::defaults::*;
+use messenger::prelude::{Client, ClientWrapper, SystemClient, TcpClient, TcpClientConfig, UserClient};
 use integration::test_server::TestServer;
 use std::fmt::{Display, Formatter, Result};
 use std::io::Write;
@@ -74,9 +74,9 @@ impl OutputFormat {
 }
 
 #[async_trait]
-pub(crate) trait IggyCmdTestCase {
+pub(crate) trait MessengerCmdTestCase {
     async fn prepare_server_state(&mut self, client: &dyn Client);
-    fn get_command(&self) -> IggyCmdCommand;
+    fn get_command(&self) -> MessengerCmdCommand;
     fn provide_stdin_input(&self) -> Option<Vec<String>> {
         None
     }
@@ -90,12 +90,12 @@ pub(crate) trait IggyCmdTestCase {
     }
 }
 
-pub(crate) struct IggyCmdTest {
+pub(crate) struct MessengerCmdTest {
     server: TestServer,
-    client: IggyClient,
+    client: MessengerClient,
 }
 
-impl IggyCmdTest {
+impl MessengerCmdTest {
     pub(crate) fn new(start_server: bool) -> Self {
         let mut server = TestServer::default();
         if start_server {
@@ -106,7 +106,7 @@ impl IggyCmdTest {
             ..TcpClientConfig::default()
         };
         let client = ClientWrapper::Tcp(TcpClient::create(Arc::new(tcp_client_config)).unwrap());
-        let client = IggyClient::create(client, None, None);
+        let client = MessengerClient::create(client, None, None);
 
         Self { server, client }
     }
@@ -131,16 +131,16 @@ impl IggyCmdTest {
         assert_eq!(identity_info.user_id, 1);
     }
 
-    pub(crate) async fn execute_test(&mut self, mut test_case: impl IggyCmdTestCase) {
+    pub(crate) async fn execute_test(&mut self, mut test_case: impl MessengerCmdTestCase) {
         // Make sure server is started
         assert!(
             self.server.is_started(),
-            "Server is not running, make sure it has been started with IggyCmdTest::setup()"
+            "Server is not running, make sure it has been started with MessengerCmdTest::setup()"
         );
-        // Prepare iggy server state before test
+        // Prepare messenger server state before test
         test_case.prepare_server_state(&self.client).await;
-        // Get iggy tool
-        let mut command = Command::cargo_bin("iggy").unwrap();
+        // Get messenger tool
+        let mut command = Command::cargo_bin("messenger").unwrap();
         // Get command line arguments and environment variables from test case and execute command
         let command_args = test_case.get_command();
         // Set environment variables for the command
@@ -196,13 +196,13 @@ impl IggyCmdTest {
 
         // Verify command output, exit code, etc in the test (if needed)
         test_case.verify_command(assert);
-        // Verify iggy server state after the test
+        // Verify messenger server state after the test
         test_case.verify_server_state(&self.client).await;
     }
 
     pub(crate) async fn execute_test_for_help_command(&mut self, test_case: TestHelpCmd) {
-        // Get iggy tool
-        let mut command = Command::cargo_bin("iggy").unwrap();
+        // Get messenger tool
+        let mut command = Command::cargo_bin("messenger").unwrap();
         // Get command line arguments and environment variables from test case and execute command
         let command_args = test_case.get_command();
         // Set environment variables for the command
@@ -241,7 +241,7 @@ impl IggyCmdTest {
     }
 }
 
-impl Default for IggyCmdTest {
+impl Default for MessengerCmdTest {
     fn default() -> Self {
         Self::new(true)
     }

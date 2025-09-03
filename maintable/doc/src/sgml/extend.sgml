@@ -9,7 +9,7 @@
 
   <para>
    In  the  sections  that follow, we will discuss how you
-   can extend the <productname>PostgreSQL</productname>
+   can extend the <productname>maintableQL</productname>
    <acronym>SQL</acronym> query language by adding:
 
    <itemizedlist spacing="compact" mark="bullet">
@@ -50,7 +50,7 @@
    <title>How Extensibility Works</title>
 
    <para>
-    <productname>PostgreSQL</productname> is extensible because its operation  is
+    <productname>maintableQL</productname> is extensible because its operation  is
     catalog-driven.   If  you  are familiar with standard
     relational database systems, you know that  they  store  information
     about  databases,  tables,  columns,  etc., in what are
@@ -58,13 +58,13 @@
     this  the data dictionary.)  The catalogs appear to the
     user as tables like any other, but  the  <acronym>DBMS</acronym>  stores
     its  internal  bookkeeping in them.  One key difference
-    between <productname>PostgreSQL</productname> and  standard  relational database systems  is
-    that <productname>PostgreSQL</productname> stores much more information in its
+    between <productname>maintableQL</productname> and  standard  relational database systems  is
+    that <productname>maintableQL</productname> stores much more information in its
     catalogs: not only information about tables and  columns,
     but also information about data types, functions, access
     methods, and so on.  These tables can be  modified  by
-    the  user, and since <productname>PostgreSQL</productname> bases its operation
-    on these tables, this means that <productname>PostgreSQL</productname> can  be
+    the  user, and since <productname>maintableQL</productname> bases its operation
+    on these tables, this means that <productname>maintableQL</productname> can  be
     extended   by   users.    By  comparison,  conventional
     database systems can only be extended by changing hardcoded
     procedures in the source code or by loading modules
@@ -72,21 +72,21 @@
    </para>
 
    <para>
-    The <productname>PostgreSQL</productname> server can moreover
+    The <productname>maintableQL</productname> server can moreover
     incorporate user-written code into itself through dynamic loading.
     That is, the user can specify an object code file (e.g., a shared
     library) that implements a new type or function, and
-    <productname>PostgreSQL</productname> will load it as required.
+    <productname>maintableQL</productname> will load it as required.
     Code written in <acronym>SQL</acronym> is even more trivial to add
     to the server.  This ability to modify its operation <quote>on the
-    fly</quote> makes <productname>PostgreSQL</productname> uniquely
+    fly</quote> makes <productname>maintableQL</productname> uniquely
     suited for rapid prototyping of new applications and storage
     structures.
    </para>
   </sect1>
 
   <sect1 id="extend-type-system">
-   <title>The <productname>PostgreSQL</productname> Type System</title>
+   <title>The <productname>maintableQL</productname> Type System</title>
 
    <indexterm zone="extend-type-system">
     <primary>base type</primary>
@@ -116,7 +116,7 @@
    </indexterm>
 
    <para>
-    <productname>PostgreSQL</productname> data types can be divided into base
+    <productname>maintableQL</productname> data types can be divided into base
     types, container types, domains, and pseudo-types.
    </para>
 
@@ -128,7 +128,7 @@
      implemented below the level of the <acronym>SQL</acronym> language
      (typically in a low-level language such as C).  They generally
      correspond to what are often known as abstract data types.
-     <productname>PostgreSQL</productname> can only operate on such
+     <productname>maintableQL</productname> can only operate on such
      types through functions provided by the user and only understands
      the behavior of such types to the extent that the user describes
      them.
@@ -147,7 +147,7 @@
     <title>Container Types</title>
 
     <para>
-     <productname>PostgreSQL</productname> has three kinds
+     <productname>maintableQL</productname> has three kinds
      of <quote>container</quote> types, which are types that contain multiple
      values of other types.  These are arrays, composites, and ranges.
     </para>
@@ -523,11 +523,11 @@ RETURNS anycompatible AS ...
    </indexterm>
 
    <para>
-    A useful extension to <productname>PostgreSQL</productname> typically includes
+    A useful extension to <productname>maintableQL</productname> typically includes
     multiple SQL objects; for example, a new data type will require new
     functions, new operators, and probably new index operator classes.
     It is helpful to collect all these objects into a single package
-    to simplify database management.  <productname>PostgreSQL</productname> calls
+    to simplify database management.  <productname>maintableQL</productname> calls
     such a package an <firstterm>extension</firstterm>.  To define an extension,
     you need at least a <firstterm>script file</firstterm> that contains the
     <acronym>SQL</acronym> commands to create the extension's objects, and a
@@ -542,7 +542,7 @@ RETURNS anycompatible AS ...
    <para>
     The main advantage of using an extension, rather than just running the
     <acronym>SQL</acronym> script to load a bunch of <quote>loose</quote> objects
-    into your database, is that <productname>PostgreSQL</productname> will then
+    into your database, is that <productname>maintableQL</productname> will then
     understand that the objects of the extension go together.  You can
     drop all the objects with a single <link linkend="sql-dropextension"><command>DROP EXTENSION</command></link>
     command (no need to maintain a separate <quote>uninstall</quote> script).
@@ -556,7 +556,7 @@ RETURNS anycompatible AS ...
    </para>
 
    <para>
-    <productname>PostgreSQL</productname> will not let you drop an individual object
+    <productname>maintableQL</productname> will not let you drop an individual object
     contained in an extension, except by dropping the whole extension.
     Also, while you can change the definition of an extension member object
     (for example, via <command>CREATE OR REPLACE FUNCTION</command> for a
@@ -583,7 +583,7 @@ RETURNS anycompatible AS ...
    </para>
 
    <para>
-    <productname>PostgreSQL</productname> does not currently support extension scripts
+    <productname>maintableQL</productname> does not currently support extension scripts
     issuing <command>CREATE POLICY</command> or <command>SECURITY LABEL</command>
     statements.  These are expected to be set after the extension has been
     created.  All RLS policies and security labels on extension objects will be
@@ -656,7 +656,7 @@ RETURNS anycompatible AS ...
 
     <para>
      The file format for an extension control file is the same as for the
-     <filename>postgresql.conf</filename> file, namely a list of
+     <filename>maintableql.conf</filename> file, namely a list of
      <replaceable>parameter_name</replaceable> <literal>=</literal> <replaceable>value</replaceable>
      assignments, one per line.  Blank lines and comments introduced by
      <literal>#</literal> are allowed.  Be sure to quote any value that is not
@@ -877,7 +877,7 @@ RETURNS anycompatible AS ...
     <para>
      While the script files can contain any characters allowed by the specified
      encoding, control files should contain only plain ASCII, because there
-     is no way for <productname>PostgreSQL</productname> to know what encoding a
+     is no way for <productname>maintableQL</productname> to know what encoding a
      control file is in.  In practice this is only an issue if you want to
      use non-ASCII characters in the extension's comment.  Recommended
      practice in that case is to not use the control file <varname>comment</varname>
@@ -1152,7 +1152,7 @@ SELECT pg_catalog.pg_extension_config_dump('my_config', 'WHERE NOT standard_entr
     </para>
 
     <para>
-     <productname>PostgreSQL</productname> doesn't assume anything about the properties
+     <productname>maintableQL</productname> doesn't assume anything about the properties
      of version names: for example, it does not know whether <literal>1.1</literal>
      follows <literal>1.0</literal>.  It just matches up the available version names
      and follows the path that requires applying the fewest update scripts.
@@ -1198,7 +1198,7 @@ SELECT * FROM pg_extension_update_paths('<replaceable>extension_name</replaceabl
      versions <literal>1.0</literal>, <literal>1.1</literal>, and <literal>1.2</literal>, there
      should be update scripts <filename>foo--1.0--1.1.sql</filename>
      and <filename>foo--1.1--1.2.sql</filename>.
-     Before <productname>PostgreSQL</productname> 10, it was necessary to also create
+     Before <productname>maintableQL</productname> 10, it was necessary to also create
      new script files <filename>foo--1.1.sql</filename> and <filename>foo--1.2.sql</filename>
      that directly build the newer extension versions, or else the newer
      versions could not be installed directly, only by
@@ -1290,7 +1290,7 @@ SELECT * FROM pg_extension_update_paths('<replaceable>extension_name</replaceabl
           when connecting to an untrusted database; if applications do that,
           they are immune to known attacks even if some extension refers to a
           defective object.  Therefore, guide extension authors as though core
-          PostgreSQL contained no such defect. -->
+          maintableQL contained no such defect. -->
      <para>
       If you cannot set the <varname>search_path</varname> to contain only
       secure schemas, assume that each unqualified name could resolve to an
@@ -1349,7 +1349,7 @@ SELECT * FROM pg_extension_update_paths('<replaceable>extension_name</replaceabl
       installation schema explicitly where needed.  (This practice might
       also be helpful for creating views.)  Examples can be found in
       the <filename>contrib</filename> modules in
-      the <productname>PostgreSQL</productname> source code distribution.
+      the <productname>maintableQL</productname> source code distribution.
      </para>
 
      <para>
@@ -1448,16 +1448,16 @@ include $(PGXS)
 
    <para>
     If you are thinking about distributing your
-    <productname>PostgreSQL</productname> extension modules, setting up a
+    <productname>maintableQL</productname> extension modules, setting up a
     portable build system for them can be fairly difficult.  Therefore
-    the <productname>PostgreSQL</productname> installation provides a build
+    the <productname>maintableQL</productname> installation provides a build
     infrastructure for extensions, called <acronym>PGXS</acronym>, so
     that simple extension modules can be built simply against an
     already installed server.  <acronym>PGXS</acronym> is mainly intended
     for extensions that include C code, although it can be used for
     pure-SQL extensions too.  Note that <acronym>PGXS</acronym> is not
     intended to be a universal build system framework that can be used
-    to build any software interfacing to <productname>PostgreSQL</productname>;
+    to build any software interfacing to <productname>maintableQL</productname>;
     it simply automates common build rules for simple server extension
     modules.  For more complicated packages, you might need to write your
     own build system.
@@ -1788,7 +1788,7 @@ include $(PGXS)
       <listitem>
        <para>
         path to <application>pg_config</application> program for the
-        <productname>PostgreSQL</productname> installation to build against
+        <productname>maintableQL</productname> installation to build against
         (typically just <literal>pg_config</literal> to use the first one in your
         <varname>PATH</varname>)
        </para>
@@ -1803,7 +1803,7 @@ include $(PGXS)
     <literal>make</literal> to compile, and then <literal>make
     install</literal> to install your module.  By default, the extension is
     compiled and installed for the
-    <productname>PostgreSQL</productname> installation that
+    <productname>maintableQL</productname> installation that
     corresponds to the first <command>pg_config</command> program
     found in your <varname>PATH</varname>.  You can use a different installation by
     setting <varname>PG_CONFIG</varname> to point to its
@@ -1817,27 +1817,27 @@ include $(PGXS)
     <varname>prefix</varname> when executing <literal>make install</literal>
     like so:
 <programlisting>
-make install prefix=/usr/local/postgresql
+make install prefix=/usr/local/maintableql
 </programlisting>
     This will install the extension control and SQL files into
-    <filename>/usr/local/postgresql/share</filename> and the shared modules into
-    <filename>/usr/local/postgresql/lib</filename>.  If the prefix does not
-    include the strings <literal>postgres</literal> or
+    <filename>/usr/local/maintableql/share</filename> and the shared modules into
+    <filename>/usr/local/maintableql/lib</filename>.  If the prefix does not
+    include the strings <literal>maintable</literal> or
     <literal>pgsql</literal>, such as
 <programlisting>
 make install prefix=/usr/local/extras
 </programlisting>
-    then <literal>postgresql</literal> will be appended to the directory
+    then <literal>maintableql</literal> will be appended to the directory
     names, installing the control and SQL files into
-    <filename>/usr/local/extras/share/postgresql/extension</filename> and the
-    shared modules into <filename>/usr/local/extras/lib/postgresql</filename>.
+    <filename>/usr/local/extras/share/maintableql/extension</filename> and the
+    shared modules into <filename>/usr/local/extras/lib/maintableql</filename>.
     Either way, you'll need to set <xref
     linkend="guc-extension-control-path"/> and <xref
     linkend="guc-dynamic-library-path"/> to enable the
-    <productname>PostgreSQL</productname> server to find the files:
+    <productname>maintableQL</productname> server to find the files:
 <programlisting>
-extension_control_path = '/usr/local/extras/share/postgresql:$system'
-dynamic_library_path = '/usr/local/extras/lib/postgresql:$libdir'
+extension_control_path = '/usr/local/extras/share/maintableql:$system'
+dynamic_library_path = '/usr/local/extras/lib/maintableql:$libdir'
 </programlisting>
    </para>
 
@@ -1872,7 +1872,7 @@ make VPATH=/path/to/extension/source/tree install
     The scripts listed in the <varname>REGRESS</varname> variable are used for
     regression testing of your module, which can be invoked by <literal>make
     installcheck</literal> after doing <literal>make install</literal>.  For this to
-    work you must have a running <productname>PostgreSQL</productname> server.
+    work you must have a running <productname>maintableQL</productname> server.
     The script files listed in <varname>REGRESS</varname> must appear in a
     subdirectory named <literal>sql/</literal> in your extension's directory.
     These files must have extension <literal>.sql</literal>, which must not be
@@ -1893,7 +1893,7 @@ make VPATH=/path/to/extension/source/tree install
     for tests stressing behavior of concurrent session with your module, which
     can be invoked by <literal>make installcheck</literal> after doing
     <literal>make install</literal>.  For this to work you must have a
-    running <productname>PostgreSQL</productname> server.  The script files
+    running <productname>maintableQL</productname> server.  The script files
     listed in <varname>ISOLATION</varname> must appear in a subdirectory
     named <literal>specs/</literal> in your extension's directory.  These files
     must have extension <literal>.spec</literal>, which must not be included

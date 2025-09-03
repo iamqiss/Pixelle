@@ -19,18 +19,18 @@
 use crate::utils::auth::fail_if_not_authenticated;
 use crate::utils::mapper;
 use crate::{BinaryClient, PersonalAccessTokenClient};
-use iggy_common::create_personal_access_token::CreatePersonalAccessToken;
-use iggy_common::delete_personal_access_token::DeletePersonalAccessToken;
-use iggy_common::get_personal_access_tokens::GetPersonalAccessTokens;
-use iggy_common::login_with_personal_access_token::LoginWithPersonalAccessToken;
-use iggy_common::{
-    ClientState, IdentityInfo, IggyError, PersonalAccessTokenExpiry, PersonalAccessTokenInfo,
+use messenger_common::create_personal_access_token::CreatePersonalAccessToken;
+use messenger_common::delete_personal_access_token::DeletePersonalAccessToken;
+use messenger_common::get_personal_access_tokens::GetPersonalAccessTokens;
+use messenger_common::login_with_personal_access_token::LoginWithPersonalAccessToken;
+use messenger_common::{
+    ClientState, IdentityInfo, MessengerError, PersonalAccessTokenExpiry, PersonalAccessTokenInfo,
     RawPersonalAccessToken,
 };
 
 #[async_trait::async_trait]
 impl<B: BinaryClient> PersonalAccessTokenClient for B {
-    async fn get_personal_access_tokens(&self) -> Result<Vec<PersonalAccessTokenInfo>, IggyError> {
+    async fn get_personal_access_tokens(&self) -> Result<Vec<PersonalAccessTokenInfo>, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self.send_with_response(&GetPersonalAccessTokens {}).await?;
         mapper::map_personal_access_tokens(response)
@@ -40,7 +40,7 @@ impl<B: BinaryClient> PersonalAccessTokenClient for B {
         &self,
         name: &str,
         expiry: PersonalAccessTokenExpiry,
-    ) -> Result<RawPersonalAccessToken, IggyError> {
+    ) -> Result<RawPersonalAccessToken, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self
             .send_with_response(&CreatePersonalAccessToken {
@@ -51,7 +51,7 @@ impl<B: BinaryClient> PersonalAccessTokenClient for B {
         mapper::map_raw_pat(response)
     }
 
-    async fn delete_personal_access_token(&self, name: &str) -> Result<(), IggyError> {
+    async fn delete_personal_access_token(&self, name: &str) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&DeletePersonalAccessToken {
             name: name.to_string(),
@@ -63,7 +63,7 @@ impl<B: BinaryClient> PersonalAccessTokenClient for B {
     async fn login_with_personal_access_token(
         &self,
         token: &str,
-    ) -> Result<IdentityInfo, IggyError> {
+    ) -> Result<IdentityInfo, MessengerError> {
         let response = self
             .send_with_response(&LoginWithPersonalAccessToken {
                 token: token.to_string(),

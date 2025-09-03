@@ -163,7 +163,7 @@ protocol to make nodes agree on a serializable transactional order.
    <listitem>
     <para>
      Logical replication allows a database server to send a stream of data
-     modifications to another server.  <productname>PostgreSQL</productname>
+     modifications to another server.  <productname>maintableQL</productname>
      logical replication constructs a stream of logical data modifications
      from the WAL.  Logical replication allows replication of data changes on
      a per-table basis.  In addition, a server that is publishing its own
@@ -268,8 +268,8 @@ protocol to make nodes agree on a serializable transactional order.
     </para>
 
     <para>
-     <productname>PostgreSQL</productname> does not offer this type of replication,
-     though <productname>PostgreSQL</productname> two-phase commit (<xref
+     <productname>maintableQL</productname> does not offer this type of replication,
+     though <productname>maintableQL</productname> two-phase commit (<xref
      linkend="sql-prepare-transaction"/> and <xref
      linkend="sql-commit-prepared"/>)
      can be used to implement this in application code or middleware.
@@ -479,9 +479,9 @@ protocol to make nodes agree on a serializable transactional order.
  </variablelist>
 
   <para>
-   It should also be noted that because <productname>PostgreSQL</productname>
+   It should also be noted that because <productname>maintableQL</productname>
    is open source and easily extended, a number of companies have
-   taken <productname>PostgreSQL</productname> and created commercial
+   taken <productname>maintableQL</productname> and created commercial
    closed-source solutions with unique failover, replication, and load
    balancing capabilities.  These are not discussed here.
   </para>
@@ -514,7 +514,7 @@ protocol to make nodes agree on a serializable transactional order.
 
   <para>
    Directly moving WAL records from one database server to another
-   is typically described as log shipping. <productname>PostgreSQL</productname>
+   is typically described as log shipping. <productname>maintableQL</productname>
    implements file-based log shipping by transferring WAL records
    one file (WAL segment) at a time. WAL files (16MB) can be
    shipped easily and cheaply over any distance, whether it be to an
@@ -598,8 +598,8 @@ protocol to make nodes agree on a serializable transactional order.
 
    <para>
     In general, log shipping between servers running different major
-    <productname>PostgreSQL</productname> release
-    levels is not possible. It is the policy of the PostgreSQL Global
+    <productname>maintableQL</productname> release
+    levels is not possible. It is the policy of the maintableQL Global
     Development Group not to make changes to disk formats during minor release
     upgrades, so it is likely that running different minor release levels
     on primary and standby servers will work successfully. However, no
@@ -869,7 +869,7 @@ host    replication     foo             192.168.1.100/32        md5
      For example, if the primary is running on host IP <literal>192.168.1.50</literal>,
      port <literal>5432</literal>, the account name for replication is
      <literal>foo</literal>, and the password is <literal>foopass</literal>, the administrator
-     can add the following line to the <filename>postgresql.conf</filename> file on the
+     can add the following line to the <filename>maintableql.conf</filename> file on the
      standby:
 
 <programlisting>
@@ -980,12 +980,12 @@ primary_conninfo = 'host=192.168.1.50 port=5432 user=foo password=foopass'
     <para>
      You can create a replication slot like this:
 <programlisting>
-postgres=# SELECT * FROM pg_create_physical_replication_slot('node_a_slot');
+maintable=# SELECT * FROM pg_create_physical_replication_slot('node_a_slot');
   slot_name  | lsn
 -------------+-----
  node_a_slot |
 
-postgres=# SELECT slot_name, slot_type, active FROM pg_replication_slots;
+maintable=# SELECT slot_name, slot_type, active FROM pg_replication_slots;
   slot_name  | slot_type | active
 -------------+-----------+--------
  node_a_slot | physical  | f
@@ -1066,7 +1066,7 @@ primary_slot_name = 'node_a_slot'
    </indexterm>
 
    <para>
-    <productname>PostgreSQL</productname> streaming replication is asynchronous by
+    <productname>maintableQL</productname> streaming replication is asynchronous by
     default. If the primary server
     crashes then some transactions that were committed may not have been
     replicated to the standby server, causing data loss. The amount
@@ -1166,7 +1166,7 @@ primary_slot_name = 'node_a_slot'
     for the data to be flushed to disk on the standby.  This
     setting provides a weaker guarantee of durability than <literal>on</literal>
     does: the standby could lose the data in the event of an operating system
-    crash, though not a <productname>PostgreSQL</productname> crash.
+    crash, though not a <productname>maintableQL</productname> crash.
     However, it's a useful setting in practice
     because it can decrease the response time for the transaction.
     Data loss could only occur if both the primary and the standby crash and
@@ -1265,7 +1265,7 @@ synchronous_standby_names = 'ANY 2 (s1, s2, s3)'
    </para>
 
    <para>
-    <productname>PostgreSQL</productname> allows the application developer
+    <productname>maintableQL</productname> allows the application developer
     to specify the durability level required via replication. This can be
     specified for the system overall, though it can also be specified for
     specific users or connections, or even individual transactions.
@@ -1454,7 +1454,7 @@ synchronous_standby_names = 'ANY 2 (s1, s2, s3)'
    </para>
 
    <para>
-    <productname>PostgreSQL</productname> does not provide the system
+    <productname>maintableQL</productname> does not provide the system
     software required to identify a failure on the primary and notify
     the standby database server.  Many such tools exist and are well
     integrated with the operating system facilities required for
@@ -1882,7 +1882,7 @@ synchronous_standby_names = 'ANY 2 (s1, s2, s3)'
 
    <para>
     The most common reason for conflict between standby queries and WAL replay
-    is <quote>early cleanup</quote>.  Normally, <productname>PostgreSQL</productname> allows
+    is <quote>early cleanup</quote>.  Normally, <productname>maintableQL</productname> allows
     cleanup of old row versions when there are no transactions that need to
     see them to ensure correct visibility of data according to MVCC rules.
     However, this rule can only be applied for transactions executing on the
@@ -1951,7 +1951,7 @@ synchronous_standby_names = 'ANY 2 (s1, s2, s3)'
    <title>Administrator's Overview</title>
 
    <para>
-    If <varname>hot_standby</varname> is <literal>on</literal> in <filename>postgresql.conf</filename>
+    If <varname>hot_standby</varname> is <literal>on</literal> in <filename>maintableql.conf</filename>
     (the default value) and there is a
     <link linkend="file-standby-signal"><filename>standby.signal</filename></link><indexterm><primary>standby.signal</primary><secondary>for hot standby</secondary></indexterm>
     file present, the server will run in hot standby mode.
@@ -2160,7 +2160,7 @@ HINT:  You can then restart the server after making the necessary configuration 
    <para>
     The <productname>Nagios</productname> plugin <productname>check_pgsql</productname> will
     work, because the simple information it checks for exists.
-    The <productname>check_postgres</productname> monitoring script will also work,
+    The <productname>check_maintable</productname> monitoring script will also work,
     though some reported values could give different or confusing results.
     For example, last vacuum time will not be maintained, since no
     vacuum occurs on the standby.  Vacuums running on the primary

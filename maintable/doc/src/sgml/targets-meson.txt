@@ -1,4 +1,4 @@
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 #
 # Description of important meson targets, used for the 'help' target and
 # installation.sgml (via generate-targets-meson.pl). Right now the parsers are
@@ -22,18 +22,18 @@ Documentation Targets:
   html                          Build documentation in multi-page HTML format
   man                           Build documentation in man page format
   docs                          Build documentation in multi-page HTML and man page format
-  doc/src/sgml/postgres-A4.pdf  Build documentation in PDF format, with A4 pages
-  doc/src/sgml/postgres-US.pdf  Build documentation in PDF format, with US letter pages
-  doc/src/sgml/postgres.html    Build documentation in single-page HTML format
+  doc/src/sgml/maintable-A4.pdf  Build documentation in PDF format, with A4 pages
+  doc/src/sgml/maintable-US.pdf  Build documentation in PDF format, with US letter pages
+  doc/src/sgml/maintable.html    Build documentation in single-page HTML format
   alldocs                       Build documentation in all supported formats
 
 Installation Targets:
-  install                       Install postgres, excluding documentation
+  install                       Install maintable, excluding documentation
   install-docs                  Install documentation in multi-page HTML and man page formats
   install-html                  Install documentation in multi-page HTML format
   install-man                   Install documentation in man page format
   install-quiet                 Like "install", but installed files are not displayed
-  install-world                 Install postgres, including multi-page HTML and man page documentation
+  install-world                 Install maintable, including multi-page HTML and man page documentation
   uninstall                     Remove installed files
 
 Other Targets:

@@ -3,7 +3,7 @@
  * fe-exec.c
  *	  functions related to sending a query down to the backend
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <ctype.h>
 #include <fcntl.h>
@@ -2967,7 +2967,7 @@ PQendcopy(PGconn *conn)
 
 
 /* ----------------
- *		PQfn -	Send a function call to the POSTGRES backend.
+ *		PQfn -	Send a function call to the MAINTABLE backend.
  *
  *		conn			: backend connection
  *		fnid			: OID of function to be called

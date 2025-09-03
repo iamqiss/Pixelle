@@ -17,8 +17,8 @@
  */
 
 use clap::Parser;
-use iggy::prelude::IggyDuration;
-use iggy::prelude::{DEFAULT_ROOT_PASSWORD, DEFAULT_ROOT_USERNAME};
+use messenger::prelude::MessengerDuration;
+use messenger::prelude::{DEFAULT_ROOT_PASSWORD, DEFAULT_ROOT_USERNAME};
 use std::str::FromStr;
 
 #[derive(Parser, Debug)]
@@ -277,8 +277,8 @@ impl Args {
         .to_string()
     }
 
-    pub fn to_sdk_args(&self) -> iggy::prelude::Args {
-        iggy::prelude::Args {
+    pub fn to_sdk_args(&self) -> messenger::prelude::Args {
+        messenger::prelude::Args {
             transport: self.transport.clone(),
             encryption_key: self.encryption_key.clone(),
             http_api_url: self.http_api_url.clone(),
@@ -315,10 +315,10 @@ impl Args {
         }
     }
 
-    pub fn get_interval(&self) -> Option<IggyDuration> {
+    pub fn get_interval(&self) -> Option<MessengerDuration> {
         match self.interval.to_lowercase().as_str() {
             "" | "0" | "none" => None,
-            x => Some(IggyDuration::from_str(x).expect("Invalid interval format")),
+            x => Some(MessengerDuration::from_str(x).expect("Invalid interval format")),
         }
     }
 }

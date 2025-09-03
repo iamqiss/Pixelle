@@ -21,8 +21,8 @@ use crate::cli::cli_command::{CliCommand, PRINT_TARGET};
 use anyhow::Context;
 use async_trait::async_trait;
 use bytes::Bytes;
-use iggy_common::{
-    BytesSerializable, HeaderKey, HeaderValue, Identifier, IggyMessage, Partitioning, Sizeable,
+use messenger_common::{
+    BytesSerializable, HeaderKey, HeaderValue, Identifier, MessengerMessage, Partitioning, Sizeable,
 };
 use std::collections::HashMap;
 use std::io::{self, Read};
@@ -108,13 +108,13 @@ impl CliCommand for SendMessagesCmd {
                 "Read {} bytes from {} file", buffer.len(), input_file,
             );
 
-            let mut messages: Vec<IggyMessage> = Vec::new();
+            let mut messages: Vec<MessengerMessage> = Vec::new();
             let mut bytes_read = 0usize;
             let all_messages_bytes: Bytes = buffer.into();
 
             while bytes_read < all_messages_bytes.len() {
                 let message_bytes = all_messages_bytes.slice(bytes_read..);
-                let message = IggyMessage::from_bytes(message_bytes);
+                let message = MessengerMessage::from_bytes(message_bytes);
                 match message {
                     Ok(message) => {
                         let message_size = message.get_size_bytes().as_bytes_usize();
@@ -140,7 +140,7 @@ impl CliCommand for SendMessagesCmd {
                 Some(messages) => messages
                     .iter()
                     .map(|s| {
-                        IggyMessage::builder()
+                        MessengerMessage::builder()
                             .payload(Bytes::from(s.clone()))
                             .user_headers(headers.clone().unwrap_or_default())
                             .build()
@@ -153,7 +153,7 @@ impl CliCommand for SendMessagesCmd {
                     input
                         .lines()
                         .map(|m| {
-                            IggyMessage::builder()
+                            MessengerMessage::builder()
                                 .payload(m.to_owned().into())
                                 .user_headers(headers.clone().unwrap_or_default())
                                 .build()

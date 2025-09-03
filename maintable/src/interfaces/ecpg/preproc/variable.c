@@ -1,6 +1,6 @@
 /* src/interfaces/ecpg/preproc/variable.c */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "preproc_extern.h"
 

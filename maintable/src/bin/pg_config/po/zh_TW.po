@@ -1,12 +1,12 @@
 # Traditional Chinese message translation file for pg_config
-# Copyright (C) 2023 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_config (PostgreSQL) package.
+# Copyright (C) 2023 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_config (maintableQL) package.
 # 2004-12-13 Zhenbang Wei <forth@zbwei.net>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_config (PostgreSQL) 16\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_config (maintableQL) 16\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-09-08 21:48+0000\n"
 "PO-Revision-Date: 2023-11-06 08:49+0800\n"
 "Last-Translator: Zhenbang Wei <znbang@gmail.com>\n"
@@ -82,11 +82,11 @@ msgstr "記憶體不足"
 #, c-format
 msgid ""
 "\n"
-"%s provides information about the installed version of PostgreSQL.\n"
+"%s provides information about the installed version of maintableQL.\n"
 "\n"
 msgstr ""
 "\n"
-"%s 提供關於已安裝 PostgreSQL 版本的資訊。\n"
+"%s 提供關於已安裝 maintableQL 版本的資訊。\n"
 "\n"
 
 #: pg_config.c:75
@@ -179,53 +179,53 @@ msgstr "  --pgxs                顯示擴充模組 makefile 位置\n"
 #, c-format
 msgid ""
 "  --configure           show options given to \"configure\" script when\n"
-"                        PostgreSQL was built\n"
-msgstr "  --configure           顯示建立 PostgreSQL 時給 \"configure\" 腳本的參數\n"
+"                        maintableQL was built\n"
+msgstr "  --configure           顯示建立 maintableQL 時給 \"configure\" 腳本的參數\n"
 
 #: pg_config.c:94
 #, c-format
-msgid "  --cc                  show CC value used when PostgreSQL was built\n"
-msgstr "  --cc                  顯示建立 PostgreSQL 時使用的 CC 值\n"
+msgid "  --cc                  show CC value used when maintableQL was built\n"
+msgstr "  --cc                  顯示建立 maintableQL 時使用的 CC 值\n"
 
 #: pg_config.c:95
 #, c-format
-msgid "  --cppflags            show CPPFLAGS value used when PostgreSQL was built\n"
-msgstr "  --cppflags            顯示建立 PostgreSQL 時使用的 CPPFLAGS 值\n"
+msgid "  --cppflags            show CPPFLAGS value used when maintableQL was built\n"
+msgstr "  --cppflags            顯示建立 maintableQL 時使用的 CPPFLAGS 值\n"
 
 #: pg_config.c:96
 #, c-format
-msgid "  --cflags              show CFLAGS value used when PostgreSQL was built\n"
-msgstr "  --cflags              顯示建立 PostgreSQL 時使用的 CFLAGS 值\n"
+msgid "  --cflags              show CFLAGS value used when maintableQL was built\n"
+msgstr "  --cflags              顯示建立 maintableQL 時使用的 CFLAGS 值\n"
 
 #: pg_config.c:97
 #, c-format
-msgid "  --cflags_sl           show CFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --cflags_sl           顯示建立 PostgreSQL 時使用的 CFLAGS_SL 值\n"
+msgid "  --cflags_sl           show CFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --cflags_sl           顯示建立 maintableQL 時使用的 CFLAGS_SL 值\n"
 
 #: pg_config.c:98
 #, c-format
-msgid "  --ldflags             show LDFLAGS value used when PostgreSQL was built\n"
-msgstr "  --ldflags             顯示建立 PostgreSQL 時使用的 LDFLAGS 值\n"
+msgid "  --ldflags             show LDFLAGS value used when maintableQL was built\n"
+msgstr "  --ldflags             顯示建立 maintableQL 時使用的 LDFLAGS 值\n"
 
 #: pg_config.c:99
 #, c-format
-msgid "  --ldflags_ex          show LDFLAGS_EX value used when PostgreSQL was built\n"
-msgstr "  --ldflags_ex          顯示建立 PostgreSQL 時使用的 LDFLAGS_EX 值\n"
+msgid "  --ldflags_ex          show LDFLAGS_EX value used when maintableQL was built\n"
+msgstr "  --ldflags_ex          顯示建立 maintableQL 時使用的 LDFLAGS_EX 值\n"
 
 #: pg_config.c:100
 #, c-format
-msgid "  --ldflags_sl          show LDFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --ldflags_sl          顯示建立 PostgreSQL 時使用的 LDFLAGS_SL 值\n"
+msgid "  --ldflags_sl          show LDFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --ldflags_sl          顯示建立 maintableQL 時使用的 LDFLAGS_SL 值\n"
 
 #: pg_config.c:101
 #, c-format
-msgid "  --libs                show LIBS value used when PostgreSQL was built\n"
-msgstr "  --libs                顯示建立 PostgreSQL 時使用的 LIBS 值\n"
+msgid "  --libs                show LIBS value used when maintableQL was built\n"
+msgstr "  --libs                顯示建立 maintableQL 時使用的 LIBS 值\n"
 
 #: pg_config.c:102
 #, c-format
-msgid "  --version             show the PostgreSQL version\n"
-msgstr "  --version             顯示 PostgreSQL 的版本\n"
+msgid "  --version             show the maintableQL version\n"
+msgstr "  --version             顯示 maintableQL 的版本\n"
 
 #: pg_config.c:103
 #, c-format

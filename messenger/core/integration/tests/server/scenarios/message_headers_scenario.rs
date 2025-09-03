@@ -21,7 +21,7 @@ use crate::server::scenarios::{
     cleanup, create_client,
 };
 use bytes::Bytes;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::{ClientFactory, assert_clean_system, login_root};
 use std::collections::HashMap;
 use std::str::FromStr;
@@ -38,7 +38,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
         let payload = create_message_payload(offset as u64);
         let headers = create_message_headers();
         messages.push(
-            IggyMessage::builder()
+            MessengerMessage::builder()
                 .id(id)
                 .payload(payload)
                 .user_headers(headers)
@@ -106,7 +106,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
     assert_clean_system(&client).await;
 }
 
-async fn init_system(client: &IggyClient) {
+async fn init_system(client: &MessengerClient) {
     // 1. Create the stream
     client
         .create_stream(STREAM_NAME, Some(STREAM_ID))
@@ -122,7 +122,7 @@ async fn init_system(client: &IggyClient) {
             CompressionAlgorithm::default(),
             None,
             Some(TOPIC_ID),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await

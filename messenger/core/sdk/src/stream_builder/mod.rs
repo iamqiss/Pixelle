@@ -18,13 +18,13 @@
 
 mod build;
 mod config;
-mod iggy_stream;
-mod iggy_stream_consumer;
-mod iggy_stream_producer;
+mod messenger_stream;
+mod messenger_stream_consumer;
+mod messenger_stream_producer;
 
-pub use config::{IggyConsumerConfig, IggyConsumerConfigBuilder};
-pub use config::{IggyProducerConfig, IggyProducerConfigBuilder};
-pub use config::{IggyStreamConfig, IggyStreamConfigBuilder};
-pub use iggy_stream::IggyStream;
-pub use iggy_stream_consumer::IggyStreamConsumer;
-pub use iggy_stream_producer::IggyStreamProducer;
+pub use config::{MessengerConsumerConfig, MessengerConsumerConfigBuilder};
+pub use config::{MessengerProducerConfig, MessengerProducerConfigBuilder};
+pub use config::{MessengerStreamConfig, MessengerStreamConfigBuilder};
+pub use messenger_stream::MessengerStream;
+pub use messenger_stream_consumer::MessengerStreamConsumer;
+pub use messenger_stream_producer::MessengerStreamProducer;

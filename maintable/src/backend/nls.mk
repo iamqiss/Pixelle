@@ -1,5 +1,5 @@
 # src/backend/nls.mk
-CATALOG_NAME     = postgres
+CATALOG_NAME     = maintable
 GETTEXT_FILES    = + gettext-files
 GETTEXT_TRIGGERS = $(BACKEND_COMMON_GETTEXT_TRIGGERS) \
                    GUC_check_errmsg \

@@ -1,10 +1,10 @@
 {
-  "name": "apache-iggy",
+  "name": "apache-messenger",
   "type": "module",
   "version": "0.5.0",
-  "description": "Official Apache Iggy NodeJS SDK",
+  "description": "Official Apache Messenger NodeJS SDK",
   "keywords": [
-    "iggy",
+    "messenger",
     "driver",
     "sdk",
     "apache",
@@ -15,14 +15,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/apache/iggy.git"
+    "url": "git+https://github.com/apache/messenger.git"
   },
   "publishConfig": {
     "access": "public",
     "main": "dist/index.js",
     "types": "dist/index.d.ts"
   },
-  "homepage": "https://iggy.apache.org",
+  "homepage": "https://messenger.apache.org",
   "files": [
     "dist/**/*.js",
     "dist/**/*.d.ts",

@@ -18,7 +18,7 @@
 """
 Comprehensive test suite for the Python SDK.
 
-This module contains all the tests for the Iggy Python SDK, organized by functionality.
+This module contains all the tests for the Messenger Python SDK, organized by functionality.
 Tests are marked as either 'unit' or 'integration' based on their requirements.
 """
 
@@ -27,8 +27,8 @@ import uuid
 from datetime import timedelta
 
 import pytest
-from apache_iggy import AutoCommit, IggyClient, PollingStrategy, ReceiveMessage
-from apache_iggy import SendMessage as Message
+from apache_messenger import AutoCommit, MessengerClient, PollingStrategy, ReceiveMessage
+from apache_messenger import SendMessage as Message
 
 from .utils import get_server_config, wait_for_ping, wait_for_server
 
@@ -37,14 +37,14 @@ class TestConnectivity:
     """Test basic connectivity and authentication."""
 
     @pytest.mark.asyncio
-    async def test_ping(self, iggy_client: IggyClient):
+    async def test_ping(self, messenger_client: MessengerClient):
         """Test server ping functionality."""
-        await iggy_client.ping()
+        await messenger_client.ping()
 
     @pytest.mark.asyncio
-    async def test_client_not_none(self, iggy_client: IggyClient):
+    async def test_client_not_none(self, messenger_client: MessengerClient):
         """Test that client fixture is properly initialized."""
-        assert iggy_client is not None
+        assert messenger_client is not None
 
     @pytest.mark.asyncio
     async def test_client_from_connection_string(self):
@@ -52,8 +52,8 @@ class TestConnectivity:
         host, port = get_server_config()
         wait_for_server(host, port)
 
-        client = IggyClient.from_connection_string(
-            f"iggy+tcp://iggy:iggy@{host}:{port}"
+        client = MessengerClient.from_connection_string(
+            f"messenger+tcp://messenger:messenger@{host}:{port}"
         )
         await client.connect()
         await wait_for_ping(client)
@@ -69,26 +69,26 @@ class TestStreamOperations:
 
     @pytest.mark.asyncio
     async def test_create_and_get_stream(
-        self, iggy_client: IggyClient, unique_stream_name
+        self, messenger_client: MessengerClient, unique_stream_name
     ):
         """Test stream creation and retrieval."""
         # Create stream
-        await iggy_client.create_stream(unique_stream_name)
+        await messenger_client.create_stream(unique_stream_name)
 
         # Get stream by name
-        stream = await iggy_client.get_stream(unique_stream_name)
+        stream = await messenger_client.get_stream(unique_stream_name)
         assert stream is not None
         assert stream.name == unique_stream_name
         assert stream.id > 0
 
     @pytest.mark.asyncio
-    async def test_list_streams(self, iggy_client: IggyClient, unique_stream_name):
+    async def test_list_streams(self, messenger_client: MessengerClient, unique_stream_name):
         """Test listing streams."""
         # Create a stream first
-        await iggy_client.create_stream(unique_stream_name)
+        await messenger_client.create_stream(unique_stream_name)
 
         # Get the stream we just created
-        stream = await iggy_client.get_stream(unique_stream_name)
+        stream = await messenger_client.get_stream(unique_stream_name)
         assert stream is not None
         assert stream.name == unique_stream_name
         assert stream.id > 0
@@ -108,40 +108,40 @@ class TestTopicOperations:
         }
 
     @pytest.mark.asyncio
-    async def test_create_and_get_topic(self, iggy_client: IggyClient, unique_names):
+    async def test_create_and_get_topic(self, messenger_client: MessengerClient, unique_names):
         """Test topic creation and retrieval."""
         stream_name = unique_names["stream"]
         topic_name = unique_names["topic"]
 
         # Create stream first
-        await iggy_client.create_stream(stream_name)
+        await messenger_client.create_stream(stream_name)
 
         # Create topic
-        await iggy_client.create_topic(
+        await messenger_client.create_topic(
             stream=stream_name, name=topic_name, partitions_count=2
         )
 
         # Get topic by name
-        topic = await iggy_client.get_topic(stream_name, topic_name)
+        topic = await messenger_client.get_topic(stream_name, topic_name)
         assert topic is not None
         assert topic.name == topic_name
         assert topic.id > 0
         assert topic.partitions_count == 2
 
     @pytest.mark.asyncio
-    async def test_list_topics(self, iggy_client: IggyClient, unique_names):
+    async def test_list_topics(self, messenger_client: MessengerClient, unique_names):
         """Test listing topics in a stream."""
         stream_name = unique_names["stream"]
         topic_name = unique_names["topic"]
 
         # Create stream and topic
-        await iggy_client.create_stream(stream_name)
-        await iggy_client.create_topic(
+        await messenger_client.create_stream(stream_name)
+        await messenger_client.create_topic(
             stream=stream_name, name=topic_name, partitions_count=1
         )
 
         # Get the topic we just created
-        topic = await iggy_client.get_topic(stream_name, topic_name)
+        topic = await messenger_client.get_topic(stream_name, topic_name)
         assert topic is not None
         assert topic.name == topic_name
         assert topic.id > 0
@@ -163,7 +163,7 @@ class TestMessageOperations:
         }
 
     @pytest.mark.asyncio
-    async def test_send_and_poll_messages(self, iggy_client: IggyClient, message_setup):
+    async def test_send_and_poll_messages(self, messenger_client: MessengerClient, message_setup):
         """Test basic message sending and polling."""
         stream_name = message_setup["stream"]
         topic_name = message_setup["topic"]
@@ -171,14 +171,14 @@ class TestMessageOperations:
         test_messages = message_setup["messages"]
 
         # Setup stream and topic
-        await iggy_client.create_stream(stream_name)
-        await iggy_client.create_topic(
+        await messenger_client.create_stream(stream_name)
+        await messenger_client.create_topic(
             stream=stream_name, name=topic_name, partitions_count=1
         )
 
         # Send messages
         messages = [Message(msg) for msg in test_messages]
-        await iggy_client.send_messages(
+        await messenger_client.send_messages(
             stream=stream_name,
             topic=topic_name,
             partitioning=partition_id,
@@ -186,7 +186,7 @@ class TestMessageOperations:
         )
 
         # Poll messages
-        polled_messages = await iggy_client.poll_messages(
+        polled_messages = await messenger_client.poll_messages(
             stream=stream_name,
             topic=topic_name,
             partition_id=partition_id,
@@ -206,7 +206,7 @@ class TestMessageOperations:
 
     @pytest.mark.asyncio
     async def test_send_and_poll_messages_as_bytes(
-        self, iggy_client: IggyClient, message_setup
+        self, messenger_client: MessengerClient, message_setup
     ):
         """Test basic message sending and polling with message payload as bytes."""
         stream_name = message_setup["stream"]
@@ -215,14 +215,14 @@ class TestMessageOperations:
         test_messages = message_setup["messages"]
 
         # Setup stream and topic
-        await iggy_client.create_stream(stream_name)
-        await iggy_client.create_topic(
+        await messenger_client.create_stream(stream_name)
+        await messenger_client.create_topic(
             stream=stream_name, name=topic_name, partitions_count=1
         )
 
         # Send messages
         messages = [Message(msg.encode()) for msg in test_messages]
-        await iggy_client.send_messages(
+        await messenger_client.send_messages(
             stream=stream_name,
             topic=topic_name,
             partitioning=partition_id,
@@ -230,7 +230,7 @@ class TestMessageOperations:
         )
 
         # Poll messages
-        polled_messages = await iggy_client.poll_messages(
+        polled_messages = await messenger_client.poll_messages(
             stream=stream_name,
             topic=topic_name,
             partition_id=partition_id,
@@ -249,22 +249,22 @@ class TestMessageOperations:
                 assert actual_payload == expected_msg
 
     @pytest.mark.asyncio
-    async def test_message_properties(self, iggy_client: IggyClient, message_setup):
+    async def test_message_properties(self, messenger_client: MessengerClient, message_setup):
         """Test access to message properties."""
         stream_name = message_setup["stream"]
         topic_name = message_setup["topic"]
         partition_id = message_setup["partition_id"]
 
         # Setup
-        await iggy_client.create_stream(stream_name)
-        await iggy_client.create_topic(
+        await messenger_client.create_stream(stream_name)
+        await messenger_client.create_topic(
             stream=stream_name, name=topic_name, partitions_count=1
         )
 
         # Send a test message
         test_payload = f"Property test - {uuid.uuid4().hex[:8]}"
         message = Message(test_payload)
-        await iggy_client.send_messages(
+        await messenger_client.send_messages(
             stream=stream_name,
             topic=topic_name,
             partitioning=partition_id,
@@ -272,7 +272,7 @@ class TestMessageOperations:
         )
 
         # Poll and verify properties
-        polled_messages = await iggy_client.poll_messages(
+        polled_messages = await messenger_client.poll_messages(
             stream=stream_name,
             topic=topic_name,
             partition_id=partition_id,
@@ -308,7 +308,7 @@ class TestPollingStrategies:
         }
 
     @pytest.mark.asyncio
-    async def test_polling_strategies(self, iggy_client: IggyClient, polling_setup):
+    async def test_polling_strategies(self, messenger_client: MessengerClient, polling_setup):
         """Test different polling strategies work correctly."""
         stream_name = polling_setup["stream"]
         topic_name = polling_setup["topic"]
@@ -316,14 +316,14 @@ class TestPollingStrategies:
         test_messages = polling_setup["messages"]
 
         # Setup
-        await iggy_client.create_stream(stream_name)
-        await iggy_client.create_topic(
+        await messenger_client.create_stream(stream_name)
+        await messenger_client.create_topic(
             stream=stream_name, name=topic_name, partitions_count=1
         )
 
         # Send test messages
         messages = [Message(msg) for msg in test_messages]
-        await iggy_client.send_messages(
+        await messenger_client.send_messages(
             stream=stream_name,
             topic=topic_name,
             partitioning=partition_id,
@@ -331,7 +331,7 @@ class TestPollingStrategies:
         )
 
         # Test First strategy
-        first_messages = await iggy_client.poll_messages(
+        first_messages = await messenger_client.poll_messages(
             stream=stream_name,
             topic=topic_name,
             partition_id=partition_id,
@@ -342,7 +342,7 @@ class TestPollingStrategies:
         assert len(first_messages) >= 1
 
         # Test Last strategy
-        last_messages = await iggy_client.poll_messages(
+        last_messages = await messenger_client.poll_messages(
             stream=stream_name,
             topic=topic_name,
             partition_id=partition_id,
@@ -353,7 +353,7 @@ class TestPollingStrategies:
         assert len(last_messages) >= 1
 
         # Test Next strategy
-        next_messages = await iggy_client.poll_messages(
+        next_messages = await messenger_client.poll_messages(
             stream=stream_name,
             topic=topic_name,
             partition_id=partition_id,
@@ -365,7 +365,7 @@ class TestPollingStrategies:
 
         # Test Offset strategy (if we have messages)
         if first_messages:
-            offset_messages = await iggy_client.poll_messages(
+            offset_messages = await messenger_client.poll_messages(
                 stream=stream_name,
                 topic=topic_name,
                 partition_id=partition_id,
@@ -382,36 +382,36 @@ class TestErrorHandling:
     """Test error handling and edge cases."""
 
     @pytest.mark.asyncio
-    async def test_duplicate_stream_creation(self, iggy_client: IggyClient):
+    async def test_duplicate_stream_creation(self, messenger_client: MessengerClient):
         """Test that creating duplicate streams raises appropriate errors."""
         stream_name = f"duplicate-test-{uuid.uuid4().hex[:8]}"
 
         # Create stream first time - should succeed
-        await iggy_client.create_stream(stream_name)
+        await messenger_client.create_stream(stream_name)
 
         # Create same stream again - should fail
         with pytest.raises(RuntimeError) as exc_info:
-            await iggy_client.create_stream(stream_name)
+            await messenger_client.create_stream(stream_name)
 
         assert "StreamNameAlreadyExists" in str(exc_info.value)
 
     @pytest.mark.asyncio
-    async def test_get_nonexistent_stream(self, iggy_client: IggyClient):
+    async def test_get_nonexistent_stream(self, messenger_client: MessengerClient):
         """Test getting a non-existent stream."""
         nonexistent_name = f"nonexistent-{uuid.uuid4().hex}"
 
         # get_stream returns None for non-existent streams
-        stream = await iggy_client.get_stream(nonexistent_name)
+        stream = await messenger_client.get_stream(nonexistent_name)
         assert stream is None
 
     @pytest.mark.asyncio
-    async def test_create_topic_in_nonexistent_stream(self, iggy_client: IggyClient):
+    async def test_create_topic_in_nonexistent_stream(self, messenger_client: MessengerClient):
         """Test creating a topic in a non-existent stream."""
         nonexistent_stream = f"nonexistent-{uuid.uuid4().hex}"
         topic_name = "test-topic"
 
         with pytest.raises(RuntimeError):
-            await iggy_client.create_topic(
+            await messenger_client.create_topic(
                 stream=nonexistent_stream, name=topic_name, partitions_count=1
             )
 
@@ -432,7 +432,7 @@ class TestConsumerGroup:
         }
 
     @pytest.mark.asyncio
-    async def test_meta(self, iggy_client: IggyClient, consumer_group_setup):
+    async def test_meta(self, messenger_client: MessengerClient, consumer_group_setup):
         """Test that meta information can be read about the consumer group."""
         consumer_name = consumer_group_setup["consumer"]
         stream_name = consumer_group_setup["stream"]
@@ -440,11 +440,11 @@ class TestConsumerGroup:
         partition_id = consumer_group_setup["partition_id"]
 
         # Setup
-        await iggy_client.create_stream(stream_name)
-        await iggy_client.create_topic(
+        await messenger_client.create_stream(stream_name)
+        await messenger_client.create_topic(
             stream=stream_name, name=topic_name, partitions_count=1
         )
-        consumer = iggy_client.consumer_group(
+        consumer = messenger_client.consumer_group(
             consumer_name,
             stream_name,
             topic_name,
@@ -464,7 +464,7 @@ class TestConsumerGroup:
 
     @pytest.mark.asyncio
     async def test_consume_messages(
-        self, iggy_client: IggyClient, consumer_group_setup
+        self, messenger_client: MessengerClient, consumer_group_setup
     ):
         """Test that the consumer group can consume messages."""
         consumer_name = consumer_group_setup["consumer"]
@@ -476,12 +476,12 @@ class TestConsumerGroup:
         # Setup
         received_messages = []
         shutdown_event = asyncio.Event()
-        await iggy_client.create_stream(stream_name)
-        await iggy_client.create_topic(
+        await messenger_client.create_stream(stream_name)
+        await messenger_client.create_topic(
             stream=stream_name, name=topic_name, partitions_count=1
         )
 
-        consumer = iggy_client.consumer_group(
+        consumer = messenger_client.consumer_group(
             consumer_name,
             stream_name,
             topic_name,
@@ -498,7 +498,7 @@ class TestConsumerGroup:
                 shutdown_event.set()
 
         async def send() -> None:
-            await iggy_client.send_messages(
+            await messenger_client.send_messages(
                 stream_name,
                 topic_name,
                 partition_id,
@@ -510,7 +510,7 @@ class TestConsumerGroup:
         assert received_messages == test_messages
 
     @pytest.mark.asyncio
-    async def test_shutdown(self, iggy_client: IggyClient, consumer_group_setup):
+    async def test_shutdown(self, messenger_client: MessengerClient, consumer_group_setup):
         """Test that the consumer group can be signaled to shutdown."""
         consumer_name = consumer_group_setup["consumer"]
         stream_name = consumer_group_setup["stream"]
@@ -519,12 +519,12 @@ class TestConsumerGroup:
 
         # Setup
         shutdown_event = asyncio.Event()
-        await iggy_client.create_stream(stream_name)
-        await iggy_client.create_topic(
+        await messenger_client.create_stream(stream_name)
+        await messenger_client.create_topic(
             stream=stream_name, name=topic_name, partitions_count=1
         )
 
-        consumer = iggy_client.consumer_group(
+        consumer = messenger_client.consumer_group(
             consumer_name,
             stream_name,
             topic_name,

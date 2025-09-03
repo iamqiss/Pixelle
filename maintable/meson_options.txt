@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 # Data layout influencing options
 
@@ -21,7 +21,7 @@ option('segsize_blocks', type: 'integer', value: 0,
 
 # Miscellaneous options
 
-option('krb_srvnam', type: 'string', value: 'postgres',
+option('krb_srvnam', type: 'string', value: 'maintable',
   description: 'Default Kerberos service principal for GSSAPI')
 
 option('system_tzdata', type: 'string', value: '',
@@ -62,7 +62,7 @@ option('extra_lib_dirs', type: 'array', value: [],
   description: 'Non-default directories to be searched for libs')
 
 option('extra_version', type: 'string', value: '',
-  description: 'Append STRING to the PostgreSQL version number')
+  description: 'Append STRING to the maintableQL version number')
 
 option('darwin_sysroot', type: 'string', value: '',
   description: 'Select a non-default sysroot path')

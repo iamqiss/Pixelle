@@ -3,11 +3,11 @@
  *
  *	execution functions
  *
- *	Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ *	Copyright (c) 2010-2025, maintableQL Global Development Group
  *	src/bin/pg_upgrade/exec.c
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <fcntl.h>
 
@@ -392,7 +392,7 @@ check_bin_dir(ClusterInfo *cluster, bool check_versions)
 		report_status(PG_FATAL, "\"%s\" is not a directory",
 					  cluster->bindir);
 
-	check_exec(cluster->bindir, "postgres", check_versions);
+	check_exec(cluster->bindir, "maintable", check_versions);
 	check_exec(cluster->bindir, "pg_controldata", check_versions);
 	check_exec(cluster->bindir, "pg_ctl", check_versions);
 
@@ -448,7 +448,7 @@ check_exec(const char *dir, const char *program, bool check_version)
 	{
 		pg_strip_crlf(line);
 
-		snprintf(versionstr, sizeof(versionstr), "%s (PostgreSQL) " PG_VERSION, program);
+		snprintf(versionstr, sizeof(versionstr), "%s (maintableQL) " PG_VERSION, program);
 
 		if (strcmp(line, versionstr) != 0)
 			pg_fatal("check for \"%s\" failed: incorrect version: found \"%s\", expected \"%s\"",

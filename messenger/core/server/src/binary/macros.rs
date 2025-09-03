@@ -42,7 +42,7 @@ macro_rules! define_server_command_enum {
 
         impl ServerCommand {
             /// Constructs a `ServerCommand` from its numeric code and payload.
-            pub fn from_code_and_payload(code: u32, payload: Bytes) -> Result<Self, IggyError> {
+            pub fn from_code_and_payload(code: u32, payload: Bytes) -> Result<Self, MessengerError> {
                 match code {
                     $(
                         $code => Ok(ServerCommand::$variant(
@@ -51,7 +51,7 @@ macro_rules! define_server_command_enum {
                     )*
                     _ => {
                         error!("Invalid server command: {}", code);
-                        Err(IggyError::InvalidCommand)
+                        Err(MessengerError::InvalidCommand)
                     }
                 }
             }
@@ -61,14 +61,14 @@ macro_rules! define_server_command_enum {
                 code: u32,
                 sender: &mut SenderKind,
                 length: u32,
-            ) -> Result<Self, IggyError> {
+            ) -> Result<Self, MessengerError> {
                 match code {
                     $(
                         $code => Ok(ServerCommand::$variant(
                             <$ty as BinaryServerCommand>::from_sender(sender, code, length).await?
                         )),
                     )*
-                    _ => Err(IggyError::InvalidCommand),
+                    _ => Err(MessengerError::InvalidCommand),
                 }
             }
 
@@ -82,10 +82,10 @@ macro_rules! define_server_command_enum {
             }
 
             /// Validate the command by delegating to the inner command’s implementation.
-            pub fn validate(&self) -> Result<(), IggyError> {
+            pub fn validate(&self) -> Result<(), MessengerError> {
                 match self {
                     $(
-                        ServerCommand::$variant(cmd) => <$ty as iggy_common::Validatable<iggy_common::IggyError>>::validate(cmd),
+                        ServerCommand::$variant(cmd) => <$ty as messenger_common::Validatable<messenger_common::MessengerError>>::validate(cmd),
                     )*
                 }
             }

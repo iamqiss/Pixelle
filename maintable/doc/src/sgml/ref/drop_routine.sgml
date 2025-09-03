@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_routine.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-droproutine">
@@ -87,7 +87,7 @@ DROP ROUTINE foo(integer);
 
   <para>
    This command conforms to the SQL standard, with
-   these <productname>PostgreSQL</productname> extensions:
+   these <productname>maintableQL</productname> extensions:
    <itemizedlist>
     <listitem>
      <para>The standard only allows one routine to be dropped per command.</para>

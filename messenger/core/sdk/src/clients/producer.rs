@@ -23,11 +23,11 @@ use crate::clients::producer_config::DirectConfig;
 use crate::clients::producer_dispatcher::ProducerDispatcher;
 use bytes::Bytes;
 use futures_util::StreamExt;
-use iggy_binary_protocol::{Client, MessageClient, StreamClient, TopicClient};
-use iggy_common::locking::{IggySharedMut, IggySharedMutFn};
-use iggy_common::{
-    CompressionAlgorithm, DiagnosticEvent, EncryptorKind, IdKind, Identifier, IggyDuration,
-    IggyError, IggyExpiry, IggyMessage, IggyTimestamp, MaxTopicSize, Partitioner, Partitioning,
+use messenger_binary_protocol::{Client, MessageClient, StreamClient, TopicClient};
+use messenger_common::locking::{MessengerSharedMut, MessengerSharedMutFn};
+use messenger_common::{
+    CompressionAlgorithm, DiagnosticEvent, EncryptorKind, IdKind, Identifier, MessengerDuration,
+    MessengerError, MessengerExpiry, MessengerMessage, MessengerTimestamp, MaxTopicSize, Partitioner, Partitioning,
 };
 use std::sync::Arc;
 use std::sync::atomic::Ordering;
@@ -45,15 +45,15 @@ pub trait ProducerCoreBackend: Send + Sync + 'static {
         &self,
         stream: &Identifier,
         topic: &Identifier,
-        msgs: Vec<IggyMessage>,
+        msgs: Vec<MessengerMessage>,
         partitioning: Option<Arc<Partitioning>>,
-    ) -> impl Future<Output = Result<(), IggyError>> + Send;
+    ) -> impl Future<Output = Result<(), MessengerError>> + Send;
 }
 
 pub struct ProducerCore {
     initialized: AtomicBool,
     can_send: Arc<AtomicBool>,
-    client: Arc<IggySharedMut<ClientWrapper>>,
+    client: Arc<MessengerSharedMut<ClientWrapper>>,
     stream_id: Arc<Identifier>,
     stream_name: String,
     topic_id: Arc<Identifier>,
@@ -65,17 +65,17 @@ pub struct ProducerCore {
     create_topic_if_not_exists: bool,
     topic_partitions_count: u32,
     topic_replication_factor: Option<u8>,
-    topic_message_expiry: IggyExpiry,
+    topic_message_expiry: MessengerExpiry,
     topic_max_size: MaxTopicSize,
     default_partitioning: Arc<Partitioning>,
     last_sent_at: Arc<AtomicU64>,
     send_retries_count: Option<u32>,
-    send_retries_interval: Option<IggyDuration>,
+    send_retries_interval: Option<MessengerDuration>,
     direct_config: Option<DirectConfig>,
 }
 
 impl ProducerCore {
-    pub async fn init(&self) -> Result<(), IggyError> {
+    pub async fn init(&self) -> Result<(), MessengerError> {
         if self.initialized.load(Ordering::SeqCst) {
             return Ok(());
         }
@@ -89,7 +89,7 @@ impl ProducerCore {
         if client.get_stream(&stream_id).await?.is_none() {
             if !self.create_stream_if_not_exists {
                 error!("Stream does not exist and auto-creation is disabled.");
-                return Err(IggyError::StreamNameNotFound(self.stream_name.clone()));
+                return Err(MessengerError::StreamNameNotFound(self.stream_name.clone()));
             }
 
             let (name, id) = match stream_id.kind {
@@ -106,7 +106,7 @@ impl ProducerCore {
         if client.get_topic(&stream_id, &topic_id).await?.is_none() {
             if !self.create_topic_if_not_exists {
                 error!("Topic does not exist and auto-creation is disabled.");
-                return Err(IggyError::TopicNameNotFound(
+                return Err(MessengerError::TopicNameNotFound(
                     self.topic_name.clone(),
                     self.stream_name.clone(),
                 ));
@@ -183,8 +183,8 @@ impl ProducerCore {
         stream: &Identifier,
         topic: &Identifier,
         partitioning: &Arc<Partitioning>,
-        messages: &mut [IggyMessage],
-    ) -> Result<(), IggyError> {
+        messages: &mut [MessengerMessage],
+    ) -> Result<(), MessengerError> {
         let client = self.client.read().await;
         let Some(max_retries) = self.send_retries_count else {
             return client
@@ -225,7 +225,7 @@ impl ProducerCore {
         stream: &Identifier,
         topic: &Identifier,
         timer: &mut Option<Interval>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let mut retries = 0;
         while !self.can_send.load(ORDERING) {
             retries += 1;
@@ -234,7 +234,7 @@ impl ProducerCore {
                     "Failed to send messages to topic: {topic}, stream: {stream} \
                      after {max_retries} retries. Client is disconnected."
                 );
-                return Err(IggyError::CannotSendMessagesDueToClientDisconnection);
+                return Err(MessengerError::CannotSendMessagesDueToClientDisconnection);
             }
 
             error!(
@@ -259,9 +259,9 @@ impl ProducerCore {
         stream: &Identifier,
         topic: &Identifier,
         partitioning: &Arc<Partitioning>,
-        messages: &mut [IggyMessage],
+        messages: &mut [MessengerMessage],
         timer: &mut Option<Interval>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let client = self.client.read().await;
         let mut retries = 0;
         loop {
@@ -297,7 +297,7 @@ impl ProducerCore {
         }
     }
 
-    fn encrypt_messages(&self, messages: &mut [IggyMessage]) -> Result<(), IggyError> {
+    fn encrypt_messages(&self, messages: &mut [MessengerMessage]) -> Result<(), MessengerError> {
         if let Some(encryptor) = &self.encryptor {
             for message in messages {
                 message.payload = Bytes::from(encryptor.encrypt(&message.payload)?);
@@ -311,9 +311,9 @@ impl ProducerCore {
         &self,
         stream: &Identifier,
         topic: &Identifier,
-        messages: &[IggyMessage],
+        messages: &[MessengerMessage],
         partitioning: Option<Arc<Partitioning>>,
-    ) -> Result<Arc<Partitioning>, IggyError> {
+    ) -> Result<Arc<Partitioning>, MessengerError> {
         if let Some(partitioner) = &self.partitioner {
             trace!("Calculating partition id using custom partitioner.");
             let partition_id = partitioner.calculate_partition_id(stream, topic, messages)?;
@@ -333,7 +333,7 @@ impl ProducerCore {
             return;
         }
 
-        let now: u64 = IggyTimestamp::now().into();
+        let now: u64 = MessengerTimestamp::now().into();
         let elapsed = now - last_sent_at;
         if elapsed >= interval {
             trace!("No need to wait before sending messages. {now} - {last_sent_at} = {elapsed}");
@@ -347,8 +347,8 @@ impl ProducerCore {
         sleep(Duration::from_micros(remaining)).await;
     }
 
-    fn make_failed_error(&self, cause: IggyError, failed: Vec<IggyMessage>) -> IggyError {
-        IggyError::ProducerSendFailed {
+    fn make_failed_error(&self, cause: MessengerError, failed: Vec<MessengerMessage>) -> MessengerError {
+        MessengerError::ProducerSendFailed {
             cause: Box::new(cause),
             failed: Arc::new(failed),
             stream_name: self.stream_name.clone(),
@@ -362,9 +362,9 @@ impl ProducerCoreBackend for ProducerCore {
         &self,
         stream: &Identifier,
         topic: &Identifier,
-        mut msgs: Vec<IggyMessage>,
+        mut msgs: Vec<MessengerMessage>,
         partitioning: Option<Arc<Partitioning>>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         if msgs.is_empty() {
             return Ok(());
         }
@@ -403,7 +403,7 @@ impl ProducerCoreBackend for ProducerCore {
                         return Err(self.make_failed_error(err, failed_tail));
                     }
                     self.last_sent_at
-                        .store(IggyTimestamp::now().into(), ORDERING);
+                        .store(MessengerTimestamp::now().into(), ORDERING);
                     index = end;
                 }
             }
@@ -413,7 +413,7 @@ impl ProducerCoreBackend for ProducerCore {
                     .await
                     .map_err(|err| self.make_failed_error(err, msgs))?;
                 self.last_sent_at
-                    .store(IggyTimestamp::now().into(), ORDERING);
+                    .store(MessengerTimestamp::now().into(), ORDERING);
             }
         }
 
@@ -421,18 +421,18 @@ impl ProducerCoreBackend for ProducerCore {
     }
 }
 
-unsafe impl Send for IggyProducer {}
-unsafe impl Sync for IggyProducer {}
+unsafe impl Send for MessengerProducer {}
+unsafe impl Sync for MessengerProducer {}
 
-pub struct IggyProducer {
+pub struct MessengerProducer {
     core: Arc<ProducerCore>,
     dispatcher: Option<ProducerDispatcher>,
 }
 
-impl IggyProducer {
+impl MessengerProducer {
     #[allow(clippy::too_many_arguments)]
     pub(crate) fn new(
-        client: IggySharedMut<ClientWrapper>,
+        client: MessengerSharedMut<ClientWrapper>,
         stream: Identifier,
         stream_name: String,
         topic: Identifier,
@@ -444,10 +444,10 @@ impl IggyProducer {
         create_topic_if_not_exists: bool,
         topic_partitions_count: u32,
         topic_replication_factor: Option<u8>,
-        topic_message_expiry: IggyExpiry,
+        topic_message_expiry: MessengerExpiry,
         topic_max_size: MaxTopicSize,
         send_retries_count: Option<u32>,
-        send_retries_interval: Option<IggyDuration>,
+        send_retries_interval: Option<MessengerDuration>,
         mode: SendMode,
     ) -> Self {
         let core = Arc::new(ProducerCore {
@@ -495,11 +495,11 @@ impl IggyProducer {
     /// Initializes the producer by subscribing to diagnostic events, creating the stream and topic if they do not exist etc.
     ///
     /// Note: This method must be invoked before producing messages.
-    pub async fn init(&self) -> Result<(), IggyError> {
+    pub async fn init(&self) -> Result<(), MessengerError> {
         self.core.init().await
     }
 
-    pub async fn send(&self, messages: Vec<IggyMessage>) -> Result<(), IggyError> {
+    pub async fn send(&self, messages: Vec<MessengerMessage>) -> Result<(), MessengerError> {
         if messages.is_empty() {
             trace!("No messages to send.");
             return Ok(());
@@ -518,15 +518,15 @@ impl IggyProducer {
         }
     }
 
-    pub async fn send_one(&self, message: IggyMessage) -> Result<(), IggyError> {
+    pub async fn send_one(&self, message: MessengerMessage) -> Result<(), MessengerError> {
         self.send(vec![message]).await
     }
 
     pub async fn send_with_partitioning(
         &self,
-        messages: Vec<IggyMessage>,
+        messages: Vec<MessengerMessage>,
         partitioning: Option<Arc<Partitioning>>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         if messages.is_empty() {
             trace!("No messages to send.");
             return Ok(());
@@ -552,9 +552,9 @@ impl IggyProducer {
         &self,
         stream: Arc<Identifier>,
         topic: Arc<Identifier>,
-        messages: Vec<IggyMessage>,
+        messages: Vec<MessengerMessage>,
         partitioning: Option<Arc<Partitioning>>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         if messages.is_empty() {
             trace!("No messages to send.");
             return Ok(());

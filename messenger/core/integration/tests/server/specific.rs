@@ -17,7 +17,7 @@
  */
 
 use crate::server::scenarios::{delete_segments_scenario, message_size_scenario, tcp_tls_scenario};
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::{
     tcp_client::TcpClientFactory,
     test_server::{IpAddrKind, TestServer},
@@ -32,7 +32,7 @@ use std::collections::HashMap;
 #[parallel]
 async fn should_delete_segments_and_validate_filesystem() {
     let mut extra_envs = HashMap::new();
-    extra_envs.insert("IGGY_SYSTEM_SEGMENT_SIZE".to_string(), "1MiB".to_string());
+    extra_envs.insert("MESSENGER_SYSTEM_SEGMENT_SIZE".to_string(), "1MiB".to_string());
 
     let mut test_server = TestServer::new(Some(extra_envs), true, None, IpAddrKind::V4);
     test_server.start();
@@ -58,13 +58,13 @@ async fn tcp_tls_scenario_should_be_valid() {
     generate_test_certificates(cert_dir_str).expect("Failed to generate test certificates");
 
     let mut extra_envs = HashMap::new();
-    extra_envs.insert("IGGY_TCP_TLS_ENABLED".to_string(), "true".to_string());
+    extra_envs.insert("MESSENGER_TCP_TLS_ENABLED".to_string(), "true".to_string());
     extra_envs.insert(
-        "IGGY_TCP_TLS_CERT_FILE".to_string(),
+        "MESSENGER_TCP_TLS_CERT_FILE".to_string(),
         cert_dir.join("test_cert.pem").to_str().unwrap().to_string(),
     );
     extra_envs.insert(
-        "IGGY_TCP_TLS_KEY_FILE".to_string(),
+        "MESSENGER_TCP_TLS_KEY_FILE".to_string(),
         cert_dir.join("test_key.pem").to_str().unwrap().to_string(),
     );
 
@@ -74,7 +74,7 @@ async fn tcp_tls_scenario_should_be_valid() {
     let server_addr = test_server.get_raw_tcp_addr().unwrap();
     let cert_path = cert_dir.join("test_cert.pem").to_str().unwrap().to_string();
 
-    let client = IggyClientBuilder::new()
+    let client = MessengerClientBuilder::new()
         .with_tcp()
         .with_server_address(server_addr)
         .with_tls_enabled(true)
@@ -88,7 +88,7 @@ async fn tcp_tls_scenario_should_be_valid() {
         .await
         .expect("Failed to connect TLS client");
 
-    let client = IggyClient::create(ClientWrapper::Iggy(client), None, None);
+    let client = MessengerClient::create(ClientWrapper::Messenger(client), None, None);
 
     tcp_tls_scenario::run(&client).await;
 }
@@ -96,11 +96,11 @@ async fn tcp_tls_scenario_should_be_valid() {
 #[tokio::test]
 #[parallel]
 async fn tcp_tls_self_signed_scenario_should_be_valid() {
-    use iggy::clients::client_builder::IggyClientBuilder;
+    use messenger::clients::client_builder::MessengerClientBuilder;
 
     let mut extra_envs = HashMap::new();
-    extra_envs.insert("IGGY_TCP_TLS_ENABLED".to_string(), "true".to_string());
-    extra_envs.insert("IGGY_TCP_TLS_SELF_SIGNED".to_string(), "true".to_string());
+    extra_envs.insert("MESSENGER_TCP_TLS_ENABLED".to_string(), "true".to_string());
+    extra_envs.insert("MESSENGER_TCP_TLS_SELF_SIGNED".to_string(), "true".to_string());
 
     let mut test_server = TestServer::new(Some(extra_envs), true, None, IpAddrKind::V4);
     test_server.start();
@@ -109,7 +109,7 @@ async fn tcp_tls_self_signed_scenario_should_be_valid() {
 
     let server_addr = test_server.get_raw_tcp_addr().unwrap();
 
-    let client = IggyClientBuilder::new()
+    let client = MessengerClientBuilder::new()
         .with_tcp()
         .with_server_address(server_addr)
         .with_tls_enabled(true)
@@ -123,7 +123,7 @@ async fn tcp_tls_self_signed_scenario_should_be_valid() {
         .await
         .expect("Failed to connect TLS client with self-signed cert");
 
-    let client = iggy::clients::client::IggyClient::create(ClientWrapper::Iggy(client), None, None);
+    let client = messenger::clients::client::MessengerClient::create(ClientWrapper::Messenger(client), None, None);
 
     tcp_tls_scenario::run(&client).await;
 }

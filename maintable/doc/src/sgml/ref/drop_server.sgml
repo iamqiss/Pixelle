@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_server.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-dropserver">
@@ -98,7 +98,7 @@ DROP SERVER IF EXISTS foo;
   <para>
    <command>DROP SERVER</command> conforms to ISO/IEC 9075-9
    (SQL/MED).  The <literal>IF EXISTS</literal> clause is
-   a <productname>PostgreSQL</productname> extension.
+   a <productname>maintableQL</productname> extension.
   </para>
  </refsect1>
 

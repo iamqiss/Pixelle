@@ -20,7 +20,7 @@ use crate::binary::sender::Sender;
 use crate::tcp::COMPONENT;
 use crate::{server_error::ServerError, tcp::sender};
 use error_set::ErrContext;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use tokio::io::AsyncWriteExt;
 use tokio::net::TcpStream;
 use tokio_rustls::server::TlsStream;
@@ -31,19 +31,19 @@ pub struct TcpTlsSender {
 }
 
 impl Sender for TcpTlsSender {
-    async fn read(&mut self, buffer: &mut [u8]) -> Result<usize, IggyError> {
+    async fn read(&mut self, buffer: &mut [u8]) -> Result<usize, MessengerError> {
         sender::read(&mut self.stream, buffer).await
     }
 
-    async fn send_empty_ok_response(&mut self) -> Result<(), IggyError> {
+    async fn send_empty_ok_response(&mut self) -> Result<(), MessengerError> {
         sender::send_empty_ok_response(&mut self.stream).await
     }
 
-    async fn send_ok_response(&mut self, payload: &[u8]) -> Result<(), IggyError> {
+    async fn send_ok_response(&mut self, payload: &[u8]) -> Result<(), MessengerError> {
         sender::send_ok_response(&mut self.stream, payload).await
     }
 
-    async fn send_error_response(&mut self, error: IggyError) -> Result<(), IggyError> {
+    async fn send_error_response(&mut self, error: MessengerError) -> Result<(), MessengerError> {
         sender::send_error_response(&mut self.stream, error).await
     }
 
@@ -61,7 +61,7 @@ impl Sender for TcpTlsSender {
         &mut self,
         length: &[u8],
         slices: Vec<std::io::IoSlice<'_>>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         sender::send_ok_response_vectored(&mut self.stream, length, slices).await
     }
 }

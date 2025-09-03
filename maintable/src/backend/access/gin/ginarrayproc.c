@@ -4,14 +4,14 @@
  *	  support functions for GIN's indexing of any array
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
  *	  src/backend/access/gin/ginarrayproc.c
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/gin.h"
 #include "access/stratnum.h"

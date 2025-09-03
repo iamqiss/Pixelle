@@ -18,16 +18,16 @@
 
 use crate::client_wrappers::client_wrapper::ClientWrapper;
 #[allow(deprecated)]
-use crate::clients::client::IggyClient;
+use crate::clients::client::MessengerClient;
 use crate::http::http_client::HttpClient;
 use crate::prelude::{
-    ClientError, HttpClientConfig, IggyDuration, QuicClientConfig, QuicClientReconnectionConfig,
+    ClientError, HttpClientConfig, MessengerDuration, QuicClientConfig, QuicClientReconnectionConfig,
     TcpClientConfig, TcpClientReconnectionConfig,
 };
 use crate::quic::quic_client::QuicClient;
 use crate::tcp::tcp_client::TcpClient;
-use iggy_binary_protocol::Client;
-use iggy_common::{AutoLogin, Credentials};
+use messenger_binary_protocol::Client;
+use messenger_common::{AutoLogin, Credentials};
 use std::str::FromStr;
 use std::sync::Arc;
 
@@ -89,13 +89,13 @@ impl ClientProviderConfig {
                     client_address: args.quic_client_address,
                     server_address: args.quic_server_address,
                     server_name: args.quic_server_name,
-                    heartbeat_interval: IggyDuration::from_str(&args.quic_heartbeat_interval)
+                    heartbeat_interval: MessengerDuration::from_str(&args.quic_heartbeat_interval)
                         .unwrap(),
                     reconnection: QuicClientReconnectionConfig {
                         enabled: args.quic_reconnection_enabled,
                         max_retries: args.quic_reconnection_max_retries,
-                        interval: IggyDuration::from_str(&args.quic_reconnection_interval).unwrap(),
-                        reestablish_after: IggyDuration::from_str(
+                        interval: MessengerDuration::from_str(&args.quic_reconnection_interval).unwrap(),
+                        reestablish_after: MessengerDuration::from_str(
                             &args.quic_reconnection_reestablish_after,
                         )
                         .unwrap(),
@@ -133,13 +133,13 @@ impl ClientProviderConfig {
                     tls_ca_file: args.tcp_tls_ca_file,
                     tls_validate_certificate: true,
                     nodelay: args.tcp_nodelay,
-                    heartbeat_interval: IggyDuration::from_str(&args.tcp_heartbeat_interval)
+                    heartbeat_interval: MessengerDuration::from_str(&args.tcp_heartbeat_interval)
                         .unwrap(),
                     reconnection: TcpClientReconnectionConfig {
                         enabled: args.tcp_reconnection_enabled,
                         max_retries: args.tcp_reconnection_max_retries,
-                        interval: IggyDuration::from_str(&args.tcp_reconnection_interval).unwrap(),
-                        reestablish_after: IggyDuration::from_str(
+                        interval: MessengerDuration::from_str(&args.tcp_reconnection_interval).unwrap(),
+                        reestablish_after: MessengerDuration::from_str(
                             &args.tcp_reconnection_reestablish_after,
                         )
                         .unwrap(),
@@ -161,15 +161,15 @@ impl ClientProviderConfig {
     }
 }
 
-/// Create a default `IggyClient` with the default configuration.
-pub async fn get_default_client_() -> Result<IggyClient, ClientError> {
+/// Create a default `MessengerClient` with the default configuration.
+pub async fn get_default_client_() -> Result<MessengerClient, ClientError> {
     get_client(Arc::new(ClientProviderConfig::default())).await
 }
 
-/// Create a `IggyClient` for the specific transport based on the provided configuration.
-pub async fn get_client(config: Arc<ClientProviderConfig>) -> Result<IggyClient, ClientError> {
+/// Create a `MessengerClient` for the specific transport based on the provided configuration.
+pub async fn get_client(config: Arc<ClientProviderConfig>) -> Result<MessengerClient, ClientError> {
     let client = get_raw_connected_client(config).await?;
-    Ok(IggyClient::builder().with_client(client).build()?)
+    Ok(MessengerClient::builder().with_client(client).build()?)
 }
 
 /// Create a `Client` for the specific transport based on the provided configuration.

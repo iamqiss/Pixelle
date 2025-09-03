@@ -1,4 +1,4 @@
-#include "postgres.h"
+#include "maintable.h"
 
 #include "fmgr.h"
 #include "hstore/hstore.h"

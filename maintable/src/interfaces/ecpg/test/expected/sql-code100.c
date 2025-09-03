@@ -9,8 +9,8 @@
 #line 1 "code100.pgc"
 
 #line 1 "sqlca.h"
-#ifndef POSTGRES_SQLCA_H
-#define POSTGRES_SQLCA_H
+#ifndef MAINTABLE_SQLCA_H
+#define MAINTABLE_SQLCA_H
 
 #ifndef PGDLLIMPORT
 #if  defined(WIN32) || defined(__CYGWIN__)
@@ -66,7 +66,7 @@ struct sqlca_t
 
 struct sqlca_t *ECPGget_sqlca(void);
 
-#ifndef POSTGRES_ECPG_INTERNAL
+#ifndef MAINTABLE_ECPG_INTERNAL
 #define sqlca (*ECPGget_sqlca())
 #endif
 

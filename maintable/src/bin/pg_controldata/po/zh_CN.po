@@ -3,8 +3,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_controldata (PostgreSQL) 14\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_controldata (maintableQL) 14\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2021-08-14 05:49+0000\n"
 "PO-Revision-Date: 2021-08-15 18:00+0800\n"
 "Last-Translator: Jie Zhang <zhangjie2@fujitsu.com>\n"
@@ -46,11 +46,11 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "可能字节顺序不匹配\n"
 "用于存储文件pg_control的字节顺序可能与程序使用的不匹配\n"
-"在那种情况下结果将会是不正确的,并且所安装的PostgreSQL\n"
+"在那种情况下结果将会是不正确的,并且所安装的maintableQL\n"
 "将会与这个数据目录不兼容"
 
 #: ../../common/controldata_utils.c:203
@@ -71,10 +71,10 @@ msgstr "无法 fsync 文件 \"%s\": %m"
 #: pg_controldata.c:35
 #, c-format
 msgid ""
-"%s displays control information of a PostgreSQL database cluster.\n"
+"%s displays control information of a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s 显示 PostgreSQL 数据库簇控制信息.\n"
+"%s 显示 maintableQL 数据库簇控制信息.\n"
 "\n"
 
 #: pg_controldata.c:36

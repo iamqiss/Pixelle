@@ -1,12 +1,12 @@
 # Traditional Chinese message translation file for libpq
-# Copyright (C) 2023 PostgreSQL Global Development Group
-# This file is distributed under the same license as the libpq (PostgreSQL) package.
+# Copyright (C) 2023 maintableQL Global Development Group
+# This file is distributed under the same license as the libpq (maintableQL) package.
 # 2004-11-11 Zhenbang Wei <znbang@gmail.com>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libpq (PostgreSQL) 16\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: libpq (maintableQL) 16\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-09-11 20:40+0000\n"
 "PO-Revision-Date: 2023-11-06 08:49+0800\n"
 "Last-Translator: Zhenbang Wei <znbang@gmail.com>\n"
@@ -50,7 +50,7 @@ msgstr "無法驗證伺服器簽名: %s"
 msgid "incorrect server signature"
 msgstr "伺服器簽名錯誤"
 
-# tcop/postgres.c:3105
+# tcop/maintable.c:3105
 #: fe-auth-scram.c:290
 #, c-format
 msgid "invalid SCRAM exchange state"
@@ -886,7 +886,7 @@ msgid "row number %d is out of range 0..%d"
 msgstr "列號 %d 超出範圍 0..%d"
 
 # commands/vacuum.c:2258 commands/vacuumlazy.c:489 commands/vacuumlazy.c:770
-# nodes/print.c:86 storage/lmgr/deadlock.c:888 tcop/postgres.c:3285
+# nodes/print.c:86 storage/lmgr/deadlock.c:888 tcop/maintable.c:3285
 #: fe-exec.c:528 fe-protocol3.c:1976
 #, c-format
 msgid "%s"

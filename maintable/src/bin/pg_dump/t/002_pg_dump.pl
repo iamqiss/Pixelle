@@ -1,14 +1,14 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $tempdir = PostgreSQL::Test::Utils::tempdir;
+my $tempdir = maintableQL::Test::Utils::tempdir;
 
 ###############################################################
 # Definition of the pg_dump runs to make.
@@ -28,7 +28,7 @@ my $tempdir = PostgreSQL::Test::Utils::tempdir;
 # the full command and arguments to run.  Note that this is run
 # using $node->command_ok(), so the port does not need to be
 # specified and is pulled from $PGPORT, which is set by the
-# PostgreSQL::Test::Cluster system.
+# maintableQL::Test::Cluster system.
 #
 # compress_cmd is the utility command for (de)compression, if any.
 # Note that this should generally be used on pg_dump's output
@@ -69,7 +69,7 @@ my %pgdump_runs = (
 			'--sequence-data',
 			'--binary-upgrade',
 			'--statistics',
-			'--dbname' => 'postgres',    # alternative way to specify database
+			'--dbname' => 'maintable',    # alternative way to specify database
 		],
 		restore_cmd => [
 			'pg_restore',
@@ -91,7 +91,7 @@ my %pgdump_runs = (
 			'--compress' => '1',
 			'--file' => "$tempdir/compression_gzip_custom.dump",
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 		restore_cmd => [
 			'pg_restore',
@@ -120,7 +120,7 @@ my %pgdump_runs = (
 			'--compress' => 'gzip:1',
 			'--file' => "$tempdir/compression_gzip_dir",
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 		# Give coverage for manually compressed blobs.toc files during
 		# restore.
@@ -151,7 +151,7 @@ my %pgdump_runs = (
 			'--compress' => '1',
 			'--file' => "$tempdir/compression_gzip_plain.sql.gz",
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 		# Decompress the generated file to run through the tests.
 		compress_cmd => {
@@ -170,7 +170,7 @@ my %pgdump_runs = (
 			'--compress' => 'lz4',
 			'--file' => "$tempdir/compression_lz4_custom.dump",
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 		restore_cmd => [
 			'pg_restore',
@@ -199,7 +199,7 @@ my %pgdump_runs = (
 			'--compress' => 'lz4:1',
 			'--file' => "$tempdir/compression_lz4_dir",
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 		# Verify that data files were compressed
 		glob_patterns => [
@@ -224,7 +224,7 @@ my %pgdump_runs = (
 			'--compress' => 'lz4',
 			'--file' => "$tempdir/compression_lz4_plain.sql.lz4",
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 		# Decompress the generated file to run through the tests.
 		compress_cmd => {
@@ -246,7 +246,7 @@ my %pgdump_runs = (
 			'--compress' => 'zstd',
 			'--file' => "$tempdir/compression_zstd_custom.dump",
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 		restore_cmd => [
 			'pg_restore',
@@ -274,7 +274,7 @@ my %pgdump_runs = (
 			'--compress' => 'zstd:1',
 			'--file' => "$tempdir/compression_zstd_dir",
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 		# Give coverage for manually compressed blobs.toc files during
 		# restore.
@@ -309,7 +309,7 @@ my %pgdump_runs = (
 			'--compress' => 'zstd:long',
 			'--file' => "$tempdir/compression_zstd_plain.sql.zst",
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 		# Decompress the generated file to run through the tests.
 		compress_cmd => {
@@ -328,7 +328,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/clean.sql",
 			'--clean',
 			'--statistics',
-			'--dbname' => 'postgres',    # alternative way to specify database
+			'--dbname' => 'maintable',    # alternative way to specify database
 		],
 	},
 	clean_if_exists => {
@@ -339,7 +339,7 @@ my %pgdump_runs = (
 			'--if-exists',
 			'--encoding' => 'UTF8',      # no-op, just for testing
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	column_inserts => {
@@ -347,7 +347,7 @@ my %pgdump_runs = (
 			'pg_dump', '--no-sync',
 			'--file' => "$tempdir/column_inserts.sql",
 			'--data-only',
-			'--column-inserts', 'postgres',
+			'--column-inserts', 'maintable',
 		],
 	},
 	createdb => {
@@ -358,7 +358,7 @@ my %pgdump_runs = (
 			'--no-reconnect',    # no-op, just for testing
 			'--verbose',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	data_only => {
@@ -369,7 +369,7 @@ my %pgdump_runs = (
 			'--superuser' => 'test_superuser',
 			'--disable-triggers',
 			'--verbose',    # no-op, just make sure it works
-			'postgres',
+			'maintable',
 		],
 	},
 	defaults => {
@@ -377,7 +377,7 @@ my %pgdump_runs = (
 			'pg_dump', '--no-sync',
 			'--file' => "$tempdir/defaults.sql",
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	defaults_no_public => {
@@ -420,7 +420,7 @@ my %pgdump_runs = (
 			'--format' => 'custom',
 			'--file' => "$tempdir/defaults_custom_format.dump",
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 		restore_cmd => [
 			'pg_restore',
@@ -452,7 +452,7 @@ my %pgdump_runs = (
 			'--format' => 'directory',
 			'--file' => "$tempdir/defaults_dir_format",
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 		restore_cmd => [
 			'pg_restore',
@@ -485,7 +485,7 @@ my %pgdump_runs = (
 			'--jobs' => 2,
 			'--file' => "$tempdir/defaults_parallel",
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 		restore_cmd => [
 			'pg_restore',
@@ -503,7 +503,7 @@ my %pgdump_runs = (
 			'--format' => 'tar',
 			'--file' => "$tempdir/defaults_tar_format.tar",
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 		restore_cmd => [
 			'pg_restore',
@@ -519,7 +519,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/exclude_dump_test_schema.sql",
 			'--exclude-schema' => 'dump_test',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	exclude_test_table => {
@@ -528,7 +528,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/exclude_test_table.sql",
 			'--exclude-table' => 'dump_test.test_table',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	exclude_measurement => {
@@ -537,7 +537,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/exclude_measurement.sql",
 			'--exclude-table-and-children' => 'dump_test.measurement',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	exclude_measurement_data => {
@@ -547,7 +547,7 @@ my %pgdump_runs = (
 			'--exclude-table-data-and-children' => 'dump_test.measurement',
 			'--no-unlogged-table-data',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	exclude_test_table_data => {
@@ -557,7 +557,7 @@ my %pgdump_runs = (
 			'--exclude-table-data' => 'dump_test.test_table',
 			'--no-unlogged-table-data',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	inserts => {
@@ -565,7 +565,7 @@ my %pgdump_runs = (
 			'pg_dump', '--no-sync',
 			'--file' => "$tempdir/inserts.sql",
 			'--data-only',
-			'--inserts', 'postgres',
+			'--inserts', 'maintable',
 		],
 	},
 	pg_dumpall_globals => {
@@ -611,7 +611,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/no_toast_compression.sql",
 			'--no-toast-compression',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	no_large_objects => {
@@ -620,7 +620,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/no_large_objects.sql",
 			'--no-large-objects',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	no_policies => {
@@ -629,7 +629,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/no_policies.sql",
 			'--no-policies',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	no_privs => {
@@ -638,7 +638,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/no_privs.sql",
 			'--no-privileges',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	no_owner => {
@@ -647,7 +647,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/no_owner.sql",
 			'--no-owner',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	no_table_access_method => {
@@ -656,7 +656,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/no_table_access_method.sql",
 			'--no-table-access-method',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	only_dump_test_schema => {
@@ -665,7 +665,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/only_dump_test_schema.sql",
 			'--schema' => 'dump_test',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	only_dump_test_table => {
@@ -674,9 +674,9 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/only_dump_test_table.sql",
 			'--table' => 'dump_test.test_table',
 			'--lock-wait-timeout' =>
-			  (1000 * $PostgreSQL::Test::Utils::timeout_default),
+			  (1000 * $maintableQL::Test::Utils::timeout_default),
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	only_dump_measurement => {
@@ -685,9 +685,9 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/only_dump_measurement.sql",
 			'--table-and-children' => 'dump_test.measurement',
 			'--lock-wait-timeout' =>
-			  (1000 * $PostgreSQL::Test::Utils::timeout_default),
+			  (1000 * $maintableQL::Test::Utils::timeout_default),
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	role => {
@@ -697,7 +697,7 @@ my %pgdump_runs = (
 			'--role' => 'regress_dump_test_role',
 			'--schema' => 'dump_test_second_schema',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	role_parallel => {
@@ -710,7 +710,7 @@ my %pgdump_runs = (
 			'--role' => 'regress_dump_test_role',
 			'--schema' => 'dump_test_second_schema',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 		restore_cmd => [
 			'pg_restore',
@@ -727,7 +727,7 @@ my %pgdump_runs = (
 			'--rows-per-insert' => '4',
 			'--table' => 'dump_test.test_table',
 			'--table' => 'dump_test.test_fourth_table',
-			'postgres',
+			'maintable',
 		],
 	},
 	schema_only => {
@@ -736,7 +736,7 @@ my %pgdump_runs = (
 			'--format' => 'plain',
 			'--file' => "$tempdir/schema_only.sql",
 			'--schema-only',
-			'postgres',
+			'maintable',
 		],
 	},
 	section_pre_data => {
@@ -745,7 +745,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/section_pre_data.sql",
 			'--section' => 'pre-data',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	section_data => {
@@ -754,7 +754,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/section_data.sql",
 			'--section' => 'data',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	section_post_data => {
@@ -763,7 +763,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/section_post_data.sql",
 			'--section' => 'post-data',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	test_schema_plus_large_objects => {
@@ -774,21 +774,21 @@ my %pgdump_runs = (
 			'--large-objects',
 			'--no-large-objects',
 			'--statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	no_statistics => {
 		dump_cmd => [
 			'pg_dump', '--no-sync',
 			"--file=$tempdir/no_statistics.sql", '--no-statistics',
-			'postgres',
+			'maintable',
 		],
 	},
 	no_data_no_schema => {
 		dump_cmd => [
 			'pg_dump', '--no-sync',
 			"--file=$tempdir/no_data_no_schema.sql", '--no-data',
-			'--no-schema', 'postgres',
+			'--no-schema', 'maintable',
 			'--statistics',
 		],
 	},
@@ -796,14 +796,14 @@ my %pgdump_runs = (
 		dump_cmd => [
 			'pg_dump', '--no-sync',
 			"--file=$tempdir/statistics_only.sql", '--statistics-only',
-			'postgres',
+			'maintable',
 		],
 	},
 	no_schema => {
 		dump_cmd => [
 			'pg_dump', '--no-sync',
 			"--file=$tempdir/no_schema.sql", '--no-schema',
-			'--statistics', 'postgres',
+			'--statistics', 'maintable',
 		],
 	},);
 
@@ -1663,10 +1663,10 @@ my %tests = (
 		},
 	},
 
-	'COMMENT ON DATABASE postgres' => {
-		regexp => qr/^COMMENT ON DATABASE postgres IS .+;/m,
+	'COMMENT ON DATABASE maintable' => {
+		regexp => qr/^COMMENT ON DATABASE maintable IS .+;/m,
 
-		# Should appear in the same tests as "CREATE DATABASE postgres"
+		# Should appear in the same tests as "CREATE DATABASE maintable"
 		like => { createdb => 1, },
 	},
 
@@ -2319,9 +2319,9 @@ my %tests = (
 		like => { %full_runs, section_pre_data => 1, },
 	},
 
-	'CREATE DATABASE postgres' => {
+	'CREATE DATABASE maintable' => {
 		regexp => qr/^
-			\QCREATE DATABASE postgres WITH TEMPLATE = template0 \E
+			\QCREATE DATABASE maintable WITH TEMPLATE = template0 \E
 			.+;/xm,
 		like => { createdb => 1, },
 	},
@@ -5078,7 +5078,7 @@ my %tests = (
 #########################################
 # Create a PG instance to test actually dumping from
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init;
 $node->start;
 
@@ -5089,7 +5089,7 @@ my $port = $node->port;
 my $collation_support = 0;
 my $collation_check_stderr;
 $node->psql(
-	'postgres',
+	'maintable',
 	"CREATE COLLATION testing FROM \"C\"; DROP COLLATION testing;",
 	on_error_stop => 0,
 	stderr => \$collation_check_stderr);
@@ -5100,12 +5100,12 @@ if ($collation_check_stderr !~ /ERROR: /)
 }
 
 # ICU doesn't work with some encodings
-my $encoding = $node->safe_psql('postgres', 'show server_encoding');
+my $encoding = $node->safe_psql('maintable', 'show server_encoding');
 $supports_icu = 0 if $encoding eq 'SQL_ASCII';
 
 # Create additional databases for mutations of schema public
-$node->psql('postgres', 'create database regress_pg_dump_test;');
-$node->psql('postgres', 'create database regress_public_owner;');
+$node->psql('maintable', 'create database regress_pg_dump_test;');
+$node->psql('maintable', 'create database regress_public_owner;');
 
 #########################################
 # Set up schemas, tables, etc, to be dumped.
@@ -5133,7 +5133,7 @@ foreach my $test (
 		}
 	} keys %tests)
 {
-	my $test_db = 'postgres';
+	my $test_db = 'maintable';
 
 	if (defined($tests{$test}->{database}))
 	{
@@ -5341,7 +5341,7 @@ command_fails_like(
 foreach my $run (sort keys %pgdump_runs)
 {
 	my $test_key = $run;
-	my $run_db = 'postgres';
+	my $run_db = 'maintable';
 
 	# Skip command-level tests for gzip/lz4/zstd if the tool is not supported
 	if ($pgdump_runs{$run}->{compile_option}
@@ -5418,7 +5418,7 @@ foreach my $run (sort keys %pgdump_runs)
 
 	foreach my $test (sort keys %tests)
 	{
-		my $test_db = 'postgres';
+		my $test_db = 'maintable';
 
 		if (defined($pgdump_runs{$run}->{database}))
 		{

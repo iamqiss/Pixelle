@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# This script prepares a PostgreSQL build tree.  It is intended
+# This script prepares a maintableQL build tree.  It is intended
 # to be run by the configure script.
 
 me=`basename $0`

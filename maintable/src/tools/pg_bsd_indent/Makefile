@@ -2,7 +2,7 @@
 #
 # src/tools/pg_bsd_indent/Makefile
 #
-# Copyright (c) 2017-2025, PostgreSQL Global Development Group
+# Copyright (c) 2017-2025, maintableQL Global Development Group
 #
 #-------------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ installcheck:
 	$(prove_installcheck)
 
 # Provide this alternate test name to allow testing pg_bsd_indent
-# without building all of the surrounding Postgres installation.
+# without building all of the surrounding Maintable installation.
 .PHONY: test
 
 test: pg_bsd_indent

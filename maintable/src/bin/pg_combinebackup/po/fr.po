@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_combinebackup
-# Copyright (C) 2024 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_combinebackup (PostgreSQL) package.
+# Copyright (C) 2024 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_combinebackup (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-11-11 01:52+0000\n"
 "PO-Revision-Date: 2024-11-11 09:55+0100\n"
 "Last-Translator: Guillaume Lelarge <guillaume@lelarge.info>\n"
@@ -72,12 +72,12 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "possible incohérence dans l'ordre des octets\n"
 "L'ordre des octets utilisé pour enregistrer le fichier pg_control peut ne\n"
 "pas correspondre à celui utilisé par ce programme. Dans ce cas, les\n"
-"résultats ci-dessous sont incorrects, et l'installation de PostgreSQL\n"
+"résultats ci-dessous sont incorrects, et l'installation de maintableQL\n"
 "est incompatible avec ce répertoire des données."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:70

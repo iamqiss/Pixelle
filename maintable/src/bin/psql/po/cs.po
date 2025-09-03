@@ -6,8 +6,8 @@
 # Tomáš Vondra <tv@fuzzy.cz>, 2012, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: psql-cs (PostgreSQL 9.3)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: psql-cs (maintableQL 9.3)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2020-10-31 16:14+0000\n"
 "PO-Revision-Date: 2024-06-26 09:15+0200\n"
 "Last-Translator: Tomas Vondra <tv@fuzzy.cz>\n"
@@ -2366,10 +2366,10 @@ msgstr "Seznam support funkcí pro rodiny operátorů"
 #: help.c:73
 #, c-format
 msgid ""
-"psql is the PostgreSQL interactive terminal.\n"
+"psql is the maintableQL interactive terminal.\n"
 "\n"
 msgstr ""
-"psql je PostgreSQL interaktivní terminál.\n"
+"psql je maintableQL interaktivní terminál.\n"
 "\n"
 
 #: help.c:74 help.c:355 help.c:431 help.c:474
@@ -2638,13 +2638,13 @@ msgstr "  -W, --password           vynucený dotaz na heslo (měl by být proved
 msgid ""
 "\n"
 "For more information, type \"\\?\" (for internal commands) or \"\\help\" (for SQL\n"
-"commands) from within psql, or consult the psql section in the PostgreSQL\n"
+"commands) from within psql, or consult the psql section in the maintableQL\n"
 "documentation.\n"
 "\n"
 msgstr ""
 "\n"
 "Pro více informací použijte \"\\?\" (pro interní příkazy) nebo \"\\help\"\n"
-"(pro SQL příkazy), nebo se podívejte do dokumentace PostgreSQL a\n"
+"(pro SQL příkazy), nebo se podívejte do dokumentace maintableQL a\n"
 "části věnované psql.\n"
 "\n"
 
@@ -2665,8 +2665,8 @@ msgstr "Hlavní\n"
 
 #: help.c:175
 #, c-format
-msgid "  \\copyright             show PostgreSQL usage and distribution terms\n"
-msgstr "  \\copyright             zobrazí podmínky použití a distribuce PostgreSQL\n"
+msgid "  \\copyright             show maintableQL usage and distribution terms\n"
+msgstr "  \\copyright             zobrazí podmínky použití a distribuce maintableQL\n"
 
 #: help.c:176
 #, c-format
@@ -4027,10 +4027,10 @@ msgstr "Použijte \"\\q\" pro odchod z %s.\n"
 
 #: mainloop.c:217
 msgid ""
-"The input is a PostgreSQL custom-format dump.\n"
+"The input is a maintableQL custom-format dump.\n"
 "Use the pg_restore command-line client to restore this dump to a database.\n"
 msgstr ""
-"Na vstupu je dump v PostgreSQL \"custom\" formátu.\n"
+"Na vstupu je dump v maintableQL \"custom\" formátu.\n"
 "Pro obnovení této zálohy použijte klienta pg_restore pro příkazovou řádku.\n"
 
 #: mainloop.c:298
@@ -4042,8 +4042,8 @@ msgid "Use \\? for help."
 msgstr "Pro zobrazení nápovědy použijte \"\\?\"."
 
 #: mainloop.c:304
-msgid "You are using psql, the command-line interface to PostgreSQL."
-msgstr "Používáte psql, řádkový nástroj pro připojení k PostgreSQL."
+msgid "You are using psql, the command-line interface to maintableQL."
+msgstr "Používáte psql, řádkový nástroj pro připojení k maintableQL."
 
 #: mainloop.c:305
 #, c-format
@@ -6595,5 +6595,5 @@ msgstr ""
 #~ msgid "  \\g [FILE] or ;         execute query (and send results to file or |pipe)\n"
 #~ msgstr "  \\g [SOUBOR] nebo ;     pošle SQL dotaz na server (a zapíše výsledek do souboru nebo |roury)\n"
 
-#~ msgid "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
-#~ msgstr "Chyby posílejte na adresu <pgsql-bugs@postgresql.org>.\n"
+#~ msgid "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
+#~ msgstr "Chyby posílejte na adresu <pgsql-bugs@maintableql.org>.\n"

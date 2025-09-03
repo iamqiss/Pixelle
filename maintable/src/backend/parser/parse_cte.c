@@ -3,7 +3,7 @@
  * parse_cte.c
  *	  handle CTEs (common table expressions) in parser
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_collation.h"
 #include "catalog/pg_type.h"
@@ -432,7 +432,7 @@ analyzeCTE(ParseState *pstate, CommonTableExpr *cte)
 		 * and that the recursive query is not itself a set operation.
 		 *
 		 * As of this writing, most of these criteria are already satisfied by
-		 * all recursive CTEs allowed by PostgreSQL.  In the future, if
+		 * all recursive CTEs allowed by maintableQL.  In the future, if
 		 * further variants recursive CTEs are accepted, there might be
 		 * further checks required here to determine what is "expandable".
 		 */

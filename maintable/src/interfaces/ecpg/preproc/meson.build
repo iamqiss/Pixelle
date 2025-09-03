@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 ecpg_sources = files(
   '../ecpglib/typename.c',
@@ -78,8 +78,8 @@ endif
 
 ecpg_exe = executable('ecpg',
   ecpg_sources,
-  include_directories: ['.', ecpg_inc, postgres_inc, libpq_inc],
-  c_pch: pch_postgres_fe_h,
+  include_directories: ['.', ecpg_inc, maintable_inc, libpq_inc],
+  c_pch: pch_maintable_fe_h,
   dependencies: [frontend_code],
   kwargs: default_bin_args,
 )

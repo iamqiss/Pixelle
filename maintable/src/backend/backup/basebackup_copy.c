@@ -16,14 +16,14 @@
  * An older method that sent each archive using a separate COPY OUT
  * operation is no longer supported.
  *
- * Portions Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/backup/basebackup_copy.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/tupdesc.h"
 #include "backup/basebackup.h"

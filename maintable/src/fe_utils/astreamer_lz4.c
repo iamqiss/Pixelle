@@ -6,14 +6,14 @@
  * astreamer_lz4_compressor applies lz4 compression to the input stream,
  * and astreamer_lz4_decompressor does the reverse.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  src/fe_utils/astreamer_lz4.c
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <unistd.h>
 

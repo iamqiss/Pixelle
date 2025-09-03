@@ -139,7 +139,7 @@ pub(crate) async fn start(
 
 fn generate_self_signed_cert()
 -> Result<(Vec<CertificateDer<'static>>, PrivateKeyDer<'static>), Box<dyn std::error::Error>> {
-    iggy_common::generate_self_signed_certificate("localhost")
+    messenger_common::generate_self_signed_certificate("localhost")
 }
 
 fn load_certificates(

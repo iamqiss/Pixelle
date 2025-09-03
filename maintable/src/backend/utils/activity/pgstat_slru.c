@@ -8,14 +8,14 @@
  * storage implementation and the details about individual types of
  * statistics.
  *
- * Copyright (c) 2001-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2001-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/utils/activity/pgstat_slru.c
  * -------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "utils/pgstat_internal.h"
 #include "utils/timestamp.h"

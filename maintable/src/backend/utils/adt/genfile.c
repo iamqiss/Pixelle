@@ -4,7 +4,7 @@
  *		Functions for direct access to files
  *
  *
- * Copyright (c) 2004-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2004-2025, maintableQL Global Development Group
  *
  * Author: Andreas Pflug <pgadmin@pse-consulting.de>
  *
@@ -13,7 +13,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/file.h>
 #include <sys/stat.h>

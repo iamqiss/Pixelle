@@ -32,11 +32,11 @@ DETAILS
 -------
 
 The most effective way to test pg_upgrade, aside from testing on user
-data, is by upgrading the PostgreSQL regression database.
+data, is by upgrading the maintableQL regression database.
 
 This testing process first requires the creation of a valid regression
 database dump that can then be used for $olddump.  Such files contain
-most database features and are specific to each major version of Postgres.
+most database features and are specific to each major version of Maintable.
 
 Here are the steps needed to create a dump file:
 

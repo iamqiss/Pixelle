@@ -21,7 +21,7 @@ use crate::BytesSerializable;
 use crate::Identifier;
 use crate::Sizeable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{CHANGE_PASSWORD_CODE, Command};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -60,20 +60,20 @@ impl Default for ChangePassword {
     }
 }
 
-impl Validatable<IggyError> for ChangePassword {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for ChangePassword {
+    fn validate(&self) -> Result<(), MessengerError> {
         if self.current_password.is_empty()
             || self.current_password.len() > MAX_PASSWORD_LENGTH
             || self.current_password.len() < MIN_PASSWORD_LENGTH
         {
-            return Err(IggyError::InvalidPassword);
+            return Err(MessengerError::InvalidPassword);
         }
 
         if self.new_password.is_empty()
             || self.new_password.len() > MAX_PASSWORD_LENGTH
             || self.new_password.len() < MIN_PASSWORD_LENGTH
         {
-            return Err(IggyError::InvalidPassword);
+            return Err(MessengerError::InvalidPassword);
         }
 
         Ok(())
@@ -94,9 +94,9 @@ impl BytesSerializable for ChangePassword {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<ChangePassword, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<ChangePassword, MessengerError> {
         if bytes.len() < 9 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let user_id = Identifier::from_bytes(bytes.clone())?;
@@ -105,13 +105,13 @@ impl BytesSerializable for ChangePassword {
         position += 1;
         let current_password =
             from_utf8(&bytes[position..position + current_password_length as usize])
-                .map_err(|_| IggyError::InvalidUtf8)?
+                .map_err(|_| MessengerError::InvalidUtf8)?
                 .to_string();
         position += current_password_length as usize;
         let new_password_length = bytes[position];
         position += 1;
         let new_password = from_utf8(&bytes[position..position + new_password_length as usize])
-            .map_err(|_| IggyError::InvalidUtf8)?
+            .map_err(|_| MessengerError::InvalidUtf8)?
             .to_string();
 
         let command = ChangePassword {

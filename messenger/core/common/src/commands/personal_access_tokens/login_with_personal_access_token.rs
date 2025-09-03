@@ -19,7 +19,7 @@
 use crate::BytesSerializable;
 use crate::Validatable;
 use crate::defaults::*;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, LOGIN_WITH_PERSONAL_ACCESS_TOKEN_CODE};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -49,10 +49,10 @@ impl Default for LoginWithPersonalAccessToken {
     }
 }
 
-impl Validatable<IggyError> for LoginWithPersonalAccessToken {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for LoginWithPersonalAccessToken {
+    fn validate(&self) -> Result<(), MessengerError> {
         if self.token.is_empty() || self.token.len() > MAX_PAT_LENGTH {
-            return Err(IggyError::InvalidPersonalAccessToken);
+            return Err(MessengerError::InvalidPersonalAccessToken);
         }
 
         Ok(())
@@ -68,17 +68,17 @@ impl BytesSerializable for LoginWithPersonalAccessToken {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<LoginWithPersonalAccessToken, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<LoginWithPersonalAccessToken, MessengerError> {
         if bytes.len() < 4 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let token_length = bytes[0];
         let token = from_utf8(&bytes[1..1 + token_length as usize])
-            .map_err(|_| IggyError::InvalidUtf8)?
+            .map_err(|_| MessengerError::InvalidUtf8)?
             .to_string();
         if token.len() != token_length as usize {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let command = LoginWithPersonalAccessToken { token };

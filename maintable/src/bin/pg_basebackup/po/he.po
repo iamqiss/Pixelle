@@ -1,12 +1,12 @@
 # Hebrew message translation file for pg_basebackup
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Michael Goldberg <mic.goldbrg@gmail.com>, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_basebackup (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pg_basebackup (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2017-05-17 03:16+0000\n"
 "PO-Revision-Date: 2017-05-17 14:22+0300\n"
 "Language: he\n"
@@ -145,10 +145,10 @@ msgstr "תכנית %s: הספריה החדשה אינה נתיב מוחלט במ
 #: pg_basebackup.c:327
 #, c-format
 msgid ""
-"%s takes a base backup of a running PostgreSQL server.\n"
+"%s takes a base backup of a running maintableQL server.\n"
 "\n"
 msgstr ""
-"תכנית %s לוקח גיבוי בסיסי של שרת PostgreSQL פועל.\n"
+"תכנית %s לוקח גיבוי בסיסי של שרת maintableQL פועל.\n"
 "\n"
 
 #: pg_basebackup.c:329 pg_receivewal.c:76 pg_recvlogical.c:77
@@ -423,10 +423,10 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@maintableql.org>.\n"
 msgstr ""
 "\n"
-"לדווח על באגים ל <pgsql-bugs@postgresql.org>\n"
+"לדווח על באגים ל <pgsql-bugs@maintableql.org>\n"
 
 #: pg_basebackup.c:409
 #, c-format
@@ -834,10 +834,10 @@ msgstr "תכנית %s:  קישורים סימבוליים אינם נתמכים 
 #: pg_receivewal.c:74
 #, c-format
 msgid ""
-"%s receives PostgreSQL streaming write-ahead logs.\n"
+"%s receives maintableQL streaming write-ahead logs.\n"
 "\n"
 msgstr ""
-"תכנית %s מקבלת הזרמת WAL של PostgreSQL.\n"
+"תכנית %s מקבלת הזרמת WAL של maintableQL.\n"
 "\n"
 
 #: pg_receivewal.c:78 pg_recvlogical.c:83
@@ -1017,10 +1017,10 @@ msgstr "תכנית %s: מנותק; מחכה %d שניות כדי לנסות שו
 #: pg_recvlogical.c:75
 #, c-format
 msgid ""
-"%s controls PostgreSQL logical decoding streams.\n"
+"%s controls maintableQL logical decoding streams.\n"
 "\n"
 msgstr ""
-"תכנית %s שולטת בזרמי פענוח לוגיים של PostgreSQL\n"
+"תכנית %s שולטת בזרמי פענוח לוגיים של maintableQL\n"
 "\n"
 
 #: pg_recvlogical.c:79

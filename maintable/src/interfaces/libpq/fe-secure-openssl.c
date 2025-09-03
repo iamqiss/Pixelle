@@ -4,7 +4,7 @@
  *	  OpenSSL support
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -20,7 +20,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <signal.h>
 #include <fcntl.h>
@@ -73,7 +73,7 @@ static int	openssl_verify_peer_name_matches_certificate_ip(PGconn *conn,
 															ASN1_OCTET_STRING *addr_entry,
 															char **store_name);
 static int	initialize_SSL(PGconn *conn);
-static PostgresPollingStatusType open_client_SSL(PGconn *conn);
+static MaintablePollingStatusType open_client_SSL(PGconn *conn);
 static char *SSLerrmessage(unsigned long ecode);
 static void SSLerrfree(char *buf);
 static int	PQssl_passwd_cb(char *buf, int size, int rwflag, void *userdata);
@@ -92,7 +92,7 @@ static int	ssl_protocol_version_to_openssl(const char *protocol);
 /*			 Procedures common to all secure sessions			*/
 /* ------------------------------------------------------------ */
 
-PostgresPollingStatusType
+MaintablePollingStatusType
 pgtls_open_client(PGconn *conn)
 {
 	/* First time through? */
@@ -1334,7 +1334,7 @@ initialize_SSL(PGconn *conn)
 /*
  *	Attempt to negotiate SSL connection.
  */
-static PostgresPollingStatusType
+static MaintablePollingStatusType
 open_client_SSL(PGconn *conn)
 {
 	int			r;

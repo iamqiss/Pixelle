@@ -22,29 +22,29 @@ mod error;
 mod logging;
 
 use crate::args::{
-    Command, IggyConsoleArgs, client::ClientAction, consumer_group::ConsumerGroupAction,
+    Command, MessengerConsoleArgs, client::ClientAction, consumer_group::ConsumerGroupAction,
     consumer_offset::ConsumerOffsetAction, permissions::PermissionsArgs,
     personal_access_token::PersonalAccessTokenAction, stream::StreamAction, topic::TopicAction,
 };
-use crate::credentials::IggyCredentials;
-use crate::error::IggyCmdError;
+use crate::credentials::MessengerCredentials;
+use crate::error::MessengerCmdError;
 use crate::logging::Logging;
 use args::context::ContextAction;
 use args::message::MessageAction;
 use args::partition::PartitionAction;
 use args::segment::SegmentAction;
 use args::user::UserAction;
-use args::{CliOptions, IggyMergedConsoleArgs};
+use args::{CliOptions, MessengerMergedConsoleArgs};
 use clap::Parser;
-use iggy::client_provider::{self, ClientProviderConfig};
-use iggy::clients::client::IggyClient;
-use iggy::prelude::{Aes256GcmEncryptor, Args, EncryptorKind, PersonalAccessTokenExpiry};
-use iggy_binary_protocol::cli::binary_context::common::ContextManager;
-use iggy_binary_protocol::cli::binary_context::use_context::UseContextCmd;
-use iggy_binary_protocol::cli::binary_segments::delete_segments::DeleteSegmentsCmd;
-use iggy_binary_protocol::cli::binary_system::snapshot::GetSnapshotCmd;
-use iggy_binary_protocol::cli::cli_command::{CliCommand, PRINT_TARGET};
-use iggy_binary_protocol::cli::{
+use messenger::client_provider::{self, ClientProviderConfig};
+use messenger::clients::client::MessengerClient;
+use messenger::prelude::{Aes256GcmEncryptor, Args, EncryptorKind, PersonalAccessTokenExpiry};
+use messenger_binary_protocol::cli::binary_context::common::ContextManager;
+use messenger_binary_protocol::cli::binary_context::use_context::UseContextCmd;
+use messenger_binary_protocol::cli::binary_segments::delete_segments::DeleteSegmentsCmd;
+use messenger_binary_protocol::cli::binary_system::snapshot::GetSnapshotCmd;
+use messenger_binary_protocol::cli::cli_command::{CliCommand, PRINT_TARGET};
+use messenger_binary_protocol::cli::{
     binary_client::{get_client::GetClientCmd, get_clients::GetClientsCmd},
     binary_consumer_groups::{
         create_consumer_group::CreateConsumerGroupCmd,
@@ -91,8 +91,8 @@ use tracing::{Level, event};
 
 #[cfg(feature = "login-session")]
 mod main_login_session {
-    pub(crate) use iggy_binary_protocol::cli::binary_system::{login::LoginCmd, logout::LogoutCmd};
-    pub(crate) use iggy_binary_protocol::cli::utils::login_session_expiry::LoginSessionExpiry;
+    pub(crate) use messenger_binary_protocol::cli::binary_system::{login::LoginCmd, logout::LogoutCmd};
+    pub(crate) use messenger_binary_protocol::cli::utils::login_session_expiry::LoginSessionExpiry;
 }
 
 #[cfg(feature = "login-session")]
@@ -101,7 +101,7 @@ use main_login_session::*;
 fn get_command(
     command: Command,
     cli_options: &CliOptions,
-    iggy_args: &Args,
+    messenger_args: &Args,
 ) -> Box<dyn CliCommand> {
     #[warn(clippy::let_and_return)]
     match command {
@@ -190,13 +190,13 @@ fn get_command(
                     PersonalAccessTokenExpiry::new(pat_create_args.expiry.clone()),
                     cli_options.quiet,
                     pat_create_args.store_token,
-                    iggy_args.get_server_address().unwrap(),
+                    messenger_args.get_server_address().unwrap(),
                 ))
             }
             PersonalAccessTokenAction::Delete(pat_delete_args) => {
                 Box::new(DeletePersonalAccessTokenCmd::new(
                     pat_delete_args.name.clone(),
-                    iggy_args.get_server_address().unwrap(),
+                    messenger_args.get_server_address().unwrap(),
                 ))
             }
             PersonalAccessTokenAction::List(pat_list_args) => Box::new(
@@ -328,17 +328,17 @@ fn get_command(
         },
         #[cfg(feature = "login-session")]
         Command::Login(login_args) => Box::new(LoginCmd::new(
-            iggy_args.get_server_address().unwrap(),
+            messenger_args.get_server_address().unwrap(),
             LoginSessionExpiry::new(login_args.expiry.clone()),
         )),
         #[cfg(feature = "login-session")]
-        Command::Logout => Box::new(LogoutCmd::new(iggy_args.get_server_address().unwrap())),
+        Command::Logout => Box::new(LogoutCmd::new(messenger_args.get_server_address().unwrap())),
     }
 }
 
 #[tokio::main]
-async fn main() -> Result<(), IggyCmdError> {
-    let args = IggyConsoleArgs::parse();
+async fn main() -> Result<(), MessengerCmdError> {
+    let args = MessengerConsoleArgs::parse();
 
     if let Some(generator) = args.cli.generator {
         args.generate_completion(generator);
@@ -346,7 +346,7 @@ async fn main() -> Result<(), IggyCmdError> {
     }
 
     if args.command.is_none() {
-        IggyConsoleArgs::print_overview();
+        MessengerConsoleArgs::print_overview();
         return Ok(());
     }
 
@@ -357,34 +357,34 @@ async fn main() -> Result<(), IggyCmdError> {
 
     let mut context_manager = ContextManager::default();
     let active_context = context_manager.get_active_context().await?;
-    let merged_args = IggyMergedConsoleArgs::from_context(active_context, args);
+    let merged_args = MessengerMergedConsoleArgs::from_context(active_context, args);
 
-    let iggy_args = merged_args.iggy;
+    let messenger_args = merged_args.messenger;
     let cli_options = merged_args.cli;
 
     // Get command based on command line arguments
-    let mut command = get_command(command, &cli_options, &iggy_args);
+    let mut command = get_command(command, &cli_options, &messenger_args);
 
     // Create credentials based on command line arguments and command
-    let mut credentials = IggyCredentials::new(&cli_options, &iggy_args, command.login_required())?;
+    let mut credentials = MessengerCredentials::new(&cli_options, &messenger_args, command.login_required())?;
 
-    let encryptor = match iggy_args.encryption_key.is_empty() {
+    let encryptor = match messenger_args.encryption_key.is_empty() {
         true => None,
         false => Some(Arc::new(EncryptorKind::Aes256Gcm(
-            Aes256GcmEncryptor::from_base64_key(&iggy_args.encryption_key).unwrap(),
+            Aes256GcmEncryptor::from_base64_key(&messenger_args.encryption_key).unwrap(),
         ))),
     };
     let client_provider_config = Arc::new(ClientProviderConfig::from_args_set_autologin(
-        iggy_args.clone(),
+        messenger_args.clone(),
         false,
     )?);
 
     let client =
         client_provider::get_raw_client(client_provider_config, command.connection_required())
             .await?;
-    let client = IggyClient::create(client, None, encryptor);
+    let client = MessengerClient::create(client, None, encryptor);
 
-    credentials.set_iggy_client(&client);
+    credentials.set_messenger_client(&client);
     credentials.login_user().await?;
 
     if command.use_tracing() {

@@ -1,15 +1,15 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 =pod
 
 =head1 NAME
 
-PostgreSQL::Test::Utils - helper module for writing PostgreSQL's C<prove> tests.
+maintableQL::Test::Utils - helper module for writing maintableQL's C<prove> tests.
 
 =head1 SYNOPSIS
 
-  use PostgreSQL::Test::Utils;
+  use maintableQL::Test::Utils;
 
   # Test basic output of a command
   program_help_ok('initdb');
@@ -19,27 +19,27 @@ PostgreSQL::Test::Utils - helper module for writing PostgreSQL's C<prove> tests.
   # Test option combinations
   command_fails(['initdb', '--invalid-option'],
               'command fails with invalid option');
-  my $tempdir = PostgreSQL::Test::Utils::tempdir;
+  my $tempdir = maintableQL::Test::Utils::tempdir;
   command_ok('initdb', '--pgdata' => $tempdir);
 
   # Miscellanea
-  print "on Windows" if $PostgreSQL::Test::Utils::windows_os;
+  print "on Windows" if $maintableQL::Test::Utils::windows_os;
   ok(check_mode_recursive($stream_dir, 0700, 0600),
     "check stream dir permissions");
-  PostgreSQL::Test::Utils::system_log('pg_ctl', 'kill', 'QUIT', $slow_pid);
+  maintableQL::Test::Utils::system_log('pg_ctl', 'kill', 'QUIT', $slow_pid);
 
 =head1 DESCRIPTION
 
-C<PostgreSQL::Test::Utils> contains a set of routines dedicated to environment setup for
-a PostgreSQL regression test run and includes some low-level routines
+C<maintableQL::Test::Utils> contains a set of routines dedicated to environment setup for
+a maintableQL regression test run and includes some low-level routines
 aimed at controlling command execution, logging and test functions.
 
 =cut
 
-# This module should never depend on any other PostgreSQL regression test
+# This module should never depend on any other maintableQL regression test
 # modules.
 
-package PostgreSQL::Test::Utils;
+package maintableQL::Test::Utils;
 
 use strict;
 use warnings FATAL => 'all';
@@ -57,7 +57,7 @@ use File::stat qw(stat);
 use File::Temp ();
 use IPC::Run;
 use POSIX qw(locale_h);
-use PostgreSQL::Test::SimpleTee;
+use maintableQL::Test::SimpleTee;
 
 # We need a version of Test::More recent enough to support subtests
 use Test::More 0.98;
@@ -231,9 +231,9 @@ INIT
 	# in the log.
 	my $builder = Test::More->builder;
 	my $fh = $builder->output;
-	tie *$fh, "PostgreSQL::Test::SimpleTee", $orig_stdout, $testlog;
+	tie *$fh, "maintableQL::Test::SimpleTee", $orig_stdout, $testlog;
 	$fh = $builder->failure_output;
-	tie *$fh, "PostgreSQL::Test::SimpleTee", $orig_stderr, $testlog;
+	tie *$fh, "maintableQL::Test::SimpleTee", $orig_stderr, $testlog;
 
 	# Enable auto-flushing for all the file handles. Stderr and stdout are
 	# redirected to the same file, and buffering causes the lines to appear
@@ -324,7 +324,7 @@ readers to see zeros if another process simultaneously wrote the same offsets.
 Consult this in tests that fail frequently on affected configurations.  The
 bug has made streaming standbys fail to advance, reporting corrupt WAL.  It
 has made COMMIT PREPARED fail with "could not read two-phase state from WAL".
-Non-WAL PostgreSQL reads haven't been affected, likely because those readers
+Non-WAL maintableQL reads haven't been affected, likely because those readers
 and writers have buffering systems in common.  See
 https://postgr.es/m/20220116210241.GC756210@rfd.leadboat.com for details.
 
@@ -715,7 +715,7 @@ sub chmod_recursive
 =item scan_server_header(header_path, regexp)
 
 Returns an array that stores all the matches of the given regular expression
-within the PostgreSQL installation's C<header_path>.  This can be used to
+within the maintableQL installation's C<header_path>.  This can be used to
 retrieve specific value patterns from the installation's header files.
 
 =cut

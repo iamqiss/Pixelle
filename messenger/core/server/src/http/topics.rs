@@ -29,13 +29,13 @@ use axum::http::StatusCode;
 use axum::routing::{delete, get};
 use axum::{Extension, Json, Router};
 use error_set::ErrContext;
-use iggy_common::Identifier;
-use iggy_common::Validatable;
-use iggy_common::create_topic::CreateTopic;
-use iggy_common::delete_topic::DeleteTopic;
-use iggy_common::purge_topic::PurgeTopic;
-use iggy_common::update_topic::UpdateTopic;
-use iggy_common::{Topic, TopicDetails};
+use messenger_common::Identifier;
+use messenger_common::Validatable;
+use messenger_common::create_topic::CreateTopic;
+use messenger_common::delete_topic::DeleteTopic;
+use messenger_common::purge_topic::PurgeTopic;
+use messenger_common::update_topic::UpdateTopic;
+use messenger_common::{Topic, TopicDetails};
 use std::sync::Arc;
 use tracing::instrument;
 
@@ -100,7 +100,7 @@ async fn get_topics(
     Ok(Json(topics))
 }
 
-#[instrument(skip_all, name = "trace_create_topic", fields(iggy_user_id = identity.user_id, iggy_stream_id = stream_id))]
+#[instrument(skip_all, name = "trace_create_topic", fields(messenger_user_id = identity.user_id, messenger_stream_id = stream_id))]
 async fn create_topic(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,
@@ -148,7 +148,7 @@ async fn create_topic(
     Ok(response)
 }
 
-#[instrument(skip_all, name = "trace_update_topic", fields(iggy_user_id = identity.user_id, iggy_stream_id = stream_id, iggy_topic_id = topic_id))]
+#[instrument(skip_all, name = "trace_update_topic", fields(messenger_user_id = identity.user_id, messenger_stream_id = stream_id, messenger_topic_id = topic_id))]
 async fn update_topic(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,
@@ -193,7 +193,7 @@ async fn update_topic(
     Ok(StatusCode::NO_CONTENT)
 }
 
-#[instrument(skip_all, name = "trace_delete_topic", fields(iggy_user_id = identity.user_id, iggy_stream_id = stream_id, iggy_topic_id = topic_id))]
+#[instrument(skip_all, name = "trace_delete_topic", fields(messenger_user_id = identity.user_id, messenger_stream_id = stream_id, messenger_topic_id = topic_id))]
 async fn delete_topic(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,
@@ -235,7 +235,7 @@ async fn delete_topic(
     Ok(StatusCode::NO_CONTENT)
 }
 
-#[instrument(skip_all, name = "trace_purge_topic", fields(iggy_user_id = identity.user_id, iggy_stream_id = stream_id, iggy_topic_id = topic_id))]
+#[instrument(skip_all, name = "trace_purge_topic", fields(messenger_user_id = identity.user_id, messenger_stream_id = stream_id, messenger_topic_id = topic_id))]
 async fn purge_topic(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,

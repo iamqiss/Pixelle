@@ -18,7 +18,7 @@
 
 use crate::args::common::ListMode;
 use clap::{Args, Subcommand};
-use iggy::prelude::Identifier;
+use messenger::prelude::Identifier;
 
 #[derive(Debug, Clone, Subcommand)]
 pub(crate) enum StreamAction {
@@ -27,8 +27,8 @@ pub(crate) enum StreamAction {
     /// If stream ID is not provided then the server will automatically assign it
     ///
     /// Examples:
-    ///  iggy stream create prod
-    ///  iggy stream create -s 1 test
+    ///  messenger stream create prod
+    ///  messenger stream create -s 1 test
     #[clap(verbatim_doc_comment, visible_alias = "c")]
     Create(StreamCreateArgs),
     /// Delete stream with given ID
@@ -36,8 +36,8 @@ pub(crate) enum StreamAction {
     /// Stream ID can be specified as a stream name or ID
     ///
     /// Examples:
-    ///  iggy stream delete 1
-    ///  iggy stream delete test
+    ///  messenger stream delete 1
+    ///  messenger stream delete test
     #[clap(verbatim_doc_comment, visible_alias = "d")]
     Delete(StreamDeleteArgs),
     /// Update stream name for given stream ID
@@ -45,8 +45,8 @@ pub(crate) enum StreamAction {
     /// Stream ID can be specified as a stream name or ID
     ///
     /// Examples:
-    ///  iggy stream update 1 production
-    ///  iggy stream update test development
+    ///  messenger stream update 1 production
+    ///  messenger stream update test development
     #[clap(verbatim_doc_comment, visible_alias = "u")]
     Update(StreamUpdateArgs),
     /// Get details of a single stream with given ID
@@ -54,16 +54,16 @@ pub(crate) enum StreamAction {
     /// Stream ID can be specified as a stream name or ID
     ///
     /// Examples:
-    ///  iggy stream get 1
-    ///  iggy stream get test
+    ///  messenger stream get 1
+    ///  messenger stream get test
     #[clap(verbatim_doc_comment, visible_alias = "g")]
     Get(StreamGetArgs),
     /// List all streams
     ///
     /// Examples:
-    ///  iggy stream list
-    ///  iggy stream list --list-mode table
-    ///  iggy stream list -l table
+    ///  messenger stream list
+    ///  messenger stream list --list-mode table
+    ///  messenger stream list -l table
     #[clap(verbatim_doc_comment, visible_alias = "l")]
     List(StreamListArgs),
     /// Purge all topics in given stream ID
@@ -72,8 +72,8 @@ pub(crate) enum StreamAction {
     /// Stream ID can be specified as a stream name or ID
     ///
     /// Examples:
-    ///  iggy stream purge 1
-    ///  iggy stream purge test
+    ///  messenger stream purge 1
+    ///  messenger stream purge test
     #[clap(verbatim_doc_comment, visible_alias = "p")]
     Purge(StreamPurgeArgs),
 }

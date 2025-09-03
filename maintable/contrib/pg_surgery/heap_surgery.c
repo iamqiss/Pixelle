@@ -3,14 +3,14 @@
  * heap_surgery.c
  *	  Functions to perform surgery on the damaged heap table.
  *
- * Copyright (c) 2020-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2020-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  contrib/pg_surgery/heap_surgery.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "access/relation.h"

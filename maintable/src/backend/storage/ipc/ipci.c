@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * ipci.c
- *	  POSTGRES inter-process communication initialization code.
+ *	  MAINTABLE inter-process communication initialization code.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/clog.h"
 #include "access/commit_ts.h"
@@ -99,7 +99,7 @@ CalculateShmemSize(int *num_semaphores)
 		*num_semaphores = numSemas;
 
 	/*
-	 * Size of the Postgres shared-memory block is estimated via moderately-
+	 * Size of the Maintable shared-memory block is estimated via moderately-
 	 * accurate estimates for the big hogs, plus 100K for the stuff that's too
 	 * small to bother with estimating.
 	 *

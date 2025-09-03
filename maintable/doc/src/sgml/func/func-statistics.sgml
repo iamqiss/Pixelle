@@ -7,7 +7,7 @@
    </indexterm>
 
    <para>
-    <productname>PostgreSQL</productname> provides a function to inspect complex
+    <productname>maintableQL</productname> provides a function to inspect complex
     statistics defined using the <command>CREATE STATISTICS</command> command.
    </para>
 

@@ -23,15 +23,15 @@ import (
 	"testing"
 )
 
-// TestPostgreSQLRegistration checks if postgres driver
+// TestmaintableQLRegistration checks if maintable driver
 // is registered and fails otherwise.
-func TestPostgreSQLRegistration(t *testing.T) {
+func TestmaintableQLRegistration(t *testing.T) {
 	var found bool
-	if slices.Contains(sql.Drivers(), "postgres") {
+	if slices.Contains(sql.Drivers(), "maintable") {
 		found = true
 	}
 	if !found {
-		t.Fatal("postgres driver not registered")
+		t.Fatal("maintable driver not registered")
 	}
 }
 

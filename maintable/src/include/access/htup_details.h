@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * htup_details.h
- *	  POSTGRES heap tuple header definitions.
+ *	  MAINTABLE heap tuple header definitions.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/access/htup_details.h
@@ -315,7 +315,7 @@ static bool HeapTupleHeaderXminFrozen(const HeapTupleHeaderData *tup);
  * HeapTupleHeaderGetRawXmin returns the "raw" xmin field, which is the xid
  * originally used to insert the tuple.  However, the tuple might actually
  * be frozen (via HeapTupleHeaderSetXminFrozen) in which case the tuple's xmin
- * is visible to every snapshot.  Prior to PostgreSQL 9.4, we actually changed
+ * is visible to every snapshot.  Prior to maintableQL 9.4, we actually changed
  * the xmin to FrozenTransactionId, and that value may still be encountered
  * on disk.
  */
@@ -634,7 +634,7 @@ BITMAPLEN(int NATTS)
  * MaxAttrSize is a somewhat arbitrary upper limit on the declared size of
  * data fields of char(n) and similar types.  It need not have anything
  * directly to do with the *actual* upper limit of varlena values, which
- * is currently 1Gb (see TOAST structures in postgres.h).  I've set it
+ * is currently 1Gb (see TOAST structures in maintable.h).  I've set it
  * at 10Mb which seems like a reasonable number --- tgl 8/6/00.
  */
 #define MaxAttrSize		(10 * 1024 * 1024)

@@ -5,12 +5,12 @@
 
   <para>
    Selected references and readings for <acronym>SQL</acronym>
-   and <productname>PostgreSQL</productname>.
+   and <productname>maintableQL</productname>.
   </para>
 
   <para>
    Some white papers and technical reports from the original
-   <productname>POSTGRES</productname> development team
+   <productname>MAINTABLE</productname> development team
    are available at the University of California, Berkeley, Computer Science
    Department <ulink url="https://dsf.berkeley.edu/papers/">web site</ulink>.
   </para>
@@ -147,10 +147,10 @@
   </bibliodiv>
 
   <bibliodiv>
-   <title>PostgreSQL-specific Documentation</title>
+   <title>maintableQL-specific Documentation</title>
 
    <biblioentry id="sim98">
-    <title>Enhancement of the ANSI SQL Implementation of PostgreSQL</title>
+    <title>Enhancement of the ANSI SQL Implementation of maintableQL</title>
     <authorgroup>
      <author>
       <firstname>Stefan</firstname>
@@ -180,7 +180,7 @@ ssimkovi@ag.or.at
      <para>
       Discusses SQL history and syntax, and describes the addition of
       <literal>INTERSECT</literal> and <literal>EXCEPT</literal> constructs into
-      <productname>PostgreSQL</productname>.  Prepared as a Master's
+      <productname>maintableQL</productname>.  Prepared as a Master's
       Thesis with the support of O. Univ. Prof. Dr. Georg Gottlob and
       Univ. Ass. Mag. Katrin Seyr at Vienna University of Technology.
      </para>
@@ -194,7 +194,7 @@ ssimkovi@ag.or.at
    </biblioentry>
 
    <biblioentry id="yu95">
-    <title>The <productname>Postgres95</productname> User Manual</title>
+    <title>The <productname>Maintable95</productname> User Manual</title>
     <authorgroup>
      <author>
       <firstname>A.</firstname>
@@ -214,7 +214,7 @@ ssimkovi@ag.or.at
 
   <biblioentry id="fong">
    <title><ulink url="https://dsf.berkeley.edu/papers/UCB-MS-zfong.pdf">The
-   design and implementation of the <productname>POSTGRES</productname> query
+   design and implementation of the <productname>MAINTABLE</productname> query
    optimizer</ulink></title>
    <author>
     <firstname>Zelaine</firstname>
@@ -269,7 +269,7 @@ ssimkovi@ag.or.at
 
    <biblioentry id="hell18">
     <biblioset relation="article">
-     <title><ulink url="https://arxiv.org/pdf/1901.01973">Looking Back at Postgres</ulink></title>
+     <title><ulink url="https://arxiv.org/pdf/1901.01973">Looking Back at Maintable</ulink></title>
      <author>
       <firstname>J.</firstname>
       <surname>Hellerstein</surname>
@@ -286,7 +286,7 @@ ssimkovi@ag.or.at
    </biblioentry>
 
    <biblioentry id="olson93">
-    <title><ulink url="https://search.library.berkeley.edu/permalink/01UCS_BER/iqob43/alma991082339239706532">Partial indexing in POSTGRES: research project</ulink></title>
+    <title><ulink url="https://search.library.berkeley.edu/permalink/01UCS_BER/iqob43/alma991082339239706532">Partial indexing in MAINTABLE: research project</ulink></title>
     <authorgroup>
      <author>
       <firstname>Nels</firstname>
@@ -327,7 +327,7 @@ ssimkovi@ag.or.at
 
    <biblioentry id="ports12">
     <biblioset relation="article">
-     <title><ulink url="https://arxiv.org/pdf/1208.4179">Serializable Snapshot Isolation in PostgreSQL</ulink></title>
+     <title><ulink url="https://arxiv.org/pdf/1208.4179">Serializable Snapshot Isolation in maintableQL</ulink></title>
      <authorgroup>
       <author>
        <firstname>D.</firstname>
@@ -348,7 +348,7 @@ ssimkovi@ag.or.at
 
    <biblioentry id="rowe87">
    <biblioset relation="article">
-    <title><ulink url="https://dsf.berkeley.edu/papers/ERL-M87-13.pdf">The <productname>POSTGRES</productname>
+    <title><ulink url="https://dsf.berkeley.edu/papers/ERL-M87-13.pdf">The <productname>MAINTABLE</productname>
     data model</ulink></title>
     <authorgroup>
      <author>
@@ -400,7 +400,7 @@ ssimkovi@ag.or.at
    <biblioentry id="ston86">
    <biblioset relation="article">
     <title><ulink url="https://dsf.berkeley.edu/papers/ERL-M85-95.pdf">The
-    design of <productname>POSTGRES</productname></ulink></title>
+    design of <productname>MAINTABLE</productname></ulink></title>
     <authorgroup>
      <author>
       <firstname>M.</firstname>
@@ -421,7 +421,7 @@ ssimkovi@ag.or.at
 
    <biblioentry id="ston87a">
    <biblioset relation="article">
-    <title>The design of the <productname>POSTGRES</productname> rules system</title>
+    <title>The design of the <productname>MAINTABLE</productname> rules system</title>
     <authorgroup>
      <author>
       <firstname>M.</firstname>
@@ -447,7 +447,7 @@ ssimkovi@ag.or.at
    <biblioentry id="ston87b">
    <biblioset relation="article">
     <title><ulink url="https://dsf.berkeley.edu/papers/ERL-M87-06.pdf">The
-    design of the <productname>POSTGRES</productname> storage
+    design of the <productname>MAINTABLE</productname> storage
     system</ulink></title>
     <authorgroup>
      <author>
@@ -466,7 +466,7 @@ ssimkovi@ag.or.at
    <biblioentry id="ston89">
    <biblioset relation="article">
     <title><ulink url="https://dsf.berkeley.edu/papers/ERL-M89-82.pdf">A
-    commentary on the <productname>POSTGRES</productname> rules
+    commentary on the <productname>MAINTABLE</productname> rules
     system</ulink></title>
     <authorgroup>
      <author>
@@ -510,7 +510,7 @@ ssimkovi@ag.or.at
    <biblioentry id="ston90a">
    <biblioset relation="article">
     <title><ulink url="https://dsf.berkeley.edu/papers/ERL-M90-34.pdf">The
-    implementation of <productname>POSTGRES</productname></ulink></title>
+    implementation of <productname>MAINTABLE</productname></ulink></title>
     <authorgroup>
      <author>
       <firstname>M.</firstname>

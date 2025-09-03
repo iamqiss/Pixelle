@@ -11,7 +11,7 @@ Vendored projects (path -> approximate size)
 - mongo             : 778M
 - neo4j             : 138M
 - opensearch        : 157M
-- postgres          : 153M
+- maintable          : 153M
 - redis             : 22M
 - wazuh             : 289M
 

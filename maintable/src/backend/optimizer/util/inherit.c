@@ -3,7 +3,7 @@
  * inherit.c
  *	  Routines to process child relations in inheritance trees
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/sysattr.h"
 #include "access/table.h"
@@ -444,7 +444,7 @@ expand_partitioned_rtentry(PlannerInfo *root, RelOptInfo *relinfo,
  * We now expand the partition hierarchy level by level, creating a
  * corresponding hierarchy of AppendRelInfos and RelOptInfos, where each
  * partitioned descendant acts as a parent of its immediate partitions.
- * (This is a difference from what older versions of PostgreSQL did and what
+ * (This is a difference from what older versions of maintableQL did and what
  * is still done in the case of table inheritance for unpartitioned tables,
  * where the hierarchy is flattened during RTE expansion.)
  *

@@ -16,17 +16,17 @@
  * under the License.
  */
 
-use crate::binary::handlers::messages::poll_messages_handler::IggyPollMetadata;
+use crate::binary::handlers::messages::poll_messages_handler::MessengerPollMetadata;
 use crate::streaming::polling_consumer::PollingConsumer;
-use crate::streaming::segments::{IggyMessagesBatchMut, IggyMessagesBatchSet};
+use crate::streaming::segments::{MessengerMessagesBatchMut, MessengerMessagesBatchSet};
 use crate::streaming::topics::COMPONENT;
 use crate::streaming::topics::topic::Topic;
 use crate::streaming::utils::hash;
 use ahash::AHashMap;
 use error_set::ErrContext;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{Confirmation, IggyTimestamp, PollingStrategy};
-use iggy_common::{IggyError, IggyExpiry, Partitioning, PartitioningKind, PollingKind};
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{Confirmation, MessengerTimestamp, PollingStrategy};
+use messenger_common::{MessengerError, MessengerExpiry, Partitioning, PartitioningKind, PollingKind};
 use std::sync::atomic::Ordering;
 use tracing::trace;
 
@@ -41,14 +41,14 @@ impl Topic {
         partition_id: u32,
         strategy: PollingStrategy,
         count: u32,
-    ) -> Result<(IggyPollMetadata, IggyMessagesBatchSet), IggyError> {
+    ) -> Result<(MessengerPollMetadata, MessengerMessagesBatchSet), MessengerError> {
         if !self.has_partitions() {
-            return Err(IggyError::NoPartitions(self.topic_id, self.stream_id));
+            return Err(MessengerError::NoPartitions(self.topic_id, self.stream_id));
         }
 
         let partition = self.partitions.get(&partition_id);
         if partition.is_none() {
-            return Err(IggyError::PartitionNotFound(
+            return Err(MessengerError::PartitionNotFound(
                 partition_id,
                 self.topic_id,
                 self.stream_id,
@@ -71,7 +71,7 @@ impl Topic {
             PollingKind::Next => partition.get_next_messages(consumer, count).await,
         }?;
 
-        let metadata = IggyPollMetadata::new(partition_id, partition.current_offset);
+        let metadata = MessengerPollMetadata::new(partition_id, partition.current_offset);
 
         Ok((metadata, messages))
     }
@@ -79,17 +79,17 @@ impl Topic {
     pub async fn append_messages(
         &self,
         partitioning: &Partitioning,
-        messages: IggyMessagesBatchMut,
+        messages: MessengerMessagesBatchMut,
         confirmation: Option<Confirmation>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         if !self.has_partitions() {
-            return Err(IggyError::NoPartitions(self.topic_id, self.stream_id));
+            return Err(MessengerError::NoPartitions(self.topic_id, self.stream_id));
         }
 
         // Don't return an error if the topic is full and delete_oldest_segments is true.
         // Oldest segment will be removed eventually by MaintainMessages background job.
         if self.is_full() && self.config.topic.delete_oldest_segments {
-            return Err(IggyError::TopicFull(self.topic_id, self.stream_id));
+            return Err(MessengerError::TopicFull(self.topic_id, self.stream_id));
         }
 
         if messages.is_empty() {
@@ -101,7 +101,7 @@ impl Topic {
             PartitioningKind::PartitionId => u32::from_le_bytes(
                 partitioning.value[..partitioning.length as usize]
                     .try_into()
-                    .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                    .map_err(|_| MessengerError::InvalidNumberEncoding)?,
             ),
             PartitioningKind::MessagesKey => {
                 self.calculate_partition_id_by_messages_key_hash(&partitioning.value)
@@ -116,10 +116,10 @@ impl Topic {
         &self,
         partition_id: u32,
         fsync: bool,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let partition = self.partitions.get(&partition_id);
         partition
-            .ok_or(IggyError::PartitionNotFound(
+            .ok_or(MessengerError::PartitionNotFound(
                 partition_id,
                 self.stream_id,
                 self.stream_id,
@@ -132,13 +132,13 @@ impl Topic {
 
     async fn append_messages_to_partition(
         &self,
-        messages: IggyMessagesBatchMut,
+        messages: MessengerMessagesBatchMut,
         partition_id: u32,
         confirmation: Option<Confirmation>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let partition = self.partitions.get(&partition_id);
         partition
-            .ok_or(IggyError::PartitionNotFound(
+            .ok_or(MessengerError::PartitionNotFound(
                 partition_id,
                 self.topic_id,
                 self.stream_id,
@@ -182,10 +182,10 @@ impl Topic {
 
     pub async fn get_expired_segments_start_offsets_per_partition(
         &self,
-        now: IggyTimestamp,
+        now: MessengerTimestamp,
     ) -> AHashMap<u32, Vec<u64>> {
         let mut expired_segments = AHashMap::new();
-        if let IggyExpiry::ExpireDuration(_) = self.message_expiry {
+        if let MessengerExpiry::ExpireDuration(_) = self.message_expiry {
             for (_, partition) in self.partitions.iter() {
                 let partition = partition.read().await;
                 let segments = partition.get_expired_segments_start_offsets(now).await;
@@ -207,8 +207,8 @@ mod tests {
     use crate::streaming::storage::SystemStorage;
     use crate::streaming::utils::MemoryPool;
     use bytes::Bytes;
-    use iggy_common::CompressionAlgorithm;
-    use iggy_common::{IggyMessage, MaxTopicSize};
+    use messenger_common::CompressionAlgorithm;
+    use messenger_common::{MessengerMessage, MaxTopicSize};
     use std::sync::Arc;
     use std::sync::atomic::AtomicU32;
     use std::sync::atomic::AtomicU64;
@@ -222,12 +222,12 @@ mod tests {
         let topic = init_topic(partitions_count).await;
 
         for entity_id in 1..=messages_count {
-            let message = IggyMessage::builder()
+            let message = MessengerMessage::builder()
                 .id(entity_id as u128)
                 .payload(Bytes::from(entity_id.to_string()))
                 .build()
                 .expect("Failed to create message with valid payload and headers");
-            let messages = IggyMessagesBatchMut::from_messages(&[message], 1);
+            let messages = MessengerMessagesBatchMut::from_messages(&[message], 1);
             topic
                 .append_messages(&partitioning, messages, None)
                 .await
@@ -255,12 +255,12 @@ mod tests {
 
         for entity_id in 1..=messages_count {
             let partitioning = Partitioning::messages_key_u32(entity_id);
-            let message = IggyMessage::builder()
+            let message = MessengerMessage::builder()
                 .id(entity_id as u128)
                 .payload(Bytes::from("test message"))
                 .build()
                 .expect("Failed to create message with valid payload and headers");
-            let messages = IggyMessagesBatchMut::from_messages(&[message], 1);
+            let messages = MessengerMessagesBatchMut::from_messages(&[message], 1);
             topic
                 .append_messages(&partitioning, messages, None)
                 .await
@@ -348,7 +348,7 @@ mod tests {
             size_of_parent_stream,
             messages_count_of_parent_stream,
             segments_count_of_parent_stream,
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             compression_algorithm,
             MaxTopicSize::ServerDefault,
             1,

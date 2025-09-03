@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * clog.c
- *		PostgreSQL transaction-commit-log manager
+ *		maintableQL transaction-commit-log manager
  *
  * This module stores two bits per transaction regarding its commit/abort
  * status; the status for four transactions fit in a byte.
@@ -24,14 +24,14 @@
  * for aborts (whether sync or async), since the post-crash assumption would
  * be that such transactions failed anyway.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/backend/access/transam/clog.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/clog.h"
 #include "access/slru.h"
@@ -48,7 +48,7 @@
 
 /*
  * Defines for CLOG page sizes.  A page is the same BLCKSZ as is used
- * everywhere else in Postgres.
+ * everywhere else in Maintable.
  *
  * Note: because TransactionIds are 32 bits and wrap around at 0xFFFFFFFF,
  * CLOG page numbering also wraps around at 0xFFFFFFFF/CLOG_XACTS_PER_PAGE,
@@ -906,9 +906,9 @@ CheckPointCLOG(void)
 	 * queued for later handling by ProcessSyncRequests(), as part of the
 	 * checkpoint.
 	 */
-	TRACE_POSTGRESQL_CLOG_CHECKPOINT_START(true);
+	TRACE_MAINTABLEQL_CLOG_CHECKPOINT_START(true);
 	SimpleLruWriteAll(XactCtl, true);
-	TRACE_POSTGRESQL_CLOG_CHECKPOINT_DONE(true);
+	TRACE_MAINTABLEQL_CLOG_CHECKPOINT_DONE(true);
 }
 
 

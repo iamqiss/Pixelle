@@ -25,7 +25,7 @@
  * automaton corresponding to the regex.  The algorithm consists of four
  * stages:
  *
- * 1) Compile the regexp to NFA form.  This is handled by the PostgreSQL
+ * 1) Compile the regexp to NFA form.  This is handled by the maintableQL
  *	  regexp library, which provides accessors for its opaque regex_t struct
  *	  to expose the NFA state graph and the "colors" (sets of equivalent
  *	  characters) used as state transition labels.
@@ -181,7 +181,7 @@
  * 7) Mark state 3 final because state 5 of source NFA is marked as final.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -189,7 +189,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_collation_d.h"
 #include "regex/regexport.h"

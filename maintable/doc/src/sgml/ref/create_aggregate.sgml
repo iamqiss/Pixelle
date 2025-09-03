@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_aggregate.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createaggregate">
@@ -137,7 +137,7 @@ CREATE [ OR REPLACE ] AGGREGATE <replaceable class="parameter">name</replaceable
   </para>
 
   <para>
-   <productname>PostgreSQL</productname> creates a temporary variable
+   <productname>maintableQL</productname> creates a temporary variable
    of data type <replaceable class="parameter">stype</replaceable>
    to hold the current internal state of the aggregate.  At each input row,
    the aggregate argument value(s) are calculated and
@@ -672,7 +672,7 @@ SELECT col FROM tab ORDER BY col USING sortop LIMIT 1;
    </para>
 
    <para>
-    Ordinarily, PostgreSQL functions are expected to be true functions that
+    Ordinarily, maintableQL functions are expected to be true functions that
     do not modify their input values.  However, an aggregate transition
     function, <emphasis>when used in the context of an aggregate</emphasis>,
     is allowed to cheat and modify its transition-state argument in place.
@@ -732,10 +732,10 @@ SELECT col FROM tab ORDER BY col USING sortop LIMIT 1;
    <para>
     If no moving-aggregate implementation is supplied,
     the aggregate can still be used with moving frames,
-    but <productname>PostgreSQL</productname> will recompute the whole
+    but <productname>maintableQL</productname> will recompute the whole
     aggregation whenever the start of the frame moves.
     Note that whether or not the aggregate supports moving-aggregate
-    mode, <productname>PostgreSQL</productname> can handle a moving frame
+    mode, <productname>maintableQL</productname> can handle a moving frame
     end without recalculation; this is done by continuing to add new values
     to the aggregate's state.  This is why use of an aggregate as a window
     function requires that the final function be read-only: it must
@@ -789,7 +789,7 @@ SELECT col FROM tab ORDER BY col USING sortop LIMIT 1;
 
   <para>
    <command>CREATE AGGREGATE</command> is a
-   <productname>PostgreSQL</productname> language extension.  The SQL
+   <productname>maintableQL</productname> language extension.  The SQL
    standard does not provide for user-defined aggregate functions.
   </para>
  </refsect1>

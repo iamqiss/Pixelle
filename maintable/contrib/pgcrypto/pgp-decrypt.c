@@ -29,7 +29,7 @@
  * contrib/pgcrypto/pgp-decrypt.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "mbuf.h"
 #include "pgp.h"

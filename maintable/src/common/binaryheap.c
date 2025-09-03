@@ -3,7 +3,7 @@
  * binaryheap.c
  *	  A simple binary heap implementation
  *
- * Portions Copyright (c) 2012-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2012-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/common/binaryheap.c
@@ -12,9 +12,9 @@
  */
 
 #ifdef FRONTEND
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #else
-#include "postgres.h"
+#include "maintable.h"
 #endif
 
 #include <math.h>

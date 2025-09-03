@@ -55,7 +55,7 @@ on:
         default: ""
 
 env:
-  IGGY_CI_BUILD: true
+  MESSENGER_CI_BUILD: true
 
 permissions:
   contents: write  # For tag creation
@@ -511,87 +511,87 @@ jobs:
           echo "sdk_version=$(scripts/extract-version.sh rust-sdk)" >> $GITHUB_OUTPUT
           echo "cli_version=$(scripts/extract-version.sh rust-cli)" >> $GITHUB_OUTPUT
 
-      # Step 1: Publish iggy_common first
-      - name: Publish iggy_common
+      # Step 1: Publish messenger_common first
+      - name: Publish messenger_common
         if: contains(inputs.publish_crates, 'rust-common')
         uses: ./.github/actions/rust/post-merge
         with:
-          package: iggy_common
+          package: messenger_common
           version: ${{ steps.versions.outputs.common_version }}
           dry_run: ${{ inputs.dry_run }}
 
       # Wait for crates.io to index (only in non-dry-run mode)
-      - name: Wait for iggy_common to be available
+      - name: Wait for messenger_common to be available
         if: |
           contains(inputs.publish_crates, 'rust-common') &&
           inputs.dry_run == 'false'
         run: |
-          echo "⏳ Waiting for iggy_common to be available on crates.io..."
+          echo "⏳ Waiting for messenger_common to be available on crates.io..."
           for i in {1..30}; do
-            if cargo search iggy_common --limit 1 | grep -q "^iggy_common = \"${{ steps.versions.outputs.common_version }}\""; then
-              echo "✅ iggy_common is now available"
+            if cargo search messenger_common --limit 1 | grep -q "^messenger_common = \"${{ steps.versions.outputs.common_version }}\""; then
+              echo "✅ messenger_common is now available"
               break
             fi
             echo "Waiting... (attempt $i/30)"
             sleep 10
           done
 
-      # Step 2: Publish iggy_binary_protocol (depends on common)
-      - name: Publish iggy_binary_protocol
+      # Step 2: Publish messenger_binary_protocol (depends on common)
+      - name: Publish messenger_binary_protocol
         if: contains(inputs.publish_crates, 'rust-binary-protocol')
         uses: ./.github/actions/rust/post-merge
         with:
-          package: iggy_binary_protocol
+          package: messenger_binary_protocol
           version: ${{ steps.versions.outputs.protocol_version }}
           dry_run: ${{ inputs.dry_run }}
 
       # Wait for crates.io to index
-      - name: Wait for iggy_binary_protocol to be available
+      - name: Wait for messenger_binary_protocol to be available
         if: |
           contains(inputs.publish_crates, 'rust-binary-protocol') &&
           inputs.dry_run == 'false'
         run: |
-          echo "⏳ Waiting for iggy_binary_protocol to be available on crates.io..."
+          echo "⏳ Waiting for messenger_binary_protocol to be available on crates.io..."
           for i in {1..30}; do
-            if cargo search iggy_binary_protocol --limit 1 | grep -q "^iggy_binary_protocol = \"${{ steps.versions.outputs.protocol_version }}\""; then
-              echo "✅ iggy_binary_protocol is now available"
+            if cargo search messenger_binary_protocol --limit 1 | grep -q "^messenger_binary_protocol = \"${{ steps.versions.outputs.protocol_version }}\""; then
+              echo "✅ messenger_binary_protocol is now available"
               break
             fi
             echo "Waiting... (attempt $i/30)"
             sleep 10
           done
 
-      # Step 3: Publish iggy SDK (depends on common and protocol)
-      - name: Publish iggy SDK
+      # Step 3: Publish messenger SDK (depends on common and protocol)
+      - name: Publish messenger SDK
         if: contains(inputs.publish_crates, 'rust-sdk')
         uses: ./.github/actions/rust/post-merge
         with:
-          package: iggy
+          package: messenger
           version: ${{ steps.versions.outputs.sdk_version }}
           dry_run: ${{ inputs.dry_run }}
 
       # Wait for crates.io to index
-      - name: Wait for iggy SDK to be available
+      - name: Wait for messenger SDK to be available
         if: |
           contains(inputs.publish_crates, 'rust-sdk') &&
           inputs.dry_run == 'false'
         run: |
-          echo "⏳ Waiting for iggy to be available on crates.io..."
+          echo "⏳ Waiting for messenger to be available on crates.io..."
           for i in {1..30}; do
-            if cargo search iggy --limit 1 | grep -q "^iggy = \"${{ steps.versions.outputs.sdk_version }}\""; then
-              echo "✅ iggy SDK is now available"
+            if cargo search messenger --limit 1 | grep -q "^messenger = \"${{ steps.versions.outputs.sdk_version }}\""; then
+              echo "✅ messenger SDK is now available"
               break
             fi
             echo "Waiting... (attempt $i/30)"
             sleep 10
           done
 
-      # Step 4: Publish iggy-cli (depends on SDK and protocol)
-      - name: Publish iggy-cli
+      # Step 4: Publish messenger-cli (depends on SDK and protocol)
+      - name: Publish messenger-cli
         if: contains(inputs.publish_crates, 'rust-cli')
         uses: ./.github/actions/rust/post-merge
         with:
-          package: iggy-cli
+          package: messenger-cli
           version: ${{ steps.versions.outputs.cli_version }}
           dry_run: ${{ inputs.dry_run }}
 

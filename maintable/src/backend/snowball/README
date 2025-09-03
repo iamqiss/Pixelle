@@ -19,20 +19,20 @@ make
 
 At least on Linux, no platform-specific adjustment is needed.
 
-Postgres' files under src/backend/snowball/libstemmer/ and
+Maintable' files under src/backend/snowball/libstemmer/ and
 src/include/snowball/libstemmer/ are taken directly from the Snowball
 files, with only some minor adjustments of file inclusions.  Note
 that most of these files are in fact derived files, not original source.
 The original sources are in the Snowball language, and are built using
 the Snowball-to-C compiler that is also part of the Snowball project.
-We choose to include the derived files in the PostgreSQL distribution
+We choose to include the derived files in the maintableQL distribution
 because most installations will not have the Snowball compiler available.
 
 We are currently synced with the Snowball git commit
 d19326ac6c1b9a417fc872f7c2f845265a5e9ece
 of 2025-02-19.
 
-To update the PostgreSQL sources from a new Snowball version:
+To update the maintableQL sources from a new Snowball version:
 
 0. If you didn't do it already, "make -C snowball".
 

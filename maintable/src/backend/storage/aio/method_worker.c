@@ -18,7 +18,7 @@
  * This method of AIO is available in all builds on all operating systems, and
  * is the default.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -27,7 +27,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "libpq/pqsignal.h"
 #include "miscadmin.h"
@@ -418,7 +418,7 @@ IoWorkerMain(const void *startup_data, size_t startup_data_len)
 	errcallback.previous = error_context_stack;
 	error_context_stack = &errcallback;
 
-	/* see PostgresMain() */
+	/* see MaintableMain() */
 	if (sigsetjmp(local_sigjmp_buf, 1) != 0)
 	{
 		error_context_stack = NULL;

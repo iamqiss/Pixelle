@@ -4,7 +4,7 @@
  *
  *	  Routines for operator manipulation commands
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -29,7 +29,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "access/table.h"
@@ -321,7 +321,7 @@ ValidateJoinEstimator(List *joinName)
 	typeId[4] = INTERNALOID;	/* SpecialJoinInfo */
 
 	/*
-	 * As of Postgres 8.4, the preferred signature for join estimators has 5
+	 * As of Maintable 8.4, the preferred signature for join estimators has 5
 	 * arguments, but we still allow the old 4-argument form.  Whine about
 	 * ambiguity if both forms exist.
 	 */

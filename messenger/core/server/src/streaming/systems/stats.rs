@@ -19,8 +19,8 @@
 use crate::VERSION;
 use crate::streaming::systems::system::System;
 use crate::versioning::SemanticVersion;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{IggyDuration, IggyError, Stats};
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{MessengerDuration, MessengerError, Stats};
 use std::sync::OnceLock;
 use sysinfo::{Pid, ProcessesToUpdate, System as SysinfoSystem};
 use tokio::sync::Mutex;
@@ -35,7 +35,7 @@ fn sysinfo() -> &'static Mutex<SysinfoSystem> {
 }
 
 impl System {
-    pub async fn get_stats(&self) -> Result<Stats, IggyError> {
+    pub async fn get_stats(&self) -> Result<Stats, MessengerError> {
         let mut sys = sysinfo().lock().await;
         let process_id = std::process::id();
         sys.refresh_cpu_all();
@@ -63,8 +63,8 @@ impl System {
             os_name,
             os_version,
             kernel_version,
-            iggy_server_version: VERSION.to_owned(),
-            iggy_server_semver: SemanticVersion::current()
+            messenger_server_version: VERSION.to_owned(),
+            messenger_server_semver: SemanticVersion::current()
                 .ok()
                 .and_then(|v| v.get_numeric_version().ok()),
             ..Default::default()
@@ -78,8 +78,8 @@ impl System {
             stats.process_id = process.pid().as_u32();
             stats.cpu_usage = process.cpu_usage();
             stats.memory_usage = process.memory().into();
-            stats.run_time = IggyDuration::new_from_secs(process.run_time());
-            stats.start_time = IggyDuration::new_from_secs(process.start_time())
+            stats.run_time = MessengerDuration::new_from_secs(process.run_time());
+            stats.start_time = MessengerDuration::new_from_secs(process.start_time())
                 .as_micros()
                 .into();
 

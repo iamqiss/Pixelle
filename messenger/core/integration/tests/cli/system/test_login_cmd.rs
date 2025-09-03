@@ -16,12 +16,12 @@
  * under the License.
  */
 
-use crate::cli::common::{IggyCmdCommand, IggyCmdTestCase};
+use crate::cli::common::{MessengerCmdCommand, MessengerCmdTestCase};
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
-use iggy::prelude::PersonalAccessTokenExpiry;
-use iggy_binary_protocol::cli::binary_system::session::ServerSession;
+use messenger::prelude::Client;
+use messenger::prelude::PersonalAccessTokenExpiry;
+use messenger_binary_protocol::cli::binary_system::session::ServerSession;
 use predicates::str::diff;
 
 #[derive(Debug)]
@@ -48,7 +48,7 @@ impl TestLoginCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestLoginCmd {
+impl MessengerCmdTestCase for TestLoginCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let login_session = ServerSession::new(self.server_address.clone());
         match self.login_type {
@@ -79,8 +79,8 @@ impl IggyCmdTestCase for TestLoginCmd {
         }
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        let command = IggyCmdCommand::new().with_cli_credentials().arg("login");
+    fn get_command(&self) -> MessengerCmdCommand {
+        let command = MessengerCmdCommand::new().with_cli_credentials().arg("login");
 
         if let TestLoginCmdType::SuccessWithTimeout(timeout) = self.login_type {
             command.arg(format!("{timeout}s"))
@@ -95,13 +95,13 @@ impl IggyCmdTestCase for TestLoginCmd {
             | TestLoginCmdType::AlreadyLoggedInWithToken
             | TestLoginCmdType::SuccessWithTimeout(_) => {
                 command_state.success().stdout(diff(format!(
-                    "Executing login command\nSuccessfully logged into Iggy server {}\n",
+                    "Executing login command\nSuccessfully logged into Messenger server {}\n",
                     self.server_address
                 )));
             }
             TestLoginCmdType::AlreadyLoggedIn => {
                 command_state.success().stdout(diff(format!(
-                    "Executing login command\nAlready logged into Iggy server {}\n",
+                    "Executing login command\nAlready logged into Messenger server {}\n",
                     self.server_address
                 )));
             }

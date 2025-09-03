@@ -16,13 +16,13 @@
  * writing is the INET type, where IPv6 values cannot be merged with IPv4
  * values.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
  *	  src/backend/access/brin/brin_inclusion.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/brin_internal.h"
 #include "access/brin_tuple.h"

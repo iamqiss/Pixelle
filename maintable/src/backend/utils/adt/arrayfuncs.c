@@ -3,7 +3,7 @@
  * arrayfuncs.c
  *	  Support functions for arrays.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <math.h>
@@ -4959,7 +4959,7 @@ array_copy(char *destptr, int nitems,
  * bits in the destination map are changed, not any before or after.
  *
  * Note: this could certainly be optimized using standard bitblt methods.
- * However, it's not clear that the typical Postgres array has enough elements
+ * However, it's not clear that the typical Maintable array has enough elements
  * to make it worth worrying too much.  For the moment, KISS.
  */
 void

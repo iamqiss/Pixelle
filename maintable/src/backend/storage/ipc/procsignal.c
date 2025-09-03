@@ -4,7 +4,7 @@
  *	  Routines for interprocess signaling
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <signal.h>
 #include <unistd.h>
@@ -271,7 +271,7 @@ CleanupProcSignalState(int status, Datum arg)
 
 /*
  * SendProcSignal
- *		Send a signal to a Postgres process
+ *		Send a signal to a Maintable process
  *
  * Providing procNumber is optional, but it will speed up the operation.
  *
@@ -338,7 +338,7 @@ SendProcSignal(pid_t pid, ProcSignalReason reason, ProcNumber procNumber)
 
 /*
  * EmitProcSignalBarrier
- *		Send a signal to every Postgres process
+ *		Send a signal to every Maintable process
  *
  * The return value of this function is the barrier "generation" created
  * by this operation. This value can be passed to WaitForProcSignalBarrier

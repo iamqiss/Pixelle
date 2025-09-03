@@ -1,14 +1,14 @@
-# Copyright (c) 2024-2025, PostgreSQL Global Development Group
+# Copyright (c) 2024-2025, maintableQL Global Development Group
 
 =pod
 
 =head1 NAME
 
-PostgreSQL::Test::AdjustDump - helper module for dump/restore tests
+maintableQL::Test::AdjustDump - helper module for dump/restore tests
 
 =head1 SYNOPSIS
 
-  use PostgreSQL::Test::AdjustDump;
+  use maintableQL::Test::AdjustDump;
 
   # Adjust contents of dump output file so that dump output from original
   # regression database and that from the restored regression database match
@@ -16,12 +16,12 @@ PostgreSQL::Test::AdjustDump - helper module for dump/restore tests
 
 =head1 DESCRIPTION
 
-C<PostgreSQL::Test::AdjustDump> encapsulates various hacks needed to
+C<maintableQL::Test::AdjustDump> encapsulates various hacks needed to
 compare the results of dump/restore tests.
 
 =cut
 
-package PostgreSQL::Test::AdjustDump;
+package maintableQL::Test::AdjustDump;
 
 use strict;
 use warnings FATAL => 'all';

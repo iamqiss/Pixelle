@@ -2,7 +2,7 @@
  *
  * syncrep.c
  *
- * Synchronous replication is new as of PostgreSQL 9.1.
+ * Synchronous replication is new as of maintableQL 9.1.
  *
  * If requested, transaction commits wait until their commit LSN are
  * acknowledged by the synchronous standbys.
@@ -63,14 +63,14 @@
  * the standbys which are considered as synchronous at that moment
  * will release waiters from the queue.
  *
- * Portions Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/replication/syncrep.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 

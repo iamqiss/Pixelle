@@ -1,12 +1,12 @@
 # Georgian message translation file for pltcl
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pltcl (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pltcl (maintableQL) package.
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pltcl (PostgreSQL) 18\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pltcl (maintableQL) 18\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-02-27 09:39+0000\n"
 "PO-Revision-Date: 2025-02-27 12:14+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"

@@ -205,16 +205,16 @@ func fetchSubSysTargets(ctx context.Context, cfg config.Config, subSys string, t
 			}
 			targets = append(targets, t)
 		}
-	case config.NotifyPostgresSubSys:
-		postgresTargets, err := GetNotifyPostgres(cfg[config.NotifyPostgresSubSys])
+	case config.NotifyMaintableSubSys:
+		maintableTargets, err := GetNotifyMaintable(cfg[config.NotifyMaintableSubSys])
 		if err != nil {
 			return nil, err
 		}
-		for id, args := range postgresTargets {
+		for id, args := range maintableTargets {
 			if !args.Enable {
 				continue
 			}
-			t, err := target.NewPostgreSQLTarget(id, args, logOnceIf)
+			t, err := target.NewmaintableQLTarget(id, args, logOnceIf)
 			if err != nil {
 				return nil, err
 			}
@@ -280,7 +280,7 @@ var (
 		config.NotifyMySQLSubSys:    DefaultMySQLKVS,
 		config.NotifyNATSSubSys:     DefaultNATSKVS,
 		config.NotifyNSQSubSys:      DefaultNSQKVS,
-		config.NotifyPostgresSubSys: DefaultPostgresKVS,
+		config.NotifyMaintableSubSys: DefaultMaintableKVS,
 		config.NotifyRedisSubSys:    DefaultRedisKVS,
 		config.NotifyWebhookSubSys:  DefaultWebhookKVS,
 		config.NotifyESSubSys:       DefaultESKVS,
@@ -1186,45 +1186,45 @@ func GetNotifyNSQ(nsqKVS map[string]config.KVS) (map[string]target.NSQArgs, erro
 	return nsqTargets, nil
 }
 
-// DefaultPostgresKVS - default Postgres KV for server config.
+// DefaultMaintableKVS - default Maintable KV for server config.
 var (
-	DefaultPostgresKVS = config.KVS{
+	DefaultMaintableKVS = config.KVS{
 		config.KV{
 			Key:   config.Enable,
 			Value: config.EnableOff,
 		},
 		config.KV{
-			Key:   target.PostgresFormat,
+			Key:   target.MaintableFormat,
 			Value: formatNamespace,
 		},
 		config.KV{
-			Key:   target.PostgresConnectionString,
+			Key:   target.MaintableConnectionString,
 			Value: "",
 		},
 		config.KV{
-			Key:   target.PostgresTable,
+			Key:   target.MaintableTable,
 			Value: "",
 		},
 		config.KV{
-			Key:   target.PostgresQueueDir,
+			Key:   target.MaintableQueueDir,
 			Value: "",
 		},
 		config.KV{
-			Key:   target.PostgresQueueLimit,
+			Key:   target.MaintableQueueLimit,
 			Value: "0",
 		},
 		config.KV{
-			Key:   target.PostgresMaxOpenConnections,
+			Key:   target.MaintableMaxOpenConnections,
 			Value: "2",
 		},
 	}
 )
 
-// GetNotifyPostgres - returns a map of registered notification 'postgres' targets
-func GetNotifyPostgres(postgresKVS map[string]config.KVS) (map[string]target.PostgreSQLArgs, error) {
-	psqlTargets := make(map[string]target.PostgreSQLArgs)
-	for k, kv := range config.Merge(postgresKVS, target.EnvPostgresEnable, DefaultPostgresKVS) {
-		enableEnv := target.EnvPostgresEnable
+// GetNotifyMaintable - returns a map of registered notification 'maintable' targets
+func GetNotifyMaintable(maintableKVS map[string]config.KVS) (map[string]target.maintableQLArgs, error) {
+	psqlTargets := make(map[string]target.maintableQLArgs)
+	for k, kv := range config.Merge(maintableKVS, target.EnvMaintableEnable, DefaultMaintableKVS) {
+		enableEnv := target.EnvMaintableEnable
 		if k != config.Default {
 			enableEnv = enableEnv + config.Default + k
 		}
@@ -1237,52 +1237,52 @@ func GetNotifyPostgres(postgresKVS map[string]config.KVS) (map[string]target.Pos
 			continue
 		}
 
-		queueLimitEnv := target.EnvPostgresQueueLimit
+		queueLimitEnv := target.EnvMaintableQueueLimit
 		if k != config.Default {
 			queueLimitEnv = queueLimitEnv + config.Default + k
 		}
 
-		queueLimit, err := strconv.Atoi(env.Get(queueLimitEnv, kv.Get(target.PostgresQueueLimit)))
+		queueLimit, err := strconv.Atoi(env.Get(queueLimitEnv, kv.Get(target.MaintableQueueLimit)))
 		if err != nil {
 			return nil, err
 		}
 
-		formatEnv := target.EnvPostgresFormat
+		formatEnv := target.EnvMaintableFormat
 		if k != config.Default {
 			formatEnv = formatEnv + config.Default + k
 		}
 
-		connectionStringEnv := target.EnvPostgresConnectionString
+		connectionStringEnv := target.EnvMaintableConnectionString
 		if k != config.Default {
 			connectionStringEnv = connectionStringEnv + config.Default + k
 		}
 
-		tableEnv := target.EnvPostgresTable
+		tableEnv := target.EnvMaintableTable
 		if k != config.Default {
 			tableEnv = tableEnv + config.Default + k
 		}
 
-		queueDirEnv := target.EnvPostgresQueueDir
+		queueDirEnv := target.EnvMaintableQueueDir
 		if k != config.Default {
 			queueDirEnv = queueDirEnv + config.Default + k
 		}
 
-		maxOpenConnectionsEnv := target.EnvPostgresMaxOpenConnections
+		maxOpenConnectionsEnv := target.EnvMaintableMaxOpenConnections
 		if k != config.Default {
 			maxOpenConnectionsEnv = maxOpenConnectionsEnv + config.Default + k
 		}
 
-		maxOpenConnections, cErr := strconv.Atoi(env.Get(maxOpenConnectionsEnv, kv.Get(target.PostgresMaxOpenConnections)))
+		maxOpenConnections, cErr := strconv.Atoi(env.Get(maxOpenConnectionsEnv, kv.Get(target.MaintableMaxOpenConnections)))
 		if cErr != nil {
 			return nil, cErr
 		}
 
-		psqlArgs := target.PostgreSQLArgs{
+		psqlArgs := target.maintableQLArgs{
 			Enable:             enabled,
-			Format:             env.Get(formatEnv, kv.Get(target.PostgresFormat)),
-			ConnectionString:   env.Get(connectionStringEnv, kv.Get(target.PostgresConnectionString)),
-			Table:              env.Get(tableEnv, kv.Get(target.PostgresTable)),
-			QueueDir:           env.Get(queueDirEnv, kv.Get(target.PostgresQueueDir)),
+			Format:             env.Get(formatEnv, kv.Get(target.MaintableFormat)),
+			ConnectionString:   env.Get(connectionStringEnv, kv.Get(target.MaintableConnectionString)),
+			Table:              env.Get(tableEnv, kv.Get(target.MaintableTable)),
+			QueueDir:           env.Get(queueDirEnv, kv.Get(target.MaintableQueueDir)),
 			QueueLimit:         uint64(queueLimit),
 			MaxOpenConnections: maxOpenConnections,
 		}

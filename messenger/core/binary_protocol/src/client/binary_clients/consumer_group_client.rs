@@ -17,7 +17,7 @@
  */
 
 use async_trait::async_trait;
-use iggy_common::{ConsumerGroup, ConsumerGroupDetails, Identifier, IggyError};
+use messenger_common::{ConsumerGroup, ConsumerGroupDetails, Identifier, MessengerError};
 
 /// This trait defines the methods to interact with the consumer group module.
 #[async_trait]
@@ -30,7 +30,7 @@ pub trait ConsumerGroupClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<Option<ConsumerGroupDetails>, IggyError>;
+    ) -> Result<Option<ConsumerGroupDetails>, MessengerError>;
     /// Get the info about all the consumer groups for the given stream and topic by unique IDs or names.
     ///
     /// Authentication is required, and the permission to read the streams or topics.
@@ -38,7 +38,7 @@ pub trait ConsumerGroupClient {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<Vec<ConsumerGroup>, IggyError>;
+    ) -> Result<Vec<ConsumerGroup>, MessengerError>;
     /// Create a new consumer group for the given stream and topic by unique IDs or names.
     ///
     /// Authentication is required, and the permission to manage the streams or topics.
@@ -48,7 +48,7 @@ pub trait ConsumerGroupClient {
         topic_id: &Identifier,
         name: &str,
         group_id: Option<u32>,
-    ) -> Result<ConsumerGroupDetails, IggyError>;
+    ) -> Result<ConsumerGroupDetails, MessengerError>;
     /// Delete a consumer group by unique ID or name for the given stream and topic by unique IDs or names.
     ///
     /// Authentication is required, and the permission to manage the streams or topics.
@@ -57,7 +57,7 @@ pub trait ConsumerGroupClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
     /// Join a consumer group by unique ID or name for the given stream and topic by unique IDs or names.
     ///
     /// Authentication is required, and the permission to read the streams or topics.
@@ -66,7 +66,7 @@ pub trait ConsumerGroupClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
     /// Leave a consumer group by unique ID or name for the given stream and topic by unique IDs or names.
     ///
     /// Authentication is required, and the permission to read the streams or topics.
@@ -75,5 +75,5 @@ pub trait ConsumerGroupClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
 }

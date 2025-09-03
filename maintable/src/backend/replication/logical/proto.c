@@ -3,14 +3,14 @@
  * proto.c
  *		logical replication protocol functions
  *
- * Copyright (c) 2015-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2015-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/backend/replication/logical/proto.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/sysattr.h"
 #include "catalog/pg_namespace.h"

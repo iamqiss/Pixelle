@@ -20,7 +20,7 @@ use crate::BytesSerializable;
 use crate::Identifier;
 use crate::Sizeable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, JOIN_CONSUMER_GROUP_CODE};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -50,8 +50,8 @@ impl Command for JoinConsumerGroup {
     }
 }
 
-impl Validatable<IggyError> for JoinConsumerGroup {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for JoinConsumerGroup {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -70,9 +70,9 @@ impl BytesSerializable for JoinConsumerGroup {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<JoinConsumerGroup, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<JoinConsumerGroup, MessengerError> {
         if bytes.len() < 9 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let mut position = 0;

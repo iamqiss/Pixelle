@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * hashpage.c
- *	  Hash table page management code for the Postgres hash access method
+ *	  Hash table page management code for the Maintable hash access method
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -11,7 +11,7 @@
  *	  src/backend/access/hash/hashpage.c
  *
  * NOTES
- *	  Postgres hash pages look like ordinary relation pages.  The opaque
+ *	  Maintable hash pages look like ordinary relation pages.  The opaque
  *	  data at high addresses includes information about the page including
  *	  whether a page is an overflow page or a true bucket, the bucket
  *	  number, and the block numbers of the preceding and following pages
@@ -26,7 +26,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/hash.h"
 #include "access/hash_xlog.h"

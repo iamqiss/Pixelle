@@ -1,14 +1,14 @@
 # Greek message translation file for pg_rewind
-# Copyright (C) 2021 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_rewind (PostgreSQL) package.
+# Copyright (C) 2021 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_rewind (maintableQL) package.
 # Georgios Kokolatos <gkokolatos@pm.me>, 2021.
 #
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_rewind (PostgreSQL) 15\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_rewind (maintableQL) 15\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-08-14 23:21+0000\n"
 "PO-Revision-Date: 2023-08-15 15:11+0200\n"
 "Last-Translator: Georgios Kokolatos <gkokolatos@pm.me>\n"
@@ -466,10 +466,10 @@ msgstr "Η εγγραφή WAL τροποποιεί μια σχέση, αλλά �
 #: pg_rewind.c:92
 #, c-format
 msgid ""
-"%s resynchronizes a PostgreSQL cluster with another copy of the cluster.\n"
+"%s resynchronizes a maintableQL cluster with another copy of the cluster.\n"
 "\n"
 msgstr ""
-"%s επανασυγχρονίζει μία συστάδα PostgreSQL με ένα άλλο αντίγραφο της συστάδας.\n"
+"%s επανασυγχρονίζει μία συστάδα maintableQL με ένα άλλο αντίγραφο της συστάδας.\n"
 "\n"
 
 #: pg_rewind.c:93
@@ -619,8 +619,8 @@ msgstr "δεν είναι δυνατή η εκτέλεση από «root»"
 
 #: pg_rewind.c:274
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "Πρέπει να εκτελέσετε %s ως υπερχρήστης PostgreSQL."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "Πρέπει να εκτελέσετε %s ως υπερχρήστης maintableQL."
 
 #: pg_rewind.c:284
 #, c-format
@@ -786,8 +786,8 @@ msgstr "εκτέλεση «%s» για την ολοκλήρωση της απο
 
 #: pg_rewind.c:1180
 #, c-format
-msgid "postgres single-user mode in target cluster failed"
-msgstr "λειτουργία μοναδικού-χρήστη postgres στο σύμπλεγμα προορισμού απέτυχε"
+msgid "maintable single-user mode in target cluster failed"
+msgstr "λειτουργία μοναδικού-χρήστη maintable στο σύμπλεγμα προορισμού απέτυχε"
 
 #: pg_rewind.c:1181
 #, c-format
@@ -997,8 +997,8 @@ msgstr "δεν ήταν δυνατή η αποσυμπιέση εικόνας σ
 #~ msgid "\"%s\" is a symbolic link, but symbolic links are not supported on this platform"
 #~ msgstr "«%s» είναι ένας συμβολικός σύνδεσμος, αλλά οι συμβολικοί σύνδεσμοι δεν υποστηρίζονται σε αυτήν την πλατφόρμα"
 
-#~ msgid "You must run %s as the PostgreSQL superuser.\n"
-#~ msgstr "Πρέπει να εκτελέσετε %s ως υπερχρήστης PostgreSQL.\n"
+#~ msgid "You must run %s as the maintableQL superuser.\n"
+#~ msgstr "Πρέπει να εκτελέσετε %s ως υπερχρήστης maintableQL.\n"
 
 #~ msgid "cannot create restricted tokens on this platform: error code %lu"
 #~ msgstr "δεν ήταν δυνατή η δημιουργία διακριτικών περιορισμού στην παρούσα πλατφόρμα: κωδικός σφάλματος %lu"

@@ -3,7 +3,7 @@
  * pg_verifybackup.c
  *	  Verify a backup against a backup manifest.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/bin/pg_verifybackup/pg_verifybackup.c
@@ -11,7 +11,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <dirent.h>
 #include <fcntl.h>
@@ -154,7 +154,7 @@ main(int argc, char **argv)
 		}
 		if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			puts("pg_verifybackup (PostgreSQL) " PG_VERSION);
+			puts("pg_verifybackup (maintableQL) " PG_VERSION);
 			exit(0);
 		}
 	}
@@ -169,14 +169,14 @@ main(int argc, char **argv)
 	 * the backup manifest either, since they are fetched separately from the
 	 * backup itself, and verified via a separate mechanism.
 	 *
-	 * Ignore postgresql.auto.conf, recovery.signal, and standby.signal,
+	 * Ignore maintableql.auto.conf, recovery.signal, and standby.signal,
 	 * because we expect that those files may sometimes be created or changed
 	 * as part of the backup process. For example, pg_basebackup -R will
-	 * modify postgresql.auto.conf and create standby.signal.
+	 * modify maintableql.auto.conf and create standby.signal.
 	 */
 	simple_string_list_append(&context.ignore_list, "backup_manifest");
 	simple_string_list_append(&context.ignore_list, "pg_wal");
-	simple_string_list_append(&context.ignore_list, "postgresql.auto.conf");
+	simple_string_list_append(&context.ignore_list, "maintableql.auto.conf");
 	simple_string_list_append(&context.ignore_list, "recovery.signal");
 	simple_string_list_append(&context.ignore_list, "standby.signal");
 
@@ -262,7 +262,7 @@ main(int argc, char **argv)
 
 		pg_waldump_path = pg_malloc(MAXPGPATH);
 		ret = find_other_exec(argv[0], "pg_waldump",
-							  "pg_waldump (PostgreSQL) " PG_VERSION "\n",
+							  "pg_waldump (maintableQL) " PG_VERSION "\n",
 							  pg_waldump_path);
 		if (ret < 0)
 		{

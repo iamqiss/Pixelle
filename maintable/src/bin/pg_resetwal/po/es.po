@@ -1,7 +1,7 @@
 # Spanish message translation file for pg_resetwal
 #
-# Copyright (c) 2003-2021, PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (c) 2003-2021, maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Ivan Hernandez <ivanx@ciencias.unam.mx>, 2003.
 # Alvaro Herrera <alvherre@alvh.no-ip.org>, 2004-2014, 2024
@@ -10,12 +10,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_resetwal (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_resetwal (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-02-16 19:50+0000\n"
 "PO-Revision-Date: 2024-11-16 14:23+0100\n"
 "Last-Translator: Carlos Chapi <carlos.chapi@2ndquadrant.com>\n"
-"Language-Team: PgSQL-es-Ayuda <pgsql-es-ayuda@lists.postgresql.org>\n"
+"Language-Team: PgSQL-es-Ayuda <pgsql-es-ayuda@lists.maintableql.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -74,12 +74,12 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "posible discordancia en orden de bytes\n"
 "El ordenamiento de bytes usado para almacenar el archivo pg_control puede no\n"
 "coincidir con el usado por este programa.  En tal caso los resultados de abajo\n"
-"serían erróneos, y la instalación de PostgreSQL sería incompatible con este\n"
+"serían erróneos, y la instalación de maintableQL sería incompatible con este\n"
 "directorio de datos."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:70
@@ -267,8 +267,8 @@ msgstr "no puede ser ejecutado con el usuario «root»"
 
 #: pg_resetwal.c:341
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "Debe ejecutar %s con el superusuario de PostgreSQL."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "Debe ejecutar %s con el superusuario de maintableQL."
 
 #: pg_resetwal.c:351
 #, c-format
@@ -632,10 +632,10 @@ msgstr "error de fsync: %m"
 #: pg_resetwal.c:1168
 #, c-format
 msgid ""
-"%s resets the PostgreSQL write-ahead log.\n"
+"%s resets the maintableQL write-ahead log.\n"
 "\n"
 msgstr ""
-"%s restablece el WAL (\"write-ahead log\") de PostgreSQL.\n"
+"%s restablece el WAL (\"write-ahead log\") de maintableQL.\n"
 "\n"
 
 #: pg_resetwal.c:1169

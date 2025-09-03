@@ -1,8 +1,8 @@
-# Apache Iggy Connectors - SDK
+# Apache Messenger Connectors - SDK
 
 SDK provides the commonly used structs and traits such as `Sink` and `Source`, along with the `sink_connector` and `source_connector` macros to be used when developing connectors.
 
-Moreover, it contains both, the `decoders` and `encoders` modules, implementing either `StreamDecoder` or `StreamEncoder` traits, which are used when consuming or producing data from/to Iggy streams.
+Moreover, it contains both, the `decoders` and `encoders` modules, implementing either `StreamDecoder` or `StreamEncoder` traits, which are used when consuming or producing data from/to Messenger streams.
 
 SDK is WiP, and it'd certainly benefit from having the support of multiple format schemas, such as Protobuf, Avro, Flatbuffers etc. including decoding/encoding the data between the different formats (when applicable) and supporting the data transformations whenever possible (easy for JSON, but complex for Bincode for example).
 
@@ -23,18 +23,18 @@ The SDK includes support for Protocol Buffers (protobuf) format with both encodi
 
 ### Configuration Example
 
-Here's a complete example configuration for using Protocol Buffers with Iggy connectors:
+Here's a complete example configuration for using Protocol Buffers with Messenger connectors:
 
 ```toml
-[iggy]
+[messenger]
 address = "localhost:8090"
-username = "iggy"
-password = "iggy"
+username = "messenger"
+password = "messenger"
 
 [sources.protobuf_source]
 enabled = true
 name = "Protobuf Source"
-path = "target/release/libiggy_connector_protobuf_source"
+path = "target/release/libmessenger_connector_protobuf_source"
 
 [[sources.protobuf_source.streams]]
 stream = "protobuf_stream"
@@ -51,7 +51,7 @@ use_any_wrapper = true
 [sinks.protobuf_sink]
 enabled = true
 name = "Protobuf Sink"
-path = "target/release/libiggy_connector_protobuf_sink"
+path = "target/release/libmessenger_connector_protobuf_sink"
 
 [[sinks.protobuf_sink.streams]]
 stream = "protobuf_stream"
@@ -101,7 +101,7 @@ preserve_structure = false
 You can load or reload schemas programmatically:
 
 ```rust
-use iggy_connector_sdk::decoders::proto::{ProtoStreamDecoder, ProtoConfig};
+use messenger_connector_sdk::decoders::proto::{ProtoStreamDecoder, ProtoConfig};
 use std::path::PathBuf;
 
 let mut decoder = ProtoStreamDecoder::new(ProtoConfig {
@@ -125,7 +125,7 @@ match decoder.update_config(config_with_schema, true) {
 #### Schema Registry Integration
 
 ```rust
-use iggy_connector_sdk::encoders::proto::{ProtoStreamEncoder, ProtoEncoderConfig};
+use messenger_connector_sdk::encoders::proto::{ProtoStreamEncoder, ProtoEncoderConfig};
 
 let mut encoder = ProtoStreamEncoder::new_with_config(ProtoEncoderConfig {
     schema_registry_url: Some("http://schema-registry:8081".to_string()),
@@ -142,8 +142,8 @@ if let Err(e) = encoder.load_schema() {
 #### Creating Converters with Schema
 
 ```rust
-use iggy_connector_sdk::transforms::proto_convert::{ProtoConvert, ProtoConvertConfig};
-use iggy_connector_sdk::Schema;
+use messenger_connector_sdk::transforms::proto_convert::{ProtoConvert, ProtoConvertConfig};
+use messenger_connector_sdk::Schema;
 use std::collections::HashMap;
 use std::path::PathBuf;
 

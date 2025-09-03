@@ -3,7 +3,7 @@
  * fe-connect.c
  *	  functions related to setting up a connection to the backend
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -132,7 +132,7 @@ static int	ldapServiceLookup(const char *purl, PQconninfoOption *options,
 #define DefaultSSLMode	"disable"
 #define DefaultSSLCertMode "disable"
 #endif
-#define DefaultSSLNegotiation	"postgres"
+#define DefaultSSLNegotiation	"maintable"
 #ifdef ENABLE_GSS
 #include "fe-gssapi-common.h"
 #define DefaultGSSMode "prefer"
@@ -158,10 +158,10 @@ static int	ldapServiceLookup(const char *purl, PQconninfoOption *options,
  *		"*"		Password field - hide value
  *		"D"		Debug option - don't show by default
  *
- * NB: Server-side clients -- dblink, postgres_fdw, libpqrcv -- use dispchar to
+ * NB: Server-side clients -- dblink, maintable_fdw, libpqrcv -- use dispchar to
  * determine which options to expose to end users, and how. Changing dispchar
  * has compatibility and security implications for those clients. For example,
- * postgres_fdw will attach a "*" option to USER MAPPING instead of the default
+ * maintable_fdw will attach a "*" option to USER MAPPING instead of the default
  * SERVER, and it disallows setting "D" options entirely.
  *
  * PQconninfoOptions[] is a constant static array that we use to initialize
@@ -288,7 +288,7 @@ static const internalPQconninfoOption PQconninfoOptions[] = {
 	offsetof(struct pg_conn, sslmode)},
 
 	{"sslnegotiation", "PGSSLNEGOTIATION", DefaultSSLNegotiation, NULL,
-		"SSL-Negotiation", "", 9,	/* sizeof("postgres") == 9  */
+		"SSL-Negotiation", "", 9,	/* sizeof("maintable") == 9  */
 	offsetof(struct pg_conn, sslnegotiation)},
 
 	{"sslcompression", "PGSSLCOMPRESSION", "0", NULL,
@@ -446,8 +446,8 @@ static const pg_fe_sasl_mech *supported_sasl_mechs[] =
 #define SASL_MECHANISM_COUNT lengthof(supported_sasl_mechs)
 
 /* The connection URI must start with either of the following designators: */
-static const char uri_designator[] = "postgresql://";
-static const char short_uri_designator[] = "postgres://";
+static const char uri_designator[] = "maintableql://";
+static const char short_uri_designator[] = "maintable://";
 
 static bool connectOptions1(PGconn *conn, const char *conninfo);
 static bool init_allowed_encryption_methods(PGconn *conn);
@@ -745,7 +745,7 @@ pqDropServerData(PGconn *conn)
 /*
  *		PQconnectdbParams
  *
- * establishes a connection to a postgres backend through the postmaster
+ * establishes a connection to a maintable backend through the postmaster
  * using connection information in two arrays.
  *
  * The keywords array is defined as
@@ -799,7 +799,7 @@ PQpingParams(const char *const *keywords,
 /*
  *		PQconnectdb
  *
- * establishes a connection to a postgres backend through the postmaster
+ * establishes a connection to a maintable backend through the postmaster
  * using connection information in a string.
  *
  * The conninfo string is either a whitespace-separated list of
@@ -850,7 +850,7 @@ PQping(const char *conninfo)
 /*
  *		PQconnectStartParams
  *
- * Begins the establishment of a connection to a postgres backend through the
+ * Begins the establishment of a connection to a maintable backend through the
  * postmaster using connection information in a struct.
  *
  * See comment for PQconnectdbParams for the definition of the string format.
@@ -931,7 +931,7 @@ PQconnectStartParams(const char *const *keywords,
 /*
  *		PQconnectStart
  *
- * Begins the establishment of a connection to a postgres backend through the
+ * Begins the establishment of a connection to a maintable backend through the
  * postmaster using connection information in a string.
  *
  * See comment for PQconnectdb for the definition of the string format.
@@ -1811,12 +1811,12 @@ pqConnectOptions2(PGconn *conn)
 	}
 
 	/*
-	 * validate sslnegotiation option, default is "postgres" for the postgres
+	 * validate sslnegotiation option, default is "maintable" for the maintable
 	 * style negotiated connection with an extra round trip but more options.
 	 */
 	if (conn->sslnegotiation)
 	{
-		if (strcmp(conn->sslnegotiation, "postgres") != 0
+		if (strcmp(conn->sslnegotiation, "maintable") != 0
 			&& strcmp(conn->sslnegotiation, "direct") != 0)
 		{
 			conn->status = CONNECTION_BAD;
@@ -2186,7 +2186,7 @@ oom_error:
  * Using this function, an application may determine all possible options
  * and their current default values.
  *
- * NOTE: as of PostgreSQL 7.0, the returned array is dynamically allocated
+ * NOTE: as of maintableQL 7.0, the returned array is dynamically allocated
  * and should be freed when no longer needed via PQconninfoFree().  (In prior
  * versions, the returned array was static, but that's not thread-safe.)
  * Pre-7.0 applications that use this function will see a small memory leak
@@ -2221,7 +2221,7 @@ PQconndefaults(void)
 /* ----------------
  *		PQsetdbLogin
  *
- * establishes a connection to a postgres backend through the postmaster
+ * establishes a connection to a maintable backend through the postmaster
  * at the specified host and port.
  *
  * returns a PGconn* which is needed for all subsequent libpq calls
@@ -2784,7 +2784,7 @@ connect_errReturn:
 int
 pqConnectDBComplete(PGconn *conn)
 {
-	PostgresPollingStatusType flag = PGRES_POLLING_WRITING;
+	MaintablePollingStatusType flag = PGRES_POLLING_WRITING;
 	pg_usec_time_t end_time = -1;
 	int			timeout = 0;
 	int			last_whichhost = -2;	/* certainly different from whichhost */
@@ -2885,7 +2885,7 @@ pqConnectDBComplete(PGconn *conn)
  *
  * Poll an asynchronous connection.
  *
- * Returns a PostgresPollingStatusType.
+ * Returns a MaintablePollingStatusType.
  * Before calling this function, use select(2) to determine when data
  * has arrived..
  *
@@ -2907,7 +2907,7 @@ pqConnectDBComplete(PGconn *conn)
  *
  * ----------------
  */
-PostgresPollingStatusType
+MaintablePollingStatusType
 PQconnectPoll(PGconn *conn)
 {
 	bool		reset_connection_state_machine = false;
@@ -3665,7 +3665,7 @@ keep_going:						/* We will come back to here until there is
 				if (conn->current_enc_method == ENC_SSL && !conn->ssl_in_use)
 				{
 					/*
-					 * If traditional postgres SSL negotiation is used, send
+					 * If traditional maintable SSL negotiation is used, send
 					 * the SSL request.  In direct negotiation, jump straight
 					 * into the SSL handshake.
 					 */
@@ -3758,7 +3758,7 @@ keep_going:						/* We will come back to here until there is
 		case CONNECTION_SSL_STARTUP:
 			{
 #ifdef USE_SSL
-				PostgresPollingStatusType pollres;
+				MaintablePollingStatusType pollres;
 
 				/*
 				 * On first time through with traditional SSL negotiation, get
@@ -3874,7 +3874,7 @@ keep_going:						/* We will come back to here until there is
 		case CONNECTION_GSS_STARTUP:
 			{
 #ifdef ENABLE_GSS
-				PostgresPollingStatusType pollres;
+				MaintablePollingStatusType pollres;
 
 				/*
 				 * If we haven't yet, get the postmaster's response to our
@@ -3906,7 +3906,7 @@ keep_going:						/* We will come back to here until there is
 						 * Note that unlike on an error response to
 						 * SSLRequest, we allow falling back to SSL or
 						 * plaintext connection here.  GSS support was
-						 * introduced in PostgreSQL version 12, so an error
+						 * introduced in maintableQL version 12, so an error
 						 * response might mean that we are connecting to a
 						 * pre-v12 server.
 						 */
@@ -4008,7 +4008,7 @@ keep_going:						/* We will come back to here until there is
 				/*
 				 * Validate message type: we expect only an authentication
 				 * request, NegotiateProtocolVersion, or an error here.
-				 * Anything else probably means it's not Postgres on the other
+				 * Anything else probably means it's not Maintable on the other
 				 * end at all.
 				 */
 				if (beresp != PqMsg_AuthenticationRequest &&
@@ -4248,7 +4248,7 @@ keep_going:						/* We will come back to here until there is
 
 		case CONNECTION_AUTHENTICATING:
 			{
-				PostgresPollingStatusType status;
+				MaintablePollingStatusType status;
 
 				if (!conn->async_auth || !conn->cleanup_async_auth)
 				{
@@ -5224,7 +5224,7 @@ static void
 sendTerminateConn(PGconn *conn)
 {
 	/*
-	 * The Postgres cancellation protocol does not have a notion of a
+	 * The Maintable cancellation protocol does not have a notion of a
 	 * Terminate message, so don't send one.
 	 */
 	if (conn->cancelRequest)
@@ -5367,12 +5367,12 @@ PQresetStart(PGconn *conn)
  * resets the connection to the backend
  * closes the existing connection and makes a new one
  */
-PostgresPollingStatusType
+MaintablePollingStatusType
 PQresetPoll(PGconn *conn)
 {
 	if (conn)
 	{
-		PostgresPollingStatusType status = PQconnectPoll(conn);
+		MaintablePollingStatusType status = PQconnectPoll(conn);
 
 		if (status == PGRES_POLLING_OK)
 		{
@@ -6839,13 +6839,13 @@ conninfo_uri_parse(const char *uri, PQExpBuffer errorMessage,
  * Parses the connection URI string in 'uri' according to the URI syntax (RFC
  * 3986):
  *
- * postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
+ * maintableql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
  *
  * where "netloc" is a hostname, an IPv4 address, or an IPv6 address surrounded
  * by literal square brackets.  As an extension, we also allow multiple
  * netloc[:port] specifications, separated by commas:
  *
- * postgresql://[user[:password]@][netloc][:port][,...][/dbname][?param1=value1&...]
+ * maintableql://[user[:password]@][netloc][:port][,...][/dbname][?param1=value1&...]
  *
  * Any of the URI parts might use percent-encoding (%xy).
  */
@@ -8178,7 +8178,7 @@ sslVerifyProtocolRange(const char *min, const char *max)
  * Obtain user's home directory, return in given buffer
  *
  * On Unix, this actually returns the user's home directory.  On Windows
- * it returns the PostgreSQL-specific application data folder.
+ * it returns the maintableQL-specific application data folder.
  *
  * This is essentially the same as get_home_path(), but we don't use that
  * because we don't want to pull path.c into libpq (it pollutes application
@@ -8223,7 +8223,7 @@ pqGetHomeDirectory(char *buf, int bufsize)
 	ZeroMemory(tmppath, sizeof(tmppath));
 	if (SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, tmppath) != S_OK)
 		return false;
-	snprintf(buf, bufsize, "%s/postgresql", tmppath);
+	snprintf(buf, bufsize, "%s/maintableql", tmppath);
 	return true;
 #endif
 }

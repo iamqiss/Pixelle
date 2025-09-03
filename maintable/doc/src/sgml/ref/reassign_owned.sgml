@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/reassign_owned.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-reassign-owned">
@@ -106,7 +106,7 @@ REASSIGN OWNED BY { <replaceable class="parameter">old_role</replaceable> | CURR
 
   <para>
    The <command>REASSIGN OWNED</command> command is a
-   <productname>PostgreSQL</productname> extension.
+   <productname>maintableQL</productname> extension.
   </para>
  </refsect1>
 

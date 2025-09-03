@@ -1,19 +1,19 @@
-# Copyright (c) 2024-2025, PostgreSQL Global Development Group
+# Copyright (c) 2024-2025, maintableQL Global Development Group
 
 #
 # Test using a standby server as the subscriber.
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 program_help_ok('pg_createsubscriber');
 program_version_ok('pg_createsubscriber');
 program_options_handling_ok('pg_createsubscriber');
 
-my $datadir = PostgreSQL::Test::Utils::tempdir;
+my $datadir = maintableQL::Test::Utils::tempdir;
 
 # Generate a database with a name made of a range of ASCII characters.
 # Extracted from 002_pg_upgrade.pl.
@@ -119,20 +119,20 @@ command_fails(
 	'wrong number of replication slot names');
 
 # Set up node P as primary
-my $node_p = PostgreSQL::Test::Cluster->new('node_p');
+my $node_p = maintableQL::Test::Cluster->new('node_p');
 my $pconnstr = $node_p->connstr;
 $node_p->init(allows_streaming => 'logical');
 # Disable autovacuum to avoid generating xid during stats update as otherwise
 # the new XID could then be replicated to standby at some random point making
 # slots at primary lag behind standby during slot sync.
-$node_p->append_conf('postgresql.conf', 'autovacuum = off');
+$node_p->append_conf('maintableql.conf', 'autovacuum = off');
 $node_p->start;
 
 # Set up node F as about-to-fail node
 # Force it to initialize a new cluster instead of copying a
 # previously initdb'd cluster. New cluster has a different system identifier so
 # we can test if the target cluster is a copy of the source cluster.
-my $node_f = PostgreSQL::Test::Cluster->new('node_f');
+my $node_f = maintableQL::Test::Cluster->new('node_f');
 $node_f->init(force_initdb => 1, allows_streaming => 'logical');
 
 # On node P
@@ -152,19 +152,19 @@ $node_p->safe_psql($db2,
 
 # Set up node S as standby linking to node P
 $node_p->backup('backup_1');
-my $node_s = PostgreSQL::Test::Cluster->new('node_s');
+my $node_s = maintableQL::Test::Cluster->new('node_s');
 $node_s->init_from_backup($node_p, 'backup_1', has_streaming => 1);
 $node_s->append_conf(
-	'postgresql.conf', qq[
+	'maintableql.conf', qq[
 primary_slot_name = '$slotname'
-primary_conninfo = '$pconnstr dbname=postgres'
+primary_conninfo = '$pconnstr dbname=maintable'
 hot_standby_feedback = on
 ]);
 $node_s->set_standby_mode();
 $node_s->start;
 
 # Set up node T as standby linking to node P then promote it
-my $node_t = PostgreSQL::Test::Cluster->new('node_t');
+my $node_t = maintableQL::Test::Cluster->new('node_t');
 $node_t->init_from_backup($node_p, 'backup_1', has_streaming => 1);
 $node_t->set_standby_mode();
 $node_t->start;
@@ -217,9 +217,9 @@ command_fails(
 
 # Set up node C as standby linking to node S
 $node_s->backup('backup_2');
-my $node_c = PostgreSQL::Test::Cluster->new('node_c');
+my $node_c = maintableQL::Test::Cluster->new('node_c');
 $node_c->init_from_backup($node_s, 'backup_2', has_streaming => 1);
-$node_c->adjust_conf('postgresql.conf', 'primary_slot_name', undef);
+$node_c->adjust_conf('maintableql.conf', 'primary_slot_name', undef);
 $node_c->set_standby_mode();
 
 # Run pg_createsubscriber on node C (P -> S -> C)
@@ -239,7 +239,7 @@ command_fails(
 
 # Check some unmet conditions on node P
 $node_p->append_conf(
-	'postgresql.conf', q{
+	'maintableql.conf', q{
 wal_level = replica
 max_replication_slots = 1
 max_wal_senders = 1
@@ -264,7 +264,7 @@ command_fails(
 # Restore default settings here but only apply it after testing standby. Some
 # standby settings should not be a lower setting than on the primary.
 $node_p->append_conf(
-	'postgresql.conf', q{
+	'maintableql.conf', q{
 wal_level = logical
 max_replication_slots = 10
 max_wal_senders = 10
@@ -273,7 +273,7 @@ max_worker_processes = 8
 
 # Check some unmet conditions on node S
 $node_s->append_conf(
-	'postgresql.conf', q{
+	'maintableql.conf', q{
 max_active_replication_origins = 1
 max_logical_replication_workers = 1
 max_worker_processes = 2
@@ -292,7 +292,7 @@ command_fails(
 	],
 	'standby contains unmet conditions on node S');
 $node_s->append_conf(
-	'postgresql.conf', q{
+	'maintableql.conf', q{
 max_active_replication_origins = 10
 max_logical_replication_workers = 4
 max_worker_processes = 8
@@ -309,8 +309,8 @@ $node_s->start;
 # Wait for the standby to catch up so that the standby is not lagging behind
 # the failover slot.
 $node_p->wait_for_replay_catchup($node_s);
-$node_s->safe_psql('postgres', "SELECT pg_sync_replication_slots()");
-my $result = $node_s->safe_psql('postgres',
+$node_s->safe_psql('maintable', "SELECT pg_sync_replication_slots()");
+my $result = $node_s->safe_psql('maintable',
 	"SELECT slot_name FROM pg_replication_slots WHERE slot_name = '$fslotname' AND synced AND NOT temporary"
 );
 is($result, 'failover_slot', 'failover slot is synced');
@@ -352,7 +352,7 @@ command_ok(
 		'pg_createsubscriber',
 		'--verbose',
 		'--dry-run',
-		'--recovery-timeout' => $PostgreSQL::Test::Utils::timeout_default,
+		'--recovery-timeout' => $maintableQL::Test::Utils::timeout_default,
 		'--pgdata' => $node_s->data_dir,
 		'--publisher-server' => $node_p->connstr($db1),
 		'--socketdir' => $node_s->host,
@@ -368,7 +368,7 @@ command_ok(
 
 # Check if node S is still a standby
 $node_s->start;
-is($node_s->safe_psql('postgres', 'SELECT pg_catalog.pg_is_in_recovery()'),
+is($node_s->safe_psql('maintable', 'SELECT pg_catalog.pg_is_in_recovery()'),
 	't', 'standby is in recovery');
 $node_s->stop;
 
@@ -425,7 +425,7 @@ my ($stdout, $stderr) = run_command(
 		'pg_createsubscriber',
 		'--verbose',
 		'--dry-run',
-		'--recovery-timeout' => $PostgreSQL::Test::Utils::timeout_default,
+		'--recovery-timeout' => $maintableQL::Test::Utils::timeout_default,
 		'--pgdata' => $node_s->data_dir,
 		'--publisher-server' => $node_p->connstr,
 		'--socketdir' => $node_s->host,
@@ -435,7 +435,7 @@ my ($stdout, $stderr) = run_command(
 	'run pg_createsubscriber with --all');
 
 # Verify that the required logical replication objects are output.
-# The expected count 3 refers to postgres, $db1 and $db2 databases.
+# The expected count 3 refers to maintable, $db1 and $db2 databases.
 is(scalar(() = $stderr =~ /creating publication/g),
 	3, "verify publications are created for all databases");
 is(scalar(() = $stderr =~ /creating the replication slot/g),
@@ -451,7 +451,7 @@ command_ok(
 	[
 		'pg_createsubscriber',
 		'--verbose', '--verbose',
-		'--recovery-timeout' => $PostgreSQL::Test::Utils::timeout_default,
+		'--recovery-timeout' => $maintableQL::Test::Utils::timeout_default,
 		'--pgdata' => $node_s->data_dir,
 		'--publisher-server' => $node_p->connstr($db1),
 		'--socketdir' => $node_s->host,
@@ -489,7 +489,7 @@ is($node_s->safe_psql($db1, "SELECT COUNT(*) FROM pg_publication;"),
 # Verify that all subtwophase states are pending or enabled,
 # e.g. there are no subscriptions where subtwophase is disabled ('d')
 is( $node_s->safe_psql(
-		'postgres',
+		'maintable',
 		"SELECT count(1) = 0 FROM pg_subscription WHERE subtwophasestate = 'd'"
 	),
 	't',
@@ -497,14 +497,14 @@ is( $node_s->safe_psql(
 
 # Confirm the pre-existing subscription has been removed
 $result = $node_s->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	SELECT count(*) FROM pg_subscription WHERE subname = '$dummy_sub'
 ));
 is($result, qq(0), 'pre-existing subscription was dropped');
 
 # Get subscription names
 $result = $node_s->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	SELECT subname FROM pg_subscription WHERE subname ~ '^pg_createsubscriber_'
 ));
 my @subnames = split("\n", $result);
@@ -531,9 +531,9 @@ $result = $node_s->safe_psql($db2, 'SELECT * FROM tbl2');
 is($result, qq(row 1), "logical replication works in database $db2");
 
 # Different system identifier?
-my $sysid_p = $node_p->safe_psql('postgres',
+my $sysid_p = $node_p->safe_psql('maintable',
 	'SELECT system_identifier FROM pg_control_system()');
-my $sysid_s = $node_s->safe_psql('postgres',
+my $sysid_s = $node_s->safe_psql('maintable',
 	'SELECT system_identifier FROM pg_control_system()');
 ok($sysid_p != $sysid_s, 'system identifier was changed');
 

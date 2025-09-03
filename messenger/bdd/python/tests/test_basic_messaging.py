@@ -21,15 +21,15 @@ Basic messaging BDD test implementation for Python SDK
 import asyncio
 import socket
 from pytest_bdd import scenarios, given, when, then, parsers
-from apache_iggy import IggyClient, SendMessage, PollingStrategy
+from apache_messenger import MessengerClient, SendMessage, PollingStrategy
 
 # Load scenarios from the shared feature file
 scenarios('/app/features/basic_messaging.feature')
 
 
-@given('I have a running Iggy server')
+@given('I have a running Messenger server')
 def running_server(context):
-    """Ensure we have a running Iggy server and create client"""
+    """Ensure we have a running Messenger server and create client"""
     async def _connect():
         # Resolve hostname to IP if needed
         host, port = context.server_addr.split(':')
@@ -41,7 +41,7 @@ def running_server(context):
             # If resolution fails, use as-is (might be an IP already)
             resolved_addr = context.server_addr
 
-        context.client = IggyClient(resolved_addr)
+        context.client = MessengerClient(resolved_addr)
         await context.client.connect()
         await context.client.ping()  # Health check
 
@@ -52,7 +52,7 @@ def running_server(context):
 def authenticated_root_user(context):
     """Authenticate as root user"""
     async def _login():
-        await context.client.login_user("iggy", "iggy")
+        await context.client.login_user("messenger", "messenger")
 
     asyncio.run(_login())
 

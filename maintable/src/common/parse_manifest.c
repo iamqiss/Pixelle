@@ -3,7 +3,7 @@
  * parse_manifest.c
  *	  Parse a backup manifest in JSON format.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/common/parse_manifest.c
@@ -11,7 +11,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "common/jsonapi.h"
 #include "common/parse_manifest.h"
@@ -412,7 +412,7 @@ json_manifest_object_field_start(void *state, char *fname, bool isnull)
 			 */
 			if (!parse->saw_version_field)
 			{
-				if (strcmp(fname, "PostgreSQL-Backup-Manifest-Version") != 0)
+				if (strcmp(fname, "maintableQL-Backup-Manifest-Version") != 0)
 					json_manifest_parse_failure(parse->context,
 												"expected version indicator");
 				parse->state = JM_EXPECT_VERSION_VALUE;
@@ -507,7 +507,7 @@ json_manifest_object_field_start(void *state, char *fname, bool isnull)
  * of the field, and we'll get the corresponding value here. When we're in
  * the toplevel object, the parse state itself tells us which field this is.
  *
- * In all cases except for PostgreSQL-Backup-Manifest-Version, which we
+ * In all cases except for maintableQL-Backup-Manifest-Version, which we
  * can just check on the spot, the goal here is just to save the value in
  * the parse state for later use. We don't actually do anything until we
  * reach either the end of the object representing this file, or the end

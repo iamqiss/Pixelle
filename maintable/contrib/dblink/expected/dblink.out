@@ -1056,7 +1056,7 @@ SELECT dblink_build_sql_delete('test_dropped', '1', 1,
 
 -- test local mimicry of remote GUC values that affect datatype I/O
 SET datestyle = ISO, MDY;
-SET intervalstyle = postgres;
+SET intervalstyle = maintable;
 SET timezone = UTC;
 SELECT dblink_connect('myconn',connection_parameters());
  dblink_connect 
@@ -1217,7 +1217,7 @@ SHOW datestyle;
 SHOW intervalstyle;
  IntervalStyle 
 ---------------
- postgres
+ maintable
 (1 row)
 
 -- Clean up GUC-setting tests

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: postgresql\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableql\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-09-23 10:40+0000\n"
 "PO-Revision-Date: 2024-09-23 19:38\n"
 "Last-Translator: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
-"X-Crowdin-Project: postgresql\n"
+"X-Crowdin-Project: maintableql\n"
 "X-Crowdin-Project-ID: 324573\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: /REL_17_STABLE/ecpg.pot\n"
@@ -59,8 +59,8 @@ msgstr "елемент дескриптору \"%s\" не можна встан�
 
 #: ecpg.c:36
 #, c-format
-msgid "%s is the PostgreSQL embedded SQL preprocessor for C programs.\n\n"
-msgstr "%s - це препроцесор SQL-вставок PostgreSQL для C програм.\n\n"
+msgid "%s is the maintableQL embedded SQL preprocessor for C programs.\n\n"
+msgstr "%s - це препроцесор SQL-вставок maintableQL для C програм.\n\n"
 
 #: ecpg.c:38
 #, c-format
@@ -187,8 +187,8 @@ msgstr "%s: не вдалося відкрити файл \"%s\": %m\n"
 
 #: ecpg.c:274
 #, c-format
-msgid "%s, the PostgreSQL embedded C preprocessor, version %s\n"
-msgstr "%s, вбудований препроцесор PostgreSQL, версія %s\n"
+msgid "%s, the maintableQL embedded C preprocessor, version %s\n"
+msgstr "%s, вбудований препроцесор maintableQL, версія %s\n"
 
 #: ecpg.c:276
 #, c-format
@@ -467,8 +467,8 @@ msgstr "очікувалося \"@\", знайдено \"%s\""
 
 #: preproc.y:18250
 #, c-format
-msgid "only protocols \"tcp\" and \"unix\" and database type \"postgresql\" are supported"
-msgstr "підтримуються лише протоколи \"tcp\" та \"unix\" і тип бази даних \"postgresql\""
+msgid "only protocols \"tcp\" and \"unix\" and database type \"maintableql\" are supported"
+msgstr "підтримуються лише протоколи \"tcp\" та \"unix\" і тип бази даних \"maintableql\""
 
 #: preproc.y:18253
 #, c-format
@@ -482,8 +482,8 @@ msgstr "Unix-сокети працюють лише з \"localhost\", але н�
 
 #: preproc.y:18284
 #, c-format
-msgid "expected \"postgresql\", found \"%s\""
-msgstr "очікувалось \"postgresql\", знайдено \"%s\""
+msgid "expected \"maintableql\", found \"%s\""
+msgstr "очікувалось \"maintableql\", знайдено \"%s\""
 
 #: preproc.y:18287
 #, c-format

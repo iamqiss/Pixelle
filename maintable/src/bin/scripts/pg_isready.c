@@ -1,15 +1,15 @@
 /*-------------------------------------------------------------------------
  *
- * pg_isready --- checks the status of the PostgreSQL server
+ * pg_isready --- checks the status of the maintableQL server
  *
- * Copyright (c) 2013-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2013-2025, maintableQL Global Development Group
  *
  * src/bin/scripts/pg_isready.c
  *
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #include "common.h"
 #include "common/logging.h"
 #include "fe_utils/option_utils.h"
@@ -136,8 +136,8 @@ main(int argc, char **argv)
 	 * Get the host and port so we can display them in our output
 	 */
 	if (pgdbname &&
-		(strncmp(pgdbname, "postgresql://", 13) == 0 ||
-		 strncmp(pgdbname, "postgres://", 11) == 0 ||
+		(strncmp(pgdbname, "maintableql://", 13) == 0 ||
+		 strncmp(pgdbname, "maintable://", 11) == 0 ||
 		 strchr(pgdbname, '=') != NULL))
 	{
 		opts = PQconninfoParse(pgdbname, &errmsg);
@@ -222,7 +222,7 @@ main(int argc, char **argv)
 static void
 help(const char *progname)
 {
-	printf(_("%s issues a connection check to a PostgreSQL database.\n\n"), progname);
+	printf(_("%s issues a connection check to a maintableQL database.\n\n"), progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]...\n"), progname);
 

@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
-      IGGY_CI_BUILD: true
+      MESSENGER_CI_BUILD: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -56,22 +56,22 @@ jobs:
         if: startsWith(inputs.component, 'bdd-') && startsWith(inputs.task, 'bdd-')
         run: |
           echo "Building server binary and CLI for BDD tests with sccache..."
-          cargo build --locked --bin iggy-server --bin iggy
+          cargo build --locked --bin messenger-server --bin messenger
 
-          echo "Server binary built at: target/debug/iggy-server"
-          ls -lh target/debug/iggy-server
+          echo "Server binary built at: target/debug/messenger-server"
+          ls -lh target/debug/messenger-server
 
-          echo "CLI binary built at: target/debug/iggy"
-          ls -lh target/debug/iggy
+          echo "CLI binary built at: target/debug/messenger"
+          ls -lh target/debug/messenger
 
           # Verify the binary exists and is executable
-          if [ ! -f "target/debug/iggy-server" ]; then
-            echo "ERROR: Server binary not found at target/debug/iggy-server"
+          if [ ! -f "target/debug/messenger-server" ]; then
+            echo "ERROR: Server binary not found at target/debug/messenger-server"
             exit 1
           fi
 
-          if [ ! -f "target/debug/iggy" ]; then
-            echo "ERROR: CLI binary not found at target/debug/iggy"
+          if [ ! -f "target/debug/messenger" ]; then
+            echo "ERROR: CLI binary not found at target/debug/messenger"
             exit 1
           fi
 
@@ -83,12 +83,12 @@ jobs:
 
           echo "Running BDD tests for SDK: $SDK_NAME"
           echo "Current directory: $(pwd)"
-          echo "Server binary location: $(ls -lh target/debug/iggy-server)"
-          echo "CLI binary location: $(ls -lh target/debug/iggy)"
+          echo "Server binary location: $(ls -lh target/debug/messenger-server)"
+          echo "CLI binary location: $(ls -lh target/debug/messenger)"
 
           # Export path to the pre-built server and cli binaries (relative to repo root)
-          export IGGY_SERVER_PATH="target/debug/iggy-server"
-          export IGGY_CLI_PATH="target/debug/iggy"
+          export MESSENGER_SERVER_PATH="target/debug/messenger-server"
+          export MESSENGER_CLI_PATH="target/debug/messenger"
           ./scripts/run-bdd-tests.sh "$SDK_NAME"
 
       - name: Clean up Docker resources (BDD)

@@ -4,7 +4,7 @@
  *	  implementation of value nodes
  *
  *
- * Copyright (c) 2003-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2003-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "nodes/value.h"
 

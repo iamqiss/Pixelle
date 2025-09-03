@@ -20,7 +20,7 @@ use crate::Client;
 use crate::cli::cli_command::{CliCommand, PRINT_TARGET};
 use anyhow::Context;
 use async_trait::async_trait;
-use iggy_common::delete_personal_access_token::DeletePersonalAccessToken;
+use messenger_common::delete_personal_access_token::DeletePersonalAccessToken;
 use keyring::Entry;
 use tracing::{Level, event};
 
@@ -58,7 +58,7 @@ impl CliCommand for DeletePersonalAccessTokenCmd {
                 )
             })?;
 
-        let server_address = format!("iggy:{}", self.server_address);
+        let server_address = format!("messenger:{}", self.server_address);
         let entry = Entry::new(&server_address, &self.delete_token.name)?;
         event!(target: PRINT_TARGET, Level::DEBUG,"Checking token presence under service: {} and name: {}",
                 server_address, self.delete_token.name);

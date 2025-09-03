@@ -3,7 +3,7 @@
 
    <para>
     The functions described in this section are used to control and
-    monitor a <productname>PostgreSQL</productname> installation.
+    monitor a <productname>maintableQL</productname> installation.
    </para>
 
   <sect2 id="functions-admin-set">
@@ -193,7 +193,7 @@
         <returnvalue>boolean</returnvalue>
        </para>
        <para>
-        Causes all processes of the <productname>PostgreSQL</productname>
+        Causes all processes of the <productname>maintableQL</productname>
         server to reload their configuration files.  (This is initiated by
         sending a <systemitem>SIGHUP</systemitem> signal to the postmaster
         process, which in turn sends <systemitem>SIGHUP</systemitem> to each
@@ -262,7 +262,7 @@
     The process ID of an active backend can be found from
     the <structfield>pid</structfield> column of the
     <structname>pg_stat_activity</structname> view, or by listing the
-    <command>postgres</command> processes on the server (using
+    <command>maintable</command> processes on the server (using
     <application>ps</application> on Unix or the <application>Task
     Manager</application> on <productname>Windows</productname>).
     The role of an active backend can be found from the
@@ -274,7 +274,7 @@
     <function>pg_log_backend_memory_contexts</function> can be used
     to log the memory contexts of a backend process. For example:
 <programlisting>
-postgres=# SELECT pg_log_backend_memory_contexts(pg_backend_pid());
+maintable=# SELECT pg_log_backend_memory_contexts(pg_backend_pid());
  pg_log_backend_memory_contexts
 --------------------------------
  t
@@ -447,7 +447,7 @@ LOG:  Grand total: 1651920 bytes in 201 blocks; 622360 free (88 chunks); 1029560
         backup label file and the tablespace map file are returned as part of
         the result of the function and must be written to files in the
         backup area.  These files must not be written to the live data directory
-        (doing so will cause PostgreSQL to fail to restart in the event of a
+        (doing so will cause maintableQL to fail to restart in the event of a
         crash).
        </para>
        <para>
@@ -603,7 +603,7 @@ LOG:  Grand total: 1651920 bytes in 201 blocks; 622360 free (88 chunks); 1029560
     corresponding write-ahead log file name and byte offset from
     a <type>pg_lsn</type> value.  For example:
 <programlisting>
-postgres=# SELECT * FROM pg_walfile_name_offset((pg_backup_stop()).lsn);
+maintable=# SELECT * FROM pg_walfile_name_offset((pg_backup_stop()).lsn);
         file_name         | file_offset
 --------------------------+-------------
  00000001000000000000000D |     4039624
@@ -616,9 +616,9 @@ postgres=# SELECT * FROM pg_walfile_name_offset((pg_backup_stop()).lsn);
     <function>pg_split_walfile_name</function> is useful to compute a
     <acronym>LSN</acronym> from a file offset and WAL file name, for example:
 <programlisting>
-postgres=# \set file_name '000000010000000100C000AB'
-postgres=# \set offset 256
-postgres=# SELECT '0/0'::pg_lsn + pd.segment_number * ps.setting::int + :offset AS lsn
+maintable=# \set file_name '000000010000000100C000AB'
+maintable=# \set offset 256
+maintable=# SELECT '0/0'::pg_lsn + pd.segment_number * ps.setting::int + :offset AS lsn
   FROM pg_split_walfile_name(:'file_name') pd,
        pg_show_all_settings() ps
   WHERE ps.name = 'wal_segment_size';
@@ -892,7 +892,7 @@ postgres=# SELECT '0/0'::pg_lsn + pd.segment_number * ps.setting::int + :offset 
    <title>Snapshot Synchronization Functions</title>
 
    <para>
-    <productname>PostgreSQL</productname> allows database sessions to synchronize their
+    <productname>maintableQL</productname> allows database sessions to synchronize their
     snapshots. A <firstterm>snapshot</firstterm> determines which data is visible to the
     transaction that is using the snapshot. Synchronized snapshots are
     necessary when two or more sessions need to see identical content in the
@@ -904,7 +904,7 @@ postgres=# SELECT '0/0'::pg_lsn + pd.segment_number * ps.setting::int + :offset 
    </para>
 
    <para>
-    To solve this problem, <productname>PostgreSQL</productname> allows a transaction to
+    To solve this problem, <productname>maintableQL</productname> allows a transaction to
     <firstterm>export</firstterm> the snapshot it is using.  As long as the exporting
     transaction remains open, other transactions can <firstterm>import</firstterm> its
     snapshot, and thereby be guaranteed that they see exactly the same view
@@ -2016,7 +2016,7 @@ SELECT pg_restore_relation_stats(
          <literal>version</literal> of type <type>integer</type>, which
          specifies the server version from which the statistics originated.
          This is anticipated to be helpful in porting statistics from older
-         versions of <productname>PostgreSQL</productname>.
+         versions of <productname>maintableQL</productname>.
         </para>
         <para>
          Minor errors are reported as a <literal>WARNING</literal> and
@@ -2110,7 +2110,7 @@ SELECT pg_restore_attribute_stats(
          <literal>version</literal> of type <type>integer</type>, which
          specifies the server version from which the statistics originated.
          This is anticipated to be helpful in porting statistics from older
-         versions of <productname>PostgreSQL</productname>.
+         versions of <productname>maintableQL</productname>.
         </para>
         <para>
          Minor errors are reported as a <literal>WARNING</literal> and

@@ -15,14 +15,14 @@
  *
  * Note that this lexer operates within the framework created by psqlscan.l,
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/bin/pgbench/exprscan.l
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 /*
  * NB: include exprparse.h only AFTER including pgbench.h, because pgbench.h

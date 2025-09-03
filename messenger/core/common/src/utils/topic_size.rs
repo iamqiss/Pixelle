@@ -23,7 +23,7 @@ use serde::{
 };
 use std::str::FromStr;
 
-use super::byte_size::IggyByteSize;
+use super::byte_size::MessengerByteSize;
 
 #[derive(Debug, Default, Clone, Copy, PartialEq)]
 pub enum MaxTopicSize {
@@ -31,13 +31,13 @@ pub enum MaxTopicSize {
     /// Use the default size set by the server
     ServerDefault,
     /// Use a custom size
-    Custom(IggyByteSize),
+    Custom(MessengerByteSize),
     /// Use an unlimited size
     Unlimited,
 }
 
 impl MaxTopicSize {
-    pub fn new(value: Option<IggyByteSize>) -> Self {
+    pub fn new(value: Option<MessengerByteSize>) -> Self {
         match value {
             Some(value) => match value.as_bytes_u64() {
                 0 => MaxTopicSize::ServerDefault,
@@ -52,13 +52,13 @@ impl MaxTopicSize {
         match self {
             MaxTopicSize::ServerDefault => 0,
             MaxTopicSize::Unlimited => u64::MAX,
-            MaxTopicSize::Custom(iggy_byte_size) => iggy_byte_size.as_bytes_u64(),
+            MaxTopicSize::Custom(messenger_byte_size) => messenger_byte_size.as_bytes_u64(),
         }
     }
 }
 
-impl From<IggyByteSize> for MaxTopicSize {
-    fn from(value: IggyByteSize) -> Self {
+impl From<MessengerByteSize> for MaxTopicSize {
+    fn from(value: MessengerByteSize) -> Self {
         match value.as_bytes_u64() {
             0 => MaxTopicSize::ServerDefault,
             u64::MAX => MaxTopicSize::Unlimited,
@@ -72,7 +72,7 @@ impl From<u64> for MaxTopicSize {
         match value {
             0 => MaxTopicSize::ServerDefault,
             u64::MAX => MaxTopicSize::Unlimited,
-            _ => MaxTopicSize::Custom(IggyByteSize::from(value)),
+            _ => MaxTopicSize::Custom(MessengerByteSize::from(value)),
         }
     }
 }
@@ -82,13 +82,13 @@ impl From<MaxTopicSize> for u64 {
         match value {
             MaxTopicSize::ServerDefault => 0,
             MaxTopicSize::Unlimited => u64::MAX,
-            MaxTopicSize::Custom(iggy_byte_size) => iggy_byte_size.as_bytes_u64(),
+            MaxTopicSize::Custom(messenger_byte_size) => messenger_byte_size.as_bytes_u64(),
         }
     }
 }
 
-impl From<Option<IggyByteSize>> for MaxTopicSize {
-    fn from(value: Option<IggyByteSize>) -> Self {
+impl From<Option<MessengerByteSize>> for MaxTopicSize {
+    fn from(value: Option<MessengerByteSize>) -> Self {
         match value {
             Some(value) => match value.as_bytes_u64() {
                 0 => MaxTopicSize::ServerDefault,
@@ -108,7 +108,7 @@ impl FromStr for MaxTopicSize {
             "unlimited" => MaxTopicSize::Unlimited,
             "0" | "server_default" => MaxTopicSize::ServerDefault,
             value => {
-                let size = value.parse::<IggyByteSize>().map_err(|e| format!("{e}"))?;
+                let size = value.parse::<MessengerByteSize>().map_err(|e| format!("{e}"))?;
                 match size.as_bytes_u64() {
                     0 => MaxTopicSize::ServerDefault,
                     u64::MAX => MaxTopicSize::Unlimited,
@@ -129,7 +129,7 @@ impl Serialize for MaxTopicSize {
         let value = match *self {
             MaxTopicSize::ServerDefault => 0,
             MaxTopicSize::Unlimited => u64::MAX,
-            MaxTopicSize::Custom(ref iggy_byte_size) => iggy_byte_size.as_bytes_u64(),
+            MaxTopicSize::Custom(ref messenger_byte_size) => messenger_byte_size.as_bytes_u64(),
         };
         serializer.serialize_u64(value)
     }
@@ -151,7 +151,7 @@ impl Visitor<'_> for MaxTopicSizeVisitor {
         let result = match value {
             0 => MaxTopicSize::ServerDefault,
             u64::MAX => MaxTopicSize::Unlimited,
-            _ => MaxTopicSize::Custom(IggyByteSize::from(value)),
+            _ => MaxTopicSize::Custom(MessengerByteSize::from(value)),
         };
         Ok(result)
     }

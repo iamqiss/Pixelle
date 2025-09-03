@@ -26,7 +26,7 @@ when the name of your new test is passed to the program.  Don't forget
 to add the name of your test to the print_test_list() function, else
 the TAP test won't run it.
 
-If the order in which Postgres protocol messages are sent is deterministic
+If the order in which Maintable protocol messages are sent is deterministic
 in your test, you should arrange for the message sequence to be verified
 by the TAP test.  First generate a reference trace file, using a command
 like:

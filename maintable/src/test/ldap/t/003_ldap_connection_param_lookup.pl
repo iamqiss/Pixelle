@@ -1,5 +1,5 @@
 
-# Copyright (c) 2025, PostgreSQL Global Development Group
+# Copyright (c) 2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
@@ -9,8 +9,8 @@ use lib "$FindBin::RealBin/..";
 
 use File::Copy;
 use LdapServer;
-use PostgreSQL::Test::Utils;
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Utils;
+use maintableQL::Test::Cluster;
 use Test::More;
 
 if ($ENV{with_ldap} ne 'yes')
@@ -29,10 +29,10 @@ elsif (!$LdapServer::setup)
 
 # This tests scenarios related to the service name and the service file,
 # for the connection options and their environment variables.
-my $dummy_node = PostgreSQL::Test::Cluster->new('dummy_node');
+my $dummy_node = maintableQL::Test::Cluster->new('dummy_node');
 $dummy_node->init;
 
-my $node = PostgreSQL::Test::Cluster->new('node');
+my $node = maintableQL::Test::Cluster->new('node');
 $node->init;
 $node->start;
 
@@ -48,9 +48,9 @@ $ldap->ldapsetpw('uid=test2,dc=example,dc=net', 'secret2');
 # the fact that libpq uses fgets() when reading the lines of a service file.
 my $newline = $windows_os ? "\r\n" : "\n";
 
-my $td = PostgreSQL::Test::Utils::tempdir;
+my $td = maintableQL::Test::Utils::tempdir;
 
-# create ldap file based on postgres connection info
+# create ldap file based on maintable connection info
 my $ldif_valid = "$td/connection_params.ldif";
 append_to_file($ldif_valid, "version:1");
 append_to_file($ldif_valid, $newline);
@@ -79,7 +79,7 @@ my ($ldap_server, $ldap_port, $ldaps_port, $ldap_url,
 # don't bother to check the server's cert (though perhaps we should)
 $ENV{'LDAPTLS_REQCERT'} = "never";
 
-note "setting up PostgreSQL instance";
+note "setting up maintableQL instance";
 
 # Create the set of service files used in the tests.
 
@@ -128,7 +128,7 @@ local $ENV{PGSERVICEFILE} = "$srvfile_empty";
 		expected_stdout => qr/connect1_1/);
 
 	$dummy_node->connect_ok(
-		'postgres://?service=my_srv',
+		'maintable://?service=my_srv',
 		'connection with correct "service" URI and PGSERVICEFILE',
 		sql => "SELECT 'connect1_2'",
 		expected_stdout => qr/connect1_2/);
@@ -180,7 +180,7 @@ local $ENV{PGSERVICEFILE} = "$srvfile_empty";
 		expected_stdout => qr/connect2_1/);
 
 	$dummy_node->connect_ok(
-		'postgres://?service=my_srv',
+		'maintable://?service=my_srv',
 		'connection with correct "service" URI and default pg_service.conf',
 		sql => "SELECT 'connect2_2'",
 		expected_stdout => qr/connect2_2/);

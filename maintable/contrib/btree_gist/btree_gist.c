@@ -1,7 +1,7 @@
 /*
  * contrib/btree_gist/btree_gist.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/cmptype.h"
 #include "access/stratnum.h"

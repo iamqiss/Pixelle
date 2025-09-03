@@ -18,7 +18,7 @@
 
 use std::time::Duration;
 
-use iggy::prelude::IggyError;
+use messenger::prelude::MessengerError;
 
 pub mod consumer;
 pub mod producer;
@@ -33,7 +33,7 @@ pub struct BatchMetrics {
 }
 
 pub trait BenchmarkInit: Send + Sync {
-    async fn setup(&mut self) -> Result<(), IggyError>;
+    async fn setup(&mut self) -> Result<(), MessengerError>;
 }
 
 pub trait ApiLabel {

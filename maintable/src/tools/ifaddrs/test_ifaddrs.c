@@ -6,7 +6,7 @@
  *		test pg_foreach_ifaddr()
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <netinet/in.h>
 #include <arpa/inet.h>

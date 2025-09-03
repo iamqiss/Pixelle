@@ -16,7 +16,7 @@
  * src/backend/utils/adt/cash.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 #include <ctype.h>

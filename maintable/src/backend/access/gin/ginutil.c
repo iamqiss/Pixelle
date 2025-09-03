@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * ginutil.c
- *	  Utility routines for the Postgres inverted index access method.
+ *	  Utility routines for the Maintable inverted index access method.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/gin_private.h"
 #include "access/ginxlog.h"

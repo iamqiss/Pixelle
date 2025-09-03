@@ -197,8 +197,8 @@ func initHelp() {
 			MultipleTargets: true,
 		},
 		config.HelpKV{
-			Key:             config.NotifyPostgresSubSys,
-			Description:     "publish bucket notifications to Postgres databases",
+			Key:             config.NotifyMaintableSubSys,
+			Description:     "publish bucket notifications to Maintable databases",
 			MultipleTargets: true,
 		},
 		config.HelpKV{
@@ -268,7 +268,7 @@ func initHelp() {
 		config.NotifyNATSSubSys:     notify.HelpNATS,
 		config.NotifyNSQSubSys:      notify.HelpNSQ,
 		config.NotifyMySQLSubSys:    notify.HelpMySQL,
-		config.NotifyPostgresSubSys: notify.HelpPostgres,
+		config.NotifyMaintableSubSys: notify.HelpMaintable,
 		config.NotifyRedisSubSys:    notify.HelpRedis,
 		config.NotifyWebhookSubSys:  notify.HelpWebhook,
 		config.NotifyESSubSys:       notify.HelpES,

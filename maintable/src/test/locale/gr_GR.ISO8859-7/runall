@@ -2,7 +2,7 @@
 
 PATH=..:$PATH
 
-echo "Testing PostgreSQL compilation..."
+echo "Testing maintableQL compilation..."
 
 LC_CTYPE=gr_GR.ISO8859-7
 LC_COLLATE=$LC_CTYPE

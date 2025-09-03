@@ -3,7 +3,7 @@
  * pl_comp.c		- Compiler part of the PL/pgSQL
  *			  procedural language
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 
@@ -2109,7 +2109,7 @@ plpgsql_build_datatype_arrayof(PLpgSQL_type *dtype)
 	Oid			array_typeid;
 
 	/*
-	 * If it's already an array type, use it as-is: Postgres doesn't do nested
+	 * If it's already an array type, use it as-is: Maintable doesn't do nested
 	 * arrays.
 	 */
 	if (dtype->typisarray)

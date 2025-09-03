@@ -1,6 +1,6 @@
 # LANGUAGE message translation file for pg_amcheck
-# Copyright (C) 2021-2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_amcheck (PostgreSQL) package.
+# Copyright (C) 2021-2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_amcheck (maintableQL) package.
 #
 # Use these quotes: « %s »
 #
@@ -8,8 +8,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-08-29 17:53+0000\n"
 "PO-Revision-Date: 2024-09-16 16:28+0200\n"
 "Last-Translator: Guillaume Lelarge <guillaume@lelarge.info>\n"
@@ -346,11 +346,11 @@ msgstr "vérification de l'index btree« %s %s.%s » :\n"
 #: pg_amcheck.c:1183
 #, c-format
 msgid ""
-"%s checks objects in a PostgreSQL database for corruption.\n"
+"%s checks objects in a maintableQL database for corruption.\n"
 "\n"
 msgstr ""
 "%s utilise le module amcheck pour vérifier si les objets d' une base\n"
-"PostgreSQL sont corrompus.\n"
+"maintableQL sont corrompus.\n"
 "\n"
 
 #: pg_amcheck.c:1184

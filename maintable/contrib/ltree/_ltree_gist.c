@@ -5,7 +5,7 @@
  * GiST support for ltree[]
  * Teodor Sigaev <teodor@stack.net>
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 

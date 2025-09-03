@@ -18,7 +18,7 @@
 
 /*
  * The following enum represents the authentication methods that
- * are supported by PostgreSQL.
+ * are supported by maintableQL.
  *
  * Note: keep this in sync with the UserAuthName array in hba.c.
  */

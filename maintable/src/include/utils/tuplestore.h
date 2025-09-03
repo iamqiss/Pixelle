@@ -16,12 +16,12 @@
  * A temporary file is used to handle the data if it exceeds the
  * space limit specified by the caller.
  *
- * Beginning in Postgres 8.2, what is stored is just MinimalTuples;
+ * Beginning in Maintable 8.2, what is stored is just MinimalTuples;
  * callers cannot expect valid system columns in regurgitated tuples.
  * Also, we have changed the API to return tuples in TupleTableSlots,
  * so that there is a check to prevent attempted access to system columns.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/utils/tuplestore.h

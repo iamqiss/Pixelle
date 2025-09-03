@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_statistics.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createstatistics">
@@ -89,7 +89,7 @@ CREATE STATISTICS [ [ IF NOT EXISTS ] <replaceable class="parameter">statistics_
      <para>
       The name (optionally schema-qualified) of the statistics object to be
       created.
-      If the name is omitted, <productname>PostgreSQL</productname> chooses a
+      If the name is omitted, <productname>maintableQL</productname> chooses a
       suitable name based on the parent table's name and the defined column
       name(s) and/or expression(s).
      </para>
@@ -175,7 +175,7 @@ CREATE STATISTICS [ [ IF NOT EXISTS ] <replaceable class="parameter">statistics_
   <para>
    Extended statistics are not currently used by the planner for selectivity
    estimations made for table joins.  This limitation will likely be removed
-   in a future version of <productname>PostgreSQL</productname>.
+   in a future version of <productname>maintableQL</productname>.
   </para>
  </refsect1>
 

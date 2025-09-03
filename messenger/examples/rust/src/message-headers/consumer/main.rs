@@ -17,10 +17,10 @@
  */
 
 use anyhow::Result;
-use iggy::prelude::*;
-use iggy_examples::shared::args::Args;
-use iggy_examples::shared::messages::*;
-use iggy_examples::shared::system;
+use messenger::prelude::*;
+use messenger_examples::shared::args::Args;
+use messenger_examples::shared::messages::*;
+use messenger_examples::shared::system;
 use std::error::Error;
 use std::sync::Arc;
 use tracing::{info, warn};
@@ -41,13 +41,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
     );
     let client_provider_config = Arc::new(ClientProviderConfig::from_args(args.to_sdk_args())?);
     let client = client_provider::get_raw_client(client_provider_config, false).await?;
-    let client = IggyClient::new(client);
+    let client = MessengerClient::new(client);
     client.connect().await?;
     system::init_by_consumer(&args, &client).await;
     system::consume_messages(&args, &client, &handle_message).await
 }
 
-fn handle_message(message: &IggyMessage) -> Result<(), Box<dyn Error>> {
+fn handle_message(message: &MessengerMessage) -> Result<(), Box<dyn Error>> {
     // The payload can be of any type as it is a raw byte array. In this case it's a JSON string.
     let payload = std::str::from_utf8(&message.payload)?;
     // The message type is stored in the custom message header.

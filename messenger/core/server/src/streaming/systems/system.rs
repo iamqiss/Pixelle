@@ -35,9 +35,9 @@ use crate::streaming::users::user::User;
 use crate::versioning::SemanticVersion;
 use ahash::AHashMap;
 use error_set::ErrContext;
-use iggy_common::locking::IggySharedMut;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{Aes256GcmEncryptor, EncryptorKind, IggyError, UserId};
+use messenger_common::locking::MessengerSharedMut;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{Aes256GcmEncryptor, EncryptorKind, MessengerError, UserId};
 use std::path::Path;
 use std::sync::Arc;
 use tokio::fs::{create_dir_all, remove_dir_all};
@@ -82,7 +82,7 @@ pub struct System {
     pub(crate) streams_ids: AHashMap<String, u32>,
     pub(crate) users: AHashMap<UserId, User>,
     pub(crate) config: Arc<SystemConfig>,
-    pub(crate) client_manager: IggySharedMut<ClientManager>,
+    pub(crate) client_manager: MessengerSharedMut<ClientManager>,
     pub(crate) encryptor: Option<Arc<EncryptorKind>>,
     pub(crate) metrics: Metrics,
     pub(crate) state: Arc<StateKind>,
@@ -174,7 +174,7 @@ impl System {
             streams_ids: AHashMap::new(),
             storage: Arc::new(storage),
             encryptor,
-            client_manager: IggySharedMut::new(ClientManager::default()),
+            client_manager: MessengerSharedMut::new(ClientManager::default()),
             permissioner: Permissioner::default(),
             metrics: Metrics::init(),
             users: AHashMap::new(),
@@ -185,29 +185,29 @@ impl System {
     }
 
     #[instrument(skip_all, name = "trace_system_init")]
-    pub async fn init(&mut self) -> Result<(), IggyError> {
+    pub async fn init(&mut self) -> Result<(), MessengerError> {
         let system_path = self.config.get_system_path();
         if !Path::new(&system_path).exists() && create_dir_all(&system_path).await.is_err() {
-            return Err(IggyError::CannotCreateBaseDirectory(system_path));
+            return Err(MessengerError::CannotCreateBaseDirectory(system_path));
         }
 
         let state_path = self.config.get_state_path();
         if !Path::new(&state_path).exists() && create_dir_all(&state_path).await.is_err() {
-            return Err(IggyError::CannotCreateStateDirectory(state_path));
+            return Err(MessengerError::CannotCreateStateDirectory(state_path));
         }
 
         let streams_path = self.config.get_streams_path();
         if !Path::new(&streams_path).exists() && create_dir_all(&streams_path).await.is_err() {
-            return Err(IggyError::CannotCreateStreamsDirectory(streams_path));
+            return Err(MessengerError::CannotCreateStreamsDirectory(streams_path));
         }
 
         let runtime_path = self.config.get_runtime_path();
         if Path::new(&runtime_path).exists() && remove_dir_all(&runtime_path).await.is_err() {
-            return Err(IggyError::CannotRemoveRuntimeDirectory(runtime_path));
+            return Err(MessengerError::CannotRemoveRuntimeDirectory(runtime_path));
         }
 
         if create_dir_all(&runtime_path).await.is_err() {
-            return Err(IggyError::CannotCreateRuntimeDirectory(runtime_path));
+            return Err(MessengerError::CannotCreateRuntimeDirectory(runtime_path));
         }
 
         info!(
@@ -248,13 +248,13 @@ impl System {
     }
 
     #[instrument(skip_all, name = "trace_shutdown")]
-    pub async fn shutdown(&mut self) -> Result<(), IggyError> {
+    pub async fn shutdown(&mut self) -> Result<(), MessengerError> {
         self.persist_messages().await?;
         Ok(())
     }
 
     #[instrument(skip_all, name = "trace_persist_messages")]
-    pub async fn persist_messages(&self) -> Result<usize, IggyError> {
+    pub async fn persist_messages(&self) -> Result<usize, MessengerError> {
         trace!("Saving buffered messages on disk...");
         let mut saved_messages_number = 0;
         for stream in self.streams.values() {
@@ -264,17 +264,17 @@ impl System {
         Ok(saved_messages_number)
     }
 
-    pub fn ensure_authenticated(&self, session: &Session) -> Result<(), IggyError> {
+    pub fn ensure_authenticated(&self, session: &Session) -> Result<(), MessengerError> {
         if !session.is_active() {
             error!("{COMPONENT} - session is inactive, session: {session}");
-            return Err(IggyError::StaleClient);
+            return Err(MessengerError::StaleClient);
         }
 
         if session.is_authenticated() {
             Ok(())
         } else {
             error!("{COMPONENT} - unauthenticated access attempt, session: {session}");
-            Err(IggyError::Unauthenticated)
+            Err(MessengerError::Unauthenticated)
         }
     }
 }

@@ -9,7 +9,7 @@
 #   The main Makefile in this directory defers to this helper file when
 #   building the sslfiles-related targets.
 #
-# Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+# Portions Copyright (c) 1996-2025, maintableQL Global Development Group
 # Portions Copyright (c) 1994, Regents of the University of California
 #
 # src/test/ssl/sslfiles.mk
@@ -123,7 +123,7 @@ ssl/client-der.key: ssl/client.key
 # formats to test libpq's support for the sslpassword= option.
 ssl/client-encrypted-pem.key: ssl/client.key
 	$(OPENSSL) pkey -in $< -outform PEM -aes128 -passout 'pass:dUmmyP^#+' -out $@
-# TODO Explicitly choosing -aes128 generates a key unusable to PostgreSQL with
+# TODO Explicitly choosing -aes128 generates a key unusable to maintableQL with
 # OpenSSL 3.0.0, so fall back on the default for now.
 ssl/client-encrypted-der.key: ssl/client.key
 	$(OPENSSL) rsa -in $< -outform DER -passout 'pass:dUmmyP^#+' -out $@

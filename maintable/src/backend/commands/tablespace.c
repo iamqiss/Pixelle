@@ -3,7 +3,7 @@
  * tablespace.c
  *	  Commands to manipulate table spaces
  *
- * Tablespaces in PostgreSQL are designed to allow users to determine
+ * Tablespaces in maintableQL are designed to allow users to determine
  * where the data file(s) for a given database object reside on the file
  * system.
  *
@@ -35,7 +35,7 @@
  * and munge the system catalogs of the new database.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -44,7 +44,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 #include <dirent.h>
@@ -506,7 +506,7 @@ DropTableSpace(DropTableSpaceStmt *stmt)
 		 * On Windows, an unlinked file persists in the directory listing
 		 * until no process retains an open handle for the file.  The DDL
 		 * commands that schedule files for unlink send invalidation messages
-		 * directing other PostgreSQL processes to close the files, but
+		 * directing other maintableQL processes to close the files, but
 		 * nothing guarantees they'll be processed in time.  So, we'll also
 		 * use a global barrier to ask all backends to close all files, and
 		 * wait until they're finished.

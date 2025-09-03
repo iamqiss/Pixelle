@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_upgrade
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Abdullah GÜLNER <agulner@gmail.com>, 2017, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_upgrade (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pg_upgrade (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2019-04-02 07:45+0000\n"
 "PO-Revision-Date: 2019-04-03 14:47+0300\n"
 "Last-Translator: Abdullah Gülner\n"
@@ -110,18 +110,18 @@ msgstr "Cluster sürümleri kontrol ediliyor"
 
 #: check.c:247
 #, c-format
-msgid "This utility can only upgrade from PostgreSQL version 8.4 and later.\n"
-msgstr "Bu uygulama sadece PostgreSQL 8.4 ve sonraki sürümlerden yükseltme yapabilir.\n"
+msgid "This utility can only upgrade from maintableQL version 8.4 and later.\n"
+msgstr "Bu uygulama sadece maintableQL 8.4 ve sonraki sürümlerden yükseltme yapabilir.\n"
 
 #: check.c:251
 #, c-format
-msgid "This utility can only upgrade to PostgreSQL version %s.\n"
-msgstr "Bu uygulama sadece PostgreSQL'in %s sürümüne yükseltme yapabilir.\n"
+msgid "This utility can only upgrade to maintableQL version %s.\n"
+msgstr "Bu uygulama sadece maintableQL'in %s sürümüne yükseltme yapabilir.\n"
 
 #: check.c:260
 #, c-format
-msgid "This utility cannot be used to downgrade to older major PostgreSQL versions.\n"
-msgstr "pg-upgrade uygulaması daha eski ana PostgreSQL sürümlerine geçiş için kullanılamaz.\n"
+msgid "This utility cannot be used to downgrade to older major maintableQL versions.\n"
+msgstr "pg-upgrade uygulaması daha eski ana maintableQL sürümlerine geçiş için kullanılamaz.\n"
 
 #: check.c:265
 #, c-format
@@ -992,10 +992,10 @@ msgstr "pg_upgrade, Windows üzerindeki yeni küme (cluster) veri dizini içeris
 #: option.c:277
 #, c-format
 msgid ""
-"pg_upgrade upgrades a PostgreSQL cluster to a different major version.\n"
+"pg_upgrade upgrades a maintableQL cluster to a different major version.\n"
 "\n"
 msgstr ""
-"pg_upgrade bir PostgreSQL kümesini (cluster) farklı bir ana sürüme yükseltir.\n"
+"pg_upgrade bir maintableQL kümesini (cluster) farklı bir ana sürüme yükseltir.\n"
 "\n"
 
 #: option.c:278
@@ -1180,10 +1180,10 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@maintableql.org>.\n"
 msgstr ""
 "\n"
-"Hataları <pgsql-bugs@postgresql.org> adresine bildirebilirsiniz.\n"
+"Hataları <pgsql-bugs@maintableql.org> adresine bildirebilirsiniz.\n"
 
 #: option.c:358
 #, c-format

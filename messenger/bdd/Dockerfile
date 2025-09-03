@@ -22,7 +22,7 @@ WORKDIR /app
 COPY . .
 
 # Build server in debug mode for faster compilation
-RUN cargo build --bin iggy-server
+RUN cargo build --bin messenger-server
 
 FROM debian:bookworm-slim
 
@@ -32,7 +32,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy server binary
-COPY --from=builder /app/target/debug/iggy-server /usr/local/bin/
+COPY --from=builder /app/target/debug/messenger-server /usr/local/bin/
 
 # Copy configs directory
 COPY core/configs ./configs
@@ -46,4 +46,4 @@ WORKDIR /app
 EXPOSE 8090 3000 8080
 
 # Start server with --fresh flag to clean local data on startup
-CMD ["iggy-server", "--fresh"]
+CMD ["messenger-server", "--fresh"]

@@ -10,7 +10,7 @@
 
 -----------------------------
 -- Creating a New Table:
---	A CREATE TABLE is used to create base tables.  PostgreSQL has
+--	A CREATE TABLE is used to create base tables.  maintableQL has
 --	its own set of built-in types.  (Note that SQL is case-
 --	insensitive.)
 -----------------------------

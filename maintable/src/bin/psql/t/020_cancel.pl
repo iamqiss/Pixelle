@@ -1,11 +1,11 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 use Time::HiRes qw(usleep);
 
@@ -15,7 +15,7 @@ if ($windows_os)
 	plan skip_all => 'sending SIGINT on Windows terminates the test itself';
 }
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init;
 $node->start;
 
@@ -31,9 +31,9 @@ my $h = IPC::Run::start(
 	'2>' => \$stderr);
 
 # Send sleep command and wait until the server has registered it
-$stdin = "select pg_sleep($PostgreSQL::Test::Utils::timeout_default);\n";
+$stdin = "select pg_sleep($maintableQL::Test::Utils::timeout_default);\n";
 pump $h while length $stdin;
-$node->poll_query_until('postgres',
+$node->poll_query_until('maintable',
 	q{SELECT (SELECT count(*) FROM pg_stat_activity WHERE query ~ '^select pg_sleep') > 0;}
 ) or die "timed out";
 

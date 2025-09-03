@@ -16,17 +16,17 @@
  * under the License.
  */
 
-use crate::cli::common::{IggyCmdCommand, IggyCmdTest, IggyCmdTestCase};
+use crate::cli::common::{MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase};
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
-use iggy::prelude::PersonalAccessTokenExpiry;
+use messenger::prelude::Client;
+use messenger::prelude::PersonalAccessTokenExpiry;
 use keyring::Entry;
 use predicates::str::{contains, starts_with};
 use serial_test::parallel;
 use std::fmt::{Display, Formatter, Result};
 
-const IGGY_SERVICE: &str = "iggy";
+const MESSENGER_SERVICE: &str = "messenger";
 
 #[derive(Debug)]
 enum UsingToken {
@@ -58,12 +58,12 @@ impl TestLoginOptions {
             token_value: None,
             using_token,
             keyring: Entry::new(
-                format!("{IGGY_SERVICE}:{server_address}").as_str(),
+                format!("{MESSENGER_SERVICE}:{server_address}").as_str(),
                 &token_name,
             )
             .unwrap_or_else(|_| {
                 panic!(
-                    "Failed to get keyring service data for {IGGY_SERVICE} service and {token_name} token name",
+                    "Failed to get keyring service data for {MESSENGER_SERVICE} service and {token_name} token name",
                 )
             }),
         }
@@ -81,7 +81,7 @@ impl TestLoginOptions {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestLoginOptions {
+impl MessengerCmdTestCase for TestLoginOptions {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let token = client
             .create_personal_access_token(&self.token_name, PersonalAccessTokenExpiry::NeverExpire)
@@ -95,8 +95,8 @@ impl IggyCmdTestCase for TestLoginOptions {
             .expect("Failed to set token");
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new().opts(self.to_opts()).arg("me")
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new().opts(self.to_opts()).arg("me")
     }
 
     fn verify_command(&self, command_state: Assert) {
@@ -119,20 +119,20 @@ impl IggyCmdTestCase for TestLoginOptions {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    let server_address = iggy_cmd_test.get_tcp_server_address();
+    messenger_cmd_test.setup().await;
+    let server_address = messenger_cmd_test.get_tcp_server_address();
     assert!(server_address.is_some());
     let server_address = server_address.unwrap();
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestLoginOptions::new(
             String::from("sample-token"),
             UsingToken::Value,
             server_address.clone(),
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestLoginOptions::new(
             String::from("access-token"),
             UsingToken::Name,

@@ -7,7 +7,7 @@
  *	AccessExclusiveLocks and starting snapshots for Hot Standby mode.
  *	Plus conflict recovery processing.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -15,7 +15,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 #include "access/transam.h"
 #include "access/twophase.h"
 #include "access/xact.h"
@@ -576,7 +576,7 @@ ResolveRecoveryConflictWithDatabase(Oid dbid)
 	 *
 	 * No locking is required here because we already acquired
 	 * AccessExclusiveLock. Anybody trying to connect while we do this will
-	 * block during InitPostgres() and then disconnect when they see the
+	 * block during InitMaintable() and then disconnect when they see the
 	 * database has been removed.
 	 */
 	while (CountDBBackends(dbid) > 0)

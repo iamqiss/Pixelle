@@ -17,7 +17,7 @@
  */
 
 use axum::http::Method;
-use iggy::prelude::{DEFAULT_ROOT_PASSWORD, DEFAULT_ROOT_USERNAME};
+use messenger::prelude::{DEFAULT_ROOT_PASSWORD, DEFAULT_ROOT_USERNAME};
 use serde::{Deserialize, Serialize};
 use strum::Display;
 use tower_http::cors::{AllowOrigin, CorsLayer};
@@ -25,13 +25,13 @@ use tower_http::cors::{AllowOrigin, CorsLayer};
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct McpServerConfig {
     pub http: Option<HttpApiConfig>,
-    pub iggy: IggyConfig,
+    pub messenger: MessengerConfig,
     pub permissions: PermissionsConfig,
     pub transport: McpTransport,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct IggyConfig {
+pub struct MessengerConfig {
     pub address: String,
     pub username: Option<String>,
     pub password: Option<String>,
@@ -88,14 +88,14 @@ impl Default for McpServerConfig {
     fn default() -> Self {
         Self {
             http: Some(HttpApiConfig::default()),
-            iggy: IggyConfig::default(),
+            messenger: MessengerConfig::default(),
             permissions: PermissionsConfig::default(),
             transport: McpTransport::Http,
         }
     }
 }
 
-impl Default for IggyConfig {
+impl Default for MessengerConfig {
     fn default() -> Self {
         Self {
             address: "localhost:8090".to_owned(),

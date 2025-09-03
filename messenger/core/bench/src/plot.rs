@@ -19,7 +19,7 @@
 use bench_report::report::BenchmarkReport;
 use charming::theme::Theme;
 use charming::{Chart, HtmlRenderer};
-use iggy::prelude::IggyByteSize;
+use messenger::prelude::MessengerByteSize;
 use std::path::Path;
 use std::process::Command;
 use std::time::Instant;
@@ -103,7 +103,7 @@ pub fn plot_chart(
 
     let total_samples = chart_type.get_samples(report);
     let report_path = format!("{output_directory}/report.json");
-    let report_size = IggyByteSize::from(std::fs::metadata(&report_path)?.len());
+    let report_size = MessengerByteSize::from(std::fs::metadata(&report_path)?.len());
 
     let chart_render_time = chart_render_start.elapsed();
 

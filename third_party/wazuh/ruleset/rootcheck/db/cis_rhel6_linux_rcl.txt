@@ -781,8 +781,8 @@ f:/etc/security/console.perms -> r:^<console>  \d+ <floppy>;
 [CIS - RHEL6 - X.X.X - Disable standard boot services - Kudzu hardware detection Enabled] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_Red_Hat_Enterprise_Linux_6_Benchmark_v1.3.0.pdf]
 d:$rc_dirs -> ^S\d\dkudzu$;
 
-[CIS - RHEL6 - X.X.X - Disable standard boot services - PostgreSQL server Enabled {PCI_DSS: 2.2.2}] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_Red_Hat_Enterprise_Linux_6_Benchmark_v1.3.0.pdf]
-d:$rc_dirs -> ^S\d\dpostgresql$;
+[CIS - RHEL6 - X.X.X - Disable standard boot services - maintableQL server Enabled {PCI_DSS: 2.2.2}] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_Red_Hat_Enterprise_Linux_6_Benchmark_v1.3.0.pdf]
+d:$rc_dirs -> ^S\d\dmaintableql$;
 
 [CIS - RHEL6 - X.X.X - Disable standard boot services - MySQL server Enabled {PCI_DSS: 2.2.2}] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_Red_Hat_Enterprise_Linux_6_Benchmark_v1.3.0.pdf]
 d:$rc_dirs -> ^S\d\dmysqld$;

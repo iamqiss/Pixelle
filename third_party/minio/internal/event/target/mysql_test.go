@@ -23,7 +23,7 @@ import (
 	"testing"
 )
 
-// TestPostgreSQLRegistration checks if sql driver
+// TestmaintableQLRegistration checks if sql driver
 // is registered and fails otherwise.
 func TestMySQLRegistration(t *testing.T) {
 	var found bool

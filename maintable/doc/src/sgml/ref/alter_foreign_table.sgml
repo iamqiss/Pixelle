@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/rel/alter_foreign_table.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-alterforeigntable">
@@ -100,7 +100,7 @@ ALTER FOREIGN TABLE [ IF EXISTS ] <replaceable class="parameter">name</replaceab
      <para>
       This form changes the type of a column of a foreign table.
       Again, this has no effect on any underlying storage: this action simply
-      changes the type that <productname>PostgreSQL</productname> believes the column to
+      changes the type that <productname>maintableQL</productname> believes the column to
       have.
      </para>
     </listitem>
@@ -535,7 +535,7 @@ ALTER FOREIGN TABLE myschema.distributors OPTIONS (ADD opt1 'value', SET opt2 'v
    The forms <literal>ADD</literal>, <literal>DROP</literal>,
    and <literal>SET DATA TYPE</literal>
    conform with the SQL standard.  The other forms are
-   <productname>PostgreSQL</productname> extensions of the SQL standard.
+   <productname>maintableQL</productname> extensions of the SQL standard.
    Also, the ability to specify more than one manipulation in a single
    <command>ALTER FOREIGN TABLE</command> command is an extension.
   </para>

@@ -21,9 +21,9 @@ use crate::cli::cli_command::{CliCommand, PRINT_TARGET};
 use anyhow::Context;
 use async_trait::async_trait;
 use comfy_table::{Cell, CellAlignment, Row, Table};
-use iggy_common::{
-    BytesSerializable, Consumer, HeaderKey, HeaderKind, HeaderValue, Identifier, IggyByteSize,
-    IggyDuration, IggyMessage, IggyTimestamp, PollMessages, PollingStrategy, Sizeable,
+use messenger_common::{
+    BytesSerializable, Consumer, HeaderKey, HeaderKind, HeaderValue, Identifier, MessengerByteSize,
+    MessengerDuration, MessengerMessage, MessengerTimestamp, PollMessages, PollingStrategy, Sizeable,
 };
 use std::collections::{HashMap, HashSet};
 use tokio::io::AsyncWriteExt;
@@ -75,7 +75,7 @@ impl PollMessagesCmd {
 
     fn create_message_header_keys(
         &self,
-        polled_messages: &[IggyMessage],
+        polled_messages: &[MessengerMessage],
     ) -> HashSet<(HeaderKey, HeaderKind)> {
         if !self.show_headers {
             return HashSet::new();
@@ -122,7 +122,7 @@ impl PollMessagesCmd {
     }
 
     fn create_table_content(
-        polled_messages: &[IggyMessage],
+        polled_messages: &[MessengerMessage],
         message_header_keys: &HashSet<(HeaderKey, HeaderKind)>,
     ) -> Vec<Row> {
         polled_messages
@@ -130,7 +130,7 @@ impl PollMessagesCmd {
             .map(|message| {
                 let mut row = vec![
                     format!("{}", message.header.offset),
-                    IggyTimestamp::from(message.header.timestamp)
+                    MessengerTimestamp::from(message.header.timestamp)
                         .to_local_string("%Y-%m-%d %H:%M:%S%.6f"),
                     format!("{}", message.header.id),
                     format!("{}", message.payload.len()),
@@ -188,7 +188,7 @@ impl CliCommand for PollMessagesCmd {
                     self.poll_messages.topic_id, self.poll_messages.stream_id
                 )
             })?;
-        let elapsed = IggyDuration::new(start.elapsed());
+        let elapsed = MessengerDuration::new(start.elapsed());
 
         event!(target: PRINT_TARGET, Level::INFO,
             "Polled messages from topic with ID: {} and stream with ID: {} (from partition with ID: {})",
@@ -197,7 +197,7 @@ impl CliCommand for PollMessagesCmd {
             polled_messages.partition_id,
         );
 
-        let polled_size = IggyByteSize::from(
+        let polled_size = MessengerByteSize::from(
             polled_messages
                 .messages
                 .iter()
@@ -214,7 +214,7 @@ impl CliCommand for PollMessagesCmd {
         if let Some(output_file) = &self.output_file {
             event!(target: PRINT_TARGET, Level::INFO, "Storing messages to {output_file} binary file");
 
-            let mut saved_size = IggyByteSize::default();
+            let mut saved_size = MessengerByteSize::default();
             let mut file = tokio::fs::OpenOptions::new()
                 .append(true)
                 .create(true)
@@ -224,7 +224,7 @@ impl CliCommand for PollMessagesCmd {
 
             for message in polled_messages.messages.iter() {
                 let message = message.to_bytes();
-                saved_size += IggyByteSize::from(message.len() as u64);
+                saved_size += MessengerByteSize::from(message.len() as u64);
                 file.write_all(&message)
                     .await
                     .with_context(|| format!("Problem writing message to file: {output_file}"))?;

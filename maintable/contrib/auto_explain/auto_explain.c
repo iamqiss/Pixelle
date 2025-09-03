@@ -3,14 +3,14 @@
  * auto_explain.c
  *
  *
- * Copyright (c) 2008-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2008-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  contrib/auto_explain/auto_explain.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 

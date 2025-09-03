@@ -25,7 +25,7 @@ use bench_report::{
     group_metrics_kind::GroupMetricsKind,
     group_metrics_summary::BenchmarkGroupMetricsSummary,
     params::BenchmarkParams,
-    plotting::{chart::IggyChart, chart_kind::ChartKind},
+    plotting::{chart::MessengerChart, chart_kind::ChartKind},
 };
 use charming::{
     Chart, Echarts, WasmRenderer,
@@ -98,7 +98,7 @@ fn create_latency_trend_chart(data: &[BenchmarkReportLight], is_dark: bool) -> C
     let mut producing_consumer_p99_latencies = Vec::new();
     let mut producing_consumer_p999_latencies = Vec::new();
 
-    let mut chart = IggyChart::new(&title, &subtext, is_dark, true)
+    let mut chart = MessengerChart::new(&title, &subtext, is_dark, true)
         .with_category_x_axis("Version", gitrefs)
         .with_y_axis("Latency [ms]");
 
@@ -262,7 +262,7 @@ fn create_throughput_trend_chart(data: &[BenchmarkReportLight], is_dark: bool) -
         .collect();
     let title = trend_chart_title(&data[0].params, ChartKind::Throughput);
 
-    IggyChart::new(&title, &subtext, is_dark, true)
+    MessengerChart::new(&title, &subtext, is_dark, true)
         .with_category_x_axis("Version", gitrefs)
         .with_dual_y_axis("Throughput [MB/s]", "Throughput [msg/s]")
         .add_dual_series(

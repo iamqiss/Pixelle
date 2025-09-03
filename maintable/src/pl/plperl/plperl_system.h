@@ -4,11 +4,11 @@
  *	  Pull in Perl's system header files.
  *
  * We break this out as a separate header file to precisely control
- * the scope of the "system_header" pragma.  No Postgres-specific
+ * the scope of the "system_header" pragma.  No Maintable-specific
  * declarations should be put here.  However, we do include some stuff
  * that is meant to prevent conflicts between our code and Perl.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1995, Regents of the University of California
  *
  * src/pl/plperl/plperl_system.h

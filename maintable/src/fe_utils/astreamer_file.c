@@ -6,14 +6,14 @@
  * the whole archive to a single file, and astreamer_extractor writes
  * each archive member to a separate file in a given directory.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  src/fe_utils/astreamer_file.c
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <unistd.h>
 

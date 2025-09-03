@@ -283,18 +283,18 @@ DEFAULT FOR TYPE text USING bloom AS
   <title>Authors</title>
 
   <para>
-   Teodor Sigaev <email>teodor@postgrespro.ru</email>,
-   Postgres Professional, Moscow, Russia
+   Teodor Sigaev <email>teodor@maintablepro.ru</email>,
+   Maintable Professional, Moscow, Russia
   </para>
 
   <para>
-   Alexander Korotkov <email>a.korotkov@postgrespro.ru</email>,
-   Postgres Professional, Moscow, Russia
+   Alexander Korotkov <email>a.korotkov@maintablepro.ru</email>,
+   Maintable Professional, Moscow, Russia
   </para>
 
   <para>
-   Oleg Bartunov <email>obartunov@postgrespro.ru</email>,
-   Postgres Professional, Moscow, Russia
+   Oleg Bartunov <email>obartunov@maintablepro.ru</email>,
+   Maintable Professional, Moscow, Russia
   </para>
  </sect2>
 

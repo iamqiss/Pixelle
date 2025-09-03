@@ -17,20 +17,20 @@
  */
 
 use crate::streaming::utils::PooledBuffer;
-use iggy_common::{INDEX_SIZE, IggyIndexView};
+use messenger_common::{INDEX_SIZE, MessengerIndexView};
 use std::fmt;
 use std::ops::{Deref, Index as StdIndex};
 
 /// A container for binary-encoded index data.
 /// Optimized for efficient storage and I/O operations.
 #[derive(Default)]
-pub struct IggyIndexesMut {
+pub struct MessengerIndexesMut {
     buffer: PooledBuffer,
     saved_count: u32,
     base_position: u32,
 }
 
-impl IggyIndexesMut {
+impl MessengerIndexesMut {
     /// Creates a new empty container
     pub fn empty() -> Self {
         Self {
@@ -120,7 +120,7 @@ impl IggyIndexesMut {
     }
 
     /// Gets a view of the Index at the specified index
-    pub fn get(&self, index: u32) -> Option<IggyIndexView<'_>> {
+    pub fn get(&self, index: u32) -> Option<MessengerIndexView<'_>> {
         if index >= self.count() {
             return None;
         }
@@ -129,7 +129,7 @@ impl IggyIndexesMut {
         let end = start + INDEX_SIZE;
 
         if end <= self.buffer.len() {
-            Some(IggyIndexView::new(&self.buffer[start..end]))
+            Some(MessengerIndexView::new(&self.buffer[start..end]))
         } else {
             None
         }
@@ -154,12 +154,12 @@ impl IggyIndexesMut {
     }
 
     /// Gets a last index
-    pub fn last(&self) -> Option<IggyIndexView<'_>> {
+    pub fn last(&self) -> Option<MessengerIndexView<'_>> {
         if self.count() == 0 {
             return None;
         }
 
-        Some(IggyIndexView::new(
+        Some(MessengerIndexView::new(
             &self.buffer[(self.count() - 1) as usize * INDEX_SIZE..],
         ))
     }
@@ -167,7 +167,7 @@ impl IggyIndexesMut {
     /// Finds an index by timestamp using binary search
     /// If an exact match isn't found, returns the index with the nearest timestamp
     /// that is greater than or equal to the requested timestamp
-    pub fn find_by_timestamp(&self, timestamp: u64) -> Option<IggyIndexView<'_>> {
+    pub fn find_by_timestamp(&self, timestamp: u64) -> Option<MessengerIndexView<'_>> {
         if self.count() == 0 {
             return None;
         }
@@ -184,7 +184,7 @@ impl IggyIndexesMut {
 
         let mut left = 0;
         let mut right = self.count() as isize - 1;
-        let mut result: Option<IggyIndexView<'_>> = None;
+        let mut result: Option<MessengerIndexView<'_>> = None;
 
         while left <= right {
             let mid = left + (right - left) / 2;
@@ -236,7 +236,7 @@ impl IggyIndexesMut {
         &self,
         relative_start_offset: u32,
         count: u32,
-    ) -> Option<IggyIndexesMut> {
+    ) -> Option<MessengerIndexesMut> {
         let available_count = self.count().saturating_sub(relative_start_offset);
         let actual_count = std::cmp::min(count, available_count);
 
@@ -251,15 +251,15 @@ impl IggyIndexesMut {
         let slice = PooledBuffer::from(&self.buffer[start_byte..end_byte]);
 
         if relative_start_offset == 0 {
-            Some(IggyIndexesMut::from_bytes(slice, self.base_position))
+            Some(MessengerIndexesMut::from_bytes(slice, self.base_position))
         } else {
             let position_offset = self.get(relative_start_offset - 1).unwrap().position();
-            Some(IggyIndexesMut::from_bytes(slice, position_offset))
+            Some(MessengerIndexesMut::from_bytes(slice, position_offset))
         }
     }
 
     /// Loads indexes from cache based on timestamp
-    pub fn slice_by_timestamp(&self, timestamp: u64, count: u32) -> Option<IggyIndexesMut> {
+    pub fn slice_by_timestamp(&self, timestamp: u64, count: u32) -> Option<MessengerIndexesMut> {
         if self.count() == 0 {
             return None;
         }
@@ -285,7 +285,7 @@ impl IggyIndexesMut {
             0
         };
 
-        Some(IggyIndexesMut::from_bytes(slice, base_position))
+        Some(MessengerIndexesMut::from_bytes(slice, base_position))
     }
 
     /// Find the position of the index with timestamp closest to (but not exceeding) the target
@@ -328,7 +328,7 @@ impl IggyIndexesMut {
     }
 }
 
-impl StdIndex<usize> for IggyIndexesMut {
+impl StdIndex<usize> for MessengerIndexesMut {
     type Output = [u8];
 
     fn index(&self, index: usize) -> &Self::Output {
@@ -338,7 +338,7 @@ impl StdIndex<usize> for IggyIndexesMut {
     }
 }
 
-impl Deref for IggyIndexesMut {
+impl Deref for MessengerIndexesMut {
     type Target = [u8];
 
     fn deref(&self) -> &Self::Target {
@@ -346,15 +346,15 @@ impl Deref for IggyIndexesMut {
     }
 }
 
-impl fmt::Debug for IggyIndexesMut {
+impl fmt::Debug for MessengerIndexesMut {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let count = self.count();
 
         if count == 0 {
-            return write!(f, "IggyIndexesMut {{ count: 0, indexes: [] }}");
+            return write!(f, "MessengerIndexesMut {{ count: 0, indexes: [] }}");
         }
 
-        writeln!(f, "IggyIndexesMut {{")?;
+        writeln!(f, "MessengerIndexesMut {{")?;
         writeln!(f, "    count: {count},")?;
         writeln!(f, "    indexes: [")?;
 

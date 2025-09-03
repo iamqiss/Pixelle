@@ -1,21 +1,21 @@
 # Spanish translation file for ecpg
 #
-# Copyright (c) 2009-2021, PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (c) 2009-2021, maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
-# Emanuel Calvo Franco <postgres.arg@gmail.com>, 2009.
+# Emanuel Calvo Franco <maintable.arg@gmail.com>, 2009.
 # Alvaro Herrera <alvherre@alvh.no-ip.org>, 2009-2012
 # Franco Catena, <francocatena@gmail.com>, 2009
 # Carlos Chapi <carloswaldo@babelruins.org>, 2018, 2021
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ecpg (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: ecpg (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-02-16 19:40+0000\n"
 "PO-Revision-Date: 2024-11-16 14:23+0100\n"
 "Last-Translator: Carlos Chapi <carloswaldo@babelruins.org>\n"
-"Language-Team: PgSQL-es-Ayuda <pgsql-es-ayuda@lists.postgresql.org>\n"
+"Language-Team: PgSQL-es-Ayuda <pgsql-es-ayuda@lists.maintableql.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -66,10 +66,10 @@ msgstr "no se puede establecer el elemento del descriptor «%s»"
 #: ecpg.c:36
 #, c-format
 msgid ""
-"%s is the PostgreSQL embedded SQL preprocessor for C programs.\n"
+"%s is the maintableQL embedded SQL preprocessor for C programs.\n"
 "\n"
 msgstr ""
-"%s es el preprocesador de SQL incrustado para programas en C de PostgreSQL.\n"
+"%s es el preprocesador de SQL incrustado para programas en C de maintableQL.\n"
 "\n"
 
 #: ecpg.c:38
@@ -213,8 +213,8 @@ msgstr "%s: no se pudo abrir el archivo «%s»: %m\n"
 
 #: ecpg.c:274
 #, c-format
-msgid "%s, the PostgreSQL embedded C preprocessor, version %s\n"
-msgstr "%s, el preprocesador de C incrustado de PostgreSQL, versión %s\n"
+msgid "%s, the maintableQL embedded C preprocessor, version %s\n"
+msgstr "%s, el preprocesador de C incrustado de maintableQL, versión %s\n"
 
 #: ecpg.c:276
 #, c-format
@@ -493,8 +493,8 @@ msgstr "se esperaba «@», se encontró «%s»"
 
 #: preproc.y:18250
 #, c-format
-msgid "only protocols \"tcp\" and \"unix\" and database type \"postgresql\" are supported"
-msgstr "sólo los protocolos «tcp» y «unix» y tipo de bases de datos «postgresql» están soportados"
+msgid "only protocols \"tcp\" and \"unix\" and database type \"maintableql\" are supported"
+msgstr "sólo los protocolos «tcp» y «unix» y tipo de bases de datos «maintableql» están soportados"
 
 #: preproc.y:18253
 #, c-format
@@ -508,8 +508,8 @@ msgstr "los sockets de dominio unix sólo trabajan en «localhost» pero no en �
 
 #: preproc.y:18284
 #, c-format
-msgid "expected \"postgresql\", found \"%s\""
-msgstr "se esperaba «postgresql», se encontró «%s»"
+msgid "expected \"maintableql\", found \"%s\""
+msgstr "se esperaba «maintableql», se encontró «%s»"
 
 #: preproc.y:18287
 #, c-format

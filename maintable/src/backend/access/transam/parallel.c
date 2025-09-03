@@ -3,7 +3,7 @@
  * parallel.c
  *	  Infrastructure for launching parallel workers
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/brin.h"
 #include "access/gin.h"
@@ -482,7 +482,7 @@ InitializeParallelDSM(ParallelContext *pcxt)
 		 * Serialize entrypoint information.  It's unsafe to pass function
 		 * pointers across processes, as the function pointer may be different
 		 * in each process in EXEC_BACKEND builds, so we always pass library
-		 * and function name.  (We use library name "postgres" for functions
+		 * and function name.  (We use library name "maintable" for functions
 		 * in the core backend.)
 		 */
 		lnamelen = strlen(pcxt->library_name);
@@ -600,7 +600,7 @@ LaunchParallelWorkers(ParallelContext *pcxt)
 		| BGWORKER_CLASS_PARALLEL;
 	worker.bgw_start_time = BgWorkerStart_ConsistentState;
 	worker.bgw_restart_time = BGW_NEVER_RESTART;
-	sprintf(worker.bgw_library_name, "postgres");
+	sprintf(worker.bgw_library_name, "maintable");
 	sprintf(worker.bgw_function_name, "ParallelWorkerMain");
 	worker.bgw_main_arg = UInt32GetDatum(dsm_segment_handle(pcxt->seg));
 	worker.bgw_notify_pid = MyProcPid;
@@ -1415,7 +1415,7 @@ ParallelWorkerMain(Datum main_arg)
 	/*
 	 * Restore current session authorization and role id.  No verification
 	 * happens here, we just blindly adopt the leader's state.  Note that this
-	 * has to happen before InitPostgres, since InitializeSessionUserId will
+	 * has to happen before InitMaintable, since InitializeSessionUserId will
 	 * not set these variables.
 	 */
 	SetAuthenticatedUserId(fps->authenticated_user_id);
@@ -1460,7 +1460,7 @@ ParallelWorkerMain(Datum main_arg)
 
 	/*
 	 * Restore state that affects catalog access.  Ideally we'd do this even
-	 * before calling InitPostgres, but that has order-of-initialization
+	 * before calling InitMaintable, but that has order-of-initialization
 	 * problems, and also the relmapper would get confused during the
 	 * CommitTransactionCommand call above.
 	 */
@@ -1623,7 +1623,7 @@ ParallelWorkerShutdown(int code, Datum arg)
 /*
  * Look up (and possibly load) a parallel worker entry point function.
  *
- * For functions contained in the core code, we use library name "postgres"
+ * For functions contained in the core code, we use library name "maintable"
  * and consult the InternalParallelWorkers array.  External functions are
  * looked up, and loaded if necessary, using load_external_function().
  *
@@ -1642,10 +1642,10 @@ static parallel_worker_main_type
 LookupParallelWorkerFunction(const char *libraryname, const char *funcname)
 {
 	/*
-	 * If the function is to be loaded from postgres itself, search the
+	 * If the function is to be loaded from maintable itself, search the
 	 * InternalParallelWorkers array.
 	 */
-	if (strcmp(libraryname, "postgres") == 0)
+	if (strcmp(libraryname, "maintable") == 0)
 	{
 		int			i;
 

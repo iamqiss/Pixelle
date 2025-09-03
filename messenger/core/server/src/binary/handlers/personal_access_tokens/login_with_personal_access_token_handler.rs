@@ -24,23 +24,23 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::login_with_personal_access_token::LoginWithPersonalAccessToken;
+use messenger_common::MessengerError;
+use messenger_common::login_with_personal_access_token::LoginWithPersonalAccessToken;
 use tracing::{debug, instrument};
 
 impl ServerCommandHandler for LoginWithPersonalAccessToken {
     fn code(&self) -> u32 {
-        iggy_common::LOGIN_WITH_PERSONAL_ACCESS_TOKEN_CODE
+        messenger_common::LOGIN_WITH_PERSONAL_ACCESS_TOKEN_CODE
     }
 
-    #[instrument(skip_all, name = "trace_login_with_personal_access_token", fields(iggy_user_id = session.get_user_id(), iggy_client_id = session.client_id))]
+    #[instrument(skip_all, name = "trace_login_with_personal_access_token", fields(messenger_user_id = session.get_user_id(), messenger_client_id = session.client_id))]
     async fn handle(
         self,
         sender: &mut SenderKind,
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
         let system = system.read().await;
         let user = system
@@ -59,7 +59,7 @@ impl ServerCommandHandler for LoginWithPersonalAccessToken {
 }
 
 impl BinaryServerCommand for LoginWithPersonalAccessToken {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
@@ -67,7 +67,7 @@ impl BinaryServerCommand for LoginWithPersonalAccessToken {
             ServerCommand::LoginWithPersonalAccessToken(login_with_personal_access_token) => {
                 Ok(login_with_personal_access_token)
             }
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

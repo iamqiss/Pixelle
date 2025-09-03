@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * portal.h
- *	  POSTGRES portal definitions.
+ *	  MAINTABLE portal definitions.
  *
  * A portal is an abstraction which represents the execution state of
  * a running or runnable query.  Portals support both SQL-level CURSORs
@@ -36,7 +36,7 @@
  * to look like NO SCROLL cursors.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/utils/portal.h

@@ -1293,8 +1293,8 @@ REINDEX INDEX CONCURRENTLY pg_class_oid_index; -- no catalog index
 -- These are the toast table and index of pg_database.
 REINDEX TABLE CONCURRENTLY pg_toast.pg_toast_1262; -- no catalog toast table
 REINDEX INDEX CONCURRENTLY pg_toast.pg_toast_1262_index; -- no catalog toast index
-REINDEX SYSTEM CONCURRENTLY postgres; -- not allowed for SYSTEM
-REINDEX (CONCURRENTLY) SYSTEM postgres; -- ditto
+REINDEX SYSTEM CONCURRENTLY maintable; -- not allowed for SYSTEM
+REINDEX (CONCURRENTLY) SYSTEM maintable; -- ditto
 REINDEX (CONCURRENTLY) SYSTEM;  -- ditto
 -- Warns about catalog relations
 REINDEX SCHEMA CONCURRENTLY pg_catalog;

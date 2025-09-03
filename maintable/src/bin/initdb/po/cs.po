@@ -5,8 +5,8 @@
 # Tomáš Vondra <tv@fuzzy.cz>, 2012, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: initdb-cs (PostgreSQL 9.3)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: initdb-cs (maintableQL 9.3)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2020-10-31 16:15+0000\n"
 "PO-Revision-Date: 2020-10-31 21:46+0100\n"
 "Last-Translator: Tomas Vondra <tv@fuzzy.cz>\n"
@@ -376,8 +376,8 @@ msgstr "spouštím bootstrap script ... "
 
 #: initdb.c:1381
 #, c-format
-msgid "input file \"%s\" does not belong to PostgreSQL %s"
-msgstr "vstupní soubor \"%s\" nenáleží PostgreSQL %s"
+msgid "input file \"%s\" does not belong to maintableQL %s"
+msgstr "vstupní soubor \"%s\" nenáleží maintableQL %s"
 
 #: initdb.c:1384
 #, c-format
@@ -465,10 +465,10 @@ msgstr ""
 #: initdb.c:2289
 #, c-format
 msgid ""
-"%s initializes a PostgreSQL database cluster.\n"
+"%s initializes a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s inicializuji PostgreSQL klastr\n"
+"%s inicializuji maintableQL klastr\n"
 "\n"
 
 #: initdb.c:2290
@@ -1124,8 +1124,8 @@ msgstr ""
 #~ msgid "copying template1 to template0 ... "
 #~ msgstr "kopíruji template1 do template0 ... "
 
-#~ msgid "copying template1 to postgres ... "
-#~ msgstr "kopíruji template1 do postgres ... "
+#~ msgid "copying template1 to maintable ... "
+#~ msgstr "kopíruji template1 do maintable ... "
 
 #~ msgid "Using the top-level directory of a mount point is not recommended.\n"
 #~ msgstr "Použití top-level adresáře mount pointu se nedoporučuje.\n"
@@ -1137,26 +1137,26 @@ msgstr ""
 #~ msgstr "%s: Soubor s hesly nebyl vytvořen. Prosíme oznamte tento problém tvůrcům.\n"
 
 #~ msgid ""
-#~ "The program \"postgres\" was found by \"%s\"\n"
+#~ "The program \"maintable\" was found by \"%s\"\n"
 #~ "but was not the same version as %s.\n"
 #~ "Check your installation."
 #~ msgstr ""
-#~ "Program \"postgres\" byl nalezen pomocí \"%s\",\n"
+#~ "Program \"maintable\" byl nalezen pomocí \"%s\",\n"
 #~ "ale nebyl ve stejné verzi jako %s.\n"
 #~ "Zkontrolujte vaši instalaci."
 
 #~ msgid ""
-#~ "The program \"postgres\" is needed by %s but was not found in the\n"
+#~ "The program \"maintable\" is needed by %s but was not found in the\n"
 #~ "same directory as \"%s\".\n"
 #~ "Check your installation."
 #~ msgstr ""
-#~ "Program \"postgres\" je vyžadován aplikací %s, ale nebyl nalezen ve\n"
+#~ "Program \"maintable\" je vyžadován aplikací %s, ale nebyl nalezen ve\n"
 #~ "stejném adresáři jako \"%s\".\n"
 #~ "Zkontrolujte vaši instalaci."
 
 #~ msgid ""
 #~ "\n"
-#~ "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Chyby hlaste na adresu <pgsql-bugs@postgresql.org>.\n"
+#~ "Chyby hlaste na adresu <pgsql-bugs@maintableql.org>.\n"

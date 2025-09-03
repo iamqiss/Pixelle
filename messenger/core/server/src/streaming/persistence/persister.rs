@@ -19,7 +19,7 @@
 use crate::streaming::persistence::COMPONENT;
 use crate::streaming::utils::file;
 use error_set::ErrContext;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use std::fmt::Debug;
 use std::future::Future;
 use tokio::fs;
@@ -37,7 +37,7 @@ pub enum PersisterKind {
 }
 
 impl PersisterKind {
-    pub async fn append(&self, path: &str, bytes: &[u8]) -> Result<(), IggyError> {
+    pub async fn append(&self, path: &str, bytes: &[u8]) -> Result<(), MessengerError> {
         match self {
             PersisterKind::File(p) => p.append(path, bytes).await,
             PersisterKind::FileWithSync(p) => p.append(path, bytes).await,
@@ -46,7 +46,7 @@ impl PersisterKind {
         }
     }
 
-    pub async fn overwrite(&self, path: &str, bytes: &[u8]) -> Result<(), IggyError> {
+    pub async fn overwrite(&self, path: &str, bytes: &[u8]) -> Result<(), MessengerError> {
         match self {
             PersisterKind::File(p) => p.overwrite(path, bytes).await,
             PersisterKind::FileWithSync(p) => p.overwrite(path, bytes).await,
@@ -55,7 +55,7 @@ impl PersisterKind {
         }
     }
 
-    pub async fn delete(&self, path: &str) -> Result<(), IggyError> {
+    pub async fn delete(&self, path: &str) -> Result<(), MessengerError> {
         match self {
             PersisterKind::File(p) => p.delete(path).await,
             PersisterKind::FileWithSync(p) => p.delete(path).await,
@@ -71,13 +71,13 @@ pub trait Persister: Send {
         &self,
         path: &str,
         bytes: &[u8],
-    ) -> impl Future<Output = Result<(), IggyError>> + Send;
+    ) -> impl Future<Output = Result<(), MessengerError>> + Send;
     fn overwrite(
         &self,
         path: &str,
         bytes: &[u8],
-    ) -> impl Future<Output = Result<(), IggyError>> + Send;
-    fn delete(&self, path: &str) -> impl Future<Output = Result<(), IggyError>> + Send;
+    ) -> impl Future<Output = Result<(), MessengerError>> + Send;
+    fn delete(&self, path: &str) -> impl Future<Output = Result<(), MessengerError>> + Send;
 }
 
 #[derive(Debug)]
@@ -87,63 +87,63 @@ pub struct FilePersister;
 pub struct FileWithSyncPersister;
 
 impl Persister for FilePersister {
-    async fn append(&self, path: &str, bytes: &[u8]) -> Result<(), IggyError> {
+    async fn append(&self, path: &str, bytes: &[u8]) -> Result<(), MessengerError> {
         let mut file = file::append(path)
             .await
             .with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to append to file: {path}")
             })
-            .map_err(|_| IggyError::CannotAppendToFile)?;
+            .map_err(|_| MessengerError::CannotAppendToFile)?;
         file.write_all(bytes)
             .await
             .with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to write data to file: {path}")
             })
-            .map_err(|_| IggyError::CannotWriteToFile)?;
+            .map_err(|_| MessengerError::CannotWriteToFile)?;
         Ok(())
     }
 
-    async fn overwrite(&self, path: &str, bytes: &[u8]) -> Result<(), IggyError> {
+    async fn overwrite(&self, path: &str, bytes: &[u8]) -> Result<(), MessengerError> {
         let mut file = file::overwrite(path)
             .await
             .with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to overwrite file: {path}")
             })
-            .map_err(|_| IggyError::CannotOverwriteFile)?;
+            .map_err(|_| MessengerError::CannotOverwriteFile)?;
         file.write_all(bytes)
             .await
             .with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to write data to file: {path}")
             })
-            .map_err(|_| IggyError::CannotWriteToFile)?;
+            .map_err(|_| MessengerError::CannotWriteToFile)?;
         Ok(())
     }
 
-    async fn delete(&self, path: &str) -> Result<(), IggyError> {
+    async fn delete(&self, path: &str) -> Result<(), MessengerError> {
         fs::remove_file(path)
             .await
             .with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to delete file: {path}")
             })
-            .map_err(|_| IggyError::CannotDeleteFile)?;
+            .map_err(|_| MessengerError::CannotDeleteFile)?;
         Ok(())
     }
 }
 
 impl Persister for FileWithSyncPersister {
-    async fn append(&self, path: &str, bytes: &[u8]) -> Result<(), IggyError> {
+    async fn append(&self, path: &str, bytes: &[u8]) -> Result<(), MessengerError> {
         let mut file = file::append(path)
             .await
             .with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to append to file: {path}")
             })
-            .map_err(|_| IggyError::CannotAppendToFile)?;
+            .map_err(|_| MessengerError::CannotAppendToFile)?;
         file.write_all(bytes)
             .await
             .with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to write data to file: {path}")
             })
-            .map_err(|_| IggyError::CannotWriteToFile)?;
+            .map_err(|_| MessengerError::CannotWriteToFile)?;
         file.sync_all()
             .await
             .with_error_context(|error| {
@@ -151,23 +151,23 @@ impl Persister for FileWithSyncPersister {
                     "{COMPONENT} (error: {error}) - failed to sync file after appending: {path}"
                 )
             })
-            .map_err(|_| IggyError::CannotSyncFile)?;
+            .map_err(|_| MessengerError::CannotSyncFile)?;
         Ok(())
     }
 
-    async fn overwrite(&self, path: &str, bytes: &[u8]) -> Result<(), IggyError> {
+    async fn overwrite(&self, path: &str, bytes: &[u8]) -> Result<(), MessengerError> {
         let mut file = file::overwrite(path)
             .await
             .with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to overwrite file: {path}")
             })
-            .map_err(|_| IggyError::CannotOverwriteFile)?;
+            .map_err(|_| MessengerError::CannotOverwriteFile)?;
         file.write_all(bytes)
             .await
             .with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to write data to file: {path}")
             })
-            .map_err(|_| IggyError::CannotWriteToFile)?;
+            .map_err(|_| MessengerError::CannotWriteToFile)?;
         file.sync_all()
             .await
             .with_error_context(|error| {
@@ -175,17 +175,17 @@ impl Persister for FileWithSyncPersister {
                     "{COMPONENT} (error: {error}) - failed to sync file after overwriting: {path}"
                 )
             })
-            .map_err(|_| IggyError::CannotSyncFile)?;
+            .map_err(|_| MessengerError::CannotSyncFile)?;
         Ok(())
     }
 
-    async fn delete(&self, path: &str) -> Result<(), IggyError> {
+    async fn delete(&self, path: &str) -> Result<(), MessengerError> {
         fs::remove_file(path)
             .await
             .with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to delete file: {path}")
             })
-            .map_err(|_| IggyError::CannotDeleteFile)?;
+            .map_err(|_| MessengerError::CannotDeleteFile)?;
         Ok(())
     }
 }

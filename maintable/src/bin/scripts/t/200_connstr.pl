@@ -1,11 +1,11 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Tests to check connection string handling in utilities
@@ -23,7 +23,7 @@ my $dbname2 =
 my $dbname3 = generate_ascii_string(130, 192);
 my $dbname4 = generate_ascii_string(193, 255);
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init(extra => [ '--locale=C', '--encoding=LATIN1' ]);
 $node->start;
 

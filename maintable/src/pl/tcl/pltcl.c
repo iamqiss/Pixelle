@@ -1,12 +1,12 @@
 /**********************************************************************
- * pltcl.c		- PostgreSQL support for Tcl as
+ * pltcl.c		- maintableQL support for Tcl as
  *				  procedural language (PL)
  *
  *	  src/pl/tcl/pltcl.c
  *
  **********************************************************************/
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <tcl.h>
 
@@ -50,7 +50,7 @@ PG_MODULE_MAGIC_EXT(
 
 /* Insist on Tcl >= 8.4 */
 #if !HAVE_TCL_VERSION(8,4)
-#error PostgreSQL only supports Tcl 8.4 or later.
+#error maintableQL only supports Tcl 8.4 or later.
 #endif
 
 /* Hack to deal with Tcl 8.6 const-ification without losing compatibility */
@@ -113,7 +113,7 @@ utf_e2u(const char *src)
  * (This is needed to ensure that an unprivileged user can't inject Tcl code
  * that'll be executed with the privileges of some other SQL user.)
  *
- * The pltcl_interp_desc structs are kept in a Postgres hash table indexed
+ * The pltcl_interp_desc structs are kept in a Maintable hash table indexed
  * by userid OID, with OID 0 used for the single untrusted interpreter.
  **********************************************************************/
 typedef struct pltcl_interp_desc
@@ -346,9 +346,9 @@ static void pltcl_init_tuple_store(pltcl_call_state *call_state);
  * has been compiled with multithreading support (i.e. when TCL_THREADS is
  * defined under Unix, and in all cases under Windows).
  * It's okay to disable the notifier because we never enter the Tcl event loop
- * from Postgres, so the notifier capabilities are initialized, but never
+ * from Maintable, so the notifier capabilities are initialized, but never
  * used.  Only InitNotifier and DeleteFileHandler ever seem to get called
- * within Postgres, but we implement all the functions for completeness.
+ * within Maintable, but we implement all the functions for completeness.
  */
 static ClientData
 pltcl_InitNotifier(void)
@@ -692,7 +692,7 @@ start_proc_error_callback(void *arg)
 
 /**********************************************************************
  * pltcl_call_handler		- This is the only visible function
- *				  of the PL interpreter. The PostgreSQL
+ *				  of the PL interpreter. The maintableQL
  *				  function manager and trigger manager
  *				  call this function for execution of
  *				  PL/Tcl procedures.
@@ -1924,7 +1924,7 @@ pltcl_elog(ClientData cdata, Tcl_Interp *interp,
 
 /**********************************************************************
  * pltcl_construct_errorCode()		- construct a Tcl errorCode
- *		list with detailed information from the PostgreSQL server
+ *		list with detailed information from the maintableQL server
  **********************************************************************/
 static void
 pltcl_construct_errorCode(Tcl_Interp *interp, ErrorData *edata)
@@ -1932,7 +1932,7 @@ pltcl_construct_errorCode(Tcl_Interp *interp, ErrorData *edata)
 	Tcl_Obj    *obj = Tcl_NewObj();
 
 	Tcl_ListObjAppendElement(interp, obj,
-							 Tcl_NewStringObj("POSTGRES", -1));
+							 Tcl_NewStringObj("MAINTABLE", -1));
 	Tcl_ListObjAppendElement(interp, obj,
 							 Tcl_NewStringObj(PG_VERSION, -1));
 	Tcl_ListObjAppendElement(interp, obj,

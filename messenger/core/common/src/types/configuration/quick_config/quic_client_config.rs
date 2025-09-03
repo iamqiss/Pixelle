@@ -17,7 +17,7 @@
  */
 
 use crate::{
-    AutoLogin, ConnectionString, ConnectionStringOptions, IggyDuration,
+    AutoLogin, ConnectionString, ConnectionStringOptions, MessengerDuration,
     QuicClientReconnectionConfig, QuicConnectionStringOptions,
 };
 use std::str::FromStr;
@@ -54,7 +54,7 @@ pub struct QuicClientConfig {
     /// Whether to validate the server certificate.
     pub validate_certificate: bool,
     /// Interval of heartbeats sent by the client
-    pub heartbeat_interval: IggyDuration,
+    pub heartbeat_interval: MessengerDuration,
 }
 
 impl Default for QuicClientConfig {
@@ -64,7 +64,7 @@ impl Default for QuicClientConfig {
             server_address: "127.0.0.1:8080".to_string(),
             server_name: "localhost".to_string(),
             auto_login: AutoLogin::Disabled,
-            heartbeat_interval: IggyDuration::from_str("5s").unwrap(),
+            heartbeat_interval: MessengerDuration::from_str("5s").unwrap(),
             reconnection: QuicClientReconnectionConfig::default(),
             response_buffer_size: 1000 * 1000 * 10,
             max_concurrent_bidi_streams: 10000,

@@ -23,27 +23,27 @@ const EXAMPLES: &str = r#"EXAMPLES:
     Run benchmarks with pinned producers and consumers. This mode pins specific producers
     and consumers to specific streams and partitions (one to one):
 
-    $ cargo r -r --bin iggy-bench -- pinned-producer --streams 10 --producers 10 tcp
-    $ cargo r -r --bin iggy-bench -- pinned-consumer --streams 10 --consumers 10 tcp
-    $ cargo r -r --bin iggy-bench -- pinned-producer-and-consumer --streams 10 --producers 10 --consumers 10 tcp
-    $ cargo r -r --bin iggy-bench -- -T 10GB pp --producers 5 tcp
+    $ cargo r -r --bin messenger-bench -- pinned-producer --streams 10 --producers 10 tcp
+    $ cargo r -r --bin messenger-bench -- pinned-consumer --streams 10 --consumers 10 tcp
+    $ cargo r -r --bin messenger-bench -- pinned-producer-and-consumer --streams 10 --producers 10 --consumers 10 tcp
+    $ cargo r -r --bin messenger-bench -- -T 10GB pp --producers 5 tcp
 
 2) Balanced Mode Benchmarking:
 
     Run benchmarks with balanced distribution of producers and consumers. This mode
     automatically balances the load across streams and consumer groups:
 
-    $ cargo r -r --bin iggy-bench -- balanced-producer --partitions 24 --producers 6 tcp
-    $ cargo r -r --bin iggy-bench -- balanced-consumer-group --consumers 6 tcp
-    $ cargo r -r --bin iggy-bench -- balanced-producer-and-consumer-group --partitions 24 --producers 6 --consumers 6 tcp
-    $ cargo r -r --bin iggy-bench -- -T 10GB bpc tcp
+    $ cargo r -r --bin messenger-bench -- balanced-producer --partitions 24 --producers 6 tcp
+    $ cargo r -r --bin messenger-bench -- balanced-consumer-group --consumers 6 tcp
+    $ cargo r -r --bin messenger-bench -- balanced-producer-and-consumer-group --partitions 24 --producers 6 --consumers 6 tcp
+    $ cargo r -r --bin messenger-bench -- -T 10GB bpc tcp
 
 3) End-to-End Benchmarking:
 
     Run end-to-end benchmarks that measure performance for a producer that is also a consumer:
 
-    $ cargo r -r --bin iggy-bench -- end-to-end-producing-consumer --producers 12 --streams 12 tcp
-    $ cargo r -r --bin iggy-bench -- end-to-end-producing-consumer-group --partitions 24 --producers 6 tcp
+    $ cargo r -r --bin messenger-bench -- end-to-end-producing-consumer --producers 12 --streams 12 tcp
+    $ cargo r -r --bin messenger-bench -- end-to-end-producing-consumer-group --partitions 24 --producers 6 tcp
 
 4) Advanced Configuration:
 
@@ -75,7 +75,7 @@ const EXAMPLES: &str = r#"EXAMPLES:
     Examples with detailed configuration:
 
     # Fixed message and batch sizes:
-    $ cargo r -r --bin iggy-bench -- \
+    $ cargo r -r --bin messenger-bench -- \
         --message-size 1000 \
         --messages-per-batch 100 \
         --message-batches 1000 \
@@ -86,7 +86,7 @@ const EXAMPLES: &str = r#"EXAMPLES:
         tcp
 
     # Random message sizes (100-1000 bytes):
-    $ cargo r -r --bin iggy-bench -- \
+    $ cargo r -r --bin messenger-bench -- \
         --message-size "100..1000" \
         --messages-per-batch 100 \
         --total-messages-size "1GB" \
@@ -96,7 +96,7 @@ const EXAMPLES: &str = r#"EXAMPLES:
         tcp
 
     # Random batch sizes (10-100 messages per batch):
-    $ cargo r -r --bin iggy-bench -- \
+    $ cargo r -r --bin messenger-bench -- \
         --message-size 1000 \
         --messages-per-batch "10..100" \
         --total-messages-size "500MB" \
@@ -106,7 +106,7 @@ const EXAMPLES: &str = r#"EXAMPLES:
         tcp
 
     # Random message and batch sizes with rate limiting:
-    $ cargo r -r --bin iggy-bench -- \
+    $ cargo r -r --bin messenger-bench -- \
         --message-size "500..2000" \
         --messages-per-batch "50..200" \
         --total-messages-size "2GB" \
@@ -120,7 +120,7 @@ const EXAMPLES: &str = r#"EXAMPLES:
 
     To benchmark a remote server, specify the server address in the transport subcommand:
 
-    $ cargo r -r --bin iggy-bench -- pinned-producer \
+    $ cargo r -r --bin messenger-bench -- pinned-producer \
         --streams 5 --producers 5 \
         tcp --server-address 192.168.1.100:8090
 
@@ -129,11 +129,11 @@ const EXAMPLES: &str = r#"EXAMPLES:
     The benchmark tool can store detailed results for analysis and comparison:
 
     # Basic result storage (results will be stored in ./performance_results):
-    $ cargo r -r --bin iggy-bench -- pinned-producer --streams 10 --producers 10 tcp output
+    $ cargo r -r --bin messenger-bench -- pinned-producer --streams 10 --producers 10 tcp output
 
 
     # Organized benchmarking with metadata:
-    $ cargo r -r --bin iggy-bench -- balanced-producer --partitions 24 --producers 6 tcp \
+    $ cargo r -r --bin messenger-bench -- balanced-producer --partitions 24 --producers 6 tcp \
         output \
         --identifier "prod-test-$(date +%Y%m%d)" \
         --remark "production-config" \
@@ -141,7 +141,7 @@ const EXAMPLES: &str = r#"EXAMPLES:
         --gitref-date "$(git show -s --format=%cI HEAD)"
 
     # Quick result visualization:
-    $ cargo r -r --bin iggy-bench -- end-to-end-producing-consumer --producers 12 --streams 12 tcp \
+    $ cargo r -r --bin messenger-bench -- end-to-end-producing-consumer --producers 12 --streams 12 tcp \
         output --open-charts
 
     Output configuration options:
@@ -156,16 +156,16 @@ const EXAMPLES: &str = r#"EXAMPLES:
     For more details on available options:
 
     # General help
-    $ cargo r -r --bin iggy-bench -- --help
+    $ cargo r -r --bin messenger-bench -- --help
 
     # Specific benchmark help
-    $ cargo r -r --bin iggy-bench -- pinned-producer --help
+    $ cargo r -r --bin messenger-bench -- pinned-producer --help
 
     # Protocol help
-    $ cargo r -r --bin iggy-bench -- pinned-producer tcp --help
+    $ cargo r -r --bin messenger-bench -- pinned-producer tcp --help
 
     # Output help
-    $ cargo r -r --bin iggy-bench -- pinned-producer tcp output --help
+    $ cargo r -r --bin messenger-bench -- pinned-producer tcp output --help
 "#;
 
 pub fn print_examples() {

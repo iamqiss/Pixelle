@@ -30,8 +30,8 @@ FROM --platform=$BUILDPLATFORM chef AS builder
 ARG PROFILE=release
 ARG TARGETPLATFORM
 ARG LIBC=musl
-ARG IGGY_CI_BUILD
-ENV IGGY_CI_BUILD=${IGGY_CI_BUILD}
+ARG MESSENGER_CI_BUILD
+ENV MESSENGER_CI_BUILD=${MESSENGER_CI_BUILD}
 
 RUN apk add --no-cache zig && \
     cargo install cargo-zigbuild --locked && \
@@ -77,11 +77,11 @@ RUN --mount=type=cache,target=/usr/local/cargo/registry,id=cargo-registry-${TARG
     *) echo "Unsupported platform/libc combination: $TARGETPLATFORM/$LIBC" && exit 1 ;; \
     esac && \
     if [ "$PROFILE" = "debug" ]; then \
-    cargo zigbuild --target ${RUST_TARGET} --bin iggy-mcp && \
-    cp /app/target/${RUST_TARGET}/debug/iggy-mcp /app/iggy-mcp; \
+    cargo zigbuild --target ${RUST_TARGET} --bin messenger-mcp && \
+    cp /app/target/${RUST_TARGET}/debug/messenger-mcp /app/messenger-mcp; \
     else \
-    cargo zigbuild --target ${RUST_TARGET} --bin iggy-mcp --release && \
-    cp /app/target/${RUST_TARGET}/release/iggy-mcp /app/iggy-mcp; \
+    cargo zigbuild --target ${RUST_TARGET} --bin messenger-mcp --release && \
+    cp /app/target/${RUST_TARGET}/release/messenger-mcp /app/messenger-mcp; \
     fi
 
 #
@@ -90,6 +90,6 @@ RUN --mount=type=cache,target=/usr/local/cargo/registry,id=cargo-registry-${TARG
 FROM debian:trixie-slim AS runtime
 WORKDIR /app
 
-COPY --from=builder /app/iggy-mcp /usr/local/bin/iggy-mcp
+COPY --from=builder /app/messenger-mcp /usr/local/bin/messenger-mcp
 
-ENTRYPOINT ["iggy-mcp"]
+ENTRYPOINT ["messenger-mcp"]

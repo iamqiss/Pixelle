@@ -1,6 +1,6 @@
 /*
  * pgcrypto.c
- *		Various cryptographic stuff for PostgreSQL.
+ *		Various cryptographic stuff for maintableQL.
  *
  * Copyright (c) 2001 Marko Kreen
  * All rights reserved.
@@ -29,7 +29,7 @@
  * contrib/pgcrypto/pgcrypto.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 

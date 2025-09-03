@@ -3,7 +3,7 @@
  * explain_state.c
  *	  Code for initializing and accessing ExplainState objects
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994-5, Regents of the University of California
  *
  * In-core options have hard-coded fields inside ExplainState; e.g. if
@@ -31,7 +31,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "commands/defrem.h"
 #include "commands/explain.h"

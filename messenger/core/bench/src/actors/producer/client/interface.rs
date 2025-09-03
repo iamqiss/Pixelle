@@ -21,7 +21,7 @@ use crate::{
     utils::batch_generator::BenchmarkBatchGenerator,
 };
 use bench_report::numeric_parameter::BenchmarkNumericParameter;
-use iggy::prelude::*;
+use messenger::prelude::*;
 
 #[derive(Debug, Clone)]
 pub struct BenchmarkProducerConfig {
@@ -30,14 +30,14 @@ pub struct BenchmarkProducerConfig {
     pub partitions: u32,
     pub messages_per_batch: BenchmarkNumericParameter,
     pub message_size: BenchmarkNumericParameter,
-    pub warmup_time: IggyDuration,
+    pub warmup_time: MessengerDuration,
 }
 
 pub trait ProducerClient: Send + Sync {
     async fn produce_batch(
         &mut self,
         batch_generator: &mut BenchmarkBatchGenerator,
-    ) -> Result<Option<BatchMetrics>, IggyError>;
+    ) -> Result<Option<BatchMetrics>, MessengerError>;
 }
 
 pub trait BenchmarkProducerClient: ProducerClient + BenchmarkInit + ApiLabel + Send + Sync {}

@@ -12,7 +12,7 @@
  * identifying statement boundaries in multi-statement source strings.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/nodes/parsenodes.h
@@ -2591,7 +2591,7 @@ typedef struct GrantStmt
  *
  * objargs includes only the types of the input parameters of the object.
  * In some contexts, that will be all we have, and it's enough to look up
- * objects according to the traditional Postgres rules (i.e., when only input
+ * objects according to the traditional Maintable rules (i.e., when only input
  * arguments matter).
  *
  * objfuncargs, if not NIL, carries the full specification of the parameter

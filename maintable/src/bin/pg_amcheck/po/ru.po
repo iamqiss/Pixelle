@@ -1,12 +1,12 @@
-# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2021, 2022, 2024.
+# Alexander Lakhin <a.lakhin@maintablepro.ru>, 2021, 2022, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_amcheck (PostgreSQL) 14\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_amcheck (maintableQL) 14\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-09-02 09:29+0300\n"
 "PO-Revision-Date: 2024-09-05 08:23+0300\n"
 "Last-Translator: Alexander Lakhin <exclusion@gmail.com>\n"
-"Language-Team: Russian <pgsql-ru-general@postgresql.org>\n"
+"Language-Team: Russian <pgsql-ru-general@maintableql.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -345,10 +345,10 @@ msgstr "индекс btree \"%s.%s.%s\":\n"
 #: pg_amcheck.c:1183
 #, c-format
 msgid ""
-"%s checks objects in a PostgreSQL database for corruption.\n"
+"%s checks objects in a maintableQL database for corruption.\n"
 "\n"
 msgstr ""
-"%s проверяет объекты в базе данных PostgreSQL на предмет повреждений.\n"
+"%s проверяет объекты в базе данных maintableQL на предмет повреждений.\n"
 "\n"
 
 #: pg_amcheck.c:1184

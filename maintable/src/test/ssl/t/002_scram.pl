@@ -1,12 +1,12 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test SCRAM authentication and TLS channel binding types
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 use File::Copy;
@@ -61,7 +61,7 @@ my $common_connstr;
 # Set up the server.
 
 note "setting up data directory";
-my $node = PostgreSQL::Test::Cluster->new('primary');
+my $node = maintableQL::Test::Cluster->new('primary');
 $node->init;
 
 # PGHOST is enforced here to set up the node, subsequent connections
@@ -71,7 +71,7 @@ $ENV{PGPORT} = $node->port;
 $node->start;
 
 # could fail in FIPS mode
-my $md5_works = ($node->psql('postgres', "select md5('')") == 0);
+my $md5_works = ($node->psql('maintable', "select md5('')") == 0);
 
 # Configure server for SSL connections, with password handling.
 $ssl_server->configure_test_server_for_ssl(
@@ -115,14 +115,14 @@ SKIP:
 # because channel binding is not performed.  Note that ssl/client.key may
 # be used in a different test, so the name of this temporary client key
 # is chosen here to be unique.
-my $cert_tempdir = PostgreSQL::Test::Utils::tempdir();
+my $cert_tempdir = maintableQL::Test::Utils::tempdir();
 my $client_tmp_key = "$cert_tempdir/client_scram.key";
 copy("ssl/client.key", "$cert_tempdir/client_scram.key")
   or die
   "couldn't copy ssl/client_key to $cert_tempdir/client_scram.key for permission change: $!";
 chmod 0600, "$cert_tempdir/client_scram.key"
   or die "failed to change permissions on $cert_tempdir/client_scram.key: $!";
-$client_tmp_key =~ s!\\!/!g if $PostgreSQL::Test::Utils::windows_os;
+$client_tmp_key =~ s!\\!/!g if $maintableQL::Test::Utils::windows_os;
 $node->connect_fails(
 	"sslcert=ssl/client.crt sslkey=$client_tmp_key sslrootcert=invalid hostaddr=$SERVERHOSTADDR host=localhost dbname=certdb user=ssltestuser channel_binding=require",
 	"Cert authentication and channel_binding=require",

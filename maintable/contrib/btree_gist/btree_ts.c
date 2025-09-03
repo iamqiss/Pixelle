@@ -1,7 +1,7 @@
 /*
  * contrib/btree_gist/btree_ts.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 

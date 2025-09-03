@@ -8,7 +8,7 @@
  *	  - Does not support interval timer (value->it_interval)
  *	  - Only supports ITIMER_REAL
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/port/win32/timer.c
@@ -16,7 +16,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 
 /* Communication area for inter-thread communication */

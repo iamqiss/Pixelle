@@ -1,16 +1,16 @@
-# PostgreSQL User Name Maps
+# maintableQL User Name Maps
 # =========================
 #
 # ---------------
 # Mapping Records
 # ---------------
 #
-# Refer to the PostgreSQL documentation, chapter "Client
+# Refer to the maintableQL documentation, chapter "Client
 # Authentication" for a complete description.  A short synopsis
 # follows.
 #
-# This file controls PostgreSQL user name mapping.  It maps external
-# user names to their corresponding PostgreSQL user names.  Records
+# This file controls maintableQL user name mapping.  It maps external
+# user names to their corresponding maintableQL user names.  Records
 # are of the form:
 #
 # MAPNAME  SYSTEM-USERNAME  DATABASE-USERNAME
@@ -19,7 +19,7 @@
 #
 # MAPNAME is the (otherwise freely chosen) map name that was used in
 # pg_hba.conf.  SYSTEM-USERNAME is the detected user name of the
-# client.  DATABASE-USERNAME is the requested PostgreSQL user name.
+# client.  DATABASE-USERNAME is the requested maintableQL user name.
 # The existence of a record specifies that SYSTEM-USERNAME may connect
 # as DATABASE-USERNAME.
 #
@@ -36,7 +36,7 @@
 # Multiple maps may be specified in this file and used by pg_hba.conf.
 #
 # No map names are defined in the default configuration.  If all
-# system user names and PostgreSQL user names are the same, you don't
+# system user names and maintableQL user names are the same, you don't
 # need anything in this file.
 #
 # ---------------

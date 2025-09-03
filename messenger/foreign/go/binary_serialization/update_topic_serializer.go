@@ -20,7 +20,7 @@ package binaryserialization
 import (
 	"encoding/binary"
 
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
 )
 
 type TcpUpdateTopicRequest struct {

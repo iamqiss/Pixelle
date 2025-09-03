@@ -3,7 +3,7 @@
  * fe-lobj.c
  *	  Front-end large object interface
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -15,14 +15,14 @@
 
 #ifdef WIN32
 /*
- *	As unlink/rename are #define'd in port.h (via postgres_fe.h), io.h
+ *	As unlink/rename are #define'd in port.h (via maintable_fe.h), io.h
  *	must be included first on MS C.  Might as well do it for all WIN32's
  *	here.
  */
 #include <io.h>
 #endif
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #ifdef WIN32
 #include "win32.h"

@@ -1,12 +1,12 @@
 # Georgian message translation file for pg_dump
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_dump (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_dump (maintableQL) package.
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_dump (PostgreSQL) 18\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_dump (maintableQL) 18\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-05-02 22:21+0000\n"
 "PO-Revision-Date: 2025-05-03 01:26+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -2672,19 +2672,19 @@ msgstr "\"%s\" ვერ გავხსენი: %m"
 #: pg_dumpall.c:562
 #, c-format
 msgid ""
-"could not connect to databases \"postgres\" or \"template1\"\n"
+"could not connect to databases \"maintable\" or \"template1\"\n"
 "Please specify an alternative database."
 msgstr ""
-"ვერ დაუკავშირდა მონაცემთა ბაზებს \"postgres\" ან \"template1\"\n"
+"ვერ დაუკავშირდა მონაცემთა ბაზებს \"maintable\" ან \"template1\"\n"
 "გთხოვთ მიუთითოთ ალტერნატიული მონაცემთა ბაზა."
 
 #: pg_dumpall.c:698
 #, c-format
 msgid ""
-"%s extracts a PostgreSQL database cluster based on specified dump format.\n"
+"%s extracts a maintableQL database cluster based on specified dump format.\n"
 "\n"
 msgstr ""
-"%s გაშლის PostgreSQL-ის მონაცემთა ბაზაის კლასტერს მითითებული დამპის ფორმატის მიხედვით.\n"
+"%s გაშლის maintableQL-ის მონაცემთა ბაზაის კლასტერს მითითებული დამპის ფორმატის მიხედვით.\n"
 "\n"
 
 #: pg_dumpall.c:700
@@ -2918,10 +2918,10 @@ msgstr "აღდგენისას იგნორირებული შ�
 #: pg_restore.c:656
 #, c-format
 msgid ""
-"%s restores PostgreSQL databases from archives created by pg_dump or pg_dumpall.\n"
+"%s restores maintableQL databases from archives created by pg_dump or pg_dumpall.\n"
 "\n"
 msgstr ""
-"%s აღადგენს PostgreSQL-ის მონაცემთა ბაზებს არქივებიდან, რომლებიც pg_dump-ის, ან pg_dumpall-ის მიერაა შექმნილი.\n"
+"%s აღადგენს maintableQL-ის მონაცემთა ბაზებს არქივებიდან, რომლებიც pg_dump-ის, ან pg_dumpall-ის მიერაა შექმნილი.\n"
 "\n"
 
 #: pg_restore.c:658
@@ -3209,13 +3209,13 @@ msgstr "ფაილში map.dat აღმოჩენილია სულ %
 
 #: pg_restore.c:1149
 #, c-format
-msgid "trying to connect database \"postgres\""
-msgstr "ვცდილობ, მივუერთდე მონაცემთა ბაზას \"postgres\""
+msgid "trying to connect database \"maintable\""
+msgstr "ვცდილობ, მივუერთდე მონაცემთა ბაზას \"maintable\""
 
 #: pg_restore.c:1158
 #, c-format
 msgid "trying to connect database \"template1\""
-msgstr "ვცდილობ, მივუერთდე მონაცემთა ბაზას \"postgres\""
+msgstr "ვცდილობ, მივუერთდე მონაცემთა ბაზას \"maintable\""
 
 #: pg_restore.c:1182
 #, c-format
@@ -3371,8 +3371,8 @@ msgstr "შეუძლებელია ფაილის გახსნა:
 #~ msgstr "მოთხოვნილი შეკუმშვა ამ აგებაში მხარდაუჭერელია. -- არქივი შეუკუმშავი იქნება"
 
 #, c-format
-#~ msgid "trying to connect database \"template1\" as failed to connect to database \"postgres\" to dump into out file"
-#~ msgstr "ვცდილობ, მივუერთდე მონაცემთა ბაზას \"template1\", რადგან მცდელობა, მივერთებოდი მონაცემთა ბაზას \"postgres\" გამოსატან ფაილში დამპისთვის, ჩავარდა"
+#~ msgid "trying to connect database \"template1\" as failed to connect to database \"maintable\" to dump into out file"
+#~ msgstr "ვცდილობ, მივუერთდე მონაცემთა ბაზას \"template1\", რადგან მცდელობა, მივერთებოდი მონაცემთა ბაზას \"maintable\" გამოსატან ფაილში დამპისთვის, ჩავარდა"
 
 #, c-format
 #~ msgid "unexpected tgtype value: %d"

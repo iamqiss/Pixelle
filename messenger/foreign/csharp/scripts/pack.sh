@@ -39,10 +39,10 @@ echo "Extracted version: $version"
 echo "Executing after success scripts on branch $GITHUB_REF_NAME"
 echo "Triggering Nuget package build"
 
-cd Iggy_SDK || exit
+cd Messenger_SDK || exit
 dotnet pack -c release /p:PackageVersion="$version" --no-restore -o .
 
-echo "Uploading Iggy package to Nuget using branch $GITHUB_REF_NAME"
+echo "Uploading Messenger package to Nuget using branch $GITHUB_REF_NAME"
 
 case "$GITHUB_REF_NAME" in
   "master")

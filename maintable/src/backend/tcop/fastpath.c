@@ -3,7 +3,7 @@
  * fastpath.c
  *	  routines to handle function requests from the frontend
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -15,7 +15,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "access/xact.h"
@@ -38,7 +38,7 @@
  * Formerly, this code attempted to cache the function and type info
  * looked up by fetch_fp_info, but only for the duration of a single
  * transaction command (since in theory the info could change between
- * commands).  This was utterly useless, because postgres.c executes
+ * commands).  This was utterly useless, because maintable.c executes
  * each fastpath call as a separate transaction command, and so the
  * cached data could never actually have been reused.  If it had worked
  * as intended, it would have had problems anyway with dangling references
@@ -176,13 +176,13 @@ fetch_fp_info(Oid func_id, struct fp_info *fip)
  * This corresponds to the libpq protocol symbol "F".
  *
  * INPUT:
- *		postgres.c has already read the message body and will pass it in
+ *		maintable.c has already read the message body and will pass it in
  *		msgBuf.
  *
  * Note: palloc()s done here and in the called function do not need to be
- * cleaned up explicitly.  We are called from PostgresMain() in the
+ * cleaned up explicitly.  We are called from MaintableMain() in the
  * MessageContext memory context, which will be automatically reset when
- * control returns to PostgresMain.
+ * control returns to MaintableMain.
  */
 void
 HandleFunctionRequest(StringInfo msgBuf)

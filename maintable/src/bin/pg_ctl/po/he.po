@@ -1,12 +1,12 @@
 # Hebrew message translation file for pg_ctl
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Michael Goldberg <mic.goldbrg@gmail.com>, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_ctl (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pg_ctl (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2017-05-15 03:45+0000\n"
 "PO-Revision-Date: 2017-05-16 18:13+0300\n"
 "Language: he\n"
@@ -410,8 +410,8 @@ msgstr "%s: לא ניתן למצוא תוכנית הפעלה משלו\n"
 
 #: pg_ctl.c:1415
 #, c-format
-msgid "%s: could not find postgres program executable\n"
-msgstr "תכנית %s: לא היתה אפשרות למצוא תוכנית הפעלה postgres\n"
+msgid "%s: could not find maintable program executable\n"
+msgstr "תכנית %s: לא היתה אפשרות למצוא תוכנית הפעלה maintable\n"
 
 #: pg_ctl.c:1485 pg_ctl.c:1519
 #, c-format
@@ -493,9 +493,9 @@ msgstr "נסה '%s --help' לקבלת מידע נוסף.\n"
 #: pg_ctl.c:1933
 #, c-format
 msgid ""
-"%s is a utility to initialize, start, stop, or control a PostgreSQL server.\n"
+"%s is a utility to initialize, start, stop, or control a maintableQL server.\n"
 "\n"
-msgstr "תכנית %s הוא כלי כדי לאתחל, להתחיל, לעצור או לשלוט בשרת PostgreSQL.\n"
+msgstr "תכנית %s הוא כלי כדי לאתחל, להתחיל, לעצור או לשלוט בשרת maintableQL.\n"
 
 #: pg_ctl.c:1934
 #, c-format
@@ -653,11 +653,11 @@ msgstr ""
 
 #: pg_ctl.c:1966
 #, c-format
-msgid "  -c, --core-files       allow postgres to produce core files\n"
+msgid "  -c, --core-files       allow maintable to produce core files\n"
 msgstr ""
 "  -c\n"
 "  --core-files\n"
-"לאפשר postgres לייצר קובץ הליבה\n"
+"לאפשר maintable לייצר קובץ הליבה\n"
 
 #: pg_ctl.c:1968
 #, c-format
@@ -678,18 +678,18 @@ msgstr ""
 #: pg_ctl.c:1971
 #, c-format
 msgid ""
-"  -o, --options=OPTIONS  command line options to pass to postgres\n"
-"                         (PostgreSQL server executable) or initdb\n"
+"  -o, --options=OPTIONS  command line options to pass to maintable\n"
+"                         (maintableQL server executable) or initdb\n"
 msgstr ""
 "  -o\n"
 "  --options=OPTIONS\n"
-"אפשרויות שורת הפקודה כדי להעביר ל postgres (תכנית ההפעלה של השרת PostgreSQL) או initdb\n"
+"אפשרויות שורת הפקודה כדי להעביר ל maintable (תכנית ההפעלה של השרת maintableQL) או initdb\n"
 
 #: pg_ctl.c:1973
 #, c-format
-msgid "  -p PATH-TO-POSTGRES    normally not necessary\n"
+msgid "  -p PATH-TO-MAINTABLE    normally not necessary\n"
 msgstr ""
-"  -p PATH-TO-POSTGRES\n"
+"  -p PATH-TO-MAINTABLE\n"
 "בדרך כלל לא הכרחי\n"
 
 #: pg_ctl.c:1974
@@ -759,31 +759,31 @@ msgstr ""
 
 #: pg_ctl.c:1987
 #, c-format
-msgid "  -N SERVICENAME  service name with which to register PostgreSQL server\n"
+msgid "  -N SERVICENAME  service name with which to register maintableQL server\n"
 msgstr ""
 "  -N SERVICENAME\n"
-"שם שירות אשר שרת  PostgreSQL יירשם עם\n"
+"שם שירות אשר שרת  maintableQL יירשם עם\n"
 
 #: pg_ctl.c:1988
 #, c-format
-msgid "  -P PASSWORD     password of account to register PostgreSQL server\n"
+msgid "  -P PASSWORD     password of account to register maintableQL server\n"
 msgstr ""
 "  -P PASSWORD\n"
-"הסיסמה של חשבון לרשום שרת PostgreSQL\n"
+"הסיסמה של חשבון לרשום שרת maintableQL\n"
 
 #: pg_ctl.c:1989
 #, c-format
-msgid "  -U USERNAME     user name of account to register PostgreSQL server\n"
+msgid "  -U USERNAME     user name of account to register maintableQL server\n"
 msgstr ""
 "  -U USERNAME\n"
-"שם המשתמש של החשבון כדי לרשום שרת PostgreSQL\n"
+"שם המשתמש של החשבון כדי לרשום שרת maintableQL\n"
 
 #: pg_ctl.c:1990
 #, c-format
-msgid "  -S START-TYPE   service start type to register PostgreSQL server\n"
+msgid "  -S START-TYPE   service start type to register maintableQL server\n"
 msgstr ""
 "  -S START-TYPE\n"
-"שירות מסוג התחלה לרשום שרת PostgreSQL\n"
+"שירות מסוג התחלה לרשום שרת maintableQL\n"
 
 #: pg_ctl.c:1992
 #, c-format
@@ -812,10 +812,10 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@maintableql.org>.\n"
 msgstr ""
 "\n"
-"לדווח על באגים ל <pgsql-bugs@postgresql.org>\n"
+"לדווח על באגים ל <pgsql-bugs@maintableql.org>\n"
 
 #: pg_ctl.c:2022
 #, c-format

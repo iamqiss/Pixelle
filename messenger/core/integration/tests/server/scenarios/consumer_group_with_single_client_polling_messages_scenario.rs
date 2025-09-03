@@ -21,7 +21,7 @@ use crate::server::scenarios::{
     STREAM_NAME, TOPIC_ID, TOPIC_NAME, cleanup, create_client, get_consumer_group,
     join_consumer_group,
 };
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::{ClientFactory, assert_clean_system, login_root};
 use std::str::{FromStr, from_utf8};
 
@@ -40,7 +40,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
     assert_clean_system(&client).await;
 }
 
-async fn init_system(client: &IggyClient) {
+async fn init_system(client: &MessengerClient) {
     // 1. Create the stream
     client
         .create_stream(STREAM_NAME, Some(STREAM_ID))
@@ -56,7 +56,7 @@ async fn init_system(client: &IggyClient) {
             CompressionAlgorithm::default(),
             None,
             Some(TOPIC_ID),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await
@@ -90,10 +90,10 @@ async fn init_system(client: &IggyClient) {
     assert_eq!(member.partitions_count, PARTITIONS_COUNT);
 }
 
-async fn execute_using_messages_key_key(client: &IggyClient) {
+async fn execute_using_messages_key_key(client: &MessengerClient) {
     // 1. Send messages to the calculated partition ID on the server side by using entity ID as a key
     for entity_id in 1..=MESSAGES_COUNT {
-        let message = IggyMessage::from_str(&create_message_payload(entity_id)).unwrap();
+        let message = MessengerMessage::from_str(&create_message_payload(entity_id)).unwrap();
         let mut messages = vec![message];
         client
             .send_messages(
@@ -133,7 +133,7 @@ fn create_message_payload(entity_id: u32) -> String {
     format!("message-{entity_id}")
 }
 
-async fn execute_using_none_key(client: &IggyClient) {
+async fn execute_using_none_key(client: &MessengerClient) {
     // 1. Send messages to the calculated partition ID on the server side (round-robin) by using none key
     for entity_id in 1..=MESSAGES_COUNT * PARTITIONS_COUNT {
         let mut partition_id = entity_id % PARTITIONS_COUNT;
@@ -142,7 +142,7 @@ async fn execute_using_none_key(client: &IggyClient) {
         }
 
         let message =
-            IggyMessage::from_str(&create_extended_message_payload(partition_id, entity_id))
+            MessengerMessage::from_str(&create_extended_message_payload(partition_id, entity_id))
                 .unwrap();
         let mut messages = vec![message];
         client

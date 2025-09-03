@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 if not llvm.found()
   subdir_done()
@@ -76,7 +76,7 @@ llvmjit_types = custom_target('llvmjit_types.bc',
   command: [llvm_irgen_command] + llvm_irgen_args + bitcode_cflags,
   input: 'llvmjit_types.c',
   output: 'llvmjit_types.bc',
-  depends: [postgres],
+  depends: [maintable],
   install: true,
   install_dir: dir_lib_pkg,
   depfile: '@BASENAME@.c.bc.d',

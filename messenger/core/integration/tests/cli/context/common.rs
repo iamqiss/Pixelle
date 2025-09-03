@@ -18,26 +18,26 @@
 
 use std::path::PathBuf;
 
-use iggy_binary_protocol::cli::binary_context::common::{ContextReaderWriter, ContextsConfigMap};
+use messenger_binary_protocol::cli::binary_context::common::{ContextReaderWriter, ContextsConfigMap};
 use tempfile::{TempDir, tempdir};
 
-pub struct TestIggyContext {
+pub struct TestMessengerContext {
     maybe_contexts: Option<ContextsConfigMap>,
     maybe_active_context_key: Option<String>,
-    iggy_home: TempDir,
+    messenger_home: TempDir,
     context_manager: ContextReaderWriter,
 }
 
-impl TestIggyContext {
+impl TestMessengerContext {
     pub fn new(
         maybe_contexts: Option<ContextsConfigMap>,
         maybe_active_context_key: Option<String>,
     ) -> Self {
-        let iggy_home = tempdir().unwrap();
-        let context_manager = ContextReaderWriter::new(Some(iggy_home.path().to_path_buf()));
+        let messenger_home = tempdir().unwrap();
+        let context_manager = ContextReaderWriter::new(Some(messenger_home.path().to_path_buf()));
 
         Self {
-            iggy_home,
+            messenger_home,
             context_manager,
             maybe_contexts,
             maybe_active_context_key,
@@ -72,7 +72,7 @@ impl TestIggyContext {
         self.maybe_active_context_key.clone()
     }
 
-    pub fn get_iggy_home(&self) -> PathBuf {
-        self.iggy_home.path().to_path_buf()
+    pub fn get_messenger_home(&self) -> PathBuf {
+        self.messenger_home.path().to_path_buf()
     }
 }

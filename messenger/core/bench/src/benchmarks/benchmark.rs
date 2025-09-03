@@ -17,12 +17,12 @@
  */
 
 use crate::args::kind::BenchmarkKindCommand;
-use crate::{args::common::IggyBenchArgs, utils::client_factory::create_client_factory};
+use crate::{args::common::MessengerBenchArgs, utils::client_factory::create_client_factory};
 use async_trait::async_trait;
 use bench_report::benchmark_kind::BenchmarkKind;
 use bench_report::individual_metrics::BenchmarkIndividualMetrics;
-use iggy::clients::client::IggyClient;
-use iggy::prelude::*;
+use messenger::clients::client::MessengerClient;
+use messenger::prelude::*;
 use integration::test_server::{ClientFactory, login_root};
 use std::sync::Arc;
 use tokio::task::JoinSet;
@@ -37,8 +37,8 @@ use super::pinned_consumer::PinnedConsumerBenchmark;
 use super::pinned_producer::PinnedProducerBenchmark;
 use super::pinned_producer_and_consumer::PinnedProducerAndConsumerBenchmark;
 
-impl From<IggyBenchArgs> for Box<dyn Benchmarkable> {
-    fn from(args: IggyBenchArgs) -> Self {
+impl From<MessengerBenchArgs> for Box<dyn Benchmarkable> {
+    fn from(args: MessengerBenchArgs) -> Self {
         let client_factory = create_client_factory(&args);
 
         match args.benchmark_kind {
@@ -85,22 +85,22 @@ impl From<IggyBenchArgs> for Box<dyn Benchmarkable> {
 pub trait Benchmarkable: Send {
     async fn run(
         &mut self,
-    ) -> Result<JoinSet<Result<BenchmarkIndividualMetrics, IggyError>>, IggyError>;
+    ) -> Result<JoinSet<Result<BenchmarkIndividualMetrics, MessengerError>>, MessengerError>;
     fn kind(&self) -> BenchmarkKind;
-    fn args(&self) -> &IggyBenchArgs;
+    fn args(&self) -> &MessengerBenchArgs;
     fn client_factory(&self) -> &Arc<dyn ClientFactory>;
     fn print_info(&self);
 
     /// Below methods have common implementation for all benchmarks.
     /// Initializes the streams and topics for the benchmark.
     /// This method is called before the benchmark is executed.
-    async fn init_streams(&self) -> Result<(), IggyError> {
+    async fn init_streams(&self) -> Result<(), MessengerError> {
         let start_stream_id = self.args().start_stream_id();
         let number_of_streams = self.args().streams();
         let topic_id: u32 = 1;
         let partitions_count: u32 = self.args().number_of_partitions();
         let client = self.client_factory().create_client().await;
-        let client = IggyClient::create(client, None, None);
+        let client = MessengerClient::create(client, None, None);
         login_root(&client).await;
         let streams = client.get_streams().await?;
         for i in 1..=number_of_streams {
@@ -128,7 +128,7 @@ pub trait Benchmarkable: Send {
                         CompressionAlgorithm::default(),
                         None,
                         None,
-                        IggyExpiry::NeverExpire,
+                        MessengerExpiry::NeverExpire,
                         max_topic_size,
                     )
                     .await?;
@@ -137,17 +137,17 @@ pub trait Benchmarkable: Send {
         Ok(())
     }
 
-    async fn check_streams(&self) -> Result<(), IggyError> {
+    async fn check_streams(&self) -> Result<(), MessengerError> {
         let start_stream_id = self.args().start_stream_id();
         let number_of_streams = self.args().streams();
         let client = self.client_factory().create_client().await;
-        let client = IggyClient::create(client, None, None);
+        let client = MessengerClient::create(client, None, None);
         login_root(&client).await;
         let streams = client.get_streams().await?;
         for i in 1..=number_of_streams {
             let stream_id = start_stream_id + i;
             if streams.iter().all(|s| s.id != stream_id) {
-                return Err(IggyError::ResourceNotFound(format!(
+                return Err(MessengerError::ResourceNotFound(format!(
                     "Streams for testing are not properly initialized. Stream with id: {stream_id} is missing."
                 )));
             }

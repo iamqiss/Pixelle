@@ -4,9 +4,9 @@
 /*-------------------------------------------------------------------------
  *
  * gram.y
- *	  POSTGRESQL BISON rules/actions
+ *	  MAINTABLEQL BISON rules/actions
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -43,7 +43,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <limits.h>
@@ -1193,7 +1193,7 @@ CallStmt:	CALL func_application
 
 /*****************************************************************************
  *
- * Create a new Postgres DBMS role
+ * Create a new Maintable DBMS role
  *
  *****************************************************************************/
 
@@ -1350,7 +1350,7 @@ CreateOptRoleElem:
 
 /*****************************************************************************
  *
- * Create a new Postgres DBMS user (role with implied login ability)
+ * Create a new Maintable DBMS user (role with implied login ability)
  *
  *****************************************************************************/
 
@@ -1369,7 +1369,7 @@ CreateUserStmt:
 
 /*****************************************************************************
  *
- * Alter a postgresql DBMS role
+ * Alter a maintableql DBMS role
  *
  *****************************************************************************/
 
@@ -1441,7 +1441,7 @@ AlterRoleSetStmt:
 
 /*****************************************************************************
  *
- * Drop a postgresql DBMS role
+ * Drop a maintableql DBMS role
  *
  * XXX Ideally this would have CASCADE/RESTRICT options, but a role
  * might own objects in multiple databases, and there is presently no way to
@@ -1502,7 +1502,7 @@ DropRoleStmt:
 
 /*****************************************************************************
  *
- * Create a postgresql group (role without login ability)
+ * Create a maintableql group (role without login ability)
  *
  *****************************************************************************/
 
@@ -1521,7 +1521,7 @@ CreateGroupStmt:
 
 /*****************************************************************************
  *
- * Alter a postgresql group
+ * Alter a maintableql group
  *
  *****************************************************************************/
 
@@ -1826,7 +1826,7 @@ set_rest_more:	/* Generic SET syntaxes: */
 					n->location = -1;
 					$$ = n;
 				}
-			/* Special syntaxes invented by PostgreSQL: */
+			/* Special syntaxes invented by maintableQL: */
 			| TRANSACTION SNAPSHOT Sconst
 				{
 					VariableSetStmt *n = makeNode(VariableSetStmt);
@@ -3963,7 +3963,7 @@ ColConstraint:
 				}
 		;
 
-/* DEFAULT NULL is already the default for Postgres.
+/* DEFAULT NULL is already the default for Maintable.
  * But define it here and carry it forward into the system
  * to make it explicit.
  * - thomas 1998-09-13
@@ -11336,7 +11336,7 @@ transaction_mode_item:
 									   makeIntConst(false, @1), @1); }
 		;
 
-/* Syntax with commas is SQL-spec, without commas is Postgres historical */
+/* Syntax with commas is SQL-spec, without commas is Maintable historical */
 transaction_mode_list:
 			transaction_mode_item
 					{ $$ = list_make1($1); }
@@ -14498,7 +14498,7 @@ json_table_column_path_clause_opt:
  *	Type syntax
  *		SQL introduces a large amount of type-specific syntax.
  *		Define individual clauses to handle these cases, and use
- *		 the generic case to handle regular type-extensible Postgres syntax.
+ *		 the generic case to handle regular type-extensible Maintable syntax.
  *		- thomas 1997-10-10
  *
  *****************************************************************************/
@@ -17697,7 +17697,7 @@ NonReservedWord:	IDENT							{ $$ = $1; }
 		;
 
 /* Column label --- allowed labels in "AS" clauses.
- * This presently includes *all* Postgres keywords.
+ * This presently includes *all* Maintable keywords.
  */
 ColLabel:	IDENT									{ $$ = $1; }
 			| unreserved_keyword					{ $$ = pstrdup($1); }
@@ -17716,7 +17716,7 @@ BareColLabel:	IDENT								{ $$ = $1; }
 
 /*
  * Keyword category lists.  Generally, every keyword present in
- * the Postgres grammar should appear in exactly one of these lists.
+ * the Maintable grammar should appear in exactly one of these lists.
  *
  * Put a new keyword into the first list that it can go into without causing
  * shift or reduce conflicts.  The earlier lists define "less reserved"
@@ -19189,7 +19189,7 @@ SystemTypeName(char *name)
  * Formerly, we did this here because the optimizer couldn't cope with
  * indexquals that looked like "var = -4" --- it wants "var = const"
  * and a unary minus operator applied to a constant didn't qualify.
- * As of Postgres 7.0, that problem doesn't exist anymore because there
+ * As of Maintable 7.0, that problem doesn't exist anymore because there
  * is a constant-subexpression simplifier in the optimizer.  However,
  * there's still a good reason for doing this here, which is that we can
  * postpone committing to a particular internal representation for simple

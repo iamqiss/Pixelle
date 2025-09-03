@@ -4,8 +4,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_ctl (PostgreSQL) 14\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_ctl (maintableQL) 14\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-04-24 03:48+0000\n"
 "PO-Revision-Date: 2023-04-24 09:26+0200\n"
 "Last-Translator: Jie Zhang <zhangjie2@fujitsu.com>\n"
@@ -417,8 +417,8 @@ msgstr "%s: 无法找到执行文件\n"
 
 #: pg_ctl.c:1441
 #, c-format
-msgid "%s: could not find postgres program executable\n"
-msgstr "%s: 无法找到postgres程序的执行文件\n"
+msgid "%s: could not find maintable program executable\n"
+msgstr "%s: 无法找到maintable程序的执行文件\n"
 
 #: pg_ctl.c:1511 pg_ctl.c:1545
 #, c-format
@@ -505,10 +505,10 @@ msgstr "请用 \"%s --help\" 获取更多的信息.\n"
 #: pg_ctl.c:1966
 #, c-format
 msgid ""
-"%s is a utility to initialize, start, stop, or control a PostgreSQL server.\n"
+"%s is a utility to initialize, start, stop, or control a maintableQL server.\n"
 "\n"
 msgstr ""
-"%s 是一个用于初始化、启动、停止或控制PostgreSQL服务器的工具.\n"
+"%s 是一个用于初始化、启动、停止或控制maintableQL服务器的工具.\n"
 "\n"
 
 #: pg_ctl.c:1967
@@ -648,8 +648,8 @@ msgstr ""
 
 #: pg_ctl.c:2000
 #, c-format
-msgid "  -c, --core-files       allow postgres to produce core files\n"
-msgstr "  -c, --core-files       允许postgres进程产生核心文件\n"
+msgid "  -c, --core-files       allow maintable to produce core files\n"
+msgstr "  -c, --core-files       允许maintable进程产生核心文件\n"
 
 #: pg_ctl.c:2002
 #, c-format
@@ -664,15 +664,15 @@ msgstr "  -l, --log=FILENAME     写入 (或追加) 服务器日志到文件FILE
 #: pg_ctl.c:2005
 #, c-format
 msgid ""
-"  -o, --options=OPTIONS  command line options to pass to postgres\n"
-"                         (PostgreSQL server executable) or initdb\n"
+"  -o, --options=OPTIONS  command line options to pass to maintable\n"
+"                         (maintableQL server executable) or initdb\n"
 msgstr ""
-"  -o, --options=OPTIONS  传递给postgres的命令行选项\n"
-"                         (PostgreSQL 服务器执行文件)或initdb\n"
+"  -o, --options=OPTIONS  传递给maintable的命令行选项\n"
+"                         (maintableQL 服务器执行文件)或initdb\n"
 
 #: pg_ctl.c:2007
 #, c-format
-msgid "  -p PATH-TO-POSTGRES    normally not necessary\n"
+msgid "  -p PATH-TO-MAINTABLE    normally not necessary\n"
 msgstr "  -p PATH-TO-POSTMASTER  正常情况不必要\n"
 
 #: pg_ctl.c:2008
@@ -733,23 +733,23 @@ msgstr ""
 
 #: pg_ctl.c:2021
 #, c-format
-msgid "  -N SERVICENAME  service name with which to register PostgreSQL server\n"
-msgstr "  -N 服务名称     注册到 PostgreSQL 服务器的服务名称\n"
+msgid "  -N SERVICENAME  service name with which to register maintableQL server\n"
+msgstr "  -N 服务名称     注册到 maintableQL 服务器的服务名称\n"
 
 #: pg_ctl.c:2022
 #, c-format
-msgid "  -P PASSWORD     password of account to register PostgreSQL server\n"
-msgstr "  -P 口令         注册到 PostgreSQL 服务器帐户的口令\n"
+msgid "  -P PASSWORD     password of account to register maintableQL server\n"
+msgstr "  -P 口令         注册到 maintableQL 服务器帐户的口令\n"
 
 #: pg_ctl.c:2023
 #, c-format
-msgid "  -U USERNAME     user name of account to register PostgreSQL server\n"
-msgstr "  -U 用户名       注册到 PostgreSQL 服务器帐户的用户名\n"
+msgid "  -U USERNAME     user name of account to register maintableQL server\n"
+msgstr "  -U 用户名       注册到 maintableQL 服务器帐户的用户名\n"
 
 #: pg_ctl.c:2024
 #, c-format
-msgid "  -S START-TYPE   service start type to register PostgreSQL server\n"
-msgstr "  -S START-TYPE   注册到PostgreSQL服务器的服务启动类型\n"
+msgid "  -S START-TYPE   service start type to register maintableQL server\n"
+msgstr "  -S START-TYPE   注册到maintableQL服务器的服务启动类型\n"
 
 #: pg_ctl.c:2026
 #, c-format

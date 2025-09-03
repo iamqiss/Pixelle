@@ -21,7 +21,7 @@
 static const char rcsid[] = "Id: inet_net_ntop.c,v 1.1.2.2 2004/03/09 09:17:27 marka Exp $";
 #endif
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/socket.h>
 #include <netinet/in.h>

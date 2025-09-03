@@ -1,7 +1,7 @@
 --
 -- Verify correct calculation of checksums
 --
--- Postgres' checksum algorithm produces different answers on little-endian
+-- Maintable' checksum algorithm produces different answers on little-endian
 -- and big-endian machines.  The results of this test also vary depending
 -- on the configured block size.  This test has several different expected
 -- results files to handle the following possibilities:

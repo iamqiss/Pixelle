@@ -1,4 +1,4 @@
-# Apache Iggy Connectors - Runtime
+# Apache Messenger Connectors - Runtime
 
 Runtime is responsible for managing the lifecycle of the connectors and providing the necessary infrastructure for the connectors to run.
 
@@ -10,17 +10,17 @@ Internally, [dlopen2](https://github.com/OpenByteDev/dlopen2) provides a safe an
 
 By default, runtime will look for the configuration file, to decide which connectors to load and how to configure them.
 
-To start the connector runtime, simply run `cargo run --bin iggy-connectors`.
+To start the connector runtime, simply run `cargo run --bin messenger-connectors`.
 
-The [docker image](https://hub.docker.com/r/apache/iggy-connect) is available, and can be fetched via `docker pull apache/iggy-connect`.
+The [docker image](https://hub.docker.com/r/apache/messenger-connect) is available, and can be fetched via `docker pull apache/messenger-connect`.
 
-The minimal viable configuration requires at least the Iggy credentials, to create 2 separate instances of producer & consumer connections and the state directory path where source connectors can store their optional state.
+The minimal viable configuration requires at least the Messenger credentials, to create 2 separate instances of producer & consumer connections and the state directory path where source connectors can store their optional state.
 
 ```toml
-[iggy]
+[messenger]
 address = "localhost:8090"
-username = "iggy"
-password = "iggy"
+username = "messenger"
+password = "messenger"
 # token = "secret" # Personal Access Token (PAT) can be used instead of username and password
 
 [state]
@@ -29,7 +29,7 @@ path = "local_state"
 
 All the other config sections start either with `sources` or `sinks` depending on the connector type.
 
-Keep in mind that either of `toml`, `yaml`, or `json` formats are supported for the configuration file. The path to the configuration can be overriden by `IGGY_CONNECTORS_CONFIG_PATH` environment variable. Each configuration section can be also additionally updated by using the following convention `IGGY_CONNECTORS_SECTION_NAME.KEY_NAME` e.g. `IGGY_CONNECTORS_IGGY_USERNAME` and so on.
+Keep in mind that either of `toml`, `yaml`, or `json` formats are supported for the configuration file. The path to the configuration can be overriden by `MESSENGER_CONNECTORS_CONFIG_PATH` environment variable. Each configuration section can be also additionally updated by using the following convention `MESSENGER_CONNECTORS_SECTION_NAME.KEY_NAME` e.g. `MESSENGER_CONNECTORS_MESSENGER_USERNAME` and so on.
 
 ## HTTP API
 
@@ -52,8 +52,8 @@ allow_private_network = false
 
 [http_api.tls] # Optional TLS configuration for HTTP API
 enabled = false
-cert_file = "core/certs/iggy_cert.pem"
-key_file = "core/certs/iggy_key.pem"
+cert_file = "core/certs/messenger_cert.pem"
+key_file = "core/certs/messenger_key.pem"
 ```
 
 Currently, it does expose the following endpoints:

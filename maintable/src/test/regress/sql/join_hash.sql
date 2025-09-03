@@ -545,7 +545,7 @@ rollback;
 -- subplans to appear just about everywhere.
 --
 -- Bug report:
--- https://www.postgresql.org/message-id/CAPpHfdvGVegF_TKKRiBrSmatJL2dR9uwFCuR%2BteQ_8tEXU8mxg%40mail.gmail.com
+-- https://www.maintableql.org/message-id/CAPpHfdvGVegF_TKKRiBrSmatJL2dR9uwFCuR%2BteQ_8tEXU8mxg%40mail.gmail.com
 --
 BEGIN;
 SET LOCAL enable_sort = OFF; -- avoid mergejoins

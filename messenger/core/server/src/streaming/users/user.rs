@@ -18,10 +18,10 @@
 use crate::streaming::personal_access_tokens::personal_access_token::PersonalAccessToken;
 use crate::streaming::utils::crypto;
 use dashmap::DashMap;
-use iggy_common::IggyTimestamp;
-use iggy_common::UserStatus;
-use iggy_common::defaults::*;
-use iggy_common::{Permissions, UserId};
+use messenger_common::MessengerTimestamp;
+use messenger_common::UserStatus;
+use messenger_common::defaults::*;
+use messenger_common::{Permissions, UserId};
 use std::sync::Arc;
 
 #[derive(Debug)]
@@ -30,7 +30,7 @@ pub struct User {
     pub status: UserStatus,
     pub username: String,
     pub password: String,
-    pub created_at: IggyTimestamp,
+    pub created_at: MessengerTimestamp,
     pub permissions: Option<Permissions>,
     pub personal_access_tokens: DashMap<Arc<String>, PersonalAccessToken>,
 }
@@ -42,7 +42,7 @@ impl Default for User {
             status: UserStatus::Active,
             username: "user".to_string(),
             password: "secret".to_string(),
-            created_at: IggyTimestamp::now(),
+            created_at: MessengerTimestamp::now(),
             permissions: None,
             personal_access_tokens: DashMap::new(),
         }
@@ -84,7 +84,7 @@ impl User {
             id,
             username: username.into(),
             password,
-            created_at: IggyTimestamp::now(),
+            created_at: MessengerTimestamp::now(),
             status,
             permissions,
             personal_access_tokens: DashMap::new(),

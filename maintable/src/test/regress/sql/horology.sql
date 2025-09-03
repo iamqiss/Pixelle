@@ -88,7 +88,7 @@ SELECT time with time zone 'T0405+08';
 SELECT time with time zone 'T04:05+08';
 -- 8601 says "Thh" is allowed, but we intentionally reject it as too vague
 SELECT time with time zone 'T04+08';
-SET DateStyle = 'Postgres, MDY';
+SET DateStyle = 'Maintable, MDY';
 -- Check Julian dates BC
 SELECT date 'J1520447' AS "Confucius' Birthday";
 SELECT date 'J0' AS "Julian Epoch";
@@ -412,11 +412,11 @@ select count(*) from date_tbl
 -- Formats
 --
 
-SET DateStyle TO 'US,Postgres';
+SET DateStyle TO 'US,Maintable';
 
 SHOW DateStyle;
 
-SELECT d1 AS us_postgres FROM TIMESTAMP_TBL;
+SELECT d1 AS us_maintable FROM TIMESTAMP_TBL;
 
 SET DateStyle TO 'US,ISO';
 
@@ -428,7 +428,7 @@ SHOW DateStyle;
 
 SELECT d1 AS us_sql FROM TIMESTAMP_TBL;
 
-SET DateStyle TO 'European,Postgres';
+SET DateStyle TO 'European,Maintable';
 
 SHOW DateStyle;
 
@@ -436,7 +436,7 @@ INSERT INTO TIMESTAMP_TBL VALUES('13/06/1957');
 
 SELECT count(*) as one FROM TIMESTAMP_TBL WHERE d1 = 'Jun 13 1957';
 
-SELECT d1 AS european_postgres FROM TIMESTAMP_TBL;
+SELECT d1 AS european_maintable FROM TIMESTAMP_TBL;
 
 SET DateStyle TO 'European,ISO';
 

@@ -17,43 +17,43 @@
  */
 
 use crate::client_wrappers::client_wrapper::ClientWrapper;
-use crate::prelude::{AutoCommit, AutoCommitWhen, IggyConsumer};
-use iggy_common::locking::IggySharedMut;
-use iggy_common::{Consumer, EncryptorKind, Identifier, IggyDuration, PollingStrategy};
+use crate::prelude::{AutoCommit, AutoCommitWhen, MessengerConsumer};
+use messenger_common::locking::MessengerSharedMut;
+use messenger_common::{Consumer, EncryptorKind, Identifier, MessengerDuration, PollingStrategy};
 use std::sync::Arc;
 
 #[derive(Debug)]
-pub struct IggyConsumerBuilder {
-    client: IggySharedMut<ClientWrapper>,
+pub struct MessengerConsumerBuilder {
+    client: MessengerSharedMut<ClientWrapper>,
     consumer_name: String,
     consumer: Consumer,
     stream: Identifier,
     topic: Identifier,
     partition: Option<u32>,
     polling_strategy: PollingStrategy,
-    polling_interval: Option<IggyDuration>,
+    polling_interval: Option<MessengerDuration>,
     batch_length: u32,
     auto_commit: AutoCommit,
     auto_join_consumer_group: bool,
     create_consumer_group_if_not_exists: bool,
     encryptor: Option<Arc<EncryptorKind>>,
-    polling_retry_interval: IggyDuration,
+    polling_retry_interval: MessengerDuration,
     init_retries: Option<u32>,
-    init_retry_interval: IggyDuration,
+    init_retry_interval: MessengerDuration,
     allow_replay: bool,
 }
 
-impl IggyConsumerBuilder {
+impl MessengerConsumerBuilder {
     #[allow(clippy::too_many_arguments)]
     pub(crate) fn new(
-        client: IggySharedMut<ClientWrapper>,
+        client: MessengerSharedMut<ClientWrapper>,
         consumer_name: String,
         consumer: Consumer,
         stream_id: Identifier,
         topic_id: Identifier,
         partition_id: Option<u32>,
         encryptor: Option<Arc<EncryptorKind>>,
-        polling_interval: Option<IggyDuration>,
+        polling_interval: Option<MessengerDuration>,
     ) -> Self {
         Self {
             client,
@@ -65,16 +65,16 @@ impl IggyConsumerBuilder {
             polling_strategy: PollingStrategy::next(),
             batch_length: 1000,
             auto_commit: AutoCommit::IntervalOrWhen(
-                IggyDuration::ONE_SECOND,
+                MessengerDuration::ONE_SECOND,
                 AutoCommitWhen::PollingMessages,
             ),
             auto_join_consumer_group: true,
             create_consumer_group_if_not_exists: true,
             encryptor,
             polling_interval,
-            polling_retry_interval: IggyDuration::ONE_SECOND,
+            polling_retry_interval: MessengerDuration::ONE_SECOND,
             init_retries: None,
-            init_retry_interval: IggyDuration::ONE_SECOND,
+            init_retry_interval: MessengerDuration::ONE_SECOND,
             allow_replay: false,
         }
     }
@@ -158,7 +158,7 @@ impl IggyConsumerBuilder {
     }
 
     /// Sets the polling interval for messages.
-    pub fn poll_interval(self, interval: IggyDuration) -> Self {
+    pub fn poll_interval(self, interval: MessengerDuration) -> Self {
         Self {
             polling_interval: Some(interval),
             ..self
@@ -190,7 +190,7 @@ impl IggyConsumerBuilder {
     }
 
     /// Sets the polling retry interval in case of server disconnection.
-    pub fn polling_retry_interval(self, interval: IggyDuration) -> Self {
+    pub fn polling_retry_interval(self, interval: MessengerDuration) -> Self {
         Self {
             polling_retry_interval: interval,
             ..self
@@ -200,7 +200,7 @@ impl IggyConsumerBuilder {
     /// Sets the number of retries and the interval when initializing the consumer if the stream or topic is not found.
     /// Might be useful when the stream or topic is created dynamically by the producer.
     /// By default, the consumer will not retry.
-    pub fn init_retries(self, retries: u32, interval: IggyDuration) -> Self {
+    pub fn init_retries(self, retries: u32, interval: MessengerDuration) -> Self {
         Self {
             init_retries: Some(retries),
             init_retry_interval: interval,
@@ -219,8 +219,8 @@ impl IggyConsumerBuilder {
     /// Builds the consumer.
     ///
     /// Note: After building the consumer, `init()` must be invoked before producing messages.
-    pub fn build(self) -> IggyConsumer {
-        IggyConsumer::new(
+    pub fn build(self) -> MessengerConsumer {
+        MessengerConsumer::new(
             self.client,
             self.consumer_name,
             self.consumer,

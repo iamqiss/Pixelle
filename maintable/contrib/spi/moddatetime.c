@@ -13,7 +13,7 @@ not really know what I am doing.  I also had help from
 Jan Wieck <jwieck@debis.com> who told me about the timestamp_in("now") function.
 OH, me, I'm Terry Mackintosh <terry@terrym.com>
 */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "catalog/pg_type.h"

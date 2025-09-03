@@ -2,13 +2,13 @@
  * hashfuncs.c
  *		Functions to investigate the content of HASH indexes
  *
- * Copyright (c) 2017-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2017-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		contrib/pageinspect/hashfuncs.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/hash.h"
 #include "access/htup_details.h"

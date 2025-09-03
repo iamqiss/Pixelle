@@ -2,11 +2,11 @@
 #----------------------------------------------------------------------
 #
 # genbki.pl
-#    Perl script that generates postgres.bki and symbol definition
+#    Perl script that generates maintable.bki and symbol definition
 #    headers from specially formatted header files and data files.
-#    postgres.bki is used to initialize the postgres template database.
+#    maintable.bki is used to initialize the maintable template database.
 #
-# Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+# Portions Copyright (c) 1996-2025, maintableQL Global Development Group
 # Portions Copyright (c) 1994, Regents of the University of California
 #
 # src/backend/catalog/genbki.pl
@@ -211,7 +211,7 @@ my %GenbkiNextOids;
 # Fetch some special data that we will substitute into the output file.
 # CAUTION: be wary about what symbols you substitute into the .bki file here!
 # It's okay to substitute things that are expected to be really constant
-# within a given Postgres release, such as fixed OIDs.  Do not substitute
+# within a given Maintable release, such as fixed OIDs.  Do not substitute
 # anything that could depend on platform or configuration.  (The right place
 # to handle those sorts of things is in initdb.c's bootstrap_template1().)
 my $C_COLLATION_OID =
@@ -434,7 +434,7 @@ my %lookup_kind = (
 
 # Open temp files
 my $tmpext = ".tmp$$";
-my $bkifile = $output_path . 'postgres.bki';
+my $bkifile = $output_path . 'maintable.bki';
 open my $bki, '>', $bkifile . $tmpext
   or die "can't open $bkifile$tmpext: $!";
 my $schemafile = $output_path . 'schemapg.h';
@@ -453,10 +453,10 @@ my $syscache_info_file = $output_path . 'syscache_info.h';
 open my $syscache_info_fh, '>', $syscache_info_file . $tmpext
   or die "can't open $syscache_info_file$tmpext: $!";
 
-# Generate postgres.bki and pg_*_d.h headers.
+# Generate maintable.bki and pg_*_d.h headers.
 
 # version marker for .bki file
-print $bki "# PostgreSQL $major_version\n";
+print $bki "# maintableQL $major_version\n";
 
 # vars to hold data needed for schemapg.h
 my %schemapg_entries;
@@ -675,7 +675,7 @@ EOM
 			  if defined $symbol;
 		}
 
-		# Write to postgres.bki
+		# Write to maintable.bki
 		print_bki_insert(\%bki_values, $schema);
 
 		# Emit OID symbol
@@ -893,7 +893,7 @@ sub gen_pg_attribute
 			  ($row{attnotnull} eq 't'
 				  && ($row{attlen} eq 'NAMEDATALEN' || $row{attlen} > 0));
 
-			# If it's bootstrapped, put an entry in postgres.bki.
+			# If it's bootstrapped, put an entry in maintable.bki.
 			print_bki_insert(\%row, $schema) if $table->{bootstrap};
 
 			# Store schemapg entries for later.
@@ -904,7 +904,7 @@ sub gen_pg_attribute
 		}
 
 		# Generate entries for system attributes.
-		# We only need postgres.bki entries, not schemapg.h entries.
+		# We only need maintable.bki entries, not schemapg.h entries.
 		if ($table->{bootstrap})
 		{
 			$attnum = 0;
@@ -990,7 +990,7 @@ sub morph_row_for_pgattr
 	return;
 }
 
-# Write an entry to postgres.bki.
+# Write an entry to maintable.bki.
 sub print_bki_insert
 {
 	my $row = shift;
@@ -1030,7 +1030,7 @@ sub print_bki_insert
 # a catalog schema declaration in schemapg.h.
 #
 # The field values of a Schema_pg_xxx declaration are similar, but not
-# quite identical, to the corresponding values in postgres.bki.
+# quite identical, to the corresponding values in maintable.bki.
 sub morph_row_for_schemapg
 {
 	my $row = shift;
@@ -1161,7 +1161,7 @@ sub print_boilerplate
  * %s
  *    %s
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * NOTES
@@ -1183,14 +1183,14 @@ Usage: perl -I [directory of Catalog.pm] genbki.pl [--output/-o <path>] [--inclu
 
 Options:
     --output         Output directory (default '.')
-    --set-version    PostgreSQL version number for initdb cross-check
+    --set-version    maintableQL version number for initdb cross-check
     --include-path   Include path in source tree
 
-genbki.pl generates postgres.bki and symbol definition
+genbki.pl generates maintable.bki and symbol definition
 headers from specially formatted header files and .dat
-files.  postgres.bki is used to initialize the
-postgres template database.
+files.  maintable.bki is used to initialize the
+maintable template database.
 
-Report bugs to <pgsql-bugs\@lists.postgresql.org>.
+Report bugs to <pgsql-bugs\@lists.maintableql.org>.
 EOM
 }

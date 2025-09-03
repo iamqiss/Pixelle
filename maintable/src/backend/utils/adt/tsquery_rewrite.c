@@ -3,7 +3,7 @@
  * tsquery_rewrite.c
  *	  Utilities for reconstructing tsquery
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_type.h"
 #include "executor/spi.h"

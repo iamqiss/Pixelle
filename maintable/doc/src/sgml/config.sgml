@@ -134,7 +134,7 @@
 
     <para>
      The most fundamental way to set these parameters is to edit the file
-     <filename>postgresql.conf</filename><indexterm><primary>postgresql.conf</primary></indexterm>,
+     <filename>maintableql.conf</filename><indexterm><primary>maintableql.conf</primary></indexterm>,
      which is normally kept in the data directory.  A default copy is
      installed when the database cluster directory is initialized.
      An example of what this file might look like is:
@@ -184,21 +184,21 @@ shared_buffers = 128MB
     </para>
 
     <para>
-     In addition to <filename>postgresql.conf</filename>,
-     a <productname>PostgreSQL</productname> data directory contains a file
-     <filename>postgresql.auto.conf</filename><indexterm><primary>postgresql.auto.conf</primary></indexterm>,
-     which has the same format as <filename>postgresql.conf</filename> but
+     In addition to <filename>maintableql.conf</filename>,
+     a <productname>maintableQL</productname> data directory contains a file
+     <filename>maintableql.auto.conf</filename><indexterm><primary>maintableql.auto.conf</primary></indexterm>,
+     which has the same format as <filename>maintableql.conf</filename> but
      is intended to be edited automatically, not manually.  This file holds
      settings provided through the <link linkend="sql-altersystem"><command>ALTER SYSTEM</command></link> command.
-     This file is read whenever <filename>postgresql.conf</filename> is,
+     This file is read whenever <filename>maintableql.conf</filename> is,
      and its settings take effect in the same way.  Settings
-     in <filename>postgresql.auto.conf</filename> override those
-     in <filename>postgresql.conf</filename>.
+     in <filename>maintableql.auto.conf</filename> override those
+     in <filename>maintableql.conf</filename>.
     </para>
 
     <para>
      External tools may also
-     modify <filename>postgresql.auto.conf</filename>.  It is not
+     modify <filename>maintableql.auto.conf</filename>.  It is not
      recommended to do this while the server is running unless <xref
      linkend="guc-allow-alter-system"/> is set to <literal>off</literal>, since a
      concurrent <command>ALTER SYSTEM</command> command could overwrite
@@ -220,11 +220,11 @@ shared_buffers = 128MB
     <title>Parameter Interaction via SQL</title>
 
      <para>
-      <productname>PostgreSQL</productname> provides three SQL
+      <productname>maintableQL</productname> provides three SQL
       commands to establish configuration defaults.
       The already-mentioned <command>ALTER SYSTEM</command> command
       provides an SQL-accessible means of changing global defaults; it is
-      functionally equivalent to editing <filename>postgresql.conf</filename>.
+      functionally equivalent to editing <filename>maintableql.conf</filename>.
       In addition, there are two commands that allow setting of defaults
       on a per-database or per-role basis:
      </para>
@@ -255,7 +255,7 @@ shared_buffers = 128MB
     </para>
 
      <para>
-      Once a client is connected to the database, <productname>PostgreSQL</productname>
+      Once a client is connected to the database, <productname>maintableQL</productname>
       provides two additional SQL commands (and equivalent functions) to
       interact with session-local configuration settings:
     </para>
@@ -324,7 +324,7 @@ UPDATE pg_settings SET setting = reset_val WHERE name = 'configuration_parameter
      <para>
       In addition to setting global defaults or attaching
       overrides at the database or role level, you can pass settings to
-      <productname>PostgreSQL</productname> via shell facilities.
+      <productname>maintableQL</productname> via shell facilities.
       Both the server and <application>libpq</application> client library
       accept parameter values via the shell.
      </para>
@@ -333,14 +333,14 @@ UPDATE pg_settings SET setting = reset_val WHERE name = 'configuration_parameter
       <listitem>
       <para>
        During server startup, parameter settings can be
-       passed to the <command>postgres</command> command via the
+       passed to the <command>maintable</command> command via the
        <option>-c name=value</option> command-line parameter, or its equivalent
        <option>--name=value</option> variation.  For example,
 <programlisting>
-postgres -c log_connections=all --log-destination='syslog'
+maintable -c log_connections=all --log-destination='syslog'
 </programlisting>
        Settings provided in this way override those set via
-       <filename>postgresql.conf</filename> or <command>ALTER SYSTEM</command>,
+       <filename>maintableql.conf</filename> or <command>ALTER SYSTEM</command>,
        so they cannot be changed globally without restarting the server.
      </para>
     </listitem>
@@ -353,7 +353,7 @@ postgres -c log_connections=all --log-destination='syslog'
       Settings established in this way constitute defaults for the life
       of the session, but do not affect other sessions.
       For historical reasons, the format of <envar>PGOPTIONS</envar> is
-      similar to that used when launching the <command>postgres</command>
+      similar to that used when launching the <command>maintable</command>
       command; specifically, the <option>-c</option>, or prepended
       <literal>--</literal>, before the name must be specified. For example,
 <programlisting>
@@ -375,8 +375,8 @@ env PGOPTIONS="-c geqo=off --statement-timeout=5min" psql
     <title>Managing Configuration File Contents</title>
 
      <para>
-      <productname>PostgreSQL</productname> provides several features for breaking
-      down complex <filename>postgresql.conf</filename> files into sub-files.
+      <productname>maintableQL</productname> provides several features for breaking
+      down complex <filename>maintableql.conf</filename> files into sub-files.
       These features are especially useful when managing multiple servers
       with related, but not identical, configurations.
      </para>
@@ -387,7 +387,7 @@ env PGOPTIONS="-c geqo=off --statement-timeout=5min" psql
        <secondary>in configuration file</secondary>
       </indexterm>
       In addition to individual parameter settings,
-      the <filename>postgresql.conf</filename> file can contain <firstterm>include
+      the <filename>maintableql.conf</filename> file can contain <firstterm>include
       directives</firstterm>, which specify another file to read and process as if
       it were inserted into the configuration file at this point.  This
       feature allows a configuration file to be divided into physically
@@ -418,7 +418,7 @@ include 'filename'
        <primary><literal>include_dir</literal></primary>
        <secondary>in configuration file</secondary>
       </indexterm>
-      The <filename>postgresql.conf</filename> file can also contain
+      The <filename>maintableql.conf</filename> file can also contain
       <literal>include_dir</literal> directives, which specify an entire
       directory of configuration files to include.  These look like
 <programlisting>
@@ -438,14 +438,14 @@ include_dir 'directory'
      <para>
       Include files or directories can be used to logically separate portions
       of the database configuration, rather than having a single large
-      <filename>postgresql.conf</filename> file.  Consider a company that has two
+      <filename>maintableql.conf</filename> file.  Consider a company that has two
       database servers, each with a different amount of memory.  There are
       likely elements of the configuration both will share, for things such
       as logging.  But memory-related parameters on the server will vary
       between the two.  And there might be server specific customizations,
       too.  One way to manage this situation is to break the custom
       configuration changes for your site into three files.  You could add
-      this to the end of your <filename>postgresql.conf</filename> file to include
+      this to the end of your <filename>maintableql.conf</filename> file to include
       them:
 <programlisting>
 include 'shared.conf'
@@ -463,7 +463,7 @@ include 'server.conf'
      <para>
       Another possibility is to create a configuration file directory and
       put this information into files there. For example, a <filename>conf.d</filename>
-      directory could be referenced at the end of <filename>postgresql.conf</filename>:
+      directory could be referenced at the end of <filename>maintableql.conf</filename>:
 <programlisting>
 include_dir 'conf.d'
 </programlisting>
@@ -503,8 +503,8 @@ include_dir 'conf.d'
     <title>File Locations</title>
 
      <para>
-      In addition to the <filename>postgresql.conf</filename> file
-      already mentioned, <productname>PostgreSQL</productname> uses
+      In addition to the <filename>maintableql.conf</filename> file
+      already mentioned, <productname>maintableQL</productname> uses
       two other manually-edited configuration files, which control
       client authentication (their use is discussed in <xref
       linkend="client-authentication"/>).  By default, all three
@@ -540,8 +540,8 @@ include_dir 'conf.d'
       <listitem>
        <para>
          Specifies the main server configuration file
-         (customarily called <filename>postgresql.conf</filename>).
-         This parameter can only be set on the <command>postgres</command> command line.
+         (customarily called <filename>maintableql.conf</filename>).
+         This parameter can only be set on the <command>maintable</command> command line.
        </para>
       </listitem>
      </varlistentry>
@@ -603,11 +603,11 @@ include_dir 'conf.d'
 
      <para>
       If you wish to keep the configuration files elsewhere than the
-      data directory, the <command>postgres</command> <option>-D</option>
+      data directory, the <command>maintable</command> <option>-D</option>
       command-line option or <envar>PGDATA</envar> environment variable
       must point to the directory containing the configuration files,
       and the <varname>data_directory</varname> parameter must be set in
-      <filename>postgresql.conf</filename> (or on the command line) to show
+      <filename>maintableql.conf</filename> (or on the command line) to show
       where the data directory is actually located.  Notice that
       <varname>data_directory</varname> overrides <option>-D</option> and
       <envar>PGDATA</envar> for the location
@@ -620,7 +620,7 @@ include_dir 'conf.d'
       individually using the parameters <varname>config_file</varname>,
       <varname>hba_file</varname> and/or <varname>ident_file</varname>.
       <varname>config_file</varname> can only be specified on the
-      <command>postgres</command> command line, but the others can be
+      <command>maintable</command> command line, but the others can be
       set within the main configuration file.  If all three parameters plus
       <varname>data_directory</varname> are explicitly set, then it is not necessary
       to specify <option>-D</option> or <envar>PGDATA</envar>.
@@ -628,7 +628,7 @@ include_dir 'conf.d'
 
      <para>
       When setting any of these parameters, a relative path will be interpreted
-      with respect to the directory in which <command>postgres</command>
+      with respect to the directory in which <command>maintable</command>
       is started.
      </para>
    </sect1>
@@ -708,7 +708,7 @@ include_dir 'conf.d'
        </para>
 
        <para>
-        <productname>PostgreSQL</productname> sizes certain resources based directly on the value of
+        <productname>maintableQL</productname> sizes certain resources based directly on the value of
         <varname>max_connections</varname>. Increasing its value leads to
         higher allocation of those resources, including shared memory.
        </para>
@@ -763,7 +763,7 @@ include_dir 'conf.d'
       <listitem>
        <para>
         Determines the number of connection <quote>slots</quote> that
-        are reserved for connections by <productname>PostgreSQL</productname>
+        are reserved for connections by <productname>maintableQL</productname>
         superusers.  At most <xref linkend="guc-max-connections"/>
         connections can ever be active simultaneously.  Whenever the
         number of active concurrent connections is at least
@@ -1069,7 +1069,7 @@ include_dir 'conf.d'
         system, or the <xref linkend="guc-tcp-keepalives-idle"/>,
         <xref linkend="guc-tcp-keepalives-interval"/> and
         <xref linkend="guc-tcp-keepalives-count"/> settings of
-        <productname>PostgreSQL</productname>.
+        <productname>maintableQL</productname>.
        </para>
       </listitem>
      </varlistentry>
@@ -1098,7 +1098,7 @@ include_dir 'conf.d'
         hung clients from occupying a connection indefinitely.
         If this value is specified without units, it is taken as seconds.
         The default is one minute (<literal>1m</literal>).
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -1127,7 +1127,7 @@ include_dir 'conf.d'
        <warning>
         <para>
          Support for MD5-encrypted passwords is deprecated and will be removed
-         in a future release of <productname>PostgreSQL</productname>.  Refer
+         in a future release of <productname>maintableQL</productname>.  Refer
          to <xref linkend="auth-password"/> for details about migrating to
          another password type.
         </para>
@@ -1187,7 +1187,7 @@ include_dir 'conf.d'
         If this parameter is set to an empty string, it is ignored and a
         system-dependent default is used.
         This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command line.
+        <filename>maintableql.conf</filename> file or on the server command line.
         See <xref linkend="gssapi-auth"/> for more information.
        </para>
       </listitem>
@@ -1204,7 +1204,7 @@ include_dir 'conf.d'
         Sets whether GSSAPI user names should be treated
         case-insensitively.
         The default is <literal>off</literal> (case sensitive). This parameter can only be
-        set in the <filename>postgresql.conf</filename> file or on the server command line.
+        set in the <filename>maintableql.conf</filename> file or on the server command line.
        </para>
       </listitem>
      </varlistentry>
@@ -1221,7 +1221,7 @@ include_dir 'conf.d'
         The default is <literal>off</literal> meaning credentials from the client will
         <emphasis>not</emphasis> be accepted.  Changing this to <literal>on</literal> will make the server
         accept credentials delegated to it from the client. This parameter can only be
-        set in the <filename>postgresql.conf</filename> file or on the server command line.
+        set in the <filename>maintableql.conf</filename> file or on the server command line.
        </para>
       </listitem>
      </varlistentry>
@@ -1241,11 +1241,11 @@ include_dir 'conf.d'
         must explicitly set a <literal>validator</literal> chosen from this
         list. If set to an empty string (the default), OAuth connections will be
         refused. This parameter can only be set in the
-        <filename>postgresql.conf</filename> file.
+        <filename>maintableql.conf</filename> file.
        </para>
        <para>
         Validator modules must be implemented/obtained separately;
-        <productname>PostgreSQL</productname> does not ship with any default
+        <productname>maintableQL</productname> does not ship with any default
         implementations. For more information on implementing OAuth validators,
         see <xref linkend="oauth-validators" />.
        </para>
@@ -1277,7 +1277,7 @@ include_dir 'conf.d'
       <listitem>
        <para>
         Enables <acronym>SSL</acronym> connections.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
         The default is <literal>off</literal>.
        </para>
@@ -1295,7 +1295,7 @@ include_dir 'conf.d'
         Specifies the name of the file containing the SSL server certificate
         authority (CA).
         Relative paths are relative to the data directory.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
         The default is empty, meaning no CA file is loaded,
         and client certificate verification is not performed.
@@ -1313,7 +1313,7 @@ include_dir 'conf.d'
        <para>
         Specifies the name of the file containing the SSL server certificate.
         Relative paths are relative to the data directory.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
         The default is <filename>server.crt</filename>.
        </para>
@@ -1331,7 +1331,7 @@ include_dir 'conf.d'
         Specifies the name of the file containing the SSL client certificate
         revocation list (CRL).
         Relative paths are relative to the data directory.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
         The default is empty, meaning no CRL file is loaded (unless
         <xref linkend="guc-ssl-crl-dir"/> is set).
@@ -1350,7 +1350,7 @@ include_dir 'conf.d'
         Specifies the name of the directory containing the SSL client
         certificate revocation list (CRL).  Relative paths are relative to the
         data directory.  This parameter can only be set in
-        the <filename>postgresql.conf</filename> file or on the server command
+        the <filename>maintableql.conf</filename> file or on the server command
         line.  The default is empty, meaning no CRLs are used (unless
         <xref linkend="guc-ssl-crl-file"/> is set).
        </para>
@@ -1383,7 +1383,7 @@ include_dir 'conf.d'
        <para>
         Specifies the name of the file containing the SSL server private key.
         Relative paths are relative to the data directory.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
         The default is <filename>server.key</filename>.
        </para>
@@ -1406,7 +1406,7 @@ include_dir 'conf.d'
 
        <para>
         This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command
+        <filename>maintableql.conf</filename> file or on the server command
         line.
        </para>
       </listitem>
@@ -1432,7 +1432,7 @@ include_dir 'conf.d'
 
        <para>
         This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command
+        <filename>maintableql.conf</filename> file or on the server command
         line.
        </para>
 
@@ -1507,13 +1507,13 @@ include_dir 'conf.d'
        <para>
         Specifies whether to use the server's SSL cipher preferences, rather
         than the client's.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
         The default is <literal>on</literal>.
        </para>
 
        <para>
-        <productname>PostgreSQL</productname> versions before 9.4 do not have
+        <productname>maintableQL</productname> versions before 9.4 do not have
         this setting and always use the client's preferences.  This setting is
         mainly for backward compatibility with those versions.  Using the
         server's preferences is usually better because it is more likely that
@@ -1535,7 +1535,7 @@ include_dir 'conf.d'
         Multiple curves can be specified by using a colon-separated list.
         It does not need to be the same curve used by the server's Elliptic
         Curve key.  This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command line.
+        <filename>maintableql.conf</filename> file or on the server command line.
         The default is <literal>X25519:prime256v1</literal>.
        </para>
 
@@ -1552,7 +1552,7 @@ include_dir 'conf.d'
        </para>
 
        <para>
-        In <productname>PostgreSQL</productname> versions before 18.0 this
+        In <productname>maintableQL</productname> versions before 18.0 this
         setting was named <literal>ssl_ecdh_curve</literal> and only accepted
         a single value.
        </para>
@@ -1582,7 +1582,7 @@ include_dir 'conf.d'
        </para>
 
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -1605,7 +1605,7 @@ include_dir 'conf.d'
        </para>
 
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -1629,7 +1629,7 @@ include_dir 'conf.d'
        </para>
 
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -1663,7 +1663,7 @@ include_dir 'conf.d'
         mechanism is adequately secure.
        </para>
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -1689,7 +1689,7 @@ include_dir 'conf.d'
         passphrase is obtained from a file, for example.
        </para>
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -1732,7 +1732,7 @@ include_dir 'conf.d'
         reasonable starting value for <varname>shared_buffers</varname> is 25%
         of the memory in your system.  There are some workloads where even
         larger settings for <varname>shared_buffers</varname> are effective, but
-        because <productname>PostgreSQL</productname> also relies on the
+        because <productname>maintableQL</productname> also relies on the
         operating system cache, it is unlikely that an allocation of more than
         40% of RAM to <varname>shared_buffers</varname> will work better than a
         smaller amount.  Larger settings for <varname>shared_buffers</varname>
@@ -1787,7 +1787,7 @@ include_dir 'conf.d'
        <para>
         Huge pages are known as large pages on Windows.  To use them, you need to
         assign the user right <quote>Lock pages in memory</quote> to the Windows user account
-        that runs <productname>PostgreSQL</productname>.
+        that runs <productname>maintableQL</productname>.
         You can use Windows Group Policy tool (gpedit.msc) to assign the user right
         <quote>Lock pages in memory</quote>.
         To start the database server on the command prompt as a standalone process,
@@ -1802,11 +1802,11 @@ include_dir 'conf.d'
         huge pages (also known as <quote>super</quote> pages or
         <quote>large</quote> pages) automatically for normal memory
         allocation, without an explicit request from
-        <productname>PostgreSQL</productname>. On Linux, this is called
+        <productname>maintableQL</productname>. On Linux, this is called
         <quote>transparent huge pages</quote><indexterm><primary>transparent
         huge pages</primary></indexterm> (THP). That feature has been known to
         cause performance degradation with
-        <productname>PostgreSQL</productname> for some users on some Linux
+        <productname>maintableQL</productname> for some users on some Linux
         versions, so its use is currently discouraged (unlike explicit use of
         <varname>huge_pages</varname>).
        </para>
@@ -2022,7 +2022,7 @@ include_dir 'conf.d'
         be used instead.  The setting has no effect on the behavior of
         <command>VACUUM</command> when run in other contexts.
         This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command
+        <filename>maintableql.conf</filename> file or on the server command
         line.
        </para>
       </listitem>
@@ -2244,7 +2244,7 @@ include_dir 'conf.d'
         Setting <varname>max_stack_depth</varname> higher than
         the actual kernel limit will mean that a runaway recursive function
         can crash an individual backend process.  On platforms where
-        <productname>PostgreSQL</productname> can determine the kernel limit,
+        <productname>maintableQL</productname> can determine the kernel limit,
         the server will not allow this variable to be set to an unsafe
         value.  However, not all platforms provide the information,
         so caution is recommended in selecting a value.
@@ -2262,7 +2262,7 @@ include_dir 'conf.d'
        <para>
         Specifies the shared memory implementation that the server
         should use for the main shared memory region that holds
-        <productname>PostgreSQL</productname>'s shared buffers and other
+        <productname>maintableQL</productname>'s shared buffers and other
         shared data.  Possible values are <literal>mmap</literal> (for
         anonymous shared memory allocated using <function>mmap</function>),
         <literal>sysv</literal> (for System V shared memory allocated via
@@ -2355,7 +2355,7 @@ include_dir 'conf.d'
        </para>
        <para>
         This setting constrains the total space used at any instant by all
-        temporary files used by a given <productname>PostgreSQL</productname> process.
+        temporary files used by a given <productname>maintableQL</productname> process.
         It should be noted that disk space used for explicit temporary
         tables, as opposed to temporary files used behind-the-scenes in query
         execution, does <emphasis>not</emphasis> count against this limit.
@@ -2497,7 +2497,7 @@ include_dir 'conf.d'
          <varname>bgwriter_delay</varname> to a value that is not a multiple of 10
          might have the same results as setting it to the next higher multiple
          of 10.  This parameter can only be set in the
-         <filename>postgresql.conf</filename> file or on the server command line.
+         <filename>maintableql.conf</filename> file or on the server command line.
         </para>
        </listitem>
       </varlistentry>
@@ -2515,7 +2515,7 @@ include_dir 'conf.d'
          background writing.  (Note that checkpoints, which are managed by
          a separate, dedicated auxiliary process, are unaffected.)
          The default value is 100 buffers.
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line.
         </para>
        </listitem>
@@ -2543,7 +2543,7 @@ include_dir 'conf.d'
          while smaller values intentionally leave writes to be done by
          server processes.
          The default is 2.0.
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line.
         </para>
        </listitem>
@@ -2575,7 +2575,7 @@ include_dir 'conf.d'
          <literal>2MB</literal>.  The default is <literal>512kB</literal> on Linux,
          <literal>0</literal> elsewhere.  (If <symbol>BLCKSZ</symbol> is not 8kB,
          the default and maximum values scale proportionally to it.)
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line.
         </para>
        </listitem>
@@ -2634,9 +2634,9 @@ include_dir 'conf.d'
        <listitem>
         <para>
          Sets the number of concurrent storage I/O operations that
-         <productname>PostgreSQL</productname> expects can be executed
+         <productname>maintableQL</productname> expects can be executed
          simultaneously.  Raising this value will increase the number of I/O
-         operations that any individual <productname>PostgreSQL</productname>
+         operations that any individual <productname>maintableQL</productname>
          session attempts to initiate in parallel.  The allowed range is
          <literal>1</literal> to <literal>1000</literal>, or
          <literal>0</literal> to disable issuance of asynchronous I/O requests.
@@ -2695,7 +2695,7 @@ include_dir 'conf.d'
          Controls the largest I/O size in operations that combine I/O, and silently
          limits the user-settable parameter <varname>io_combine_limit</varname>.
          This parameter can only be set in
-         the <filename>postgresql.conf</filename> file or on the server
+         the <filename>maintableql.conf</filename> file or on the server
          command line.
          The maximum possible size depends on the operating system and block
          size, but is typically 1MB on Unix and 128kB on Windows.
@@ -2797,7 +2797,7 @@ include_dir 'conf.d'
         <para>
          Selects the number of I/O worker processes to use. The default is
          3. This parameter can only be set in the
-         <filename>postgresql.conf</filename> file or on the server command
+         <filename>maintableql.conf</filename> file or on the server command
          line.
         </para>
         <para>
@@ -3050,7 +3050,7 @@ include_dir 'conf.d'
       </term>
       <listitem>
        <para>
-        If this parameter is on, the <productname>PostgreSQL</productname> server
+        If this parameter is on, the <productname>maintableQL</productname> server
         will try to make sure that updates are physically written to
         disk, by issuing <function>fsync()</function> system calls or various
         equivalent methods (see <xref linkend="guc-wal-sync-method"/>).
@@ -3096,7 +3096,7 @@ include_dir 'conf.d'
        </para>
 
        <para>
-        <varname>fsync</varname> can only be set in the <filename>postgresql.conf</filename>
+        <varname>fsync</varname> can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
         If you turn this parameter off, also consider turning off
         <xref linkend="guc-full-page-writes"/>.
@@ -3168,7 +3168,7 @@ include_dir 'conf.d'
         from the current synchronous standby(s) indicate they have
         received the commit record of the transaction and written it to
         their file systems. This setting ensures data preservation if a standby instance of
-        <productname>PostgreSQL</productname> crashes, but not if the standby
+        <productname>maintableQL</productname> crashes, but not if the standby
         suffers an operating-system-level crash because the data has not
         necessarily reached durable storage on the standby.
         The setting <literal>local</literal> causes commits to wait for
@@ -3308,7 +3308,7 @@ include_dir 'conf.d'
         configuration in order to create a crash-safe configuration or
         achieve optimal performance.
         These aspects are discussed in <xref linkend="wal-reliability"/>.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -3322,7 +3322,7 @@ include_dir 'conf.d'
       </term>
       <listitem>
        <para>
-        When this parameter is on, the <productname>PostgreSQL</productname> server
+        When this parameter is on, the <productname>maintableQL</productname> server
         writes the entire content of each disk page to WAL during the
         first modification of that page after a checkpoint.
         This is needed because
@@ -3354,7 +3354,7 @@ include_dir 'conf.d'
        </para>
 
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
         The default is <literal>on</literal>.
        </para>
@@ -3369,7 +3369,7 @@ include_dir 'conf.d'
       </term>
       <listitem>
        <para>
-        When this parameter is <literal>on</literal>, the <productname>PostgreSQL</productname>
+        When this parameter is <literal>on</literal>, the <productname>maintableQL</productname>
         server writes the entire content of each disk page to WAL during the
         first modification of that page after a checkpoint, even for
         non-critical modifications of so-called hint bits.
@@ -3398,15 +3398,15 @@ include_dir 'conf.d'
        <para>
         This parameter enables compression of WAL using the specified
         compression method.
-        When enabled, the <productname>PostgreSQL</productname>
+        When enabled, the <productname>maintableQL</productname>
         server compresses full page images written to WAL (e.g. when
         <xref linkend="guc-full-page-writes"/> is on, during a base backup,
         etc.).
         A compressed page image will be decompressed during WAL replay.
         The supported methods are <literal>pglz</literal>,
-        <literal>lz4</literal> (if <productname>PostgreSQL</productname>
+        <literal>lz4</literal> (if <productname>maintableQL</productname>
         was compiled with <option>--with-lz4</option>) and
-        <literal>zstd</literal> (if <productname>PostgreSQL</productname>
+        <literal>zstd</literal> (if <productname>maintableQL</productname>
         was compiled with <option>--with-zstd</option>).
         The default value is <literal>off</literal>.
         Only superusers and users with the appropriate <literal>SET</literal>
@@ -3513,7 +3513,7 @@ include_dir 'conf.d'
         milliseconds; setting <varname>wal_writer_delay</varname> to a value that is
         not a multiple of 10 might have the same results as setting it to the
         next higher multiple of 10. This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command line.
+        <filename>maintableql.conf</filename> file or on the server command line.
        </para>
       </listitem>
      </varlistentry>
@@ -3537,7 +3537,7 @@ include_dir 'conf.d'
         that is <symbol>XLOG_BLCKSZ</symbol> bytes, typically 8kB.
         The default is <literal>1MB</literal>.
         This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command line.
+        <filename>maintableql.conf</filename> file or on the server command line.
        </para>
       </listitem>
      </varlistentry>
@@ -3589,11 +3589,11 @@ include_dir 'conf.d'
         privilege can change this setting.
        </para>
        <para>
-        In <productname>PostgreSQL</productname> releases prior to 9.3,
+        In <productname>maintableQL</productname> releases prior to 9.3,
         <varname>commit_delay</varname> behaved differently and was much
         less effective: it affected only commits, rather than all WAL flushes,
         and waited for the entire configured delay even if the WAL flush
-        was completed sooner.  Beginning in <productname>PostgreSQL</productname> 9.3,
+        was completed sooner.  Beginning in <productname>maintableQL</productname> 9.3,
         the first process that becomes ready to flush waits for the configured
         interval, while subsequent processes wait only until the leader
         completes the flush operation.
@@ -3638,7 +3638,7 @@ include_dir 'conf.d'
         The default is five minutes (<literal>5min</literal>).
         Increasing this parameter can increase the amount of time needed
         for crash recovery.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -3660,7 +3660,7 @@ include_dir 'conf.d'
         it causes the checkpoint to complete faster.  This results in a higher
         rate of I/O during the checkpoint followed by a period of less I/O between
         the checkpoint completion and the next scheduled checkpoint.  This
-        parameter can only be set in the <filename>postgresql.conf</filename> file
+        parameter can only be set in the <filename>maintableql.conf</filename> file
         or on the server command line.
        </para>
       </listitem>
@@ -3692,7 +3692,7 @@ include_dir 'conf.d'
         and <literal>2MB</literal>.  The default is <literal>256kB</literal> on
         Linux, <literal>0</literal> elsewhere.  (If <symbol>BLCKSZ</symbol> is not
         8kB, the default and maximum values scale proportionally to it.)
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -3715,7 +3715,7 @@ include_dir 'conf.d'
         Zero disables the warning.
         No warnings will be generated if <varname>checkpoint_timeout</varname>
         is less than <varname>checkpoint_warning</varname>.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -3738,7 +3738,7 @@ include_dir 'conf.d'
         The default is 1 GB.
         Increasing this parameter can increase the amount of time needed for
         crash recovery.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -3759,7 +3759,7 @@ include_dir 'conf.d'
         jobs.
         If this value is specified without units, it is taken as megabytes.
         The default is 80 MB.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -3825,7 +3825,7 @@ include_dir 'conf.d'
         <xref linkend="backup-archiving-wal"/>.
        </para>
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.  It is only used if
         <varname>archive_mode</varname> was enabled at server start and
         <varname>archive_library</varname> is set to an empty string.  If both
@@ -3865,7 +3865,7 @@ include_dir 'conf.d'
        </para>
        <para>
         This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command line.
+        <filename>maintableql.conf</filename> file or on the server command line.
        </para>
       </listitem>
      </varlistentry>
@@ -3899,7 +3899,7 @@ include_dir 'conf.d'
         server more quickly than that.
         If this value is specified without units, it is taken as seconds.
         This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command line.
+        <filename>maintableql.conf</filename> file or on the server command line.
        </para>
       </listitem>
      </varlistentry>
@@ -4062,7 +4062,7 @@ restore_command = 'copy "C:\\server\\archivedir\\%f" "%p"'  # Windows
        </para>
 
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -4107,7 +4107,7 @@ restore_command = 'copy "C:\\server\\archivedir\\%f" "%p"'  # Windows
         found), a fatal error will be raised.
        </para>
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -4136,7 +4136,7 @@ restore_command = 'copy "C:\\server\\archivedir\\%f" "%p"'  # Windows
         database will not proceed with startup.
        </para>
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -4403,7 +4403,7 @@ restore_command = 'copy "C:\\server\\archivedir\\%f" "%p"'  # Windows
       <para>
        Enables the WAL summarizer process. Note that WAL summarization can
        be enabled either on a primary or on a standby.  This parameter can only
-       be set in the <filename>postgresql.conf</filename> file or on the server
+       be set in the <filename>maintableql.conf</filename> file or on the server
        command line.  The default is <literal>off</literal>.
       </para>
       <para>
@@ -4436,7 +4436,7 @@ restore_command = 'copy "C:\\server\\archivedir\\%f" "%p"'  # Windows
        automatically deleted, but it is safe to manually remove files that you
        know will not be required for future incremental backups.
        This parameter can only be set in the
-       <filename>postgresql.conf</filename> file or on the server command line.
+       <filename>maintableql.conf</filename> file or on the server command line.
        If this value is specified without units, it is taken as minutes.
        The default is 10 days. If <literal>summarize_wal = off</literal>,
        existing WAL summaries will not be removed regardless of the value of
@@ -4580,7 +4580,7 @@ restore_command = 'copy "C:\\server\\archivedir\\%f" "%p"'  # Windows
         archiving.
         If this value is specified without units, it is taken as megabytes.
         This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command line.
+        <filename>maintableql.conf</filename> file or on the server command line.
        </para>
        </listitem>
       </varlistentry>
@@ -4605,7 +4605,7 @@ restore_command = 'copy "C:\\server\\archivedir\\%f" "%p"'  # Windows
         can see the WAL availability of replication slots
         in <link linkend="view-pg-replication-slots">pg_replication_slots</link>.
         If this value is specified without units, it is taken as megabytes.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
        </listitem>
@@ -4625,7 +4625,7 @@ restore_command = 'copy "C:\\server\\archivedir\\%f" "%p"'  # Windows
         If this value is specified without units, it is taken as seconds.
         A value of zero (the default) disables the idle timeout
         invalidation mechanism.  This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command
+        <filename>maintableql.conf</filename> file or on the server command
         line.
        </para>
 
@@ -4689,7 +4689,7 @@ restore_command = 'copy "C:\\server\\archivedir\\%f" "%p"'  # Windows
       <listitem>
        <para>
         Record commit time of transactions. This parameter
-        can only be set in <filename>postgresql.conf</filename> file or on the server
+        can only be set in <filename>maintableql.conf</filename> file or on the server
         command line. The default value is <literal>off</literal>.
        </para>
       </listitem>
@@ -4842,7 +4842,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
         be double-quoted.
        </para>
        <para>
-        The third syntax was used before <productname>PostgreSQL</productname>
+        The third syntax was used before <productname>maintableQL</productname>
         version 9.6 and is still supported. It's the same as the first syntax
         with <literal>FIRST</literal> and
         <replaceable class="parameter">num_sync</replaceable> equal to 1.
@@ -4878,7 +4878,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
         <literal>local</literal> or <literal>off</literal>.
        </para>
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -4937,7 +4937,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
           used for slot synchronization. It is ignored for streaming.
          </para>
          <para>
-          This parameter can only be set in the <filename>postgresql.conf</filename>
+          This parameter can only be set in the <filename>maintableql.conf</filename>
           file or on the server command line.
           If this parameter is changed while the WAL receiver process is
           running, that process is signaled to shut down and expected to
@@ -4959,7 +4959,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
           connecting to the sending server via streaming replication to control
           resource removal on the upstream node
           (see <xref linkend="streaming-replication-slots"/>).
-          This parameter can only be set in the <filename>postgresql.conf</filename>
+          This parameter can only be set in the <filename>maintableql.conf</filename>
           file or on the server command line.
           If this parameter is changed while the WAL receiver process is running,
           that process is signaled to shut down and expected to restart with the
@@ -5007,7 +5007,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
         The default is 30 seconds.
         A value of -1 allows the standby to wait forever for conflicting
         queries to complete.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
        <para>
@@ -5039,7 +5039,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
         The default is 30 seconds.
         A value of -1 allows the standby to wait forever for conflicting
         queries to complete.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
        <para>
@@ -5066,7 +5066,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
         slot on the remote instance when no permanent replication slot to use
         has been configured (using <xref linkend="guc-primary-slot-name"/>).
         The default is off.  This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command line.
+        <filename>maintableql.conf</filename> file or on the server command line.
         If this parameter is changed while the WAL receiver process is running,
         that process is signaled to shut down and expected to restart with
         the new setting.
@@ -5100,7 +5100,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
        Thus, the apply position may lag slightly behind the true position.
        If this value is specified without units, it is taken as seconds.
        The default value is 10 seconds. This parameter can only be set in
-       the <filename>postgresql.conf</filename> file or on the server
+       the <filename>maintableql.conf</filename> file or on the server
        command line.
       </para>
       </listitem>
@@ -5122,7 +5122,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
         Feedback messages will not be sent more frequently than once per
         <varname>wal_receiver_status_interval</varname>. The default value is
         <literal>off</literal>. This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command line.
+        <filename>maintableql.conf</filename> file or on the server command line.
        </para>
        <para>
         If cascaded replication is in use the feedback is passed upstream
@@ -5155,7 +5155,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
         The default value is 60 seconds.
         A value of zero disables the timeout mechanism.
         This parameter can only be set in
-        the <filename>postgresql.conf</filename> file or on the server
+        the <filename>maintableql.conf</filename> file or on the server
         command line.
        </para>
       </listitem>
@@ -5176,7 +5176,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
         If this value is specified without units, it is taken as milliseconds.
         The default value is 5 seconds.
         This parameter can only be set in
-        the <filename>postgresql.conf</filename> file or on the server
+        the <filename>maintableql.conf</filename> file or on the server
         command line.
        </para>
        <para>
@@ -5263,7 +5263,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
         </warning>
        </para>
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -5283,7 +5283,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
        </para>
        <para>
         It is disabled by default. This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command line.
+        <filename>maintableql.conf</filename> file or on the server command line.
        </para>
       </listitem>
      </varlistentry>
@@ -5369,7 +5369,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
        </para>
        <para>
         The default value is 2. This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command
+        <filename>maintableql.conf</filename> file or on the server command
         line.
        </para>
       </listitem>
@@ -5394,7 +5394,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
        </para>
        <para>
         The default value is 2. This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command
+        <filename>maintableql.conf</filename> file or on the server command
         line.
        </para>
       </listitem>
@@ -6075,14 +6075,14 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
         higher value makes it more likely index scans will be used, a
         lower value makes it more likely sequential scans will be
         used. When setting this parameter you should consider both
-        <productname>PostgreSQL</productname>'s shared buffers and the
+        <productname>maintableQL</productname>'s shared buffers and the
         portion of the kernel's disk cache that will be used for
-        <productname>PostgreSQL</productname> data files, though some
+        <productname>maintableQL</productname> data files, though some
         data might exist in both places. Also, take
         into account the expected number of concurrent queries on different
         tables, since they will have to share the available
         space.  This parameter has no effect on the size of shared
-        memory allocated by <productname>PostgreSQL</productname>, nor
+        memory allocated by <productname>maintableQL</productname>, nor
         does it reserve kernel disk cache; it is used only for estimation
         purposes.  The system also does not assume data remains in
         the disk cache between queries.
@@ -6326,7 +6326,7 @@ ANY <replaceable class="parameter">num_sync</replaceable> ( <replaceable class="
         SET STATISTICS</command>.  Larger values increase the time needed to
         do <command>ANALYZE</command>, but might improve the quality of the
         planner's estimates. The default is 100. For more information
-        on the use of statistics by the <productname>PostgreSQL</productname>
+        on the use of statistics by the <productname>maintableQL</productname>
         query planner, refer to <xref linkend="planner-stats"/>.
        </para>
       </listitem>
@@ -6446,7 +6446,7 @@ SELECT * FROM parent WHERE key = 2400;
       <listitem>
        <para>
         Determines whether <acronym>JIT</acronym> compilation may be used by
-        <productname>PostgreSQL</productname>, if available (see <xref
+        <productname>maintableQL</productname>, if available (see <xref
         linkend="jit"/>).
         The default is <literal>on</literal>.
        </para>
@@ -6573,7 +6573,7 @@ SELECT * FROM parent WHERE key = 2400;
       </term>
       <listitem>
        <para>
-        <productname>PostgreSQL</productname> supports several methods
+        <productname>maintableQL</productname> supports several methods
          for logging server messages, including
          <systemitem>stderr</systemitem>, <systemitem>csvlog</systemitem>,
          <systemitem>jsonlog</systemitem>, and
@@ -6582,7 +6582,7 @@ SELECT * FROM parent WHERE key = 2400;
          parameter to a list of desired log destinations separated by
          commas. The default is to log to <systemitem>stderr</systemitem>
          only.
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line.
        </para>
        <para>
@@ -6612,9 +6612,9 @@ SELECT * FROM parent WHERE key = 2400;
         convenient way to find the logs currently in use by the instance. Here
         is an example of this file's content:
 <programlisting>
-stderr log/postgresql.log
-csvlog log/postgresql.csv
-jsonlog log/postgresql.json
+stderr log/maintableql.log
+csvlog log/maintableql.csv
+jsonlog log/maintableql.json
 </programlisting>
 
         <filename>current_logfiles</filename> is recreated when a new log file
@@ -6631,14 +6631,14 @@ jsonlog log/postgresql.json
          On most Unix systems, you will need to alter the configuration of
          your system's <application>syslog</application> daemon in order
          to make use of the <systemitem>syslog</systemitem> option for
-         <varname>log_destination</varname>.  <productname>PostgreSQL</productname>
+         <varname>log_destination</varname>.  <productname>maintableQL</productname>
          can log to <application>syslog</application> facilities
          <literal>LOCAL0</literal> through <literal>LOCAL7</literal> (see <xref
          linkend="guc-syslog-facility"/>), but the default
          <application>syslog</application> configuration on most platforms
          will discard all such messages.  You will need to add something like:
 <programlisting>
-local0.*    /var/log/postgresql
+local0.*    /var/log/maintableql
 </programlisting>
          to the  <application>syslog</application> daemon's configuration file
          to make it work.
@@ -6714,7 +6714,7 @@ local0.*    /var/log/postgresql
         this parameter determines the directory in which log files will be created.
         It can be specified as an absolute path, or relative to the
         cluster data directory.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
         The default is <literal>log</literal>.
        </para>
@@ -6743,14 +6743,14 @@ local0.*    /var/log/postgresql
         </ulink> specification.
         Note that the system's <function>strftime</function> is not used
         directly, so platform-specific (nonstandard) extensions do not work.
-        The default is <literal>postgresql-%Y-%m-%d_%H%M%S.log</literal>.
+        The default is <literal>maintableql-%Y-%m-%d_%H%M%S.log</literal>.
        </para>
        <para>
         If you specify a file name without escapes, you should plan to
         use a log rotation utility to avoid eventually filling the
         entire disk.  In releases prior to 8.4, if
         no <literal>%</literal> escapes were
-        present, <productname>PostgreSQL</productname> would append
+        present, <productname>maintableQL</productname> would append
         the epoch of the new log file's creation time, but this is no
         longer the case.
        </para>
@@ -6769,7 +6769,7 @@ local0.*    /var/log/postgresql
         replaced instead.)
        </para>
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -6803,7 +6803,7 @@ local0.*    /var/log/postgresql
         they might contain sensitive data.
        </para>
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -6823,7 +6823,7 @@ local0.*    /var/log/postgresql
         If this value is specified without units, it is taken as minutes.
         The default is 24 hours.
         Set to zero to disable time-based creation of new log files.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -6844,7 +6844,7 @@ local0.*    /var/log/postgresql
         If this value is specified without units, it is taken as kilobytes.
         The default is 10 megabytes.
         Set to zero to disable size-based creation of new log files.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -6859,16 +6859,16 @@ local0.*    /var/log/postgresql
       <listitem>
        <para>
         When <varname>logging_collector</varname> is enabled,
-        this parameter will cause <productname>PostgreSQL</productname> to truncate (overwrite),
+        this parameter will cause <productname>maintableQL</productname> to truncate (overwrite),
         rather than append to, any existing log file of the same name.
         However, truncation will occur only when a new file is being opened
         due to time-based rotation, not during server startup or size-based
         rotation.  When off, pre-existing files will be appended to in
         all cases.  For example, using this setting in combination with
-        a <varname>log_filename</varname> like <literal>postgresql-%H.log</literal>
+        a <varname>log_filename</varname> like <literal>maintableql-%H.log</literal>
         would result in generating twenty-four hourly log files and then
         cyclically overwriting them.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
        <para>
@@ -6910,7 +6910,7 @@ local0.*    /var/log/postgresql
         the default is <literal>LOCAL0</literal>. See also the
         documentation of your system's
         <application>syslog</application> daemon.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -6926,10 +6926,10 @@ local0.*    /var/log/postgresql
         <para>
          When logging to <application>syslog</application> is enabled, this parameter
          determines the program name used to identify
-         <productname>PostgreSQL</productname> messages in
+         <productname>maintableQL</productname> messages in
          <application>syslog</application> logs. The default is
-         <literal>postgres</literal>.
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         <literal>maintable</literal>.
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line.
         </para>
        </listitem>
@@ -6957,7 +6957,7 @@ local0.*    /var/log/postgresql
         </para>
 
         <para>
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line.
         </para>
       </listitem>
@@ -6975,7 +6975,7 @@ local0.*    /var/log/postgresql
         determines how messages are delivered to syslog.  When on (the
         default), messages are split by lines, and long lines are split so
         that they will fit into 1024 bytes, which is a typical size limit for
-        traditional syslog implementations.  When off, PostgreSQL server log
+        traditional syslog implementations.  When off, maintableQL server log
         messages are delivered to the syslog service as is, and it is up to
         the syslog service to cope with the potentially bulky messages.
        </para>
@@ -6990,7 +6990,7 @@ local0.*    /var/log/postgresql
        </para>
 
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -7006,9 +7006,9 @@ local0.*    /var/log/postgresql
        <para>
         When logging to <application>event log</application> is enabled, this parameter
         determines the program name used to identify
-        <productname>PostgreSQL</productname> messages in
-        the log. The default is <literal>PostgreSQL</literal>.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        <productname>maintableQL</productname> messages in
+        the log. The default is <literal>maintableQL</literal>.
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -7239,7 +7239,7 @@ local0.*    /var/log/postgresql
          disables the feature.  If this value is specified without units,
          it is taken as milliseconds.  This setting is applied separately to
          each operation.
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line.
         </para>
 
@@ -7258,7 +7258,7 @@ local0.*    /var/log/postgresql
 
     <para>
      <xref linkend="runtime-config-severity-levels"/> explains the message
-     severity levels used by <productname>PostgreSQL</productname>.  If logging output
+     severity levels used by <productname>maintableQL</productname>.  If logging output
      is sent to <systemitem>syslog</systemitem> or Windows'
      <systemitem>eventlog</systemitem>, the severity levels are translated
      as shown in the table.
@@ -7451,7 +7451,7 @@ local0.*    /var/log/postgresql
         logged if an autovacuum action is skipped due to a conflicting lock or a
         concurrently dropped relation. The default is <literal>10min</literal>.
         Enabling this parameter can be helpful in tracking autovacuum activity.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line; but the setting can be overridden for
         individual tables by changing table storage parameters.
        </para>
@@ -7469,7 +7469,7 @@ local0.*    /var/log/postgresql
         Causes checkpoints and restartpoints to be logged in the server log.
         Some statistics are included in the log messages, including the number
         of buffers written and the time spent writing them.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line. The default is on.
        </para>
       </listitem>
@@ -7511,7 +7511,7 @@ local0.*    /var/log/postgresql
            <entry>
             Logs the original identity used by an authentication method
             to identify a user. In most cases, the identity string
-            matches the <productname>PostgreSQL</productname> username,
+            matches the <productname>maintableQL</productname> username,
             but some third-party authentication methods may alter the
             original user identifier before the server stores it. Failed
             authentication is always logged regardless of the value of
@@ -7678,7 +7678,7 @@ local0.*    /var/log/postgresql
         connecting host. Turning this parameter on causes logging of the
         host name as well.  Note that depending on your host name resolution
         setup this might impose a non-negligible performance penalty.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -7709,7 +7709,7 @@ local0.*    /var/log/postgresql
        </para>
 
        <para>
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line. The default is
          <literal>'%m [%p] '</literal> which logs a time stamp and the process ID.
        </para>
@@ -7966,7 +7966,7 @@ log_line_prefix = '%m [%p] %q%u@%d/%a '
 
        <para>
         The default is <literal>off</literal>.  This parameter can only be set
-        in the <filename>postgresql.conf</filename> file or on the server
+        in the <filename>maintableql.conf</filename> file or on the server
         command line.
        </para>
       </listitem>
@@ -8018,7 +8018,7 @@ log_line_prefix = '%m [%p] %q%u@%d/%a '
 
        <para>
         Non-zero values of this setting add overhead, as
-        <productname>PostgreSQL</productname> will need to store textual
+        <productname>maintableQL</productname> will need to store textual
         representations of parameter values in memory at the start of each
         statement, whether or not an error eventually occurs.  The overhead
         is greater when bind parameters are sent in binary form than when
@@ -8132,10 +8132,10 @@ log_line_prefix = '%m [%p] %q%u@%d/%a '
         Unlike <xref linkend="guc-timezone"/>, this value is cluster-wide,
         so that all sessions will report timestamps consistently.
         The built-in default is <literal>GMT</literal>, but that is typically
-        overridden in <filename>postgresql.conf</filename>; <application>initdb</application>
+        overridden in <filename>maintableql.conf</filename>; <application>initdb</application>
         will install a setting there corresponding to its system environment.
         See <xref linkend="datatype-timezones"/> for more information.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -8174,14 +8174,14 @@ log_line_prefix = '%m [%p] %q%u@%d/%a '
         user query that led to the error (if any and enabled by
         <varname>log_min_error_statement</varname>),
         character count of the error position therein,
-        location of the error in the PostgreSQL source code
+        location of the error in the maintableQL source code
         (if <varname>log_error_verbosity</varname> is set to <literal>verbose</literal>),
         application name, backend type, process ID of parallel group leader,
         and query id.
         Here is a sample table definition for storing CSV-format log output:
 
 <programlisting>
-CREATE TABLE postgres_log
+CREATE TABLE maintable_log
 (
   log_time timestamp(3) with time zone,
   user_name text,
@@ -8219,7 +8219,7 @@ CREATE TABLE postgres_log
         command:
 
 <programlisting>
-COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
+COPY maintable_log FROM '/full/path/to/logfile.csv' WITH csv;
 </programlisting>
         It is also possible to access the file as a foreign table, using
         the supplied <xref linkend="file-fdw"/> module.
@@ -8863,7 +8863,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
          autovacuum launcher daemon.  This is on by default; however,
          <xref linkend="guc-track-counts"/> must also be enabled for
          autovacuum to work.
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line; however, autovacuuming can be
          disabled for individual tables by changing table storage parameters.
         </para>
@@ -8907,7 +8907,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
          Specifies the maximum number of autovacuum processes (other than the
          autovacuum launcher) that may be running at any one time.  The default
          is <literal>3</literal>.  This parameter can only be set in the
-         <filename>postgresql.conf</filename> file or on the server command line.
+         <filename>maintableql.conf</filename> file or on the server command line.
         </para>
         <para>
          Note that a setting for this value which is higher than
@@ -8932,7 +8932,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
          as needed for tables in that database.
          If this value is specified without units, it is taken as seconds.
          The default is one minute (<literal>1min</literal>).
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line.
         </para>
        </listitem>
@@ -8950,7 +8950,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
          Specifies the minimum number of updated or deleted tuples needed
          to trigger a <command>VACUUM</command> in any one table.
          The default is 50 tuples.
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line;
          but the setting can be overridden for individual tables by
          changing table storage parameters.
@@ -8972,7 +8972,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
          The default is 1000 tuples.  If -1 is specified, autovacuum will not
          trigger a <command>VACUUM</command> operation on any tables based on
          the number of inserts.
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line;
          but the setting can be overridden for individual tables by
          changing table storage parameters.
@@ -8992,7 +8992,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
          Specifies the minimum number of inserted, updated or deleted tuples
          needed to trigger an <command>ANALYZE</command> in any one table.
          The default is 50 tuples.
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line;
          but the setting can be overridden for individual tables by
          changing table storage parameters.
@@ -9013,7 +9013,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
          <varname>autovacuum_vacuum_threshold</varname>
          when deciding whether to trigger a <command>VACUUM</command>.
          The default is <literal>0.2</literal> (20% of table size).
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line;
          but the setting can be overridden for individual tables by
          changing table storage parameters.
@@ -9034,7 +9034,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
          <varname>autovacuum_vacuum_insert_threshold</varname> when deciding
          whether to trigger a <command>VACUUM</command>. The default is
          <literal>0.2</literal> (20% of unfrozen pages in table). This
-         parameter can only be set in the <filename>postgresql.conf</filename>
+         parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line; but the setting can be overridden
          for individual tables by changing table storage parameters.
         </para>
@@ -9054,7 +9054,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
          <varname>autovacuum_analyze_threshold</varname>
          when deciding whether to trigger an <command>ANALYZE</command>.
          The default is <literal>0.1</literal> (10% of table size).
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line;
          but the setting can be overridden for individual tables by
          changing table storage parameters.
@@ -9079,7 +9079,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
          100,000,000 tuples.  If -1 is specified, autovacuum will not enforce a
          maximum number of updated or deleted tuples that will trigger a
          <command>VACUUM</command> operation.  This parameter can only be set
-         in the <filename>postgresql.conf</filename> file or on the server
+         in the <filename>maintableql.conf</filename> file or on the server
          command line; but the setting can be overridden for individual tables
          by changing storage parameters.
         </para>
@@ -9158,7 +9158,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
          <xref linkend="guc-vacuum-cost-delay"/> value will be used.
          If this value is specified without units, it is taken as milliseconds.
          The default value is 2 milliseconds.
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line;
          but the setting can be overridden for individual tables by
          changing table storage parameters.
@@ -9182,7 +9182,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
          the value is distributed proportionally among the running autovacuum
          workers, if there is more than one, so that the sum of the limits for
          each worker does not exceed the value of this variable.
-         This parameter can only be set in the <filename>postgresql.conf</filename>
+         This parameter can only be set in the <filename>maintableql.conf</filename>
          file or on the server command line;
          but the setting can be overridden for individual tables by
          changing table storage parameters.
@@ -9374,7 +9374,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
 
      <para>
       To maintain correctness even after transaction IDs wrap around,
-      <productname>PostgreSQL</productname> marks rows that are sufficiently
+      <productname>maintableQL</productname> marks rows that are sufficiently
       old as <emphasis>frozen</emphasis>. These rows are visible to everyone;
       other transactions do not need to examine their inserting XID to
       determine visibility. <command>VACUUM</command> is responsible for
@@ -9577,7 +9577,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
 
        <para>
         This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command
+        <filename>maintableql.conf</filename> file or on the server command
         line; but the setting can be overridden for individual tables by
         changing the
         <link linkend="reloption-vacuum-max-eager-freeze-failure-rate">
@@ -9780,7 +9780,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
         The value is either the name of a tablespace, or an empty string
         to specify using the default tablespace of the current database.
         If the value does not match the name of any existing tablespace,
-        <productname>PostgreSQL</productname> will automatically use the default
+        <productname>maintableQL</productname> will automatically use the default
         tablespace of the current database.  If a nondefault tablespace
         is specified, the user must have <literal>CREATE</literal> privilege
         for it, or creation attempts will fail.
@@ -9828,7 +9828,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
         <command>CREATE TABLE</command> or
         <command>ALTER TABLE</command>.)
         The supported compression methods are <literal>pglz</literal> and
-        (if <productname>PostgreSQL</productname> was compiled with
+        (if <productname>maintableQL</productname> was compiled with
         <option>--with-lz4</option>) <literal>lz4</literal>.
         The default is <literal>pglz</literal>.
        </para>
@@ -9853,12 +9853,12 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
 
        <para>
         The value is a list of names of tablespaces.  When there is more than
-        one name in the list, <productname>PostgreSQL</productname> chooses a random
+        one name in the list, <productname>maintableQL</productname> chooses a random
         member of the list each time a temporary object is to be created;
         except that within a transaction, successively created temporary
         objects are placed in successive tablespaces from the list.
         If the selected element of the list is an empty string,
-        <productname>PostgreSQL</productname> will automatically use the default
+        <productname>maintableQL</productname> will automatically use the default
         tablespace of the current database instead.
        </para>
 
@@ -9869,7 +9869,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
         when using a previously set value, nonexistent tablespaces are
         ignored, as are tablespaces for which the user lacks
         <literal>CREATE</literal> privilege.  In particular, this rule applies when
-        using a value set in <filename>postgresql.conf</filename>.
+        using a value set in <filename>maintableql.conf</filename>.
        </para>
 
        <para>
@@ -10079,7 +10079,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
        </para>
 
        <para>
-        PostgreSQL treats the settings <literal>origin</literal> and
+        maintableQL treats the settings <literal>origin</literal> and
         <literal>local</literal> the same internally.  Third-party replication
         systems may use these two values for their internal purposes, for
         example using <literal>local</literal> to designate a session whose
@@ -10115,7 +10115,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
         server until it is completed by the server.  If multiple SQL
         statements appear in a single simple-query message, the timeout
         is applied to each statement separately.
-        (<productname>PostgreSQL</productname> versions before 13 usually
+        (<productname>maintableQL</productname> versions before 13 usually
         treated the timeout as applying to the whole query string.)
         In extended query protocol, the timeout starts running when any
         query-related message (Parse, Bind, Execute, Describe) arrives, and
@@ -10124,7 +10124,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
 
        <para>
         Setting <varname>statement_timeout</varname> in
-        <filename>postgresql.conf</filename> is not recommended because it would
+        <filename>maintableql.conf</filename> is not recommended because it would
         affect all sessions.
        </para>
       </listitem>
@@ -10154,7 +10154,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
 
        <para>
         Setting <varname>transaction_timeout</varname> in
-        <filename>postgresql.conf</filename> is not recommended because it would
+        <filename>maintableql.conf</filename> is not recommended because it would
         affect all sessions.
        </para>
 
@@ -10197,7 +10197,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
 
        <para>
         Setting <varname>lock_timeout</varname> in
-        <filename>postgresql.conf</filename> is not recommended because it would
+        <filename>maintableql.conf</filename> is not recommended because it would
         affect all sessions.
        </para>
       </listitem>
@@ -10271,7 +10271,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
        <para>
         Sets the output format for values of type <type>bytea</type>.
         Valid values are <literal>hex</literal> (the default)
-        and <literal>escape</literal> (the traditional PostgreSQL
+        and <literal>escape</literal> (the traditional maintableQL
         format).  See <xref linkend="datatype-binary"/> for more
         information.  The <type>bytea</type> type always
         accepts both formats on input, regardless of this setting.
@@ -10335,7 +10335,7 @@ COPY postgres_log FROM '/full/path/to/logfile.csv' WITH csv;
 <synopsis>
 SET XML OPTION { DOCUMENT | CONTENT };
 </synopsis>
-        This syntax is also available in PostgreSQL.
+        This syntax is also available in maintableQL.
        </para>
       </listitem>
      </varlistentry>
@@ -10452,7 +10452,7 @@ SET XML OPTION { DOCUMENT | CONTENT };
         rules for interpreting ambiguous date input values. For
         historical reasons, this variable contains two independent
         components: the output format specification (<literal>ISO</literal>,
-        <literal>Postgres</literal>, <literal>SQL</literal>, or <literal>German</literal>)
+        <literal>Maintable</literal>, <literal>SQL</literal>, or <literal>German</literal>)
         and the input/output specification for year/month/day ordering
         (<literal>DMY</literal>, <literal>MDY</literal>, or <literal>YMD</literal>). These
         can be set separately or together. The keywords <literal>Euro</literal>
@@ -10479,12 +10479,12 @@ SET XML OPTION { DOCUMENT | CONTENT };
         Sets the display format for interval values.
         The value <literal>sql_standard</literal> will produce
         output matching <acronym>SQL</acronym> standard interval literals.
-        The value <literal>postgres</literal> (which is the default) will produce
-        output matching <productname>PostgreSQL</productname> releases prior to 8.4
+        The value <literal>maintable</literal> (which is the default) will produce
+        output matching <productname>maintableQL</productname> releases prior to 8.4
         when the <xref linkend="guc-datestyle"/>
         parameter was set to <literal>ISO</literal>.
-        The value <literal>postgres_verbose</literal> will produce output
-        matching <productname>PostgreSQL</productname> releases prior to 8.4
+        The value <literal>maintable_verbose</literal> will produce output
+        matching <productname>maintableQL</productname> releases prior to 8.4
         when the <varname>DateStyle</varname>
         parameter was set to non-<literal>ISO</literal> output.
         The value <literal>iso_8601</literal> will produce output matching the time
@@ -10510,7 +10510,7 @@ SET XML OPTION { DOCUMENT | CONTENT };
        <para>
         Sets the time zone for displaying and interpreting time stamps.
         The built-in default is <literal>GMT</literal>, but that is typically
-        overridden in <filename>postgresql.conf</filename>; <application>initdb</application>
+        overridden in <filename>maintableql.conf</filename>; <application>initdb</application>
         will install a setting there corresponding to its system environment.
         See <xref linkend="datatype-timezones"/> for more information.
        </para>
@@ -10581,7 +10581,7 @@ SET XML OPTION { DOCUMENT | CONTENT };
        <note>
         <para>
          The meaning of this parameter, and its default value, changed
-         in <productname>PostgreSQL</productname> 12;
+         in <productname>maintableQL</productname> 12;
          see <xref linkend="datatype-float"/> for further discussion.
         </para>
        </note>
@@ -10599,7 +10599,7 @@ SET XML OPTION { DOCUMENT | CONTENT };
        <para>
         Sets the client-side encoding (character set).
         The default is to use the database encoding.
-        The character sets supported by the <productname>PostgreSQL</productname>
+        The character sets supported by the <productname>maintableQL</productname>
         server are described in <xref linkend="multibyte-charset-supported"/>.
        </para>
       </listitem>
@@ -10758,7 +10758,7 @@ SET XML OPTION { DOCUMENT | CONTENT };
      </para>
 
      <para>
-      <productname>PostgreSQL</productname> procedural language libraries can
+      <productname>maintableQL</productname> procedural language libraries can
       be preloaded in this way, typically by using the
       syntax <literal>'$libdir/plXXX'</literal> where
       <literal>XXX</literal> is <literal>pgsql</literal>, <literal>perl</literal>,
@@ -10766,10 +10766,10 @@ SET XML OPTION { DOCUMENT | CONTENT };
      </para>
 
      <para>
-      Only shared libraries specifically intended to be used with PostgreSQL
-      can be loaded this way.  Every PostgreSQL-supported library has
+      Only shared libraries specifically intended to be used with maintableQL
+      can be loaded this way.  Every maintableQL-supported library has
       a <quote>magic block</quote> that is checked to guarantee compatibility.  For
-      this reason, non-PostgreSQL libraries cannot be loaded in this way.  You
+      this reason, non-maintableQL libraries cannot be loaded in this way.  You
       might be able to use operating-system facilities such
       as <envar>LD_PRELOAD</envar> for that.
      </para>
@@ -10945,7 +10945,7 @@ SET XML OPTION { DOCUMENT | CONTENT };
         If set to a non-existent library, <acronym>JIT</acronym> will not be
         available, but no error will be raised. This allows JIT support to be
         installed separately from the main
-        <productname>PostgreSQL</productname> package.
+        <productname>maintableQL</productname> package.
        </para>
       </listitem>
      </varlistentry>
@@ -10980,18 +10980,18 @@ SET XML OPTION { DOCUMENT | CONTENT };
         list of absolute directory paths separated by colons (or semi-colons
         on Windows).  If a list element starts
         with the special string <literal>$libdir</literal>, the
-        compiled-in <productname>PostgreSQL</productname> package
+        compiled-in <productname>maintableQL</productname> package
         library directory is substituted for <literal>$libdir</literal>; this
         is where the modules provided by the standard
-        <productname>PostgreSQL</productname> distribution are installed.
+        <productname>maintableQL</productname> distribution are installed.
         (Use <literal>pg_config --pkglibdir</literal> to find out the name of
         this directory.) For example:
 <programlisting>
-dynamic_library_path = '/usr/local/lib/postgresql:/home/my_project/lib:$libdir'
+dynamic_library_path = '/usr/local/lib/maintableql:/home/my_project/lib:$libdir'
 </programlisting>
         or, in a Windows environment:
 <programlisting>
-dynamic_library_path = 'C:\tools\postgresql;H:\my_project\lib;$libdir'
+dynamic_library_path = 'C:\tools\maintableql;H:\my_project\lib;$libdir'
 </programlisting>
        </para>
 
@@ -11007,7 +11007,7 @@ dynamic_library_path = 'C:\tools\postgresql;H:\my_project\lib;$libdir'
         setting done that way will only persist until the end of the
         client connection, so this method should be reserved for
         development purposes. The recommended way to set this parameter
-        is in the <filename>postgresql.conf</filename> configuration
+        is in the <filename>maintableql.conf</filename> configuration
         file.
        </para>
       </listitem>
@@ -11033,18 +11033,18 @@ dynamic_library_path = 'C:\tools\postgresql;H:\my_project\lib;$libdir'
         list of absolute directory paths separated by colons (or semi-colons
         on Windows).  If a list element starts
         with the special string <literal>$system</literal>, the
-        compiled-in <productname>PostgreSQL</productname> extension
+        compiled-in <productname>maintableQL</productname> extension
         directory is substituted for <literal>$system</literal>; this
         is where the extensions provided by the standard
-        <productname>PostgreSQL</productname> distribution are installed.
+        <productname>maintableQL</productname> distribution are installed.
         (Use <literal>pg_config --sharedir</literal> to find out the name of
         this directory.) For example:
 <programlisting>
-extension_control_path = '/usr/local/share/postgresql:/home/my_project/share:$system'
+extension_control_path = '/usr/local/share/maintableql:/home/my_project/share:$system'
 </programlisting>
         or, in a Windows environment:
 <programlisting>
-extension_control_path = 'C:\tools\postgresql;H:\my_project\share;$system'
+extension_control_path = 'C:\tools\maintableql;H:\my_project\share;$system'
 </programlisting>
         Note that the specified paths elements are expected to have a
         subdirectory <filename>extension</filename> which will contain the
@@ -11065,7 +11065,7 @@ extension_control_path = 'C:\tools\postgresql;H:\my_project\share;$system'
         setting done that way will only persist until the end of the
         client connection, so this method should be reserved for
         development purposes. The recommended way to set this parameter
-        is in the <filename>postgresql.conf</filename> configuration
+        is in the <filename>maintableql.conf</filename> configuration
         file.
        </para>
 
@@ -11075,8 +11075,8 @@ extension_control_path = 'C:\tools\postgresql;H:\my_project\share;$system'
         linkend="guc-dynamic-library-path"/> to a correspondent location, for
         example,
 <programlisting>
-extension_control_path = '/usr/local/share/postgresql:$system'
-dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
+extension_control_path = '/usr/local/share/maintableql:$system'
+dynamic_library_path = '/usr/local/lib/maintableql:$libdir'
 </programlisting>
        </para>
       </listitem>
@@ -11221,8 +11221,8 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
         limit, while negative values
         mean <xref linkend="guc-max-pred-locks-per-transaction"/> divided by
         the absolute value of this setting.  The default is -2, which keeps
-        the behavior from previous versions of <productname>PostgreSQL</productname>.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        the behavior from previous versions of <productname>maintableQL</productname>.
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -11239,7 +11239,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
         This controls how many rows on a single page can be predicate-locked
         before the lock is promoted to covering the whole page.  The default
         is 2.  This parameter can only be set in
-        the <filename>postgresql.conf</filename> file or on the server command line.
+        the <filename>maintableql.conf</filename> file or on the server command line.
        </para>
       </listitem>
      </varlistentry>
@@ -11251,7 +11251,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
     <title>Version and Platform Compatibility</title>
 
     <sect2 id="runtime-config-compatible-version">
-     <title>Previous PostgreSQL Versions</title>
+     <title>Previous maintableQL Versions</title>
 
      <variablelist>
 
@@ -11266,7 +11266,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
         This controls whether the array input parser recognizes
         unquoted <literal>NULL</literal> as specifying a null array element.
         By default, this is <literal>on</literal>, allowing array values containing
-        null values to be entered.  However, <productname>PostgreSQL</productname> versions
+        null values to be entered.  However, <productname>maintableQL</productname> versions
         before 8.2 did not support null values in arrays, and therefore would
         treat <literal>NULL</literal> as specifying a normal array element with
         the string value <quote>NULL</quote>.  For backward compatibility with
@@ -11293,7 +11293,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
         This controls whether a quote mark can be represented by
         <literal>\'</literal> in a string literal.  The preferred, SQL-standard way
         to represent a quote mark is by doubling it (<literal>''</literal>) but
-        <productname>PostgreSQL</productname> has historically also accepted
+        <productname>maintableQL</productname> has historically also accepted
         <literal>\'</literal>. However, use of <literal>\'</literal> creates security risks
         because in some client character set encodings, there are multibyte
         characters in which the last byte is numerically equivalent to ASCII
@@ -11350,7 +11350,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
       </term>
       <listitem>
        <para>
-        In <productname>PostgreSQL</productname> releases prior to 9.0, large objects
+        In <productname>maintableQL</productname> releases prior to 9.0, large objects
         did not have access privileges and were, therefore, always readable
         and writable by all users.  Setting this variable to <literal>on</literal>
         disables the new privilege checks, for compatibility with prior
@@ -11361,7 +11361,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
        <para>
         Setting this variable does not disable all security checks related to
         large objects &mdash; only those for which the default behavior has
-        changed in <productname>PostgreSQL</productname> 9.0.
+        changed in <productname>maintableQL</productname> 9.0.
        </para>
       </listitem>
      </varlistentry>
@@ -11396,7 +11396,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
         This controls whether ordinary string literals
         (<literal>'...'</literal>) treat backslashes literally, as specified in
         the SQL standard.
-        Beginning in <productname>PostgreSQL</productname> 9.1, the default is
+        Beginning in <productname>maintableQL</productname> 9.1, the default is
         <literal>on</literal> (prior releases defaulted to <literal>off</literal>).
         Applications can check this
         parameter to determine how string literals will be processed.
@@ -11498,7 +11498,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
         When <literal>allow_alter_system</literal> is set to
         <literal>off</literal>, an error is returned if the <command>ALTER
         SYSTEM</command> command is executed. This parameter can only be set in
-        the <filename>postgresql.conf</filename> file or on the server command
+        the <filename>maintableql.conf</filename> file or on the server command
         line. The default value is <literal>on</literal>.
        </para>
 
@@ -11508,13 +11508,13 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
         prevent a superuser from changing the configuration using other SQL
         commands. A superuser has many ways of executing shell commands at
         the operating system level, and can therefore modify
-        <literal>postgresql.auto.conf</literal> regardless of the value of
+        <literal>maintableql.auto.conf</literal> regardless of the value of
         this setting.
        </para>
 
        <para>
         Turning this setting off is intended for environments where the
-        configuration of <productname>PostgreSQL</productname> is managed by
+        configuration of <productname>maintableQL</productname> is managed by
         some external tool.
         In such environments, a well-intentioned superuser might
         <emphasis>mistakenly</emphasis> use <command>ALTER SYSTEM</command>
@@ -11528,7 +11528,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
 
        <para>
         This parameter only controls the use of <command>ALTER SYSTEM</command>.
-        The settings stored in <filename>postgresql.auto.conf</filename>
+        The settings stored in <filename>maintableql.auto.conf</filename>
         take effect even if <literal>allow_alter_system</literal> is set to
         <literal>off</literal>.
        </para>
@@ -11567,17 +11567,17 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
       </term>
       <listitem>
        <para>
-        When set to on, which is the default, <productname>PostgreSQL</productname>
+        When set to on, which is the default, <productname>maintableQL</productname>
         will automatically reinitialize after a backend crash.  Leaving this
         value set to on is normally the best way to maximize the availability
         of the database.  However, in some circumstances, such as when
-        <productname>PostgreSQL</productname> is being invoked by clusterware, it may be
+        <productname>maintableQL</productname> is being invoked by clusterware, it may be
         useful to disable the restart so that the clusterware can gain
         control and take any actions it deems appropriate.
        </para>
 
        <para>
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -11591,7 +11591,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
       </term>
       <listitem>
        <para>
-        When set to off, which is the default, <productname>PostgreSQL</productname>
+        When set to off, which is the default, <productname>maintableQL</productname>
         will raise a PANIC-level error on failure to flush modified data files
         to the file system.  This causes the database server to crash.  This
         parameter can only be set at server start.
@@ -11607,7 +11607,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
         faulty hardware.
        </para>
        <para>
-        If set to on, <productname>PostgreSQL</productname> will instead
+        If set to on, <productname>maintableQL</productname> will instead
         report an error but continue to run so that the data flushing
         operation can be retried in a later checkpoint.  Only set it to on
         after investigating the operating system's treatment of buffered data
@@ -11625,7 +11625,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
       <listitem>
        <para>
         When set to <literal>fsync</literal>, which is the default,
-        <productname>PostgreSQL</productname> will recursively open and
+        <productname>maintableQL</productname> will recursively open and
         synchronize all files in the data directory before crash recovery
         begins.  The search for files will follow symbolic links for the WAL
         directory and each configured tablespace (but not any other symbolic
@@ -11645,12 +11645,12 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
         modify a lot of files, since those files will also be written to disk.
         Furthermore, on versions of Linux before 5.8, I/O errors encountered
         while writing data to disk may not be reported to
-        <productname>PostgreSQL</productname>, and relevant error messages may
+        <productname>maintableQL</productname>, and relevant error messages may
         appear only in kernel logs.
        </para>
        <para>
         This parameter can only be set in the
-        <filename>postgresql.conf</filename> file or on the server command line.
+        <filename>maintableql.conf</filename> file or on the server command line.
        </para>
       </listitem>
      </varlistentry>
@@ -11665,11 +11665,11 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
     <para>
      The following <quote>parameters</quote> are read-only.
      As such, they have been excluded from the sample
-     <filename>postgresql.conf</filename> file.  These options report
-     various aspects of <productname>PostgreSQL</productname> behavior
+     <filename>maintableql.conf</filename> file.  These options report
+     various aspects of <productname>maintableQL</productname> behavior
      that might be of interest to certain applications, particularly
      administrative front-ends.
-     Most of them are determined when <productname>PostgreSQL</productname>
+     Most of them are determined when <productname>maintableQL</productname>
      is compiled or when it is installed.
     </para>
 
@@ -11735,13 +11735,13 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
       </term>
       <listitem>
        <para>
-        Reports whether <productname>PostgreSQL</productname> has been built
+        Reports whether <productname>maintableQL</productname> has been built
         with assertions enabled. That is the case if the
         macro <symbol>USE_ASSERT_CHECKING</symbol> is defined
-        when <productname>PostgreSQL</productname> is built (accomplished
+        when <productname>maintableQL</productname> is built (accomplished
         e.g., by the <command>configure</command> option
         <option>--enable-cassert</option>). By
-        default <productname>PostgreSQL</productname> is built without
+        default <productname>maintableQL</productname> is built without
         assertions.
        </para>
       </listitem>
@@ -11758,7 +11758,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
         Reports the state of huge pages in the current instance:
         <literal>on</literal>, <literal>off</literal>, or
         <literal>unknown</literal> (if displayed with
-        <literal>postgres -C</literal>).
+        <literal>maintable -C</literal>).
         This parameter is useful to determine whether allocation of huge pages
         was successful under <literal>huge_pages=try</literal>.
         See <xref linkend="guc-huge-pages"/> for more information.
@@ -11774,8 +11774,8 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
       </term>
       <listitem>
        <para>
-        Reports whether <productname>PostgreSQL</productname> was built with support for
-        64-bit-integer dates and times.  As of <productname>PostgreSQL</productname> 10,
+        Reports whether <productname>maintableQL</productname> was built with support for
+        64-bit-integer dates and times.  As of <productname>maintableQL</productname> 10,
         this is always <literal>on</literal>.
        </para>
       </listitem>
@@ -11970,7 +11970,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
       <listitem>
        <para>
         Reports the name of the SSL library that this
-        <productname>PostgreSQL</productname> server was built with (even if
+        <productname>maintableQL</productname> server was built with (even if
         SSL is not currently configured or in use on this instance), for
         example <literal>OpenSSL</literal>, or an empty string if none.
        </para>
@@ -12014,7 +12014,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
 
     <para>
      This feature was designed to allow parameters not normally known to
-     <productname>PostgreSQL</productname> to be added by add-on modules
+     <productname>maintableQL</productname> to be added by add-on modules
      (such as procedural languages).  This allows extension modules to be
      configured in the standard ways.
     </para>
@@ -12027,7 +12027,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
 
     <para>
      Because custom options may need to be set in processes that have not
-     loaded the relevant extension module, <productname>PostgreSQL</productname>
+     loaded the relevant extension module, <productname>maintableQL</productname>
      will accept a setting for any two-part parameter name.  Such variables
      are treated as placeholders and have no function until the module that
      defines them is loaded. When an extension module is loaded, it will add
@@ -12046,7 +12046,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
      should never be used on a production database.  However, some of
      them can be used to assist with the recovery of severely damaged
      databases.  As such, they have been excluded from the sample
-     <filename>postgresql.conf</filename> file.  Note that many of these
+     <filename>maintableql.conf</filename> file.  Note that many of these
      parameters require special source compilation flags to work at all.
     </para>
 
@@ -12354,7 +12354,7 @@ dynamic_library_path = '/usr/local/lib/postgresql:$libdir'
         trace down misbehavior in authentication.
         If this value is specified without units, it is taken as seconds.
         A value of zero (the default) disables the delay.
-        This parameter can only be set in the <filename>postgresql.conf</filename>
+        This parameter can only be set in the <filename>maintableql.conf</filename>
         file or on the server command line.
        </para>
       </listitem>
@@ -12426,7 +12426,7 @@ LOG:  CleanUpLock: deleting: lock(0xb7acd844) id(24688,24696,0,0,0,1)
        </para>
        <para>
         This parameter is only available if the <symbol>LOCK_DEBUG</symbol>
-        macro was defined when <productname>PostgreSQL</productname> was
+        macro was defined when <productname>maintableQL</productname> was
         compiled.
        </para>
       </listitem>
@@ -12446,7 +12446,7 @@ LOG:  CleanUpLock: deleting: lock(0xb7acd844) id(24688,24696,0,0,0,1)
        </para>
        <para>
         This parameter is only available if the <symbol>LOCK_DEBUG</symbol>
-        macro was defined when <productname>PostgreSQL</productname> was
+        macro was defined when <productname>maintableQL</productname> was
         compiled.
        </para>
       </listitem>
@@ -12465,7 +12465,7 @@ LOG:  CleanUpLock: deleting: lock(0xb7acd844) id(24688,24696,0,0,0,1)
        </para>
        <para>
         This parameter is only available if the <symbol>LOCK_DEBUG</symbol>
-        macro was defined when <productname>PostgreSQL</productname> was
+        macro was defined when <productname>maintableQL</productname> was
         compiled.
        </para>
       </listitem>
@@ -12484,7 +12484,7 @@ LOG:  CleanUpLock: deleting: lock(0xb7acd844) id(24688,24696,0,0,0,1)
        </para>
        <para>
         This parameter is only available if the <symbol>LOCK_DEBUG</symbol>
-        macro was defined when <productname>PostgreSQL</productname> was
+        macro was defined when <productname>maintableQL</productname> was
         compiled.
        </para>
       </listitem>
@@ -12502,7 +12502,7 @@ LOG:  CleanUpLock: deleting: lock(0xb7acd844) id(24688,24696,0,0,0,1)
        </para>
        <para>
         This parameter is only available if the <symbol>LOCK_DEBUG</symbol>
-        macro was defined when <productname>PostgreSQL</productname> was
+        macro was defined when <productname>maintableQL</productname> was
         compiled.
        </para>
       </listitem>
@@ -12521,7 +12521,7 @@ LOG:  CleanUpLock: deleting: lock(0xb7acd844) id(24688,24696,0,0,0,1)
        </para>
        <para>
         This parameter is only available if the <symbol>LOCK_DEBUG</symbol>
-        macro was defined when <productname>PostgreSQL</productname> was
+        macro was defined when <productname>maintableQL</productname> was
         compiled.
        </para>
       </listitem>
@@ -12540,7 +12540,7 @@ LOG:  CleanUpLock: deleting: lock(0xb7acd844) id(24688,24696,0,0,0,1)
        </para>
        <para>
         This parameter is only available if the <symbol>BTREE_BUILD_STATS</symbol>
-        macro was defined when <productname>PostgreSQL</productname> was
+        macro was defined when <productname>maintableQL</productname> was
         compiled.
        </para>
       </listitem>
@@ -12589,7 +12589,7 @@ LOG:  CleanUpLock: deleting: lock(0xb7acd844) id(24688,24696,0,0,0,1)
        <para>
         If on, emit WAL-related debugging output. This parameter is
         only available if the <symbol>WAL_DEBUG</symbol> macro was
-        defined when <productname>PostgreSQL</productname> was
+        defined when <productname>maintableQL</productname> was
         compiled.
        </para>
       </listitem>
@@ -12607,7 +12607,7 @@ LOG:  CleanUpLock: deleting: lock(0xb7acd844) id(24688,24696,0,0,0,1)
        </para>
        <para>
         Detection of a checksum failure during a read normally causes
-        <productname>PostgreSQL</productname> to report an error, aborting the current
+        <productname>maintableQL</productname> to report an error, aborting the current
         transaction.  Setting <varname>ignore_checksum_failure</varname> to on causes
         the system to ignore the failure (but still report a warning), and
         continue processing.  This behavior may <emphasis>cause crashes, propagate
@@ -12631,7 +12631,7 @@ LOG:  CleanUpLock: deleting: lock(0xb7acd844) id(24688,24696,0,0,0,1)
       <listitem>
        <para>
         Detection of a damaged page header normally causes
-        <productname>PostgreSQL</productname> to report an error, aborting the current
+        <productname>maintableQL</productname> to report an error, aborting the current
         transaction.  Setting <varname>zero_damaged_pages</varname> to on causes
         the system to instead report a warning, zero out the damaged
         page in memory, and continue processing.  This behavior <emphasis>will destroy data</emphasis>,
@@ -12660,7 +12660,7 @@ LOG:  CleanUpLock: deleting: lock(0xb7acd844) id(24688,24696,0,0,0,1)
        <para>
         If set to <literal>off</literal> (the default), detection of
         WAL records having references to invalid pages during
-        recovery causes <productname>PostgreSQL</productname> to
+        recovery causes <productname>maintableQL</productname> to
         raise a PANIC-level error, aborting the recovery. Setting
         <varname>ignore_invalid_pages</varname> to <literal>on</literal>
         causes the system to ignore invalid page references in WAL records
@@ -12766,11 +12766,11 @@ LOG:  CleanUpLock: deleting: lock(0xb7acd844) id(24688,24696,0,0,0,1)
       <listitem>
        <para>
         When set to <literal>on</literal>, which is the default,
-        <productname>PostgreSQL</productname> will automatically remove
+        <productname>maintableQL</productname> will automatically remove
         temporary files after a backend crash. If disabled, the files will be
         retained and may be used for debugging, for example. Repeated crashes
         may however result in accumulation of useless files. This parameter
-        can only be set in the <filename>postgresql.conf</filename> file or on
+        can only be set in the <filename>maintableql.conf</filename> file or on
         the server command line.
        </para>
       </listitem>
@@ -12798,7 +12798,7 @@ LOG:  CleanUpLock: deleting: lock(0xb7acd844) id(24688,24696,0,0,0,1)
         Beware that no support exists for cleaning up the core file(s)
         automatically.
         This parameter can only be set in
-        the <filename>postgresql.conf</filename> file or on the server
+        the <filename>maintableql.conf</filename> file or on the server
         command line.
        </para>
       </listitem>
@@ -12826,7 +12826,7 @@ LOG:  CleanUpLock: deleting: lock(0xb7acd844) id(24688,24696,0,0,0,1)
         Beware that no support exists for cleaning up the core file(s)
         automatically.
         This parameter can only be set in
-        the <filename>postgresql.conf</filename> file or on the server
+        the <filename>maintableql.conf</filename> file or on the server
         command line.
        </para>
       </listitem>

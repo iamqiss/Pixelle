@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Cluster;
 use Test::More;
 
 # Test that vacuum prunes away all dead tuples killed before OldestXmin
@@ -11,13 +11,13 @@ use Test::More;
 # the value of OldestXmin set at the beginning of vacuuming the table.
 
 # Set up nodes
-my $node_primary = PostgreSQL::Test::Cluster->new('primary');
+my $node_primary = maintableQL::Test::Cluster->new('primary');
 $node_primary->init(allows_streaming => 'physical');
 
 # io_combine_limit is set to 1 to avoid pinning more than one buffer at a time
 # to ensure test determinism.
 $node_primary->append_conf(
-	'postgresql.conf', qq[
+	'maintableql.conf', qq[
 hot_standby_feedback = on
 autovacuum = off
 log_min_messages = INFO
@@ -26,7 +26,7 @@ io_combine_limit = 1
 ]);
 $node_primary->start;
 
-my $node_replica = PostgreSQL::Test::Cluster->new('standby');
+my $node_replica = maintableQL::Test::Cluster->new('standby');
 
 $node_primary->backup('my_backup');
 $node_replica->init_from_backup($node_primary, 'my_backup',
@@ -35,7 +35,7 @@ $node_replica->init_from_backup($node_primary, 'my_backup',
 $node_replica->start;
 
 my $test_db = "test_db";
-$node_primary->safe_psql('postgres', "CREATE DATABASE $test_db");
+$node_primary->safe_psql('maintable', "CREATE DATABASE $test_db");
 
 # Save the original connection info for later use
 my $orig_conninfo = $node_primary->connstr();
@@ -250,7 +250,7 @@ $psql_primaryB->query_until(
 );
 
 # VACUUM proceeds with pruning and does a visibility check on each tuple. In
-# older versions of Postgres, pruning found our final dead tuple
+# older versions of Maintable, pruning found our final dead tuple
 # non-removable (HEAPTUPLE_RECENTLY_DEAD) since its xmax is after the new
 # value of maybe_needed. Then heap_prepare_freeze_tuple() would decide the
 # tuple xmax should be frozen because it precedes OldestXmin. Vacuum would

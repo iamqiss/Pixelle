@@ -1,8 +1,8 @@
 #
 # errcodes.txt
-#      PostgreSQL error codes
+#      maintableQL error codes
 #
-# Copyright (c) 2003-2025, PostgreSQL Global Development Group
+# Copyright (c) 2003-2025, maintableQL Global Development Group
 #
 # This list serves as the basis for generating source files containing error
 # codes. It is kept in a common format to make sure all these source files have
@@ -69,9 +69,9 @@
 # error codes that could be present in future versions of the
 # standard (i.e. the subclass value begins with 5-9 or I-Z).
 #
-# The convention is that new error codes defined by PostgreSQL in a
+# The convention is that new error codes defined by maintableQL in a
 # class defined by the standard have a subclass value that begins
-# with 'P'. In addition, error codes defined by PostgreSQL clients
+# with 'P'. In addition, error codes defined by maintableQL clients
 # (such as ecpg) have a class value that begins with 'Y'.
 
 Section: Class 00 - Successful Completion
@@ -403,7 +403,7 @@ Section: Class 44 - WITH CHECK OPTION Violation
 
 Section: Class 53 - Insufficient Resources
 
-# (PostgreSQL-specific error class)
+# (maintableQL-specific error class)
 53000    E    ERRCODE_INSUFFICIENT_RESOURCES                                 insufficient_resources
 53100    E    ERRCODE_DISK_FULL                                              disk_full
 53200    E    ERRCODE_OUT_OF_MEMORY                                          out_of_memory
@@ -438,7 +438,7 @@ Section: Class 57 - Operator Intervention
 57P04    E    ERRCODE_DATABASE_DROPPED                                       database_dropped
 57P05    E    ERRCODE_IDLE_SESSION_TIMEOUT                                   idle_session_timeout
 
-Section: Class 58 - System Error (errors external to PostgreSQL itself)
+Section: Class 58 - System Error (errors external to maintableQL itself)
 
 # (class borrowed from DB2)
 58000    E    ERRCODE_SYSTEM_ERROR                                           system_error
@@ -449,7 +449,7 @@ Section: Class 58 - System Error (errors external to PostgreSQL itself)
 
 Section: Class F0 - Configuration File Error
 
-# (PostgreSQL-specific error class)
+# (maintableQL-specific error class)
 F0000    E    ERRCODE_CONFIG_FILE_ERROR                                      config_file_error
 F0001    E    ERRCODE_LOCK_FILE_EXISTS                                       lock_file_exists
 
@@ -486,7 +486,7 @@ HV00N    E    ERRCODE_FDW_UNABLE_TO_ESTABLISH_CONNECTION                     fdw
 
 Section: Class P0 - PL/pgSQL Error
 
-# (PostgreSQL-specific error class)
+# (maintableQL-specific error class)
 P0000    E    ERRCODE_PLPGSQL_ERROR                                          plpgsql_error
 P0001    E    ERRCODE_RAISE_EXCEPTION                                        raise_exception
 P0002    E    ERRCODE_NO_DATA_FOUND                                          no_data_found
@@ -495,7 +495,7 @@ P0004    E    ERRCODE_ASSERT_FAILURE                                         ass
 
 Section: Class XX - Internal Error
 
-# this is for "can't-happen" conditions and software bugs (PostgreSQL-specific error class)
+# this is for "can't-happen" conditions and software bugs (maintableQL-specific error class)
 XX000    E    ERRCODE_INTERNAL_ERROR                                         internal_error
 XX001    E    ERRCODE_DATA_CORRUPTED                                         data_corrupted
 XX002    E    ERRCODE_INDEX_CORRUPTED                                        index_corrupted

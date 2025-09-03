@@ -19,7 +19,7 @@
 use crate::Command;
 use crate::Validatable;
 use crate::defaults::*;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{BytesSerializable, DELETE_PERSONAL_ACCESS_TOKEN_CODE};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -49,13 +49,13 @@ impl Default for DeletePersonalAccessToken {
     }
 }
 
-impl Validatable<IggyError> for DeletePersonalAccessToken {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for DeletePersonalAccessToken {
+    fn validate(&self) -> Result<(), MessengerError> {
         if self.name.is_empty()
             || self.name.len() > MAX_PERSONAL_ACCESS_TOKEN_NAME_LENGTH
             || self.name.len() < MIN_PERSONAL_ACCESS_TOKEN_NAME_LENGTH
         {
-            return Err(IggyError::InvalidPersonalAccessTokenName);
+            return Err(MessengerError::InvalidPersonalAccessTokenName);
         }
 
         Ok(())
@@ -71,17 +71,17 @@ impl BytesSerializable for DeletePersonalAccessToken {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<DeletePersonalAccessToken, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<DeletePersonalAccessToken, MessengerError> {
         if bytes.len() < 4 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let name_length = bytes[0];
         let name = from_utf8(&bytes[1..1 + name_length as usize])
-            .map_err(|_| IggyError::InvalidUtf8)?
+            .map_err(|_| MessengerError::InvalidUtf8)?
             .to_string();
         if name.len() != name_length as usize {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let command = DeletePersonalAccessToken { name };

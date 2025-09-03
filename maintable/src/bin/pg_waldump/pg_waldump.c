@@ -2,7 +2,7 @@
  *
  * pg_waldump.c - decode and display WAL
  *
- * Copyright (c) 2013-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2013-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  src/bin/pg_waldump/pg_waldump.c
@@ -10,7 +10,7 @@
  */
 
 #define FRONTEND 1
-#include "postgres.h"
+#include "maintable.h"
 
 #include <dirent.h>
 #include <limits.h>
@@ -755,7 +755,7 @@ XLogDumpDisplayStats(XLogDumpConfig *config, XLogStats *stats)
 static void
 usage(void)
 {
-	printf(_("%s decodes and displays PostgreSQL write-ahead logs for debugging.\n\n"),
+	printf(_("%s decodes and displays maintableQL write-ahead logs for debugging.\n\n"),
 		   progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]... [STARTSEG [ENDSEG]]\n"), progname);
@@ -844,7 +844,7 @@ main(int argc, char **argv)
 		}
 		if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			puts("pg_waldump (PostgreSQL) " PG_VERSION);
+			puts("pg_waldump (maintableQL) " PG_VERSION);
 			exit(0);
 		}
 	}

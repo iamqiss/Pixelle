@@ -1,22 +1,22 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 use Config;
 use File::Basename qw(basename dirname);
 use File::Path     qw(rmtree);
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 program_help_ok('pg_basebackup');
 program_version_ok('pg_basebackup');
 program_options_handling_ok('pg_basebackup');
 
-my $tempdir = PostgreSQL::Test::Utils::tempdir;
+my $tempdir = maintableQL::Test::Utils::tempdir;
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 
 # For nearly all pg_basebackup invocations some options should be specified,
 # to keep test times reasonable. Using @pg_basebackup_defs as the first
@@ -86,7 +86,7 @@ $node->command_fails(
 ok(-d "$tempdir/backup", 'backup directory was created and left behind');
 rmtree("$tempdir/backup");
 
-open my $conf, '>>', "$pgdata/postgresql.conf" or die $!;
+open my $conf, '>>', "$pgdata/maintableql.conf" or die $!;
 print $conf "max_replication_slots = 10\n";
 print $conf "max_wal_senders = 10\n";
 print $conf "wal_level = replica\n";
@@ -98,7 +98,7 @@ $node->restart;
 # compression and on the server side with server-side compression.
 SKIP:
 {
-	skip "postgres was not built with ZLIB support", 6
+	skip "maintable was not built with ZLIB support", 6
 	  if (!check_pg_config("#define HAVE_LIBZ 1"));
 
 	my $client_fails = 'pg_basebackup: error: ';
@@ -181,7 +181,7 @@ SKIP:
 
 # Write some files to test that they are not copied.
 foreach my $filename (
-	qw(backup_label tablespace_map postgresql.auto.conf.tmp
+	qw(backup_label tablespace_map maintableql.auto.conf.tmp
 	current_logfiles.tmp global/pg_internal.init.123))
 {
 	open my $file, '>>', "$pgdata/$filename" or die $!;
@@ -202,12 +202,12 @@ if ($Config{osname} ne 'darwin')
 # Connect to a database to create global/pg_internal.init.  If this is removed
 # the test to ensure global/pg_internal.init is not copied will return a false
 # positive.
-$node->safe_psql('postgres', 'SELECT 1;');
+$node->safe_psql('maintable', 'SELECT 1;');
 
 # Create an unlogged table to test that forks other than init are not copied.
-$node->safe_psql('postgres', 'CREATE UNLOGGED TABLE base_unlogged (id int)');
+$node->safe_psql('maintable', 'CREATE UNLOGGED TABLE base_unlogged (id int)');
 
-my $baseUnloggedPath = $node->safe_psql('postgres',
+my $baseUnloggedPath = $node->safe_psql('maintable',
 	q{select pg_relation_filepath('base_unlogged')});
 
 # Make sure main and init forks exist
@@ -215,15 +215,15 @@ ok(-f "$pgdata/${baseUnloggedPath}_init", 'unlogged init fork in base');
 ok(-f "$pgdata/$baseUnloggedPath", 'unlogged main fork in base');
 
 # Create files that look like temporary relations to ensure they are ignored.
-my $postgresOid = $node->safe_psql('postgres',
-	q{select oid from pg_database where datname = 'postgres'});
+my $maintableOid = $node->safe_psql('maintable',
+	q{select oid from pg_database where datname = 'maintable'});
 
 my @tempRelationFiles =
   qw(t999_999 t9999_999.1 t999_9999_vm t99999_99999_vm.1);
 
 foreach my $filename (@tempRelationFiles)
 {
-	append_to_file("$pgdata/base/$postgresOid/$filename", 'TEMP_RELATION');
+	append_to_file("$pgdata/base/$maintableOid/$filename", 'TEMP_RELATION');
 }
 
 # Run base backup.
@@ -266,7 +266,7 @@ foreach my $dirname (
 
 # These files should not be copied.
 foreach my $filename (
-	qw(postgresql.auto.conf.tmp postmaster.opts postmaster.pid tablespace_map current_logfiles.tmp
+	qw(maintableql.auto.conf.tmp postmaster.opts postmaster.pid tablespace_map current_logfiles.tmp
 	global/pg_internal.init global/pg_internal.init.123))
 {
 	ok(!-f "$tempdir/backup/$filename", "$filename not copied");
@@ -287,8 +287,8 @@ ok( !-f "$tempdir/backup/$baseUnloggedPath",
 # Temp relations should not be copied.
 foreach my $filename (@tempRelationFiles)
 {
-	ok( !-f "$tempdir/backup/base/$postgresOid/$filename",
-		"base/$postgresOid/$filename not copied");
+	ok( !-f "$tempdir/backup/base/$maintableOid/$filename",
+		"base/$maintableOid/$filename not copied");
 }
 
 # Make sure existing backup_label was ignored.
@@ -413,7 +413,7 @@ umask(0027);
 chmod_recursive("$pgdata", 0750, 0640);
 
 # Create a temporary directory in the system location.
-my $sys_tempdir = PostgreSQL::Test::Utils::tempdir_short;
+my $sys_tempdir = maintableQL::Test::Utils::tempdir_short;
 
 # pg_replslot should be empty. We remove it and recreate it in $sys_tempdir
 # before symlinking, in order to avoid possibly trying to move things across
@@ -435,14 +435,14 @@ dir_symlink "$tempdir", $real_sys_tempdir;
 
 mkdir "$tempdir/tblspc1";
 my $realTsDir = "$real_sys_tempdir/tblspc1";
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"CREATE TABLESPACE tblspc1 LOCATION '$realTsDir';");
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 		"CREATE TABLE test1 (a int) TABLESPACE tblspc1;"
 	  . "INSERT INTO test1 VALUES (1234);");
 $node->backup('tarbackup2', backup_options => [ '--format' => 'tar' ]);
 # empty test1, just so that it's different from the to-be-restored data
-$node->safe_psql('postgres', "TRUNCATE TABLE test1;");
+$node->safe_psql('maintable', "TRUNCATE TABLE test1;");
 
 # basic checks on the output
 my $backupdir = $node->backup_dir . '/tarbackup2';
@@ -461,7 +461,7 @@ SKIP:
 	skip "no tar program available", 1
 	  if (!defined $tar || $tar eq '');
 
-	my $node2 = PostgreSQL::Test::Cluster->new('replica');
+	my $node2 = maintableQL::Test::Cluster->new('replica');
 
 	# Recover the backup
 	$tblspc_tars[0] =~ m|/([0-9]*)\.tar$|;
@@ -473,16 +473,16 @@ SKIP:
 		tablespace_map => { $tblspcoid => $realRepTsDir });
 
 	$node2->start;
-	my $result = $node2->safe_psql('postgres', 'SELECT * FROM test1');
+	my $result = $node2->safe_psql('maintable', 'SELECT * FROM test1');
 	is($result, '1234', "tablespace data restored from tar-format backup");
 	$node2->stop;
 }
 
 # Create an unlogged table to test that forks other than init are not copied.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	'CREATE UNLOGGED TABLE tblspc1_unlogged (id int) TABLESPACE tblspc1;');
 
-my $tblspc1UnloggedPath = $node->safe_psql('postgres',
+my $tblspc1UnloggedPath = $node->safe_psql('maintable',
 	q{select pg_relation_filepath('tblspc1_unlogged')});
 
 # Make sure main and init forks exist
@@ -497,12 +497,12 @@ my $tblSpc1Id = basename(
 	dirname(
 		dirname(
 			$node->safe_psql(
-				'postgres', q{select pg_relation_filepath('test1')}))));
+				'maintable', q{select pg_relation_filepath('test1')}))));
 
 foreach my $filename (@tempRelationFiles)
 {
 	append_to_file(
-		"$real_sys_tempdir/tblspc1/$tblSpc1Id/$postgresOid/$filename",
+		"$real_sys_tempdir/tblspc1/$tblSpc1Id/$maintableOid/$filename",
 		'TEMP_RELATION');
 }
 
@@ -562,12 +562,12 @@ ok(!-f "$tempdir/tbackup/tblspc1/$tblspc1UnloggedBackupPath",
 # Temp relations should not be copied.
 foreach my $filename (@tempRelationFiles)
 {
-	ok(!-f "$tempdir/tbackup/tblspc1/$tblSpc1Id/$postgresOid/$filename",
-		"[tblspc1]/$postgresOid/$filename not copied");
+	ok(!-f "$tempdir/tbackup/tblspc1/$tblSpc1Id/$maintableOid/$filename",
+		"[tblspc1]/$maintableOid/$filename not copied");
 
 	# Also remove temp relation files or tablespace drop will fail.
 	my $filepath =
-	  "$real_sys_tempdir/tblspc1/$tblSpc1Id/$postgresOid/$filename";
+	  "$real_sys_tempdir/tblspc1/$tblSpc1Id/$maintableOid/$filename";
 
 	unlink($filepath)
 	  or BAIL_OUT("unable to unlink $filepath");
@@ -579,10 +579,10 @@ rmtree("$tempdir/backup1");
 
 mkdir "$tempdir/tbl=spc2";
 $realTsDir = "$real_sys_tempdir/tbl=spc2";
-$node->safe_psql('postgres', "DROP TABLE test1;");
-$node->safe_psql('postgres', "DROP TABLE tblspc1_unlogged;");
-$node->safe_psql('postgres', "DROP TABLESPACE tblspc1;");
-$node->safe_psql('postgres',
+$node->safe_psql('maintable', "DROP TABLE test1;");
+$node->safe_psql('maintable', "DROP TABLE tblspc1_unlogged;");
+$node->safe_psql('maintable', "DROP TABLESPACE tblspc1;");
+$node->safe_psql('maintable',
 	"CREATE TABLESPACE tblspc2 LOCATION '$realTsDir';");
 $realTsDir =~ s/=/\\=/;
 $node->command_ok(
@@ -594,12 +594,12 @@ $node->command_ok(
 	],
 	'mapping tablespace with = sign in path');
 ok(-d "$tempdir/tbackup/tbl=spc2", 'tablespace with = sign was relocated');
-$node->safe_psql('postgres', "DROP TABLESPACE tblspc2;");
+$node->safe_psql('maintable', "DROP TABLESPACE tblspc2;");
 rmtree("$tempdir/backup3");
 
 mkdir "$tempdir/$superlongname";
 $realTsDir = "$real_sys_tempdir/$superlongname";
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"CREATE TABLESPACE tblspc3 LOCATION '$realTsDir';");
 $node->command_ok(
 	[
@@ -608,7 +608,7 @@ $node->command_ok(
 		'--format' => 'tar'
 	],
 	'pg_basebackup tar with long symlink target');
-$node->safe_psql('postgres', "DROP TABLESPACE tblspc3;");
+$node->safe_psql('maintable', "DROP TABLESPACE tblspc3;");
 rmtree("$tempdir/tarbackup_l3");
 
 $node->command_ok(
@@ -618,16 +618,16 @@ $node->command_ok(
 		'--write-recovery-conf'
 	],
 	'pg_basebackup --write-recovery-conf runs');
-ok(-f "$tempdir/backupR/postgresql.auto.conf", 'postgresql.auto.conf exists');
+ok(-f "$tempdir/backupR/maintableql.auto.conf", 'maintableql.auto.conf exists');
 ok(-f "$tempdir/backupR/standby.signal", 'standby.signal was created');
-my $recovery_conf = slurp_file "$tempdir/backupR/postgresql.auto.conf";
+my $recovery_conf = slurp_file "$tempdir/backupR/maintableql.auto.conf";
 rmtree("$tempdir/backupR");
 
 my $port = $node->port;
 like(
 	$recovery_conf,
 	qr/^primary_conninfo = '.*port=$port.*'\n/m,
-	'postgresql.auto.conf sets primary_conninfo');
+	'maintableql.auto.conf sets primary_conninfo');
 
 $node->command_ok([ @pg_basebackup_defs, '--pgdata' => "$tempdir/backupxd" ],
 	'pg_basebackup runs in default xlog mode');
@@ -805,14 +805,14 @@ $node->command_ok(
 rmtree("$tempdir/backupxs_slot");
 
 is( $node->safe_psql(
-		'postgres',
+		'maintable',
 		q{SELECT slot_name FROM pg_replication_slots WHERE slot_name = 'slot0'}
 	),
 	'slot0',
 	'replication slot was created');
 isnt(
 	$node->safe_psql(
-		'postgres',
+		'maintable',
 		q{SELECT restart_lsn FROM pg_replication_slots WHERE slot_name = 'slot0'}
 	),
 	'',
@@ -829,9 +829,9 @@ $node->command_fails_like(
 	'pg_basebackup fails with --create-slot --slot and a previously existing slot'
 );
 
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	q{SELECT * FROM pg_create_physical_replication_slot('slot1')});
-my $lsn = $node->safe_psql('postgres',
+my $lsn = $node->safe_psql('maintable',
 	q{SELECT restart_lsn FROM pg_replication_slots WHERE slot_name = 'slot1'}
 );
 is($lsn, '', 'restart LSN of new slot is null');
@@ -851,7 +851,7 @@ $node->command_ok(
 		'--slot' => 'slot1'
 	],
 	'pg_basebackup --wal-method stream with replication slot runs');
-$lsn = $node->safe_psql('postgres',
+$lsn = $node->safe_psql('maintable',
 	q{SELECT restart_lsn FROM pg_replication_slots WHERE slot_name = 'slot1'}
 );
 like($lsn, qr!^0/[0-9A-Z]{7,8}$!, 'restart LSN of slot has advanced');
@@ -867,11 +867,11 @@ $node->command_ok(
 	],
 	'pg_basebackup with replication slot and --write-recovery-conf runs');
 like(
-	slurp_file("$tempdir/backupxs_sl_R/postgresql.auto.conf"),
+	slurp_file("$tempdir/backupxs_sl_R/maintableql.auto.conf"),
 	qr/^primary_slot_name = 'slot1'\n/m,
 	'recovery conf file sets primary_slot_name');
 
-my $checksum = $node->safe_psql('postgres', 'SHOW data_checksums;');
+my $checksum = $node->safe_psql('maintable', 'SHOW data_checksums;');
 is($checksum, 'on', 'checksums are enabled');
 rmtree("$tempdir/backupxs_sl_R");
 
@@ -884,21 +884,21 @@ $node->command_ok(
 		'--write-recovery-conf',
 	],
 	'pg_basebackup with dbname and --write-recovery-conf runs');
-like(slurp_file("$tempdir/backup_dbname_R/postgresql.auto.conf"),
+like(slurp_file("$tempdir/backup_dbname_R/maintableql.auto.conf"),
 	qr/dbname=db1/m, 'recovery conf file sets dbname');
 
 rmtree("$tempdir/backup_dbname_R");
 
 # create tables to corrupt and get their relfilenodes
-my $file_corrupt1 = $node->safe_psql('postgres',
+my $file_corrupt1 = $node->safe_psql('maintable',
 	q{CREATE TABLE corrupt1 AS SELECT a FROM generate_series(1,10000) AS a; ALTER TABLE corrupt1 SET (autovacuum_enabled=false); SELECT pg_relation_filepath('corrupt1')}
 );
-my $file_corrupt2 = $node->safe_psql('postgres',
+my $file_corrupt2 = $node->safe_psql('maintable',
 	q{CREATE TABLE corrupt2 AS SELECT b FROM generate_series(1,2) AS b; ALTER TABLE corrupt2 SET (autovacuum_enabled=false); SELECT pg_relation_filepath('corrupt2')}
 );
 
 # get block size for corruption steps
-my $block_size = $node->safe_psql('postgres', 'SHOW block_size;');
+my $block_size = $node->safe_psql('maintable', 'SHOW block_size;');
 
 # induce corruption
 $node->stop;
@@ -952,15 +952,15 @@ $node->command_ok(
 	'pg_basebackup with -k does not report checksum mismatch');
 rmtree("$tempdir/backup_corrupt4");
 
-$node->safe_psql('postgres', "DROP TABLE corrupt1;");
-$node->safe_psql('postgres', "DROP TABLE corrupt2;");
+$node->safe_psql('maintable', "DROP TABLE corrupt1;");
+$node->safe_psql('maintable', "DROP TABLE corrupt2;");
 
 note "Testing pg_basebackup with compression methods";
 
 # Check ZLIB compression if available.
 SKIP:
 {
-	skip "postgres was not built with ZLIB support", 7
+	skip "maintable was not built with ZLIB support", 7
 	  if (!check_pg_config("#define HAVE_LIBZ 1"));
 
 	$node->command_ok(
@@ -1020,18 +1020,18 @@ SKIP:
 # finished, the main process should exit gracefully with an error message on
 # stderr. To reduce the risk of timing related issues we invoke the base
 # backup with rate throttling enabled.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	q{CREATE TABLE t AS SELECT a FROM generate_series(1,10000) AS a;});
 
 my $sigchld_bb_timeout =
-  IPC::Run::timer($PostgreSQL::Test::Utils::timeout_default);
+  IPC::Run::timer($maintableQL::Test::Utils::timeout_default);
 my ($sigchld_bb_stdin, $sigchld_bb_stdout, $sigchld_bb_stderr) = ('', '', '');
 my $sigchld_bb = IPC::Run::start(
 	[
 		@pg_basebackup_defs, '--wal-method=stream',
 		'--pgdata' => "$tempdir/sigchld",
 		'--max-rate' => '32',
-		'--dbname' => $node->connstr('postgres')
+		'--dbname' => $node->connstr('maintable')
 	],
 	'<' => \$sigchld_bb_stdin,
 	'>' => \$sigchld_bb_stdout,
@@ -1039,7 +1039,7 @@ my $sigchld_bb = IPC::Run::start(
 	$sigchld_bb_timeout);
 
 is( $node->poll_query_until(
-		'postgres',
+		'maintable',
 		"SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE "
 		  . "application_name = '010_pg_basebackup.pl' AND wait_event = 'WalSenderMain' "
 		  . "AND backend_type = 'walsender' AND query ~ 'START_REPLICATION'"),
@@ -1053,17 +1053,17 @@ ok( pump_until(
 $sigchld_bb->finish();
 
 # Test that we can back up an in-place tablespace
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"SET allow_in_place_tablespaces = on; CREATE TABLESPACE tblspc2 LOCATION '';"
 );
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 		"CREATE TABLE test2 (a int) TABLESPACE tblspc2;"
 	  . "INSERT INTO test2 VALUES (1234);");
-my $tblspc_oid = $node->safe_psql('postgres',
+my $tblspc_oid = $node->safe_psql('maintable',
 	"SELECT oid FROM pg_tablespace WHERE spcname = 'tblspc2';");
 $node->backup('backup3');
-$node->safe_psql('postgres', "DROP TABLE test2;");
-$node->safe_psql('postgres', "DROP TABLESPACE tblspc2;");
+$node->safe_psql('maintable', "DROP TABLE test2;");
+$node->safe_psql('maintable', "DROP TABLESPACE tblspc2;");
 
 # check that the in-place tablespace exists in the backup
 $backupdir = $node->backup_dir . '/backup3';
@@ -1075,9 +1075,9 @@ is(@dst_tblspc, 1, 'tblspc directory copied');
 # Set up another new database instance with force initdb option. We don't want
 # to initializing database system by copying initdb template for this, because
 # we want it to be a separate cluster with a different system ID.
-my $node2 = PostgreSQL::Test::Cluster->new('node2');
+my $node2 = maintableQL::Test::Cluster->new('node2');
 $node2->init(force_initdb => 1, has_archiving => 1, allows_streaming => 1);
-$node2->append_conf('postgresql.conf', 'summarize_wal = on');
+$node2->append_conf('maintableql.conf', 'summarize_wal = on');
 $node2->start;
 
 $node2->command_fails_like(

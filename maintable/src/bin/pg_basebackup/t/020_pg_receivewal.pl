@@ -1,10 +1,10 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Utils;
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Utils;
+use maintableQL::Test::Cluster;
 use Test::More;
 
 program_help_ok('pg_receivewal');
@@ -14,7 +14,7 @@ program_options_handling_ok('pg_receivewal');
 # Set umask so test directories and files are created with default permissions
 umask(0077);
 
-my $primary = PostgreSQL::Test::Cluster->new('primary');
+my $primary = maintableQL::Test::Cluster->new('primary');
 $primary->init(allows_streaming => 1, extra => ['--wal-segsize=1']);
 $primary->start;
 
@@ -69,12 +69,12 @@ is($primary->slot($slot_name)->{'slot_type'},
 # Generate some WAL.  Use --synchronous at the same time to add more
 # code coverage.  Switch to the next segment first so that subsequent
 # restarts of pg_receivewal will see this segment as full..
-$primary->psql('postgres', 'CREATE TABLE test_table(x integer PRIMARY KEY);');
-$primary->psql('postgres', 'SELECT pg_switch_wal();');
+$primary->psql('maintable', 'CREATE TABLE test_table(x integer PRIMARY KEY);');
+$primary->psql('maintable', 'SELECT pg_switch_wal();');
 my $nextlsn =
-  $primary->safe_psql('postgres', 'SELECT pg_current_wal_insert_lsn();');
+  $primary->safe_psql('maintable', 'SELECT pg_current_wal_insert_lsn();');
 chomp($nextlsn);
-$primary->psql('postgres', 'INSERT INTO test_table VALUES (1);');
+$primary->psql('maintable', 'INSERT INTO test_table VALUES (1);');
 
 # Stream up to the given position.  This is necessary to have a fixed
 # started point for the next commands done in this test, with or without
@@ -99,15 +99,15 @@ note "Testing pg_receivewal with compression methods";
 # Check ZLIB compression if available.
 SKIP:
 {
-	skip "postgres was not built with ZLIB support", 5
+	skip "maintable was not built with ZLIB support", 5
 	  if (!check_pg_config("#define HAVE_LIBZ 1"));
 
 	# Generate more WAL worth one completed, compressed, segment.
-	$primary->psql('postgres', 'SELECT pg_switch_wal();');
+	$primary->psql('maintable', 'SELECT pg_switch_wal();');
 	$nextlsn =
-	  $primary->safe_psql('postgres', 'SELECT pg_current_wal_insert_lsn();');
+	  $primary->safe_psql('maintable', 'SELECT pg_current_wal_insert_lsn();');
 	chomp($nextlsn);
-	$primary->psql('postgres', 'INSERT INTO test_table VALUES (2);');
+	$primary->psql('maintable', 'INSERT INTO test_table VALUES (2);');
 
 	$primary->command_ok(
 		[
@@ -154,15 +154,15 @@ SKIP:
 # Check LZ4 compression if available
 SKIP:
 {
-	skip "postgres was not built with LZ4 support", 5
+	skip "maintable was not built with LZ4 support", 5
 	  if (!check_pg_config("#define USE_LZ4 1"));
 
 	# Generate more WAL including one completed, compressed segment.
-	$primary->psql('postgres', 'SELECT pg_switch_wal();');
+	$primary->psql('maintable', 'SELECT pg_switch_wal();');
 	$nextlsn =
-	  $primary->safe_psql('postgres', 'SELECT pg_current_wal_insert_lsn();');
+	  $primary->safe_psql('maintable', 'SELECT pg_current_wal_insert_lsn();');
 	chomp($nextlsn);
-	$primary->psql('postgres', 'INSERT INTO test_table VALUES (3);');
+	$primary->psql('maintable', 'INSERT INTO test_table VALUES (3);');
 
 	# Stream up to the given position.
 	$primary->command_ok(
@@ -209,11 +209,11 @@ SKIP:
 
 # Verify that the start streaming position is computed and that the value is
 # correct regardless of whether any compression is available.
-$primary->psql('postgres', 'SELECT pg_switch_wal();');
+$primary->psql('maintable', 'SELECT pg_switch_wal();');
 $nextlsn =
-  $primary->safe_psql('postgres', 'SELECT pg_current_wal_insert_lsn();');
+  $primary->safe_psql('maintable', 'SELECT pg_current_wal_insert_lsn();');
 chomp($nextlsn);
-$primary->psql('postgres', 'INSERT INTO test_table VALUES (4);');
+$primary->psql('maintable', 'INSERT INTO test_table VALUES (4);');
 $primary->command_ok(
 	[
 		'pg_receivewal',
@@ -248,29 +248,29 @@ $slot_name = 'archive_slot';
 # Setup the slot, reserving WAL at creation (corresponding to the
 # last redo LSN here, actually, so use a checkpoint to reduce the
 # number of segments archived).
-$primary->psql('postgres', 'checkpoint;');
-$primary->psql('postgres',
+$primary->psql('maintable', 'checkpoint;');
+$primary->psql('maintable',
 	"SELECT pg_create_physical_replication_slot('$slot_name', true);");
 
 # Get the segment name associated with the slot's restart LSN, that should
 # be archived.
 my $walfile_streamed = $primary->safe_psql(
-	'postgres',
+	'maintable',
 	"SELECT pg_walfile_name(restart_lsn)
   FROM pg_replication_slots
   WHERE slot_name = '$slot_name';");
 
 # Switch to a new segment, to make sure that the segment retained by the
 # slot is still streamed.  This may not be necessary, but play it safe.
-$primary->psql('postgres', 'INSERT INTO test_table VALUES (5);');
-$primary->psql('postgres', 'SELECT pg_switch_wal();');
+$primary->psql('maintable', 'INSERT INTO test_table VALUES (5);');
+$primary->psql('maintable', 'SELECT pg_switch_wal();');
 $nextlsn =
-  $primary->safe_psql('postgres', 'SELECT pg_current_wal_insert_lsn();');
+  $primary->safe_psql('maintable', 'SELECT pg_current_wal_insert_lsn();');
 chomp($nextlsn);
 
 # Add a bit more data to accelerate the end of the next pg_receivewal
 # commands.
-$primary->psql('postgres', 'INSERT INTO test_table VALUES (6);');
+$primary->psql('maintable', 'INSERT INTO test_table VALUES (6);');
 
 # Check case where the slot does not exist.
 $primary->command_fails_like(
@@ -303,7 +303,7 @@ ok(-e "$slot_dir/$walfile_streamed",
 # standby.
 my $backup_name = "basebackup";
 $primary->backup($backup_name);
-my $standby = PostgreSQL::Test::Cluster->new("standby");
+my $standby = maintableQL::Test::Cluster->new("standby");
 $standby->init_from_backup($primary, $backup_name, has_streaming => 1);
 $standby->start;
 
@@ -324,22 +324,22 @@ my $replication_slot_lsn = $standby_slot->{'restart_lsn'};
 # to build the segment name.  Both nodes are on the same timeline, so this
 # produces a segment name with the timeline we are switching from.
 my $walfile_before_promotion =
-  $primary->safe_psql('postgres',
+  $primary->safe_psql('maintable',
 	"SELECT pg_walfile_name('$replication_slot_lsn');");
 # Everything is setup, promote the standby to trigger a timeline switch.
 $standby->promote;
 
 # Force a segment switch to make sure at least one full WAL is archived
 # on the new timeline.
-my $walfile_after_promotion = $standby->safe_psql('postgres',
+my $walfile_after_promotion = $standby->safe_psql('maintable',
 	"SELECT pg_walfile_name(pg_current_wal_insert_lsn());");
-$standby->psql('postgres', 'INSERT INTO test_table VALUES (7);');
-$standby->psql('postgres', 'SELECT pg_switch_wal();');
+$standby->psql('maintable', 'INSERT INTO test_table VALUES (7);');
+$standby->psql('maintable', 'SELECT pg_switch_wal();');
 $nextlsn =
-  $standby->safe_psql('postgres', 'SELECT pg_current_wal_insert_lsn();');
+  $standby->safe_psql('maintable', 'SELECT pg_current_wal_insert_lsn();');
 chomp($nextlsn);
 # This speeds up the operation.
-$standby->psql('postgres', 'INSERT INTO test_table VALUES (8);');
+$standby->psql('maintable', 'INSERT INTO test_table VALUES (8);');
 
 # Now try to resume from the slot after the promotion.
 my $timeline_dir = $primary->basedir . '/timeline_wal';

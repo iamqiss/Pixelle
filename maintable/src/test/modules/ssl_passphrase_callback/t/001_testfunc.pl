@@ -1,14 +1,14 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
 use File::Copy;
 
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use Test::More;
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Cluster;
 
 unless (($ENV{with_ssl} || "") eq 'openssl')
 {
@@ -19,13 +19,13 @@ my $rot13pass = "SbbOnE1";
 
 # see the Makefile for how the certificate and key have been generated
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init;
-$node->append_conf('postgresql.conf',
+$node->append_conf('maintableql.conf',
 	"ssl_passphrase.passphrase = '$rot13pass'");
-$node->append_conf('postgresql.conf',
+$node->append_conf('maintableql.conf',
 	"shared_preload_libraries = 'ssl_passphrase_func'");
-$node->append_conf('postgresql.conf', "ssl = 'on'");
+$node->append_conf('maintableql.conf', "ssl = 'on'");
 
 my $ddir = $node->data_dir;
 
@@ -37,14 +37,14 @@ chmod 0600, "$ddir/server.key" or die $!;
 $node->start;
 
 # if the server is running we must have successfully transformed the passphrase
-ok(-e "$ddir/postmaster.pid", "postgres started");
+ok(-e "$ddir/postmaster.pid", "maintable started");
 
 $node->stop('fast');
 
 # should get a warning if ssl_passphrase_command is set
 my $log = $node->rotate_logfile();
 
-$node->append_conf('postgresql.conf',
+$node->append_conf('maintableql.conf',
 	"ssl_passphrase_command = 'echo spl0tz'");
 
 $node->start;
@@ -59,10 +59,10 @@ like(
 	"ssl_passphrase_command set warning");
 
 # set the wrong passphrase
-$node->append_conf('postgresql.conf', "ssl_passphrase.passphrase = 'blurfl'");
+$node->append_conf('maintableql.conf', "ssl_passphrase.passphrase = 'blurfl'");
 
 # try to start the server again
-my $ret = PostgreSQL::Test::Utils::system_log(
+my $ret = maintableQL::Test::Utils::system_log(
 	'pg_ctl',
 	'--pgdata' => $node->data_dir,
 	'--log' => $node->logfile,
@@ -71,7 +71,7 @@ my $ret = PostgreSQL::Test::Utils::system_log(
 
 # with a bad passphrase the server should not start
 ok($ret, "pg_ctl fails with bad passphrase");
-ok(!-e "$ddir/postmaster.pid", "postgres not started with bad passphrase");
+ok(!-e "$ddir/postmaster.pid", "maintable not started with bad passphrase");
 
 # just in case
 $node->stop('fast');

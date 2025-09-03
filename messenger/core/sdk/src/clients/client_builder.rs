@@ -17,35 +17,35 @@
  */
 
 use crate::client_wrappers::client_wrapper::ClientWrapper;
-use crate::clients::client::IggyClient;
+use crate::clients::client::MessengerClient;
 use crate::http::http_client::HttpClient;
 use crate::prelude::{
-    AutoLogin, EncryptorKind, HttpClientConfigBuilder, IggyDuration, IggyError, Partitioner,
+    AutoLogin, EncryptorKind, HttpClientConfigBuilder, MessengerDuration, MessengerError, Partitioner,
     QuicClientConfigBuilder, TcpClientConfigBuilder,
 };
 use crate::quic::quic_client::QuicClient;
 use crate::tcp::tcp_client::TcpClient;
-use iggy_common::{ConnectionStringUtils, TransportProtocol};
+use messenger_common::{ConnectionStringUtils, TransportProtocol};
 use std::sync::Arc;
 use tracing::error;
 
-/// The builder for the `IggyClient` instance, which allows to configure and provide custom implementations for the partitioner, encryptor or message handler.
+/// The builder for the `MessengerClient` instance, which allows to configure and provide custom implementations for the partitioner, encryptor or message handler.
 #[derive(Debug, Default)]
-pub struct IggyClientBuilder {
+pub struct MessengerClientBuilder {
     client: Option<ClientWrapper>,
     partitioner: Option<Arc<dyn Partitioner>>,
     encryptor: Option<Arc<EncryptorKind>>,
 }
 
-impl IggyClientBuilder {
-    /// Creates a new `IggyClientBuilder`.
-    /// This is not enough to build the `IggyClient` instance. You need to provide the client configuration or the client implementation for the specific transport.
+impl MessengerClientBuilder {
+    /// Creates a new `MessengerClientBuilder`.
+    /// This is not enough to build the `MessengerClient` instance. You need to provide the client configuration or the client implementation for the specific transport.
     pub fn new() -> Self {
-        IggyClientBuilder::default()
+        MessengerClientBuilder::default()
     }
 
-    /// Creates a new `IggyClientBuilder` from the provided connection string.
-    pub fn from_connection_string(connection_string: &str) -> Result<Self, IggyError> {
+    /// Creates a new `MessengerClientBuilder` from the provided connection string.
+    pub fn from_connection_string(connection_string: &str) -> Result<Self, MessengerError> {
         let mut builder = Self::new();
 
         match ConnectionStringUtils::parse_protocol(connection_string)? {
@@ -117,24 +117,24 @@ impl IggyClientBuilder {
         }
     }
 
-    /// Build the `IggyClient` instance.
+    /// Build the `MessengerClient` instance.
     /// This method returns an error if the client is not provided.
-    /// If the client is provided, it creates the `IggyClient` instance with the provided configuration.
+    /// If the client is provided, it creates the `MessengerClient` instance with the provided configuration.
     /// To provide the client configuration, use the `with_tcp`, `with_quic` or `with_http` methods.
-    pub fn build(self) -> Result<IggyClient, IggyError> {
+    pub fn build(self) -> Result<MessengerClient, MessengerError> {
         let Some(client) = self.client else {
             error!("Client is not provided");
-            return Err(IggyError::InvalidConfiguration);
+            return Err(MessengerError::InvalidConfiguration);
         };
 
-        Ok(IggyClient::create(client, self.partitioner, self.encryptor))
+        Ok(MessengerClient::create(client, self.partitioner, self.encryptor))
     }
 }
 
 #[derive(Debug, Default)]
 pub struct TcpClientBuilder {
     config: TcpClientConfigBuilder,
-    parent_builder: IggyClientBuilder,
+    parent_builder: MessengerClientBuilder,
 }
 
 impl TcpClientBuilder {
@@ -159,7 +159,7 @@ impl TcpClientBuilder {
     }
 
     /// Sets the interval between retries when connecting to the server.
-    pub fn with_reconnection_interval(mut self, reconnection_interval: IggyDuration) -> Self {
+    pub fn with_reconnection_interval(mut self, reconnection_interval: MessengerDuration) -> Self {
         self.config = self
             .config
             .with_reconnection_interval(reconnection_interval);
@@ -198,8 +198,8 @@ impl TcpClientBuilder {
         self
     }
 
-    /// Builds the parent `IggyClient` with TCP configuration.
-    pub fn build(self) -> Result<IggyClient, IggyError> {
+    /// Builds the parent `MessengerClient` with TCP configuration.
+    pub fn build(self) -> Result<MessengerClient, MessengerError> {
         let client = TcpClient::create(Arc::new(self.config.build()?))?;
         let client = self
             .parent_builder
@@ -212,7 +212,7 @@ impl TcpClientBuilder {
 #[derive(Debug, Default)]
 pub struct QuicClientBuilder {
     config: QuicClientConfigBuilder,
-    parent_builder: IggyClientBuilder,
+    parent_builder: MessengerClientBuilder,
 }
 
 impl QuicClientBuilder {
@@ -237,7 +237,7 @@ impl QuicClientBuilder {
     }
 
     /// Sets the interval between retries when connecting to the server.
-    pub fn with_reconnection_interval(mut self, reconnection_interval: IggyDuration) -> Self {
+    pub fn with_reconnection_interval(mut self, reconnection_interval: MessengerDuration) -> Self {
         self.config = self
             .config
             .with_reconnection_interval(reconnection_interval);
@@ -250,8 +250,8 @@ impl QuicClientBuilder {
         self
     }
 
-    /// Builds the parent `IggyClient` with QUIC configuration.
-    pub fn build(self) -> Result<IggyClient, IggyError> {
+    /// Builds the parent `MessengerClient` with QUIC configuration.
+    pub fn build(self) -> Result<MessengerClient, MessengerError> {
         let client = QuicClient::create(Arc::new(self.config.build()))?;
         let client = self
             .parent_builder
@@ -264,7 +264,7 @@ impl QuicClientBuilder {
 #[derive(Debug, Default)]
 pub struct HttpClientBuilder {
     config: HttpClientConfigBuilder,
-    parent_builder: IggyClientBuilder,
+    parent_builder: MessengerClientBuilder,
 }
 
 impl HttpClientBuilder {
@@ -280,8 +280,8 @@ impl HttpClientBuilder {
         self
     }
 
-    /// Builds the parent `IggyClient` with HTTP configuration.
-    pub fn build(self) -> Result<IggyClient, IggyError> {
+    /// Builds the parent `MessengerClient` with HTTP configuration.
+    pub fn build(self) -> Result<MessengerClient, MessengerError> {
         let client = HttpClient::create(Arc::new(self.config.build()))?;
         let client = self
             .parent_builder
@@ -298,13 +298,13 @@ mod tests {
     #[test]
     fn should_fail_with_empty_connection_string() {
         let value = "";
-        let client_builder = IggyClientBuilder::from_connection_string(value);
+        let client_builder = MessengerClientBuilder::from_connection_string(value);
         assert!(client_builder.is_err());
     }
 
     #[test]
     fn should_fail_without_username() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -313,13 +313,13 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client_builder = IggyClientBuilder::from_connection_string(&value);
+        let client_builder = MessengerClientBuilder::from_connection_string(&value);
         assert!(client_builder.is_err());
     }
 
     #[test]
     fn should_fail_without_password() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -328,13 +328,13 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client_builder = IggyClientBuilder::from_connection_string(&value);
+        let client_builder = MessengerClientBuilder::from_connection_string(&value);
         assert!(client_builder.is_err());
     }
 
     #[test]
     fn should_fail_without_server_address() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "";
         let port = "1234";
@@ -343,13 +343,13 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client_builder = IggyClientBuilder::from_connection_string(&value);
+        let client_builder = MessengerClientBuilder::from_connection_string(&value);
         assert!(client_builder.is_err());
     }
 
     #[test]
     fn should_fail_without_port() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "";
@@ -358,7 +358,7 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client_builder = IggyClientBuilder::from_connection_string(&value);
+        let client_builder = MessengerClientBuilder::from_connection_string(&value);
         assert!(client_builder.is_err());
     }
 
@@ -373,13 +373,13 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client_builder = IggyClientBuilder::from_connection_string(&value);
+        let client_builder = MessengerClientBuilder::from_connection_string(&value);
         assert!(client_builder.is_err());
     }
 
     #[test]
     fn should_succeed_with_default_prefix() {
-        let default_connection_string_prefix = "iggy://";
+        let default_connection_string_prefix = "messenger://";
         let server_address = "127.0.0.1";
         let port = "1234";
         let username = "user";
@@ -387,13 +387,13 @@ mod tests {
         let value = format!(
             "{default_connection_string_prefix}{username}:{password}@{server_address}:{port}"
         );
-        let client_builder = IggyClientBuilder::from_connection_string(&value);
+        let client_builder = MessengerClientBuilder::from_connection_string(&value);
         assert!(client_builder.is_ok());
     }
 
     #[test]
     fn should_succeed_with_tcp_protocol() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -402,25 +402,25 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client_builder = IggyClientBuilder::from_connection_string(&value);
+        let client_builder = MessengerClientBuilder::from_connection_string(&value);
         assert!(client_builder.is_ok());
     }
 
     #[test]
     fn should_succeed_with_tcp_protocol_using_pat() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "1234";
-        let pat = "iggypat-1234567890abcdef";
+        let pat = "messengerpat-1234567890abcdef";
         let value = format!("{connection_string_prefix}{protocol}://{pat}@{server_address}:{port}");
-        let client_builder = IggyClientBuilder::from_connection_string(&value);
+        let client_builder = MessengerClientBuilder::from_connection_string(&value);
         assert!(client_builder.is_ok());
     }
 
     #[tokio::test]
     async fn should_succeed_with_quic_protocol() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Quic;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -429,25 +429,25 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client_builder = IggyClientBuilder::from_connection_string(&value);
+        let client_builder = MessengerClientBuilder::from_connection_string(&value);
         assert!(client_builder.is_ok());
     }
 
     #[tokio::test]
     async fn should_succeed_with_quic_protocol_using_pat() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Quic;
         let server_address = "127.0.0.1";
         let port = "1234";
-        let pat = "iggypat-1234567890abcdef";
+        let pat = "messengerpat-1234567890abcdef";
         let value = format!("{connection_string_prefix}{protocol}://{pat}@{server_address}:{port}");
-        let client_builder = IggyClientBuilder::from_connection_string(&value);
+        let client_builder = MessengerClientBuilder::from_connection_string(&value);
         assert!(client_builder.is_ok());
     }
 
     #[test]
     fn should_succeed_with_http_protocol() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Http;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -456,19 +456,19 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client_builder = IggyClientBuilder::from_connection_string(&value);
+        let client_builder = MessengerClientBuilder::from_connection_string(&value);
         assert!(client_builder.is_ok());
     }
 
     #[test]
     fn should_succeed_with_http_protocol_with_pat() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Http;
         let server_address = "127.0.0.1";
         let port = "1234";
-        let pat = "iggypat-1234567890abcdef";
+        let pat = "messengerpat-1234567890abcdef";
         let value = format!("{connection_string_prefix}{protocol}://{pat}@{server_address}:{port}");
-        let client_builder = IggyClientBuilder::from_connection_string(&value);
+        let client_builder = MessengerClientBuilder::from_connection_string(&value);
         assert!(client_builder.is_ok());
     }
 }

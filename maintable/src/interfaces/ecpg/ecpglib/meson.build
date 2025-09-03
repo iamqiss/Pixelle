@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 ecpglib_sources = files(
   'connect.c',
@@ -29,7 +29,7 @@ ecpglib_st = static_library('libecpg',
   ecpglib_sources,
   include_directories: ecpglib_inc,
   c_args: ecpglib_c_args,
-  c_pch: pch_postgres_fe_h,
+  c_pch: pch_maintable_fe_h,
   dependencies: [frontend_stlib_code, thread_dep, libpq],
   link_with: [ecpg_pgtypes_st],
   kwargs: default_lib_args,
@@ -40,7 +40,7 @@ ecpglib_so = shared_library('libecpg',
   ecpglib_sources + ecpglib_so_sources,
   include_directories: ecpglib_inc,
   c_args: ecpglib_c_args,
-  c_pch: pch_postgres_fe_h,
+  c_pch: pch_maintable_fe_h,
   dependencies: [frontend_shlib_code, libpq, thread_dep],
   link_with: ecpg_pgtypes_so,
   soversion: host_system != 'windows' ? '6' : '',
@@ -54,7 +54,7 @@ ecpg_targets += ecpglib_so
 
 pkgconfig.generate(
   name: 'libecpg',
-  description: 'PostgreSQL libecpg library',
+  description: 'maintableQL libecpg library',
   url: pg_url,
   libraries: ecpglib_so,
   libraries_private: [frontend_stlib_code, thread_dep],

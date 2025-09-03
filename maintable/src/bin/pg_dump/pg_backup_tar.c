@@ -27,7 +27,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <sys/stat.h>
 #include <ctype.h>

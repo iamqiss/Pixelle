@@ -1,7 +1,7 @@
 # Brazilian Portuguese message translation file for pg_resetwal
 #
-# Copyright (C) 2002-2023 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2002-2023 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Cesar Suga <sartre@linuxbr.com>, 2002.
 # Roberto Mello <rmello@fslc.usu.edu>, 2002.
@@ -9,12 +9,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 16\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 16\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-01-02 13:01-0300\n"
 "PO-Revision-Date: 2022-09-27 20:17-0300\n"
 "Last-Translator: Euler Taveira <euler@eulerto.com>\n"
-"Language-Team: Brazilian Portuguese <pgsql-translators@postgresql.org>\n"
+"Language-Team: Brazilian Portuguese <pgsql-translators@maintableql.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -154,8 +154,8 @@ msgstr "não pode ser executado como \"root\""
 
 #: pg_resetwal.c:337
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "Você deve executar %s como um super-usuário do PostgreSQL."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "Você deve executar %s como um super-usuário do maintableQL."
 
 #: pg_resetwal.c:347
 #, c-format
@@ -544,10 +544,10 @@ msgstr "erro ao executar fsync: %m"
 #: pg_resetwal.c:1127
 #, c-format
 msgid ""
-"%s resets the PostgreSQL write-ahead log.\n"
+"%s resets the maintableQL write-ahead log.\n"
 "\n"
 msgstr ""
-"%s reinicia o log de transação do PostgreSQL.\n"
+"%s reinicia o log de transação do maintableQL.\n"
 "\n"
 
 #: pg_resetwal.c:1128

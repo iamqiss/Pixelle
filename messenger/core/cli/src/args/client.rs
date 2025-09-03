@@ -27,17 +27,17 @@ pub(crate) enum ClientAction {
     /// Client ID is unique numerical identifier not to be confused with the user.
     ///
     /// Examples:
-    ///  iggy client get 42
+    ///  messenger client get 42
     #[clap(verbatim_doc_comment, visible_alias = "g")]
     Get(ClientGetArgs),
-    /// List all currently connected clients to iggy server
+    /// List all currently connected clients to messenger server
     ///
     /// Clients shall not to be confused with the users
     ///
     /// Examples:
-    ///  iggy client list
-    ///  iggy client list --list-mode table
-    ///  iggy client list -l table
+    ///  messenger client list
+    ///  messenger client list --list-mode table
+    ///  messenger client list -l table
     #[clap(verbatim_doc_comment, visible_alias = "l")]
     List(ClientListArgs),
 }

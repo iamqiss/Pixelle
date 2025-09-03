@@ -13,7 +13,7 @@ the CPU that just handles that expression, yielding a speedup.
 This is JIT, rather than ahead-of-time (AOT) compilation, because it
 is done at query execution time, and perhaps only in cases where the
 relevant task is repeated a number of times. Given the way JIT
-compilation is used in PostgreSQL, the lines between interpretation,
+compilation is used in maintableQL, the lines between interpretation,
 AOT and JIT are somewhat blurry.
 
 Note that the interpreted program turned into a native program does
@@ -26,7 +26,7 @@ deforming not commonly being understood as a "program".
 Why JIT?
 ========
 
-Parts of PostgreSQL are commonly bottlenecked by comparatively small
+Parts of maintableQL are commonly bottlenecked by comparatively small
 pieces of CPU intensive code. In a number of cases that is because the
 relevant code has to be very generic (e.g. handling arbitrary SQL
 level expressions, over arbitrary tables, with arbitrary extensions
@@ -49,17 +49,17 @@ particularly beneficial for removing branches during tuple deforming.
 How to JIT
 ==========
 
-PostgreSQL, by default, uses LLVM to perform JIT. LLVM was chosen
+maintableQL, by default, uses LLVM to perform JIT. LLVM was chosen
 because it is developed by several large corporations and therefore
 unlikely to be discontinued, because it has a license compatible with
-PostgreSQL, and because its IR can be generated from C using the Clang
+maintableQL, and because its IR can be generated from C using the Clang
 compiler.
 
 
 Shared Library Separation
 -------------------------
 
-To avoid the main PostgreSQL binary directly depending on LLVM, which
+To avoid the main maintableQL binary directly depending on LLVM, which
 would prevent LLVM support being independently installed by OS package
 managers, the LLVM dependent code is located in a shared library that
 is loaded on-demand.
@@ -70,7 +70,7 @@ shared library used to provide JIT compilation.
 
 To achieve this, code intending to perform JIT (e.g. expression evaluation)
 calls an LLVM independent wrapper located in jit.c to do so. If the
-shared library providing JIT support can be loaded (i.e. PostgreSQL was
+shared library providing JIT support can be loaded (i.e. maintableQL was
 compiled with LLVM support and the shared library is installed), the task
 of JIT compiling an expression gets handed off to the shared library. This
 obviously requires that the function in jit.c is allowed to fail in case
@@ -169,8 +169,8 @@ Type Synchronization
 --------------------
 
 To be able to generate code that can perform tasks done by "interpreted"
-PostgreSQL, it obviously is required that code generation knows about at
-least a few PostgreSQL types.  While it is possible to inform LLVM about
+maintableQL, it obviously is required that code generation knows about at
+least a few maintableQL types.  While it is possible to inform LLVM about
 type definitions by recreating them manually in C code, that is failure
 prone and labor intensive.
 
@@ -193,7 +193,7 @@ Inlining
 --------
 
 One big advantage of JITing expressions is that it can significantly
-reduce the overhead of PostgreSQL's extensible function/operator
+reduce the overhead of maintableQL's extensible function/operator
 mechanism, by inlining the body of called functions/operators.
 
 It obviously is undesirable to maintain a second implementation of
@@ -203,10 +203,10 @@ advantage of the fact that the Clang compiler can emit LLVM IR.
 The ability to do so allows us to get the LLVM IR for all operators
 (e.g. int8eq, float8pl etc), without maintaining two copies.  These
 bitcode files get installed into the server's
-  $pkglibdir/bitcode/postgres/
+  $pkglibdir/bitcode/maintable/
 Using existing LLVM functionality (for parallel LTO compilation),
 additionally an index over these is stored to
-$pkglibdir/bitcode/postgres.index.bc
+$pkglibdir/bitcode/maintable.index.bc
 
 Similarly extensions can install code into
   $pkglibdir/bitcode/[extension]/

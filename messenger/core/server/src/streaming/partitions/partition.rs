@@ -21,12 +21,12 @@ use crate::streaming::deduplication::message_deduplicator::MessageDeduplicator;
 use crate::streaming::segments::*;
 use crate::streaming::storage::SystemStorage;
 use dashmap::DashMap;
-use iggy_common::ConsumerKind;
-use iggy_common::IggyByteSize;
-use iggy_common::IggyDuration;
-use iggy_common::IggyExpiry;
-use iggy_common::IggyTimestamp;
-use iggy_common::Sizeable;
+use messenger_common::ConsumerKind;
+use messenger_common::MessengerByteSize;
+use messenger_common::MessengerDuration;
+use messenger_common::MessengerExpiry;
+use messenger_common::MessengerTimestamp;
+use messenger_common::Sizeable;
 use std::fmt;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicU32, AtomicU64, Ordering};
@@ -43,10 +43,10 @@ pub struct Partition {
     pub current_offset: u64,
     pub message_deduplicator: Option<MessageDeduplicator>,
     pub unsaved_messages_count: u32,
-    pub unsaved_messages_size: IggyByteSize,
+    pub unsaved_messages_size: MessengerByteSize,
     pub should_increment_offset: bool,
-    pub created_at: IggyTimestamp,
-    pub avg_timestamp_delta: IggyDuration,
+    pub created_at: MessengerTimestamp,
+    pub avg_timestamp_delta: MessengerDuration,
     pub messages_count_of_parent_stream: Arc<AtomicU64>,
     pub messages_count_of_parent_topic: Arc<AtomicU64>,
     pub messages_count: Arc<AtomicU64>,
@@ -54,7 +54,7 @@ pub struct Partition {
     pub size_of_parent_topic: Arc<AtomicU64>,
     pub size_bytes: Arc<AtomicU64>,
     pub segments_count_of_parent_stream: Arc<AtomicU32>,
-    pub(crate) message_expiry: IggyExpiry,
+    pub(crate) message_expiry: MessengerExpiry,
     pub(crate) consumer_offsets: DashMap<u32, ConsumerOffset>,
     pub(crate) consumer_group_offsets: DashMap<u32, ConsumerOffset>,
     pub(crate) segments: Vec<Segment>,
@@ -90,13 +90,13 @@ impl Partition {
         with_segment: bool,
         config: Arc<SystemConfig>,
         storage: Arc<SystemStorage>,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         messages_count_of_parent_stream: Arc<AtomicU64>,
         messages_count_of_parent_topic: Arc<AtomicU64>,
         size_of_parent_stream: Arc<AtomicU64>,
         size_of_parent_topic: Arc<AtomicU64>,
         segments_count_of_parent_stream: Arc<AtomicU32>,
-        created_at: IggyTimestamp,
+        created_at: MessengerTimestamp,
     ) -> Partition {
         let partition_path = config.get_partition_path(stream_id, topic_id, partition_id);
         let offsets_path = config.get_offsets_path(stream_id, topic_id, partition_id);
@@ -136,14 +136,14 @@ impl Partition {
             segments: vec![],
             current_offset: 0,
             unsaved_messages_count: 0,
-            unsaved_messages_size: IggyByteSize::from(0),
+            unsaved_messages_size: MessengerByteSize::from(0),
             should_increment_offset: false,
             consumer_offsets: DashMap::new(),
             consumer_group_offsets: DashMap::new(),
             config,
             storage,
             created_at,
-            avg_timestamp_delta: IggyDuration::default(),
+            avg_timestamp_delta: MessengerDuration::default(),
             size_of_parent_stream,
             size_of_parent_topic,
             size_bytes: Arc::new(AtomicU64::new(0)),
@@ -180,8 +180,8 @@ impl Partition {
 }
 
 impl Sizeable for Partition {
-    fn get_size_bytes(&self) -> IggyByteSize {
-        IggyByteSize::from(self.size_bytes.load(Ordering::SeqCst))
+    fn get_size_bytes(&self) -> MessengerByteSize {
+        MessengerByteSize::from(self.size_bytes.load(Ordering::SeqCst))
     }
 }
 
@@ -206,9 +206,9 @@ mod tests {
     use crate::streaming::persistence::persister::{FileWithSyncPersister, PersisterKind};
     use crate::streaming::storage::SystemStorage;
     use crate::streaming::utils::MemoryPool;
-    use iggy_common::IggyDuration;
-    use iggy_common::IggyExpiry;
-    use iggy_common::IggyTimestamp;
+    use messenger_common::MessengerDuration;
+    use messenger_common::MessengerExpiry;
+    use messenger_common::MessengerTimestamp;
     use std::sync::Arc;
     use std::sync::atomic::{AtomicU32, AtomicU64};
 
@@ -230,7 +230,7 @@ mod tests {
         let partition_id = 3;
         let with_segment = true;
         let path = config.get_partition_path(stream_id, topic_id, partition_id);
-        let message_expiry = IggyExpiry::ExpireDuration(IggyDuration::from(10));
+        let message_expiry = MessengerExpiry::ExpireDuration(MessengerDuration::from(10));
         let partition = Partition::create(
             stream_id,
             topic_id,
@@ -244,7 +244,7 @@ mod tests {
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU32::new(0)),
-            IggyTimestamp::now(),
+            MessengerTimestamp::now(),
         )
         .await;
 
@@ -281,13 +281,13 @@ mod tests {
             false,
             Arc::new(SystemConfig::default()),
             storage,
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU32::new(0)),
-            IggyTimestamp::now(),
+            MessengerTimestamp::now(),
         )
         .await;
         assert!(partition.segments.is_empty());

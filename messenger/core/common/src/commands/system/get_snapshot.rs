@@ -18,7 +18,7 @@
 
 use crate::BytesSerializable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, GET_SNAPSHOT_FILE_CODE};
 use crate::{SnapshotCompression, SystemSnapshotType};
 use bytes::{BufMut, Bytes, BytesMut};
@@ -54,11 +54,11 @@ impl Command for GetSnapshot {
     }
 }
 
-impl Validatable<IggyError> for GetSnapshot {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for GetSnapshot {
+    fn validate(&self) -> Result<(), MessengerError> {
         if self.snapshot_types.contains(&SystemSnapshotType::All) && self.snapshot_types.len() > 1 {
             error!("When using 'All' snapshot type, no other types can be specified");
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
         Ok(())
     }
@@ -77,21 +77,21 @@ impl BytesSerializable for GetSnapshot {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<GetSnapshot, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<GetSnapshot, MessengerError> {
         let mut index = 0;
 
         let compression =
-            SnapshotCompression::from_code(*bytes.get(index).ok_or(IggyError::InvalidCommand)?)?;
+            SnapshotCompression::from_code(*bytes.get(index).ok_or(MessengerError::InvalidCommand)?)?;
         index += 1;
 
-        let types_count = *bytes.get(index).ok_or(IggyError::InvalidCommand)? as usize;
+        let types_count = *bytes.get(index).ok_or(MessengerError::InvalidCommand)? as usize;
         index += 1;
 
         let mut snapshot_types = Vec::with_capacity(types_count);
 
         for _ in 0..types_count {
             let tool =
-                SystemSnapshotType::from_code(*bytes.get(index).ok_or(IggyError::InvalidCommand)?)?;
+                SystemSnapshotType::from_code(*bytes.get(index).ok_or(MessengerError::InvalidCommand)?)?;
             index += 1;
 
             snapshot_types.push(tool);

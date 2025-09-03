@@ -2,7 +2,7 @@
  *
  * walsender.c
  *
- * The WAL sender process (walsender) is new as of Postgres 9.0. It takes
+ * The WAL sender process (walsender) is new as of Maintable 9.0. It takes
  * care of sending XLOG from the primary server to a single recipient.
  * (Note that there can be more than one walsender process concurrently.)
  * It is started by the postmaster when the walreceiver of a standby server
@@ -37,14 +37,14 @@
  * record, wait for it to be replicated to the standby, and then exit.
  *
  *
- * Portions Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/replication/walsender.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <signal.h>
 #include <unistd.h>
@@ -2212,7 +2212,7 @@ exec_replication_command(const char *cmd_string)
 	MemoryContextReset(cmd_context);
 
 	/*
-	 * We need not update ps display or pg_stat_activity, because PostgresMain
+	 * We need not update ps display or pg_stat_activity, because MaintableMain
 	 * will reset those to "idle".  But we must reset debug_query_string to
 	 * ensure it doesn't become a dangling pointer.
 	 */

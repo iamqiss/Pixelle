@@ -3,7 +3,7 @@
  * origin.c
  *	  Logical replication progress tracking support.
  *
- * Copyright (c) 2013-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2013-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/replication/logical/origin.c
@@ -65,7 +65,7 @@
  * ---------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 #include <sys/stat.h>

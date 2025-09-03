@@ -1,10 +1,10 @@
 /*
- * reporting Python exceptions as PostgreSQL errors
+ * reporting Python exceptions as maintableQL errors
  *
  * src/pl/plpython/plpy_elog.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "lib/stringinfo.h"
 #include "plpy_elog.h"

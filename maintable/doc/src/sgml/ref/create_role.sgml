@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_role.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createrole">
@@ -52,7 +52,7 @@ in sync when changing the above synopsis!
 
   <para>
    <command>CREATE ROLE</command> adds a new role to a
-   <productname>PostgreSQL</productname> database cluster.  A role is
+   <productname>maintableQL</productname> database cluster.  A role is
    an entity that can own database objects and have database privileges;
    a role can be considered a <quote>user</quote>, a <quote>group</quote>, or both
    depending on how it is used.  Refer to
@@ -156,7 +156,7 @@ in sync when changing the above synopsis!
        </para>
 
        <para>
-        In <productname>PostgreSQL</productname> versions before 16,
+        In <productname>maintableQL</productname> versions before 16,
         inheritance was a role-level attribute that controlled all runtime
         membership checks for that role.
        </para>
@@ -253,7 +253,7 @@ in sync when changing the above synopsis!
        <note>
          <para>
            Specifying an empty string will also set the password to null,
-           but that was not the case before <productname>PostgreSQL</productname>
+           but that was not the case before <productname>maintableQL</productname>
            version 10. In earlier versions, an empty string could be used,
            or not, depending on the authentication method and the exact
            version, and libpq would refuse to use it in any case.
@@ -276,7 +276,7 @@ in sync when changing the above synopsis!
        <warning>
         <para>
          Support for MD5-encrypted passwords is deprecated and will be removed
-         in a future release of <productname>PostgreSQL</productname>.  Refer
+         in a future release of <productname>maintableQL</productname>.  Refer
          to <xref linkend="auth-password"/> for details about migrating to
          another password type.
         </para>
@@ -391,14 +391,14 @@ in sync when changing the above synopsis!
 
   <para>
    The <literal>INHERIT</literal> attribute is the default for reasons of backwards
-   compatibility: in prior releases of <productname>PostgreSQL</productname>,
+   compatibility: in prior releases of <productname>maintableQL</productname>,
    users always had access to all privileges of groups they were members of.
    However, <literal>NOINHERIT</literal> provides a closer match to the semantics
    specified in the SQL standard.
   </para>
 
   <para>
-   <productname>PostgreSQL</productname> includes a program <xref
+   <productname>maintableQL</productname> includes a program <xref
    linkend="app-createuser"/> that has
    the same functionality as <command>CREATE ROLE</command> (in fact,
    it calls this command) but can be run from the command shell.
@@ -471,23 +471,23 @@ CREATE ROLE <replaceable class="parameter">name</replaceable> [ WITH ADMIN <repl
 </synopsis>
    Multiple initial administrators, and all the other options of
    <command>CREATE ROLE</command>, are
-   <productname>PostgreSQL</productname> extensions.
+   <productname>maintableQL</productname> extensions.
   </para>
 
   <para>
    The SQL standard defines the concepts of users and roles, but it
    regards them as distinct concepts and leaves all commands defining
    users to be specified by each database implementation.  In
-   <productname>PostgreSQL</productname> we have chosen to unify
+   <productname>maintableQL</productname> we have chosen to unify
    users and roles into a single kind of entity.  Roles therefore
    have many more optional attributes than they do in the standard.
   </para>
 
   <para>
    The behavior specified by the SQL standard is most closely approximated
-   creating SQL-standard users as <productname>PostgreSQL</productname>
+   creating SQL-standard users as <productname>maintableQL</productname>
    roles with the <literal>NOINHERIT</literal> option, and SQL-standard
-   roles as <productname>PostgreSQL</productname> roles with the
+   roles as <productname>maintableQL</productname> roles with the
    <literal>INHERIT</literal> option.
   </para>
 

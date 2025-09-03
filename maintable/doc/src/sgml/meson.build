@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 docs = []
 installdocs = []
@@ -100,17 +100,17 @@ xmllint = xmltools_wrapper + [
 # we're at it, also resolve all entities (that is, copy all included
 # files into one big file).  This helps tools that don't understand
 # vpath builds (such as dbtoepub).
-postgres_full_xml = custom_target('postgres-full.xml',
-  input: 'postgres.sgml',
-  output: 'postgres-full.xml',
-  depfile: 'postgres-full.xml.d',
+maintable_full_xml = custom_target('maintable-full.xml',
+  input: 'maintable.sgml',
+  output: 'maintable-full.xml',
+  depfile: 'maintable-full.xml.d',
   command: [xmllint, '--nonet', '--noent', '--valid',
             '--path', '@OUTDIR@', '-o', '@OUTPUT@', '@INPUT@'],
   depends: doc_generated,
   build_by_default: false,
 )
-docs += postgres_full_xml
-alldocs += postgres_full_xml
+docs += maintable_full_xml
+alldocs += maintable_full_xml
 
 
 if xsltproc_bin.found()
@@ -136,7 +136,7 @@ endif
 #
 if docs_dep.found()
   html = custom_target('html',
-    input: ['stylesheet.xsl', postgres_full_xml],
+    input: ['stylesheet.xsl', maintable_full_xml],
     output: 'html',
     depfile: 'html.d',
     command: [xsltproc, '-o', '@OUTDIR@/', xsltproc_html_flags, '@INPUT@'],
@@ -160,24 +160,24 @@ if docs_dep.found()
 
 
   # single-page HTML
-  postgres_html = custom_target('postgres.html',
-    input: ['stylesheet-html-nochunk.xsl', postgres_full_xml],
-    output: 'postgres.html',
-    depfile: 'postgres.html.d',
+  maintable_html = custom_target('maintable.html',
+    input: ['stylesheet-html-nochunk.xsl', maintable_full_xml],
+    output: 'maintable.html',
+    depfile: 'maintable.html.d',
     command: [xsltproc, '-o', '@OUTPUT@', xsltproc_html_flags, '@INPUT@'],
     build_by_default: false,
   )
-  alldocs += postgres_html
+  alldocs += maintable_html
 
   # single-page text
   if pandoc.found()
-    postgres_txt = custom_target('postgres.txt',
-      input: [postgres_html],
-      output: 'postgres.txt',
+    maintable_txt = custom_target('maintable.txt',
+      input: [maintable_html],
+      output: 'maintable.txt',
       command: [pandoc, '-t', 'plain', '-o', '@OUTPUT@', '@INPUT@'],
       build_by_default: false,
     )
-    alldocs += postgres_txt
+    alldocs += maintable_txt
   endif
 endif
 
@@ -188,7 +188,7 @@ endif
 if docs_dep.found()
   # FIXME: implement / consider sqlmansectnum logic
   man = custom_target('man',
-    input: ['stylesheet-man.xsl', postgres_full_xml],
+    input: ['stylesheet-man.xsl', maintable_full_xml],
     output: ['man1', 'man3', 'man7'],
     depfile: 'man.d',
     command: [xsltproc, '-o', '@OUTDIR@/', xsltproc_html_flags, '@INPUT@'],
@@ -222,27 +222,27 @@ if docs_pdf_dep.found()
   ]
 
   foreach format, detail: {'A4': 'A4', 'US': 'USletter'}
-    postgres_x_fo_f = 'postgres-@0@.fo'.format(format)
-    postgres_x_fo_dep = 'postgres-@0@.fo.d'.format(format)
-    postgres_x_pdf_f = 'postgres-@0@.pdf'.format(format)
+    maintable_x_fo_f = 'maintable-@0@.fo'.format(format)
+    maintable_x_fo_dep = 'maintable-@0@.fo.d'.format(format)
+    maintable_x_pdf_f = 'maintable-@0@.pdf'.format(format)
 
-    postgres_x_fo = custom_target(postgres_x_fo_f,
-      input: ['stylesheet-fo.xsl', postgres_full_xml],
-      output: postgres_x_fo_f,
-      depfile: postgres_x_fo_dep,
+    maintable_x_fo = custom_target(maintable_x_fo_f,
+      input: ['stylesheet-fo.xsl', maintable_full_xml],
+      output: maintable_x_fo_f,
+      depfile: maintable_x_fo_dep,
       command: [xsltproc, xsltproc_fo_flags,
                 '--stringparam', 'paper.type', detail,
                 '-o', '@OUTPUT@', '@INPUT@'],
       build_by_default: false,
     )
 
-    postgres_x_pdf = custom_target(postgres_x_pdf_f,
-      input: [postgres_x_fo],
-      output: [postgres_x_pdf_f],
+    maintable_x_pdf = custom_target(maintable_x_pdf_f,
+      input: [maintable_x_fo],
+      output: [maintable_x_pdf_f],
       command: [fop, '-fo', '@INPUT@', '-pdf', '@OUTPUT@'],
       build_by_default: false,
     )
-    alldocs += postgres_x_pdf
+    alldocs += maintable_x_pdf
   endforeach
 endif
 
@@ -255,14 +255,14 @@ endif
 # support running in build != source directory (i.e. VPATH builds already
 # weren't supported).
 if pandoc.found() and xsltproc_bin.found()
-  postgres_epub = custom_target('postgres.epub',
-    input: postgres_full_xml,
-    output: 'postgres.epub',
+  maintable_epub = custom_target('maintable.epub',
+    input: maintable_full_xml,
+    output: 'maintable.epub',
     command: [pandoc, '-f', 'docbook', '-t', 'epub', '-o', '@OUTPUT@', '--resource-path=@CURRENT_SOURCE_DIR@',
               '@INPUT@'],
     build_by_default: false,
   )
-  alldocs += postgres_epub
+  alldocs += maintable_epub
 endif
 
 
@@ -275,26 +275,26 @@ db2x_texixml = find_program('db2x_texixml', native: true, required: false)
 makeinfo = find_program('makeinfo', native: true, required: false)
 
 if xsltproc_bin.found() and db2x_texixml.found() and db2x_xsltproc.found() and makeinfo.found()
-  postgres_texixml = custom_target('postgres.texixml',
-    output: 'postgres.texixml',
+  maintable_texixml = custom_target('maintable.texixml',
+    output: 'maintable.texixml',
     command: [db2x_xsltproc, '-s', 'texi',
-              '-g', 'output-file=postgres',
-              postgres_full_xml, '-o', '@OUTPUT@'],
+              '-g', 'output-file=maintable',
+              maintable_full_xml, '-o', '@OUTPUT@'],
     build_by_default: false,
   )
-  postgres_texi = custom_target('postgres.texi',
-    output: 'postgres.texi',
-    command: [db2x_texixml, '--encoding=utf-8', postgres_texixml,
+  maintable_texi = custom_target('maintable.texi',
+    output: 'maintable.texi',
+    command: [db2x_texixml, '--encoding=utf-8', maintable_texixml,
               '--output-dir=@OUTDIR@'],
     build_by_default: false,
   )
-  postgres_info = custom_target('postgres.info',
-    output: 'postgres.info',
+  maintable_info = custom_target('maintable.info',
+    output: 'maintable.info',
     command: [makeinfo, '--enable-encoding', '--no-split', '--no-validate',
-              postgres_texi, '-o', '@OUTPUT0@'],
+              maintable_texi, '-o', '@OUTPUT0@'],
     build_by_default: false,
   )
-  alldocs += postgres_info
+  alldocs += maintable_info
 endif
 
 

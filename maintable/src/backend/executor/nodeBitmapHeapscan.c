@@ -16,7 +16,7 @@
  * required index qual conditions.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -33,7 +33,7 @@
  *		ExecReScanBitmapHeapScan	prepares to rescan the plan.
  *		ExecEndBitmapHeapScan		releases all storage.
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 

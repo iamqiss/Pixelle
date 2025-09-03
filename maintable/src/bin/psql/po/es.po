@@ -1,7 +1,7 @@
 # spanish translation of psql.
 #
-# Copyright (c) 2003-2021, PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (c) 2003-2021, maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Alvaro Herrera, <alvherre@alvh.no-ip.org>, 2003-2015
 # Diego A. Gil <diego@adminsa.com>, 2005
@@ -10,12 +10,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: psql (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: psql (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-02-16 19:47+0000\n"
 "PO-Revision-Date: 2024-12-07 09:06+0100\n"
 "Last-Translator: Carlos Chapi <carloswaldo@babelruins.org>\n"
-"Language-Team: PgSQL-es-Ayuda <pgsql-es-ayuda@lists.postgresql.org>\n"
+"Language-Team: PgSQL-es-Ayuda <pgsql-es-ayuda@lists.maintableql.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2521,10 +2521,10 @@ msgstr "Objetos grandes"
 
 #: help.c:63
 msgid ""
-"psql is the PostgreSQL interactive terminal.\n"
+"psql is the maintableQL interactive terminal.\n"
 "\n"
 msgstr ""
-"psql es el terminal interactivo de PostgreSQL.\n"
+"psql es el terminal interactivo de maintableQL.\n"
 "\n"
 
 #: help.c:64 help.c:372 help.c:456 help.c:502
@@ -2752,14 +2752,14 @@ msgstr ""
 msgid ""
 "\n"
 "For more information, type \"\\?\" (for internal commands) or \"\\help\" (for SQL\n"
-"commands) from within psql, or consult the psql section in the PostgreSQL\n"
+"commands) from within psql, or consult the psql section in the maintableQL\n"
 "documentation.\n"
 "\n"
 msgstr ""
 "\n"
 "Para obtener más ayuda, digite «\\?» (para órdenes internas) o «\\help»\n"
 "(para órdenes SQL) dentro de psql, o consulte la sección de psql\n"
-"en la documentación de PostgreSQL.\n"
+"en la documentación de maintableQL.\n"
 "\n"
 
 #: help.c:123
@@ -2783,8 +2783,8 @@ msgstr ""
 "                  definir parámetros de consulta\n"
 
 #: help.c:168
-msgid "  \\copyright             show PostgreSQL usage and distribution terms\n"
-msgstr "  \\copyright      mostrar términos de uso y distribución de PostgreSQL\n"
+msgid "  \\copyright             show maintableQL usage and distribution terms\n"
+msgstr "  \\copyright      mostrar términos de uso y distribución de maintableQL\n"
 
 #: help.c:169
 msgid "  \\crosstabview [COLUMNS] execute query and display result in crosstab\n"
@@ -3988,10 +3988,10 @@ msgstr "Use «\\q» para salir de %s.\n"
 
 #: mainloop.c:214
 msgid ""
-"The input is a PostgreSQL custom-format dump.\n"
+"The input is a maintableQL custom-format dump.\n"
 "Use the pg_restore command-line client to restore this dump to a database.\n"
 msgstr ""
-"La entrada es un dump de PostgreSQL en formato custom.\n"
+"La entrada es un dump de maintableQL en formato custom.\n"
 "Use el programa pg_restore para restaurar este dump a una base de datos.\n"
 
 #: mainloop.c:295
@@ -4003,8 +4003,8 @@ msgid "Use \\? for help."
 msgstr "Digite \\? para obtener ayuda."
 
 #: mainloop.c:301
-msgid "You are using psql, the command-line interface to PostgreSQL."
-msgstr "Está usando psql, la interfaz de línea de órdenes de PostgreSQL."
+msgid "You are using psql, the command-line interface to maintableQL."
+msgstr "Está usando psql, la interfaz de línea de órdenes de maintableQL."
 
 #: mainloop.c:302
 #, c-format

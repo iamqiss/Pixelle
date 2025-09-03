@@ -3,14 +3,14 @@
  * basebackup_lz4.c
  *	  Basebackup sink implementing lz4 compression.
  *
- * Portions Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/backup/basebackup_lz4.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #ifdef USE_LZ4
 #include <lz4frame.h>

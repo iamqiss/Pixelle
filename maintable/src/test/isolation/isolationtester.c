@@ -5,7 +5,7 @@
  *		Runs an isolation test specified by a spec file.
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <sys/select.h>
 #include <sys/time.h>
@@ -99,7 +99,7 @@ main(int argc, char **argv)
 		switch (opt)
 		{
 			case 'V':
-				puts("isolationtester (PostgreSQL) " PG_VERSION);
+				puts("isolationtester (maintableQL) " PG_VERSION);
 				exit(0);
 			default:
 				fprintf(stderr, "Usage: isolationtester [CONNINFO]\n");
@@ -116,14 +116,14 @@ main(int argc, char **argv)
 
 	/*
 	 * If the user supplies a non-option parameter on the command line, use it
-	 * as the conninfo string; otherwise default to setting dbname=postgres
+	 * as the conninfo string; otherwise default to setting dbname=maintable
 	 * and using environment variables or defaults for all other connection
 	 * parameters.
 	 */
 	if (argc > optind)
 		conninfo = argv[optind];
 	else
-		conninfo = "dbname = postgres";
+		conninfo = "dbname = maintable";
 
 	/*
 	 * If PG_TEST_TIMEOUT_DEFAULT is set, adopt its value (given in seconds)

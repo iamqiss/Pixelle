@@ -22,14 +22,14 @@
  * the logic directly into that file as it's fairly simple, but it seems
  * cleaner to have everything related to progress reporting in one place.)
  *
- * Portions Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/backup/basebackup_progress.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "backup/basebackup_sink.h"
 #include "commands/progress.h"

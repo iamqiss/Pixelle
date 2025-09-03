@@ -17,16 +17,16 @@
  */
 
 use crate::prelude::AutoLogin;
-use iggy_binary_protocol::{
+use messenger_binary_protocol::{
     BinaryClient, BinaryTransport, Client, PersonalAccessTokenClient, UserClient,
 };
 
-use crate::prelude::{IggyDuration, IggyError, IggyTimestamp, QuicClientConfig};
+use crate::prelude::{MessengerDuration, MessengerError, MessengerTimestamp, QuicClientConfig};
 use crate::quic::skip_server_verification::SkipServerVerification;
 use async_broadcast::{Receiver, Sender, broadcast};
 use async_trait::async_trait;
 use bytes::Bytes;
-use iggy_common::{
+use messenger_common::{
     ClientState, Command, ConnectionString, ConnectionStringUtils, Credentials, DiagnosticEvent,
     QuicConnectionStringOptions, TransportProtocol,
 };
@@ -43,9 +43,9 @@ use tracing::{error, info, trace, warn};
 
 const REQUEST_INITIAL_BYTES_LENGTH: usize = 4;
 const RESPONSE_INITIAL_BYTES_LENGTH: usize = 8;
-const NAME: &str = "Iggy";
+const NAME: &str = "Messenger";
 
-/// QUIC client for interacting with the Iggy API.
+/// QUIC client for interacting with the Messenger API.
 #[derive(Debug)]
 pub struct QuicClient {
     pub(crate) endpoint: Endpoint,
@@ -54,7 +54,7 @@ pub struct QuicClient {
     pub(crate) server_address: SocketAddr,
     pub(crate) state: Mutex<ClientState>,
     events: (Sender<DiagnosticEvent>, Receiver<DiagnosticEvent>),
-    connected_at: Mutex<Option<IggyTimestamp>>,
+    connected_at: Mutex<Option<MessengerTimestamp>>,
 }
 
 unsafe impl Send for QuicClient {}
@@ -68,15 +68,15 @@ impl Default for QuicClient {
 
 #[async_trait]
 impl Client for QuicClient {
-    async fn connect(&self) -> Result<(), IggyError> {
+    async fn connect(&self) -> Result<(), MessengerError> {
         QuicClient::connect(self).await
     }
 
-    async fn disconnect(&self) -> Result<(), IggyError> {
+    async fn disconnect(&self) -> Result<(), MessengerError> {
         QuicClient::disconnect(self).await
     }
 
-    async fn shutdown(&self) -> Result<(), IggyError> {
+    async fn shutdown(&self) -> Result<(), MessengerError> {
         QuicClient::shutdown(self).await
     }
 
@@ -101,13 +101,13 @@ impl BinaryTransport for QuicClient {
         }
     }
 
-    async fn send_with_response<T: Command>(&self, command: &T) -> Result<Bytes, IggyError> {
+    async fn send_with_response<T: Command>(&self, command: &T) -> Result<Bytes, MessengerError> {
         command.validate()?;
         self.send_raw_with_response(command.code(), command.to_bytes())
             .await
     }
 
-    async fn send_raw_with_response(&self, code: u32, payload: Bytes) -> Result<Bytes, IggyError> {
+    async fn send_raw_with_response(&self, code: u32, payload: Bytes) -> Result<Bytes, MessengerError> {
         let result = self.send_raw(code, payload.clone()).await;
         if result.is_ok() {
             return result;
@@ -116,13 +116,13 @@ impl BinaryTransport for QuicClient {
         let error = result.unwrap_err();
         if !matches!(
             error,
-            IggyError::Disconnected | IggyError::EmptyResponse | IggyError::Unauthenticated
+            MessengerError::Disconnected | MessengerError::EmptyResponse | MessengerError::Unauthenticated
         ) {
             return Err(error);
         }
 
         if !self.config.reconnection.enabled {
-            return Err(IggyError::Disconnected);
+            return Err(MessengerError::Disconnected);
         }
 
         self.disconnect().await?;
@@ -134,7 +134,7 @@ impl BinaryTransport for QuicClient {
         self.send_raw(code, payload).await
     }
 
-    fn get_heartbeat_interval(&self) -> IggyDuration {
+    fn get_heartbeat_interval(&self) -> MessengerDuration {
         self.config.heartbeat_interval
     }
 }
@@ -149,7 +149,7 @@ impl QuicClient {
         server_name: &str,
         validate_certificate: bool,
         auto_sign_in: AutoLogin,
-    ) -> Result<Self, IggyError> {
+    ) -> Result<Self, MessengerError> {
         Self::create(Arc::new(QuicClientConfig {
             client_address: client_address.to_string(),
             server_address: server_address.to_string(),
@@ -161,13 +161,13 @@ impl QuicClient {
     }
 
     /// Create a new QUIC client for the provided configuration.
-    pub fn create(config: Arc<QuicClientConfig>) -> Result<Self, IggyError> {
+    pub fn create(config: Arc<QuicClientConfig>) -> Result<Self, MessengerError> {
         let server_address = config
             .server_address
             .parse::<SocketAddr>()
             .map_err(|error| {
                 error!("Invalid server address: {error}");
-                IggyError::InvalidServerAddress
+                MessengerError::InvalidServerAddress
             })?;
         let client_address = if server_address.is_ipv6()
             && config.client_address == QuicClientConfig::default().client_address
@@ -179,14 +179,14 @@ impl QuicClient {
         .parse::<SocketAddr>()
         .map_err(|error| {
             error!("Invalid client address: {error}");
-            IggyError::InvalidClientAddress
+            MessengerError::InvalidClientAddress
         })?;
 
         let quic_config = configure(&config)?;
         let endpoint = Endpoint::client(client_address);
         if endpoint.is_err() {
             error!("Cannot create client endpoint");
-            return Err(IggyError::CannotCreateEndpoint);
+            return Err(MessengerError::CannotCreateEndpoint);
         }
 
         let mut endpoint = endpoint.unwrap();
@@ -204,9 +204,9 @@ impl QuicClient {
     }
 
     /// Creates a new QUIC client from a connection string.
-    pub fn from_connection_string(connection_string: &str) -> Result<Self, IggyError> {
+    pub fn from_connection_string(connection_string: &str) -> Result<Self, MessengerError> {
         if ConnectionStringUtils::parse_protocol(connection_string)? != TransportProtocol::Quic {
-            return Err(IggyError::InvalidConnectionString);
+            return Err(MessengerError::InvalidConnectionString);
         }
 
         Self::create(Arc::new(
@@ -217,37 +217,37 @@ impl QuicClient {
     async fn handle_response(
         recv: &mut RecvStream,
         response_buffer_size: usize,
-    ) -> Result<Bytes, IggyError> {
+    ) -> Result<Bytes, MessengerError> {
         let buffer = recv
             .read_to_end(response_buffer_size)
             .await
             .map_err(|error| {
                 error!("Failed to read response data: {error}");
-                IggyError::QuicError
+                MessengerError::QuicError
             })?;
         if buffer.is_empty() {
-            return Err(IggyError::EmptyResponse);
+            return Err(MessengerError::EmptyResponse);
         }
 
         let status = u32::from_le_bytes(
             buffer[..4]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         if status != 0 {
             error!(
                 "Received an invalid response with status: {} ({}).",
                 status,
-                IggyError::from_code_as_string(status)
+                MessengerError::from_code_as_string(status)
             );
 
-            return Err(IggyError::from_code(status));
+            return Err(MessengerError::from_code(status));
         }
 
         let length = u32::from_le_bytes(
             buffer[4..RESPONSE_INITIAL_BYTES_LENGTH]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         trace!("Status: OK. Response length: {}", length);
         if length <= 1 {
@@ -259,11 +259,11 @@ impl QuicClient {
         ))
     }
 
-    async fn connect(&self) -> Result<(), IggyError> {
+    async fn connect(&self) -> Result<(), MessengerError> {
         match self.get_state().await {
             ClientState::Shutdown => {
                 trace!("Cannot connect. Client is shutdown.");
-                return Err(IggyError::ClientShutdown);
+                return Err(MessengerError::ClientShutdown);
             }
             ClientState::Connected | ClientState::Authenticating | ClientState::Authenticated => {
                 trace!("Client is already connected.");
@@ -278,15 +278,15 @@ impl QuicClient {
 
         self.set_state(ClientState::Connecting).await;
         if let Some(connected_at) = self.connected_at.lock().await.as_ref() {
-            let now = IggyTimestamp::now();
+            let now = MessengerTimestamp::now();
             let elapsed = now.as_micros() - connected_at.as_micros();
             let interval = self.config.reconnection.reestablish_after.as_micros();
             trace!(
                 "Elapsed time since last connection: {}",
-                IggyDuration::from(elapsed)
+                MessengerDuration::from(elapsed)
             );
             if elapsed < interval {
-                let remaining = IggyDuration::from(interval - elapsed);
+                let remaining = MessengerDuration::from(interval - elapsed);
                 info!("Trying to connect to the server in: {remaining}",);
                 sleep(remaining.get_duration()).await;
             }
@@ -313,7 +313,7 @@ impl QuicClient {
                 );
                 if !self.config.reconnection.enabled {
                     warn!("Automatic reconnection is disabled.");
-                    return Err(IggyError::CannotEstablishConnection);
+                    return Err(MessengerError::CannotEstablishConnection);
                 }
 
                 let unlimited_retries = self.config.reconnection.max_retries.is_none();
@@ -338,18 +338,18 @@ impl QuicClient {
 
                 self.set_state(ClientState::Disconnected).await;
                 self.publish_event(DiagnosticEvent::Disconnected).await;
-                return Err(IggyError::CannotEstablishConnection);
+                return Err(MessengerError::CannotEstablishConnection);
             }
 
             connection = connection_result.map_err(|error| {
                 error!("Failed to establish QUIC connection: {error}");
-                IggyError::CannotEstablishConnection
+                MessengerError::CannotEstablishConnection
             })?;
             remote_address = connection.remote_address();
             break;
         }
 
-        let now = IggyTimestamp::now();
+        let now = MessengerTimestamp::now();
         info!("{NAME} client has connected to server: {remote_address} at {now}",);
         self.set_state(ClientState::Connected).await;
         self.connection.lock().await.replace(connection);
@@ -391,7 +391,7 @@ impl QuicClient {
         }
     }
 
-    async fn shutdown(&self) -> Result<(), IggyError> {
+    async fn shutdown(&self) -> Result<(), MessengerError> {
         if self.get_state().await == ClientState::Shutdown {
             return Ok(());
         }
@@ -409,7 +409,7 @@ impl QuicClient {
         Ok(())
     }
 
-    async fn disconnect(&self) -> Result<(), IggyError> {
+    async fn disconnect(&self) -> Result<(), MessengerError> {
         if self.get_state().await == ClientState::Disconnected {
             return Ok(());
         }
@@ -422,7 +422,7 @@ impl QuicClient {
         self.connection.lock().await.take();
         self.endpoint.wait_idle().await;
         self.publish_event(DiagnosticEvent::Disconnected).await;
-        let now = IggyTimestamp::now();
+        let now = MessengerTimestamp::now();
         info!(
             "{NAME} client: {} has disconnected from server at: {now}.",
             self.config.client_address
@@ -430,25 +430,25 @@ impl QuicClient {
         Ok(())
     }
 
-    async fn send_raw(&self, code: u32, payload: Bytes) -> Result<Bytes, IggyError> {
+    async fn send_raw(&self, code: u32, payload: Bytes) -> Result<Bytes, MessengerError> {
         match self.get_state().await {
             ClientState::Shutdown => {
                 trace!("Cannot send data. Client is shutdown.");
-                return Err(IggyError::ClientShutdown);
+                return Err(MessengerError::ClientShutdown);
             }
             ClientState::Disconnected => {
                 trace!(
                     "Cannot send data. Client: {} is not connected.",
                     self.config.client_address
                 );
-                return Err(IggyError::NotConnected);
+                return Err(MessengerError::NotConnected);
             }
             ClientState::Connecting => {
                 trace!(
                     "Cannot send data. Client: {} is still connecting.",
                     self.config.client_address
                 );
-                return Err(IggyError::NotConnected);
+                return Err(MessengerError::NotConnected);
             }
             _ => {}
         }
@@ -462,56 +462,56 @@ impl QuicClient {
                 let payload_length = payload.len() + REQUEST_INITIAL_BYTES_LENGTH;
                 let (mut send, mut recv) = connection.open_bi().await.map_err(|error| {
                     error!("Failed to open a bidirectional stream: {error}");
-                    IggyError::QuicError
+                    MessengerError::QuicError
                 })?;
                 trace!("Sending a QUIC request with code: {code}");
                 send.write_all(&(payload_length as u32).to_le_bytes())
                     .await
                     .map_err(|error| {
                         error!("Failed to write payload length: {error}");
-                        IggyError::QuicError
+                        MessengerError::QuicError
                     })?;
                 send.write_all(&code.to_le_bytes()).await.map_err(|error| {
                     error!("Failed to write payload code: {error}");
-                    IggyError::QuicError
+                    MessengerError::QuicError
                 })?;
                 send.write_all(&payload).await.map_err(|error| {
                     error!("Failed to write payload: {error}");
-                    IggyError::QuicError
+                    MessengerError::QuicError
                 })?;
                 send.finish().map_err(|error| {
                     error!("Failed to finish sending data: {error}");
-                    IggyError::QuicError
+                    MessengerError::QuicError
                 })?;
                 trace!("Sent a QUIC request with code: {code}, waiting for a response...");
                 return QuicClient::handle_response(&mut recv, response_buffer_size as usize).await;
             }
 
             error!("Cannot send data. Client is not connected.");
-            Err(IggyError::NotConnected)
+            Err(MessengerError::NotConnected)
         })
         .await
         .map_err(|e| {
             error!("Task execution failed during QUIC request: {}", e);
-            IggyError::QuicError
+            MessengerError::QuicError
         })?
     }
 }
 
-fn configure(config: &QuicClientConfig) -> Result<ClientConfig, IggyError> {
+fn configure(config: &QuicClientConfig) -> Result<ClientConfig, MessengerError> {
     let max_concurrent_bidi_streams = VarInt::try_from(config.max_concurrent_bidi_streams);
     if max_concurrent_bidi_streams.is_err() {
         error!(
             "Invalid 'max_concurrent_bidi_streams': {}",
             config.max_concurrent_bidi_streams
         );
-        return Err(IggyError::InvalidConfiguration);
+        return Err(MessengerError::InvalidConfiguration);
     }
 
     let receive_window = VarInt::try_from(config.receive_window);
     if receive_window.is_err() {
         error!("Invalid 'receive_window': {}", config.receive_window);
-        return Err(IggyError::InvalidConfiguration);
+        return Err(MessengerError::InvalidConfiguration);
     }
 
     let mut transport = quinn::TransportConfig::default();
@@ -528,7 +528,7 @@ fn configure(config: &QuicClientConfig) -> Result<ClientConfig, IggyError> {
             IdleTimeout::try_from(Duration::from_millis(config.max_idle_timeout));
         if max_idle_timeout.is_err() {
             error!("Invalid 'max_idle_timeout': {}", config.max_idle_timeout);
-            return Err(IggyError::InvalidConfiguration);
+            return Err(MessengerError::InvalidConfiguration);
         }
         transport.max_idle_timeout(Some(max_idle_timeout.unwrap()));
     }
@@ -544,7 +544,7 @@ fn configure(config: &QuicClientConfig) -> Result<ClientConfig, IggyError> {
     let mut client_config = match config.validate_certificate {
         true => ClientConfig::try_with_platform_verifier().map_err(|error| {
             error!("Failed to create QUIC client configuration: {error}");
-            IggyError::InvalidConfiguration
+            MessengerError::InvalidConfiguration
         })?,
         false => {
             match QuinnQuicClientConfig::try_from(
@@ -556,7 +556,7 @@ fn configure(config: &QuicClientConfig) -> Result<ClientConfig, IggyError> {
                 Ok(config) => ClientConfig::new(Arc::new(config)),
                 Err(error) => {
                     error!("Failed to create QUIC client configuration: {error}");
-                    return Err(IggyError::InvalidConfiguration);
+                    return Err(MessengerError::InvalidConfiguration);
                 }
             }
         }
@@ -581,7 +581,7 @@ mod tests {
 
     #[tokio::test]
     async fn should_fail_without_username() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Quic;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -596,7 +596,7 @@ mod tests {
 
     #[tokio::test]
     async fn should_fail_without_password() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Quic;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -611,7 +611,7 @@ mod tests {
 
     #[tokio::test]
     async fn should_fail_without_server_address() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Quic;
         let server_address = "";
         let port = "1234";
@@ -626,7 +626,7 @@ mod tests {
 
     #[tokio::test]
     async fn should_fail_without_port() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Quic;
         let server_address = "127.0.0.1";
         let port = "";
@@ -656,7 +656,7 @@ mod tests {
 
     #[tokio::test]
     async fn should_fail_with_unmatch_protocol() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -671,7 +671,7 @@ mod tests {
 
     #[tokio::test]
     async fn should_fail_with_default_prefix() {
-        let default_connection_string_prefix = "iggy://";
+        let default_connection_string_prefix = "messenger://";
         let server_address = "127.0.0.1";
         let port = "1234";
         let username = "user";
@@ -685,7 +685,7 @@ mod tests {
 
     #[tokio::test]
     async fn should_fail_with_invalid_options() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Quic;
         let server_address = "127.0.0.1";
         let port = "";
@@ -700,7 +700,7 @@ mod tests {
 
     #[tokio::test]
     async fn should_succeed_without_options() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Quic;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -736,24 +736,24 @@ mod tests {
         assert!(!quic_client_config.validate_certificate);
         assert_eq!(
             quic_client_config.heartbeat_interval,
-            IggyDuration::from_str("5s").unwrap()
+            MessengerDuration::from_str("5s").unwrap()
         );
 
         assert!(quic_client_config.reconnection.enabled);
         assert!(quic_client_config.reconnection.max_retries.is_none());
         assert_eq!(
             quic_client_config.reconnection.interval,
-            IggyDuration::from_str("1s").unwrap()
+            MessengerDuration::from_str("1s").unwrap()
         );
         assert_eq!(
             quic_client_config.reconnection.reestablish_after,
-            IggyDuration::from_str("5s").unwrap()
+            MessengerDuration::from_str("5s").unwrap()
         );
     }
 
     #[tokio::test]
     async fn should_succeed_with_options() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Quic;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -794,28 +794,28 @@ mod tests {
         assert!(!quic_client_config.validate_certificate);
         assert_eq!(
             quic_client_config.heartbeat_interval,
-            IggyDuration::from_str("5s").unwrap()
+            MessengerDuration::from_str("5s").unwrap()
         );
 
         assert!(quic_client_config.reconnection.enabled);
         assert!(quic_client_config.reconnection.max_retries.is_none());
         assert_eq!(
             quic_client_config.reconnection.interval,
-            IggyDuration::from_str(reconnection_interval).unwrap()
+            MessengerDuration::from_str(reconnection_interval).unwrap()
         );
         assert_eq!(
             quic_client_config.reconnection.reestablish_after,
-            IggyDuration::from_str("5s").unwrap()
+            MessengerDuration::from_str("5s").unwrap()
         );
     }
 
     #[tokio::test]
     async fn should_succeed_with_pat() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Quic;
         let server_address = "127.0.0.1";
         let port = "1234";
-        let pat = "iggypat-1234567890abcdef";
+        let pat = "messengerpat-1234567890abcdef";
         let value = format!("{connection_string_prefix}{protocol}://{pat}@{server_address}:{port}");
         let quic_client = QuicClient::from_connection_string(&value);
         assert!(quic_client.is_ok());
@@ -841,18 +841,18 @@ mod tests {
         assert!(!quic_client_config.validate_certificate);
         assert_eq!(
             quic_client_config.heartbeat_interval,
-            IggyDuration::from_str("5s").unwrap()
+            MessengerDuration::from_str("5s").unwrap()
         );
 
         assert!(quic_client_config.reconnection.enabled);
         assert!(quic_client_config.reconnection.max_retries.is_none());
         assert_eq!(
             quic_client_config.reconnection.interval,
-            IggyDuration::from_str("1s").unwrap()
+            MessengerDuration::from_str("1s").unwrap()
         );
         assert_eq!(
             quic_client_config.reconnection.reestablish_after,
-            IggyDuration::from_str("5s").unwrap()
+            MessengerDuration::from_str("5s").unwrap()
         );
     }
 }

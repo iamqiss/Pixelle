@@ -3,14 +3,14 @@
  * blvacuum.c
  *		Bloom VACUUM functions.
  *
- * Copyright (c) 2016-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2016-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  contrib/bloom/blvacuum.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/genam.h"
 #include "bloom.h"

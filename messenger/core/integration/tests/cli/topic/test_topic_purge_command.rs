@@ -17,12 +17,12 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, TestStreamId,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, TestStreamId,
     TestTopicId, USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use predicates::str::diff;
 use serial_test::parallel;
 use std::str::FromStr;
@@ -71,7 +71,7 @@ impl TestTopicPurgeCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestTopicPurgeCmd {
+impl MessengerCmdTestCase for TestTopicPurgeCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let stream = client
             .create_stream(&self.stream_name, Some(self.stream_id))
@@ -86,7 +86,7 @@ impl IggyCmdTestCase for TestTopicPurgeCmd {
                 Default::default(),
                 None,
                 Some(self.topic_id),
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 MaxTopicSize::ServerDefault,
             )
             .await;
@@ -94,7 +94,7 @@ impl IggyCmdTestCase for TestTopicPurgeCmd {
 
         let mut messages = (1..100)
             .map(|n| format!("message {n}"))
-            .filter_map(|s| IggyMessage::from_str(s.as_str()).ok())
+            .filter_map(|s| MessengerMessage::from_str(s.as_str()).ok())
             .collect::<Vec<_>>();
 
         let send_status = client
@@ -118,8 +118,8 @@ impl IggyCmdTestCase for TestTopicPurgeCmd {
         assert!(topic_state.size > 0);
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("topic")
             .arg("purge")
             .args(self.to_args())
@@ -173,10 +173,10 @@ impl IggyCmdTestCase for TestTopicPurgeCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestTopicPurgeCmd::new(
             1,
             String::from("main"),
@@ -186,7 +186,7 @@ pub async fn should_be_successful() {
             TestTopicId::Numeric,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestTopicPurgeCmd::new(
             2,
             String::from("testing"),
@@ -196,7 +196,7 @@ pub async fn should_be_successful() {
             TestTopicId::Named,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestTopicPurgeCmd::new(
             3,
             String::from("prod"),
@@ -206,7 +206,7 @@ pub async fn should_be_successful() {
             TestTopicId::Numeric,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestTopicPurgeCmd::new(
             4,
             String::from("big"),
@@ -221,9 +221,9 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["topic", "purge", "--help"],
             format!(
@@ -234,10 +234,10 @@ Stream ID can be specified as a stream name or ID
 Topic ID can be specified as a topic name or ID
 
 Examples
- iggy topic purge 1 1
- iggy topic purge prod 2
- iggy topic purge test debugs
- iggy topic purge 2 debugs
+ messenger topic purge 1 1
+ messenger topic purge prod 2
+ messenger topic purge test debugs
+ messenger topic purge 2 debugs
 
 {USAGE_PREFIX} topic purge <STREAM_ID> <TOPIC_ID>
 
@@ -264,9 +264,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["topic", "purge", "-h"],
             format!(

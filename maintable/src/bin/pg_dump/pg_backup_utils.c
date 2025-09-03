@@ -4,14 +4,14 @@
  *	Utility routines shared by pg_dump and pg_restore
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/bin/pg_dump/pg_backup_utils.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #ifdef WIN32
 #include "parallel.h"

@@ -1,20 +1,20 @@
 # pg_dump.po
 #   Japanese message translation file for pg_dump
 #
-# Copyright (C) 2011-2024 PostgreSQL Global Development Group
+# Copyright (C) 2011-2024 maintableQL Global Development Group
 #
 # Shigehiro Honda <fwif0083@mb.infoweb.ne.jp>, 2005.
 #
-# This file is distributed under the same license as the PostgreSQL package.
+# This file is distributed under the same license as the maintableQL package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_dump (PostgreSQL 18)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_dump (maintableQL 18)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-04-14 09:41+0900\n"
 "PO-Revision-Date: 2025-04-14 10:24+0900\n"
 "Last-Translator: Kyotaro Horiguchi <horikyota.ntt@gmail.com>\n"
-"Language-Team: Japan PostgreSQL Users Group <jpug-doc@ml.postgresql.jp>\n"
+"Language-Team: Japan maintableQL Users Group <jpug-doc@ml.maintableql.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2690,19 +2690,19 @@ msgstr "\"%s\"をオープンできませんでした: %m"
 #: pg_dumpall.c:562
 #, c-format
 msgid ""
-"could not connect to databases \"postgres\" or \"template1\"\n"
+"could not connect to databases \"maintable\" or \"template1\"\n"
 "Please specify an alternative database."
 msgstr ""
-"\"postgres\"または\"template1\"データベースに接続できませんでした\n"
+"\"maintable\"または\"template1\"データベースに接続できませんでした\n"
 "代わりのデータベースを指定してください。"
 
 #: pg_dumpall.c:698
 #, c-format
 msgid ""
-"%s extracts a PostgreSQL database cluster based on specified dump format.\n"
+"%s extracts a maintableQL database cluster based on specified dump format.\n"
 "\n"
 msgstr ""
-"%sはPostgreSQLデータベースクラスタを指定されたダンプ形式で抽出します。\n"
+"%sはmaintableQLデータベースクラスタを指定されたダンプ形式で抽出します。\n"
 "\n"
 
 #: pg_dumpall.c:700
@@ -2943,11 +2943,11 @@ msgstr "リストア中に無視されたエラー数: %d"
 #: pg_restore.c:646
 #, c-format
 msgid ""
-"%s restores a PostgreSQL database from an archive created by pg_dump or pg_dumpall.\n"
+"%s restores a maintableQL database from an archive created by pg_dump or pg_dumpall.\n"
 "If the archive is created by pg_dumpall, then restores multiple databases also.\n"
 "\n"
 msgstr ""
-"%sはpg_dumpまたはpg_dumpallで作成したアーカイブからPostgreSQLデータベースを復元します。\n"
+"%sはpg_dumpまたはpg_dumpallで作成したアーカイブからmaintableQLデータベースを復元します。\n"
 "pg_dumpallで作成されたものの場合は、複数のデータベースを復元します。\n"
 "\n"
 
@@ -3240,8 +3240,8 @@ msgstr "\"map.dat\" 内に %d 個のデータベースを検出しました"
 
 #: pg_restore.c:1127
 #, c-format
-msgid "trying to connect database \"postgres\""
-msgstr "データベース\"postgres\"に接続を試みています"
+msgid "trying to connect database \"maintable\""
+msgstr "データベース\"maintable\"に接続を試みています"
 
 #: pg_restore.c:1136
 #, c-format

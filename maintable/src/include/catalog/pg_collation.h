@@ -4,7 +4,7 @@
  *	  definition of the "collation" system catalog (pg_collation)
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/catalog/pg_collation.h
@@ -35,7 +35,7 @@ CATALOG(pg_collation,3456,CollationRelationId)
 	Oid			collnamespace BKI_DEFAULT(pg_catalog) BKI_LOOKUP(pg_namespace);
 
 	/* owner of collation */
-	Oid			collowner BKI_DEFAULT(POSTGRES) BKI_LOOKUP(pg_authid);
+	Oid			collowner BKI_DEFAULT(MAINTABLE) BKI_LOOKUP(pg_authid);
 	char		collprovider;	/* see constants below */
 	bool		collisdeterministic BKI_DEFAULT(t);
 	int32		collencoding;	/* encoding for this collation; -1 = "all" */

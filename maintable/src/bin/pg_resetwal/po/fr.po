@@ -1,6 +1,6 @@
 # LANGUAGE message translation file for pg_resetwal
-# Copyright (C) 2003-2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_resetwal (PostgreSQL) package.
+# Copyright (C) 2003-2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_resetwal (maintableQL) package.
 #
 # Use these quotes: « %s »
 #
@@ -10,8 +10,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-08-22 10:21+0000\n"
 "PO-Revision-Date: 2024-09-16 16:28+0200\n"
 "Last-Translator: Guillaume Lelarge <guillaume@lelarge.info>\n"
@@ -74,12 +74,12 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "possible incohérence dans l'ordre des octets\n"
 "L'ordre des octets utilisé pour enregistrer le fichier pg_control peut ne\n"
 "pas correspondre à celui utilisé par ce programme. Dans ce cas, les\n"
-"résultats ci-dessous sont incorrects, et l'installation de PostgreSQL\n"
+"résultats ci-dessous sont incorrects, et l'installation de maintableQL\n"
 "est incompatible avec ce répertoire des données."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:70
@@ -267,8 +267,8 @@ msgstr "ne peut pas être exécuté par « root »"
 
 #: pg_resetwal.c:341
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "Vous devez exécuter %s en tant que super-utilisateur PostgreSQL."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "Vous devez exécuter %s en tant que super-utilisateur maintableQL."
 
 #: pg_resetwal.c:351
 #, c-format
@@ -632,10 +632,10 @@ msgstr "erreur fsync : %m"
 #: pg_resetwal.c:1168
 #, c-format
 msgid ""
-"%s resets the PostgreSQL write-ahead log.\n"
+"%s resets the maintableQL write-ahead log.\n"
 "\n"
 msgstr ""
-"%s réinitialise le journal des transactions PostgreSQL.\n"
+"%s réinitialise le journal des transactions maintableQL.\n"
 "\n"
 
 #: pg_resetwal.c:1169

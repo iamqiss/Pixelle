@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_collation.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createcollation">
@@ -152,7 +152,7 @@ CREATE COLLATION [ IF NOT EXISTS ] <replaceable>name</replaceable> FROM <replace
        Specifies whether the collation should use deterministic comparisons.
        The default is true.  A deterministic comparison considers strings that
        are not byte-wise equal to be unequal even if they are considered
-       logically equal by the comparison.  PostgreSQL breaks ties using a
+       logically equal by the comparison.  maintableQL breaks ties using a
        byte-wise comparison.  Comparison that is not deterministic can make the
        collation be, say, case- or accent-insensitive.  For that, you need to
        choose an appropriate <literal>LOCALE</literal> setting
@@ -284,7 +284,7 @@ CREATE COLLATION german FROM "de_DE";
    There is a <command>CREATE COLLATION</command> statement in the SQL
    standard, but it is limited to copying an existing collation.  The
    syntax to create a new collation is
-   a <productname>PostgreSQL</productname> extension.
+   a <productname>maintableQL</productname> extension.
   </para>
  </refsect1>
 

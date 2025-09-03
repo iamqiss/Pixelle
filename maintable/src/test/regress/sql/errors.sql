@@ -2,7 +2,7 @@
 -- ERRORS
 --
 
--- bad in postquel, but ok in PostgreSQL
+-- bad in postquel, but ok in maintableQL
 select 1;
 
 

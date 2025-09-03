@@ -122,7 +122,7 @@ runs:
 
         echo "🔍 DRY RUN - Would publish to PyPI:"
         echo ""
-        echo "Package: apache-iggy"
+        echo "Package: apache-messenger"
         echo "Version: $VERSION"
         echo "Registry: https://pypi.org"
         echo ""
@@ -143,12 +143,12 @@ runs:
 
         echo ""
         echo "After publishing, users could install with:"
-        echo "  pip install apache-iggy==$VERSION"
+        echo "  pip install apache-messenger==$VERSION"
         echo ""
         echo "Or add to requirements.txt:"
-        echo "  apache-iggy==$VERSION"
+        echo "  apache-messenger==$VERSION"
         echo ""
-        echo "View on PyPI: https://pypi.org/project/apache-iggy/$VERSION/"
+        echo "View on PyPI: https://pypi.org/project/apache-messenger/$VERSION/"
       shell: bash
 
     - name: Publish to PyPI using maturin

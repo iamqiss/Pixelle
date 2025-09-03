@@ -1,12 +1,12 @@
 # Georgian message translation file for pg_upgrade
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_upgrade (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_upgrade (maintableQL) package.
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_upgrade (PostgreSQL) 18\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_upgrade (maintableQL) 18\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-05-02 22:20+0000\n"
 "PO-Revision-Date: 2025-05-03 01:23+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -65,12 +65,12 @@ msgstr "მომხმარებლის ცხრილებში სი�
 #: check.c:118
 msgid ""
 "Your installation contains system-defined composite types in user tables.\n"
-"These type OIDs are not stable across PostgreSQL versions,\n"
+"These type OIDs are not stable across maintableQL versions,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns and restart the upgrade.\n"
 msgstr ""
 "პროგრამის თქვენი ვერსია მომხმარებლის ცხრილებში სისტემის მიერ აღწერილ კომპოზიტურ ტიპებს შეიცავს.\n"
-"ამ ტიპის OID-ები PostgreSQL-ის ვერსიებს შორის მუდმივი არაა, ამიტომ,\n"
+"ამ ტიპის OID-ები maintableQL-ის ვერსიებს შორის მუდმივი არაა, ამიტომ,\n"
 "ამ კლასტერის განახლება ამჟამად შეუძლებელია  შეგიძლიათ\n"
 "წაშალოთ პრობლემური სვეტები და განახლება თავიდან გაუშვათ.\n"
 
@@ -115,7 +115,7 @@ msgstr "შეუთავსებელი \"aclitem\" მონაცემ�
 #: check.c:198
 msgid ""
 "Your installation contains the \"aclitem\" data type in user tables.\n"
-"The internal format of \"aclitem\" changed in PostgreSQL version 16\n"
+"The internal format of \"aclitem\" changed in maintableQL version 16\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns and restart the upgrade.\n"
 msgstr ""
@@ -179,13 +179,13 @@ msgstr "მომხმარებლის ცხრილებში წა�
 #: check.c:277
 msgid ""
 "Your installation contains the \"abstime\" data type in user tables.\n"
-"The \"abstime\" type has been removed in PostgreSQL version 12,\n"
+"The \"abstime\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr ""
 "პროგრამის თქვენი ვერსია მოხმარებლის ცხრილებში მონაცემების \"%s\" ტიპს შეიცავს.\n"
-"ტიპი \"%s\" გაუქმდა PostgreSQL-ის %s-ე ვერსიაში\n"
+"ტიპი \"%s\" გაუქმდა maintableQL-ის %s-ე ვერსიაში\n"
 "ასე, რომ ამ კლასტერის განახლება ამჟამად\n"
 "შეუძლებელია  შეგიძლიათ წაშალოთ პრობლემური სვეტები,\n"
 "ან შეცვალოთ მათი ტიპი და განახლება თავიდან გაუშვათ.\n"
@@ -197,13 +197,13 @@ msgstr "მომხმარებლის ცხრილებში წა�
 #: check.c:290
 msgid ""
 "Your installation contains the \"reltime\" data type in user tables.\n"
-"The \"reltime\" type has been removed in PostgreSQL version 12,\n"
+"The \"reltime\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr ""
 "პროგრამის თქვენი ვერსია მოხმარებლის ცხრილებში მონაცემების \"%s\" ტიპს შეიცავს.\n"
-"ტიპი \"%s\" გაუქმდა PostgreSQL-ის %s-ე ვერსიაში\n"
+"ტიპი \"%s\" გაუქმდა maintableQL-ის %s-ე ვერსიაში\n"
 "ასე, რომ ამ კლასტერის განახლება ამჟამად\n"
 "შეუძლებელია  შეგიძლიათ წაშალოთ პრობლემური სვეტები,\n"
 "ან შეცვალოთ მათი ტიპი და განახლება თავიდან გაუშვათ.\n"
@@ -215,13 +215,13 @@ msgstr "მომხმარებლის ცხრილებში წა�
 #: check.c:303
 msgid ""
 "Your installation contains the \"tinterval\" data type in user tables.\n"
-"The \"tinterval\" type has been removed in PostgreSQL version 12,\n"
+"The \"tinterval\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr ""
 "პროგრამის თქვენი ვერსია მოხმარებლის ცხრილებში მონაცემების \"%s\" ტიპს შეიცავს.\n"
-"ტიპი \"%s\" გაუქმდა PostgreSQL-ის %s-ე ვერსიაში\n"
+"ტიპი \"%s\" გაუქმდა maintableQL-ის %s-ე ვერსიაში\n"
 "ასე, რომ ამ კლასტერის განახლება ამჟამად\n"
 "შეუძლებელია  შეგიძლიათ წაშალოთ პრობლემური სვეტები,\n"
 "ან შეცვალოთ მათი ტიპი და განახლება თავიდან გაუშვათ.\n"
@@ -273,8 +273,8 @@ msgstr ""
 
 #: check.c:745
 #, c-format
-msgid "Swap mode can only upgrade clusters from PostgreSQL version %s and later."
-msgstr "რეჟიმის 'swap' გამოყენება კლასტერის ვერსიის ასაწევად შესაძლებელია PostgreSQL-ის ვერსიაში %s და შემდეგ."
+msgid "Swap mode can only upgrade clusters from maintableQL version %s and later."
+msgstr "რეჟიმის 'swap' გამოყენება კლასტერის ვერსიის ასაწევად შესაძლებელია maintableQL-ის ვერსიაში %s და შემდეგ."
 
 #: check.c:768
 #, c-format
@@ -338,18 +338,18 @@ msgstr "კლასტერის ვერსიების შემოწ�
 
 #: check.c:855
 #, c-format
-msgid "This utility can only upgrade from PostgreSQL version %s and later."
-msgstr "ამ პროგრამას განახლება PostgreSQL-ის ვერსიის %s-დან და ზემოთ შეუძლია."
+msgid "This utility can only upgrade from maintableQL version %s and later."
+msgstr "ამ პროგრამას განახლება maintableQL-ის ვერსიის %s-დან და ზემოთ შეუძლია."
 
 #: check.c:860
 #, c-format
-msgid "This utility can only upgrade to PostgreSQL version %s."
-msgstr "ამ პროგრამას შეუძლია მხოლოდ PostgreSQL ვერსიაზე გადასვლა %s."
+msgid "This utility can only upgrade to maintableQL version %s."
+msgstr "ამ პროგრამას შეუძლია მხოლოდ maintableQL ვერსიაზე გადასვლა %s."
 
 #: check.c:869
 #, c-format
-msgid "This utility cannot be used to downgrade to older major PostgreSQL versions."
-msgstr "ეს პროგრამა არ შეიძლება გამოყენებულ იქნას უფრო ძველი ძირითადი PostgreSQL ვერსიების ჩამოსაწევად."
+msgid "This utility cannot be used to downgrade to older major maintableQL versions."
+msgstr "ეს პროგრამა არ შეიძლება გამოყენებულ იქნას უფრო ძველი ძირითადი maintableQL ვერსიების ჩამოსაწევად."
 
 #: check.c:874
 #, c-format
@@ -363,8 +363,8 @@ msgstr "ახალი კლასტერის მონაცემებ�
 
 #: check.c:888
 #, c-format
-msgid "%s option cannot be used to upgrade from PostgreSQL %s and later."
-msgstr "პარამეტრს %s ვერ გამოიყენებთ PostgreSQL %s-დან და უფრო ახლიდან განახლებისას."
+msgid "%s option cannot be used to upgrade from maintableQL %s and later."
+msgstr "პარამეტრს %s ვერ გამოიყენებთ maintableQL %s-დან და უფრო ახლიდან განახლებისას."
 
 #: check.c:904
 #, c-format
@@ -599,7 +599,7 @@ msgstr "მომხმარებლის მიერ განსაზღ�
 #, c-format
 msgid ""
 "Your installation contains user-defined encoding conversions.\n"
-"The conversion function parameters changed in PostgreSQL version 14\n"
+"The conversion function parameters changed in maintableQL version 14\n"
 "so this cluster cannot currently be upgraded.  You can remove the\n"
 "encoding conversions in the old cluster and restart the upgrade.\n"
 "A list of user-defined encoding conversions is in the file:\n"
@@ -1395,10 +1395,10 @@ msgstr "pg_upgrade-ის გაშვება Windows-ზე ახალი �
 #: option.c:306
 #, c-format
 msgid ""
-"pg_upgrade upgrades a PostgreSQL cluster to a different major version.\n"
+"pg_upgrade upgrades a maintableQL cluster to a different major version.\n"
 "\n"
 msgstr ""
-"pg_upgrade -ი PostgreSQL კლასტერს სხვა მთავარ ვერსიაზე განაახლებს.\n"
+"pg_upgrade -ი maintableQL კლასტერს სხვა მთავარ ვერსიაზე განაახლებს.\n"
 "\n"
 
 #: option.c:307

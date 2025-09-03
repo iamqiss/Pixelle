@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/unlisten.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-unlisten">
@@ -32,7 +32,7 @@ UNLISTEN { <replaceable class="parameter">channel</replaceable> | * }
    <command>UNLISTEN</command> is used to remove an existing
    registration for <command>NOTIFY</command> events.
    <command>UNLISTEN</command> cancels any existing registration of
-   the current <productname>PostgreSQL</productname> session as a
+   the current <productname>maintableQL</productname> session as a
    listener on the notification channel named <replaceable
    class="parameter">channel</replaceable>.  The special wildcard
    <literal>*</literal> cancels all listener registrations for the

@@ -1,20 +1,20 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 #
 # Test checking options of pg_rewind.
 #
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use Test::More;
 
 program_help_ok('pg_rewind');
 program_version_ok('pg_rewind');
 program_options_handling_ok('pg_rewind');
 
-my $primary_pgdata = PostgreSQL::Test::Utils::tempdir;
-my $standby_pgdata = PostgreSQL::Test::Utils::tempdir;
+my $primary_pgdata = maintableQL::Test::Utils::tempdir;
+my $standby_pgdata = maintableQL::Test::Utils::tempdir;
 command_fails(
 	[
 		'pg_rewind',

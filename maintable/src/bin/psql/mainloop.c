@@ -1,11 +1,11 @@
 /*
- * psql - the PostgreSQL interactive terminal
+ * psql - the maintableQL interactive terminal
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  *
  * src/bin/psql/mainloop.c
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "command.h"
 #include "common.h"
@@ -211,7 +211,7 @@ MainLoop(FILE *source)
 			strncmp(line, "PGDMP", 5) == 0)
 		{
 			free(line);
-			puts(_("The input is a PostgreSQL custom-format dump.\n"
+			puts(_("The input is a maintableQL custom-format dump.\n"
 				   "Use the pg_restore command-line client to restore this dump to a database.\n"));
 			fflush(stdout);
 			successResult = EXIT_FAILURE;
@@ -298,7 +298,7 @@ MainLoop(FILE *source)
 #endif
 				else
 				{
-					puts(_("You are using psql, the command-line interface to PostgreSQL."));
+					puts(_("You are using psql, the command-line interface to maintableQL."));
 					printf(_("Type:  \\copyright for distribution terms\n"
 							 "       \\h for help with SQL commands\n"
 							 "       \\? for help with psql commands\n"

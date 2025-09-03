@@ -17,10 +17,10 @@
  */
 use crate::http::http_client::HttpClient;
 use crate::http::http_transport::HttpTransport;
-use crate::prelude::{Identifier, IggyError};
+use crate::prelude::{Identifier, MessengerError};
 use async_trait::async_trait;
-use iggy_binary_protocol::SegmentClient;
-use iggy_common::delete_segments::DeleteSegments;
+use messenger_binary_protocol::SegmentClient;
+use messenger_common::delete_segments::DeleteSegments;
 
 #[async_trait]
 impl SegmentClient for HttpClient {
@@ -30,7 +30,7 @@ impl SegmentClient for HttpClient {
         topic_id: &Identifier,
         partition_id: u32,
         segments_count: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.delete_with_query(
             &get_path(
                 &stream_id.as_cow_str(),

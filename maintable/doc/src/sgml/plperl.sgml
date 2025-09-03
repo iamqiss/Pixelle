@@ -13,7 +13,7 @@
 
   <para>
    PL/Perl is a loadable procedural language that enables you to write
-   <productname>PostgreSQL</productname> functions and procedures in the
+   <productname>maintableQL</productname> functions and procedures in the
    <ulink url="https://www.perl.org">Perl programming language</ulink>.
   </para>
 
@@ -147,7 +147,7 @@ $$ LANGUAGE plperl;
    above function definition will not behave very nicely with null
    inputs (in fact, it will act as though they are zeroes).  We could
    add <literal>STRICT</literal> to the function definition to make
-   <productname>PostgreSQL</productname> do something more reasonable:
+   <productname>maintableQL</productname> do something more reasonable:
    if a null value is passed, the function will not be called at all,
    but will just return a null result automatically.  Alternatively,
    we could check for undefined inputs in the function body.  For
@@ -174,7 +174,7 @@ $$ LANGUAGE plperl;
 
   <para>
    Anything in a function argument that is not a reference is
-   a string, which is in the standard <productname>PostgreSQL</productname>
+   a string, which is in the standard <productname>maintableQL</productname>
    external text representation for the relevant data type. In the case of
    ordinary numeric or text types, Perl will just do the right thing and
    the programmer will normally not have to worry about it. However, in
@@ -185,7 +185,7 @@ $$ LANGUAGE plperl;
   </para>
 
   <para>
-   Similarly, values passed back to <productname>PostgreSQL</productname>
+   Similarly, values passed back to <productname>maintableQL</productname>
    must be in the external text representation format. For example, the
    <function>encode_bytea</function> function can be used to
    escape binary data for a return value of type <type>bytea</type>.
@@ -225,7 +225,7 @@ $$ LANGUAGE plperl;
   </para>
 
   <para>
-   Perl can return <productname>PostgreSQL</productname> arrays as
+   Perl can return <productname>maintableQL</productname> arrays as
    references to Perl arrays.  Here is an example:
 
 <programlisting>
@@ -239,10 +239,10 @@ select returns_array();
   </para>
 
   <para>
-   Perl passes <productname>PostgreSQL</productname> arrays as a blessed
-   <type>PostgreSQL::InServer::ARRAY</type> object. This object may be treated as an array
+   Perl passes <productname>maintableQL</productname> arrays as a blessed
+   <type>maintableQL::InServer::ARRAY</type> object. This object may be treated as an array
    reference or a string, allowing for backward compatibility with Perl
-   code written for <productname>PostgreSQL</productname> versions below 9.1 to
+   code written for <productname>maintableQL</productname> versions below 9.1 to
    run.  For example:
 
 <programlisting>
@@ -352,7 +352,7 @@ SELECT * FROM perl_set_int(5);
 CREATE OR REPLACE FUNCTION perl_set()
 RETURNS SETOF testrowperl AS $$
     return_next({ f1 =&gt; 1, f2 =&gt; 'Hello', f3 =&gt; 'World' });
-    return_next({ f1 =&gt; 2, f2 =&gt; 'Hello', f3 =&gt; 'PostgreSQL' });
+    return_next({ f1 =&gt; 2, f2 =&gt; 'Hello', f3 =&gt; 'maintableQL' });
     return_next({ f1 =&gt; 3, f2 =&gt; 'Hello', f3 =&gt; 'PL/Perl' });
     return undef;
 $$ LANGUAGE plperl;
@@ -374,7 +374,7 @@ SELECT * FROM perl_set_int(5);
 CREATE OR REPLACE FUNCTION perl_set() RETURNS SETOF testrowperl AS $$
     return [
         { f1 =&gt; 1, f2 =&gt; 'Hello', f3 =&gt; 'World' },
-        { f1 =&gt; 2, f2 =&gt; 'Hello', f3 =&gt; 'PostgreSQL' },
+        { f1 =&gt; 2, f2 =&gt; 'Hello', f3 =&gt; 'maintableQL' },
         { f1 =&gt; 3, f2 =&gt; 'Hello', f3 =&gt; 'PL/Perl' }
     ];
 $$ LANGUAGE plperl;
@@ -390,7 +390,7 @@ SELECT * FROM perl_set();
    This will affect subsequent compilations of <application>PL/Perl</application>
    functions, but not functions already compiled in the current session.
    For permanent global use you can set <literal>plperl.use_strict</literal>
-   to true in the <filename>postgresql.conf</filename> file.
+   to true in the <filename>maintableql.conf</filename> file.
   </para>
 
   <para>
@@ -423,7 +423,7 @@ use strict;
    If this behavior is inconvenient for a particular case, it can be
    improved by using a transform, as already illustrated
    for <type>bool</type> values.  Several examples of transform modules
-   are included in the <productname>PostgreSQL</productname> distribution.
+   are included in the <productname>maintableQL</productname> distribution.
   </para>
  </sect1>
 
@@ -987,7 +987,7 @@ CALL transaction_test1();
       <para>
         Returns a true value if the given argument may be treated as an
         array reference, that is, if ref of the argument is <literal>ARRAY</literal> or
-        <literal>PostgreSQL::InServer::ARRAY</literal>.  Returns false otherwise.
+        <literal>maintableQL::InServer::ARRAY</literal>.  Returns false otherwise.
       </para>
      </listitem>
     </varlistentry>
@@ -1486,7 +1486,7 @@ DO 'elog(WARNING, join ", ", sort keys %INC)' LANGUAGE plperl;
         child processes.
        </para>
        <para>
-       This parameter can only be set in the <filename>postgresql.conf</filename> file or on the server command line.
+       This parameter can only be set in the <filename>maintableql.conf</filename> file or on the server command line.
        </para>
       </listitem>
      </varlistentry>
@@ -1583,7 +1583,7 @@ DO 'elog(WARNING, join ", ", sort keys %INC)' LANGUAGE plperl;
      </para>
      <para>
         A similar problem occurs if a set-returning function passes a
-        large set of rows back to PostgreSQL via <literal>return</literal>. You
+        large set of rows back to maintableQL via <literal>return</literal>. You
         can avoid this problem too by instead using
         <literal>return_next</literal> for each row returned, as shown
         previously.

@@ -8,7 +8,7 @@
  * Foundation.
  */
 
-/* Read PostgreSQL logs */
+/* Read maintableQL logs */
 
 #include "shared.h"
 #include "logcollector.h"
@@ -17,7 +17,7 @@
 
 /* Send pgsql message and check the return code */
 static void __send_pgsql_msg(logreader *lf, int drop_it, char *buffer) {
-    mdebug2("Reading PostgreSQL message: '%s'", buffer);
+    mdebug2("Reading maintableQL message: '%s'", buffer);
 
     /* Check ignore and restrict log regex, if configured. */
     if (drop_it == 0 && !check_ignore_and_restrict(lf->regex_ignore, lf->regex_restrict, buffer)) {
@@ -26,8 +26,8 @@ static void __send_pgsql_msg(logreader *lf, int drop_it, char *buffer) {
     }
 }
 
-/* Read PostgreSQL log files */
-void *read_postgresql_log(logreader *lf, int *rc, int drop_it) {
+/* Read maintableQL log files */
+void *read_maintableql_log(logreader *lf, int *rc, int drop_it) {
     size_t str_len = 0;
     int need_clear = 0;
     char *p;
@@ -87,7 +87,7 @@ void *read_postgresql_log(logreader *lf, int *rc, int drop_it) {
         }
 #endif
 
-        /* PostgreSQL messages have the following format:
+        /* maintableQL messages have the following format:
          * [2007-08-31 19:17:32.186 ADT] 192.168.2.99:db_name
          */
         if ((str_len > 32) &&

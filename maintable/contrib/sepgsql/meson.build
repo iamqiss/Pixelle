@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 if not selinux.found()
   subdir_done()
@@ -24,7 +24,7 @@ endif
 
 sepgsql = shared_module('sepgsql',
   sepgsql_sources,
-  c_pch: pch_postgres_h,
+  c_pch: pch_maintable_h,
   kwargs: contrib_mod_args + {
     'dependencies': [selinux, contrib_mod_args['dependencies']],
   }

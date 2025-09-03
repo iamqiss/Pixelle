@@ -1,6 +1,6 @@
 # Russian message translation file for initdb
-# Copyright (C) 2004-2016 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2004-2016 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Serguei A. Mokhov <mokhov@cs.concordia.ca>, 2004-2005.
 # Oleg Bartunov <oleg@sai.msu.su>, 2004.
 # Sergey Burladyan <eshkinkot@gmail.com>, 2009.
@@ -9,12 +9,12 @@
 # Alexander Lakhin <exclusion@gmail.com>, 2012-2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: initdb (PostgreSQL current)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: initdb (maintableQL current)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-11-02 08:21+0300\n"
 "PO-Revision-Date: 2024-11-02 08:27+0300\n"
 "Last-Translator: Alexander Lakhin <exclusion@gmail.com>\n"
-"Language-Team: Russian <pgsql-ru-general@postgresql.org>\n"
+"Language-Team: Russian <pgsql-ru-general@maintableql.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -390,7 +390,7 @@ msgid ""
 "This might mean you have a corrupted installation or identified the wrong "
 "directory with the invocation option -L."
 msgstr ""
-"Это означает, что ваша установка PostgreSQL испорчена или в параметре -L "
+"Это означает, что ваша установка maintableQL испорчена или в параметре -L "
 "задан неправильный каталог."
 
 #: initdb.c:1001
@@ -439,8 +439,8 @@ msgstr "выполняется подготовительный скрипт... 
 
 #: initdb.c:1548
 #, c-format
-msgid "input file \"%s\" does not belong to PostgreSQL %s"
-msgstr "входной файл \"%s\" не принадлежит PostgreSQL %s"
+msgid "input file \"%s\" does not belong to maintableQL %s"
+msgstr "входной файл \"%s\" не принадлежит maintableQL %s"
 
 #: initdb.c:1550
 #, c-format
@@ -573,10 +573,10 @@ msgstr "Для локали ICU \"%s\" используется метка яз�
 #: initdb.c:2499
 #, c-format
 msgid ""
-"%s initializes a PostgreSQL database cluster.\n"
+"%s initializes a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s инициализирует кластер PostgreSQL.\n"
+"%s инициализирует кластер maintableQL.\n"
 "\n"
 
 #: initdb.c:2500
@@ -1278,10 +1278,10 @@ msgstr ""
 
 #~ msgid ""
 #~ "\n"
-#~ "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Об ошибках сообщайте по адресу <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Об ошибках сообщайте по адресу <pgsql-bugs@lists.maintableql.org>.\n"
 
 #~ msgid "%s: could not open directory \"%s\": %s\n"
 #~ msgstr "%s: не удалось открыть каталог \"%s\": %s\n"
@@ -1363,8 +1363,8 @@ msgstr ""
 #~ msgid "copying template1 to template0 ... "
 #~ msgstr "копирование template1 в template0... "
 
-#~ msgid "copying template1 to postgres ... "
-#~ msgstr "копирование template1 в postgres... "
+#~ msgid "copying template1 to maintable ... "
+#~ msgstr "копирование template1 в maintable... "
 
 #~ msgid "%s: could not close directory \"%s\": %s\n"
 #~ msgstr "%s: не удалось закрыть каталог \"%s\": %s\n"

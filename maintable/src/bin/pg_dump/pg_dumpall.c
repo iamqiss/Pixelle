@@ -2,7 +2,7 @@
  *
  * pg_dumpall.c
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * pg_dumpall forces all pg_dump output to be text, since it also outputs
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <time.h>
 #include <unistd.h>
@@ -32,7 +32,7 @@
 #include "getopt_long.h"
 
 /* version string we expect back from pg_dump */
-#define PGDUMP_VERSIONSTR "pg_dump (PostgreSQL) " PG_VERSION "\n"
+#define PGDUMP_VERSIONSTR "pg_dump (maintableQL) " PG_VERSION "\n"
 
 typedef struct
 {
@@ -223,7 +223,7 @@ main(int argc, char *argv[])
 		}
 		if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			puts("pg_dumpall (PostgreSQL) " PG_VERSION);
+			puts("pg_dumpall (maintableQL) " PG_VERSION);
 			exit_nicely(0);
 		}
 	}
@@ -501,7 +501,7 @@ main(int argc, char *argv[])
 
 	/*
 	 * If there was a database specified on the command line, use that,
-	 * otherwise try to connect to database "postgres", and failing that
+	 * otherwise try to connect to database "maintable", and failing that
 	 * "template1".
 	 */
 	if (pgdb)
@@ -515,7 +515,7 @@ main(int argc, char *argv[])
 	}
 	else
 	{
-		conn = ConnectDatabase("postgres", connstr, pghost, pgport, pguser,
+		conn = ConnectDatabase("maintable", connstr, pghost, pgport, pguser,
 							   prompt_password, false,
 							   progname, &connstr, &server_version, NULL, NULL);
 		if (!conn)
@@ -525,7 +525,7 @@ main(int argc, char *argv[])
 
 		if (!conn)
 		{
-			pg_log_error("could not connect to databases \"postgres\" or \"template1\"\n"
+			pg_log_error("could not connect to databases \"maintable\" or \"template1\"\n"
 						 "Please specify an alternative database.");
 			pg_log_error_hint("Try \"%s --help\" for more information.", progname);
 			exit_nicely(1);
@@ -585,7 +585,7 @@ main(int argc, char *argv[])
 	if (quote_all_identifiers)
 		executeCommand(conn, "SET quote_all_identifiers = true");
 
-	fprintf(OPF, "--\n-- PostgreSQL database cluster dump\n--\n\n");
+	fprintf(OPF, "--\n-- maintableQL database cluster dump\n--\n\n");
 	if (verbose)
 		dumpTimestamp("Started on");
 
@@ -600,8 +600,8 @@ main(int argc, char *argv[])
 	fprintf(OPF, "\\restrict %s\n\n", restrict_key);
 
 	/*
-	 * We used to emit \connect postgres here, but that served no purpose
-	 * other than to break things for installations without a postgres
+	 * We used to emit \connect maintable here, but that served no purpose
+	 * other than to break things for installations without a maintable
 	 * database.  Everything we're restoring here is a global, so whichever
 	 * database we're connected to at the moment is fine.
 	 */
@@ -672,7 +672,7 @@ main(int argc, char *argv[])
 
 	if (verbose)
 		dumpTimestamp("Completed on");
-	fprintf(OPF, "--\n-- PostgreSQL database cluster dump complete\n--\n\n");
+	fprintf(OPF, "--\n-- maintableQL database cluster dump complete\n--\n\n");
 
 	if (filename)
 	{
@@ -690,7 +690,7 @@ main(int argc, char *argv[])
 static void
 help(void)
 {
-	printf(_("%s exports a PostgreSQL database cluster as an SQL script.\n\n"), progname);
+	printf(_("%s exports a maintableQL database cluster as an SQL script.\n\n"), progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]...\n"), progname);
 
@@ -1043,7 +1043,7 @@ dumpRoleMembership(PGconn *conn)
 	int			i_set_option;
 
 	/*
-	 * Previous versions of PostgreSQL didn't used to track the grantor very
+	 * Previous versions of maintableQL didn't used to track the grantor very
 	 * carefully in the backend, and the grantor could be any user even if
 	 * they didn't have ADMIN OPTION on the role, or a user that no longer
 	 * existed. To avoid dump and restore failures, don't dump the grantor
@@ -1056,7 +1056,7 @@ dumpRoleMembership(PGconn *conn)
 	dump_grantors = (PQserverVersion(conn) >= 160000);
 
 	/*
-	 * Previous versions of PostgreSQL also did not have grant-level options.
+	 * Previous versions of maintableQL also did not have grant-level options.
 	 */
 	dump_grant_options = (server_version >= 160000);
 
@@ -1482,20 +1482,20 @@ dropDBs(PGconn *conn)
 					   "ORDER BY datname");
 
 	if (PQntuples(res) > 0)
-		fprintf(OPF, "--\n-- Drop databases (except postgres and template1)\n--\n\n");
+		fprintf(OPF, "--\n-- Drop databases (except maintable and template1)\n--\n\n");
 
 	for (i = 0; i < PQntuples(res); i++)
 	{
 		char	   *dbname = PQgetvalue(res, i, 0);
 
 		/*
-		 * Skip "postgres" and "template1"; dumpDatabases() will deal with
+		 * Skip "maintable" and "template1"; dumpDatabases() will deal with
 		 * them specially.  Also, be sure to skip "template0", even if for
 		 * some reason it's not marked !datallowconn.
 		 */
 		if (strcmp(dbname, "template1") != 0 &&
 			strcmp(dbname, "template0") != 0 &&
-			strcmp(dbname, "postgres") != 0)
+			strcmp(dbname, "maintable") != 0)
 		{
 			fprintf(OPF, "DROP DATABASE %s%s;\n",
 					if_exists ? "IF EXISTS " : "",
@@ -1619,7 +1619,7 @@ dumpDatabases(PGconn *conn)
 	 *
 	 * We arrange for template1 to be processed first, then we process other
 	 * DBs in alphabetical order.  If we just did them all alphabetically, we
-	 * might find ourselves trying to drop the "postgres" database while still
+	 * might find ourselves trying to drop the "maintable" database while still
 	 * connected to it.  This makes trying to run the restore script while
 	 * connected to "template1" a bad idea, but there's no fixed order that
 	 * doesn't have some failure mode with --clean.
@@ -1658,14 +1658,14 @@ dumpDatabases(PGconn *conn)
 		free(sanitized);
 
 		/*
-		 * We assume that "template1" and "postgres" already exist in the
+		 * We assume that "template1" and "maintable" already exist in the
 		 * target installation.  dropDBs() won't have removed them, for fear
 		 * of removing the DB the restore script is initially connected to. If
 		 * --clean was specified, tell pg_dump to drop and recreate them;
 		 * otherwise we'll merely restore their contents.  Other databases
 		 * should simply be created.
 		 */
-		if (strcmp(dbname, "template1") == 0 || strcmp(dbname, "postgres") == 0)
+		if (strcmp(dbname, "template1") == 0 || strcmp(dbname, "maintable") == 0)
 		{
 			if (output_clean)
 				create_opts = "--clean --create";

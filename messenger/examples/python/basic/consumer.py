@@ -19,7 +19,7 @@ import argparse
 import asyncio
 from collections import namedtuple
 
-from apache_iggy import IggyClient, PollingStrategy, ReceiveMessage
+from apache_messenger import MessengerClient, PollingStrategy, ReceiveMessage
 from loguru import logger
 
 STREAM_NAME = "sample-stream"
@@ -37,9 +37,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "connection_string",
         help=(
-            "Connection string for Iggy client, e.g. 'iggy+tcp://iggy:iggy@127.0.0.1:8090'"
+            "Connection string for Messenger client, e.g. 'messenger+tcp://messenger:messenger@127.0.0.1:8090'"
         ),
-        default="iggy+tcp://iggy:iggy@127.0.0.1:8090",
+        default="messenger+tcp://messenger:messenger@127.0.0.1:8090",
         type=str,
     )
     return parser.parse_args()
@@ -47,14 +47,14 @@ def parse_args() -> argparse.Namespace:
 
 async def main():
     args: ArgNamespace = parse_args()
-    client = IggyClient.from_connection_string(args.connection_string)
-    logger.info("Connecting to Iggy")
+    client = MessengerClient.from_connection_string(args.connection_string)
+    logger.info("Connecting to Messenger")
     await client.connect()
     logger.info("Connected")
     await consume_messages(client)
 
 
-async def consume_messages(client: IggyClient):
+async def consume_messages(client: MessengerClient):
     interval = 0.5  # 500 milliseconds in seconds for asyncio.sleep
     logger.info(
         f"Messages will be consumed from stream: {STREAM_NAME}, topic: {TOPIC_NAME}, partition: {PARTITION_ID} with "

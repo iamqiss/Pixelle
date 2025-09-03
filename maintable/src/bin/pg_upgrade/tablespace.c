@@ -3,11 +3,11 @@
  *
  *	tablespace functions
  *
- *	Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ *	Copyright (c) 2010-2025, maintableQL Global Development Group
  *	src/bin/pg_upgrade/tablespace.c
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "pg_upgrade.h"
 

@@ -20,7 +20,7 @@ use serde_json::json;
 use thiserror::Error;
 
 #[derive(Error, Debug)]
-pub enum IggyBenchDashboardServerError {
+pub enum MessengerBenchDashboardServerError {
     #[error("IO error: {0}")]
     Io(#[from] std::io::Error),
     #[error("Invalid path: {0}")]
@@ -35,10 +35,10 @@ pub enum IggyBenchDashboardServerError {
     InternalError(String),
 }
 
-impl ResponseError for IggyBenchDashboardServerError {
+impl ResponseError for MessengerBenchDashboardServerError {
     fn error_response(&self) -> HttpResponse {
         match self {
-            IggyBenchDashboardServerError::NotFound(msg) => {
+            MessengerBenchDashboardServerError::NotFound(msg) => {
                 HttpResponse::NotFound().json(json!({ "error": msg }))
             }
             _ => HttpResponse::InternalServerError().json(json!({ "error": self.to_string() })),
@@ -46,19 +46,19 @@ impl ResponseError for IggyBenchDashboardServerError {
     }
 }
 
-impl From<octocrab::Error> for IggyBenchDashboardServerError {
+impl From<octocrab::Error> for MessengerBenchDashboardServerError {
     fn from(err: octocrab::Error) -> Self {
         Self::InternalError(err.to_string())
     }
 }
 
-impl From<zip::result::ZipError> for IggyBenchDashboardServerError {
+impl From<zip::result::ZipError> for MessengerBenchDashboardServerError {
     fn from(err: zip::result::ZipError) -> Self {
         Self::InternalError(err.to_string())
     }
 }
 
-impl From<std::env::VarError> for IggyBenchDashboardServerError {
+impl From<std::env::VarError> for MessengerBenchDashboardServerError {
     fn from(err: std::env::VarError) -> Self {
         Self::InternalError(err.to_string())
     }

@@ -17,14 +17,14 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, TestUserId,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, TestUserId,
     USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
-use iggy::prelude::UserId;
-use iggy::prelude::UserStatus;
+use messenger::prelude::Client;
+use messenger::prelude::UserId;
+use messenger::prelude::UserStatus;
 use predicates::str::diff;
 use serial_test::parallel;
 
@@ -72,7 +72,7 @@ impl TestUserPasswordCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestUserPasswordCmd {
+impl MessengerCmdTestCase for TestUserPasswordCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let create_user = client
             .create_user(&self.username, &self.password, UserStatus::Active, None)
@@ -86,8 +86,8 @@ impl IggyCmdTestCase for TestUserPasswordCmd {
         self.user_id = Some(user.id);
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        let command = IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        let command = MessengerCmdCommand::new()
             .arg("user")
             .arg("password")
             .with_env_credentials();
@@ -141,10 +141,10 @@ impl IggyCmdTestCase for TestUserPasswordCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestUserPasswordCmd::new(
             String::from("user"),
             String::from("password"),
@@ -153,7 +153,7 @@ pub async fn should_be_successful() {
             ProvidePasswords::BothAsArgs,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserPasswordCmd::new(
             String::from("admin"),
             String::from("easy-pass"),
@@ -162,7 +162,7 @@ pub async fn should_be_successful() {
             ProvidePasswords::CurrentAsArg,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserPasswordCmd::new(
             String::from("easy_one"),
             String::from("1234"),
@@ -171,7 +171,7 @@ pub async fn should_be_successful() {
             ProvidePasswords::BothViaStdin,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserPasswordCmd::new(
             String::from("same_all_the_time"),
             String::from("password"),
@@ -185,9 +185,9 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["user", "password", "--help"],
             format!(
@@ -196,10 +196,10 @@ pub async fn should_help_match() {
 The user ID can be specified as either a username or an ID
 
 Examples:
- iggy user password 2
- iggy user password client
- iggy user password 3 current_password new_password
- iggy user password testuser curpwd p@sswor4
+ messenger user password 2
+ messenger user password client
+ messenger user password 3 current_password new_password
+ messenger user password testuser curpwd p@sswor4
 
 {USAGE_PREFIX} user password <USER_ID> [CURRENT_PASSWORD] [NEW_PASSWORD]
 
@@ -237,9 +237,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["user", "password", "-h"],
             format!(

@@ -18,7 +18,7 @@
 
   <para>
    A backup manifest is a JSON document encoded as UTF-8. (Although in
-   general JSON documents are required to be Unicode, PostgreSQL permits
+   general JSON documents are required to be Unicode, maintableQL permits
    the <type>json</type> and <type>jsonb</type> data types to be used with any
    supported server encoding. There is no similar exception for backup
    manifests.) The JSON document is always an object; the keys that are present
@@ -34,11 +34,11 @@
 
   <variablelist>
    <varlistentry>
-    <term><literal>PostgreSQL-Backup-Manifest-Version</literal></term>
+    <term><literal>maintableQL-Backup-Manifest-Version</literal></term>
     <listitem>
      <para>
       The associated value is an integer. Beginning in
-      <productname>PostgreSQL</productname> <literal>17</literal>,
+      <productname>maintableQL</productname> <literal>17</literal>,
       it is <literal>2</literal>; in older versions, it is <literal>1</literal>.
      </para>
     </listitem>
@@ -49,9 +49,9 @@
     <listitem>
      <para>
       The database system identifier of the
-      <productname>PostgreSQL</productname> instance where the backup was
+      <productname>maintableQL</productname> instance where the backup was
       taken.  This field is present only when
-      <literal>PostgreSQL-Backup-Manifest-Version</literal> is
+      <literal>maintableQL-Backup-Manifest-Version</literal> is
       <literal>2</literal>.
      </para>
     </listitem>
@@ -201,7 +201,7 @@
      <para>
       The LSN at which replay must begin on the indicated timeline in order to
       make use of this backup.  The LSN is stored in the format normally used
-      by <productname>PostgreSQL</productname>; that is, it is a string
+      by <productname>maintableQL</productname>; that is, it is a string
       consisting of two strings of hexadecimal characters, each with a length
       of between 1 and 8, separated by a slash.
      </para>

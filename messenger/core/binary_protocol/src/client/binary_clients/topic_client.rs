@@ -17,8 +17,8 @@
  */
 
 use async_trait::async_trait;
-use iggy_common::{
-    CompressionAlgorithm, Identifier, IggyError, IggyExpiry, MaxTopicSize, Topic, TopicDetails,
+use messenger_common::{
+    CompressionAlgorithm, Identifier, MessengerError, MessengerExpiry, MaxTopicSize, Topic, TopicDetails,
 };
 
 /// This trait defines the methods to interact with the topic module.
@@ -32,11 +32,11 @@ pub trait TopicClient {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<Option<TopicDetails>, IggyError>;
+    ) -> Result<Option<TopicDetails>, MessengerError>;
     /// Get the info about all the topics.
     ///
     /// Authentication is required, and the permission to read the topics.
-    async fn get_topics(&self, stream_id: &Identifier) -> Result<Vec<Topic>, IggyError>;
+    async fn get_topics(&self, stream_id: &Identifier) -> Result<Vec<Topic>, MessengerError>;
     /// Create a new topic.
     ///
     /// Authentication is required, and the permission to manage the topics.
@@ -49,9 +49,9 @@ pub trait TopicClient {
         compression_algorithm: CompressionAlgorithm,
         replication_factor: Option<u8>,
         topic_id: Option<u32>,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         max_topic_size: MaxTopicSize,
-    ) -> Result<TopicDetails, IggyError>;
+    ) -> Result<TopicDetails, MessengerError>;
     /// Update a topic by unique ID or name.
     ///
     /// Authentication is required, and the permission to manage the topics.
@@ -62,9 +62,9 @@ pub trait TopicClient {
         name: &str,
         compression_algorithm: CompressionAlgorithm,
         replication_factor: Option<u8>,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         max_topic_size: MaxTopicSize,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
     /// Delete a topic by unique ID or name.
     ///
     /// Authentication is required, and the permission to manage the topics.
@@ -72,7 +72,7 @@ pub trait TopicClient {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
     /// Purge a topic by unique ID or name.
     ///
     /// Authentication is required, and the permission to manage the topics.
@@ -80,5 +80,5 @@ pub trait TopicClient {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
 }

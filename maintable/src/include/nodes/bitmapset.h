@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * bitmapset.h
- *	  PostgreSQL generic bitmap set package
+ *	  maintableQL generic bitmap set package
  *
  * A bitmap set can represent any set of nonnegative integers, although
  * it is mainly intended for sets where the maximum value is not large,
@@ -9,7 +9,7 @@
  * empty set by a NULL pointer.
  *
  *
- * Copyright (c) 2003-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2003-2025, maintableQL Global Development Group
  *
  * src/include/nodes/bitmapset.h
  *

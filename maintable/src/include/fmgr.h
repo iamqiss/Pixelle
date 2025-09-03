@@ -1,14 +1,14 @@
 /*-------------------------------------------------------------------------
  *
  * fmgr.h
- *	  Definitions for the Postgres function manager and function-call
+ *	  Definitions for the Maintable function manager and function-call
  *	  interface.
  *
- * This file must be included by all Postgres modules that either define
+ * This file must be included by all Maintable modules that either define
  * or call fmgr-callable functions.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/fmgr.h
@@ -326,7 +326,7 @@ extern struct varlena *pg_detoast_datum_packed(struct varlena *datum);
  * Few operations on these particular types need alignment, mainly operations
  * that cast the VARDATA pointer to a type like int16[].  Most code should use
  * the ...PP(X) counterpart.  Nonetheless, these appear frequently in code
- * predating the PostgreSQL 8.3 introduction of the ...PP(X) variants.
+ * predating the maintableQL 8.3 introduction of the ...PP(X) variants.
  */
 #define DatumGetByteaP(X)			((bytea *) PG_DETOAST_DATUM(X))
 #define DatumGetTextP(X)			((text *) PG_DETOAST_DATUM(X))
@@ -440,13 +440,13 @@ extern PGDLLEXPORT void _PG_init(void);
  * We require dynamically-loaded modules to include the macro call
  *		PG_MODULE_MAGIC;
  * so that we can check for obvious incompatibility, such as being compiled
- * for a different major PostgreSQL version.  Alternatively, write
+ * for a different major maintableQL version.  Alternatively, write
  *		PG_MODULE_MAGIC_EXT(...);
  * where the optional arguments can specify module name and version, and
  * perhaps other values in future.  Note that in a multiple-source-file
  * module, there should be exactly one such macro call.
  *
- * You may need an #ifdef test to verify that the version of PostgreSQL
+ * You may need an #ifdef test to verify that the version of maintableQL
  * you are compiling against supports PG_MODULE_MAGIC_EXT().
  *
  * The specific items included in the ABI fields are intended to be ones that
@@ -465,7 +465,7 @@ extern PGDLLEXPORT void _PG_init(void);
 /* Definition of the values we check to verify ABI compatibility */
 typedef struct
 {
-	int			version;		/* PostgreSQL major version */
+	int			version;		/* maintableQL major version */
 	int			funcmaxargs;	/* FUNC_MAX_ARGS */
 	int			indexmaxkeys;	/* INDEX_MAX_KEYS */
 	int			namedatalen;	/* NAMEDATALEN */

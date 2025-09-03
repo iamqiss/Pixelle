@@ -32,7 +32,7 @@ use bench_report::{
     benchmark_kind::BenchmarkKind, individual_metrics::BenchmarkIndividualMetrics,
     numeric_parameter::BenchmarkNumericParameter,
 };
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::ClientFactory;
 
 pub enum TypedBenchmarkConsumer {
@@ -51,11 +51,11 @@ impl TypedBenchmarkConsumer {
         stream_id: u32,
         messages_per_batch: BenchmarkNumericParameter,
         finish_condition: Arc<BenchmarkFinishCondition>,
-        warmup_time: IggyDuration,
-        sampling_time: IggyDuration,
+        warmup_time: MessengerDuration,
+        sampling_time: MessengerDuration,
         moving_average_window: u32,
         polling_kind: PollingKind,
-        limit_bytes_per_second: Option<IggyByteSize>,
+        limit_bytes_per_second: Option<MessengerByteSize>,
         origin_timestamp_latency_calculation: bool,
     ) -> Self {
         let config = BenchmarkConsumerConfig {
@@ -91,7 +91,7 @@ impl TypedBenchmarkConsumer {
         }
     }
 
-    pub async fn run(self) -> Result<BenchmarkIndividualMetrics, IggyError> {
+    pub async fn run(self) -> Result<BenchmarkIndividualMetrics, MessengerError> {
         match self {
             Self::High(c) => c.run().await,
             Self::Low(c) => c.run().await,

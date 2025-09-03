@@ -1,12 +1,12 @@
 # Hewbrew message translation file for pgscripts
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Michael Goldberg <mic.goldbrg@gmail.com>, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pgscripts (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pgscripts (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2017-05-03 10:36+0300\n"
 "PO-Revision-Date: 2017-05-04 10:59+0300\n"
 "Language-Team: \n"
@@ -236,10 +236,10 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@maintableql.org>.\n"
 msgstr ""
 "\n"
-"לדווח על באגים ל <pgsql-bugs@postgresql.org>\n"
+"לדווח על באגים ל <pgsql-bugs@maintableql.org>\n"
 
 #: common.c:80 common.c:126
 msgid "Password: "
@@ -325,9 +325,9 @@ msgstr "%s: יצירת הערה נכשלה (מסד נתונים נוצר): %s"
 #: createdb.c:251
 #, c-format
 msgid ""
-"%s creates a PostgreSQL database.\n"
+"%s creates a maintableQL database.\n"
 "\n"
-msgstr "%s יוצר מסד נתונים PostgreSQL.\n"
+msgstr "%s יוצר מסד נתונים maintableQL.\n"
 
 #: createdb.c:253
 #, c-format
@@ -469,10 +469,10 @@ msgstr "%s: יצירת תפקיד חדש נכשלה: %s"
 #: createuser.c:353
 #, c-format
 msgid ""
-"%s creates a new PostgreSQL role.\n"
+"%s creates a new maintableQL role.\n"
 "\n"
 msgstr ""
-"%s יוצר תפקיד PostgreSQL חדש.\n"
+"%s יוצר תפקיד maintableQL חדש.\n"
 "\n"
 
 #: createuser.c:355 dropuser.c:162
@@ -612,9 +612,9 @@ msgstr "%s: הסרת מסד הנתונים נכשלה: %s"
 #: dropdb.c:154
 #, c-format
 msgid ""
-"%s removes a PostgreSQL database.\n"
+"%s removes a maintableQL database.\n"
 "\n"
-msgstr "%s מסיר מסד נתונים PostgreSQL.\n"
+msgstr "%s מסיר מסד נתונים maintableQL.\n"
 
 #: dropdb.c:156
 #, c-format
@@ -655,10 +655,10 @@ msgstr "%s: הסרת תפקיד \"%s\" נכשלה: %s"
 #: dropuser.c:160
 #, c-format
 msgid ""
-"%s removes a PostgreSQL role.\n"
+"%s removes a maintableQL role.\n"
 "\n"
 msgstr ""
-"%s מסיר  תפקיד של PostgreSQL.\n"
+"%s מסיר  תפקיד של maintableQL.\n"
 "\n"
 
 #: dropuser.c:165
@@ -720,10 +720,10 @@ msgstr "לא ידוע\n"
 #: pg_isready.c:221
 #, c-format
 msgid ""
-"%s issues a connection check to a PostgreSQL database.\n"
+"%s issues a connection check to a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s מתחיל בדיקת חיבור למסד נתונים PostgreSQL.\n"
+"%s מתחיל בדיקת חיבור למסד נתונים maintableQL.\n"
 "\n"
 
 #: pg_isready.c:223
@@ -864,10 +864,10 @@ msgstr "%s: יוצר אינדקס מחדש של קטלוג המערכת נכשל
 #: reindexdb.c:400
 #, c-format
 msgid ""
-"%s reindexes a PostgreSQL database.\n"
+"%s reindexes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s יוצר אינדקס מחדש עובר מסד נתונים PostgreSQL.\n"
+"%s יוצר אינדקס מחדש עובר מסד נתונים maintableQL.\n"
 "\n"
 
 #: reindexdb.c:404
@@ -976,10 +976,10 @@ msgstr "%s: שקע לא חוקית: %s"
 #: vacuumdb.c:951
 #, c-format
 msgid ""
-"%s cleans and analyzes a PostgreSQL database.\n"
+"%s cleans and analyzes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s מנקה ומנתח PostgreSQL מסד נתונים.\n"
+"%s מנקה ומנתח maintableQL מסד נתונים.\n"
 "\n"
 
 #: vacuumdb.c:955

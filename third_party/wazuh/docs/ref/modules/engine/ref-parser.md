@@ -796,7 +796,7 @@ predefined formats like RFC3339, ISO8601, etc.
 | ISO8601Z              | %FT%TZ              | 2018-08-14T14:30:02.203151Z       |
 | HTTPDATE              | %d/%b/%Y:%T %z      | 26/Dec/2016:16:22:14 +0000        |
 | NGINX_ERROR           | %Y/%m/%d %T         | 2019/10/30 23:26:34               |
-| POSTGRES              | %F %H:%M:%6S %Z     | 2021-02-14 10:45:33 UTC           |
+| MAINTABLE              | %F %H:%M:%6S %Z     | 2021-02-14 10:45:33 UTC           |
 
 ### Examples: Without locale
 

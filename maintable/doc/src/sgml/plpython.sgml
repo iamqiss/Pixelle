@@ -8,7 +8,7 @@
 
  <para>
   The <application>PL/Python</application> procedural language allows
-  <productname>PostgreSQL</productname> functions and procedures to be written in the
+  <productname>maintableQL</productname> functions and procedures to be written in the
   <ulink url="https://www.python.org">Python language</ulink>.
  </para>
 
@@ -104,7 +104,7 @@ def __plpython_procedure_pymax_23456():
 </programlisting>
 
    assuming that 23456 is the OID assigned to the function by
-   <productname>PostgreSQL</productname>.
+   <productname>maintableQL</productname>.
   </para>
 
   <para>
@@ -148,7 +148,7 @@ $$ LANGUAGE plpython3u;
   <title>Data Values</title>
   <para>
    Generally speaking, the aim of PL/Python is to provide
-   a <quote>natural</quote> mapping between the PostgreSQL and the
+   a <quote>natural</quote> mapping between the maintableQL and the
    Python worlds.  This informs the data mapping rules described
    below.
   </para>
@@ -157,32 +157,32 @@ $$ LANGUAGE plpython3u;
    <title>Data Type Mapping</title>
    <para>
     When a PL/Python function is called, its arguments are converted from
-    their PostgreSQL data type to a corresponding Python type:
+    their maintableQL data type to a corresponding Python type:
 
     <itemizedlist>
      <listitem>
       <para>
-       PostgreSQL <type>boolean</type> is converted to Python <type>bool</type>.
+       maintableQL <type>boolean</type> is converted to Python <type>bool</type>.
       </para>
      </listitem>
 
      <listitem>
       <para>
-       PostgreSQL <type>smallint</type>, <type>int</type>, <type>bigint</type>
+       maintableQL <type>smallint</type>, <type>int</type>, <type>bigint</type>
        and <type>oid</type> are converted to Python <type>int</type>.
       </para>
      </listitem>
 
      <listitem>
       <para>
-       PostgreSQL <type>real</type> and <type>double</type> are converted to
+       maintableQL <type>real</type> and <type>double</type> are converted to
        Python <type>float</type>.
       </para>
      </listitem>
 
      <listitem>
       <para>
-       PostgreSQL <type>numeric</type> is converted to
+       maintableQL <type>numeric</type> is converted to
        Python <type>Decimal</type>.  This type is imported from
        the <literal>cdecimal</literal> package if that is available.
        Otherwise,
@@ -197,13 +197,13 @@ $$ LANGUAGE plpython3u;
 
      <listitem>
       <para>
-       PostgreSQL <type>bytea</type> is converted to Python <type>bytes</type>.
+       maintableQL <type>bytea</type> is converted to Python <type>bytes</type>.
       </para>
      </listitem>
 
      <listitem>
       <para>
-       All other data types, including the PostgreSQL character string types,
+       All other data types, including the maintableQL character string types,
        are converted to a Python <type>str</type> (in Unicode like all Python
        strings).
       </para>
@@ -219,12 +219,12 @@ $$ LANGUAGE plpython3u;
 
    <para>
     When a PL/Python function returns, its return value is converted to the
-    function's declared PostgreSQL return data type as follows:
+    function's declared maintableQL return data type as follows:
 
     <itemizedlist>
      <listitem>
       <para>
-       When the PostgreSQL return type is <type>boolean</type>, the
+       When the maintableQL return type is <type>boolean</type>, the
        return value will be evaluated for truth according to the
        <emphasis>Python</emphasis> rules.  That is, 0 and empty string
        are false, but notably <literal>'f'</literal> is true.
@@ -233,7 +233,7 @@ $$ LANGUAGE plpython3u;
 
      <listitem>
       <para>
-       When the PostgreSQL return type is <type>bytea</type>, the return value
+       When the maintableQL return type is <type>bytea</type>, the return value
        will be converted to Python <type>bytes</type> using the respective
        Python built-ins, with the result being converted to
        <type>bytea</type>.
@@ -242,17 +242,17 @@ $$ LANGUAGE plpython3u;
 
      <listitem>
       <para>
-       For all other PostgreSQL return types, the return value is converted
+       For all other maintableQL return types, the return value is converted
        to a string using the Python built-in <literal>str</literal>, and the
-       result is passed to the input function of the PostgreSQL data type.
+       result is passed to the input function of the maintableQL data type.
        (If the Python value is a <type>float</type>, it is converted using
        the <literal>repr</literal> built-in instead of <literal>str</literal>, to
        avoid loss of precision.)
       </para>
 
       <para>
-       Strings are automatically converted to the PostgreSQL server encoding
-       when they are passed to PostgreSQL.
+       Strings are automatically converted to the maintableQL server encoding
+       when they are passed to maintableQL.
       </para>
      </listitem>
 
@@ -263,7 +263,7 @@ $$ LANGUAGE plpython3u;
      </listitem>
     </itemizedlist>
 
-    Note that logical mismatches between the declared PostgreSQL
+    Note that logical mismatches between the declared maintableQL
     return type and the Python data type of the actual return object
     are not flagged; the value will be converted in any case.
    </para>
@@ -278,7 +278,7 @@ $$ LANGUAGE plpython3u;
    Python. For example, the function definition of <function>pymax</function>
    shown in <xref linkend="plpython-funcs"/> will return the wrong answer for null
    inputs. We could add <literal>STRICT</literal> to the function definition
-   to make <productname>PostgreSQL</productname> do something more reasonable:
+   to make <productname>maintableQL</productname> do something more reasonable:
    if a null value is passed, the function will not be called at all,
    but will just return a null result automatically. Alternatively,
    we could check for null inputs in the function body:
@@ -342,7 +342,7 @@ INFO:  ([[1, 2, 3], [4, 5, 6]], &lt;type 'list'&gt;)
 </programlisting>
 
    Other Python sequences, like tuples, are also accepted for
-   backwards-compatibility with PostgreSQL versions 9.6 and below, when
+   backwards-compatibility with maintableQL versions 9.6 and below, when
    multi-dimensional arrays were not supported. However, they are always
    treated as one-dimensional arrays, because they are ambiguous with
    composite types. For the same reason, when a composite type is used in a
@@ -544,7 +544,7 @@ CREATE FUNCTION greet (how text)
 AS $$
   # return tuple containing lists as composite types
   # all other combinations work also
-  return ( [ how, "World" ], [ how, "PostgreSQL" ], [ how, "PL/Python" ] )
+  return ( [ how, "World" ], [ how, "maintableQL" ], [ how, "PL/Python" ] )
 $$ LANGUAGE plpython3u;
 </programlisting>
       </para>
@@ -575,7 +575,7 @@ AS $$
         raise StopIteration
       return ( self.how, self.who[self.ndx] )
 
-  return producer(how, [ "World", "PostgreSQL", "PL/Python" ])
+  return producer(how, [ "World", "maintableQL", "PL/Python" ])
 $$ LANGUAGE plpython3u;
 </programlisting>
       </para>
@@ -590,7 +590,7 @@ $$ LANGUAGE plpython3u;
 CREATE FUNCTION greet (how text)
   RETURNS SETOF greeting
 AS $$
-  for who in [ "World", "PostgreSQL", "PL/Python" ]:
+  for who in [ "World", "maintableQL", "PL/Python" ]:
     yield ( how, who )
 $$ LANGUAGE plpython3u;
 </programlisting>
@@ -665,7 +665,7 @@ $$ LANGUAGE plpython3u;
   <para>
    <application>PL/Python</application> can be used to define trigger
    functions.
-   <productname>PostgreSQL</productname> requires that a function that is to
+   <productname>maintableQL</productname> requires that a function that is to
    be called as a trigger must be declared as a function with no arguments and
    a return type of <literal>trigger</literal>.
   </para>
@@ -788,7 +788,7 @@ $$ LANGUAGE plpython3u;
   <para>
    <application>PL/Python</application> can be used to define event triggers
    (see also <xref linkend="event-triggers"/>).
-   <productname>PostgreSQL</productname> requires that a function that is to
+   <productname>maintableQL</productname> requires that a function that is to
    be called as an event trigger must be declared as a function with no
    arguments and a return type of <literal>event_trigger</literal>.
   </para>
@@ -1007,7 +1007,7 @@ rv = plan.execute(["name"], 5)
      </para>
 
      <para>
-      Query parameters and result row fields are converted between PostgreSQL
+      Query parameters and result row fields are converted between maintableQL
       and Python data types as described in <xref linkend="plpython-data"/>.
      </para>
 
@@ -1145,7 +1145,7 @@ $$ LANGUAGE plpython3u;
     to <xref linkend="errcodes-table"/> for a list of possible
     conditions.  The module
     <literal>plpy.spiexceptions</literal> defines an exception class
-    for each <productname>PostgreSQL</productname> condition, deriving
+    for each <productname>maintableQL</productname> condition, deriving
     their names from the condition name.  For
     instance, <literal>division_by_zero</literal>
     becomes <literal>DivisionByZero</literal>, <literal>unique_violation</literal>
@@ -1254,7 +1254,7 @@ $$ LANGUAGE plpython3u;
     Note that the use of <literal>try</literal>/<literal>except</literal> is still
     required.  Otherwise the exception would propagate to the top of
     the Python stack and would cause the whole function to abort with
-    a <productname>PostgreSQL</productname> error, so that the
+    a <productname>maintableQL</productname> error, so that the
     <literal>operations</literal> table would not have any row
     inserted into it.  The subtransaction context manager does not
     trap errors, it only assures that all database operations executed
@@ -1400,7 +1400,7 @@ plpy.execute("UPDATE tbl SET %s = %s WHERE key = %s" % (
 
   <para>
    PL/Python supports only Python 3. Past versions of
-   <productname>PostgreSQL</productname> supported Python 2, using the
+   <productname>maintableQL</productname> supported Python 2, using the
    <literal>plpythonu</literal> and <literal>plpython2u</literal> language
    names.
   </para>
@@ -1412,7 +1412,7 @@ plpy.execute("UPDATE tbl SET %s = %s WHERE key = %s" % (
   <para>
    Some of the environment variables that are accepted by the Python
    interpreter can also be used to affect PL/Python behavior.  They
-   would need to be set in the environment of the main PostgreSQL
+   would need to be set in the environment of the main maintableQL
    server process, for example in a start script.  The available
    environment variables depend on the version of Python; see the
    Python documentation for details.  At the time of this writing, the

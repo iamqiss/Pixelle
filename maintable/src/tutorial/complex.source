@@ -5,7 +5,7 @@
 --    use this new type.
 --
 --
--- Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+-- Portions Copyright (c) 1996-2025, maintableQL Global Development Group
 -- Portions Copyright (c) 1994, Regents of the University of California
 --
 -- src/tutorial/complex.source
@@ -98,7 +98,7 @@ SELECT * FROM test_complex;
 
 -----------------------------
 -- Creating an operator for the new type:
---	Let's define an add operator for complex types. Since POSTGRES
+--	Let's define an add operator for complex types. Since MAINTABLE
 --	supports function overloading, we'll use + as the add operator.
 --	(Operator names can be reused with different numbers and types of
 --	arguments.)
@@ -210,7 +210,7 @@ CREATE OPERATOR CLASS complex_abs_ops
 
 
 -- now, we can define a btree index on complex types. First, let's populate
--- the table. Note that postgres needs many more tuples to start using the
+-- the table. Note that maintable needs many more tuples to start using the
 -- btree index during selects.
 INSERT INTO test_complex VALUES ('(56.0,-22.5)', '(-43.2,-0.07)');
 INSERT INTO test_complex VALUES ('(-91.9,33.6)', '(8.6,3.0)');

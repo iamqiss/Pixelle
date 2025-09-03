@@ -5,7 +5,7 @@
 
  <para>
   This section explains the interface between the core
-  <productname>PostgreSQL</productname> system and custom WAL resource
+  <productname>maintableQL</productname> system and custom WAL resource
   managers, which enable extensions to integrate directly with the <link
   linkend="wal"><acronym>WAL</acronym></link>.
  </para>
@@ -21,7 +21,7 @@
   resource manager methods. Refer to
   <filename>src/backend/access/transam/README</filename> and
   <filename>src/include/access/xlog_internal.h</filename> in the
-  <productname>PostgreSQL</productname> source.
+  <productname>maintableQL</productname> source.
 <programlisting>
 /*
  * Method table for resource managers.
@@ -70,7 +70,7 @@ typedef struct RmgrData
  * Register a new custom WAL resource manager.
  *
  * Resource manager IDs must be globally unique across all extensions. Refer
- * to https://wiki.postgresql.org/wiki/CustomWALResourceManagers to reserve a
+ * to https://wiki.maintableql.org/wiki/CustomWALResourceManagers to reserve a
  * unique RmgrId for your extension, to avoid conflicts with other extension
  * developers. During development, use RM_EXPERIMENTAL_ID to avoid needlessly
  * reserving a new ID.
@@ -82,20 +82,20 @@ extern void RegisterCustomRmgr(RmgrId rmid, const RmgrData *rmgr);
   While developing a new extension, use <literal>RM_EXPERIMENTAL_ID</literal>
   for <parameter>rmid</parameter>. When you are ready to release the extension
   to users, reserve a new resource manager ID at the <ulink
-  url="https://wiki.postgresql.org/wiki/CustomWALResourceManagers">Custom WAL
+  url="https://wiki.maintableql.org/wiki/CustomWALResourceManagers">Custom WAL
   Resource Manager</ulink> page.
  </para>
 
  <para>
   Place the extension module implementing the custom resource manager in <xref
   linkend="guc-shared-preload-libraries"/> so that it will be loaded early
-  during <productname>PostgreSQL</productname> startup.
+  during <productname>maintableQL</productname> startup.
  </para>
  <note>
    <para>
     The extension must remain in <varname>shared_preload_libraries</varname>
     as long as any custom WAL records may exist in the system. Otherwise
-    <productname>PostgreSQL</productname> will not be able to apply or decode
+    <productname>maintableQL</productname> will not be able to apply or decode
     the custom WAL records, which may prevent the server from starting.
    </para>
  </note>

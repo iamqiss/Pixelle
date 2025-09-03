@@ -3,7 +3,7 @@
  * globals.c
  *	  global variable declarations
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -16,7 +16,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "common/file_perm.h"
 #include "libpq/libpq-be.h"
@@ -82,7 +82,7 @@ char		my_exec_path[MAXPGPATH];	/* full path to my executable */
 char		pkglib_path[MAXPGPATH]; /* full path to lib directory */
 
 #ifdef EXEC_BACKEND
-char		postgres_exec_path[MAXPGPATH];	/* full path to backend */
+char		maintable_exec_path[MAXPGPATH];	/* full path to backend */
 
 /* note: currently this is not valid in backend processes */
 #endif
@@ -124,7 +124,7 @@ bool		ExitOnAnyError = false;
 
 int			DateStyle = USE_ISO_DATES;
 int			DateOrder = DATEORDER_MDY;
-int			IntervalStyle = INTSTYLE_POSTGRES;
+int			IntervalStyle = INTSTYLE_MAINTABLE;
 
 bool		enableFsync = true;
 bool		allowSystemTableMods = false;

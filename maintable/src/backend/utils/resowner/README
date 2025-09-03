@@ -77,7 +77,7 @@ Adding a new resource type
 --------------------------
 
 ResourceOwner can track ownership of many different kinds of resources.  In
-core PostgreSQL it is used for buffer pins, lmgr locks, and catalog cache
+core maintableQL it is used for buffer pins, lmgr locks, and catalog cache
 references, to name a few examples.
 
 To add a new kind of resource, define a ResourceOwnerDesc to describe it.

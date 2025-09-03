@@ -1,13 +1,13 @@
-# Java SDK for Iggy
+# Java SDK for Messenger
 
-[Iggy GitHub](https://github.com/apache/iggy) | [Website](https://iggy.apache.org) | [Getting started](https://iggy.apache.org/docs/introduction/getting-started) | [Documentation](https://iggy.apache.org/docs) | [Blog](https://iggy.apache.org/blogs) | [Discord](https://discord.gg/C5Sux5NcRa)
+[Messenger GitHub](https://github.com/apache/messenger) | [Website](https://messenger.apache.org) | [Getting started](https://messenger.apache.org/docs/introduction/getting-started) | [Documentation](https://messenger.apache.org/docs) | [Blog](https://messenger.apache.org/blogs) | [Discord](https://discord.gg/C5Sux5NcRa)
 
-[![Tests](https://github.com/apache/iggy/actions/workflows/ci-check-java-sdk.yml/badge.svg)](https://github.com/apache/iggy/actions/workflows/ci-check-java-sdk.yml)
-[![x](https://img.shields.io/twitter/follow/iggy_rs_?style=social)](https://x.com/ApacheIggy)
+[![Tests](https://github.com/apache/messenger/actions/workflows/ci-check-java-sdk.yml/badge.svg)](https://github.com/apache/messenger/actions/workflows/ci-check-java-sdk.yml)
+[![x](https://img.shields.io/twitter/follow/messenger_rs_?style=social)](https://x.com/ApacheMessenger)
 
 ---
 
-Official Java client SDK for [Apache Iggy](https://iggy.apache.org) message streaming.
+Official Java client SDK for [Apache Messenger](https://messenger.apache.org) message streaming.
 
 The client currently supports HTTP and TCP protocols with blocking implementation.
 
@@ -17,11 +17,11 @@ Add dependency to `pom.xml` or `build.gradle` file.
 
 You can find the latest version in Maven Central repository:
 
-<https://central.sonatype.com/artifact/org.apache.iggy/iggy-java-sdk>
+<https://central.sonatype.com/artifact/org.apache.messenger/messenger-java-sdk>
 
 ## Implement consumer and producer
 
 You can find examples for
-simple [consumer](https://github.com/apache/iggy/blob/master/foreign/java/examples/simple-consumer/src/main/java/org/apache/iggy/SimpleConsumer.java)
-and [producer](https://github.com/apache/iggy/blob/master/foreign/java/examples/simple-producer/src/main/java/org/apache/iggy/SimpleProducer.java)
+simple [consumer](https://github.com/apache/messenger/blob/master/foreign/java/examples/simple-consumer/src/main/java/org/apache/messenger/SimpleConsumer.java)
+and [producer](https://github.com/apache/messenger/blob/master/foreign/java/examples/simple-producer/src/main/java/org/apache/messenger/SimpleProducer.java)
 in the repository.

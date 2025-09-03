@@ -21,7 +21,7 @@ use crate::Identifier;
 use crate::Permissions;
 use crate::Sizeable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, UPDATE_PERMISSIONS_CODE};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -46,8 +46,8 @@ impl Command for UpdatePermissions {
     }
 }
 
-impl Validatable<IggyError> for UpdatePermissions {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for UpdatePermissions {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -68,16 +68,16 @@ impl BytesSerializable for UpdatePermissions {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<UpdatePermissions, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<UpdatePermissions, MessengerError> {
         if bytes.len() < 4 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let user_id = Identifier::from_bytes(bytes.clone())?;
         let mut position = user_id.get_size_bytes().as_bytes_usize();
         let has_permissions = bytes[position];
         if has_permissions > 1 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         position += 1;

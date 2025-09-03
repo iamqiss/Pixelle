@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/cluster.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-cluster">
@@ -33,7 +33,7 @@ CLUSTER [ ( <replaceable class="parameter">option</replaceable> [, ...] ) ] [ <r
   <title>Description</title>
 
   <para>
-   <command>CLUSTER</command> instructs <productname>PostgreSQL</productname>
+   <command>CLUSTER</command> instructs <productname>maintableQL</productname>
    to cluster the table specified
    by <replaceable class="parameter">table_name</replaceable>
    based on the index specified by
@@ -55,7 +55,7 @@ CLUSTER [ ( <replaceable class="parameter">option</replaceable> [, ...] ) ] [ <r
   </para>
 
   <para>
-   When a table is clustered, <productname>PostgreSQL</productname>
+   When a table is clustered, <productname>maintableQL</productname>
    remembers which index it was clustered by.  The form
    <command>CLUSTER <replaceable class="parameter">table_name</replaceable></command>
    reclusters the table using the same index as before.  You can also
@@ -250,7 +250,7 @@ CLUSTER;
   </para>
 
   <para>
-   The following syntax was used before <productname>PostgreSQL</productname>
+   The following syntax was used before <productname>maintableQL</productname>
    17 and is still supported:
 <synopsis>
 CLUSTER [ VERBOSE ] [ <replaceable class="parameter">table_name</replaceable> [ USING <replaceable class="parameter">index_name</replaceable> ] ]
@@ -258,7 +258,7 @@ CLUSTER [ VERBOSE ] [ <replaceable class="parameter">table_name</replaceable> [ 
   </para>
 
   <para>
-   The following syntax was used before <productname>PostgreSQL</productname>
+   The following syntax was used before <productname>maintableQL</productname>
    8.3 and is still supported:
 <synopsis>
 CLUSTER <replaceable class="parameter">index_name</replaceable> ON <replaceable class="parameter">table_name</replaceable>

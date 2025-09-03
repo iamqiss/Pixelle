@@ -1,25 +1,25 @@
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 use strict;
 use warnings FATAL => 'all';
 use Config;
-use PostgreSQL::Test::Utils;
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Utils;
+use maintableQL::Test::Cluster;
 use Test::More;
 
 # This tests load balancing across the list of different hosts in the host
 # parameter of the connection string.
 
 # Cluster setup which is shared for testing both load balancing methods
-my $node1 = PostgreSQL::Test::Cluster->new('node1');
-my $node2 = PostgreSQL::Test::Cluster->new('node2', own_host => 1);
-my $node3 = PostgreSQL::Test::Cluster->new('node3', own_host => 1);
+my $node1 = maintableQL::Test::Cluster->new('node1');
+my $node2 = maintableQL::Test::Cluster->new('node2', own_host => 1);
+my $node3 = maintableQL::Test::Cluster->new('node3', own_host => 1);
 
 # Create a data directory with initdb
 $node1->init();
 $node2->init();
 $node3->init();
 
-# Start the PostgreSQL server
+# Start the maintableQL server
 $node1->start();
 $node2->start();
 $node3->start();

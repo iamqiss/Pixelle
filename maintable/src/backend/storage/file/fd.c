@@ -3,7 +3,7 @@
  * fd.c
  *	  Virtual file descriptor code.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -70,7 +70,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <dirent.h>
 #include <sys/file.h>
@@ -132,7 +132,7 @@
  * If we have fewer than this many usable FDs after allowing for the reserved
  * ones, choke.  (This value is chosen to work with "ulimit -n 64", but not
  * much less than that.  Note that this value ensures numExternalFDs can be
- * at least 16; as of this writing, the contrib/postgres_fdw regression tests
+ * at least 16; as of this writing, the contrib/maintable_fdw regression tests
  * will not pass unless that can grow to at least 14.)
  */
 #define FD_MINFREE				48
@@ -3954,7 +3954,7 @@ fsync_parent_path(const char *fname, int elevel)
 }
 
 /*
- * Create a PostgreSQL data sub-directory
+ * Create a maintableQL data sub-directory
  *
  * The data directory itself, and most of its sub-directories, are created at
  * initdb time, but we do have some occasions when we create directories in
@@ -3968,7 +3968,7 @@ fsync_parent_path(const char *fname, int elevel)
  *
  * For permissions other than the default, mkdir() can be used directly, but
  * be sure to consider carefully such cases -- a sub-directory with incorrect
- * permissions in a PostgreSQL data directory could cause backups and other
+ * permissions in a maintableQL data directory could cause backups and other
  * processes to fail.
  */
 int

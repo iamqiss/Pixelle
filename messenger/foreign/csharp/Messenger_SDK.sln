@@ -1,18 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iggy_SDK", "Iggy_SDK\Iggy_SDK.csproj", "{661540EB-81F9-492C-828B-CF787BEBD50B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger_SDK", "Messenger_SDK\Messenger_SDK.csproj", "{661540EB-81F9-492C-828B-CF787BEBD50B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iggy_SDK_Tests", "Iggy_SDK_Tests\Iggy_SDK_Tests.csproj", "{8514D555-35CF-4538-97D3-DC42A182B694}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger_SDK_Tests", "Messenger_SDK_Tests\Messenger_SDK_Tests.csproj", "{8514D555-35CF-4538-97D3-DC42A182B694}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iggy_Sample_Producer", "Iggy_Sample_Producer\Iggy_Sample_Producer.csproj", "{ABF3900E-D9C1-46F8-97B1-E0918DCFC89C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger_Sample_Producer", "Messenger_Sample_Producer\Messenger_Sample_Producer.csproj", "{ABF3900E-D9C1-46F8-97B1-E0918DCFC89C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iggy_Sample_Consumer", "Iggy_Sample_Consumer\Iggy_Sample_Consumer.csproj", "{2ED2B03B-369E-493C-9AB3-0FF7EA9AFDE2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger_Sample_Consumer", "Messenger_Sample_Consumer\Messenger_Sample_Consumer.csproj", "{2ED2B03B-369E-493C-9AB3-0FF7EA9AFDE2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{A9D91A9B-606D-469E-BAD9-B220A4AB31CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks", "Benchmarks\Benchmarks.csproj", "{466C54AD-A5FA-401C-9300-8FE21D3C355A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iggy_SDK.Tests.Integration", "Iggy_SDK.Tests.Integration\Iggy_SDK.Tests.Integration.csproj", "{59661E1B-1D5E-4D58-AE7B-10E8ABB9839A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger_SDK.Tests.Integration", "Messenger_SDK.Tests.Integration\Messenger_SDK.Tests.Integration.csproj", "{59661E1B-1D5E-4D58-AE7B-10E8ABB9839A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionFolder", "{3A9B7D3B-EFA9-4652-A647-C72F84616114}"
 	ProjectSection(SolutionItems) = preProject
@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionF
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iggy_SDK.Tests.BDD", "Iggy_SDK.Tests.BDD\Iggy_SDK.Tests.BDD.csproj", "{91BFFAE1-1252-4061-BF40-C7E7296F82BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger_SDK.Tests.BDD", "Messenger_SDK.Tests.BDD\Messenger_SDK.Tests.BDD.csproj", "{91BFFAE1-1252-4061-BF40-C7E7296F82BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

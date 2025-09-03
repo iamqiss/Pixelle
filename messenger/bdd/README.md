@@ -1,6 +1,6 @@
 # Cross-SDK BDD Testing
 
-This directory contains cross-SDK Behavior-Driven Development (BDD) tests for Apache Iggy, designed to ensure consistency across different language SDKs.
+This directory contains cross-SDK Behavior-Driven Development (BDD) tests for Apache Messenger, designed to ensure consistency across different language SDKs.
 
 ## Structure
 
@@ -21,7 +21,7 @@ bdd/
 ├── csharp/                     # csharp SDK BDD implementation
 │   └── Dockerfile              # csharp BDD test container
 ├── docker-compose.yml          # Orchestrates server + SDK containers
-├── Dockerfile                  # Debug build of Iggy server
+├── Dockerfile                  # Debug build of Messenger server
 └── README.md
 ```
 
@@ -47,11 +47,11 @@ bdd/
 ### Requirements
 
 - Docker and Docker Compose
-- The tests build the latest Iggy server from source in debug mode for faster compilation
+- The tests build the latest Messenger server from source in debug mode for faster compilation
 
 ### How it Works
 
-1. **Server Container**: Builds and runs the latest Iggy server in debug mode
+1. **Server Container**: Builds and runs the latest Messenger server in debug mode
 2. **SDK Containers**: Each SDK has its own container with the appropriate runtime and dependencies
 3. **Shared Features**: All SDKs test against the same `.feature` files for consistency
 4. **Health Checks**: Containers wait for the server to be healthy before running tests
@@ -65,11 +65,11 @@ To add a new SDK (e.g., Node.js):
 3. Create `node/tests/` directory with BDD implementation
 4. Add `node-bdd` service to `docker-compose.yml`
 5. Update `../scripts/run-bdd-tests.sh` script
-6. Update [changed-files-config.json](https://github.com/apache/iggy/blob/master/.github/changed-files-config.json) file to include the new SDK files
+6. Update [changed-files-config.json](https://github.com/apache/messenger/blob/master/.github/changed-files-config.json) file to include the new SDK files
 
 ### CI/CD Integration
 
-GitHub Actions workflow: [ci-test-bdd.yml](https://github.com/apache/iggy/blob/master/.github/workflows/ci-test-bdd.yml)
+GitHub Actions workflow: [ci-test-bdd.yml](https://github.com/apache/messenger/blob/master/.github/workflows/ci-test-bdd.yml)
 
 ## Development
 
@@ -87,7 +87,7 @@ The node.js BDD test are run by cucumber-js, bdd test code is located at [foreig
 
 ### For csharp SDK
 
-The csharp implementation is located at [foreign/csharp/Iggy_SDK.Tests.BDD](../foreign/csharp/Iggy_SDK.Tests.BDD)
+The csharp implementation is located at [foreign/csharp/Messenger_SDK.Tests.BDD](../foreign/csharp/Messenger_SDK.Tests.BDD)
 
 ### Adding New Scenarios
 

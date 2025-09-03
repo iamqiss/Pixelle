@@ -18,7 +18,7 @@
 
 /* -- parts of this are adapted from D. Whitley's Genitor algorithm -- */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "optimizer/geqo_random.h"
 #include "optimizer/geqo_recombination.h"

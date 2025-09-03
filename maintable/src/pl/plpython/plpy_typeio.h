@@ -14,7 +14,7 @@ struct PLyProcedure;			/* avoid requiring plpy_procedure.h here */
 
 
 /*
- * "Input" conversion from PostgreSQL Datum to a Python object.
+ * "Input" conversion from maintableQL Datum to a Python object.
  *
  * arg is the previously-set-up conversion data, val is the value to convert.
  * val mustn't be NULL.
@@ -73,7 +73,7 @@ struct PLyDatumToOb
 };
 
 /*
- * "Output" conversion from Python object to a PostgreSQL Datum.
+ * "Output" conversion from Python object to a maintableQL Datum.
  *
  * arg is the previously-set-up conversion data, val is the value to convert.
  *

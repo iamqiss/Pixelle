@@ -30,23 +30,23 @@ use std::{
 pub const SEC_IN_MICRO: u64 = 1_000_000;
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
-pub struct IggyDuration {
+pub struct MessengerDuration {
     duration: Duration,
 }
 
-impl IggyDuration {
-    pub const ONE_SECOND: IggyDuration = IggyDuration {
+impl MessengerDuration {
+    pub const ONE_SECOND: MessengerDuration = MessengerDuration {
         duration: Duration::from_secs(1),
     };
 }
 
-impl IggyDuration {
-    pub fn new(duration: Duration) -> IggyDuration {
-        IggyDuration { duration }
+impl MessengerDuration {
+    pub fn new(duration: Duration) -> MessengerDuration {
+        MessengerDuration { duration }
     }
 
-    pub fn new_from_secs(secs: u64) -> IggyDuration {
-        IggyDuration {
+    pub fn new_from_secs(secs: u64) -> MessengerDuration {
+        MessengerDuration {
             duration: Duration::from_secs(secs),
         }
     }
@@ -75,57 +75,57 @@ impl IggyDuration {
         self.duration.as_secs() == 0
     }
 
-    pub fn abs_diff(&self, other: IggyDuration) -> IggyDuration {
+    pub fn abs_diff(&self, other: MessengerDuration) -> MessengerDuration {
         let diff = self.duration.abs_diff(other.duration);
-        IggyDuration { duration: diff }
+        MessengerDuration { duration: diff }
     }
 }
 
-impl FromStr for IggyDuration {
+impl FromStr for MessengerDuration {
     type Err = humantime::DurationError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let s = &s.to_lowercase();
         if s == "0" || s == "unlimited" || s == "disabled" || s == "none" {
-            Ok(IggyDuration {
+            Ok(MessengerDuration {
                 duration: Duration::new(0, 0),
             })
         } else {
-            Ok(IggyDuration {
+            Ok(MessengerDuration {
                 duration: humantime::parse_duration(s)?,
             })
         }
     }
 }
 
-impl From<Option<u64>> for IggyDuration {
+impl From<Option<u64>> for MessengerDuration {
     fn from(duration_us: Option<u64>) -> Self {
         match duration_us {
-            Some(value) => IggyDuration {
+            Some(value) => MessengerDuration {
                 duration: Duration::from_micros(value),
             },
-            None => IggyDuration {
+            None => MessengerDuration {
                 duration: Duration::new(0, 0),
             },
         }
     }
 }
 
-impl From<u64> for IggyDuration {
+impl From<u64> for MessengerDuration {
     fn from(value: u64) -> Self {
-        IggyDuration {
+        MessengerDuration {
             duration: Duration::from_micros(value),
         }
     }
 }
 
-impl From<Duration> for IggyDuration {
+impl From<Duration> for MessengerDuration {
     fn from(duration: Duration) -> Self {
-        IggyDuration { duration }
+        MessengerDuration { duration }
     }
 }
 
-impl From<HumanDuration> for IggyDuration {
+impl From<HumanDuration> for MessengerDuration {
     fn from(human_duration: HumanDuration) -> Self {
         Self {
             duration: human_duration.into(),
@@ -133,37 +133,37 @@ impl From<HumanDuration> for IggyDuration {
     }
 }
 
-impl From<IggyDuration> for u64 {
-    fn from(iggy_duration: IggyDuration) -> u64 {
-        iggy_duration.duration.as_micros() as u64
+impl From<MessengerDuration> for u64 {
+    fn from(messenger_duration: MessengerDuration) -> u64 {
+        messenger_duration.duration.as_micros() as u64
     }
 }
 
-impl Default for IggyDuration {
+impl Default for MessengerDuration {
     fn default() -> Self {
-        IggyDuration {
+        MessengerDuration {
             duration: Duration::new(0, 0),
         }
     }
 }
 
-impl Display for IggyDuration {
+impl Display for MessengerDuration {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.as_human_time_string())
     }
 }
 
-impl Add for IggyDuration {
-    type Output = IggyDuration;
+impl Add for MessengerDuration {
+    type Output = MessengerDuration;
 
     fn add(self, rhs: Self) -> Self::Output {
-        IggyDuration {
+        MessengerDuration {
             duration: self.duration + rhs.duration,
         }
     }
 }
 
-impl Serialize for IggyDuration {
+impl Serialize for MessengerDuration {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -172,19 +172,19 @@ impl Serialize for IggyDuration {
     }
 }
 
-struct IggyDurationVisitor;
+struct MessengerDurationVisitor;
 
-impl<'de> Deserialize<'de> for IggyDuration {
-    fn deserialize<D>(deserializer: D) -> Result<IggyDuration, D::Error>
+impl<'de> Deserialize<'de> for MessengerDuration {
+    fn deserialize<D>(deserializer: D) -> Result<MessengerDuration, D::Error>
     where
         D: Deserializer<'de>,
     {
-        deserializer.deserialize_u64(IggyDurationVisitor)
+        deserializer.deserialize_u64(MessengerDurationVisitor)
     }
 }
 
-impl Visitor<'_> for IggyDurationVisitor {
-    type Value = IggyDuration;
+impl Visitor<'_> for MessengerDurationVisitor {
+    type Value = MessengerDuration;
 
     fn expecting(&self, formatter: &mut Formatter) -> std::fmt::Result {
         formatter.write_str("a duration in seconds")
@@ -194,7 +194,7 @@ impl Visitor<'_> for IggyDurationVisitor {
     where
         E: serde::de::Error,
     {
-        Ok(IggyDuration::new(Duration::from_micros(value)))
+        Ok(MessengerDuration::new(Duration::from_micros(value)))
     }
 }
 
@@ -206,76 +206,76 @@ mod tests {
     #[test]
     fn test_new() {
         let duration = Duration::new(60, 0); // 60 seconds
-        let iggy_duration = IggyDuration::new(duration);
-        assert_eq!(iggy_duration.as_secs(), 60);
+        let messenger_duration = MessengerDuration::new(duration);
+        assert_eq!(messenger_duration.as_secs(), 60);
     }
 
     #[test]
     fn test_as_human_time_string() {
         let duration = Duration::new(3661, 0); // 1 hour, 1 minute and 1 second
-        let iggy_duration = IggyDuration::new(duration);
-        assert_eq!(iggy_duration.as_human_time_string(), "1h 1m 1s");
+        let messenger_duration = MessengerDuration::new(duration);
+        assert_eq!(messenger_duration.as_human_time_string(), "1h 1m 1s");
     }
 
     #[test]
     fn test_long_duration_as_human_time_string() {
         let duration = Duration::new(36611233, 0); // 1year 1month 28days 1hour 13minutes 37seconds
-        let iggy_duration = IggyDuration::new(duration);
+        let messenger_duration = MessengerDuration::new(duration);
         assert_eq!(
-            iggy_duration.as_human_time_string(),
+            messenger_duration.as_human_time_string(),
             "1year 1month 28days 1h 13m 37s"
         );
     }
 
     #[test]
     fn test_from_str() {
-        let iggy_duration: IggyDuration = "1h 1m 1s".parse().unwrap();
-        assert_eq!(iggy_duration.as_secs(), 3661);
+        let messenger_duration: MessengerDuration = "1h 1m 1s".parse().unwrap();
+        assert_eq!(messenger_duration.as_secs(), 3661);
     }
 
     #[test]
     fn test_display() {
         let duration = Duration::new(3661, 0);
-        let iggy_duration = IggyDuration::new(duration);
-        let duration_string = format!("{iggy_duration}");
+        let messenger_duration = MessengerDuration::new(duration);
+        let duration_string = format!("{messenger_duration}");
         assert_eq!(duration_string, "1h 1m 1s");
     }
 
     #[test]
     fn test_invalid_duration() {
-        let result: Result<IggyDuration, _> = "1 hour and 30 minutes".parse();
+        let result: Result<MessengerDuration, _> = "1 hour and 30 minutes".parse();
         assert!(result.is_err());
     }
 
     #[test]
     fn test_zero_seconds_duration() {
-        let iggy_duration: IggyDuration = "0s".parse().unwrap();
-        assert_eq!(iggy_duration.as_secs(), 0);
+        let messenger_duration: MessengerDuration = "0s".parse().unwrap();
+        assert_eq!(messenger_duration.as_secs(), 0);
     }
 
     #[test]
     fn test_zero_duration() {
-        let iggy_duration: IggyDuration = "0".parse().unwrap();
-        assert_eq!(iggy_duration.as_secs(), 0);
+        let messenger_duration: MessengerDuration = "0".parse().unwrap();
+        assert_eq!(messenger_duration.as_secs(), 0);
     }
 
     #[test]
     fn test_unlimited() {
-        let iggy_duration: IggyDuration = "unlimited".parse().unwrap();
-        assert_eq!(iggy_duration.as_secs(), 0);
+        let messenger_duration: MessengerDuration = "unlimited".parse().unwrap();
+        assert_eq!(messenger_duration.as_secs(), 0);
     }
 
     #[test]
     fn test_disabled() {
-        let iggy_duration: IggyDuration = "disabled".parse().unwrap();
-        assert_eq!(iggy_duration.as_secs(), 0);
+        let messenger_duration: MessengerDuration = "disabled".parse().unwrap();
+        assert_eq!(messenger_duration.as_secs(), 0);
     }
 
     #[test]
     fn test_add_duration() {
-        let iggy_duration1: IggyDuration = "6s".parse().unwrap();
-        let iggy_duration2: IggyDuration = "1m".parse().unwrap();
-        let result: IggyDuration = iggy_duration1 + iggy_duration2;
+        let messenger_duration1: MessengerDuration = "6s".parse().unwrap();
+        let messenger_duration2: MessengerDuration = "1m".parse().unwrap();
+        let result: MessengerDuration = messenger_duration1 + messenger_duration2;
         assert_eq!(result.as_secs(), 66);
     }
 }

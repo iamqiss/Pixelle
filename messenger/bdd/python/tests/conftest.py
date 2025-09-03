@@ -29,7 +29,7 @@ from typing import Optional, List
 class GlobalContext:
     """Global test context similar to Rust implementation."""
 
-    client: Optional[object] = None  # Will be IggyClient
+    client: Optional[object] = None  # Will be MessengerClient
     server_addr: Optional[str] = None
     last_stream_id: Optional[int] = None
     last_stream_name: Optional[str] = None
@@ -54,7 +54,7 @@ def context():
     ctx = GlobalContext()
 
     # Get server address from environment or use default
-    ctx.server_addr = os.environ.get("IGGY_TCP_ADDRESS", "127.0.0.1:8090")
+    ctx.server_addr = os.environ.get("MESSENGER_TCP_ADDRESS", "127.0.0.1:8090")
 
     yield ctx
 

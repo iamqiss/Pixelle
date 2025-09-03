@@ -23,7 +23,7 @@ use crate::actors::{
         interface::{BenchmarkProducerConfig, ProducerClient},
     },
 };
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::{ClientFactory, login_root};
 use std::sync::Arc;
 use tokio::time::Instant;
@@ -31,7 +31,7 @@ use tokio::time::Instant;
 pub struct HighLevelProducerClient {
     client_factory: Arc<dyn ClientFactory>,
     config: BenchmarkProducerConfig,
-    producer: Option<IggyProducer>,
+    producer: Option<MessengerProducer>,
 }
 
 impl HighLevelProducerClient {
@@ -48,7 +48,7 @@ impl ProducerClient for HighLevelProducerClient {
     async fn produce_batch(
         &mut self,
         batch_generator: &mut crate::utils::batch_generator::BenchmarkBatchGenerator,
-    ) -> Result<Option<BatchMetrics>, IggyError> {
+    ) -> Result<Option<BatchMetrics>, MessengerError> {
         let producer = self.producer.as_mut().expect("Producer not initialized");
 
         let batch = batch_generator.generate_owned_batch();
@@ -70,11 +70,11 @@ impl ProducerClient for HighLevelProducerClient {
 }
 
 impl BenchmarkInit for HighLevelProducerClient {
-    async fn setup(&mut self) -> Result<(), IggyError> {
+    async fn setup(&mut self) -> Result<(), MessengerError> {
         let topic_id: u32 = 1;
 
         let client = self.client_factory.create_client().await;
-        let client = IggyClient::create(client, None, None);
+        let client = MessengerClient::create(client, None, None);
         login_root(&client).await;
 
         let stream_id_str = self.config.stream_id.to_string();
@@ -87,7 +87,7 @@ impl BenchmarkInit for HighLevelProducerClient {
                 .create_topic_if_not_exists(
                     self.config.partitions,
                     Some(1),
-                    IggyExpiry::NeverExpire,
+                    MessengerExpiry::NeverExpire,
                     MaxTopicSize::ServerDefault,
                 )
                 .build(),

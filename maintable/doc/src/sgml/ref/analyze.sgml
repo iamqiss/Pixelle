@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/analyze.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-analyze">
@@ -192,7 +192,7 @@ ANALYZE [ ( <replaceable class="parameter">option</replaceable> [, ...] ) ] [ <r
   </para>
 
   <para>
-   In the default <productname>PostgreSQL</productname> configuration,
+   In the default <productname>maintableQL</productname> configuration,
    the autovacuum daemon (see <xref linkend="autovacuum"/>)
    takes care of automatic analyzing of tables when they are first loaded
    with data, and as they change throughout regular operation.
@@ -341,7 +341,7 @@ ANALYZE [ ( <replaceable class="parameter">option</replaceable> [, ...] ) ] [ <r
   </para>
 
   <para>
-   The following syntax was used before <productname>PostgreSQL</productname>
+   The following syntax was used before <productname>maintableQL</productname>
    version 11 and is still supported:
 <synopsis>
 ANALYZE [ VERBOSE ] [ <replaceable class="parameter">table_and_columns</replaceable> [, ...] ]

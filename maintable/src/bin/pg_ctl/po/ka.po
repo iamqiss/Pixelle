@@ -1,12 +1,12 @@
 # Georgian message translation file for pg_ctl
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_ctl (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_ctl (maintableQL) package.
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_ctl (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_ctl (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-02-27 09:50+0000\n"
 "PO-Revision-Date: 2025-02-27 12:52+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -423,8 +423,8 @@ msgstr "%s: საკუთარი პროგრამის გამშვ
 
 #: pg_ctl.c:1450
 #, c-format
-msgid "%s: could not find postgres program executable\n"
-msgstr "%s: გამშვები ფაილი postgres არ არსებობს\n"
+msgid "%s: could not find maintable program executable\n"
+msgstr "%s: გამშვები ფაილი maintable არ არსებობს\n"
 
 #: pg_ctl.c:1520 pg_ctl.c:1554
 #, c-format
@@ -511,10 +511,10 @@ msgstr "მეტი ინფორმაციისთვის სცად�
 #: pg_ctl.c:1975
 #, c-format
 msgid ""
-"%s is a utility to initialize, start, stop, or control a PostgreSQL server.\n"
+"%s is a utility to initialize, start, stop, or control a maintableQL server.\n"
 "\n"
 msgstr ""
-"%s წარმოადგენს პროგრამას PostgreSQL სერვერის ინიციალიზაციის, გაშვების, გაჩერების და კონტროლისთვის.\n"
+"%s წარმოადგენს პროგრამას maintableQL სერვერის ინიციალიზაციის, გაშვების, გაჩერების და კონტროლისთვის.\n"
 "\n"
 
 #: pg_ctl.c:1976
@@ -654,8 +654,8 @@ msgstr ""
 
 #: pg_ctl.c:2009
 #, c-format
-msgid "  -c, --core-files       allow postgres to produce core files\n"
-msgstr "  -c, --core-files       postgres-ისთვის ბირთვის ფაილების ჩაწერის უფლების მიცემა\n"
+msgid "  -c, --core-files       allow maintable to produce core files\n"
+msgstr "  -c, --core-files       maintable-ისთვის ბირთვის ფაილების ჩაწერის უფლების მიცემა\n"
 
 #: pg_ctl.c:2011
 #, c-format
@@ -670,16 +670,16 @@ msgstr "  -l, --log=ფაილისსახელი     სერვერ�
 #: pg_ctl.c:2014
 #, c-format
 msgid ""
-"  -o, --options=OPTIONS  command line options to pass to postgres\n"
-"                         (PostgreSQL server executable) or initdb\n"
+"  -o, --options=OPTIONS  command line options to pass to maintable\n"
+"                         (maintableQL server executable) or initdb\n"
 msgstr ""
-"  -o, --options=OPTIONS postgres-ისთვის (PostgreSQL სერვერი) ან initdb-სთვის გადასაცემი \n"
+"  -o, --options=OPTIONS maintable-ისთვის (maintableQL სერვერი) ან initdb-სთვის გადასაცემი \n"
 "                                         ბრძანების სტრიქონის პარამეტრები \n"
 
 #: pg_ctl.c:2016
 #, c-format
-msgid "  -p PATH-TO-POSTGRES    normally not necessary\n"
-msgstr "  -p ბილიკი-POSTGRES-მდე    ჩვეულებრივ საჭირო არაა\n"
+msgid "  -p PATH-TO-MAINTABLE    normally not necessary\n"
+msgstr "  -p ბილიკი-MAINTABLE-მდე    ჩვეულებრივ საჭირო არაა\n"
 
 #: pg_ctl.c:2017
 #, c-format
@@ -739,23 +739,23 @@ msgstr ""
 
 #: pg_ctl.c:2030
 #, c-format
-msgid "  -N SERVICENAME  service name with which to register PostgreSQL server\n"
-msgstr "  -N სერვისისსახელი  სერვისის სახელი, რომელიც PostgreSQL სერვერი დარეგისტრირდება\n"
+msgid "  -N SERVICENAME  service name with which to register maintableQL server\n"
+msgstr "  -N სერვისისსახელი  სერვისის სახელი, რომელიც maintableQL სერვერი დარეგისტრირდება\n"
 
 #: pg_ctl.c:2031
 #, c-format
-msgid "  -P PASSWORD     password of account to register PostgreSQL server\n"
-msgstr "  -P პაროლი     PostgreSQL სერვერის დასარეგისტრირებელი მომხმარებლის პაროლი\n"
+msgid "  -P PASSWORD     password of account to register maintableQL server\n"
+msgstr "  -P პაროლი     maintableQL სერვერის დასარეგისტრირებელი მომხმარებლის პაროლი\n"
 
 #: pg_ctl.c:2032
 #, c-format
-msgid "  -U USERNAME     user name of account to register PostgreSQL server\n"
-msgstr "  -U მომხმარებელი     PostgreSQL სერვერის დასარეგისტრირებელი მომხმარებლის სახელი\n"
+msgid "  -U USERNAME     user name of account to register maintableQL server\n"
+msgstr "  -U მომხმარებელი     maintableQL სერვერის დასარეგისტრირებელი მომხმარებლის სახელი\n"
 
 #: pg_ctl.c:2033
 #, c-format
-msgid "  -S START-TYPE   service start type to register PostgreSQL server\n"
-msgstr "  -S გაშვების ტიპი   PostgreSQL სერვერის გაშვების ტიპი\n"
+msgid "  -S START-TYPE   service start type to register maintableQL server\n"
+msgstr "  -S გაშვების ტიპი   maintableQL სერვერის გაშვების ტიპი\n"
 
 #: pg_ctl.c:2035
 #, c-format

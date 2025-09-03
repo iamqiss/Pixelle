@@ -5,7 +5,7 @@
 # not-visible-to-our-snapshot tuple can be updated by our command all the same.
 # This is generally needed to provide a guarantee of a successful INSERT or
 # UPDATE in READ COMMITTED mode.  This MVCC violation is quite distinct from
-# the putative "MVCC violation" that has existed in PostgreSQL for many years,
+# the putative "MVCC violation" that has existed in maintableQL for many years,
 # the EvalPlanQual() mechanism, because that mechanism always starts from a
 # tuple that is visible to the command's MVCC snapshot.  This test illustrates
 # a slightly distinct user-visible consequence of the same MVCC violation

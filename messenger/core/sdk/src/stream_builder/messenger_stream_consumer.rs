@@ -16,74 +16,74 @@
  * under the License.
  */
 
-use crate::clients::client::IggyClient;
-use crate::clients::consumer::IggyConsumer;
-use crate::prelude::{IggyError, SystemClient};
-use crate::stream_builder::{IggyConsumerConfig, build};
+use crate::clients::client::MessengerClient;
+use crate::clients::consumer::MessengerConsumer;
+use crate::prelude::{MessengerError, SystemClient};
+use crate::stream_builder::{MessengerConsumerConfig, build};
 use tracing::trace;
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
-pub struct IggyStreamConsumer;
+pub struct MessengerStreamConsumer;
 
-impl IggyStreamConsumer {
-    /// Creates a new `IggyStreamConsumer` with an existing client and `IggyConsumerConfig`.
+impl MessengerStreamConsumer {
+    /// Creates a new `MessengerStreamConsumer` with an existing client and `MessengerConsumerConfig`.
     ///
     /// # Arguments
     ///
-    /// * `client`: the existing `IggyClient` to use for the consumer.
-    /// * `config`: the `IggyConsumerConfig` to use to build the consumer.
+    /// * `client`: the existing `MessengerClient` to use for the consumer.
+    /// * `config`: the `MessengerConsumerConfig` to use to build the consumer.
     ///
     /// # Errors
     ///
-    /// If the builds fails, an `IggyError` is returned.
+    /// If the builds fails, an `MessengerError` is returned.
     ///
     pub async fn build(
-        client: &IggyClient,
-        config: &IggyConsumerConfig,
-    ) -> Result<IggyConsumer, IggyError> {
+        client: &MessengerClient,
+        config: &MessengerConsumerConfig,
+    ) -> Result<MessengerConsumer, MessengerError> {
         trace!("Check if client is connected");
         if client.ping().await.is_err() {
-            return Err(IggyError::NotConnected);
+            return Err(MessengerError::NotConnected);
         }
 
         trace!("Check if stream and topic exist");
-        build::build_iggy_stream_topic_if_not_exists(client, config).await?;
+        build::build_messenger_stream_topic_if_not_exists(client, config).await?;
 
-        trace!("Build iggy consumer");
-        let iggy_consumer = build::build_iggy_consumer(client, config).await?;
+        trace!("Build messenger consumer");
+        let messenger_consumer = build::build_messenger_consumer(client, config).await?;
 
-        Ok(iggy_consumer)
+        Ok(messenger_consumer)
     }
 
-    /// Creates a new `IggyStreamConsumer` by building a client from a connection string and
-    /// a consumer with an `IggyConsumerConfig`.
+    /// Creates a new `MessengerStreamConsumer` by building a client from a connection string and
+    /// a consumer with an `MessengerConsumerConfig`.
     ///
     /// # Arguments
     ///
     /// * `connection_string`: the connection string to use to build the client.
-    /// * `config`: the `IggyConsumerConfig` to use to build the consumer.
+    /// * `config`: the `MessengerConsumerConfig` to use to build the consumer.
     ///
     /// # Errors
     ///
-    /// If the builds fails, an `IggyError` is returned.
+    /// If the builds fails, an `MessengerError` is returned.
     ///
     pub async fn with_client_from_url(
         connection_string: &str,
-        config: &IggyConsumerConfig,
-    ) -> Result<(IggyClient, IggyConsumer), IggyError> {
-        trace!("Build and connect iggy client");
-        let client = build::build_iggy_client(connection_string).await?;
+        config: &MessengerConsumerConfig,
+    ) -> Result<(MessengerClient, MessengerConsumer), MessengerError> {
+        trace!("Build and connect messenger client");
+        let client = build::build_messenger_client(connection_string).await?;
 
         trace!("Check if stream and topic exist");
-        build::build_iggy_stream_topic_if_not_exists(&client, config).await?;
+        build::build_messenger_stream_topic_if_not_exists(&client, config).await?;
 
-        trace!("Build iggy consumer");
-        let iggy_consumer = build::build_iggy_consumer(&client, config).await?;
+        trace!("Build messenger consumer");
+        let messenger_consumer = build::build_messenger_consumer(&client, config).await?;
 
-        Ok((client, iggy_consumer))
+        Ok((client, messenger_consumer))
     }
 
-    /// Builds an `IggyClient` from the given connection string.
+    /// Builds an `MessengerClient` from the given connection string.
     ///
     /// # Arguments
     ///
@@ -91,18 +91,18 @@ impl IggyStreamConsumer {
     ///
     /// # Errors
     ///
-    /// * `IggyError` - If the connection string is invalid or the client cannot be initialized.
+    /// * `MessengerError` - If the connection string is invalid or the client cannot be initialized.
     ///
     /// # Details
     ///
-    /// This function will create a new `IggyClient` with the given `connection_string`.
+    /// This function will create a new `MessengerClient` with the given `connection_string`.
     /// It will then connect to the server using the provided connection string.
     /// If the connection string is invalid or the client cannot be initialized,
-    /// an `IggyError` will be returned.
+    /// an `MessengerError` will be returned.
     ///
-    pub async fn build_iggy_client(connection_string: &str) -> Result<IggyClient, IggyError> {
-        trace!("Build and connect iggy client");
-        let client = build::build_iggy_client(connection_string).await?;
+    pub async fn build_messenger_client(connection_string: &str) -> Result<MessengerClient, MessengerError> {
+        trace!("Build and connect messenger client");
+        let client = build::build_messenger_client(connection_string).await?;
 
         Ok(client)
     }

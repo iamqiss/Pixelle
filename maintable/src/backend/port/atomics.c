@@ -3,7 +3,7 @@
  * atomics.c
  *	   Non-Inline parts of the atomics implementation
  *
- * Portions Copyright (c) 2013-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2013-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -11,7 +11,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "miscadmin.h"
 #include "port/atomics.h"

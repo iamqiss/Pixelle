@@ -18,10 +18,10 @@
 
 use crate::BytesSerializable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use std::fmt::Display;
 
-pub trait Command: BytesSerializable + Validatable<IggyError> + Send + Sync + Display {
+pub trait Command: BytesSerializable + Validatable<MessengerError> + Send + Sync + Display {
     fn code(&self) -> u32;
 }
 
@@ -118,7 +118,7 @@ pub const JOIN_CONSUMER_GROUP_CODE: u32 = 604;
 pub const LEAVE_CONSUMER_GROUP: &str = "consumer_group.leave";
 pub const LEAVE_CONSUMER_GROUP_CODE: u32 = 605;
 
-pub fn get_name_from_code(code: u32) -> Result<&'static str, IggyError> {
+pub fn get_name_from_code(code: u32) -> Result<&'static str, MessengerError> {
     match code {
         PING_CODE => Ok(PING),
         GET_STATS_CODE => Ok(GET_STATS),
@@ -165,6 +165,6 @@ pub fn get_name_from_code(code: u32) -> Result<&'static str, IggyError> {
         JOIN_CONSUMER_GROUP_CODE => Ok(JOIN_CONSUMER_GROUP),
         LEAVE_CONSUMER_GROUP_CODE => Ok(LEAVE_CONSUMER_GROUP),
         GET_SNAPSHOT_FILE_CODE => Ok(GET_SNAPSHOT_FILE),
-        _ => Err(IggyError::InvalidCommand),
+        _ => Err(MessengerError::InvalidCommand),
     }
 }

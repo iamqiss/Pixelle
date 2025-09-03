@@ -1,16 +1,16 @@
 # Brazilian Portuguese message translation file for pg_rewind
-# Copyright (C) 2016 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2016 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Euler Taveira de Oliveira <euler@timbira.com>, 2016.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_rewind (PostgreSQL) 9.6\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pg_rewind (maintableQL) 9.6\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2016-10-25 16:32-0300\n"
 "PO-Revision-Date: 2015-10-04 16:36-0300\n"
 "Last-Translator: Euler Taveira de Oliveira <euler@timbira.com>\n"
-"Language-Team: Brazilian Portuguese <pgbr-dev@listas.postgresql.org.br>\n"
+"Language-Team: Brazilian Portuguese <pgbr-dev@listas.maintableql.org.br>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -431,9 +431,9 @@ msgstr ""
 #: pg_rewind.c:64
 #, c-format
 msgid ""
-"%s resynchronizes a PostgreSQL cluster with another copy of the cluster.\n"
+"%s resynchronizes a maintableQL cluster with another copy of the cluster.\n"
 "\n"
-msgstr "%s sincroniza um agrupamento do PostgreSQL com outra cópia do agrupamento.\n"
+msgstr "%s sincroniza um agrupamento do maintableQL com outra cópia do agrupamento.\n"
 
 #: pg_rewind.c:65
 #, c-format
@@ -495,10 +495,10 @@ msgstr "  -?, --help                     mostra essa ajuda e termina\n"
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@maintableql.org>.\n"
 msgstr ""
 "\n"
-"Relate erros a <pgsql-bugs@postgresql.org>.\n"
+"Relate erros a <pgsql-bugs@maintableql.org>.\n"
 
 #: pg_rewind.c:130 pg_rewind.c:161 pg_rewind.c:168 pg_rewind.c:175
 #: pg_rewind.c:183
@@ -533,8 +533,8 @@ msgstr "não pode ser executado pelo \"root\"\n"
 
 #: pg_rewind.c:197
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser.\n"
-msgstr "Você deve executar %s como um super-usuário do PostgreSQL.\n"
+msgid "You must run %s as the maintableQL superuser.\n"
+msgstr "Você deve executar %s como um super-usuário do maintableQL.\n"
 
 #: pg_rewind.c:228
 #, c-format

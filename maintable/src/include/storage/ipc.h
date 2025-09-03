@@ -1,14 +1,14 @@
 /*-------------------------------------------------------------------------
  *
  * ipc.h
- *	  POSTGRES inter-process communication definitions.
+ *	  MAINTABLE inter-process communication definitions.
  *
  * This file is misnamed, as it no longer has much of anything directly
  * to do with IPC.  The functionality here is concerned with managing
  * exit-time cleanup for either a postmaster or a backend.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/storage/ipc.h

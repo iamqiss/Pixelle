@@ -34,7 +34,7 @@ use bench_report::{
     individual_metrics::BenchmarkIndividualMetrics, numeric_parameter::BenchmarkNumericParameter,
 };
 use human_repr::HumanCount;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use tokio::time::Instant;
 use tracing::info;
 
@@ -48,9 +48,9 @@ where
     pub benchmark_kind: BenchmarkKind,
     pub send_finish_condition: Arc<BenchmarkFinishCondition>,
     pub poll_finish_condition: Arc<BenchmarkFinishCondition>,
-    pub sampling_time: IggyDuration,
+    pub sampling_time: MessengerDuration,
     pub moving_average_window: u32,
-    pub limit_bytes_per_second: Option<IggyByteSize>,
+    pub limit_bytes_per_second: Option<MessengerByteSize>,
     pub producer_config: BenchmarkProducerConfig,
     pub consumer_config: BenchmarkConsumerConfig,
 }
@@ -67,9 +67,9 @@ where
         benchmark_kind: BenchmarkKind,
         send_finish_condition: Arc<BenchmarkFinishCondition>,
         poll_finish_condition: Arc<BenchmarkFinishCondition>,
-        sampling_time: IggyDuration,
+        sampling_time: MessengerDuration,
         moving_average_window: u32,
-        limit_bytes_per_second: Option<IggyByteSize>,
+        limit_bytes_per_second: Option<MessengerByteSize>,
         producer_config: BenchmarkProducerConfig,
         consumer_config: BenchmarkConsumerConfig,
     ) -> Self {
@@ -88,7 +88,7 @@ where
     }
     #[allow(clippy::too_many_lines)]
     #[allow(clippy::cognitive_complexity)]
-    pub async fn run(mut self) -> Result<BenchmarkIndividualMetrics, IggyError> {
+    pub async fn run(mut self) -> Result<BenchmarkIndividualMetrics, MessengerError> {
         info!(
             "ProducingConsumer #{producer_id} → sending {send_status} and polling {poll_status} ({messages_per_batch} msgs/batch) on stream {stream_id}, rate limit: {rate_limit:?}",
             producer_id = self.producer_config.producer_id,
@@ -281,7 +281,7 @@ where
             total_batches.human_count_bare(),
             messages_per_batch,
             metrics.summary.total_time_secs,
-            IggyByteSize::from(metrics.summary.total_user_data_bytes),
+            MessengerByteSize::from(metrics.summary.total_user_data_bytes),
             metrics.summary.throughput_megabytes_per_second,
             metrics.summary.p50_latency_ms,
             metrics.summary.p90_latency_ms,

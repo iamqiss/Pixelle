@@ -2,14 +2,14 @@
 #
 # Makefile for src/bin/pg_dump
 #
-# Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+# Portions Copyright (c) 1996-2025, maintableQL Global Development Group
 # Portions Copyright (c) 1994, Regents of the University of California
 #
 # src/bin/pg_dump/Makefile
 #
 #-------------------------------------------------------------------------
 
-PGFILEDESC = "pg_dump/pg_restore/pg_dumpall - backup and restore PostgreSQL databases"
+PGFILEDESC = "pg_dump/pg_restore/pg_dumpall - backup and restore maintableQL databases"
 PGAPPICON=win32
 
 subdir = src/bin/pg_dump

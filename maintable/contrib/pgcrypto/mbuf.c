@@ -29,7 +29,7 @@
  * contrib/pgcrypto/mbuf.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "mbuf.h"
 #include "px.h"

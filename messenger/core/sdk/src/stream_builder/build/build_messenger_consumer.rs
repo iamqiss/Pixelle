@@ -16,32 +16,32 @@
  * under the License.
  */
 
-use crate::clients::client::IggyClient;
-use crate::clients::consumer::IggyConsumer;
-use crate::prelude::{ConsumerKind, IggyError};
-use crate::stream_builder::IggyConsumerConfig;
+use crate::clients::client::MessengerClient;
+use crate::clients::consumer::MessengerConsumer;
+use crate::prelude::{ConsumerKind, MessengerError};
+use crate::stream_builder::MessengerConsumerConfig;
 use tracing::{error, trace};
 
-/// Builds an `IggyConsumer` from the given `IggyClient` and `IggyConsumerConfig`.
+/// Builds an `MessengerConsumer` from the given `MessengerClient` and `MessengerConsumerConfig`.
 ///
 /// # Arguments
 ///
-/// * `client` - The `IggyClient` to use.
-/// * `config` - The `IggyConsumerConfig` to use.
+/// * `client` - The `MessengerClient` to use.
+/// * `config` - The `MessengerConsumerConfig` to use.
 ///
 /// # Errors
 ///
-/// * `IggyError` - If the iggy consumer cannot be build.
+/// * `MessengerError` - If the messenger consumer cannot be build.
 ///
 /// # Details
 ///
-/// This function will create a new `IggyConsumer` with the given `IggyClient` and `IggyConsumerConfig`.
-/// The `IggyConsumerConfig` fields are used to configure the `IggyConsumer`.
+/// This function will create a new `MessengerConsumer` with the given `MessengerClient` and `MessengerConsumerConfig`.
+/// The `MessengerConsumerConfig` fields are used to configure the `MessengerConsumer`.
 ///
-pub(crate) async fn build_iggy_consumer(
-    client: &IggyClient,
-    config: &IggyConsumerConfig,
-) -> Result<IggyConsumer, IggyError> {
+pub(crate) async fn build_messenger_consumer(
+    client: &MessengerClient,
+    config: &MessengerConsumerConfig,
+) -> Result<MessengerConsumer, MessengerError> {
     trace!("Extract config fields.");
     let stream = config.stream_name();
     let topic = config.topic_name();
@@ -54,7 +54,7 @@ pub(crate) async fn build_iggy_consumer(
     let partition = config.partitions_count();
     let polling_retry_interval = config.polling_retry_interval();
 
-    trace!("Build iggy consumer");
+    trace!("Build messenger consumer");
     let mut builder = match consumer_kind {
         ConsumerKind::Consumer => client.consumer(consumer_name, stream, topic, partition)?,
         ConsumerKind::ConsumerGroup => client.consumer_group(consumer_name, stream, topic)?,

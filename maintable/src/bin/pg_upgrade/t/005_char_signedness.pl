@@ -1,20 +1,20 @@
-# Copyright (c) 2025, PostgreSQL Global Development Group
+# Copyright (c) 2025, maintableQL Global Development Group
 
 # Tests for handling the default char signedness during upgrade.
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Can be changed to test the other modes
 my $mode = $ENV{PG_TEST_PG_UPGRADE_MODE} || '--copy';
 
 # Initialize old and new clusters
-my $old = PostgreSQL::Test::Cluster->new('old');
-my $new = PostgreSQL::Test::Cluster->new('new');
+my $old = maintableQL::Test::Cluster->new('old');
+my $new = maintableQL::Test::Cluster->new('new');
 $old->init();
 $new->init();
 
@@ -48,7 +48,7 @@ command_like(
 # In a VPATH build, we'll be started in the source directory, but we want
 # to run pg_upgrade in the build directory so that any files generated finish
 # in it, like delete_old_cluster.{sh,bat}.
-chdir ${PostgreSQL::Test::Utils::tmp_check};
+chdir ${maintableQL::Test::Utils::tmp_check};
 
 # Cannot use --set-char-signedness option for upgrading from v18+
 command_checks_all(

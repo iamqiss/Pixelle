@@ -16,38 +16,38 @@
  * under the License.
  */
 
-use crate::prelude::IggyClient;
+use crate::prelude::MessengerClient;
 use async_trait::async_trait;
-use iggy_binary_protocol::SystemClient;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{
-    ClientInfo, ClientInfoDetails, IggyDuration, IggyError, Snapshot, SnapshotCompression, Stats,
+use messenger_binary_protocol::SystemClient;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{
+    ClientInfo, ClientInfoDetails, MessengerDuration, MessengerError, Snapshot, SnapshotCompression, Stats,
     SystemSnapshotType,
 };
 
 #[async_trait]
-impl SystemClient for IggyClient {
-    async fn get_stats(&self) -> Result<Stats, IggyError> {
+impl SystemClient for MessengerClient {
+    async fn get_stats(&self) -> Result<Stats, MessengerError> {
         self.client.read().await.get_stats().await
     }
 
-    async fn get_me(&self) -> Result<ClientInfoDetails, IggyError> {
+    async fn get_me(&self) -> Result<ClientInfoDetails, MessengerError> {
         self.client.read().await.get_me().await
     }
 
-    async fn get_client(&self, client_id: u32) -> Result<Option<ClientInfoDetails>, IggyError> {
+    async fn get_client(&self, client_id: u32) -> Result<Option<ClientInfoDetails>, MessengerError> {
         self.client.read().await.get_client(client_id).await
     }
 
-    async fn get_clients(&self) -> Result<Vec<ClientInfo>, IggyError> {
+    async fn get_clients(&self) -> Result<Vec<ClientInfo>, MessengerError> {
         self.client.read().await.get_clients().await
     }
 
-    async fn ping(&self) -> Result<(), IggyError> {
+    async fn ping(&self) -> Result<(), MessengerError> {
         self.client.read().await.ping().await
     }
 
-    async fn heartbeat_interval(&self) -> IggyDuration {
+    async fn heartbeat_interval(&self) -> MessengerDuration {
         self.client.read().await.heartbeat_interval().await
     }
 
@@ -55,7 +55,7 @@ impl SystemClient for IggyClient {
         &self,
         compression: SnapshotCompression,
         snapshot_types: Vec<SystemSnapshotType>,
-    ) -> Result<Snapshot, IggyError> {
+    ) -> Result<Snapshot, MessengerError> {
         self.client
             .read()
             .await

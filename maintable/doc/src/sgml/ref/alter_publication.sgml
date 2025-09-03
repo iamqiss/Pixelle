@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_publication.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-alterpublication">
@@ -237,7 +237,7 @@ ALTER PUBLICATION production_publication ADD TABLE users, departments, TABLES IN
   <title>Compatibility</title>
 
   <para>
-   <command>ALTER PUBLICATION</command> is a <productname>PostgreSQL</productname>
+   <command>ALTER PUBLICATION</command> is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

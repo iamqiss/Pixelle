@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/merge.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-merge">
@@ -682,7 +682,7 @@ MERGE <replaceable class="parameter">total_count</replaceable>
    cause a uniqueness violation, while a repeated <command>UPDATE</command>
    or <command>DELETE</command> will cause a cardinality violation; the
    latter behavior is required by the <acronym>SQL</acronym> standard.
-   This differs from historical <productname>PostgreSQL</productname>
+   This differs from historical <productname>maintableQL</productname>
    behavior of joins in <command>UPDATE</command> and
    <command>DELETE</command> statements where second and subsequent
    attempts to modify the same row are simply ignored.

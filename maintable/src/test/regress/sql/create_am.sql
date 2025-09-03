@@ -330,7 +330,7 @@ CREATE TABLE tableam_parted_2_heapx PARTITION OF tableam_parted_heapx FOR VALUES
 -- sequences, views and foreign servers shouldn't have an AM
 CREATE VIEW tableam_view_heapx AS SELECT * FROM tableam_tbl_heapx;
 CREATE SEQUENCE tableam_seq_heapx;
-CREATE FOREIGN DATA WRAPPER fdw_heap2 VALIDATOR postgresql_fdw_validator;
+CREATE FOREIGN DATA WRAPPER fdw_heap2 VALIDATOR maintableql_fdw_validator;
 CREATE SERVER fs_heap2 FOREIGN DATA WRAPPER fdw_heap2 ;
 CREATE FOREIGN table tableam_fdw_heapx () SERVER fs_heap2;
 

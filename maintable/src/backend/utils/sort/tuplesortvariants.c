@@ -9,7 +9,7 @@
  * could be easily added here, another module, or even an extension.
  *
  *
- * Copyright (c) 2022-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2022-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/utils/sort/tuplesortvariants.c
@@ -17,7 +17,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/brin_tuple.h"
 #include "access/gin_tuple.h"
@@ -199,7 +199,7 @@ tuplesort_begin_heap(TupleDesc tupDesc,
 
 	base->nKeys = nkeys;
 
-	TRACE_POSTGRESQL_SORT_START(HEAP_SORT,
+	TRACE_MAINTABLEQL_SORT_START(HEAP_SORT,
 								false,	/* no unique check */
 								nkeys,
 								workMem,
@@ -275,7 +275,7 @@ tuplesort_begin_cluster(TupleDesc tupDesc,
 
 	base->nKeys = IndexRelationGetNumberOfKeyAttributes(indexRel);
 
-	TRACE_POSTGRESQL_SORT_START(CLUSTER_SORT,
+	TRACE_MAINTABLEQL_SORT_START(CLUSTER_SORT,
 								false,	/* no unique check */
 								base->nKeys,
 								workMem,
@@ -382,7 +382,7 @@ tuplesort_begin_index_btree(Relation heapRel,
 
 	base->nKeys = IndexRelationGetNumberOfKeyAttributes(indexRel);
 
-	TRACE_POSTGRESQL_SORT_START(INDEX_SORT,
+	TRACE_MAINTABLEQL_SORT_START(INDEX_SORT,
 								enforceUnique,
 								base->nKeys,
 								workMem,
@@ -671,7 +671,7 @@ tuplesort_begin_datum(Oid datumType, Oid sortOperator, Oid sortCollation,
 
 	base->nKeys = 1;			/* always a one-column sort */
 
-	TRACE_POSTGRESQL_SORT_START(DATUM_SORT,
+	TRACE_MAINTABLEQL_SORT_START(DATUM_SORT,
 								false,	/* no unique check */
 								1,
 								workMem,

@@ -17,9 +17,9 @@
 #include "../../sdk/client.h"
 #include "e2e_testutils.h"
 
-TEST_CASE("ping Iggy server", E2E_TAG) {
+TEST_CASE("ping Messenger server", E2E_TAG) {
     // Start the Docker container; shuts down when this object goes out of scope
-    IggyRunner runner;
+    MessengerRunner runner;
 
     // Create a client object with all defaults
     icp::client::Options options;

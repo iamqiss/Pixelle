@@ -9,7 +9,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <unistd.h>
 #include <ctype.h>

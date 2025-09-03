@@ -1,22 +1,22 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # This regression test checks the behavior of the btree validation in the
 # presence of breaking sort order changes.
 #
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $node = PostgreSQL::Test::Cluster->new('test');
+my $node = maintableQL::Test::Cluster->new('test');
 $node->init;
 $node->start;
 
 # Create a custom operator class and an index which uses it.
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 	CREATE EXTENSION amcheck;
 
 	CREATE FUNCTION int4_asc_cmp (a int4, b int4) RETURNS int LANGUAGE sql AS $$
@@ -52,14 +52,14 @@ $node->safe_psql(
 ));
 
 # We have not yet broken the index, so we should get no corruption
-$node->command_like([ 'pg_amcheck', '--port' => $node->port, 'postgres' ],
+$node->command_like([ 'pg_amcheck', '--port' => $node->port, 'maintable' ],
 	qr/^$/,
 	'pg_amcheck all schemas, tables and indexes reports no corruption');
 
 # Change the operator class to use a function which sorts in a different
 # order to corrupt the btree index
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 	CREATE FUNCTION int4_desc_cmp (int4, int4) RETURNS int LANGUAGE sql AS $$
 		SELECT CASE WHEN $1 = $2 THEN 0 WHEN $1 > $2 THEN -1 ELSE 1 END; $$;
 	UPDATE pg_catalog.pg_amproc
@@ -69,7 +69,7 @@ $node->safe_psql(
 
 # Index corruption should now be reported
 $node->command_checks_all(
-	[ 'pg_amcheck', '--port' => $node->port, 'postgres' ],
+	[ 'pg_amcheck', '--port' => $node->port, 'maintable' ],
 	2,
 	[qr/item order invariant violated for index "fickleidx"/],
 	[],
@@ -82,7 +82,7 @@ $node->command_checks_all(
 
 # Repair broken opclass for check unique tests.
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 	UPDATE pg_catalog.pg_amproc
 		SET amproc = 'int4_asc_cmp'::regproc
 		WHERE amproc = 'int4_desc_cmp'::regproc
@@ -90,13 +90,13 @@ $node->safe_psql(
 
 # We should get no corruptions
 $node->command_like(
-	[ 'pg_amcheck', '--checkunique', '--port' => $node->port, 'postgres' ],
+	[ 'pg_amcheck', '--checkunique', '--port' => $node->port, 'maintable' ],
 	qr/^$/,
 	'pg_amcheck all schemas, tables and indexes reports no corruption');
 
 # Break opclass for check unique tests.
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 	CREATE FUNCTION bad_cmp (int4, int4)
 	RETURNS int LANGUAGE sql AS
 	$$
@@ -116,7 +116,7 @@ $node->safe_psql(
 
 # Unique index corruption should now be reported
 $node->command_checks_all(
-	[ 'pg_amcheck', '--checkunique', '--port' => $node->port, 'postgres' ],
+	[ 'pg_amcheck', '--checkunique', '--port' => $node->port, 'maintable' ],
 	2,
 	[qr/index uniqueness is violated for index "bttest_unique_idx"/],
 	[],

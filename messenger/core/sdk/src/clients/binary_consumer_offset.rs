@@ -16,14 +16,14 @@
  * under the License.
  */
 
-use crate::prelude::IggyClient;
+use crate::prelude::MessengerClient;
 use async_trait::async_trait;
-use iggy_binary_protocol::ConsumerOffsetClient;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{Consumer, ConsumerOffsetInfo, Identifier, IggyError};
+use messenger_binary_protocol::ConsumerOffsetClient;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{Consumer, ConsumerOffsetInfo, Identifier, MessengerError};
 
 #[async_trait]
-impl ConsumerOffsetClient for IggyClient {
+impl ConsumerOffsetClient for MessengerClient {
     async fn store_consumer_offset(
         &self,
         consumer: &Consumer,
@@ -31,7 +31,7 @@ impl ConsumerOffsetClient for IggyClient {
         topic_id: &Identifier,
         partition_id: Option<u32>,
         offset: u64,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.client
             .read()
             .await
@@ -45,7 +45,7 @@ impl ConsumerOffsetClient for IggyClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partition_id: Option<u32>,
-    ) -> Result<Option<ConsumerOffsetInfo>, IggyError> {
+    ) -> Result<Option<ConsumerOffsetInfo>, MessengerError> {
         self.client
             .read()
             .await
@@ -59,7 +59,7 @@ impl ConsumerOffsetClient for IggyClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partition_id: Option<u32>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.client
             .read()
             .await

@@ -17,9 +17,9 @@
 
 import asyncio
 
-# Assuming we have a Python module for iggy with similar functionality as the Rust one.
-from apache_iggy import IggyClient, StreamDetails, TopicDetails
-from apache_iggy import SendMessage as Message
+# Assuming we have a Python module for messenger with similar functionality as the Rust one.
+from apache_messenger import MessengerClient, StreamDetails, TopicDetails
+from apache_messenger import SendMessage as Message
 from loguru import logger
 
 STREAM_NAME = "sample-stream"
@@ -28,17 +28,17 @@ PARTITION_ID = 1
 
 
 async def main():
-    client = IggyClient()  # Assuming default constructor has similar functionality.
-    logger.info("Connecting to IggyClient")
+    client = MessengerClient()  # Assuming default constructor has similar functionality.
+    logger.info("Connecting to MessengerClient")
     await client.connect()
     logger.info("Connected. Logging in user...")
-    await client.login_user("iggy", "iggy")
+    await client.login_user("messenger", "messenger")
     logger.info("Logged in.")
     await init_system(client)
     await produce_messages(client)
 
 
-async def init_system(client: IggyClient):
+async def init_system(client: MessengerClient):
     try:
         logger.info(f"Creating stream with name {STREAM_NAME}...")
         stream: StreamDetails = await client.get_stream(STREAM_NAME)
@@ -70,7 +70,7 @@ async def init_system(client: IggyClient):
         logger.exception(error)
 
 
-async def produce_messages(client: IggyClient):
+async def produce_messages(client: MessengerClient):
     interval = 0.5  # 500 milliseconds in seconds for asyncio.sleep
     logger.info(
         f"Messages will be sent to stream: {STREAM_NAME}, topic: {TOPIC_NAME}, partition: {PARTITION_ID} with interval {interval * 1000} ms."

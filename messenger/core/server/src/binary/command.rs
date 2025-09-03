@@ -22,50 +22,50 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use bytes::{BufMut, Bytes, BytesMut};
 use enum_dispatch::enum_dispatch;
-use iggy_common::change_password::ChangePassword;
-use iggy_common::create_consumer_group::CreateConsumerGroup;
-use iggy_common::create_partitions::CreatePartitions;
-use iggy_common::create_personal_access_token::CreatePersonalAccessToken;
-use iggy_common::create_stream::CreateStream;
-use iggy_common::create_topic::CreateTopic;
-use iggy_common::create_user::CreateUser;
-use iggy_common::delete_consumer_group::DeleteConsumerGroup;
-use iggy_common::delete_consumer_offset::DeleteConsumerOffset;
-use iggy_common::delete_partitions::DeletePartitions;
-use iggy_common::delete_personal_access_token::DeletePersonalAccessToken;
-use iggy_common::delete_segments::DeleteSegments;
-use iggy_common::delete_stream::DeleteStream;
-use iggy_common::delete_topic::DeleteTopic;
-use iggy_common::delete_user::DeleteUser;
-use iggy_common::get_client::GetClient;
-use iggy_common::get_clients::GetClients;
-use iggy_common::get_consumer_group::GetConsumerGroup;
-use iggy_common::get_consumer_groups::GetConsumerGroups;
-use iggy_common::get_consumer_offset::GetConsumerOffset;
-use iggy_common::get_me::GetMe;
-use iggy_common::get_personal_access_tokens::GetPersonalAccessTokens;
-use iggy_common::get_snapshot::GetSnapshot;
-use iggy_common::get_stats::GetStats;
-use iggy_common::get_stream::GetStream;
-use iggy_common::get_streams::GetStreams;
-use iggy_common::get_topic::GetTopic;
-use iggy_common::get_topics::GetTopics;
-use iggy_common::get_user::GetUser;
-use iggy_common::get_users::GetUsers;
-use iggy_common::join_consumer_group::JoinConsumerGroup;
-use iggy_common::leave_consumer_group::LeaveConsumerGroup;
-use iggy_common::login_user::LoginUser;
-use iggy_common::login_with_personal_access_token::LoginWithPersonalAccessToken;
-use iggy_common::logout_user::LogoutUser;
-use iggy_common::ping::Ping;
-use iggy_common::purge_stream::PurgeStream;
-use iggy_common::purge_topic::PurgeTopic;
-use iggy_common::store_consumer_offset::StoreConsumerOffset;
-use iggy_common::update_permissions::UpdatePermissions;
-use iggy_common::update_stream::UpdateStream;
-use iggy_common::update_topic::UpdateTopic;
-use iggy_common::update_user::UpdateUser;
-use iggy_common::*;
+use messenger_common::change_password::ChangePassword;
+use messenger_common::create_consumer_group::CreateConsumerGroup;
+use messenger_common::create_partitions::CreatePartitions;
+use messenger_common::create_personal_access_token::CreatePersonalAccessToken;
+use messenger_common::create_stream::CreateStream;
+use messenger_common::create_topic::CreateTopic;
+use messenger_common::create_user::CreateUser;
+use messenger_common::delete_consumer_group::DeleteConsumerGroup;
+use messenger_common::delete_consumer_offset::DeleteConsumerOffset;
+use messenger_common::delete_partitions::DeletePartitions;
+use messenger_common::delete_personal_access_token::DeletePersonalAccessToken;
+use messenger_common::delete_segments::DeleteSegments;
+use messenger_common::delete_stream::DeleteStream;
+use messenger_common::delete_topic::DeleteTopic;
+use messenger_common::delete_user::DeleteUser;
+use messenger_common::get_client::GetClient;
+use messenger_common::get_clients::GetClients;
+use messenger_common::get_consumer_group::GetConsumerGroup;
+use messenger_common::get_consumer_groups::GetConsumerGroups;
+use messenger_common::get_consumer_offset::GetConsumerOffset;
+use messenger_common::get_me::GetMe;
+use messenger_common::get_personal_access_tokens::GetPersonalAccessTokens;
+use messenger_common::get_snapshot::GetSnapshot;
+use messenger_common::get_stats::GetStats;
+use messenger_common::get_stream::GetStream;
+use messenger_common::get_streams::GetStreams;
+use messenger_common::get_topic::GetTopic;
+use messenger_common::get_topics::GetTopics;
+use messenger_common::get_user::GetUser;
+use messenger_common::get_users::GetUsers;
+use messenger_common::join_consumer_group::JoinConsumerGroup;
+use messenger_common::leave_consumer_group::LeaveConsumerGroup;
+use messenger_common::login_user::LoginUser;
+use messenger_common::login_with_personal_access_token::LoginWithPersonalAccessToken;
+use messenger_common::logout_user::LogoutUser;
+use messenger_common::ping::Ping;
+use messenger_common::purge_stream::PurgeStream;
+use messenger_common::purge_topic::PurgeTopic;
+use messenger_common::store_consumer_offset::StoreConsumerOffset;
+use messenger_common::update_permissions::UpdatePermissions;
+use messenger_common::update_stream::UpdateStream;
+use messenger_common::update_topic::UpdateTopic;
+use messenger_common::update_user::UpdateUser;
+use messenger_common::*;
 use strum::EnumString;
 use tracing::error;
 
@@ -131,7 +131,7 @@ pub trait ServerCommandHandler {
         length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
 }
 
 pub trait BinaryServerCommand {
@@ -141,7 +141,7 @@ pub trait BinaryServerCommand {
         sender: &mut SenderKind,
         code: u32,
         length: u32,
-    ) -> Result<Self, IggyError>
+    ) -> Result<Self, MessengerError>
     where
         Self: Sized;
 }

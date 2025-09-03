@@ -16,21 +16,21 @@
  * under the License.
  */
 
-use crate::cli::common::{IggyCmdCommand, IggyCmdTest, IggyCmdTestCase};
+use crate::cli::common::{MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase};
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
+use messenger::prelude::Client;
 use predicates::str::diff;
 use serial_test::parallel;
 
 struct TestQuietModCmd {}
 
 #[async_trait]
-impl IggyCmdTestCase for TestQuietModCmd {
+impl MessengerCmdTestCase for TestQuietModCmd {
     async fn prepare_server_state(&mut self, _client: &dyn Client) {}
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new().arg("ping").opt("-q")
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new().arg("ping").opt("-q")
     }
 
     fn verify_command(&self, command_state: Assert) {
@@ -43,8 +43,8 @@ impl IggyCmdTestCase for TestQuietModCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_no_output() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test.execute_test(TestQuietModCmd {}).await;
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test.execute_test(TestQuietModCmd {}).await;
 }

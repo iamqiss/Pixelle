@@ -12,7 +12,7 @@
  <title>Overview</title>
 
  <para>
-  <productname>PostgreSQL</productname>
+  <productname>maintableQL</productname>
   includes an implementation of persistent on-disk hash indexes,
   which are fully crash recoverable. Any data type can be indexed by a
   hash index, including data types that do not have a well-defined linear

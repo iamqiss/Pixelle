@@ -20,24 +20,24 @@ use crate::state::system::PartitionState;
 use crate::streaming::partitions::COMPONENT;
 use crate::streaming::partitions::partition::Partition;
 use error_set::ErrContext;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use std::path::Path;
 use std::sync::atomic::Ordering;
 use tokio::fs::create_dir_all;
 use tracing::error;
 
 impl Partition {
-    pub async fn load(&mut self, state: PartitionState) -> Result<(), IggyError> {
+    pub async fn load(&mut self, state: PartitionState) -> Result<(), MessengerError> {
         let storage = self.storage.clone();
         storage.partition.load(self, state).await
     }
 
-    pub async fn persist(&mut self) -> Result<(), IggyError> {
+    pub async fn persist(&mut self) -> Result<(), MessengerError> {
         let storage = self.storage.clone();
         storage.partition.save(self).await
     }
 
-    pub async fn delete(&mut self) -> Result<(), IggyError> {
+    pub async fn delete(&mut self) -> Result<(), MessengerError> {
         for segment in &mut self.segments {
             segment.delete().await.with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to delete segment: {segment}",)
@@ -48,7 +48,7 @@ impl Partition {
         self.storage.partition.delete(self).await
     }
 
-    pub async fn purge(&mut self) -> Result<(), IggyError> {
+    pub async fn purge(&mut self) -> Result<(), MessengerError> {
         self.current_offset = 0;
         self.unsaved_messages_count = 0;
         self.should_increment_offset = false;
@@ -90,7 +90,7 @@ impl Partition {
                 "Failed to create consumer offsets directory for partition with ID: {} for stream with ID: {} and topic with ID: {}.",
                 self.partition_id, self.stream_id, self.topic_id
             );
-            return Err(IggyError::CannotCreateConsumerOffsetsDirectory(
+            return Err(MessengerError::CannotCreateConsumerOffsetsDirectory(
                 self.consumer_offsets_path.to_owned(),
             ));
         }
@@ -104,7 +104,7 @@ impl Partition {
                 "Failed to create consumer group offsets directory for partition with ID: {} for stream with ID: {} and topic with ID: {}.",
                 self.partition_id, self.stream_id, self.topic_id
             );
-            return Err(IggyError::CannotCreateConsumerOffsetsDirectory(
+            return Err(MessengerError::CannotCreateConsumerOffsetsDirectory(
                 self.consumer_group_offsets_path.to_owned(),
             ));
         }

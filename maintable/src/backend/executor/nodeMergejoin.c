@@ -3,7 +3,7 @@
  * nodeMergejoin.c
  *	  routines supporting merge joins
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -44,7 +44,7 @@
  *		compare the columns one at a time (see MJCompare).  The planner
  *		passes us enough information about the sort ordering of the inputs
  *		to allow us to determine how to make the comparison.  We may use the
- *		appropriate btree comparison function, since Postgres' only notion
+ *		appropriate btree comparison function, since Maintable' only notion
  *		of ordering is specified by btree opfamilies.
  *
  *
@@ -90,7 +90,7 @@
  *		execution state information and is preserved across calls to
  *		ExecMergeJoin. -cim 10/31/89
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/nbtree.h"
 #include "executor/execdebug.h"

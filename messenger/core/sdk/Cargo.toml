@@ -16,16 +16,16 @@
 # under the License.
 
 [package]
-name = "iggy"
+name = "messenger"
 version = "0.7.0"
-description = "Iggy is the persistent message streaming platform written in Rust, supporting QUIC, TCP and HTTP transport protocols, capable of processing millions of messages per second."
+description = "Messenger is the persistent message streaming platform written in Rust, supporting QUIC, TCP and HTTP transport protocols, capable of processing millions of messages per second."
 edition = "2024"
 license = "Apache-2.0"
-keywords = ["iggy", "messaging", "streaming"]
+keywords = ["messenger", "messaging", "streaming"]
 categories = ["command-line-utilities", "database", "network-programming"]
-homepage = "https://iggy.apache.org"
-documentation = "https://iggy.apache.org/docs"
-repository = "https://github.com/apache/iggy"
+homepage = "https://messenger.apache.org"
+documentation = "https://messenger.apache.org/docs"
+repository = "https://github.com/apache/messenger"
 readme = "../../README.md"
 
 [features]
@@ -46,8 +46,8 @@ dashmap = { workspace = true }
 flume = { workspace = true }
 futures = { workspace = true }
 futures-util = { workspace = true }
-iggy_binary_protocol = { workspace = true }
-iggy_common = { workspace = true }
+messenger_binary_protocol = { workspace = true }
+messenger_common = { workspace = true }
 num_cpus = "1.17.0"
 quinn = { workspace = true }
 reqwest = { workspace = true }

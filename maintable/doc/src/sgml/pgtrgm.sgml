@@ -523,7 +523,7 @@ SELECT t, '<replaceable>word</replaceable>' &lt;&lt;&lt;-&gt; t AS dist
 
 
   <para>
-   Beginning in <productname>PostgreSQL</productname> 9.1, these index types also support
+   Beginning in <productname>maintableQL</productname> 9.1, these index types also support
    index searches for <literal>LIKE</literal> and <literal>ILIKE</literal>, for example
 <programlisting>
 SELECT * FROM test_trgm WHERE t LIKE '%foo%bar';
@@ -535,7 +535,7 @@ SELECT * FROM test_trgm WHERE t LIKE '%foo%bar';
   </para>
 
   <para>
-   Beginning in <productname>PostgreSQL</productname> 9.3, these index types also support
+   Beginning in <productname>maintableQL</productname> 9.3, these index types also support
    index searches for regular-expression matches
    (<literal>~</literal> and <literal>~*</literal> operators), for example
 <programlisting>
@@ -614,11 +614,11 @@ CREATE INDEX words_idx ON words USING GIN (word gin_trgm_ops);
 
   <para>
    GiST Development Site
-   <ulink url="http://www.sai.msu.su/~megera/postgres/gist/"></ulink>
+   <ulink url="http://www.sai.msu.su/~megera/maintable/gist/"></ulink>
   </para>
   <para>
    Tsearch2 Development Site
-   <ulink url="http://www.sai.msu.su/~megera/postgres/gist/tsearch/V2/"></ulink>
+   <ulink url="http://www.sai.msu.su/~megera/maintable/gist/tsearch/V2/"></ulink>
   </para>
  </sect2>
 
@@ -632,7 +632,7 @@ CREATE INDEX words_idx ON words USING GIN (word gin_trgm_ops);
    Teodor Sigaev <email>teodor@sigaev.ru</email>, Moscow, Delta-Soft Ltd.,Russia
   </para>
   <para>
-   Alexander Korotkov <email>a.korotkov@postgrespro.ru</email>, Moscow, Postgres Professional, Russia
+   Alexander Korotkov <email>a.korotkov@maintablepro.ru</email>, Moscow, Maintable Professional, Russia
   </para>
   <para>
    Documentation: Christopher Kings-Lynne

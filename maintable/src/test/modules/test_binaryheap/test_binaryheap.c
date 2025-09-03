@@ -3,7 +3,7 @@
  * test_binaryheap.c
  *		Test correctness of binary heap implementation.
  *
- * Copyright (c) 2025, PostgreSQL Global Development Group
+ * Copyright (c) 2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/test/modules/test_binaryheap/test_binaryheap.c
@@ -11,7 +11,7 @@
  * -------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "common/int.h"
 #include "common/pg_prng.h"

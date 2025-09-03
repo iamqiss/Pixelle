@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_verifybackup
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_verifybackup (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_verifybackup (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_verifybackup (PostgreSQL) 15\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_verifybackup (maintableQL) 15\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2022-09-26 08:16+0000\n"
 "PO-Revision-Date: 2023-09-05 08:24+0200\n"
 "Last-Translator: \n"

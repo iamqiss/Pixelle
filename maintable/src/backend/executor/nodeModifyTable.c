@@ -3,7 +3,7 @@
  * nodeModifyTable.c
  *	  routines to handle ModifyTable nodes.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -50,7 +50,7 @@
  *		return NULL.  This avoids useless call/return overhead.
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "access/tableam.h"
@@ -1661,7 +1661,7 @@ ldelete:
 				 * current command, or by a later command in the current
 				 * transaction.  The former case is possible in a join DELETE
 				 * where multiple tuples join to the same target tuple. This
-				 * is somewhat questionable, but Postgres has always allowed
+				 * is somewhat questionable, but Maintable has always allowed
 				 * it: we just ignore additional deletion attempts.
 				 *
 				 * The latter case arises if the tuple is modified by a
@@ -1804,7 +1804,7 @@ ldelete:
 		 * Note: Normally one would think that we have to delete index tuples
 		 * associated with the heap tuple now...
 		 *
-		 * ... but in POSTGRES, we have no need to do this because VACUUM will
+		 * ... but in MAINTABLE, we have no need to do this because VACUUM will
 		 * take care of it later.  We can't delete index tuples immediately
 		 * anyway, since the tuple is still visible to other transactions.
 		 */
@@ -2544,7 +2544,7 @@ redo_act:
 				 * current command, or by a later command in the current
 				 * transaction.  The former case is possible in a join UPDATE
 				 * where multiple tuples join to the same target tuple. This
-				 * is pretty questionable, but Postgres has always allowed it:
+				 * is pretty questionable, but Maintable has always allowed it:
 				 * we just execute the first update action and ignore
 				 * additional update attempts.
 				 *

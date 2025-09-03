@@ -3,7 +3,7 @@
 
   <para>
    While many uses of triggers involve user-written trigger functions,
-   <productname>PostgreSQL</productname> provides a few built-in trigger
+   <productname>maintableQL</productname> provides a few built-in trigger
    functions that can be used directly in user-defined triggers.  These
    are summarized in <xref linkend="builtin-triggers-table"/>.
    (Additional built-in trigger functions exist, which implement foreign

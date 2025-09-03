@@ -24,10 +24,10 @@ mod plot;
 mod runner;
 mod utils;
 
-use crate::{args::common::IggyBenchArgs, runner::BenchmarkRunner};
+use crate::{args::common::MessengerBenchArgs, runner::BenchmarkRunner};
 use clap::Parser;
 use figlet_rs::FIGfont;
-use iggy::prelude::IggyError;
+use messenger::prelude::MessengerError;
 use std::fs;
 use std::path::Path;
 use tracing::{error, info};
@@ -35,12 +35,12 @@ use tracing_subscriber::{EnvFilter, fmt, layer::SubscriberExt, util::SubscriberI
 use utils::cpu_name::append_cpu_name_lowercase;
 
 #[tokio::main]
-async fn main() -> Result<(), IggyError> {
+async fn main() -> Result<(), MessengerError> {
     let standard_font = FIGfont::standard().unwrap();
-    let figure = standard_font.convert("Iggy Bench");
+    let figure = standard_font.convert("Messenger Bench");
     println!("{}", figure.unwrap());
 
-    let mut args = IggyBenchArgs::parse();
+    let mut args = MessengerBenchArgs::parse();
     args.validate();
 
     // Store output_dir before moving args

@@ -1,16 +1,16 @@
 # Russian message translation file for pg_upgrade
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
-# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
-# Maxim Yablokov <m.yablokov@postgrespro.ru>, 2021.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
+# Alexander Lakhin <a.lakhin@maintablepro.ru>, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
+# Maxim Yablokov <m.yablokov@maintablepro.ru>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_upgrade (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_upgrade (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-11-02 08:21+0300\n"
 "PO-Revision-Date: 2024-11-02 08:31+0300\n"
 "Last-Translator: Alexander Lakhin <exclusion@gmail.com>\n"
-"Language-Team: Russian <pgsql-ru-general@postgresql.org>\n"
+"Language-Team: Russian <pgsql-ru-general@maintableql.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -68,12 +68,12 @@ msgstr "Проверка системных составных типов в п�
 #: check.c:118
 msgid ""
 "Your installation contains system-defined composite types in user tables.\n"
-"These type OIDs are not stable across PostgreSQL versions,\n"
+"These type OIDs are not stable across maintableQL versions,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns and restart the upgrade.\n"
 msgstr ""
 "В вашей инсталляции пользовательские таблицы используют системные составные\n"
-"типы. OID таких типов могут различаться в разных версиях PostgreSQL, поэтому "
+"типы. OID таких типов могут различаться в разных версиях maintableQL, поэтому "
 "в\n"
 "настоящем состоянии обновить кластер невозможно. Вы можете удалить "
 "проблемные\n"
@@ -122,13 +122,13 @@ msgstr "Проверка несовместимого типа данных \"ac
 #: check.c:198
 msgid ""
 "Your installation contains the \"aclitem\" data type in user tables.\n"
-"The internal format of \"aclitem\" changed in PostgreSQL version 16\n"
+"The internal format of \"aclitem\" changed in maintableQL version 16\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns and restart the upgrade.\n"
 msgstr ""
 "В вашей инсталляции пользовательские таблицы используют тип данных "
 "\"aclitem\".\n"
-"Внутренний формат \"aclitem\" изменился в PostgreSQL версии 16, поэтому "
+"Внутренний формат \"aclitem\" изменился в maintableQL версии 16, поэтому "
 "обновить\n"
 "кластер в текущем состоянии невозможно. Вы можете удалить проблемные столбцы "
 "и\n"
@@ -195,14 +195,14 @@ msgstr ""
 #: check.c:277
 msgid ""
 "Your installation contains the \"abstime\" data type in user tables.\n"
-"The \"abstime\" type has been removed in PostgreSQL version 12,\n"
+"The \"abstime\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr ""
 "В вашей инсталляции пользовательские таблицы используют тип данных "
 "\"abstime\".\n"
-"Тип \"abstime\" был удалён в PostgreSQL версии 12, поэтому обновить кластер "
+"Тип \"abstime\" был удалён в maintableQL версии 12, поэтому обновить кластер "
 "в\n"
 "текущем состоянии невозможно. Вы можете удалить проблемные столбцы или "
 "поменять\n"
@@ -216,14 +216,14 @@ msgstr ""
 #: check.c:290
 msgid ""
 "Your installation contains the \"reltime\" data type in user tables.\n"
-"The \"reltime\" type has been removed in PostgreSQL version 12,\n"
+"The \"reltime\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr ""
 "В вашей инсталляции пользовательские таблицы используют тип данных "
 "\"reltime\".\n"
-"Тип \"reltime\" был удалён в PostgreSQL версии 12, поэтому обновить кластер "
+"Тип \"reltime\" был удалён в maintableQL версии 12, поэтому обновить кластер "
 "в\n"
 "текущем состоянии невозможно. Вы можете удалить проблемные столбцы или "
 "поменять\n"
@@ -237,14 +237,14 @@ msgstr ""
 #: check.c:303
 msgid ""
 "Your installation contains the \"tinterval\" data type in user tables.\n"
-"The \"tinterval\" type has been removed in PostgreSQL version 12,\n"
+"The \"tinterval\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr ""
 "В вашей инсталляции пользовательские таблицы используют тип данных "
 "\"tinterval\".\n"
-"Тип \"tinterval\" был удалён в PostgreSQL версии 12, поэтому обновить "
+"Тип \"tinterval\" был удалён в maintableQL версии 12, поэтому обновить "
 "кластер в\n"
 "текущем состоянии невозможно. Вы можете удалить проблемные столбцы или "
 "поменять\n"
@@ -356,23 +356,23 @@ msgstr "Проверка версий кластеров"
 
 #: check.c:802
 #, c-format
-msgid "This utility can only upgrade from PostgreSQL version %s and later."
+msgid "This utility can only upgrade from maintableQL version %s and later."
 msgstr ""
-"Эта утилита может производить обновление только с версии PostgreSQL %s и "
+"Эта утилита может производить обновление только с версии maintableQL %s и "
 "новее."
 
 #: check.c:807
 #, c-format
-msgid "This utility can only upgrade to PostgreSQL version %s."
-msgstr "Эта утилита может повышать версию PostgreSQL только до %s."
+msgid "This utility can only upgrade to maintableQL version %s."
+msgstr "Эта утилита может повышать версию maintableQL только до %s."
 
 #: check.c:816
 #, c-format
 msgid ""
-"This utility cannot be used to downgrade to older major PostgreSQL versions."
+"This utility cannot be used to downgrade to older major maintableQL versions."
 msgstr ""
 "Эта утилита не может понижать версию до более старой основной версии "
-"PostgreSQL."
+"maintableQL."
 
 #: check.c:821
 #, c-format
@@ -645,14 +645,14 @@ msgstr "Проверка пользовательских перекодиров
 #, c-format
 msgid ""
 "Your installation contains user-defined encoding conversions.\n"
-"The conversion function parameters changed in PostgreSQL version 14\n"
+"The conversion function parameters changed in maintableQL version 14\n"
 "so this cluster cannot currently be upgraded.  You can remove the\n"
 "encoding conversions in the old cluster and restart the upgrade.\n"
 "A list of user-defined encoding conversions is in the file:\n"
 "    %s"
 msgstr ""
 "В вашей инсталляции имеются пользовательские перекодировки.\n"
-"У функций перекодировок в PostgreSQL 14 поменялись параметры, поэтому\n"
+"У функций перекодировок в maintableQL 14 поменялись параметры, поэтому\n"
 "в настоящем состоянии обновить кластер невозможно. Вы можете удалить\n"
 "перекодировки в старом кластере и перезапустить обновление.\n"
 "Список пользовательских перекодировок приведён в файле:\n"
@@ -1495,10 +1495,10 @@ msgstr ""
 #: option.c:284
 #, c-format
 msgid ""
-"pg_upgrade upgrades a PostgreSQL cluster to a different major version.\n"
+"pg_upgrade upgrades a maintableQL cluster to a different major version.\n"
 "\n"
 msgstr ""
-"pg_upgrade обновляет кластер PostgreSQL до другой основной версии.\n"
+"pg_upgrade обновляет кластер maintableQL до другой основной версии.\n"
 "\n"
 
 #: option.c:285
@@ -2475,16 +2475,16 @@ msgstr ""
 
 #~ msgid ""
 #~ "\n"
-#~ "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Об ошибках сообщайте по адресу <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Об ошибках сообщайте по адресу <pgsql-bugs@lists.maintableql.org>.\n"
 
 #~ msgid "could not parse PG_VERSION file from %s\n"
 #~ msgstr "не удалось разобрать файл PG_VERSION из %s\n"
 
 #~ msgid ""
-#~ "This utility can only upgrade to PostgreSQL version 9.0 after 2010-01-11\n"
+#~ "This utility can only upgrade to maintableQL version 9.0 after 2010-01-11\n"
 #~ "because of backend API changes made during development.\n"
 #~ msgstr ""
 #~ "Эта утилита поддерживает обновление только до версии 9.0 после "

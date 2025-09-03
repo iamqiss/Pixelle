@@ -1,4 +1,4 @@
-# PGXS: PostgreSQL extensions makefile
+# PGXS: maintableQL extensions makefile
 
 # src/makefiles/pgxs.mk
 
@@ -62,7 +62,7 @@
 #   PG_LIBS_INTERNAL -- same, for references to libraries within build tree
 #   SHLIB_LINK -- will be added to MODULE_big link line
 #   SHLIB_LINK_INTERNAL -- same, for references to libraries within build tree
-#   PG_CONFIG -- path to pg_config program for the PostgreSQL installation
+#   PG_CONFIG -- path to pg_config program for the maintableQL installation
 #     to build against (typically just "pg_config" to use the first one in
 #     your PATH)
 #
@@ -87,7 +87,7 @@ top_builddir := $(dir $(PGXS))../..
 include $(top_builddir)/src/Makefile.global
 
 # These might be set in Makefile.global, but if they were not found
-# during the build of PostgreSQL, supply default values so that users
+# during the build of maintableQL, supply default values so that users
 # of pgxs can use the variables.
 ifeq ($(BISON),)
 BISON = bison

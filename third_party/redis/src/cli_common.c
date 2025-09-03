@@ -110,7 +110,7 @@ error:
 
 /* Wrapper around hiredis to allow arbitrary reads and writes.
  *
- * We piggybacks on top of hiredis to achieve transparent TLS support,
+ * We pmessengerbacks on top of hiredis to achieve transparent TLS support,
  * and use its internal buffers so it can co-exist with commands
  * previously/later issued on the connection.
  *

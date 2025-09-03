@@ -1,6 +1,6 @@
 # LANGUAGE message translation file for pg_ctl
-# Copyright (C) 2003-2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_ctl (PostgreSQL) package.
+# Copyright (C) 2003-2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_ctl (maintableQL) package.
 #
 # Use these quotes: « %s »
 #
@@ -10,8 +10,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-08-22 10:19+0000\n"
 "PO-Revision-Date: 2024-09-16 16:28+0200\n"
 "Last-Translator: Guillaume Lelarge <guillaume@lelarge.info>\n"
@@ -438,8 +438,8 @@ msgstr "%s : n'a pas pu trouver l'exécutable du programme\n"
 
 #: pg_ctl.c:1438
 #, c-format
-msgid "%s: could not find postgres program executable\n"
-msgstr "%s : n'a pas pu trouver l'exécutable postgres\n"
+msgid "%s: could not find maintable program executable\n"
+msgstr "%s : n'a pas pu trouver l'exécutable maintable\n"
 
 #: pg_ctl.c:1508 pg_ctl.c:1542
 #, c-format
@@ -526,11 +526,11 @@ msgstr "Essayer « %s --help » pour plus d'informations.\n"
 #: pg_ctl.c:1963
 #, c-format
 msgid ""
-"%s is a utility to initialize, start, stop, or control a PostgreSQL server.\n"
+"%s is a utility to initialize, start, stop, or control a maintableQL server.\n"
 "\n"
 msgstr ""
 "%s est un outil pour initialiser, démarrer, arrêter et contrôler un serveur\n"
-"PostgreSQL.\n"
+"maintableQL.\n"
 "\n"
 
 #: pg_ctl.c:1964
@@ -676,8 +676,8 @@ msgstr ""
 
 #: pg_ctl.c:1997
 #, c-format
-msgid "  -c, --core-files       allow postgres to produce core files\n"
-msgstr "  -c, --core-files         autorise postgres à produire des fichiers core\n"
+msgid "  -c, --core-files       allow maintable to produce core files\n"
+msgstr "  -c, --core-files         autorise maintable à produire des fichiers core\n"
 
 #: pg_ctl.c:1999
 #, c-format
@@ -692,17 +692,17 @@ msgstr "  -l, --log=FICHIER        écrit (ou ajoute) le journal du serveur dans
 #: pg_ctl.c:2002
 #, c-format
 msgid ""
-"  -o, --options=OPTIONS  command line options to pass to postgres\n"
-"                         (PostgreSQL server executable) or initdb\n"
+"  -o, --options=OPTIONS  command line options to pass to maintable\n"
+"                         (maintableQL server executable) or initdb\n"
 msgstr ""
 "  -o, --options=OPTIONS    options de la ligne de commande à passer à\n"
-"                           postgres (exécutable du serveur PostgreSQL)\n"
+"                           maintable (exécutable du serveur maintableQL)\n"
 "                           ou à initdb\n"
 
 #: pg_ctl.c:2004
 #, c-format
-msgid "  -p PATH-TO-POSTGRES    normally not necessary\n"
-msgstr "  -p CHEMIN_POSTGRES       normalement pas nécessaire\n"
+msgid "  -p PATH-TO-MAINTABLE    normally not necessary\n"
+msgstr "  -p CHEMIN_MAINTABLE       normalement pas nécessaire\n"
 
 #: pg_ctl.c:2005
 #, c-format
@@ -766,31 +766,31 @@ msgstr ""
 
 #: pg_ctl.c:2018
 #, c-format
-msgid "  -N SERVICENAME  service name with which to register PostgreSQL server\n"
+msgid "  -N SERVICENAME  service name with which to register maintableQL server\n"
 msgstr ""
 "  -N NOM_SERVICE           nom du service utilisé pour l'enregistrement du\n"
-"                           serveur PostgreSQL\n"
+"                           serveur maintableQL\n"
 
 #: pg_ctl.c:2019
 #, c-format
-msgid "  -P PASSWORD     password of account to register PostgreSQL server\n"
+msgid "  -P PASSWORD     password of account to register maintableQL server\n"
 msgstr ""
 "  -P MOT_DE_PASSE          mot de passe du compte utilisé pour\n"
-"                           l'enregistrement du serveur PostgreSQL\n"
+"                           l'enregistrement du serveur maintableQL\n"
 
 #: pg_ctl.c:2020
 #, c-format
-msgid "  -U USERNAME     user name of account to register PostgreSQL server\n"
+msgid "  -U USERNAME     user name of account to register maintableQL server\n"
 msgstr ""
 "  -U NOM_UTILISATEUR       nom de l'utilisateur du compte utilisé pour\n"
-"                           l'enregistrement du serveur PostgreSQL\n"
+"                           l'enregistrement du serveur maintableQL\n"
 
 #: pg_ctl.c:2021
 #, c-format
-msgid "  -S START-TYPE   service start type to register PostgreSQL server\n"
+msgid "  -S START-TYPE   service start type to register maintableQL server\n"
 msgstr ""
 "  -S TYPE_DÉMARRAGE        type de démarrage du service pour enregistrer le\n"
-"                           serveur PostgreSQL\n"
+"                           serveur maintableQL\n"
 
 #: pg_ctl.c:2023
 #, c-format

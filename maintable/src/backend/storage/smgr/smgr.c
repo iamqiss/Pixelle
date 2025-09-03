@@ -52,7 +52,7 @@
  * other, more complicated, problems would need to be fixed for that to be
  * viable (e.g. smgr.c is often called with interrupts already held).
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -61,7 +61,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/xlogutils.h"
 #include "lib/ilist.h"
@@ -225,7 +225,7 @@ smgrshutdown(int code, Datum arg)
 /*
  * smgropen() -- Return an SMgrRelation object, creating it if need be.
  *
- * In versions of PostgreSQL prior to 17, this function returned an object
+ * In versions of maintableQL prior to 17, this function returned an object
  * with no defined lifetime.  Now, however, the object remains valid for the
  * lifetime of the transaction, up to the point where AtEOXact_SMgr() is
  * called, making it much easier for callers to know for how long they can
@@ -712,7 +712,7 @@ smgrmaxcombine(SMgrRelation reln, ForkNumber forknum,
  *
  * This routine is called from the buffer manager in order to
  * instantiate pages in the shared buffer cache.  All storage managers
- * return pages in the format that POSTGRES expects.
+ * return pages in the format that MAINTABLE expects.
  *
  * If more than one block is intended to be read, callers need to use
  * smgrmaxcombine() to check how many blocks can be combined into one IO.

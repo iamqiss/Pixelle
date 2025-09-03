@@ -1,12 +1,12 @@
 # Czech message translation file for ecpglib
-# Copyright (C) 2012 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2012 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Tomáš Vondra <tv@fuzzy.cz>, 2012, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: ecpglib-cs (PostgreSQL 9.3)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: ecpglib-cs (maintableQL 9.3)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2018-07-13 19:38+0000\n"
 "PO-Revision-Date: 2018-07-13 23:44+0200\n"
 "Last-Translator: Tomas Vondra <tv@fuzzy.cz>\n"

@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_amcheck
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_amcheck (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_amcheck (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_amcheck (PostgreSQL) 15\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_amcheck (maintableQL) 15\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2022-09-26 08:20+0000\n"
 "PO-Revision-Date: 2023-09-05 08:02+0200\n"
 "Language: it\n"
@@ -235,10 +235,10 @@ msgstr "btree index \"%s.%s.%s\":\n"
 #: pg_amcheck.c:1138
 #, c-format
 msgid ""
-"%s checks objects in a PostgreSQL database for corruption.\n"
+"%s checks objects in a maintableQL database for corruption.\n"
 "\n"
 msgstr ""
-"%s verifica la corruzione degli oggetti in un database PostgreSQL.\n"
+"%s verifica la corruzione degli oggetti in un database maintableQL.\n"
 "\n"
 
 #: pg_amcheck.c:1139

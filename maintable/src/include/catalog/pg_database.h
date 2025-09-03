@@ -4,7 +4,7 @@
  *	  definition of the "database" system catalog (pg_database)
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/catalog/pg_database.h
@@ -35,7 +35,7 @@ CATALOG(pg_database,1262,DatabaseRelationId) BKI_SHARED_RELATION BKI_ROWTYPE_OID
 	NameData	datname;
 
 	/* owner of database */
-	Oid			datdba BKI_DEFAULT(POSTGRES) BKI_LOOKUP(pg_authid);
+	Oid			datdba BKI_DEFAULT(MAINTABLE) BKI_LOOKUP(pg_authid);
 
 	/* character encoding */
 	int32		encoding;
@@ -104,12 +104,12 @@ MAKE_SYSCACHE(DATABASEOID, pg_database_oid_index, 4);
 
 /*
  * pg_database.dat contains an entry for template1, but not for the template0
- * or postgres databases, because those are created later in initdb.
+ * or maintable databases, because those are created later in initdb.
  * However, we still want to manually assign the OIDs for template0 and
- * postgres, so declare those here.
+ * maintable, so declare those here.
  */
 DECLARE_OID_DEFINING_MACRO(Template0DbOid, 4);
-DECLARE_OID_DEFINING_MACRO(PostgresDbOid, 5);
+DECLARE_OID_DEFINING_MACRO(MaintableDbOid, 5);
 
 /*
  * Special values for pg_database.datconnlimit. Normal values are >= 0.

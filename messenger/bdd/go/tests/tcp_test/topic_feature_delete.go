@@ -18,8 +18,8 @@
 package tcp_test
 
 import (
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	ierror "github.com/apache/iggy/foreign/go/errors"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	ierror "github.com/apache/messenger/foreign/go/errors"
 	"github.com/onsi/ginkgo/v2"
 )
 
@@ -46,7 +46,7 @@ var _ = ginkgo.Describe("DELETE TOPIC:", func() {
 			streamIdentifier, _ := iggcon.NewIdentifier(streamId)
 			err := client.DeleteTopic(streamIdentifier, randomU32Identifier())
 
-			itShouldReturnSpecificIggyError(err, ierror.TopicIdNotFound)
+			itShouldReturnSpecificMessengerError(err, ierror.TopicIdNotFound)
 		})
 
 		ginkgo.Context("and tries to delete non-existing topic and stream", func() {
@@ -54,7 +54,7 @@ var _ = ginkgo.Describe("DELETE TOPIC:", func() {
 
 			err := client.DeleteTopic(randomU32Identifier(), randomU32Identifier())
 
-			itShouldReturnSpecificIggyError(err, ierror.StreamIdNotFound)
+			itShouldReturnSpecificMessengerError(err, ierror.StreamIdNotFound)
 		})
 	})
 

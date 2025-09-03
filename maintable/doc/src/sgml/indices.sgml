@@ -91,7 +91,7 @@ CREATE INDEX test1_id_index ON test1 (id);
   </para>
 
   <para>
-   In general, <productname>PostgreSQL</productname> indexes can be used
+   In general, <productname>maintableQL</productname> indexes can be used
    to optimize queries that contain one or more <literal>WHERE</literal>
    or <literal>JOIN</literal> clauses of the form
 
@@ -125,7 +125,7 @@ CREATE INDEX test1_id_index ON test1 (id);
 
   <para>
    Creating an index on a large table can take a long time.  By default,
-   <productname>PostgreSQL</productname> allows reads (<command>SELECT</command> statements) to occur
+   <productname>maintableQL</productname> allows reads (<command>SELECT</command> statements) to occur
    on the table in parallel with index creation, but writes (<command>INSERT</command>,
    <command>UPDATE</command>, <command>DELETE</command>) are blocked until the index build is finished.
    In production environments this is often unacceptable.
@@ -149,7 +149,7 @@ CREATE INDEX test1_id_index ON test1 (id);
   <title>Index Types</title>
 
   <para>
-   <productname>PostgreSQL</productname> provides several index types:
+   <productname>maintableQL</productname> provides several index types:
    B-tree, Hash, GiST, SP-GiST, GIN, BRIN, and the extension <link
    linkend="bloom">bloom</link>.
    Each index type uses a different
@@ -180,7 +180,7 @@ CREATE INDEX <replaceable>name</replaceable> ON <replaceable>table</replaceable>
   <para>
    B-trees can handle equality and range queries on data that can be sorted
    into some ordering.
-   In particular, the <productname>PostgreSQL</productname> query planner
+   In particular, the <productname>maintableQL</productname> query planner
    will consider using a B-tree index whenever an indexed column is
    involved in a comparison using one of these operators:
 
@@ -261,7 +261,7 @@ CREATE INDEX <replaceable>name</replaceable> ON <replaceable>table</replaceable>
    Accordingly, the particular operators with which a GiST index can be
    used vary depending on the indexing strategy (the <firstterm>operator
    class</firstterm>).  As an example, the standard distribution of
-   <productname>PostgreSQL</productname> includes GiST operator classes
+   <productname>maintableQL</productname> includes GiST operator classes
    for several two-dimensional geometric data types, which support indexed
    queries using these operators:
 
@@ -309,7 +309,7 @@ SELECT * FROM places ORDER BY location <-> point '(101,456)' LIMIT 10;
    various kinds of searches.  SP-GiST permits implementation of a wide range
    of different non-balanced disk-based data structures, such as quadtrees,
    k-d trees, and radix trees (tries).  As an example, the standard distribution of
-   <productname>PostgreSQL</productname> includes SP-GiST operator classes
+   <productname>maintableQL</productname> includes SP-GiST operator classes
    for two-dimensional points, which support indexed
    queries using these operators:
 
@@ -358,7 +358,7 @@ SELECT * FROM places ORDER BY location <-> point '(101,456)' LIMIT 10;
    operators with which a GIN index can be used vary depending on the
    indexing strategy.
    As an example, the standard distribution of
-   <productname>PostgreSQL</productname> includes a GIN operator class
+   <productname>maintableQL</productname> includes a GIN operator class
    for arrays, which supports indexed queries using these operators:
 
 <synopsis>
@@ -450,7 +450,7 @@ CREATE INDEX test2_mm_idx ON test2 (major, minor);
    columns is independent of whether <literal>INCLUDE</literal> columns
    can be added to the index.  Indexes can have up to 32 columns,
    including <literal>INCLUDE</literal> columns.  (This limit can be
-   altered when building <productname>PostgreSQL</productname>; see the
+   altered when building <productname>maintableQL</productname>; see the
    file <filename>pg_config_manual.h</filename>.)
   </para>
 
@@ -568,7 +568,7 @@ CREATE INDEX test2_mm_idx ON test2 (major, minor);
    an index may be able to deliver them in a specific sorted order.
    This allows a query's <literal>ORDER BY</literal> specification to be honored
    without a separate sorting step.  Of the index types currently
-   supported by <productname>PostgreSQL</productname>, only B-tree
+   supported by <productname>maintableQL</productname>, only B-tree
    can produce sorted output &mdash; the other index types return
    matching rows in an unspecified, implementation-dependent order.
   </para>
@@ -662,7 +662,7 @@ CREATE INDEX test3_desc_index ON test3 (id DESC NULLS LAST);
 
   <para>
    Fortunately,
-   <productname>PostgreSQL</productname> has the ability to combine multiple indexes
+   <productname>maintableQL</productname> has the ability to combine multiple indexes
    (including multiple uses of the same index) to handle cases that cannot
    be implemented by single index scans.  The system can form <literal>AND</literal>
    and <literal>OR</literal> conditions across several index scans.  For example,
@@ -752,7 +752,7 @@ CREATE UNIQUE INDEX <replaceable>name</replaceable> ON <replaceable>table</repla
   </para>
 
   <para>
-   <productname>PostgreSQL</productname> automatically creates a unique
+   <productname>maintableQL</productname> automatically creates a unique
    index when a unique constraint or primary key is defined for a table.
    The index covers the columns that make up the primary key or unique
    constraint (a multicolumn index, if appropriate), and is the mechanism
@@ -983,7 +983,7 @@ SELECT * FROM orders WHERE order_nr = 3501;
   <para>
    <xref linkend="indexes-partial-ex2"/> also illustrates that the
    indexed column and the column used in the predicate do not need to
-   match.  <productname>PostgreSQL</productname> supports partial
+   match.  <productname>maintableQL</productname> supports partial
    indexes with arbitrary predicates, so long as only columns of the
    table being indexed are involved.  However, keep in mind that the
    predicate must match the conditions used in the queries that
@@ -991,7 +991,7 @@ SELECT * FROM orders WHERE order_nr = 3501;
    index can be used in a query only if the system can recognize that
    the <literal>WHERE</literal> condition of the query mathematically implies
    the predicate of the index.
-   <productname>PostgreSQL</productname> does not have a sophisticated
+   <productname>maintableQL</productname> does not have a sophisticated
    theorem prover that can recognize mathematically equivalent
    expressions that are written in different forms.  (Not
    only is such a general theorem prover extremely difficult to
@@ -1050,7 +1050,7 @@ CREATE UNIQUE INDEX tests_success_constraint ON tests (subject, target)
    distributions might cause the system to use an index when it really
    should not.  In that case the index can be set up so that it is not
    available for the offending query.  Normally,
-   <productname>PostgreSQL</productname> makes reasonable choices about index
+   <productname>maintableQL</productname> makes reasonable choices about index
    usage (e.g., it avoids them when retrieving common values, so the
    earlier example really only saves index size, it is not required to
    avoid index usage), and grossly incorrect plan choices are cause
@@ -1062,7 +1062,7 @@ CREATE UNIQUE INDEX tests_success_constraint ON tests (subject, target)
    know at least as much as the query planner knows, in particular you
    know when an index might be profitable.  Forming this knowledge
    requires experience and understanding of how indexes in
-   <productname>PostgreSQL</productname> work.  In most cases, the
+   <productname>maintableQL</productname> work.  In most cases, the
    advantage of a partial index over a regular index will be minimal.
    There are cases where they are quite counterproductive, as in <xref
    linkend="indexes-partial-ex4"/>.
@@ -1137,11 +1137,11 @@ CREATE INDEX mytable_cat_data ON mytable (category, data);
   </indexterm>
 
   <para>
-   All indexes in <productname>PostgreSQL</productname>
+   All indexes in <productname>maintableQL</productname>
    are <firstterm>secondary</firstterm> indexes, meaning that each index is
    stored separately from the table's main data area (which is called the
    table's <firstterm>heap</firstterm>
-   in <productname>PostgreSQL</productname> terminology).  This means that
+   in <productname>maintableQL</productname> terminology).  This means that
    in an ordinary index scan, each row retrieval requires fetching data from
    both the index and the heap.  Furthermore, while the index entries that
    match a given indexable <literal>WHERE</literal> condition are usually
@@ -1155,7 +1155,7 @@ CREATE INDEX mytable_cat_data ON mytable (category, data);
   </para>
 
   <para>
-   To solve this performance problem, <productname>PostgreSQL</productname>
+   To solve this performance problem, <productname>maintableQL</productname>
    supports <firstterm>index-only scans</firstterm>, which can answer
    queries from an index alone without any heap access.  The basic idea is
    to return values directly out of each index entry instead of consulting
@@ -1202,14 +1202,14 @@ SELECT x FROM tab WHERE x = 'key' AND z &lt; 42;
    If these two fundamental requirements are met, then all the data values
    required by the query are available from the index, so an index-only scan
    is physically possible.  But there is an additional requirement for any
-   table scan in <productname>PostgreSQL</productname>: it must verify that
+   table scan in <productname>maintableQL</productname>: it must verify that
    each retrieved row be <quote>visible</quote> to the query's MVCC
    snapshot, as discussed in <xref linkend="mvcc"/>.  Visibility information
    is not stored in index entries, only in heap entries; so at first glance
    it would seem that every row retrieval would require a heap access
    anyway.  And this is indeed the case, if the table row has been modified
    recently.  However, for seldom-changing data there is a way around this
-   problem.  <productname>PostgreSQL</productname> tracks, for each page in
+   problem.  <productname>maintableQL</productname> tracks, for each page in
    a table's heap, whether all rows stored in that page are old enough to be
    visible to all current and future transactions.  This information is
    stored in a bit in the table's <firstterm>visibility map</firstterm>.  An
@@ -1243,7 +1243,7 @@ SELECT x FROM tab WHERE x = 'key' AND z &lt; 42;
    specifically designed to include the columns needed by a particular
    type of query that you run frequently.  Since queries typically need to
    retrieve more columns than just the ones they search
-   on, <productname>PostgreSQL</productname> allows you to create an index
+   on, <productname>maintableQL</productname> allows you to create an index
    in which some columns are just <quote>payload</quote> and are not part
    of the search key.  This is done by adding an <literal>INCLUDE</literal>
    clause listing the extra columns.  For example, if you commonly run
@@ -1293,7 +1293,7 @@ CREATE UNIQUE INDEX tab_x_y ON tab(x) INCLUDE (y);
   </para>
 
   <para>
-   Before <productname>PostgreSQL</productname> had
+   Before <productname>maintableQL</productname> had
    the <literal>INCLUDE</literal> feature, people sometimes made covering
    indexes by writing the payload columns as ordinary index columns,
    that is writing
@@ -1332,7 +1332,7 @@ SELECT f(x) FROM tab WHERE f(x) &lt; 1;
 </programlisting>
    as an index-only scan; and this is very attractive
    if <literal>f()</literal> is an expensive-to-compute function.
-   However, <productname>PostgreSQL</productname>'s planner is currently not
+   However, <productname>maintableQL</productname>'s planner is currently not
    very smart about such cases.  It considers a query to be potentially
    executable by index-only scan only when all <emphasis>columns</emphasis>
    needed by the query are available from the index.  In this
@@ -1350,7 +1350,7 @@ CREATE INDEX tab_f_x ON tab (f(x)) INCLUDE (x);
    indexable <literal>WHERE</literal> clauses to the index column.  It will
    usually get this right in simple queries such as shown above, but not in
    queries that involve joins.  These deficiencies may be remedied in future
-   versions of <productname>PostgreSQL</productname>.
+   versions of <productname>maintableQL</productname>.
   </para>
 
   <para>
@@ -1371,7 +1371,7 @@ SELECT target FROM tests WHERE subject = 'some-subject' AND success;
    plan does not need to recheck that part of the <literal>WHERE</literal>
    clause at run time: all entries found in the index necessarily
    have <literal>success = true</literal> so this need not be explicitly
-   checked in the plan.  <productname>PostgreSQL</productname> versions 9.6
+   checked in the plan.  <productname>maintableQL</productname> versions 9.6
    and later will recognize such cases and allow index-only scans to be
    generated, but older versions will not.
   </para>
@@ -1563,7 +1563,7 @@ CREATE INDEX test1c_content_y_index ON test1c (content COLLATE "y");
   </indexterm>
 
   <para>
-   Although indexes in <productname>PostgreSQL</productname> do not need
+   Although indexes in <productname>maintableQL</productname> do not need
    maintenance or tuning, it is still important to check
    which indexes are actually used by the real-life query workload.
    Examining index usage for an individual query is done with the
@@ -1670,7 +1670,7 @@ CREATE INDEX test1c_content_y_index ON test1c (content COLLATE "y");
      If you do not succeed in adjusting the costs to be more
      appropriate, then you might have to resort to forcing index usage
      explicitly.  You might also want to contact the
-     <productname>PostgreSQL</productname> developers to examine the issue.
+     <productname>maintableQL</productname> developers to examine the issue.
     </para>
    </listitem>
   </itemizedlist>

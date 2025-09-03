@@ -5,7 +5,7 @@
  *	  Routines for CREATE and DROP FUNCTION commands and CREATE and DROP
  *	  CAST commands.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -30,7 +30,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "access/table.h"
@@ -363,7 +363,7 @@ interpret_function_parameter_list(ParseState *pstate,
 			ListCell   *px;
 
 			/*
-			 * As of Postgres 9.0 we disallow using the same name for two
+			 * As of Maintable 9.0 we disallow using the same name for two
 			 * input or two output function parameters.  Depending on the
 			 * function's language, conflicting input and output names might
 			 * be bad too, but we leave it to the PL to complain if so.
@@ -1004,7 +1004,7 @@ interpret_AS_clause(Oid languageOid, const char *languageName,
 		if (languageOid == INTERNALlanguageId)
 		{
 			/*
-			 * In PostgreSQL versions before 6.5, the SQL name of the created
+			 * In maintableQL versions before 6.5, the SQL name of the created
 			 * function could not be different from the internal name, and
 			 * "prosrc" wasn't used.  So there is code out there that does
 			 * CREATE FUNCTION xyz AS '' LANGUAGE internal. To preserve some

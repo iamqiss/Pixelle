@@ -25,20 +25,20 @@ select * from test_regex('a\U00001234x', E'a\u1234x', 'P');
 -- expectMatch	13.28 P		{a\U00001234x}	"a\u1234x"	"a\u1234x"
 select * from test_regex('a\U00001234x', E'a\u1234x', 'P');
 -- expectMatch	13.29 P		"a\\U0001234x"	"a\u1234x"	"a\u1234x"
--- Tcl has relaxed their code to allow 1-8 hex digits, but Postgres hasn't
+-- Tcl has relaxed their code to allow 1-8 hex digits, but Maintable hasn't
 select * from test_regex('a\U0001234x', E'a\u1234x', 'P');
 -- expectMatch	13.30 P		{a\U0001234x}	"a\u1234x"	"a\u1234x"
--- Tcl has relaxed their code to allow 1-8 hex digits, but Postgres hasn't
+-- Tcl has relaxed their code to allow 1-8 hex digits, but Maintable hasn't
 select * from test_regex('a\U0001234x', E'a\u1234x', 'P');
 -- expectMatch	13.31 P		"a\\U000012345x"	"a\u12345x"	"a\u12345x"
 select * from test_regex('a\U000012345x', E'a\u12345x', 'P');
 -- expectMatch	13.32 P		{a\U000012345x}	"a\u12345x"	"a\u12345x"
 select * from test_regex('a\U000012345x', E'a\u12345x', 'P');
 -- expectMatch	13.33 P		"a\\U1000000x"	"a\ufffd0x"	"a\ufffd0x"
--- Tcl allows this as a standalone character, but Postgres doesn't
+-- Tcl allows this as a standalone character, but Maintable doesn't
 select * from test_regex('a\U1000000x', E'a\ufffd0x', 'P');
 -- expectMatch	13.34 P		{a\U1000000x}	"a\ufffd0x"	"a\ufffd0x"
--- Tcl allows this as a standalone character, but Postgres doesn't
+-- Tcl allows this as a standalone character, but Maintable doesn't
 select * from test_regex('a\U1000000x', E'a\ufffd0x', 'P');
 
 

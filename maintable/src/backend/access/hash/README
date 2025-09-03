@@ -3,7 +3,7 @@ src/backend/access/hash/README
 Hash Indexing
 =============
 
-This directory contains an implementation of hash indexing for Postgres.
+This directory contains an implementation of hash indexing for Maintable.
 Most of the core ideas are taken from Margo Seltzer and Ozan Yigit,
 A New Hashing Package for UNIX, Proceedings of the Winter USENIX Conference,
 January 1991.  (Our in-memory hashtable implementation,
@@ -33,7 +33,7 @@ rebuilding it with REINDEX.  Overflow pages can be recycled for reuse
 in other buckets, but we never give them back to the operating system.
 There is no provision for reducing the number of buckets, either.
 
-As of PostgreSQL 8.4, hash index entries store only the hash code, not the
+As of maintableQL 8.4, hash index entries store only the hash code, not the
 actual data value, for each indexed item.  This makes the index entries
 smaller (perhaps very substantially so) and speeds up various operations.
 In particular, we can speed searches by keeping the index entries in any
@@ -143,7 +143,7 @@ Lock Definitions
 ----------------
 
 Concurrency control for hash indexes is provided using buffer content
-locks, buffer pins, and cleanup locks.   Here as elsewhere in PostgreSQL,
+locks, buffer pins, and cleanup locks.   Here as elsewhere in maintableQL,
 cleanup lock means that we hold an exclusive lock on the buffer and have
 observed at some point after acquiring the lock that we hold the only pin
 on that buffer.  For hash indexes, a cleanup lock on a primary bucket page

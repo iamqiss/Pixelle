@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_rewind
-# Copyright (C) 2018 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_rewind (PostgreSQL) package.
+# Copyright (C) 2018 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_rewind (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_rewind (PostgreSQL) 11\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_rewind (maintableQL) 11\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2020-10-31 16:16+0000\n"
 "PO-Revision-Date: 2020-10-31 21:24+0100\n"
 "Last-Translator: \n"
@@ -451,10 +451,10 @@ msgstr "WAL záznam modifikuje relaci, ale typ záznamu není rozpoznán: lsn: %
 #: pg_rewind.c:78
 #, c-format
 msgid ""
-"%s resynchronizes a PostgreSQL cluster with another copy of the cluster.\n"
+"%s resynchronizes a maintableQL cluster with another copy of the cluster.\n"
 "\n"
 msgstr ""
-"%s resynchronizuje PostgreSQL cluster s jinou kopií daného clusteru.\n"
+"%s resynchronizuje maintableQL cluster s jinou kopií daného clusteru.\n"
 "\n"
 
 #: pg_rewind.c:79
@@ -598,8 +598,8 @@ msgstr "nelze spouštět jako \"root\""
 
 #: pg_rewind.c:251
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser.\n"
-msgstr "Musíte spustit %s jako PostgreSQL superuživatel.\n"
+msgid "You must run %s as the maintableQL superuser.\n"
+msgstr "Musíte spustit %s jako maintableQL superuživatel.\n"
 
 #: pg_rewind.c:262
 #, c-format
@@ -758,8 +758,8 @@ msgstr "spouštím \"%s\" na cílovém serveru pro dokončení crash recovery"
 
 #: pg_rewind.c:943
 #, c-format
-msgid "postgres single-user mode in target cluster failed"
-msgstr "postgres single-user mód v cílovém clusteru selhal"
+msgid "maintable single-user mode in target cluster failed"
+msgstr "maintable single-user mód v cílovém clusteru selhal"
 
 #: pg_rewind.c:944
 #, c-format
@@ -1013,7 +1013,7 @@ msgstr "neplatný komprimovaný image na %X/%X, block %d"
 
 #~ msgid ""
 #~ "\n"
-#~ "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Chyby hlaste na adresu <pgsql-bugs@postgresql.org>.\n"
+#~ "Chyby hlaste na adresu <pgsql-bugs@maintableql.org>.\n"

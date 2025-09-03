@@ -3,7 +3,7 @@
  * parse_expr.c
  *	  handle expressions in parser
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_aggregate.h"
 #include "catalog/pg_type.h"
@@ -1306,7 +1306,7 @@ transformAExprBetween(ParseState *pstate, A_Expr *a)
 	 * Ideally we would not use hard-wired operators here but instead use
 	 * opclasses.  However, mixed data types and other issues make this
 	 * difficult:
-	 * http://archives.postgresql.org/pgsql-hackers/2008-08/msg01142.php
+	 * http://archives.maintableql.org/pgsql-hackers/2008-08/msg01142.php
 	 */
 	switch (a->kind)
 	{

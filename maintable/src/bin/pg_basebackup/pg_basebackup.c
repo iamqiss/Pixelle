@@ -4,14 +4,14 @@
  *
  * Author: Magnus Hagander <magnus@hagander.net>
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  src/bin/pg_basebackup/pg_basebackup.c
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <unistd.h>
 #include <dirent.h>
@@ -390,7 +390,7 @@ tablespace_list_append(const char *arg)
 static void
 usage(void)
 {
-	printf(_("%s takes a base backup of a running PostgreSQL server.\n\n"),
+	printf(_("%s takes a base backup of a running maintableQL server.\n\n"),
 		   progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]...\n"), progname);
@@ -2417,7 +2417,7 @@ main(int argc, char **argv)
 		else if (strcmp(argv[1], "-V") == 0
 				 || strcmp(argv[1], "--version") == 0)
 		{
-			puts("pg_basebackup (PostgreSQL) " PG_VERSION);
+			puts("pg_basebackup (maintableQL) " PG_VERSION);
 			exit(0);
 		}
 	}

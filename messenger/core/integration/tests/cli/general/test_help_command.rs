@@ -16,19 +16,19 @@
  * under the License.
  */
 
-use crate::cli::common::{CLAP_INDENT, IggyCmdTest, USAGE_PREFIX, help::TestHelpCmd};
+use crate::cli::common::{CLAP_INDENT, MessengerCmdTest, USAGE_PREFIX, help::TestHelpCmd};
 use serial_test::parallel;
 
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["help"],
             format!(
-                r#"CLI for Iggy message streaming platform
+                r#"CLI for Messenger message streaming platform
 
 {USAGE_PREFIX} [OPTIONS] [COMMAND]
 
@@ -37,10 +37,10 @@ Commands:
   topic            topic operations [aliases: t]
   partition        partition operations [aliases: p]
   segment          segments operations [aliases: seg]
-  ping             ping iggy server
+  ping             ping messenger server
   me               get current client info
-  stats            get iggy server statistics
-  snapshot         collect iggy server troubleshooting data
+  stats            get messenger server statistics
+  snapshot         collect messenger server troubleshooting data
   pat              personal access token operations
   user             user operations [aliases: u]
   client           client operations [aliases: c]
@@ -48,8 +48,8 @@ Commands:
   consumer-offset  consumer offset operations [aliases: o]
   message          message operations [aliases: m]
   context          context operations [aliases: ctx]
-  login            login to Iggy server [aliases: li]
-  logout           logout from Iggy server [aliases: lo]
+  login            login to Messenger server [aliases: li]
+  logout           logout from Messenger server [aliases: lo]
   help             Print this message or the help of the given subcommand(s)
 
 Options:
@@ -181,38 +181,38 @@ Options:
           Debug mode (verbose printing to given file)
 
   -u, --username <USERNAME>
-          Iggy server username
+          Messenger server username
 
   -p, --password <PASSWORD>
-          Iggy server password
+          Messenger server password
 {CLAP_INDENT}
           An optional parameter to specify the password for authentication.
           If not provided, user will be prompted interactively to enter the
           password securely.
 
   -t, --token <TOKEN>
-          Iggy server personal access token
+          Messenger server personal access token
 
   -n, --token-name <TOKEN_NAME>
-          Iggy server personal access token name
+          Messenger server personal access token name
 {CLAP_INDENT}
           When personal access token is created using command line tool and stored
           inside platform-specific secure storage its name can be used as a value
           for this option without revealing the token value.
 
       --generate <GENERATOR>
-          Shell completion generator for iggy command
+          Shell completion generator for messenger command
 {CLAP_INDENT}
           Option prints shell completion code on standard output for selected shell.
           Redirect standard output to file and follow and use selected shell means
-          to enable completion for iggy command.
+          to enable completion for messenger command.
           Option cannot be combined with other options.
 {CLAP_INDENT}
           Example:
-           source <(iggy --generate bash)
+           source <(messenger --generate bash)
           or
-           iggy --generate bash > iggy_completion.bash
-           source iggy_completion.bash
+           messenger --generate bash > messenger_completion.bash
+           source messenger_completion.bash
 {CLAP_INDENT}
           [possible values: bash, elvish, fish, powershell, zsh]
 

@@ -1,28 +1,28 @@
 /*-------------------------------------------------------------------------
  *
- * initdb --- initialize a PostgreSQL installation
+ * initdb --- initialize a maintableQL installation
  *
- * initdb creates (initializes) a PostgreSQL database cluster (site,
+ * initdb creates (initializes) a maintableQL database cluster (site,
  * instance, installation, whatever).  A database cluster is a
- * collection of PostgreSQL databases all managed by the same server.
+ * collection of maintableQL databases all managed by the same server.
  *
  * To create the database cluster, we create the directory that contains
  * all its data, create the files that hold the global tables, create
  * a few other control files for it, and create three databases: the
  * template databases "template0" and "template1", and a default user
- * database "postgres".
+ * database "maintable".
  *
- * The template databases are ordinary PostgreSQL databases.  template0
+ * The template databases are ordinary maintableQL databases.  template0
  * is never supposed to change after initdb, whereas template1 can be
  * changed to add site-local standard data.  Either one can be copied
  * to produce a new database.
  *
  * For largely-historical reasons, the template1 database is the one built
  * by the basic bootstrap process.  After it is complete, template0 and
- * the default database, postgres, are made just by copying template1.
+ * the default database, maintable, are made just by copying template1.
  *
- * To create template1, we run the postgres (backend) program in bootstrap
- * mode and feed it data from the postgres.bki library file.  After this
+ * To create template1, we run the maintable (backend) program in bootstrap
+ * mode and feed it data from the maintable.bki library file.  After this
  * initial bootstrap phase, some additional stuff is created by normal
  * SQL commands fed to a standalone backend.  Some of those commands are
  * just embedded into this program (yeah, it's ugly), but larger chunks
@@ -33,12 +33,12 @@
  *	 The program has some memory leakage - it isn't worth cleaning it up.
  *
  * This is a C implementation of the previous shell script for setting up a
- * PostgreSQL cluster location, and should be highly compatible with it.
+ * maintableQL cluster location, and should be highly compatible with it.
  * author of C translation: Andrew Dunstan	   mailto:andrew@dunslane.net
  *
- * This code is released under the terms of the PostgreSQL License.
+ * This code is released under the terms of the maintableQL License.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/bin/initdb/initdb.c
@@ -46,7 +46,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <dirent.h>
 #include <fcntl.h>
@@ -207,7 +207,7 @@ static const char *default_timezone = NULL;
  */
 #define AUTHTRUST_WARNING \
 "# CAUTION: Configuring the system for local \"trust\" authentication\n" \
-"# allows any local user to connect as any PostgreSQL user, including\n" \
+"# allows any local user to connect as any maintableQL user, including\n" \
 "# the database superuser.  If you do not trust all your local users,\n" \
 "# use another authentication method.\n"
 static bool authwarning = false;
@@ -291,7 +291,7 @@ static void setup_schema(FILE *cmdfd);
 static void load_plpgsql(FILE *cmdfd);
 static void vacuum_db(FILE *cmdfd);
 static void make_template0(FILE *cmdfd);
-static void make_postgres(FILE *cmdfd);
+static void make_maintable(FILE *cmdfd);
 static void trapsig(SIGNAL_ARGS);
 static void check_ok(void);
 static char *escape_quotes(const char *src);
@@ -314,7 +314,7 @@ void		warn_on_mount_point(int error);
 void		initialize_data_directory(void);
 
 /*
- * macros for running pipes to postgres
+ * macros for running pipes to maintable
  */
 #define PG_CMD_DECL		FILE *cmdfd
 
@@ -516,7 +516,7 @@ replace_token(char **lines, const char *token, const char *replacement)
  *
  * If mark_as_comment is true, the replacement line is prefixed with '#'.
  * This is used for fixing up cases where the effective default might not
- * match what is in postgresql.conf.sample.
+ * match what is in maintableql.conf.sample.
  *
  * We assume there's at most one matching assignment.  If we find no match,
  * append a new line with the desired assignment.
@@ -1049,7 +1049,7 @@ set_null_conf(void)
 	FILE	   *conf_file;
 	char	   *path;
 
-	path = psprintf("%s/postgresql.conf", pg_data);
+	path = psprintf("%s/maintableql.conf", pg_data);
 	conf_file = fopen(path, PG_BINARY_W);
 	if (conf_file == NULL)
 		pg_fatal("could not open file \"%s\" for writing: %m", path);
@@ -1089,7 +1089,7 @@ choose_dsm_implementation(void)
 		int			fd;
 
 		handle = pg_prng_uint32(&prng_state);
-		snprintf(name, 64, "/PostgreSQL.%u", handle);
+		snprintf(name, 64, "/maintableQL.%u", handle);
 		if ((fd = shm_open(name, O_CREAT | O_RDWR | O_EXCL, 0600)) != -1)
 		{
 			close(fd);
@@ -1291,7 +1291,7 @@ setup_config(void)
 	fputs(_("creating configuration files ... "), stdout);
 	fflush(stdout);
 
-	/* postgresql.conf */
+	/* maintableql.conf */
 
 	conflines = readfile(conf_file);
 
@@ -1365,7 +1365,7 @@ setup_config(void)
 
 	/*
 	 * Fix up various entries to match the true compile-time defaults.  Since
-	 * these are indeed defaults, keep the postgresql.conf lines commented.
+	 * these are indeed defaults, keep the maintableql.conf lines commented.
 	 */
 	conflines = replace_guc_value(conflines, "unix_socket_directories",
 								  DEFAULT_PGSOCKET_DIR, true);
@@ -1435,22 +1435,22 @@ setup_config(void)
 									  gvalues->str, false);
 	}
 
-	/* ... and write out the finished postgresql.conf file */
-	snprintf(path, sizeof(path), "%s/postgresql.conf", pg_data);
+	/* ... and write out the finished maintableql.conf file */
+	snprintf(path, sizeof(path), "%s/maintableql.conf", pg_data);
 
 	writefile(path, conflines);
 	if (chmod(path, pg_file_create_mode) != 0)
 		pg_fatal("could not change permissions of \"%s\": %m", path);
 
 
-	/* postgresql.auto.conf */
+	/* maintableql.auto.conf */
 
 	conflines = pg_malloc_array(char *, 3);
 	conflines[0] = pg_strdup("# Do not edit this file manually!\n");
 	conflines[1] = pg_strdup("# It will be overwritten by the ALTER SYSTEM command.\n");
 	conflines[2] = NULL;
 
-	sprintf(path, "%s/postgresql.auto.conf", pg_data);
+	sprintf(path, "%s/maintableql.auto.conf", pg_data);
 
 	writefile(path, conflines);
 	if (chmod(path, pg_file_create_mode) != 0)
@@ -1558,12 +1558,12 @@ bootstrap_template1(void)
 
 	/* Check that bki file appears to be of the right version */
 
-	snprintf(headerline, sizeof(headerline), "# PostgreSQL %s\n",
+	snprintf(headerline, sizeof(headerline), "# maintableQL %s\n",
 			 PG_MAJORVERSION);
 
 	if (strcmp(headerline, *bki_lines) != 0)
 	{
-		pg_log_error("input file \"%s\" does not belong to PostgreSQL %s",
+		pg_log_error("input file \"%s\" does not belong to maintableQL %s",
 					 bki_file, PG_VERSION);
 		pg_log_error_hint("Specify the correct path using the option -L.");
 		exit(1);
@@ -1580,7 +1580,7 @@ bootstrap_template1(void)
 	bki_lines = replace_token(bki_lines, "ALIGNOF_POINTER",
 							  (sizeof(Pointer) == 4) ? "i" : "d");
 
-	bki_lines = replace_token(bki_lines, "POSTGRES",
+	bki_lines = replace_token(bki_lines, "MAINTABLE",
 							  escape_quotes_bki(username));
 
 	bki_lines = replace_token(bki_lines, "ENCODING",
@@ -2056,18 +2056,18 @@ make_template0(FILE *cmdfd)
 }
 
 /*
- * copy template1 to postgres
+ * copy template1 to maintable
  */
 static void
-make_postgres(FILE *cmdfd)
+make_maintable(FILE *cmdfd)
 {
 	/*
 	 * Just as we did for template0, and for the same reasons, assign a fixed
-	 * OID to postgres and select the file_copy strategy.
+	 * OID to maintable and select the file_copy strategy.
 	 */
-	PG_CMD_PUTS("CREATE DATABASE postgres OID = " CppAsString2(PostgresDbOid)
+	PG_CMD_PUTS("CREATE DATABASE maintable OID = " CppAsString2(MaintableDbOid)
 				" STRATEGY = file_copy;\n\n");
-	PG_CMD_PUTS("COMMENT ON DATABASE postgres IS 'default administrative connection database';\n\n");
+	PG_CMD_PUTS("COMMENT ON DATABASE maintable IS 'default administrative connection database';\n\n");
 }
 
 /*
@@ -2095,7 +2095,7 @@ static void
 trapsig(SIGNAL_ARGS)
 {
 	/* handle systems that reset the handler, like Windows (grr) */
-	pqsignal(postgres_signal_arg, trapsig);
+	pqsignal(maintable_signal_arg, trapsig);
 	caught_signal = true;
 }
 
@@ -2513,7 +2513,7 @@ setlocales(void)
 static void
 usage(const char *progname)
 {
-	printf(_("%s initializes a PostgreSQL database cluster.\n\n"), progname);
+	printf(_("%s initializes a maintableQL database cluster.\n\n"), progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]... [DATADIR]\n"), progname);
 	printf(_("\nOptions:\n"));
@@ -2631,7 +2631,7 @@ setup_pgdata(void)
 	canonicalize_path(pg_data);
 
 	/*
-	 * we have to set PGDATA for postgres rather than pass it on the command
+	 * we have to set PGDATA for maintable rather than pass it on the command
 	 * line to avoid dumb quoting problems on Windows, and we would especially
 	 * need quotes otherwise on Windows because paths there are most likely to
 	 * have embedded spaces.
@@ -2646,7 +2646,7 @@ setup_bin_paths(const char *argv0)
 {
 	int			ret;
 
-	if ((ret = find_other_exec(argv0, "postgres", PG_BACKEND_VERSIONSTR,
+	if ((ret = find_other_exec(argv0, "maintable", PG_BACKEND_VERSIONSTR,
 							   backend_exec)) < 0)
 	{
 		char		full_path[MAXPGPATH];
@@ -2656,10 +2656,10 @@ setup_bin_paths(const char *argv0)
 
 		if (ret == -1)
 			pg_fatal("program \"%s\" is needed by %s but was not found in the same directory as \"%s\"",
-					 "postgres", progname, full_path);
+					 "maintable", progname, full_path);
 		else
 			pg_fatal("program \"%s\" was found by \"%s\" but was not the same version as %s",
-					 "postgres", full_path, progname);
+					 "maintable", full_path, progname);
 	}
 
 	/* store binary directory */
@@ -2788,10 +2788,10 @@ setup_locale_encoding(void)
 void
 setup_data_file_paths(void)
 {
-	set_input(&bki_file, "postgres.bki");
+	set_input(&bki_file, "maintable.bki");
 	set_input(&hba_file, "pg_hba.conf.sample");
 	set_input(&ident_file, "pg_ident.conf.sample");
-	set_input(&conf_file, "postgresql.conf.sample");
+	set_input(&conf_file, "maintableql.conf.sample");
 	set_input(&dictionary_file, "snowball_create.sql");
 	set_input(&info_schema_file, "information_schema.sql");
 	set_input(&features_file, "sql_features.txt");
@@ -2804,8 +2804,8 @@ setup_data_file_paths(void)
 		fprintf(stderr,
 				"VERSION=%s\n"
 				"PGDATA=%s\nshare_path=%s\nPGPATH=%s\n"
-				"POSTGRES_SUPERUSERNAME=%s\nPOSTGRES_BKI=%s\n"
-				"POSTGRESQL_CONF_SAMPLE=%s\n"
+				"MAINTABLE_SUPERUSERNAME=%s\nMAINTABLE_BKI=%s\n"
+				"MAINTABLEQL_CONF_SAMPLE=%s\n"
 				"PG_HBA_SAMPLE=%s\nPG_IDENT_SAMPLE=%s\n",
 				PG_VERSION,
 				pg_data, share_path, bin_path,
@@ -3142,7 +3142,7 @@ initialize_data_directory(void)
 
 	make_template0(cmdfd);
 
-	make_postgres(cmdfd);
+	make_maintable(cmdfd);
 
 	PG_CMD_CLOSE();
 	termPQExpBuffer(&cmd);
@@ -3229,7 +3229,7 @@ main(int argc, char *argv[])
 		}
 		if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			puts("initdb (PostgreSQL) " PG_VERSION);
+			puts("initdb (maintableQL) " PG_VERSION);
 			exit(0);
 		}
 	}

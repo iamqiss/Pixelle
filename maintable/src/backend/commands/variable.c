@@ -4,7 +4,7 @@
  *		Routines for handling specialized SET variables.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -14,7 +14,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 
@@ -95,11 +95,11 @@ check_datestyle(char **newval, void **extra, GucSource source)
 			newDateStyle = USE_SQL_DATES;
 			have_style = true;
 		}
-		else if (pg_strncasecmp(tok, "POSTGRES", 8) == 0)
+		else if (pg_strncasecmp(tok, "MAINTABLE", 8) == 0)
 		{
-			if (have_style && newDateStyle != USE_POSTGRES_DATES)
+			if (have_style && newDateStyle != USE_MAINTABLE_DATES)
 				ok = false;		/* conflicting styles */
-			newDateStyle = USE_POSTGRES_DATES;
+			newDateStyle = USE_MAINTABLE_DATES;
 			have_style = true;
 		}
 		else if (pg_strcasecmp(tok, "GERMAN") == 0)
@@ -205,7 +205,7 @@ check_datestyle(char **newval, void **extra, GucSource source)
 			strcpy(result, "German");
 			break;
 		default:
-			strcpy(result, "Postgres");
+			strcpy(result, "Maintable");
 			break;
 	}
 	switch (newDateOrder)
@@ -294,7 +294,7 @@ check_timezone(char **newval, void **extra, GucSource source)
 		 * Try to parse it.  XXX an invalid interval format will result in
 		 * ereport(ERROR), which is not desirable for GUC.  We did what we
 		 * could to guard against this in flatten_set_variable_args, but a
-		 * string coming in from postgresql.conf might contain anything.
+		 * string coming in from maintableql.conf might contain anything.
 		 */
 		interval = DatumGetIntervalP(DirectFunctionCall3(interval_in,
 														 CStringGetDatum(val),
@@ -350,7 +350,7 @@ check_timezone(char **newval, void **extra, GucSource source)
 			{
 				GUC_check_errmsg("time zone \"%s\" appears to use leap seconds",
 								 *newval);
-				GUC_check_errdetail("PostgreSQL does not support leap seconds.");
+				GUC_check_errdetail("maintableQL does not support leap seconds.");
 				return false;
 			}
 		}
@@ -434,7 +434,7 @@ check_log_timezone(char **newval, void **extra, GucSource source)
 	{
 		GUC_check_errmsg("time zone \"%s\" appears to use leap seconds",
 						 *newval);
-		GUC_check_errdetail("PostgreSQL does not support leap seconds.");
+		GUC_check_errdetail("maintableQL does not support leap seconds.");
 		return false;
 	}
 
@@ -722,7 +722,7 @@ check_client_encoding(char **newval, void **extra, GucSource source)
 	 * starting up, it will return "OK" anyway, and InitializeClientEncoding
 	 * will fix things once initialization is far enough along.  After
 	 * startup, we'll fail.  This would only happen if someone tries to change
-	 * client_encoding in postgresql.conf and then SIGHUP existing sessions.
+	 * client_encoding in maintableql.conf and then SIGHUP existing sessions.
 	 * It seems like a bad idea for client_encoding to change that way anyhow,
 	 * so we don't go out of our way to support it.
 	 *
@@ -840,7 +840,7 @@ check_session_authorization(char **newval, void **extra, GucSource source)
 		{
 			/*
 			 * Can't do catalog lookups, so fail.  The result of this is that
-			 * session_authorization cannot be set in postgresql.conf, which
+			 * session_authorization cannot be set in maintableql.conf, which
 			 * seems like a good thing anyway, so we don't work hard to avoid
 			 * it.
 			 */
@@ -960,7 +960,7 @@ check_role(char **newval, void **extra, GucSource source)
 		{
 			/*
 			 * Can't do catalog lookups, so fail.  The result of this is that
-			 * role cannot be set in postgresql.conf, which seems like a good
+			 * role cannot be set in maintableql.conf, which seems like a good
 			 * thing anyway, so we don't work hard to avoid it.
 			 */
 			return false;

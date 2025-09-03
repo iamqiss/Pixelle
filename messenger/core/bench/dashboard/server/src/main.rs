@@ -30,9 +30,9 @@ use actix_web::{
     middleware::{Compress, Logger},
     web,
 };
-use args::{IggyBenchDashboardServerArgs, PollGithub};
+use args::{MessengerBenchDashboardServerArgs, PollGithub};
 use cache::BenchmarkCache;
-use github::IggyBenchDashboardGithubPoller;
+use github::MessengerBenchDashboardGithubPoller;
 use handlers::AppState;
 use std::sync::Arc;
 use tracing::{error, info};
@@ -55,7 +55,7 @@ async fn index() -> actix_web::Result<NamedFile> {
 
 #[actix_web::main]
 async fn main() -> Result<(), std::io::Error> {
-    let args = IggyBenchDashboardServerArgs::parse();
+    let args = MessengerBenchDashboardServerArgs::parse();
     args.validate();
 
     let env_filter =
@@ -94,7 +94,7 @@ async fn main() -> Result<(), std::io::Error> {
             PollGithub::PollGithub(args) => {
                 info!("Starting GithubPoller for branch {}", args.branch);
 
-                Some(IggyBenchDashboardGithubPoller::start(
+                Some(MessengerBenchDashboardGithubPoller::start(
                     results_dir.clone(),
                     args.branch,
                     args.interval_seconds,

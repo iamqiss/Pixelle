@@ -5,11 +5,11 @@
  *	to control oid and relfilenumber assignment, and do other special
  *	hacks needed for pg_upgrade.
  *
- *	Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ *	Copyright (c) 2010-2025, maintableQL Global Development Group
  *	src/backend/utils/adt/pg_upgrade_support.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/relation.h"
 #include "access/table.h"

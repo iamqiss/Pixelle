@@ -1,12 +1,12 @@
 # plpgsql message translation file for plpgsql
-# Copyright (C) 2011 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2011 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Begina Felicysym <begina.felicysym@wp.eu>, 2011, 2012, 2013.
 # grzegorz <begina.felicysym@wp.eu>, 2014, 2015, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: plpgsql (PostgreSQL 9.1)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: plpgsql (maintableQL 9.1)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2016-07-18 17:37+0000\n"
 "PO-Revision-Date: 2016-07-18 23:20+0200\n"
 "Last-Translator: grzegorz <begina.felicysym@wp.eu>\n"

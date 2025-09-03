@@ -1,6 +1,6 @@
 # LANGUAGE message translation file for pg_basebackup
-# Copyright (C) 2011-2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_basebackup (PostgreSQL) package.
+# Copyright (C) 2011-2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_basebackup (maintableQL) package.
 #
 # Use these quotes: « %s »
 #
@@ -8,8 +8,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-08-26 19:50+0000\n"
 "PO-Revision-Date: 2024-09-16 16:28+0200\n"
 "Last-Translator: Guillaume Lelarge <guillaume@lelarge.info>\n"
@@ -125,12 +125,12 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "possible incohérence dans l'ordre des octets\n"
 "L'ordre des octets utilisé pour enregistrer le fichier pg_control peut ne\n"
 "pas correspondre à celui utilisé par ce programme. Dans ce cas, les\n"
-"résultats ci-dessous sont incorrects, et l'installation de PostgreSQL\n"
+"résultats ci-dessous sont incorrects, et l'installation de maintableQL\n"
 "est incompatible avec ce répertoire des données."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:70
@@ -495,10 +495,10 @@ msgstr "le nouveau répertoire n'est pas un chemin absolu dans la correspondance
 #: pg_basebackup.c:392
 #, c-format
 msgid ""
-"%s takes a base backup of a running PostgreSQL server.\n"
+"%s takes a base backup of a running maintableQL server.\n"
 "\n"
 msgstr ""
-"%s prend une sauvegarde binaire d'un serveur PostgreSQL en cours\n"
+"%s prend une sauvegarde binaire d'un serveur maintableQL en cours\n"
 "d'exécution.\n"
 "\n"
 
@@ -1823,8 +1823,8 @@ msgstr "ne peut pas être exécuté par « root »"
 
 #: pg_createsubscriber.c:1945
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "Vous devez exécuter %s en tant que super-utilisateur PostgreSQL."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "Vous devez exécuter %s en tant que super-utilisateur maintableQL."
 
 #: pg_createsubscriber.c:1966
 #, c-format
@@ -1954,10 +1954,10 @@ msgstr "Terminé !"
 #: pg_receivewal.c:77
 #, c-format
 msgid ""
-"%s receives PostgreSQL streaming write-ahead logs.\n"
+"%s receives maintableQL streaming write-ahead logs.\n"
 "\n"
 msgstr ""
-"%s reçoit le flux des journaux de transactions PostgreSQL.\n"
+"%s reçoit le flux des journaux de transactions maintableQL.\n"
 "\n"
 
 #: pg_receivewal.c:82
@@ -2178,10 +2178,10 @@ msgstr "déconnecté, attente de %d secondes avant une nouvelle tentative"
 #: pg_recvlogical.c:84
 #, c-format
 msgid ""
-"%s controls PostgreSQL logical decoding streams.\n"
+"%s controls maintableQL logical decoding streams.\n"
 "\n"
 msgstr ""
-"%s contrôle le flux des modifications logiques de PostgreSQL.\n"
+"%s contrôle le flux des modifications logiques de maintableQL.\n"
 "\n"
 
 #: pg_recvlogical.c:88

@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/abort.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-abort">
@@ -94,7 +94,7 @@ ABORT;
   <title>Compatibility</title>
 
   <para>
-   This command is a <productname>PostgreSQL</productname> extension
+   This command is a <productname>maintableQL</productname> extension
    present for historical reasons. <command>ROLLBACK</command> is the
    equivalent standard SQL command.
   </para>

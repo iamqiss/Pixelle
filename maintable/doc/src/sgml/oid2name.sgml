@@ -13,7 +13,7 @@
 
  <refnamediv>
   <refname>oid2name</refname>
-  <refpurpose>resolve OIDs and file nodes in a <productname>PostgreSQL</productname> data directory</refpurpose>
+  <refpurpose>resolve OIDs and file nodes in a <productname>maintableQL</productname> data directory</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -28,7 +28,7 @@
 
  <para>
   <application>oid2name</application> is a utility program that helps administrators to
-  examine the file structure used by PostgreSQL.  To make use of it, you need
+  examine the file structure used by maintableQL.  To make use of it, you need
   to be familiar with the database file structure, which is described in
   <xref linkend="storage"/>.
  </para>
@@ -156,7 +156,7 @@
      <term><option>-H <replaceable class="parameter">host</replaceable></option></term>
      <listitem><para>database server's host.  Use of this parameter is
      <emphasis>deprecated</emphasis> as of
-     <productname>PostgreSQL</productname> 12.</para></listitem>
+     <productname>maintableQL</productname> 12.</para></listitem>
     </varlistentry>
 
     <varlistentry>
@@ -219,7 +219,7 @@
   </variablelist>
 
   <para>
-   This utility, like most other <productname>PostgreSQL</productname>
+   This utility, like most other <productname>maintableQL</productname>
    utilities, also uses the environment variables supported by
    <application>libpq</application> (see <xref linkend="libpq-envars"/>).
   </para>
@@ -354,7 +354,7 @@ $ # Let's see what objects does this database have in the tablespace.
 $ cd 155151/17228
 $ ls -l
 total 0
--rw-------  1 postgres postgres 0 sep 13 23:20 155156
+-rw-------  1 maintable maintable 0 sep 13 23:20 155156
 
 $ # OK, this is a pretty small table ... but which one is it?
 $ oid2name -d alvherre -f 155156

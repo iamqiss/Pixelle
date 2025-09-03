@@ -25,9 +25,9 @@ updates:
     commit-message:
       prefix: "chore(deps): "
     assignees:
-      - "apache/iggy-committers"
+      - "apache/messenger-committers"
     reviewers:
-      - "apache/iggy-committers"
+      - "apache/messenger-committers"
     groups:
       minor-and-patch:
         patterns:

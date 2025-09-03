@@ -60,7 +60,7 @@ pub enum ConnStatusType {
 }
 #[repr(u32)]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum PostgresPollingStatusType {
+pub enum MaintablePollingStatusType {
     PGRES_POLLING_FAILED = 0,
     PGRES_POLLING_READING = 1,
     PGRES_POLLING_WRITING = 2,
@@ -312,7 +312,7 @@ unsafe extern "C" {
     ) -> *mut PGconn;
 }
 unsafe extern "C" {
-    pub fn PQconnectPoll(conn: *mut PGconn) -> PostgresPollingStatusType;
+    pub fn PQconnectPoll(conn: *mut PGconn) -> MaintablePollingStatusType;
 }
 unsafe extern "C" {
     pub fn PQconnectdb(conninfo: *const ::std::os::raw::c_char) -> *mut PGconn;
@@ -357,7 +357,7 @@ unsafe extern "C" {
     pub fn PQresetStart(conn: *mut PGconn) -> ::std::os::raw::c_int;
 }
 unsafe extern "C" {
-    pub fn PQresetPoll(conn: *mut PGconn) -> PostgresPollingStatusType;
+    pub fn PQresetPoll(conn: *mut PGconn) -> MaintablePollingStatusType;
 }
 unsafe extern "C" {
     pub fn PQreset(conn: *mut PGconn);
@@ -372,7 +372,7 @@ unsafe extern "C" {
     pub fn PQcancelBlocking(cancelConn: *mut PGcancelConn) -> ::std::os::raw::c_int;
 }
 unsafe extern "C" {
-    pub fn PQcancelPoll(cancelConn: *mut PGcancelConn) -> PostgresPollingStatusType;
+    pub fn PQcancelPoll(cancelConn: *mut PGcancelConn) -> MaintablePollingStatusType;
 }
 unsafe extern "C" {
     pub fn PQcancelStatus(cancelConn: *const PGcancelConn) -> ConnStatusType;

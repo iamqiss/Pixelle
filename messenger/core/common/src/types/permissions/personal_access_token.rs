@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::utils::timestamp::IggyTimestamp;
+use crate::utils::timestamp::MessengerTimestamp;
 use serde::{Deserialize, Serialize};
 
 /// `RawPersonalAccessToken` represents the raw personal access token - the secured token which is returned only once during the creation.
@@ -37,5 +37,5 @@ pub struct PersonalAccessTokenInfo {
     /// The unique name of the token.
     pub name: String,
     /// The optional expiry of the token.
-    pub expiry_at: Option<IggyTimestamp>,
+    pub expiry_at: Option<MessengerTimestamp>,
 }

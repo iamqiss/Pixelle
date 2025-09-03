@@ -5,12 +5,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-06-16 07:53+0000\n"
 "PO-Revision-Date: 2024-05-17 13:06+0200\n"
 "Last-Translator: Peter Eisentraut <peter@eisentraut.org>\n"
-"Language-Team: German <pgsql-translators@postgresql.org>\n"
+"Language-Team: German <pgsql-translators@maintableql.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,12 +47,12 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "möglicherweise falsche Byte-Reihenfolge\n"
 "Die Byte-Reihenfolge, die zur Speicherung der Datei pg_control verwendet wurde,\n"
 "stimmt möglicherweise nicht mit der von diesem Programm verwendeten überein. In\n"
-"diesem Fall wären die Ergebnisse unten falsch und die PostgreSQL-Installation\n"
+"diesem Fall wären die Ergebnisse unten falsch und die maintableQL-Installation\n"
 "wäre inkompatibel mit diesem Datenverzeichnis."
 
 #: ../../common/controldata_utils.c:230
@@ -84,10 +84,10 @@ msgstr "kann NULL-Zeiger nicht kopieren (interner Fehler)\n"
 #: pg_controldata.c:35
 #, c-format
 msgid ""
-"%s displays control information of a PostgreSQL database cluster.\n"
+"%s displays control information of a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s zeigt Kontrollinformationen über einen PostgreSQL-Datenbankcluster.\n"
+"%s zeigt Kontrollinformationen über einen maintableQL-Datenbankcluster.\n"
 "\n"
 
 #: pg_controldata.c:36

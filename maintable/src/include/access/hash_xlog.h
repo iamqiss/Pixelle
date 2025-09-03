@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * hash_xlog.h
- *	  header file for Postgres hash AM implementation
+ *	  header file for Maintable hash AM implementation
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/access/hash_xlog.h

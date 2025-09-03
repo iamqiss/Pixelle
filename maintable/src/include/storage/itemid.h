@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * itemid.h
- *	  Standard POSTGRES buffer page item identifier/line pointer definitions.
+ *	  Standard MAINTABLE buffer page item identifier/line pointer definitions.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/storage/itemid.h

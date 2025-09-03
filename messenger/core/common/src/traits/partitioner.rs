@@ -17,17 +17,17 @@
  */
 
 use crate::Identifier;
-use crate::error::IggyError;
-use crate::types::message::IggyMessage;
+use crate::error::MessengerError;
+use crate::types::message::MessengerMessage;
 use std::fmt::Debug;
 
-/// The trait represent the logic responsible for calculating the partition ID and is used by the `IggyClient`.
+/// The trait represent the logic responsible for calculating the partition ID and is used by the `MessengerClient`.
 /// This might be especially useful when the partition ID is not constant and might be calculated based on the stream ID, topic ID and other parameters.
 pub trait Partitioner: Send + Sync + Debug {
     fn calculate_partition_id(
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-        messages: &[IggyMessage],
-    ) -> Result<u32, IggyError>;
+        messages: &[MessengerMessage],
+    ) -> Result<u32, MessengerError>;
 }

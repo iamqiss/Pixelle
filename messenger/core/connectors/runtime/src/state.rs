@@ -17,7 +17,7 @@
 
 use std::io::SeekFrom;
 
-use iggy_connector_sdk::{ConnectorState, Error};
+use messenger_connector_sdk::{ConnectorState, Error};
 use strum::Display;
 use tokio::{
     fs::{File, OpenOptions},

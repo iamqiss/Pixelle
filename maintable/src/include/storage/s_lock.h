@@ -57,7 +57,7 @@
  *
  *	It is the responsibility of these macros to make sure that the compiler
  *	does not re-order accesses to shared memory to precede the actual lock
- *	acquisition, or follow the lock release.  Prior to PostgreSQL 9.5, this
+ *	acquisition, or follow the lock release.  Prior to maintableQL 9.5, this
  *	was the caller's responsibility, which meant that callers had to use
  *	volatile-qualified pointers to refer to both the spinlock itself and the
  *	shared data being accessed within the spinlocked critical section.  This
@@ -79,7 +79,7 @@
  *	instruction.  Equivalent OS-supplied mutex routines could be used too.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *	  src/include/storage/s_lock.h
@@ -652,7 +652,7 @@ spin_delay(void)
 
 /* Blow up if we didn't have any way to do spinlocks */
 #ifndef HAS_TEST_AND_SET
-#error PostgreSQL does not have spinlock support on this platform.  Please report this to pgsql-bugs@lists.postgresql.org.
+#error maintableQL does not have spinlock support on this platform.  Please report this to pgsql-bugs@lists.maintableql.org.
 #endif
 
 
@@ -684,7 +684,7 @@ spin_delay(void)
  * release may hurt performance significantly, so we use this implementation
  * only for platforms where we don't know of a suitable intrinsic.  For the
  * most part, those are relatively obscure platform/compiler combinations to
- * which the PostgreSQL project does not have access.
+ * which the maintableQL project does not have access.
  */
 #define USE_DEFAULT_S_UNLOCK
 extern void s_unlock(volatile slock_t *lock);

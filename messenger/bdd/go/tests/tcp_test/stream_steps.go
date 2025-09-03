@@ -19,16 +19,16 @@ package tcp_test
 
 import (
 	"fmt"
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	ierror "github.com/apache/iggy/foreign/go/errors"
-	"github.com/apache/iggy/foreign/go/iggycli"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	ierror "github.com/apache/messenger/foreign/go/errors"
+	"github.com/apache/messenger/foreign/go/messengercli"
 	"github.com/onsi/ginkgo/v2"
 	"github.com/onsi/gomega"
 )
 
 //operations
 
-func successfullyCreateStream(prefix string, client iggycli.Client) (uint32, string) {
+func successfullyCreateStream(prefix string, client messengercli.Client) (uint32, string) {
 	streamId := createRandomUInt32()
 	name := createRandomStringWithPrefix(prefix, 128)
 
@@ -78,7 +78,7 @@ func itShouldContainSpecificStream(id uint32, name string, streams []iggcon.Stre
 	})
 }
 
-func itShouldSuccessfullyCreateStream(id uint32, expectedName string, client iggycli.Client) {
+func itShouldSuccessfullyCreateStream(id uint32, expectedName string, client messengercli.Client) {
 	streamIdentifier, _ := iggcon.NewIdentifier(id)
 	stream, err := client.GetStream(streamIdentifier)
 
@@ -92,7 +92,7 @@ func itShouldSuccessfullyCreateStream(id uint32, expectedName string, client igg
 	})
 }
 
-func itShouldSuccessfullyUpdateStream(id uint32, expectedName string, client iggycli.Client) {
+func itShouldSuccessfullyUpdateStream(id uint32, expectedName string, client messengercli.Client) {
 	streamIdentifier, _ := iggcon.NewIdentifier(id)
 	stream, err := client.GetStream(streamIdentifier)
 
@@ -106,17 +106,17 @@ func itShouldSuccessfullyUpdateStream(id uint32, expectedName string, client igg
 	})
 }
 
-func itShouldSuccessfullyDeleteStream(id uint32, client iggycli.Client) {
+func itShouldSuccessfullyDeleteStream(id uint32, client messengercli.Client) {
 	streamIdentifier, _ := iggcon.NewIdentifier(id)
 	stream, err := client.GetStream(streamIdentifier)
 
-	itShouldReturnSpecificIggyError(err, ierror.StreamIdNotFound)
+	itShouldReturnSpecificMessengerError(err, ierror.StreamIdNotFound)
 	ginkgo.It("should not return stream", func() {
 		gomega.Expect(stream).To(gomega.BeNil())
 	})
 }
 
-func deleteStreamAfterTests(streamId uint32, client iggycli.Client) {
+func deleteStreamAfterTests(streamId uint32, client messengercli.Client) {
 	streamIdentifier, _ := iggcon.NewIdentifier(streamId)
 	_ = client.DeleteStream(streamIdentifier)
 }

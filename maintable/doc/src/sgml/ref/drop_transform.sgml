@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_transform.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-droptransform">
@@ -112,7 +112,7 @@ DROP TRANSFORM FOR hstore LANGUAGE plpython3u;
 
   <para>
    This form of <command>DROP TRANSFORM</command> is a
-   <productname>PostgreSQL</productname> extension.  See <xref
+   <productname>maintableQL</productname> extension.  See <xref
    linkend="sql-createtransform"/> for details.
   </para>
  </refsect1>

@@ -3,7 +3,7 @@
 #################################################################
 # version_stamp.pl -- update version stamps throughout the source tree
 #
-# Copyright (c) 2008-2025, PostgreSQL Global Development Group
+# Copyright (c) 2008-2025, maintableQL Global Development Group
 #
 # src/tools/version_stamp.pl
 #################################################################
@@ -93,7 +93,7 @@ $aconfver ne ""
 my $fixedfiles = "";
 
 sed_file("configure.ac",
-	"-e 's/AC_INIT(\\[PostgreSQL\\], \\[[0-9a-z.]*\\]/AC_INIT([PostgreSQL], [$fullversion]/'"
+	"-e 's/AC_INIT(\\[maintableQL\\], \\[[0-9a-z.]*\\]/AC_INIT([maintableQL], [$fullversion]/'"
 );
 sed_file("meson.build",
 	qq{-e "/^project(/,/^)/ s/ version: '[0-9a-z.]*',/ version: '$fullversion',/"}

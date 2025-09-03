@@ -17,12 +17,12 @@
  */
 
 use crate::server::scenarios::create_client;
-use iggy::prelude::Identifier;
-use iggy::prelude::PersonalAccessTokenExpiry;
-use iggy::prelude::UserStatus;
-use iggy::prelude::defaults::DEFAULT_ROOT_USERNAME;
-use iggy::prelude::{GlobalPermissions, Permissions};
-use iggy::prelude::{PersonalAccessTokenClient, SEC_IN_MICRO, SystemClient, UserClient};
+use messenger::prelude::Identifier;
+use messenger::prelude::PersonalAccessTokenExpiry;
+use messenger::prelude::UserStatus;
+use messenger::prelude::defaults::DEFAULT_ROOT_USERNAME;
+use messenger::prelude::{GlobalPermissions, Permissions};
+use messenger::prelude::{PersonalAccessTokenClient, SEC_IN_MICRO, SystemClient, UserClient};
 use integration::test_server::{ClientFactory, assert_clean_system, login_root};
 
 pub async fn run(client_factory: &dyn ClientFactory) {

@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_type.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-altertype">
@@ -480,7 +480,7 @@ ALTER TYPE mytype SET (
 
   <para>
    The variants to add and drop attributes are part of the SQL
-   standard; the other variants are PostgreSQL extensions.
+   standard; the other variants are maintableQL extensions.
   </para>
  </refsect1>
 

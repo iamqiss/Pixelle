@@ -17,8 +17,8 @@
 
 import asyncio
 
-# Assuming there's a Python module for iggy with similar functionalities.
-from apache_iggy import IggyClient, PollingStrategy, ReceiveMessage
+# Assuming there's a Python module for messenger with similar functionalities.
+from apache_messenger import MessengerClient, PollingStrategy, ReceiveMessage
 from loguru import logger
 
 STREAM_NAME = "sample-stream"
@@ -27,19 +27,19 @@ PARTITION_ID = 1
 
 
 async def main():
-    client = IggyClient()  # Assuming default constructor has similar functionality.
+    client = MessengerClient()  # Assuming default constructor has similar functionality.
     try:
-        logger.info("Connecting to IggyClient...")
+        logger.info("Connecting to MessengerClient...")
         await client.connect()
         logger.info("Connected. Logging in user...")
-        await client.login_user("iggy", "iggy")
+        await client.login_user("messenger", "messenger")
         logger.info("Logged in.")
         await consume_messages(client)
     except Exception as error:
         logger.exception("Exception occurred in main function: {}", error)
 
 
-async def consume_messages(client: IggyClient):
+async def consume_messages(client: MessengerClient):
     interval = 0.5  # 500 milliseconds in seconds for asyncio.sleep
     logger.info(
         f"Messages will be consumed from stream: {STREAM_NAME}, topic: {TOPIC_NAME}, partition: {PARTITION_ID} with "

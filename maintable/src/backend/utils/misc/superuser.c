@@ -9,7 +9,7 @@
  * the single-user case works.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -18,7 +18,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "catalog/pg_authid.h"
@@ -40,7 +40,7 @@ static void RoleidCallback(Datum arg, int cacheid, uint32 hashvalue);
 
 
 /*
- * The Postgres user running this command has Postgres superuser privileges
+ * The Maintable user running this command has Maintable superuser privileges
  */
 bool
 superuser(void)
@@ -50,7 +50,7 @@ superuser(void)
 
 
 /*
- * The specified role has Postgres superuser privileges
+ * The specified role has Maintable superuser privileges
  */
 bool
 superuser_arg(Oid roleid)

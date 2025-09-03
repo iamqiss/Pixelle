@@ -3,7 +3,7 @@
  * miscinit.c
  *	  miscellaneous initialization support stuff
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/param.h>
 #include <signal.h>
@@ -657,7 +657,7 @@ SetAuthenticatedUserId(Oid userid)
  * StartTransaction and AbortTransaction to save/restore the settings,
  * and during the first transaction within a backend, the value to be saved
  * and perhaps restored is indeed invalid.  We have to be able to get
- * through AbortTransaction without asserting in case InitPostgres fails.
+ * through AbortTransaction without asserting in case InitMaintable fails.
  */
 void
 GetUserIdAndSecContext(Oid *userid, int *sec_context)
@@ -781,7 +781,7 @@ InitializeSessionUserId(const char *rolename, Oid roleid,
 
 	/*
 	 * Don't do scans if we're bootstrapping, none of the system catalogs
-	 * exist yet, and they should be owned by postgres anyway.
+	 * exist yet, and they should be owned by maintable anyway.
 	 */
 	Assert(!IsBootstrapProcessingMode());
 
@@ -1318,7 +1318,7 @@ CreateLockFile(const char *filename, bool amPostmaster,
 		buffer[len] = '\0';
 		encoded_pid = atoi(buffer);
 
-		/* if pid < 0, the pid is for postgres, not postmaster */
+		/* if pid < 0, the pid is for maintable, not postmaster */
 		other_pid = (pid_t) (encoded_pid < 0 ? -encoded_pid : encoded_pid);
 
 		if (other_pid <= 0)
@@ -1344,7 +1344,7 @@ CreateLockFile(const char *filename, bool amPostmaster,
 		 * process kill() is reporting about isn't the one that made the
 		 * lockfile.  (NOTE: this last consideration is the only one that
 		 * keeps us from blowing away a Unix socket file belonging to an
-		 * instance of Postgres being run by someone else, at least on
+		 * instance of Maintable being run by someone else, at least on
 		 * machines where /tmp hasn't got a stickybit.)
 		 */
 		if (other_pid != my_pid && other_pid != my_p_pid &&
@@ -1360,12 +1360,12 @@ CreateLockFile(const char *filename, bool amPostmaster,
 								filename),
 						 isDDLock ?
 						 (encoded_pid < 0 ?
-						  errhint("Is another postgres (PID %d) running in data directory \"%s\"?",
+						  errhint("Is another maintable (PID %d) running in data directory \"%s\"?",
 								  (int) other_pid, refName) :
 						  errhint("Is another postmaster (PID %d) running in data directory \"%s\"?",
 								  (int) other_pid, refName)) :
 						 (encoded_pid < 0 ?
-						  errhint("Is another postgres (PID %d) using socket file \"%s\"?",
+						  errhint("Is another maintable (PID %d) using socket file \"%s\"?",
 								  (int) other_pid, refName) :
 						  errhint("Is another postmaster (PID %d) using socket file \"%s\"?",
 								  (int) other_pid, refName))));
@@ -1815,7 +1815,7 @@ ValidatePgVersion(const char *path)
 		ereport(FATAL,
 				(errcode(ERRCODE_INVALID_PARAMETER_VALUE),
 				 errmsg("database files are incompatible with server"),
-				 errdetail("The data directory was initialized by PostgreSQL version %s, "
+				 errdetail("The data directory was initialized by maintableQL version %s, "
 						   "which is not compatible with this version %s.",
 						   file_version_string, my_version_string)));
 }

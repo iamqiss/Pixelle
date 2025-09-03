@@ -47,7 +47,7 @@ use tracing_subscriber::{
     reload, reload::Handle,
 };
 
-const IGGY_LOG_FILE_PREFIX: &str = "iggy-server.log";
+const MESSENGER_LOG_FILE_PREFIX: &str = "messenger-server.log";
 
 // Writer that does nothing
 struct NullWriter;
@@ -318,7 +318,7 @@ impl Logging {
         let logs_subdirectory = PathBuf::from(config.path.clone());
         let logs_path = base_directory.join(logs_subdirectory.clone());
         let file_appender =
-            tracing_appender::rolling::hourly(logs_path.clone(), IGGY_LOG_FILE_PREFIX);
+            tracing_appender::rolling::hourly(logs_path.clone(), MESSENGER_LOG_FILE_PREFIX);
         let (mut non_blocking_file, file_guard) = tracing_appender::non_blocking(file_appender);
 
         self.dump_to_file(&mut non_blocking_file);
@@ -393,7 +393,7 @@ impl Logging {
     }
 
     fn print_build_info() {
-        if option_env!("IGGY_CI_BUILD") == Some("true") {
+        if option_env!("MESSENGER_CI_BUILD") == Some("true") {
             let hash = option_env!("VERGEN_GIT_SHA").unwrap_or("unknown");
             let built_at = option_env!("VERGEN_BUILD_TIMESTAMP").unwrap_or("unknown");
             let rust_version = option_env!("VERGEN_RUSTC_SEMVER").unwrap_or("unknown");
@@ -404,7 +404,7 @@ impl Logging {
             );
         } else {
             info!(
-                "It seems that you are a developer. Environment variable IGGY_CI_BUILD is not set to 'true', skipping build info print."
+                "It seems that you are a developer. Environment variable MESSENGER_CI_BUILD is not set to 'true', skipping build info print."
             )
         }
     }

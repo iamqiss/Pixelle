@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * procarray.c
- *	  POSTGRES process array code.
+ *	  MAINTABLE process array code.
  *
  *
  * This module maintains arrays of PGPROC substructures, as well as associated
@@ -34,7 +34,7 @@
  * happen, it would tie up KnownAssignedXids indefinitely, so we protect
  * ourselves by pruning the array when a valid list of running XIDs arrives.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -43,7 +43,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <signal.h>
 
@@ -3840,7 +3840,7 @@ TerminateOtherDBBackends(Oid databaseId)
 		 * DROP DATABASE unexpectedly.
 		 *
 		 * Unlike pg_terminate_backend, we don't raise some warnings - like
-		 * "PID %d is not a PostgreSQL server process", because for us already
+		 * "PID %d is not a maintableQL server process", because for us already
 		 * finished session is not a problem.
 		 */
 		foreach(lc, pids)

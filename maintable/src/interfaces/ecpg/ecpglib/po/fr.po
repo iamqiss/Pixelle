@@ -1,6 +1,6 @@
 # LANGUAGE message translation file for ecpglib
-# Copyright (C) 2009-2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the ecpglib (PostgreSQL) package.
+# Copyright (C) 2009-2022 maintableQL Global Development Group
+# This file is distributed under the same license as the ecpglib (maintableQL) package.
 #
 # Use these quotes: « %s »
 #
@@ -9,8 +9,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2022-04-12 05:16+0000\n"
 "PO-Revision-Date: 2024-09-16 16:28+0200\n"
 "Last-Translator: Guillaume Lelarge <guillaume@lelarge.info>\n"

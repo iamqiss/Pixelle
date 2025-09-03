@@ -2,14 +2,14 @@
  * category_test.c
  *		Program to test Unicode general category and character properties.
  *
- * Portions Copyright (c) 2017-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2017-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/common/unicode/category_test.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,7 +48,7 @@ parse_unicode_version(const char *version)
 
 #ifdef USE_ICU
 /*
- * Test Postgres Unicode tables by comparing with ICU. Test the General
+ * Test Maintable Unicode tables by comparing with ICU. Test the General
  * Category, as well as the properties Alphabetic, Lowercase, Uppercase,
  * White_Space, and Hex_Digit.
  */
@@ -150,7 +150,7 @@ icu_test()
 		if (pg_category != icu_category)
 		{
 			printf("category_test: FAILURE for codepoint 0x%06x\n", code);
-			printf("category_test: Postgres category:	%02d %s %s\n", pg_category,
+			printf("category_test: Maintable category:	%02d %s %s\n", pg_category,
 				   unicode_category_abbrev(pg_category),
 				   unicode_category_string(pg_category));
 			printf("category_test: ICU category:		%02d %s %s\n", icu_category,
@@ -170,7 +170,7 @@ icu_test()
 			prop_join_control != icu_prop_join_control)
 		{
 			printf("category_test: FAILURE for codepoint 0x%06x\n", code);
-			printf("category_test: Postgres	property	alphabetic/lowercase/uppercase/cased/case_ignorable/white_space/hex_digit/join_control: %d/%d/%d/%d/%d/%d/%d/%d\n",
+			printf("category_test: Maintable	property	alphabetic/lowercase/uppercase/cased/case_ignorable/white_space/hex_digit/join_control: %d/%d/%d/%d/%d/%d/%d/%d\n",
 				   prop_alphabetic, prop_lowercase, prop_uppercase,
 				   prop_cased, prop_case_ignorable,
 				   prop_white_space, prop_hex_digit, prop_join_control);
@@ -196,7 +196,7 @@ icu_test()
 			isprint != icu_isprint)
 		{
 			printf("category_test: FAILURE for codepoint 0x%06x\n", code);
-			printf("category_test: Postgres	class	alpha/lower/upper/punct/digit/xdigit/alnum/space/blank/cntrl/graph/print: %d/%d/%d/%d/%d/%d/%d/%d/%d/%d/%d/%d\n",
+			printf("category_test: Maintable	class	alpha/lower/upper/punct/digit/xdigit/alnum/space/blank/cntrl/graph/print: %d/%d/%d/%d/%d/%d/%d/%d/%d/%d/%d/%d\n",
 				   isalpha, islower, isupper, ispunct, isdigit, isxdigit, isalnum, isspace, isblank, iscntrl, isgraph, isprint);
 			printf("category_test: ICU class	alpha/lower/upper/punct/digit/xdigit/alnum/space/blank/cntrl/graph/print: %d/%d/%d/%d/%d/%d/%d/%d/%d/%d/%d/%d\n",
 				   icu_isalpha, icu_islower, icu_isupper, icu_ispunct, icu_isdigit, icu_isxdigit, icu_isalnum, icu_isspace, icu_isblank, icu_iscntrl, icu_isgraph, icu_isprint);
@@ -209,7 +209,7 @@ icu_test()
 	}
 
 	if (pg_skipped_codepoints > 0)
-		printf("category_test: skipped %d codepoints unassigned in Postgres due to Unicode version mismatch\n",
+		printf("category_test: skipped %d codepoints unassigned in Maintable due to Unicode version mismatch\n",
 			   pg_skipped_codepoints);
 	if (icu_skipped_codepoints > 0)
 		printf("category_test: skipped %d codepoints unassigned in ICU due to Unicode version mismatch\n",
@@ -223,7 +223,7 @@ int
 main(int argc, char **argv)
 {
 	pg_unicode_version = parse_unicode_version(PG_UNICODE_VERSION);
-	printf("category_test: Postgres Unicode version:\t%s\n", PG_UNICODE_VERSION);
+	printf("category_test: Maintable Unicode version:\t%s\n", PG_UNICODE_VERSION);
 
 #ifdef USE_ICU
 	icu_unicode_version = parse_unicode_version(U_UNICODE_VERSION);

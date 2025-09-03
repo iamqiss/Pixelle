@@ -17,15 +17,15 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, TestStreamId,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, TestStreamId,
     TestTopicId, USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
-use iggy::prelude::Identifier;
-use iggy::prelude::IggyExpiry;
-use iggy::prelude::MaxTopicSize;
+use messenger::prelude::Client;
+use messenger::prelude::Identifier;
+use messenger::prelude::MessengerExpiry;
+use messenger::prelude::MaxTopicSize;
 use predicates::str::diff;
 use serial_test::parallel;
 use std::str::FromStr;
@@ -92,7 +92,7 @@ impl TestMessageFetchCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestMessageFetchCmd {
+impl MessengerCmdTestCase for TestMessageFetchCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let stream = client.create_stream(&self.stream_name, None).await;
         assert!(stream.is_ok());
@@ -109,15 +109,15 @@ impl IggyCmdTestCase for TestMessageFetchCmd {
                 Default::default(),
                 None,
                 None,
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 MaxTopicSize::ServerDefault,
             )
             .await;
         assert!(topic.is_ok());
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("message")
             .arg("flush")
             .args(self.to_args())
@@ -171,7 +171,7 @@ impl IggyCmdTestCase for TestMessageFetchCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
     let test_parameters: Vec<(TestStreamId, TestTopicId, bool)> = vec![
         (TestStreamId::Numeric, TestTopicId::Numeric, false),
@@ -184,9 +184,9 @@ pub async fn should_be_successful() {
         (TestStreamId::Named, TestTopicId::Named, true),
     ];
 
-    iggy_cmd_test.setup().await;
+    messenger_cmd_test.setup().await;
     for (using_stream_id, using_topic_id, fsync) in test_parameters {
-        iggy_cmd_test
+        messenger_cmd_test
             .execute_test(TestMessageFetchCmd::new(
                 1,
                 "stream",
@@ -205,9 +205,9 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["message", "flush", "--help"],
             format!(
@@ -222,10 +222,10 @@ Stream ID can be specified as a stream name or ID
 Topic ID can be specified as a topic name or ID
 
 Examples:
- iggy message flush 1 2 1
- iggy message flush stream 2 1
- iggy message flush 1 topic 1
- iggy message flush stream topic 1
+ messenger message flush 1 2 1
+ messenger message flush stream 2 1
+ messenger message flush 1 topic 1
+ messenger message flush stream topic 1
 
 {USAGE_PREFIX} message flush [OPTIONS] <STREAM_ID> <TOPIC_ID> <PARTITION_ID>
 
@@ -261,9 +261,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["message", "flush", "-h"],
             format!(

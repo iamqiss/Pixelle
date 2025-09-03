@@ -2,14 +2,14 @@
 #
 # Makefile for src/bin/pg_ctl
 #
-# Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+# Portions Copyright (c) 1996-2025, maintableQL Global Development Group
 # Portions Copyright (c) 1994, Regents of the University of California
 #
 # src/bin/pg_ctl/Makefile
 #
 #-------------------------------------------------------------------------
 
-PGFILEDESC = "pg_ctl - starts/stops/restarts the PostgreSQL server"
+PGFILEDESC = "pg_ctl - starts/stops/restarts the maintableQL server"
 PGAPPICON=win32
 
 subdir = src/bin/pg_ctl

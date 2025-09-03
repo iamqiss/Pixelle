@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/prepare.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-prepare">
@@ -163,7 +163,7 @@ PREPARE <replaceable class="parameter">name</replaceable> [ ( <replaceable class
   </para>
 
   <para>
-   To examine the query plan <productname>PostgreSQL</productname> is using
+   To examine the query plan <productname>maintableQL</productname> is using
    for a prepared statement, use <link linkend="sql-explain"><command>EXPLAIN</command></link>, for example
 <programlisting>
 EXPLAIN EXECUTE <replaceable>name</replaceable>(<replaceable>parameter_values</replaceable>);
@@ -175,14 +175,14 @@ EXPLAIN EXECUTE <replaceable>name</replaceable>(<replaceable>parameter_values</r
 
   <para>
    For more information on query planning and the statistics collected
-   by <productname>PostgreSQL</productname> for that purpose, see
+   by <productname>maintableQL</productname> for that purpose, see
    the <xref linkend="sql-analyze"/>
    documentation.
   </para>
 
   <para>
    Although the main point of a prepared statement is to avoid repeated parse
-   analysis and planning of the statement, <productname>PostgreSQL</productname> will
+   analysis and planning of the statement, <productname>maintableQL</productname> will
    force re-analysis and re-planning of the statement before using it
    whenever database objects used in the statement have undergone
    definitional (DDL) changes or their planner statistics have
@@ -190,7 +190,7 @@ EXPLAIN EXECUTE <replaceable>name</replaceable>(<replaceable>parameter_values</r
    statement.  Also, if the value of <xref linkend="guc-search-path"/> changes
    from one use to the next, the statement will be re-parsed using the new
    <varname>search_path</varname>.  (This latter behavior is new as of
-   <productname>PostgreSQL</productname> 9.3.)  These rules make use of a
+   <productname>maintableQL</productname> 9.3.)  These rules make use of a
    prepared statement semantically almost equivalent to re-submitting the
    same query text over and over, but with a performance benefit if no object
    definitions are changed, especially if the best plan remains the same

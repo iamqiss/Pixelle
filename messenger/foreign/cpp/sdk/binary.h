@@ -22,9 +22,9 @@ namespace icp {
 namespace serialization {
 /**
  * @namespace binary
- * @brief All related types for the binary format used in Iggy's TCP and QUIC transports.
+ * @brief All related types for the binary format used in Messenger's TCP and QUIC transports.
  *
- * The definitions \htmlonly <a href="https://iggy.apache.org/docs/server/schema">binary specification</a> \endhtmlonly
+ * The definitions \htmlonly <a href="https://messenger.apache.org/docs/server/schema">binary specification</a> \endhtmlonly
  * which should be taken as canonical; E2E conformance tests will be used to ensure client stays in line. I am not sure
  * about this design yet; ideally I want minimal duplication between the binary and JSON variations, and so may
  * introduce format-specific serializers. This is less natural in C++ than Rust.
@@ -33,7 +33,7 @@ namespace binary {
 
 /**
  * @enum CommandCode
- * @brief Complete list of supported integer codes for the Iggy protocol.
+ * @brief Complete list of supported integer codes for the Messenger protocol.
  */
 enum CommandCode {
     PING = 1,
@@ -65,7 +65,7 @@ enum CommandCode {
 
 /**
  * @class BinaryWireFormat
- * @brief Simple binary serialization and deserialization for Iggy's protocol.
+ * @brief Simple binary serialization and deserialization for Messenger's protocol.
  */
 class BinaryWireFormat : icp::serialization::WireFormat {
 public:

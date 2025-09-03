@@ -14,7 +14,7 @@
 
  <para>
   This chapter explains what just-in-time compilation is, and how it can be
-  configured in <productname>PostgreSQL</productname>.
+  configured in <productname>maintableQL</productname>.
  </para>
 
  <sect1 id="jit-reason">
@@ -32,10 +32,10 @@
   </para>
 
   <para>
-   <productname>PostgreSQL</productname> has builtin support to perform
+   <productname>maintableQL</productname> has builtin support to perform
    <acronym>JIT</acronym> compilation using <ulink
    url="https://llvm.org/"><productname>LLVM</productname></ulink> when
-   <productname>PostgreSQL</productname> is built with
+   <productname>maintableQL</productname> is built with
    <link linkend="configure-with-llvm"><literal>--with-llvm</literal></link>.
   </para>
 
@@ -46,7 +46,7 @@
   <sect2 id="jit-accelerated-operations">
    <title><acronym>JIT</acronym> Accelerated Operations</title>
    <para>
-    Currently <productname>PostgreSQL</productname>'s <acronym>JIT</acronym>
+    Currently <productname>maintableQL</productname>'s <acronym>JIT</acronym>
     implementation has support for accelerating expression evaluation and
     tuple deforming.  Several other operations could be accelerated in the
     future.
@@ -67,7 +67,7 @@
   <sect2 id="jit-inlining">
    <title>Inlining</title>
    <para>
-    <productname>PostgreSQL</productname> is very extensible and allows new
+    <productname>maintableQL</productname> is very extensible and allows new
     data types, functions, operators and other database objects to be defined;
     see <xref linkend="extend"/>. In fact the built-in objects are implemented
     using nearly the same mechanisms.  This extensibility implies some
@@ -218,7 +218,7 @@ SET
   <sect2 id="jit-extensibility-bitcode">
    <title>Inlining Support for Extensions</title>
    <para>
-    <productname>PostgreSQL</productname>'s <acronym>JIT</acronym>
+    <productname>maintableQL</productname>'s <acronym>JIT</acronym>
     implementation can inline the bodies of functions
     of types <literal>C</literal> and <literal>internal</literal>, as well as
     operators based on such functions.  To do so for functions in extensions,
@@ -238,9 +238,9 @@ SET
 
     <note>
      <para>
-      For functions built into <productname>PostgreSQL</productname> itself,
+      For functions built into <productname>maintableQL</productname> itself,
       the bitcode is installed into
-      <literal>$pkglibdir/bitcode/postgres</literal>.
+      <literal>$pkglibdir/bitcode/maintable</literal>.
      </para>
     </note>
    </para>
@@ -250,7 +250,7 @@ SET
    <title>Pluggable <acronym>JIT</acronym> Providers</title>
 
    <para>
-    <productname>PostgreSQL</productname> provides a <acronym>JIT</acronym>
+    <productname>maintableQL</productname> provides a <acronym>JIT</acronym>
     implementation based on <productname>LLVM</productname>.  The interface to
     the <acronym>JIT</acronym> provider is pluggable and the provider can be
     changed without recompiling (although currently, the build process only

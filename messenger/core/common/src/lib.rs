@@ -24,7 +24,7 @@ mod utils;
 
 // Errors
 pub use error::client_error::ClientError;
-pub use error::iggy_error::{IggyError, IggyErrorDiscriminants};
+pub use error::messenger_error::{MessengerError, MessengerErrorDiscriminants};
 // Locking is feature gated, thus only mod level re-export.
 pub mod locking;
 // Commands
@@ -83,11 +83,11 @@ pub use types::user::user_info::*;
 pub use types::user::user_status::*;
 // Utils
 pub use certificates::generate_self_signed_certificate;
-pub use utils::byte_size::IggyByteSize;
+pub use utils::byte_size::MessengerByteSize;
 pub use utils::checksum::*;
 pub use utils::crypto::*;
-pub use utils::duration::{IggyDuration, SEC_IN_MICRO};
-pub use utils::expiry::IggyExpiry;
+pub use utils::duration::{MessengerDuration, SEC_IN_MICRO};
+pub use utils::expiry::MessengerExpiry;
 pub use utils::personal_access_token_expiry::PersonalAccessTokenExpiry;
 pub use utils::text;
 pub use utils::timestamp::*;

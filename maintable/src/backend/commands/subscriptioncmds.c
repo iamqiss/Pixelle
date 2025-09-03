@@ -3,7 +3,7 @@
  * subscriptioncmds.c
  *		subscription catalog manipulation functions
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/commit_ts.h"
 #include "access/htup_details.h"
@@ -2428,7 +2428,7 @@ check_pub_dead_tuple_retention(WalReceiverConn *wrconn)
 	if (walrcv_server_version(wrconn) < 19000)
 		ereport(ERROR,
 				errcode(ERRCODE_OBJECT_NOT_IN_PREREQUISITE_STATE),
-				errmsg("cannot enable retain_dead_tuples if the publisher is running a version earlier than PostgreSQL 19"));
+				errmsg("cannot enable retain_dead_tuples if the publisher is running a version earlier than maintableQL 19"));
 
 	res = walrcv_exec(wrconn, "SELECT pg_is_in_recovery()", 1, RecoveryRow);
 

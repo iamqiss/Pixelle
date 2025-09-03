@@ -3,7 +3,7 @@
  * tablecmds.c
  *	  Commands for creating and altering table structures and settings
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/attmap.h"
 #include "access/genam.h"
@@ -10422,7 +10422,7 @@ ATAddForeignKeyConstraint(List **wqueue, AlteredTableInfo *tab, Relation rel,
 			 * because we need a consistent notion of equality on both
 			 * columns.  We relax this by allowing different collations if
 			 * they are both deterministic.  (This is also for backward
-			 * compatibility, because PostgreSQL has always allowed this.)
+			 * compatibility, because maintableQL has always allowed this.)
 			 */
 			if ((!pkcolldet || !fkcolldet) && pkcoll != fkcoll)
 				ereport(ERROR,

@@ -17,7 +17,7 @@
  * under the License.
  */
 
-import { fetchIggyApi } from '$lib/api/fetchApi';
+import { fetchMessengerApi } from '$lib/api/fetchApi';
 import { handleFetchErrors } from '$lib/api/handleFetchErrors';
 import { streamListMapper } from '$lib/domain/Stream';
 import { streamDetailsMapper } from '$lib/domain/StreamDetails.js';
@@ -26,7 +26,7 @@ import { userMapper, type User } from '$lib/domain/User.js';
 
 export const load = async ({ cookies }) => {
   const getUsers = async () => {
-    const result = await fetchIggyApi({
+    const result = await fetchMessengerApi({
       method: 'GET',
       path: '/users',
       cookies
@@ -37,7 +37,7 @@ export const load = async ({ cookies }) => {
   };
 
   const getStreams = async () => {
-    const result = await fetchIggyApi({
+    const result = await fetchMessengerApi({
       method: 'GET',
       path: '/streams',
       cookies
@@ -53,7 +53,7 @@ export const load = async ({ cookies }) => {
       };
     }
 
-    const streamDetailResult = await fetchIggyApi({
+    const streamDetailResult = await fetchMessengerApi({
       method: 'GET',
       path: `/streams/${streams[0].id}`,
       cookies

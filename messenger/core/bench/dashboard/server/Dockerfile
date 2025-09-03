@@ -19,10 +19,10 @@ ARG RUST_VERSION=1.89
 
 # Build stage
 FROM rust:${RUST_VERSION}-slim-trixie AS builder
-ARG IGGY_CI_BUILD
-ENV IGGY_CI_BUILD=${IGGY_CI_BUILD}
+ARG MESSENGER_CI_BUILD
+ENV MESSENGER_CI_BUILD=${MESSENGER_CI_BUILD}
 
-WORKDIR /usr/src/iggy-bench-dashboard
+WORKDIR /usr/src/messenger-bench-dashboard
 
 # Install build dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -51,7 +51,7 @@ COPY . .
 RUN cd core/bench/dashboard/frontend && trunk build --release
 
 # Build the server with release profile
-RUN cargo build --release --bin iggy-bench-dashboard-server
+RUN cargo build --release --bin messenger-bench-dashboard-server
 
 # Runtime stage
 FROM debian:trixie-slim
@@ -67,20 +67,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the built binary and frontend files
-COPY --from=builder /usr/src/iggy-bench-dashboard/target/release/iggy-bench-dashboard-server /app/
-COPY --from=builder /usr/src/iggy-bench-dashboard/core/bench/dashboard/frontend/dist /app/frontend/dist
+COPY --from=builder /usr/src/messenger-bench-dashboard/target/release/messenger-bench-dashboard-server /app/
+COPY --from=builder /usr/src/messenger-bench-dashboard/core/bench/dashboard/frontend/dist /app/frontend/dist
 
 # Create data directory and non-root user
-RUN groupadd -r iggy && \
-    useradd -r -g iggy -s /bin/false iggy && \
+RUN groupadd -r messenger && \
+    useradd -r -g messenger -s /bin/false messenger && \
     mkdir -p /data/performance_results && \
-    chown -R iggy:iggy /app /data && \
+    chown -R messenger:messenger /app /data && \
     chmod -R 755 /data/performance_results
 
 # Copy the entrypoint script
 COPY core/bench/dashboard/server/docker-entrypoint.sh /app/
 RUN chmod +x /app/docker-entrypoint.sh && \
-    chown iggy:iggy /app/docker-entrypoint.sh
+    chown messenger:messenger /app/docker-entrypoint.sh
 
 # Set default environment variables for configuration
 ENV HOST=0.0.0.0 \
@@ -91,7 +91,7 @@ ENV HOST=0.0.0.0 \
 VOLUME ["/data/performance_results"]
 
 # Switch to non-root user
-USER iggy
+USER messenger
 
 # Set the entrypoint script
 ENTRYPOINT ["/app/docker-entrypoint.sh"]

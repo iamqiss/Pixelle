@@ -23,7 +23,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "common/file_utils.h"
 #include "compress_io.h"

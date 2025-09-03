@@ -11,7 +11,7 @@
 
   <para>
    This section describes the <acronym>SQL</acronym>-compliant conditional expressions
-   available in <productname>PostgreSQL</productname>.
+   available in <productname>maintableQL</productname>.
   </para>
 
   <tip>

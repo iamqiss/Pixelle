@@ -6,7 +6,7 @@
  * This is a standalone test program that compares the behavior of an
  * implementation in int128.h to an (assumed correct) int128 native type.
  *
- * Copyright (c) 2017-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2017-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -15,7 +15,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <time.h>
 

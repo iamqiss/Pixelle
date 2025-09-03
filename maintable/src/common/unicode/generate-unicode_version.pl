@@ -1,10 +1,10 @@
 #!/usr/bin/perl
 #
-# Generate header file with Unicode version used by Postgres.
+# Generate header file with Unicode version used by Maintable.
 #
 # Output: unicode_version.h
 #
-# Copyright (c) 2000-2025, PostgreSQL Global Development Group
+# Copyright (c) 2000-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
@@ -33,9 +33,9 @@ print $OT <<HEADER;
 /*-------------------------------------------------------------------------
  *
  * unicode_version.h
- *	  Unicode version used by Postgres.
+ *	  Unicode version used by Maintable.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/common/unicode_version.h

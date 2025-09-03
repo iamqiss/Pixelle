@@ -23,13 +23,13 @@
  * Note the size of the null bitmask may not be the same as that of the
  * datum array.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
  *	  src/backend/access/brin/brin_tuple.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/brin_tuple.h"
 #include "access/detoast.h"

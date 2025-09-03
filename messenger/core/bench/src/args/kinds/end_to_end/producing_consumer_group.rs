@@ -17,7 +17,7 @@
  */
 
 use crate::args::{
-    common::IggyBenchArgs,
+    common::MessengerBenchArgs,
     defaults::{
         DEFAULT_BALANCED_NUMBER_OF_PARTITIONS, DEFAULT_BALANCED_NUMBER_OF_STREAMS,
         DEFAULT_NUMBER_OF_CONSUMER_GROUPS, DEFAULT_NUMBER_OF_CONSUMERS,
@@ -27,7 +27,7 @@ use crate::args::{
     transport::BenchmarkTransportCommand,
 };
 use clap::{CommandFactory, Parser, error::ErrorKind};
-use iggy::prelude::IggyByteSize;
+use messenger::prelude::MessengerByteSize;
 use std::num::NonZeroU32;
 
 #[derive(Parser, Debug, Clone)]
@@ -57,7 +57,7 @@ pub struct EndToEndProducingConsumerGroupArgs {
 
     /// Max topic size in human readable format, e.g. "1GiB", "2MB", "1GiB". If not provided then topic size will be unlimited.
     #[arg(long, short = 'T')]
-    pub max_topic_size: Option<IggyByteSize>,
+    pub max_topic_size: Option<MessengerByteSize>,
 }
 
 impl BenchmarkKindProps for EndToEndProducingConsumerGroupArgs {
@@ -85,12 +85,12 @@ impl BenchmarkKindProps for EndToEndProducingConsumerGroupArgs {
         self.consumer_groups.get()
     }
 
-    fn max_topic_size(&self) -> Option<IggyByteSize> {
+    fn max_topic_size(&self) -> Option<MessengerByteSize> {
         self.max_topic_size
     }
 
     fn validate(&self) {
-        let mut cmd = IggyBenchArgs::command();
+        let mut cmd = MessengerBenchArgs::command();
         let streams = self.streams();
         let producers = self.producers();
         if streams > producers {

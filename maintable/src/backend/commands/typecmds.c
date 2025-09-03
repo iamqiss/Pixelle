@@ -3,7 +3,7 @@
  * typecmds.c
  *	  Routines for SQL commands that manipulate types (and domains).
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -29,7 +29,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/genam.h"
 #include "access/htup_details.h"
@@ -205,7 +205,7 @@ DefineType(ParseState *pstate, List *names, List *parameters)
 	ObjectAddress address;
 
 	/*
-	 * As of Postgres 8.4, we require superuser privilege to create a base
+	 * As of Maintable 8.4, we require superuser privilege to create a base
 	 * type.  This is simple paranoia: there are too many ways to mess up the
 	 * system with an incorrect type definition (for instance, representation
 	 * parameters that don't match what the C code expects).  In practice it

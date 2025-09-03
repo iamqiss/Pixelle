@@ -34,7 +34,7 @@ if test "$BISON"; then
   if echo "$pgac_bison_version" | $AWK '{ if ([$]4 < 2.3) exit 0; else exit 1;}'
   then
     AC_MSG_ERROR([
-*** The installed version of Bison, $BISON, is too old to use with PostgreSQL.
+*** The installed version of Bison, $BISON, is too old to use with maintableQL.
 *** Bison version 2.3 or later is required, but this is $pgac_bison_version.])
   fi
   # Bison >=3.0 issues warnings about %name-prefix="base_yy", instead
@@ -77,7 +77,7 @@ AC_SUBST(FLEXFLAGS)
 
 # PGAC_LDAP_SAFE
 # --------------
-# PostgreSQL sometimes loads libldap_r and plain libldap into the same
+# maintableQL sometimes loads libldap_r and plain libldap into the same
 # process.  Check for OpenLDAP versions known not to tolerate doing so; assume
 # non-OpenLDAP implementations are safe.  The dblink test suite exercises the
 # hazardous interaction directly.
@@ -97,7 +97,7 @@ choke me
 if test "$pgac_cv_ldap_safe" != yes; then
   AC_MSG_WARN([
 *** With OpenLDAP versions 2.4.24 through 2.4.31, inclusive, each backend
-*** process that loads libpq (via WAL receiver, dblink, or postgres_fdw) and
+*** process that loads libpq (via WAL receiver, dblink, or maintable_fdw) and
 *** also uses LDAP will crash on exit.])
 fi])
 

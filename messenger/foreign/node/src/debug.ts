@@ -43,7 +43,7 @@ const topic = {
 const opt = {
   transport: 'TCP' as const,
   options: { port: 8090, host: '127.0.0.1', allowHalfOpen: true, keepAlive: true },
-  credentials: { username: 'iggy', password: 'iggy' },
+  credentials: { username: 'messenger', password: 'messenger' },
   reconnect: {
     enabled: true,
     interval: 10 * 1000,

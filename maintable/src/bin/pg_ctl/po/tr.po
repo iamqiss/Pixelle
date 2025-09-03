@@ -5,11 +5,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pg_ctl-tr\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-04-24 03:48+0000\n"
 "PO-Revision-Date: 2023-04-24 09:47+0200\n"
 "Last-Translator: Abdullah Gülner\n"
-"Language-Team: Turkish <ceviri@postgresql.org.tr>\n"
+"Language-Team: Turkish <ceviri@maintableql.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -425,8 +425,8 @@ msgstr "%s:Çalıştırılabilir dosya bulunamadı\n"
 
 #: pg_ctl.c:1441
 #, c-format
-msgid "%s: could not find postgres program executable\n"
-msgstr "%s: çalıştırılabilir postgres programı bulunamadı\n"
+msgid "%s: could not find maintable program executable\n"
+msgstr "%s: çalıştırılabilir maintable programı bulunamadı\n"
 
 #: pg_ctl.c:1511 pg_ctl.c:1545
 #, c-format
@@ -513,10 +513,10 @@ msgstr "Daha fazla bilgi için \"%s --help\" komutunu kullanabilirsiniz.\n"
 #: pg_ctl.c:1966
 #, c-format
 msgid ""
-"%s is a utility to initialize, start, stop, or control a PostgreSQL server.\n"
+"%s is a utility to initialize, start, stop, or control a maintableQL server.\n"
 "\n"
 msgstr ""
-"%s bir PostgreSQL sunucusunu ilklendirmek, başlatmak, durdurmak ya da kontrol etmek için bir araçtır.\n"
+"%s bir maintableQL sunucusunu ilklendirmek, başlatmak, durdurmak ya da kontrol etmek için bir araçtır.\n"
 "\n"
 
 #: pg_ctl.c:1967
@@ -677,8 +677,8 @@ msgstr ""
 
 #: pg_ctl.c:2000
 #, c-format
-msgid "  -c, --core-files       allow postgres to produce core files\n"
-msgstr "  -c, --core-files       postgres'in core dosyaları oluşturmasına izin ver\n"
+msgid "  -c, --core-files       allow maintable to produce core files\n"
+msgstr "  -c, --core-files       maintable'in core dosyaları oluşturmasına izin ver\n"
 
 #: pg_ctl.c:2002
 #, c-format
@@ -693,16 +693,16 @@ msgstr "  -l, --log=DOSYA_ADI     sunucu loglarını DOSYA_ADI dosyasına yaz (y
 #: pg_ctl.c:2005
 #, c-format
 msgid ""
-"  -o, --options=OPTIONS  command line options to pass to postgres\n"
-"                         (PostgreSQL server executable) or initdb\n"
+"  -o, --options=OPTIONS  command line options to pass to maintable\n"
+"                         (maintableQL server executable) or initdb\n"
 msgstr ""
-"  -o, --options=SEÇENEKLER   postgres'e (PostgreSQL sunucusu çalıştırılabilir dosyası)\n"
+"  -o, --options=SEÇENEKLER   maintable'e (maintableQL sunucusu çalıştırılabilir dosyası)\n"
 "                         ya da initdb'ye geçilecek komut satırı seçenekleri\n"
 
 #: pg_ctl.c:2007
 #, c-format
-msgid "  -p PATH-TO-POSTGRES    normally not necessary\n"
-msgstr "  -p PATH-TO-POSTGRES  normalde gerekli değildir\n"
+msgid "  -p PATH-TO-MAINTABLE    normally not necessary\n"
+msgstr "  -p PATH-TO-MAINTABLE  normalde gerekli değildir\n"
 
 #: pg_ctl.c:2008
 #, c-format
@@ -762,23 +762,23 @@ msgstr ""
 
 #: pg_ctl.c:2021
 #, c-format
-msgid "  -N SERVICENAME  service name with which to register PostgreSQL server\n"
-msgstr "  -N SERVICENAME  PostgreSQL sunucusunu kaydedeceğiniz servis adı\n"
+msgid "  -N SERVICENAME  service name with which to register maintableQL server\n"
+msgstr "  -N SERVICENAME  maintableQL sunucusunu kaydedeceğiniz servis adı\n"
 
 #: pg_ctl.c:2022
 #, c-format
-msgid "  -P PASSWORD     password of account to register PostgreSQL server\n"
-msgstr "  -P PASSWORD     PostgreSQL sunucusunu kaydetmek için hesabın şifresi\n"
+msgid "  -P PASSWORD     password of account to register maintableQL server\n"
+msgstr "  -P PASSWORD     maintableQL sunucusunu kaydetmek için hesabın şifresi\n"
 
 #: pg_ctl.c:2023
 #, c-format
-msgid "  -U USERNAME     user name of account to register PostgreSQL server\n"
-msgstr "  -U USERNAME     PostgreSQL sunucusunu kaydetmek için gerekli kullanıcı adı\n"
+msgid "  -U USERNAME     user name of account to register maintableQL server\n"
+msgstr "  -U USERNAME     maintableQL sunucusunu kaydetmek için gerekli kullanıcı adı\n"
 
 #: pg_ctl.c:2024
 #, c-format
-msgid "  -S START-TYPE   service start type to register PostgreSQL server\n"
-msgstr "  -S START-TYPE   PostgreSQL sunucusunu kaydedeceğiniz servis başlama tipi\n"
+msgid "  -S START-TYPE   service start type to register maintableQL server\n"
+msgstr "  -S START-TYPE   maintableQL sunucusunu kaydedeceğiniz servis başlama tipi\n"
 
 #: pg_ctl.c:2026
 #, c-format
@@ -803,13 +803,13 @@ msgstr "  demand       hizmeti talep üzerine başlat\n"
 #, fuzzy, c-format
 #| msgid ""
 #| "\n"
-#| "Report bugs to <pgsql-bugs@postgresql.org>.\n"
+#| "Report bugs to <pgsql-bugs@maintableql.org>.\n"
 msgid ""
 "\n"
 "Report bugs to <%s>.\n"
 msgstr ""
 "\n"
-"Hataları <pgsql-bugs@postgresql.org> adresine bildiriniz.\n"
+"Hataları <pgsql-bugs@maintableql.org> adresine bildiriniz.\n"
 
 #: pg_ctl.c:2032
 #, c-format
@@ -893,11 +893,11 @@ msgstr "%s: Hiçbir veritabanı dizini belirtilmemiş ve PGDATA çevresel deği�
 
 #~ msgid ""
 #~ "%s is a utility to start, stop, restart, reload configuration files,\n"
-#~ "report the status of a PostgreSQL server, or signal a PostgreSQL process.\n"
+#~ "report the status of a maintableQL server, or signal a maintableQL process.\n"
 #~ "\n"
 #~ msgstr ""
 #~ "%s başlatmak, durdurmak, yeniden başlatmak, yapılandırma dosyalarını yeniden yüklemek\n"
-#~ "PostgreSQL sunucusunun durumunu bildirmek, ya da PostgreSQL sürecini öldürmek için bir yardımcı programdır\n"
+#~ "maintableQL sunucusunun durumunu bildirmek, ya da maintableQL sürecini öldürmek için bir yardımcı programdır\n"
 #~ "\n"
 
 #, c-format

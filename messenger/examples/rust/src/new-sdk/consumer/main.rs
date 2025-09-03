@@ -17,9 +17,9 @@
  */
 
 use futures_util::StreamExt;
-use iggy::prelude::*;
-use iggy_examples::shared::args::Args;
-use iggy_examples::shared::messages::{
+use messenger::prelude::*;
+use messenger_examples::shared::args::Args;
+use messenger_examples::shared::messages::{
     Envelope, ORDER_CONFIRMED_TYPE, ORDER_CREATED_TYPE, ORDER_REJECTED_TYPE, OrderConfirmed,
     OrderCreated, OrderRejected,
 };
@@ -44,7 +44,7 @@ async fn main() -> anyhow::Result<(), Box<dyn Error>> {
     );
     let client_provider_config = Arc::new(ClientProviderConfig::from_args(args.to_sdk_args())?);
     let client = client_provider::get_raw_client(client_provider_config, false).await?;
-    let client = IggyClient::new(client);
+    let client = MessengerClient::new(client);
     client.connect().await?;
 
     let name = "new-sdk-consumer";
@@ -60,7 +60,7 @@ async fn main() -> anyhow::Result<(), Box<dyn Error>> {
     .create_consumer_group_if_not_exists()
     .auto_join_consumer_group()
     .polling_strategy(PollingStrategy::next())
-    .poll_interval(IggyDuration::from_str(&args.interval)?)
+    .poll_interval(MessengerDuration::from_str(&args.interval)?)
     .batch_length(args.messages_per_batch)
     .build();
 
@@ -72,7 +72,7 @@ async fn main() -> anyhow::Result<(), Box<dyn Error>> {
 
 pub async fn consume_messages(
     args: &Args,
-    consumer: &mut IggyConsumer,
+    consumer: &mut MessengerConsumer,
 ) -> Result<(), Box<dyn Error>> {
     let interval = args.get_interval();
     let mut consumed_messages = 0;

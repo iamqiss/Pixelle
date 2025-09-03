@@ -1,17 +1,17 @@
 # LANGUAGE message translation file for pg_test_fsync
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_test_fsync (PostgreSQL) package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_test_fsync (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
 # Abdullah GÜLNER <agulner@gmail.com>, 2017, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_test_fsync (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pg_test_fsync (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2018-11-28 12:46+0000\n"
 "PO-Revision-Date: 2018-11-28 17:01+0300\n"
 "Last-Translator: Abdullah Gülner\n"
-"Language-Team: Turkish <ceviri@postgresql.org.tr>\n"
+"Language-Team: Turkish <ceviri@maintableql.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

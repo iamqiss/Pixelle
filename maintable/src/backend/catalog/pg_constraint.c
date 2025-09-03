@@ -3,7 +3,7 @@
  * pg_constraint.c
  *	  routines to support manipulation of the pg_constraint relation
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/genam.h"
 #include "access/gist.h"
@@ -112,7 +112,7 @@ CreateConstraintEntry(const char *constraintName,
 	namestrcpy(&cname, constraintName);
 
 	/*
-	 * Convert C arrays into Postgres arrays.
+	 * Convert C arrays into Maintable arrays.
 	 */
 	if (constraintNKeys > 0)
 	{
@@ -488,7 +488,7 @@ ConstraintNameExists(const char *conname, Oid namespaceid)
  * Select a nonconflicting name for a new constraint.
  *
  * The objective here is to choose a name that is unique within the
- * specified namespace.  Postgres does not require this, but the SQL
+ * specified namespace.  Maintable does not require this, but the SQL
  * spec does, and some apps depend on it.  Therefore we avoid choosing
  * default names that so conflict.
  *

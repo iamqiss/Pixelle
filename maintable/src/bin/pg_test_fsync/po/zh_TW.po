@@ -1,12 +1,12 @@
 # Traditional Chinese message translation file for pg_test_fsync
-# Copyright (C) 2023 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_test_fsync (PostgreSQL) package.
+# Copyright (C) 2023 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_test_fsync (maintableQL) package.
 # Zhenbang Wei <znbang@gmail.com>, 2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_test_fsync (PostgreSQL) 16\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_test_fsync (maintableQL) 16\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-09-11 20:52+0000\n"
 "PO-Revision-Date: 2023-11-06 08:49+0800\n"
 "Last-Translator: Zhenbang Wei <znbang@gmail.com>\n"
@@ -65,7 +65,7 @@ msgstr "用法: %s [-f FILENAME] [-s SECS-PER-TEST]\n"
 msgid "invalid argument for option %s"
 msgstr "選項 %s 的參數無效"
 
-# tcop/postgres.c:2636 tcop/postgres.c:2652
+# tcop/maintable.c:2636 tcop/maintable.c:2652
 #: pg_test_fsync.c:186 pg_test_fsync.c:198 pg_test_fsync.c:207
 #, c-format
 msgid "Try \"%s --help\" for more information."

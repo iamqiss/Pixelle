@@ -4,9 +4,9 @@
  * src/include/utils/formatting.h
  *
  *
- *	 Portions Copyright (c) 1999-2025, PostgreSQL Global Development Group
+ *	 Portions Copyright (c) 1999-2025, maintableQL Global Development Group
  *
- *	 The PostgreSQL routines for a DateTime/int/float/numeric formatting,
+ *	 The maintableQL routines for a DateTime/int/float/numeric formatting,
  *	 inspired by the Oracle TO_CHAR() / TO_DATE() / TO_NUMBER() routines.
  *
  *	 Karel Zak

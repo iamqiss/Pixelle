@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_role.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-alterrole">
@@ -57,7 +57,7 @@ ALTER ROLE { <replaceable class="parameter">role_specification</replaceable> | A
 
   <para>
    <command>ALTER ROLE</command> changes the attributes of a
-   <productname>PostgreSQL</productname> role.
+   <productname>maintableQL</productname> role.
   </para>
 
   <para>
@@ -109,7 +109,7 @@ ALTER ROLE { <replaceable class="parameter">role_specification</replaceable> | A
    Whenever the role subsequently
    starts a new session, the specified value becomes the session
    default, overriding whatever setting is present in
-   <filename>postgresql.conf</filename> or has been received from the <command>postgres</command>
+   <filename>maintableql.conf</filename> or has been received from the <command>maintable</command>
    command line. This only happens at login time; executing
    <link linkend="sql-set-role"><command>SET ROLE</command></link> or
    <link linkend="sql-set-session-authorization"><command>SET SESSION AUTHORIZATION</command></link> does not cause new
@@ -344,7 +344,7 @@ ALTER ROLE fred IN DATABASE devel SET client_min_messages = DEBUG;
 
   <para>
    The <command>ALTER ROLE</command> statement is a
-   <productname>PostgreSQL</productname> extension.
+   <productname>maintableQL</productname> extension.
   </para>
  </refsect1>
 

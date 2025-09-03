@@ -21,13 +21,13 @@ use bench_report::{
     numeric_parameter::BenchmarkNumericParameter, params::BenchmarkParams,
     transport::BenchmarkTransport,
 };
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::{ClientFactory, Transport};
 use std::{fs, path::Path, sync::Arc};
 use tracing::{error, info};
 
 use crate::args::{
-    common::IggyBenchArgs,
+    common::MessengerBenchArgs,
     defaults::{
         DEFAULT_BALANCED_NUMBER_OF_PARTITIONS, DEFAULT_BALANCED_NUMBER_OF_STREAMS,
         DEFAULT_HTTP_SERVER_ADDRESS, DEFAULT_MESSAGE_BATCHES, DEFAULT_MESSAGE_SIZE,
@@ -61,9 +61,9 @@ pub fn batch_user_size_bytes(polled_messages: &PolledMessages) -> u64 {
         .sum()
 }
 
-pub async fn get_server_stats(client_factory: &Arc<dyn ClientFactory>) -> Result<Stats, IggyError> {
+pub async fn get_server_stats(client_factory: &Arc<dyn ClientFactory>) -> Result<Stats, MessengerError> {
     let client = client_factory.create_client().await;
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
 
     client.connect().await?;
     client
@@ -76,9 +76,9 @@ pub async fn get_server_stats(client_factory: &Arc<dyn ClientFactory>) -> Result
 pub async fn collect_server_logs_and_save_to_file(
     client_factory: &Arc<dyn ClientFactory>,
     output_dir: &Path,
-) -> Result<(), IggyError> {
+) -> Result<(), MessengerError> {
     let client = client_factory.create_client().await;
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
 
     client.connect().await?;
     client
@@ -95,7 +95,7 @@ pub async fn collect_server_logs_and_save_to_file(
 
     fs::write(output_dir.join("server_logs.zip"), snapshot).map_err(|e| {
         error!("Failed to write server logs to file: {:?}", e);
-        IggyError::CannotWriteToFile
+        MessengerError::CannotWriteToFile
     })
 }
 
@@ -107,12 +107,12 @@ fn message_batches_from_metrics(individual_metrics: &[BenchmarkIndividualMetrics
 }
 
 pub fn params_from_args_and_metrics(
-    args: &IggyBenchArgs,
+    args: &MessengerBenchArgs,
     metrics: &[BenchmarkIndividualMetrics],
 ) -> BenchmarkParams {
     let benchmark_kind = args.benchmark_kind.as_simple_kind();
 
-    // Ugly conversion but let it stay here to have `bench-report` not depend on `iggy` or `integration`
+    // Ugly conversion but let it stay here to have `bench-report` not depend on `messenger` or `integration`
     let transport = match args.transport() {
         Transport::Tcp => BenchmarkTransport::Tcp,
         Transport::Quic => BenchmarkTransport::Quic,
@@ -181,11 +181,11 @@ pub fn params_from_args_and_metrics(
     }
 }
 
-fn recreate_bench_command(args: &IggyBenchArgs) -> String {
+fn recreate_bench_command(args: &MessengerBenchArgs) -> String {
     let mut parts = Vec::new();
 
     add_environment_variables(&mut parts, args.server_address());
-    parts.push("iggy-bench".to_string());
+    parts.push("messenger-bench".to_string());
 
     add_basic_arguments(&mut parts, args);
     add_benchmark_kind_arguments(&mut parts, args);
@@ -202,18 +202,18 @@ fn add_environment_variables(parts: &mut Vec<String>, server_address: &str) {
         .is_some_and(|host| host == "localhost" || host == "127.0.0.1");
 
     if is_localhost {
-        let iggy_vars: Vec<_> = std::env::vars()
-            .filter(|(k, _)| k.starts_with("IGGY_"))
+        let messenger_vars: Vec<_> = std::env::vars()
+            .filter(|(k, _)| k.starts_with("MESSENGER_"))
             .collect();
 
-        if !iggy_vars.is_empty() {
-            info!("Found env vars starting with IGGY_: {:?}", iggy_vars);
-            parts.extend(iggy_vars.into_iter().map(|(k, v)| format!("{k}={v}")));
+        if !messenger_vars.is_empty() {
+            info!("Found env vars starting with MESSENGER_: {:?}", messenger_vars);
+            parts.extend(messenger_vars.into_iter().map(|(k, v)| format!("{k}={v}")));
         }
     }
 }
 
-fn add_basic_arguments(parts: &mut Vec<String>, args: &IggyBenchArgs) {
+fn add_basic_arguments(parts: &mut Vec<String>, args: &MessengerBenchArgs) {
     let messages_per_batch = args.messages_per_batch();
     if messages_per_batch != BenchmarkNumericParameter::Value(DEFAULT_MESSAGES_PER_BATCH.get()) {
         parts.push(format!("--messages-per-batch {messages_per_batch}"));
@@ -245,7 +245,7 @@ fn add_basic_arguments(parts: &mut Vec<String>, args: &IggyBenchArgs) {
     }
 }
 
-fn add_benchmark_kind_arguments(parts: &mut Vec<String>, args: &IggyBenchArgs) {
+fn add_benchmark_kind_arguments(parts: &mut Vec<String>, args: &MessengerBenchArgs) {
     let kind_str = match args.benchmark_kind.as_simple_kind() {
         BenchmarkKind::PinnedProducer => "pinned-producer",
         BenchmarkKind::PinnedConsumer => "pinned-consumer",
@@ -261,7 +261,7 @@ fn add_benchmark_kind_arguments(parts: &mut Vec<String>, args: &IggyBenchArgs) {
     add_actor_arguments(parts, args);
 }
 
-fn add_actor_arguments(parts: &mut Vec<String>, args: &IggyBenchArgs) {
+fn add_actor_arguments(parts: &mut Vec<String>, args: &MessengerBenchArgs) {
     let producers = args.producers();
     let consumers = args.consumers();
     let number_of_consumer_groups = args.number_of_consumer_groups();
@@ -302,7 +302,7 @@ fn add_actor_arguments(parts: &mut Vec<String>, args: &IggyBenchArgs) {
     }
 }
 
-fn add_infrastructure_arguments(parts: &mut Vec<String>, args: &IggyBenchArgs) {
+fn add_infrastructure_arguments(parts: &mut Vec<String>, args: &MessengerBenchArgs) {
     let streams = args.streams();
     let default_streams = match args.benchmark_kind.as_simple_kind() {
         BenchmarkKind::BalancedProducerAndConsumerGroup
@@ -353,7 +353,7 @@ fn add_infrastructure_arguments(parts: &mut Vec<String>, args: &IggyBenchArgs) {
     }
 }
 
-fn add_output_arguments(parts: &mut Vec<String>, args: &IggyBenchArgs) {
+fn add_output_arguments(parts: &mut Vec<String>, args: &MessengerBenchArgs) {
     parts.push("output".to_string());
     parts.push("-o performance_results".to_string());
 

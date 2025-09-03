@@ -43,7 +43,7 @@
  * sha512crypt: 123 bytes
  *
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "common/string.h"
 #include "mb/pg_wchar.h"

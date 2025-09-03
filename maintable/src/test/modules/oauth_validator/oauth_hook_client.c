@@ -4,7 +4,7 @@
  *		Test driver for t/002_client.pl, which verifies OAuth hook
  *		functionality in libpq.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -14,7 +14,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <sys/socket.h>
 
@@ -22,10 +22,10 @@
 #include "libpq-fe.h"
 
 static int	handle_auth_data(PGauthData type, PGconn *conn, void *data);
-static PostgresPollingStatusType async_cb(PGconn *conn,
+static MaintablePollingStatusType async_cb(PGconn *conn,
 										  PGoauthBearerRequest *req,
 										  pgsocket *altsock);
-static PostgresPollingStatusType misbehave_cb(PGconn *conn,
+static MaintablePollingStatusType misbehave_cb(PGconn *conn,
 											  PGoauthBearerRequest *req,
 											  pgsocket *altsock);
 
@@ -137,7 +137,7 @@ main(int argc, char *argv[])
 		 * that rely on asynchronous work to be done before continuing with
 		 * the next step in the flow.
 		 */
-		PostgresPollingStatusType res;
+		MaintablePollingStatusType res;
 
 		conn = PQconnectStart(conninfo);
 
@@ -225,7 +225,7 @@ handle_auth_data(PGauthData type, PGconn *conn, void *data)
 	return 1;
 }
 
-static PostgresPollingStatusType
+static MaintablePollingStatusType
 async_cb(PGconn *conn, PGoauthBearerRequest *req, pgsocket *altsock)
 {
 	if (hang_forever)
@@ -267,7 +267,7 @@ async_cb(PGconn *conn, PGoauthBearerRequest *req, pgsocket *altsock)
 	return PGRES_POLLING_OK;
 }
 
-static PostgresPollingStatusType
+static MaintablePollingStatusType
 misbehave_cb(PGconn *conn, PGoauthBearerRequest *req, pgsocket *altsock)
 {
 	if (strcmp(misbehave_mode, "fail-async") == 0)

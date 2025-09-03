@@ -5,7 +5,7 @@
  *
  * See src/backend/access/transam/README for more information.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -15,7 +15,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <time.h>
 #include <unistd.h>
@@ -2186,7 +2186,7 @@ StartTransaction(void)
 	Assert(MyProc->vxid.procNumber == vxid.procNumber);
 	MyProc->vxid.lxid = vxid.localTransactionId;
 
-	TRACE_POSTGRESQL_TRANSACTION_START(vxid.localTransactionId);
+	TRACE_MAINTABLEQL_TRANSACTION_START(vxid.localTransactionId);
 
 	/*
 	 * set transaction_timestamp() (a/k/a now()).  Normally, we want this to
@@ -2391,7 +2391,7 @@ CommitTransaction(void)
 		ParallelWorkerReportLastRecEnd(XactLastRecEnd);
 	}
 
-	TRACE_POSTGRESQL_TRANSACTION_COMMIT(MyProc->vxid.lxid);
+	TRACE_MAINTABLEQL_TRANSACTION_COMMIT(MyProc->vxid.lxid);
 
 	/*
 	 * Let others know about no transaction in progress by me. Note that this
@@ -2955,7 +2955,7 @@ AbortTransaction(void)
 		XLogSetAsyncXactLSN(XactLastRecEnd);
 	}
 
-	TRACE_POSTGRESQL_TRANSACTION_ABORT(MyProc->vxid.lxid);
+	TRACE_MAINTABLEQL_TRANSACTION_ABORT(MyProc->vxid.lxid);
 
 	/*
 	 * Let others know about no transaction in progress by me. Note that this
@@ -3649,7 +3649,7 @@ AbortCurrentTransactionInternal(void)
  *	completes).  Subtransactions are verboten too.
  *
  *	We must also set XACT_FLAGS_NEEDIMMEDIATECOMMIT in MyXactFlags, to ensure
- *	that postgres.c follows through by committing after the statement is done.
+ *	that maintable.c follows through by committing after the statement is done.
  *
  *	isTopLevel: passed down from ProcessUtility to determine whether we are
  *	inside a function.  (We will always fail if this is false, but it's
@@ -4330,7 +4330,7 @@ UserAbortTransactionBlock(bool chain)
  *		Start an implicit transaction block if we're not already in one.
  *
  * Unlike BeginTransactionBlock, this is called directly from the main loop
- * in postgres.c, not within a Portal.  So we can just change blockState
+ * in maintable.c, not within a Portal.  So we can just change blockState
  * without a lot of ceremony.  We do not expect caller to do
  * CommitTransactionCommand/StartTransactionCommand.
  */

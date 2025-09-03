@@ -3,10 +3,10 @@
  * plperl.h
  *	  Common include file for PL/Perl files
  *
- * This should be included _AFTER_ postgres.h and system include files, as
+ * This should be included _AFTER_ maintable.h and system include files, as
  * well as headers that could in turn include system headers.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1995, Regents of the University of California
  *
  * src/pl/plperl/plperl.h

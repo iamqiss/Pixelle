@@ -9,7 +9,7 @@
  * and implementing search-path-controlled searches.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -17,7 +17,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "access/parallel.h"
@@ -4727,7 +4727,7 @@ assign_search_path(const char *newval, void *extra)
 }
 
 /*
- * InitializeSearchPath: initialize module during InitPostgres.
+ * InitializeSearchPath: initialize module during InitMaintable.
  *
  * This is called after we are up enough to be able to do catalog lookups.
  */
@@ -4881,7 +4881,7 @@ fetch_search_path_array(Oid *sarray, int sarray_len)
 /*
  * Export the FooIsVisible functions as SQL-callable functions.
  *
- * Note: as of Postgres 8.4, these will silently return NULL if called on
+ * Note: as of Maintable 8.4, these will silently return NULL if called on
  * a nonexistent object OID, rather than failing.  This is to avoid race
  * condition errors when a query that's scanning a catalog using an MVCC
  * snapshot uses one of these functions.  The underlying IsVisible functions

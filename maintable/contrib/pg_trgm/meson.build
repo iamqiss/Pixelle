@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 pg_trgm_sources = files(
   'trgm_gin.c',
@@ -15,7 +15,7 @@ endif
 
 pg_trgm = shared_module('pg_trgm',
   pg_trgm_sources,
-  c_pch: pch_postgres_h,
+  c_pch: pch_maintable_h,
   kwargs: contrib_mod_args,
 )
 contrib_targets += pg_trgm

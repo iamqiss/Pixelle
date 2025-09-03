@@ -3,7 +3,7 @@
  * mcxtfuncs.c
  *	  Functions to show backend memory context.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "funcapi.h"
 #include "mb/pg_wchar.h"
@@ -290,7 +290,7 @@ pg_log_backend_memory_contexts(PG_FUNCTION_ARGS)
 		 * if one backend terminated on its own during the run.
 		 */
 		ereport(WARNING,
-				(errmsg("PID %d is not a PostgreSQL server process", pid)));
+				(errmsg("PID %d is not a maintableQL server process", pid)));
 		PG_RETURN_BOOL(false);
 	}
 

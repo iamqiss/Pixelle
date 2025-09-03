@@ -1,8 +1,8 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Test PQsslAttribute(NULL, "library")

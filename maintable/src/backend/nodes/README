@@ -6,7 +6,7 @@ Node Structures
 Introduction
 ------------
 
-Postgres uses "node" types to organize parse trees, plan trees, and
+Maintable uses "node" types to organize parse trees, plan trees, and
 executor state trees.  All objects that can appear in such trees must
 be declared as node types.  In addition, a few object types that aren't
 part of parse/plan/execute node trees receive NodeTags anyway for

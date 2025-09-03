@@ -1,18 +1,18 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 program_help_ok('createdb');
 program_version_ok('createdb');
 program_options_handling_ok('createdb');
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init;
 $node->start;
 
@@ -82,7 +82,7 @@ if ($ENV{with_icu} eq 'yes')
 		'fails for encoding not supported by ICU');
 
 	# additional node, which uses the icu provider
-	my $node2 = PostgreSQL::Test::Cluster->new('icu');
+	my $node2 = maintableQL::Test::Cluster->new('icu');
 	$node2->init(extra => [ '--locale-provider=icu', '--icu-locale=en' ]);
 	$node2->start;
 

@@ -16,14 +16,14 @@
  * under the License.
  */
 
-use crate::prelude::{EncryptorKind, Identifier, IggyDuration, IggyError, Partitioning};
+use crate::prelude::{EncryptorKind, Identifier, MessengerDuration, MessengerError, Partitioning};
 use bon::Builder;
 use std::str::FromStr;
 use std::sync::Arc;
 
 #[derive(Builder, Debug, Clone)]
 #[builder(on(String, into))]
-pub struct IggyProducerConfig {
+pub struct MessengerProducerConfig {
     /// Identifier of the stream. Must be unique.
     stream_id: Identifier,
     /// Name of the stream. Must be unique.
@@ -39,19 +39,19 @@ pub struct IggyProducerConfig {
     /// The max number of messages to send in a batch. Must be greater than 0.
     batch_length: u32,
     /// Sets the interval between sending the messages, can be combined with `batch_length`.
-    linger_time: IggyDuration,
+    linger_time: MessengerDuration,
     /// Specifies to which partition the messages should be sent.
     partitioning: Partitioning,
     /// Sets the maximum number of send retries in case of a message sending failure.
     send_retries_count: Option<u32>,
     /// Sets the interval between send retries in case of a message sending failure.
-    send_retries_interval: Option<IggyDuration>,
+    send_retries_interval: Option<MessengerDuration>,
     /// Sets a optional client side encryptor for encrypting the messages' payloads. Currently only Aes256Gcm is supported.
     /// Note, this is independent of server side encryption meaning you can add client encryption, server encryption, or both.
     encryptor: Option<Arc<EncryptorKind>>,
 }
 
-impl Default for IggyProducerConfig {
+impl Default for MessengerProducerConfig {
     fn default() -> Self {
         let stream_id = Identifier::from_str_value("test_stream").unwrap();
         let topic_id = Identifier::from_str_value("test_topic").unwrap();
@@ -62,19 +62,19 @@ impl Default for IggyProducerConfig {
             topic_id,
             topic_name: "test_topic".to_string(),
             batch_length: 100,
-            linger_time: IggyDuration::from_str("5ms").unwrap(),
+            linger_time: MessengerDuration::from_str("5ms").unwrap(),
             partitioning: Partitioning::balanced(),
             topic_partitions_count: 1,
             topic_replication_factor: None,
             encryptor: None,
             send_retries_count: Some(3),
-            send_retries_interval: Some(IggyDuration::new_from_secs(1)),
+            send_retries_interval: Some(MessengerDuration::new_from_secs(1)),
         }
     }
 }
 
-impl IggyProducerConfig {
-    /// Creates a new `IggyProducerConfig` with all fields defined.
+impl MessengerProducerConfig {
+    /// Creates a new `MessengerProducerConfig` with all fields defined.
     ///
     /// # Args
     ///
@@ -92,7 +92,7 @@ impl IggyProducerConfig {
     /// * `send_retries_interval` - The interval between retries.
     ///
     /// Returns:
-    /// A new `IggyProducerConfig`.
+    /// A new `MessengerProducerConfig`.
     ///
     #[allow(clippy::too_many_arguments)]
     pub fn new(
@@ -103,11 +103,11 @@ impl IggyProducerConfig {
         topic_partitions_count: u32,
         topic_replication_factor: Option<u8>,
         batch_length: u32,
-        linger_time: IggyDuration,
+        linger_time: MessengerDuration,
         partitioning: Partitioning,
         encryptor: Option<Arc<EncryptorKind>>,
         send_retries_count: Option<u32>,
-        send_retries_interval: Option<IggyDuration>,
+        send_retries_interval: Option<MessengerDuration>,
     ) -> Self {
         Self {
             stream_id,
@@ -125,7 +125,7 @@ impl IggyProducerConfig {
         }
     }
 
-    /// Creates a new `IggyProducerConfig` from the given stream and topic names, along with the
+    /// Creates a new `MessengerProducerConfig` from the given stream and topic names, along with the
     /// max batch size and the send interval.
     ///
     /// # Args
@@ -136,14 +136,14 @@ impl IggyProducerConfig {
     /// * `linger_time` - The interval between messages sent.
     ///
     /// Returns:
-    /// A new `IggyProducerConfig`.
+    /// A new `MessengerProducerConfig`.
     ///
     pub fn from_stream_topic(
         stream: &str,
         topic: &str,
         batch_length: u32,
-        linger_time: IggyDuration,
-    ) -> Result<Self, IggyError> {
+        linger_time: MessengerDuration,
+    ) -> Result<Self, MessengerError> {
         let stream_id = Identifier::from_str_value(stream)?;
         let topic_id = Identifier::from_str_value(topic)?;
 
@@ -159,12 +159,12 @@ impl IggyProducerConfig {
             topic_replication_factor: None,
             encryptor: None,
             send_retries_count: Some(3),
-            send_retries_interval: Some(IggyDuration::new_from_secs(1)),
+            send_retries_interval: Some(MessengerDuration::new_from_secs(1)),
         })
     }
 }
 
-impl IggyProducerConfig {
+impl MessengerProducerConfig {
     pub fn stream_id(&self) -> &Identifier {
         &self.stream_id
     }
@@ -185,7 +185,7 @@ impl IggyProducerConfig {
         self.batch_length
     }
 
-    pub fn linger_time(&self) -> IggyDuration {
+    pub fn linger_time(&self) -> MessengerDuration {
         self.linger_time
     }
 
@@ -209,7 +209,7 @@ impl IggyProducerConfig {
         self.send_retries_count
     }
 
-    pub fn send_retries_interval(&self) -> Option<IggyDuration> {
+    pub fn send_retries_interval(&self) -> Option<MessengerDuration> {
         self.send_retries_interval
     }
 }
@@ -224,17 +224,17 @@ mod tests {
         let topic = "test_topic";
 
         // Builder is generated by the bon macro
-        let config = IggyProducerConfig::builder()
+        let config = MessengerProducerConfig::builder()
             .stream_id(Identifier::from_str_value(stream).unwrap())
             .stream_name(stream)
             .topic_id(Identifier::from_str_value(topic).unwrap())
             .topic_name(topic)
             .topic_partitions_count(3)
             .batch_length(100)
-            .linger_time(IggyDuration::from_str("5ms").unwrap())
+            .linger_time(MessengerDuration::from_str("5ms").unwrap())
             .partitioning(Partitioning::balanced())
             .send_retries_count(3)
-            .send_retries_interval(IggyDuration::new_from_secs(1))
+            .send_retries_interval(MessengerDuration::new_from_secs(1))
             .build();
 
         assert_eq!(
@@ -248,14 +248,14 @@ mod tests {
         );
         assert_eq!(config.topic_name(), "test_topic");
         assert_eq!(config.batch_length(), 100);
-        assert_eq!(config.linger_time(), IggyDuration::from_str("5ms").unwrap());
+        assert_eq!(config.linger_time(), MessengerDuration::from_str("5ms").unwrap());
         assert_eq!(config.partitioning(), &Partitioning::balanced());
         assert_eq!(config.topic_partitions_count(), 3);
         assert_eq!(config.topic_replication_factor(), None);
         assert_eq!(config.send_retries_count(), Some(3));
         assert_eq!(
             config.send_retries_interval(),
-            Some(IggyDuration::new_from_secs(1))
+            Some(MessengerDuration::new_from_secs(1))
         );
     }
 
@@ -264,20 +264,20 @@ mod tests {
         let stream_id = Identifier::from_str_value("test_stream").unwrap();
         let topic_id = Identifier::from_str_value("test_topic").unwrap();
 
-        let config = IggyProducerConfig::default();
+        let config = MessengerProducerConfig::default();
         assert_eq!(config.stream_id(), &stream_id);
         assert_eq!(config.stream_name(), "test_stream");
         assert_eq!(config.topic_id(), &topic_id);
         assert_eq!(config.topic_name(), "test_topic");
         assert_eq!(config.batch_length(), 100);
-        assert_eq!(config.linger_time(), IggyDuration::from_str("5ms").unwrap());
+        assert_eq!(config.linger_time(), MessengerDuration::from_str("5ms").unwrap());
         assert_eq!(config.partitioning(), &Partitioning::balanced());
         assert_eq!(config.topic_partitions_count(), 1);
         assert_eq!(config.topic_replication_factor(), None);
         assert_eq!(config.send_retries_count(), Some(3));
         assert_eq!(
             config.send_retries_interval(),
-            Some(IggyDuration::new_from_secs(1))
+            Some(MessengerDuration::new_from_secs(1))
         );
     }
 
@@ -286,7 +286,7 @@ mod tests {
         let stream_id = Identifier::from_str_value("test_stream").unwrap();
         let topic_id = Identifier::from_str_value("test_topic").unwrap();
 
-        let config = IggyProducerConfig::new(
+        let config = MessengerProducerConfig::new(
             stream_id.clone(),
             String::from("test_stream"),
             topic_id.clone(),
@@ -294,7 +294,7 @@ mod tests {
             3,
             None,
             100,
-            IggyDuration::from_str("5ms").unwrap(),
+            MessengerDuration::from_str("5ms").unwrap(),
             Partitioning::balanced(),
             None,
             None,
@@ -305,7 +305,7 @@ mod tests {
         assert_eq!(config.topic_id(), &topic_id);
         assert_eq!(config.topic_name(), "test_topic");
         assert_eq!(config.batch_length(), 100);
-        assert_eq!(config.linger_time(), IggyDuration::from_str("5ms").unwrap());
+        assert_eq!(config.linger_time(), MessengerDuration::from_str("5ms").unwrap());
         assert_eq!(config.partitioning(), &Partitioning::balanced());
         assert_eq!(config.topic_partitions_count(), 3);
         assert_eq!(config.topic_replication_factor(), None);
@@ -318,11 +318,11 @@ mod tests {
         let stream_id = Identifier::from_str_value("test_stream").unwrap();
         let topic_id = Identifier::from_str_value("test_topic").unwrap();
 
-        let res = IggyProducerConfig::from_stream_topic(
+        let res = MessengerProducerConfig::from_stream_topic(
             "test_stream",
             "test_topic",
             100,
-            IggyDuration::from_str("5ms").unwrap(),
+            MessengerDuration::from_str("5ms").unwrap(),
         );
 
         assert!(res.is_ok());
@@ -333,7 +333,7 @@ mod tests {
         assert_eq!(config.topic_id(), &topic_id);
         assert_eq!(config.topic_name(), "test_topic");
         assert_eq!(config.batch_length(), 100);
-        assert_eq!(config.linger_time(), IggyDuration::from_str("5ms").unwrap());
+        assert_eq!(config.linger_time(), MessengerDuration::from_str("5ms").unwrap());
         assert_eq!(config.partitioning(), &Partitioning::balanced());
         assert_eq!(config.topic_partitions_count(), 1);
         assert_eq!(config.topic_replication_factor(), None);

@@ -2,14 +2,14 @@
  *
  * auth_delay.c
  *
- * Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		contrib/auth_delay/auth_delay.c
  *
  * -------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 

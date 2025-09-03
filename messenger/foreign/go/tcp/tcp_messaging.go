@@ -18,16 +18,16 @@
 package tcp
 
 import (
-	binaryserialization "github.com/apache/iggy/foreign/go/binary_serialization"
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	ierror "github.com/apache/iggy/foreign/go/errors"
+	binaryserialization "github.com/apache/messenger/foreign/go/binary_serialization"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	ierror "github.com/apache/messenger/foreign/go/errors"
 )
 
-func (tms *IggyTcpClient) SendMessages(
+func (tms *MessengerTcpClient) SendMessages(
 	streamId iggcon.Identifier,
 	topicId iggcon.Identifier,
 	partitioning iggcon.Partitioning,
-	messages []iggcon.IggyMessage,
+	messages []iggcon.MessengerMessage,
 ) error {
 	if len(messages) == 0 {
 		return ierror.CustomError("messages_count_should_be_greater_than_zero")
@@ -42,7 +42,7 @@ func (tms *IggyTcpClient) SendMessages(
 	return err
 }
 
-func (tms *IggyTcpClient) PollMessages(
+func (tms *MessengerTcpClient) PollMessages(
 	streamId iggcon.Identifier,
 	topicId iggcon.Identifier,
 	consumer iggcon.Consumer,

@@ -1,12 +1,12 @@
 /*------------------------------------------------------------------------
- * PostgreSQL manual configuration settings
+ * maintableQL manual configuration settings
  *
  * This file contains various configuration symbols and limits.  In
  * all cases, changing them is only useful in very rare situations or
  * for developers.  If you edit any of these, be sure to do a *full*
  * rebuild (and an initdb if noted).
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/pg_config_manual.h
@@ -43,7 +43,7 @@
 #define FUNC_MAX_ARGS		100
 
 /*
- * When creating a product derived from PostgreSQL with changes that cause
+ * When creating a product derived from maintableQL with changes that cause
  * incompatibilities for loadable modules, it is recommended to change this
  * string so that dfmgr.c can refuse to load incompatible modules with a clean
  * error message.  Typical examples that cause incompatibilities are any
@@ -54,10 +54,10 @@
  *
  * There is no prescribed format for the string.  The suggestion is to include
  * product or company name, and optionally any internally-relevant ABI
- * version.  Example: "ACME Postgres/1.2".  Note that the string will appear
+ * version.  Example: "ACME Maintable/1.2".  Note that the string will appear
  * in a user-facing error message if an ABI mismatch is detected.
  */
-#define FMGR_ABI_EXTRA		"PostgreSQL"
+#define FMGR_ABI_EXTRA		"maintableQL"
 
 /*
  * Maximum number of columns in an index.  There is little point in making
@@ -83,7 +83,7 @@
 
 
 /*
- * MAXPGPATH: standard size of a pathname buffer in PostgreSQL (hence,
+ * MAXPGPATH: standard size of a pathname buffer in maintableQL (hence,
  * maximum usable pathname length is one less).
  *
  * We'd use a standard system header symbol for this, if there weren't
@@ -122,7 +122,7 @@
 #endif
 
 /*
- * USE_POSIX_FADVISE controls whether Postgres will attempt to use the
+ * USE_POSIX_FADVISE controls whether Maintable will attempt to use the
  * posix_fadvise() kernel call.  Usually the automatic configure tests are
  * sufficient, but some older Linux distributions had broken versions of
  * posix_fadvise().  If necessary you can remove the #define here.
@@ -193,7 +193,7 @@
 /*
  * This is the default event source for Windows event log.
  */
-#define DEFAULT_EVENT_SOURCE  "PostgreSQL"
+#define DEFAULT_EVENT_SOURCE  "maintableQL"
 
 /*
  * Assumed cache line size.  This doesn't affect correctness, but can be used
@@ -228,7 +228,7 @@
 
 /*
  * Include Valgrind "client requests", mostly in the memory allocator, so
- * Valgrind understands PostgreSQL memory contexts.  This permits detecting
+ * Valgrind understands maintableQL memory contexts.  This permits detecting
  * memory errors that Valgrind would not detect on a vanilla build.  It also
  * enables detection of buffer accesses that take place without holding a
  * buffer pin (or without holding a buffer lock in the case of index access

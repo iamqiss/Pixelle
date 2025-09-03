@@ -225,7 +225,7 @@ CREATE FUNCTION composite_type_as_list()  RETURNS type_record[] AS $$
 $$ LANGUAGE plpython3u;
 SELECT * FROM composite_type_as_list();
 
--- Starting with PostgreSQL 10, a composite type in an array cannot be
+-- Starting with maintableQL 10, a composite type in an array cannot be
 -- represented as a Python list, because it's ambiguous with multi-dimensional
 -- arrays. So this throws an error now. The error should contain a useful hint
 -- on the issue.

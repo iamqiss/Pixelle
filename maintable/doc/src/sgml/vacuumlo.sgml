@@ -13,7 +13,7 @@
 
  <refnamediv>
   <refname>vacuumlo</refname>
-  <refpurpose>remove orphaned large objects from a <productname>PostgreSQL</productname> database</refpurpose>
+  <refpurpose>remove orphaned large objects from a <productname>maintableQL</productname> database</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -30,7 +30,7 @@
  <para>
   <application>vacuumlo</application> is a simple utility program that will remove any
   <quote>orphaned</quote> large objects from a
-  <productname>PostgreSQL</productname> database.  An orphaned large object (LO) is
+  <productname>maintableQL</productname> database.  An orphaned large object (LO) is
   considered to be any LO whose OID does not appear in any <type>oid</type> or
   <type>lo</type> data column of the database.
  </para>
@@ -192,7 +192,7 @@
   </variablelist>
 
   <para>
-   This utility, like most other <productname>PostgreSQL</productname> utilities,
+   This utility, like most other <productname>maintableQL</productname> utilities,
    also uses the environment variables supported by <application>libpq</application>
    (see <xref linkend="libpq-envars"/>).
   </para>

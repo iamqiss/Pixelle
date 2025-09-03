@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 if not libxml.found()
   subdir_done()
@@ -17,7 +17,7 @@ endif
 
 xml2 = shared_module('pgxml',
   xml2_sources,
-  c_pch: pch_postgres_h,
+  c_pch: pch_maintable_h,
   kwargs: contrib_mod_args + {
     'dependencies': [libxml, libxslt, contrib_mod_args['dependencies']],
   },

@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 #
 # This test aims to validate that pg_combinebackup works in the degenerate
 # case where it is invoked on a single full backup and that it can produce
@@ -8,8 +8,8 @@
 use strict;
 use warnings FATAL => 'all';
 use File::Compare;
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Can be changed to test the other modes.
@@ -18,7 +18,7 @@ my $mode = $ENV{PG_TEST_PG_COMBINEBACKUP_MODE} || '--copy';
 note "testing using mode $mode";
 
 # Set up a new database instance.
-my $node = PostgreSQL::Test::Cluster->new('node');
+my $node = maintableQL::Test::Cluster->new('node');
 $node->init(has_archiving => 1, allows_streaming => 1);
 $node->start;
 

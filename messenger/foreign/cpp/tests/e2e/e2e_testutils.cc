@@ -21,9 +21,9 @@
 #include <thread>
 #include <vector>
 
-IggyRunner::IggyRunner() {
+MessengerRunner::MessengerRunner() {
     // start the Docker process with stdout redirected to parent process
-    std::vector<std::string> arguments = {"docker", "run", "-d", "--name", "iggy_test", "apache/iggy:latest"};
+    std::vector<std::string> arguments = {"docker", "run", "-d", "--name", "messenger_test", "apache/messenger:latest"};
     reproc::options options;
     options.redirect.parent = true;
     auto err = process.start(arguments, options);
@@ -35,7 +35,7 @@ IggyRunner::IggyRunner() {
     std::this_thread::sleep_for(std::chrono::seconds(5));
 }
 
-IggyRunner::~IggyRunner() {
+MessengerRunner::~MessengerRunner() {
     // stop the Docker process
     process.stop(reproc::stop_actions{{reproc::stop::terminate, reproc::milliseconds(5000)},
                                       {reproc::stop::kill, reproc::milliseconds(2000)},
@@ -43,7 +43,7 @@ IggyRunner::~IggyRunner() {
 
     // remove the Docker container
     reproc::process remove_process;
-    std::vector<std::string> remove_arguments = {"docker", "rm", "-f", "iggy_test"};
+    std::vector<std::string> remove_arguments = {"docker", "rm", "-f", "messenger_test"};
     remove_process.start(remove_arguments);
     remove_process.wait(reproc::milliseconds(5000));
 }

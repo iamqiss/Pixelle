@@ -2,9 +2,9 @@
  *
  * contrib/sepgsql/sepgsql.h
  *
- * Definitions corresponding to SE-PostgreSQL
+ * Definitions corresponding to SE-maintableQL
  *
- * Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * -------------------------------------------------------------------------
  */
@@ -18,12 +18,12 @@
 #include <selinux/avc.h>
 
 /*
- * SE-PostgreSQL Label Tag
+ * SE-maintableQL Label Tag
  */
 #define SEPGSQL_LABEL_TAG			"selinux"
 
 /*
- * SE-PostgreSQL performing mode
+ * SE-maintableQL performing mode
  */
 #define SEPGSQL_MODE_DEFAULT		1
 #define SEPGSQL_MODE_PERMISSIVE		2

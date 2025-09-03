@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * mvdistinct.c
- *	  POSTGRES multivariate ndistinct coefficients
+ *	  MAINTABLE multivariate ndistinct coefficients
  *
  * Estimating number of groups in a combination of columns (e.g. for GROUP BY)
  * is tricky, and the estimation error is often significant.
@@ -13,7 +13,7 @@
  * estimates are already available in pg_statistic.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -21,7 +21,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 

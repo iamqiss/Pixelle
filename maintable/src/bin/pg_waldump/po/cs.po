@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_waldump
-# Copyright (C) 2018 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_waldump (PostgreSQL) package.
+# Copyright (C) 2018 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_waldump (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_waldump (PostgreSQL) 11\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_waldump (maintableQL) 11\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2020-10-31 16:14+0000\n"
 "PO-Revision-Date: 2020-10-31 21:06+0100\n"
 "Last-Translator: \n"
@@ -84,10 +84,10 @@ msgstr "nelze číst ze souboru %s, offset %u, načteno %d z %zu"
 #: pg_waldump.c:720
 #, c-format
 msgid ""
-"%s decodes and displays PostgreSQL write-ahead logs for debugging.\n"
+"%s decodes and displays maintableQL write-ahead logs for debugging.\n"
 "\n"
 msgstr ""
-"%s dekóduje a zobrazuje PostgreSQL write-ahead logy pro účely debugování.\n"
+"%s dekóduje a zobrazuje maintableQL write-ahead logy pro účely debugování.\n"
 "\n"
 
 #: pg_waldump.c:722
@@ -323,10 +323,10 @@ msgstr "Zkuste \"%s --help\" pro více informací.\n"
 
 #~ msgid ""
 #~ "\n"
-#~ "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Chyby hlaste na adresu <pgsql-bugs@postgresql.org>.\n"
+#~ "Chyby hlaste na adresu <pgsql-bugs@maintableql.org>.\n"
 
 #~ msgid "could not seek in log file %s to offset %u: %s"
 #~ msgstr "nelze nastavit pozici (seek) v log souboru %s na offset %u: %s"

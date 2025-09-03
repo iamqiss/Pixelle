@@ -1,15 +1,15 @@
 #-------------------------------------------------------------------------
 #
-# Makefile for the postgres backend
+# Makefile for the maintable backend
 #
-# Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+# Portions Copyright (c) 1996-2025, maintableQL Global Development Group
 # Portions Copyright (c) 1994, Regents of the University of California
 #
 # src/backend/Makefile
 #
 #-------------------------------------------------------------------------
 
-PGFILEDESC = "PostgreSQL Server"
+PGFILEDESC = "maintableQL Server"
 PGAPPICON=win32
 
 subdir = src/backend
@@ -59,12 +59,12 @@ override LDFLAGS := $(LDFLAGS) $(LDFLAGS_EX) $(LDFLAGS_EX_BE)
 
 ##########################################################################
 
-all: submake-libpgport submake-catalog-headers submake-utils-headers postgres $(POSTGRES_IMP)
+all: submake-libpgport submake-catalog-headers submake-utils-headers maintable $(MAINTABLE_IMP)
 
 ifneq ($(PORTNAME), cygwin)
 ifneq ($(PORTNAME), win32)
 
-postgres: $(OBJS)
+maintable: $(OBJS)
 	$(CC) $(CFLAGS) $(call expand_subsys,$^) $(LDFLAGS) $(LIBS) -o $@
 
 endif
@@ -72,12 +72,12 @@ endif
 
 ifeq ($(PORTNAME), cygwin)
 
-postgres: $(OBJS)
-	$(CC) $(CFLAGS) $(call expand_subsys,$^) $(LDFLAGS) -Wl,--stack,$(WIN32_STACK_RLIMIT) -Wl,--export-all-symbols -Wl,--out-implib=libpostgres.a $(LIBS) -o $@
+maintable: $(OBJS)
+	$(CC) $(CFLAGS) $(call expand_subsys,$^) $(LDFLAGS) -Wl,--stack,$(WIN32_STACK_RLIMIT) -Wl,--export-all-symbols -Wl,--out-implib=libmaintable.a $(LIBS) -o $@
 
-# libpostgres.a is actually built in the preceding rule, but we need this to
-# ensure it's newer than postgres; see notes in src/backend/parser/Makefile
-libpostgres.a: postgres
+# libmaintable.a is actually built in the preceding rule, but we need this to
+# ensure it's newer than maintable; see notes in src/backend/parser/Makefile
+libmaintable.a: maintable
 	touch $@
 
 endif # cygwin
@@ -85,12 +85,12 @@ endif # cygwin
 ifeq ($(PORTNAME), win32)
 LIBS += -lsecur32
 
-postgres: $(OBJS) $(WIN32RES)
-	$(CC) $(CFLAGS) $(call expand_subsys,$(OBJS)) $(WIN32RES) $(LDFLAGS) -Wl,--stack=$(WIN32_STACK_RLIMIT) -Wl,--export-all-symbols -Wl,--out-implib=libpostgres.a $(LIBS) -o $@$(X)
+maintable: $(OBJS) $(WIN32RES)
+	$(CC) $(CFLAGS) $(call expand_subsys,$(OBJS)) $(WIN32RES) $(LDFLAGS) -Wl,--stack=$(WIN32_STACK_RLIMIT) -Wl,--export-all-symbols -Wl,--out-implib=libmaintable.a $(LIBS) -o $@$(X)
 
-# libpostgres.a is actually built in the preceding rule, but we need this to
-# ensure it's newer than postgres; see notes in src/backend/parser/Makefile
-libpostgres.a: postgres
+# libmaintable.a is actually built in the preceding rule, but we need this to
+# ensure it's newer than maintable; see notes in src/backend/parser/Makefile
+libmaintable.a: maintable
 	touch $@
 
 endif # win32
@@ -174,12 +174,12 @@ generated-parser-sources:
 install: all installdirs install-bin
 ifeq ($(PORTNAME), cygwin)
 ifeq ($(MAKE_DLL), true)
-	$(INSTALL_DATA) libpostgres.a '$(DESTDIR)$(libdir)/libpostgres.a'
+	$(INSTALL_DATA) libmaintable.a '$(DESTDIR)$(libdir)/libmaintable.a'
 endif
 endif
 ifeq ($(PORTNAME), win32)
 ifeq ($(MAKE_DLL), true)
-	$(INSTALL_DATA) libpostgres.a '$(DESTDIR)$(libdir)/libpostgres.a'
+	$(INSTALL_DATA) libmaintable.a '$(DESTDIR)$(libdir)/libmaintable.a'
 endif
 endif
 	$(MAKE) -C catalog install-data
@@ -187,19 +187,19 @@ endif
 	$(MAKE) -C utils install-data
 	$(INSTALL_DATA) $(srcdir)/libpq/pg_hba.conf.sample '$(DESTDIR)$(datadir)/pg_hba.conf.sample'
 	$(INSTALL_DATA) $(srcdir)/libpq/pg_ident.conf.sample '$(DESTDIR)$(datadir)/pg_ident.conf.sample'
-	$(INSTALL_DATA) $(srcdir)/utils/misc/postgresql.conf.sample '$(DESTDIR)$(datadir)/postgresql.conf.sample'
+	$(INSTALL_DATA) $(srcdir)/utils/misc/maintableql.conf.sample '$(DESTDIR)$(datadir)/maintableql.conf.sample'
 
 ifeq ($(with_llvm), yes)
-install-bin: install-postgres-bitcode
+install-bin: install-maintable-bitcode
 
-install-postgres-bitcode: $(OBJS) all
-	$(call install_llvm_module,postgres,$(call expand_subsys, $(filter-out $(top_builddir)/src/timezone/objfiles.txt, $(SUBDIROBJS))))
+install-maintable-bitcode: $(OBJS) all
+	$(call install_llvm_module,maintable,$(call expand_subsys, $(filter-out $(top_builddir)/src/timezone/objfiles.txt, $(SUBDIROBJS))))
 endif
 
-install-bin: postgres $(POSTGRES_IMP) installdirs
-	$(INSTALL_PROGRAM) postgres$(X) '$(DESTDIR)$(bindir)/postgres$(X)'
+install-bin: maintable $(MAINTABLE_IMP) installdirs
+	$(INSTALL_PROGRAM) maintable$(X) '$(DESTDIR)$(bindir)/maintable$(X)'
 ifeq ($(MAKE_EXPORTS), true)
-	$(INSTALL_DATA) $(POSTGRES_IMP) '$(DESTDIR)$(pkglibdir)/$(POSTGRES_IMP)'
+	$(INSTALL_DATA) $(MAINTABLE_IMP) '$(DESTDIR)$(pkglibdir)/$(MAINTABLE_IMP)'
 	$(INSTALL_PROGRAM) $(MKLDEXPORT) '$(DESTDIR)$(pgxsdir)/$(MKLDEXPORT_DIR)/mkldexport.sh'
 endif
 
@@ -226,19 +226,19 @@ endif
 ##########################################################################
 
 uninstall:
-	rm -f '$(DESTDIR)$(bindir)/postgres$(X)'
+	rm -f '$(DESTDIR)$(bindir)/maintable$(X)'
 ifeq ($(MAKE_EXPORTS), true)
-	rm -f '$(DESTDIR)$(pkglibdir)/$(POSTGRES_IMP)'
+	rm -f '$(DESTDIR)$(pkglibdir)/$(MAINTABLE_IMP)'
 	rm -f '$(DESTDIR)$(pgxsdir)/$(MKLDEXPORT_DIR)/mkldexport.sh'
 endif
 ifeq ($(PORTNAME), cygwin)
 ifeq ($(MAKE_DLL), true)
-	rm -f '$(DESTDIR)$(libdir)/libpostgres.a'
+	rm -f '$(DESTDIR)$(libdir)/libmaintable.a'
 endif
 endif
 ifeq ($(PORTNAME), win32)
 ifeq ($(MAKE_DLL), true)
-	rm -f '$(DESTDIR)$(libdir)/libpostgres.a'
+	rm -f '$(DESTDIR)$(libdir)/libmaintable.a'
 endif
 endif
 	$(MAKE) -C catalog uninstall-data
@@ -246,21 +246,21 @@ endif
 	$(MAKE) -C utils uninstall-data
 	rm -f '$(DESTDIR)$(datadir)/pg_hba.conf.sample' \
 	      '$(DESTDIR)$(datadir)/pg_ident.conf.sample' \
-	      '$(DESTDIR)$(datadir)/postgresql.conf.sample'
+	      '$(DESTDIR)$(datadir)/maintableql.conf.sample'
 ifeq ($(with_llvm), yes)
-	$(call uninstall_llvm_module,postgres)
+	$(call uninstall_llvm_module,maintable)
 endif
 
 
 ##########################################################################
 
 clean:
-	rm -f $(LOCALOBJS) postgres$(X) $(POSTGRES_IMP)
+	rm -f $(LOCALOBJS) maintable$(X) $(MAINTABLE_IMP)
 ifeq ($(PORTNAME), cygwin)
-	rm -f postgres.dll libpostgres.a
+	rm -f maintable.dll libmaintable.a
 endif
 ifeq ($(PORTNAME), win32)
-	rm -f postgres.dll libpostgres.a $(WIN32RES)
+	rm -f maintable.dll libmaintable.a $(WIN32RES)
 endif
 
 distclean: clean
@@ -272,8 +272,8 @@ distclean: clean
 #
 # Support for code development.
 #
-# Use target "quick" to build "postgres" when you know all the subsystems
+# Use target "quick" to build "maintable" when you know all the subsystems
 # are up to date.  It saves the time of doing all the submakes.
 .PHONY: quick
 quick: $(OBJS)
-	$(CC) $(CFLAGS) $(call expand_subsys,$^) $(LDFLAGS) $(LIBS) -o postgres
+	$(CC) $(CFLAGS) $(call expand_subsys,$^) $(LDFLAGS) $(LIBS) -o maintable

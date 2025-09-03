@@ -16,14 +16,14 @@
  * under the License.
  */
 
-use crate::locking::IggySharedMutFn;
+use crate::locking::MessengerSharedMutFn;
 use fast_async_mutex::rwlock::{RwLock as FastAsyncRwLock, RwLockReadGuard, RwLockWriteGuard};
 use std::sync::Arc;
 
 #[derive(Debug)]
-pub struct IggyFastAsyncRwLock<T>(Arc<FastAsyncRwLock<T>>);
+pub struct MessengerFastAsyncRwLock<T>(Arc<FastAsyncRwLock<T>>);
 
-impl<T> IggySharedMutFn<T> for IggyFastAsyncRwLock<T>
+impl<T> MessengerSharedMutFn<T> for MessengerFastAsyncRwLock<T>
 where
     T: Send + Sync,
 {
@@ -36,7 +36,7 @@ where
     where
         T: 'a;
     fn new(data: T) -> Self {
-        IggyFastAsyncRwLock(Arc::new(FastAsyncRwLock::new(data)))
+        MessengerFastAsyncRwLock(Arc::new(FastAsyncRwLock::new(data)))
     }
 
     async fn read<'a>(&'a self) -> Self::ReadGuard<'a>
@@ -54,7 +54,7 @@ where
     }
 }
 
-impl<T> Clone for IggyFastAsyncRwLock<T> {
+impl<T> Clone for MessengerFastAsyncRwLock<T> {
     fn clone(&self) -> Self {
         Self(Arc::clone(&self.0))
     }

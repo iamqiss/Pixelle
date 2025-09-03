@@ -22,7 +22,7 @@ version = "0.1.0"
 edition = "2024"
 
 [[bin]]
-name = "iggy-bench-runner"
+name = "messenger-bench-runner"
 path = "src/main.rs"
 
 [dependencies]

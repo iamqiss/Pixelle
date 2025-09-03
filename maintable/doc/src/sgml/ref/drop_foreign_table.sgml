@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_foreign_table.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-dropforeigntable">
@@ -98,7 +98,7 @@ DROP FOREIGN TABLE films, distributors;
   <para>
    This command conforms to ISO/IEC 9075-9 (SQL/MED), except that the
    standard only allows one foreign table to be dropped per command, and apart
-   from the <literal>IF EXISTS</literal> option, which is a <productname>PostgreSQL</productname>
+   from the <literal>IF EXISTS</literal> option, which is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

@@ -15,10 +15,10 @@
  * under the License.
  */
 
-use iggy_connector_sdk::decoders::proto::{ProtoConfig, ProtoStreamDecoder};
-use iggy_connector_sdk::encoders::proto::{ProtoEncoderConfig, ProtoStreamEncoder};
-use iggy_connector_sdk::transforms::{ProtoConvert, ProtoConvertConfig, Transform};
-use iggy_connector_sdk::{Payload, Schema, StreamDecoder, StreamEncoder};
+use messenger_connector_sdk::decoders::proto::{ProtoConfig, ProtoStreamDecoder};
+use messenger_connector_sdk::encoders::proto::{ProtoEncoderConfig, ProtoStreamEncoder};
+use messenger_connector_sdk::transforms::{ProtoConvert, ProtoConvertConfig, Transform};
+use messenger_connector_sdk::{Payload, Schema, StreamDecoder, StreamEncoder};
 use prost::Message;
 use prost_types::Any;
 use std::collections::HashMap;
@@ -40,12 +40,12 @@ async fn should_transform_with_real_schema_and_field_mapping() {
     };
 
     let converter = ProtoConvert::new(config);
-    let metadata = iggy_connector_sdk::TopicMetadata {
+    let metadata = messenger_connector_sdk::TopicMetadata {
         stream: "test_stream".to_string(),
         topic: "test_topic".to_string(),
     };
 
-    let input_message = iggy_connector_sdk::DecodedMessage {
+    let input_message = messenger_connector_sdk::DecodedMessage {
         id: Some(1),
         offset: Some(0),
         checksum: Some(0),
@@ -195,12 +195,12 @@ async fn should_transform_json_to_proto_with_field_mappings() {
     };
 
     let converter = ProtoConvert::new(config);
-    let metadata = iggy_connector_sdk::TopicMetadata {
+    let metadata = messenger_connector_sdk::TopicMetadata {
         stream: "test_stream".to_string(),
         topic: "test_topic".to_string(),
     };
 
-    let input_message = iggy_connector_sdk::DecodedMessage {
+    let input_message = messenger_connector_sdk::DecodedMessage {
         id: Some(1),
         offset: Some(0),
         checksum: Some(0),
@@ -300,7 +300,7 @@ async fn should_perform_json_to_proto_to_json_roundtrip() {
     let json_to_proto = ProtoConvert::new(json_to_proto_config);
     let proto_to_json = ProtoConvert::new(proto_to_json_config);
 
-    let metadata = iggy_connector_sdk::TopicMetadata {
+    let metadata = messenger_connector_sdk::TopicMetadata {
         stream: "test_stream".to_string(),
         topic: "test_topic".to_string(),
     };
@@ -313,7 +313,7 @@ async fn should_perform_json_to_proto_to_json_roundtrip() {
         "created_at": 1642771200
     });
 
-    let original_message = iggy_connector_sdk::DecodedMessage {
+    let original_message = messenger_connector_sdk::DecodedMessage {
         id: Some(1),
         offset: Some(0),
         checksum: Some(0),

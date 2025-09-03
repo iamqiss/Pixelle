@@ -478,7 +478,7 @@ MongosProcessInterface::ensureFieldsUniqueOrResolveDocumentKey(
         // There are edge cases when the collection could be dropped or re-created during or near
         // the time of the operation (for example, during aggregation). This is okay - we are mostly
         // paranoid that this mongos is very stale and want to prevent returning an error if the
-        // collection was dropped a long time ago. Because of this, we are okay with piggy-backing
+        // collection was dropped a long time ago. Because of this, we are okay with pmessenger-backing
         // off another thread's request to refresh the cache, simply waiting for that request to
         // return instead of forcing another refresh.
         catalogCache->onStaleCollectionVersion(outputNs, boost::none);

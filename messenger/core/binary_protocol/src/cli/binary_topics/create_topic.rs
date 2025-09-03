@@ -21,13 +21,13 @@ use crate::cli::cli_command::{CliCommand, PRINT_TARGET};
 use anyhow::Context;
 use async_trait::async_trait;
 use core::fmt;
-use iggy_common::create_topic::CreateTopic;
-use iggy_common::{CompressionAlgorithm, Identifier, IggyExpiry, MaxTopicSize};
+use messenger_common::create_topic::CreateTopic;
+use messenger_common::{CompressionAlgorithm, Identifier, MessengerExpiry, MaxTopicSize};
 use tracing::{Level, event};
 
 pub struct CreateTopicCmd {
     create_topic: CreateTopic,
-    message_expiry: IggyExpiry,
+    message_expiry: MessengerExpiry,
     max_topic_size: MaxTopicSize,
     replication_factor: u8,
 }
@@ -40,7 +40,7 @@ impl CreateTopicCmd {
         partitions_count: u32,
         compression_algorithm: CompressionAlgorithm,
         name: String,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         max_topic_size: MaxTopicSize,
         replication_factor: u8,
     ) -> Self {

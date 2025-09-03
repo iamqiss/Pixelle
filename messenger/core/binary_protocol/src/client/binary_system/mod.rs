@@ -19,31 +19,31 @@
 use crate::utils::auth::fail_if_not_authenticated;
 use crate::utils::mapper;
 use crate::{BinaryClient, SystemClient};
-use iggy_common::get_client::GetClient;
-use iggy_common::get_clients::GetClients;
-use iggy_common::get_me::GetMe;
-use iggy_common::get_snapshot::GetSnapshot;
-use iggy_common::get_stats::GetStats;
-use iggy_common::ping::Ping;
-use iggy_common::{
-    ClientInfo, ClientInfoDetails, IggyDuration, IggyError, Snapshot, SnapshotCompression, Stats,
+use messenger_common::get_client::GetClient;
+use messenger_common::get_clients::GetClients;
+use messenger_common::get_me::GetMe;
+use messenger_common::get_snapshot::GetSnapshot;
+use messenger_common::get_stats::GetStats;
+use messenger_common::ping::Ping;
+use messenger_common::{
+    ClientInfo, ClientInfoDetails, MessengerDuration, MessengerError, Snapshot, SnapshotCompression, Stats,
     SystemSnapshotType,
 };
 
 #[async_trait::async_trait]
 impl<B: BinaryClient> SystemClient for B {
-    async fn get_stats(&self) -> Result<Stats, IggyError> {
+    async fn get_stats(&self) -> Result<Stats, MessengerError> {
         let response = self.send_with_response(&GetStats {}).await?;
         mapper::map_stats(response)
     }
 
-    async fn get_me(&self) -> Result<ClientInfoDetails, IggyError> {
+    async fn get_me(&self) -> Result<ClientInfoDetails, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self.send_with_response(&GetMe {}).await?;
         mapper::map_client(response)
     }
 
-    async fn get_client(&self, client_id: u32) -> Result<Option<ClientInfoDetails>, IggyError> {
+    async fn get_client(&self, client_id: u32) -> Result<Option<ClientInfoDetails>, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self.send_with_response(&GetClient { client_id }).await?;
         if response.is_empty() {
@@ -53,18 +53,18 @@ impl<B: BinaryClient> SystemClient for B {
         mapper::map_client(response).map(Some)
     }
 
-    async fn get_clients(&self) -> Result<Vec<ClientInfo>, IggyError> {
+    async fn get_clients(&self) -> Result<Vec<ClientInfo>, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self.send_with_response(&GetClients {}).await?;
         mapper::map_clients(response)
     }
 
-    async fn ping(&self) -> Result<(), IggyError> {
+    async fn ping(&self) -> Result<(), MessengerError> {
         self.send_with_response(&Ping {}).await?;
         Ok(())
     }
 
-    async fn heartbeat_interval(&self) -> IggyDuration {
+    async fn heartbeat_interval(&self) -> MessengerDuration {
         self.get_heartbeat_interval()
     }
 
@@ -72,7 +72,7 @@ impl<B: BinaryClient> SystemClient for B {
         &self,
         compression: SnapshotCompression,
         snapshot_types: Vec<SystemSnapshotType>,
-    ) -> Result<Snapshot, IggyError> {
+    ) -> Result<Snapshot, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self
             .send_with_response(&GetSnapshot {

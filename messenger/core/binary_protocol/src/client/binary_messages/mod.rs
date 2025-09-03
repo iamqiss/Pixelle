@@ -17,8 +17,8 @@
  */
 use crate::utils::auth::fail_if_not_authenticated;
 use crate::{BinaryClient, MessageClient};
-use iggy_common::{
-    BytesSerializable, Consumer, FlushUnsavedBuffer, Identifier, IggyError, IggyMessage,
+use messenger_common::{
+    BytesSerializable, Consumer, FlushUnsavedBuffer, Identifier, MessengerError, MessengerMessage,
     POLL_MESSAGES_CODE, Partitioning, PollMessages, PolledMessages, PollingStrategy,
     SEND_MESSAGES_CODE, SendMessages,
 };
@@ -34,7 +34,7 @@ impl<B: BinaryClient> MessageClient for B {
         strategy: &PollingStrategy,
         count: u32,
         auto_commit: bool,
-    ) -> Result<PolledMessages, IggyError> {
+    ) -> Result<PolledMessages, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self
             .send_raw_with_response(
@@ -58,8 +58,8 @@ impl<B: BinaryClient> MessageClient for B {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitioning: &Partitioning,
-        messages: &mut [IggyMessage],
-    ) -> Result<(), IggyError> {
+        messages: &mut [MessengerMessage],
+    ) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_raw_with_response(
             SEND_MESSAGES_CODE,
@@ -75,7 +75,7 @@ impl<B: BinaryClient> MessageClient for B {
         topic_id: &Identifier,
         partition_id: u32,
         fsync: bool,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&FlushUnsavedBuffer {
             stream_id: stream_id.clone(),

@@ -1,10 +1,10 @@
 
-# Copyright (c) 2024-2025, PostgreSQL Global Development Group
+# Copyright (c) 2024-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Time::HiRes qw(usleep);
 use Test::More;
 
@@ -26,10 +26,10 @@ if ($ENV{enable_injection_points} ne 'yes')
 
 # Initialize primary node.  log_checkpoints is required as the checkpoint
 # activity is monitored based on the contents of the logs.
-my $node_primary = PostgreSQL::Test::Cluster->new('master');
+my $node_primary = maintableQL::Test::Cluster->new('master');
 $node_primary->init(allows_streaming => 1);
 $node_primary->append_conf(
-	'postgresql.conf', q[
+	'maintableql.conf', q[
 log_checkpoints = on
 restart_after_crash = on
 ]);
@@ -47,31 +47,31 @@ my $backup_name = 'my_backup';
 $node_primary->backup($backup_name);
 
 # Setup a standby.
-my $node_standby = PostgreSQL::Test::Cluster->new('standby1');
+my $node_standby = maintableQL::Test::Cluster->new('standby1');
 $node_standby->init_from_backup($node_primary, $backup_name,
 	has_streaming => 1);
 $node_standby->start;
 
 # Dummy table for the upcoming tests.
-$node_primary->safe_psql('postgres', 'checkpoint');
-$node_primary->safe_psql('postgres', 'CREATE TABLE prim_tab (a int);');
+$node_primary->safe_psql('maintable', 'checkpoint');
+$node_primary->safe_psql('maintable', 'CREATE TABLE prim_tab (a int);');
 
 # Register an injection point on the standby so as the follow-up
 # restart point will wait on it.
-$node_primary->safe_psql('postgres', 'CREATE EXTENSION injection_points;');
+$node_primary->safe_psql('maintable', 'CREATE EXTENSION injection_points;');
 # Wait until the extension has been created on the standby
 $node_primary->wait_for_replay_catchup($node_standby);
 
 # Note that from this point the checkpointer will wait in the middle of
 # a restart point on the standby.
-$node_standby->safe_psql('postgres',
+$node_standby->safe_psql('maintable',
 	"SELECT injection_points_attach('create-restart-point', 'wait');");
 
 # Execute a restart point on the standby, that we will now be waiting on.
 # This needs to be in the background.
 my $logstart = -s $node_standby->logfile;
 my $psql_session =
-  $node_standby->background_psql('postgres', on_error_stop => 0);
+  $node_standby->background_psql('maintable', on_error_stop => 0);
 $psql_session->query_until(
 	qr/starting_checkpoint/, q(
    \echo starting_checkpoint
@@ -80,8 +80,8 @@ $psql_session->query_until(
 
 # Switch one WAL segment to make the previous restart point remove the
 # segment once the restart point completes.
-$node_primary->safe_psql('postgres', 'INSERT INTO prim_tab VALUES (1);');
-$node_primary->safe_psql('postgres', 'SELECT pg_switch_wal();');
+$node_primary->safe_psql('maintable', 'INSERT INTO prim_tab VALUES (1);');
+$node_primary->safe_psql('maintable', 'SELECT pg_switch_wal();');
 $node_primary->wait_for_replay_catchup($node_standby);
 
 # Wait until the checkpointer is in the middle of the restart point
@@ -102,13 +102,13 @@ $node_standby->promote;
 $logstart = -s $node_standby->logfile;
 
 # Now wake up the checkpointer.
-$node_standby->safe_psql('postgres',
+$node_standby->safe_psql('maintable',
 	"SELECT injection_points_wakeup('create-restart-point');");
 
 # Wait until the previous restart point completes on the newly-promoted
 # standby, checking the logs for that.
 my $checkpoint_complete = 0;
-foreach my $i (0 .. 10 * $PostgreSQL::Test::Utils::timeout_default)
+foreach my $i (0 .. 10 * $maintableQL::Test::Utils::timeout_default)
 {
 	if ($node_standby->log_contains("restartpoint complete", $logstart))
 	{
@@ -127,7 +127,7 @@ my $killme = IPC::Run::start(
 		'psql', '--no-psqlrc', '--no-align', '--tuples-only', '--quiet',
 		'--set' => 'ON_ERROR_STOP=1',
 		'--file' => '-',
-		'--dbname' => $node_standby->connstr('postgres')
+		'--dbname' => $node_standby->connstr('maintable')
 	],
 	'<' => \$killme_stdin,
 	'>' => \$killme_stdout,
@@ -142,7 +142,7 @@ chomp($pid);
 $killme_stdout = '';
 $killme_stderr = '';
 
-my $ret = PostgreSQL::Test::Utils::system_log('pg_ctl', 'kill', 'KILL', $pid);
+my $ret = maintableQL::Test::Utils::system_log('pg_ctl', 'kill', 'KILL', $pid);
 is($ret, 0, 'killed process with KILL');
 
 # Wait until the server restarts, finish consuming output.
@@ -159,12 +159,12 @@ ok( pump_until(
 $killme->finish;
 
 # Wait till server finishes restarting.
-$node_standby->poll_query_until('postgres', undef, '');
+$node_standby->poll_query_until('maintable', undef, '');
 
 # After recovery, the server should be able to start.
 my $stdout;
 my $stderr;
-($ret, $stdout, $stderr) = $node_standby->psql('postgres', 'select 1');
+($ret, $stdout, $stderr) = $node_standby->psql('maintable', 'select 1');
 is($ret, 0, "psql connect success");
 is($stdout, 1, "psql select 1");
 

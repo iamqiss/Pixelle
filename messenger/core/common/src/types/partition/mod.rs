@@ -16,8 +16,8 @@
  * under the License.
  */
 
-use crate::utils::byte_size::IggyByteSize;
-use crate::utils::timestamp::IggyTimestamp;
+use crate::utils::byte_size::MessengerByteSize;
+use crate::utils::timestamp::MessengerTimestamp;
 use serde::{Deserialize, Serialize};
 
 /// `Partition` represents the information about a partition.
@@ -33,13 +33,13 @@ pub struct Partition {
     /// Unique identifier of the partition.
     pub id: u32,
     /// The timestamp of the partition creation.
-    pub created_at: IggyTimestamp,
+    pub created_at: MessengerTimestamp,
     /// The number of segments in the partition.
     pub segments_count: u32,
     /// The current offset of the partition.
     pub current_offset: u64,
     /// The size of the partition in bytes.
-    pub size: IggyByteSize,
+    pub size: MessengerByteSize,
     /// The number of messages in the partition.
     pub messages_count: u64,
 }

@@ -1,12 +1,12 @@
 
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 use File::Basename;
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::RecursiveCopy;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::RecursiveCopy;
+use maintableQL::Test::Utils;
 use Test::More;
 
 my ($blocksize, $walfile_name);
@@ -29,10 +29,10 @@ sub get_block_lsn
 	return ($lsn_hi, $lsn_lo);
 }
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init;
 $node->append_conf(
-	'postgresql.conf', q{
+	'maintableql.conf', q{
 wal_level = 'replica'
 max_wal_senders = 4
 });
@@ -40,7 +40,7 @@ $node->start;
 
 # Generate data/WAL to examine that will have full pages in them.
 $node->safe_psql(
-	'postgres',
+	'maintable',
 	"SELECT 'init' FROM pg_create_physical_replication_slot('regress_pg_waldump_slot', true, false);
 CREATE TABLE test_table AS SELECT generate_series(1,100) a;
 -- Force FPWs on the next writes.
@@ -48,12 +48,12 @@ CHECKPOINT;
 UPDATE test_table SET a = a + 1;
 ");
 
-($walfile_name, $blocksize) = split '\|' => $node->safe_psql('postgres',
+($walfile_name, $blocksize) = split '\|' => $node->safe_psql('maintable',
 	"SELECT pg_walfile_name(pg_switch_wal()), current_setting('block_size')");
 
 # Get the relation node, etc for the new table
 my $relation = $node->safe_psql(
-	'postgres',
+	'maintable',
 	q{SELECT format(
         '%s/%s/%s',
         CASE WHEN reltablespace = 0 THEN dattablespace ELSE reltablespace END,
@@ -65,7 +65,7 @@ my $relation = $node->safe_psql(
 );
 
 my $walfile = $node->data_dir . '/pg_wal/' . $walfile_name;
-my $tmp_folder = PostgreSQL::Test::Utils::tempdir;
+my $tmp_folder = maintableQL::Test::Utils::tempdir;
 
 ok(-f $walfile, "Got a WAL file");
 

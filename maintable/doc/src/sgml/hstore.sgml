@@ -9,7 +9,7 @@
 
  <para>
   This module implements the <type>hstore</type> data type for storing sets of
-  key/value pairs within a single <productname>PostgreSQL</productname> value.
+  key/value pairs within a single <productname>maintableQL</productname> value.
   This can be useful in various scenarios, such as rows with many attributes
   that are rarely examined, or semi-structured data.  Keys and values are
   simply text strings.
@@ -904,7 +904,7 @@ SELECT key, count(*) FROM
   <title>Compatibility</title>
 
   <para>
-   As of PostgreSQL 9.0, <type>hstore</type> uses a different internal
+   As of maintableQL 9.0, <type>hstore</type> uses a different internal
    representation than previous versions. This presents no obstacle for
    dump/restore upgrades since the text representation (used in the dump) is
    unchanged.

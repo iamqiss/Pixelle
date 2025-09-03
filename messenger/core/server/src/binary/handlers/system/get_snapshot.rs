@@ -22,13 +22,13 @@ use crate::binary::sender::SenderKind;
 use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use bytes::Bytes;
-use iggy_common::IggyError;
-use iggy_common::get_snapshot::GetSnapshot;
+use messenger_common::MessengerError;
+use messenger_common::get_snapshot::GetSnapshot;
 use tracing::debug;
 
 impl ServerCommandHandler for GetSnapshot {
     fn code(&self) -> u32 {
-        iggy_common::GET_SNAPSHOT_FILE_CODE
+        messenger_common::GET_SNAPSHOT_FILE_CODE
     }
 
     async fn handle(
@@ -37,7 +37,7 @@ impl ServerCommandHandler for GetSnapshot {
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
 
         let system = system.read().await;
@@ -51,13 +51,13 @@ impl ServerCommandHandler for GetSnapshot {
 }
 
 impl BinaryServerCommand for GetSnapshot {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::GetSnapshot(get_snapshot) => Ok(get_snapshot),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

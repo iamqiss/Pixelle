@@ -3,11 +3,11 @@
  * pg_rewrite.h
  *	  definition of the "rewrite rule" system catalog (pg_rewrite)
  *
- * As of Postgres 7.3, the primary key for this table is <ev_class, rulename>
+ * As of Maintable 7.3, the primary key for this table is <ev_class, rulename>
  * --- ie, rule names are only unique among the rules of a given table.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/catalog/pg_rewrite.h

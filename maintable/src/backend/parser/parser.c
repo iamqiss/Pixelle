@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * parser.c
- *		Main entry point/driver for PostgreSQL grammar
+ *		Main entry point/driver for maintableQL grammar
  *
  * Note that the grammar is not allowed to perform any table access
  * (since we need to be able to do basic parsing even while inside an
@@ -10,7 +10,7 @@
  * analyze.c and related files.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -19,7 +19,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "gramparse.h"
 #include "mb/pg_wchar.h"

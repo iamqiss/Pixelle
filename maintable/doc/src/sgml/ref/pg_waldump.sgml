@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pg_waldump.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="pgwaldump">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>pg_waldump</refname>
-  <refpurpose>display a human-readable rendering of the write-ahead log of a <productname>PostgreSQL</productname> database cluster</refpurpose>
+  <refpurpose>display a human-readable rendering of the write-ahead log of a <productname>maintableQL</productname> database cluster</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>

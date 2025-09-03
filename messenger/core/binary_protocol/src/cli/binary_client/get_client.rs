@@ -21,7 +21,7 @@ use crate::cli::cli_command::{CliCommand, PRINT_TARGET};
 use anyhow::Context;
 use async_trait::async_trait;
 use comfy_table::{Table, presets::ASCII_NO_BORDERS};
-use iggy_common::get_client::GetClient;
+use messenger_common::get_client::GetClient;
 use tracing::{Level, event};
 
 pub struct GetClientCmd {

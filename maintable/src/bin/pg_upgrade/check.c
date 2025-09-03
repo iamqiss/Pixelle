@@ -3,11 +3,11 @@
  *
  *	server checks and output routines
  *
- *	Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ *	Copyright (c) 2010-2025, maintableQL Global Development Group
  *	src/bin/pg_upgrade/check.c
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "catalog/pg_authid_d.h"
 #include "catalog/pg_class_d.h"
@@ -79,7 +79,7 @@ typedef struct
  *						end with a newline, and does not need to refer to the
  *						report_filename as that is automatically appended to
  *						the report with the path to the log folder.
- * threshold_version	The major version of PostgreSQL for which to run the
+ * threshold_version	The major version of maintableQL for which to run the
  *						check. Iff the old cluster is less than, or equal to,
  *						the threshold version then the check will be executed.
  *						If the old version is greater than the threshold then
@@ -117,7 +117,7 @@ static DataTypesUsageChecks data_types_usage_checks[] =
 		" WHERE typtype = 'c' AND (t.oid < 16384 OR nspname = 'information_schema')",
 		.report_text =
 		gettext_noop("Your installation contains system-defined composite types in user tables.\n"
-					 "These type OIDs are not stable across PostgreSQL versions,\n"
+					 "These type OIDs are not stable across maintableQL versions,\n"
 					 "so this cluster cannot currently be upgraded.  You can drop the\n"
 					 "problem columns and restart the upgrade.\n"),
 		.threshold_version = ALL_VERSIONS
@@ -198,7 +198,7 @@ static DataTypesUsageChecks data_types_usage_checks[] =
 		"SELECT 'pg_catalog.aclitem'::pg_catalog.regtype AS oid",
 		.report_text =
 		gettext_noop("Your installation contains the \"aclitem\" data type in user tables.\n"
-					 "The internal format of \"aclitem\" changed in PostgreSQL version 16\n"
+					 "The internal format of \"aclitem\" changed in maintableQL version 16\n"
 					 "so this cluster cannot currently be upgraded.  You can drop the\n"
 					 "problem columns and restart the upgrade.\n"),
 		.threshold_version = 1500
@@ -277,7 +277,7 @@ static DataTypesUsageChecks data_types_usage_checks[] =
 		"SELECT 'pg_catalog.abstime'::pg_catalog.regtype AS oid",
 		.report_text =
 		gettext_noop("Your installation contains the \"abstime\" data type in user tables.\n"
-					 "The \"abstime\" type has been removed in PostgreSQL version 12,\n"
+					 "The \"abstime\" type has been removed in maintableQL version 12,\n"
 					 "so this cluster cannot currently be upgraded.  You can drop the\n"
 					 "problem columns, or change them to another data type, and restart\n"
 					 "the upgrade.\n"),
@@ -290,7 +290,7 @@ static DataTypesUsageChecks data_types_usage_checks[] =
 		"SELECT 'pg_catalog.reltime'::pg_catalog.regtype AS oid",
 		.report_text =
 		gettext_noop("Your installation contains the \"reltime\" data type in user tables.\n"
-					 "The \"reltime\" type has been removed in PostgreSQL version 12,\n"
+					 "The \"reltime\" type has been removed in maintableQL version 12,\n"
 					 "so this cluster cannot currently be upgraded.  You can drop the\n"
 					 "problem columns, or change them to another data type, and restart\n"
 					 "the upgrade.\n"),
@@ -303,7 +303,7 @@ static DataTypesUsageChecks data_types_usage_checks[] =
 		"SELECT 'pg_catalog.tinterval'::pg_catalog.regtype AS oid",
 		.report_text =
 		gettext_noop("Your installation contains the \"tinterval\" data type in user tables.\n"
-					 "The \"tinterval\" type has been removed in PostgreSQL version 12,\n"
+					 "The \"tinterval\" type has been removed in maintableQL version 12,\n"
 					 "so this cluster cannot currently be upgraded.  You can drop the\n"
 					 "problem columns, or change them to another data type, and restart\n"
 					 "the upgrade.\n"),
@@ -752,7 +752,7 @@ check_new_cluster(void)
 			 * long-unsupported versions.
 			 */
 			if (GET_MAJOR_VERSION(old_cluster.major_version) < 1000)
-				pg_fatal("Swap mode can only upgrade clusters from PostgreSQL version %s and later.",
+				pg_fatal("Swap mode can only upgrade clusters from maintableQL version %s and later.",
 						 "10");
 
 			break;
@@ -862,12 +862,12 @@ check_cluster_versions(void)
 	 */
 
 	if (GET_MAJOR_VERSION(old_cluster.major_version) < 902)
-		pg_fatal("This utility can only upgrade from PostgreSQL version %s and later.",
+		pg_fatal("This utility can only upgrade from maintableQL version %s and later.",
 				 "9.2");
 
 	/* Only current PG version is supported as a target */
 	if (GET_MAJOR_VERSION(new_cluster.major_version) != GET_MAJOR_VERSION(PG_VERSION_NUM))
-		pg_fatal("This utility can only upgrade to PostgreSQL version %s.",
+		pg_fatal("This utility can only upgrade to maintableQL version %s.",
 				 PG_MAJORVERSION);
 
 	/*
@@ -876,7 +876,7 @@ check_cluster_versions(void)
 	 * older versions.
 	 */
 	if (old_cluster.major_version > new_cluster.major_version)
-		pg_fatal("This utility cannot be used to downgrade to older major PostgreSQL versions.");
+		pg_fatal("This utility cannot be used to downgrade to older major maintableQL versions.");
 
 	/* Ensure binaries match the designated data directories */
 	if (GET_MAJOR_VERSION(old_cluster.major_version) !=
@@ -895,7 +895,7 @@ check_cluster_versions(void)
 	 */
 	if (GET_MAJOR_VERSION(old_cluster.major_version) >= 1800 &&
 		user_opts.char_signedness != -1)
-		pg_fatal("The option %s cannot be used for upgrades from PostgreSQL %s and later.",
+		pg_fatal("The option %s cannot be used for upgrades from maintableQL %s and later.",
 				 "--set-char-signedness", "18");
 
 	check_ok();
@@ -1852,7 +1852,7 @@ check_for_user_defined_encoding_conversions(ClusterInfo *cluster)
 		fclose(report.file);
 		pg_log(PG_REPORT, "fatal");
 		pg_fatal("Your installation contains user-defined encoding conversions.\n"
-				 "The conversion function parameters changed in PostgreSQL version 14\n"
+				 "The conversion function parameters changed in maintableQL version 14\n"
 				 "so this cluster cannot currently be upgraded.  You can remove the\n"
 				 "encoding conversions in the old cluster and restart the upgrade.\n"
 				 "A list of user-defined encoding conversions is in the file:\n"
@@ -1893,7 +1893,7 @@ process_unicode_update(DbInfo *dbinfo, PGresult *res, void *arg)
 }
 
 /*
- * Check if the Unicode version built into Postgres changed between the old
+ * Check if the Unicode version built into Maintable changed between the old
  * cluster and the new cluster.
  */
 static bool

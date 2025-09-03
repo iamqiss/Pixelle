@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use iggy_common::{IggyByteSize, IggyDuration};
+use messenger_common::{MessengerByteSize, MessengerDuration};
 use serde::{Deserialize, Serialize};
 use serde_with::DisplayFromStr;
 use serde_with::serde_as;
@@ -42,10 +42,10 @@ pub struct TcpTlsConfig {
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct TcpSocketConfig {
     pub override_defaults: bool,
-    pub recv_buffer_size: IggyByteSize,
-    pub send_buffer_size: IggyByteSize,
+    pub recv_buffer_size: MessengerByteSize,
+    pub send_buffer_size: MessengerByteSize,
     pub keepalive: bool,
     pub nodelay: bool,
     #[serde_as(as = "DisplayFromStr")]
-    pub linger: IggyDuration,
+    pub linger: MessengerDuration,
 }

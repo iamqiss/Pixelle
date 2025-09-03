@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/checkpoint.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-checkpoint">
@@ -127,7 +127,7 @@ CHECKPOINT [ ( option [, ...] ) ]
 
   <para>
    The <command>CHECKPOINT</command> command is a
-   <productname>PostgreSQL</productname> language extension.
+   <productname>maintableQL</productname> language extension.
   </para>
  </refsect1>
 </refentry>

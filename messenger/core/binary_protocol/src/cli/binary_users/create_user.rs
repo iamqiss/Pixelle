@@ -20,9 +20,9 @@ use crate::Client;
 use crate::cli::cli_command::{CliCommand, PRINT_TARGET};
 use anyhow::Context;
 use async_trait::async_trait;
-use iggy_common::Permissions;
-use iggy_common::UserStatus;
-use iggy_common::create_user::CreateUser;
+use messenger_common::Permissions;
+use messenger_common::UserStatus;
+use messenger_common::create_user::CreateUser;
 use tracing::{Level, event};
 
 pub struct CreateUserCmd {

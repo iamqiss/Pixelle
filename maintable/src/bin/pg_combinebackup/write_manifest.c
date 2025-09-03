@@ -2,7 +2,7 @@
  *
  * Write a new backup manifest.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/bin/pg_combinebackup/write_manifest.c
@@ -10,7 +10,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <fcntl.h>
 #include <time.h>
@@ -57,7 +57,7 @@ create_manifest_writer(char *directory, uint64 system_identifier)
 	pg_checksum_init(&mwriter->manifest_ctx, CHECKSUM_TYPE_SHA256);
 
 	appendStringInfo(&mwriter->buf,
-					 "{ \"PostgreSQL-Backup-Manifest-Version\": 2,\n"
+					 "{ \"maintableQL-Backup-Manifest-Version\": 2,\n"
 					 "\"System-Identifier\": " UINT64_FORMAT ",\n"
 					 "\"Files\": [",
 					 system_identifier);

@@ -48,7 +48,7 @@ const opt: ClientConfig = {
     // allowHalfOpen: true,
     // keepAlive: true
   },
-  credentials: { username: 'iggy', password: 'iggy' },
+  credentials: { username: 'messenger', password: 'messenger' },
   reconnect: {
     enabled: true,
     interval: 10 * 1000,

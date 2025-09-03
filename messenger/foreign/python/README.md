@@ -1,15 +1,15 @@
-# apache-iggy
+# apache-messenger
 
 [![discord-badge](https://img.shields.io/discord/1144142576266530928)](https://discord.gg/C5Sux5NcRa)
 
-Apache Iggy is the persistent message streaming platform written in Rust, supporting QUIC, TCP and HTTP transport protocols, capable of processing millions of messages per second.
+Apache Messenger is the persistent message streaming platform written in Rust, supporting QUIC, TCP and HTTP transport protocols, capable of processing millions of messages per second.
 
 ## Installation
 
 ### Basic Installation
 
 ```bash
-pip install apache-iggy
+pip install apache-messenger
 ```
 
 ### Development Installation
@@ -32,14 +32,14 @@ pip install -e ".[dev,testing,examples]"
 
 ## Usage and Examples
 
-All examples rely on a running iggy server. To start the server, execute:
+All examples rely on a running messenger server. To start the server, execute:
 
 ```bash
 # Using latest version
-docker run --rm -p 8080:8080 -p 3000:3000 -p 8090:8090 apache/iggy:latest
+docker run --rm -p 8080:8080 -p 3000:3000 -p 8090:8090 apache/messenger:latest
 
 # Or build from source (recommended for development)
-cd ../../ && cargo run --bin iggy-server
+cd ../../ && cargo run --bin messenger-server
 ```
 
 ## Testing
@@ -58,18 +58,18 @@ docker compose -f docker-compose.test.yml up --build
 pip install -e ".[testing]"
 maturin develop
 
-# Run tests (requires iggy-server running)
+# Run tests (requires messenger-server running)
 pytest tests/ -v
 ```
 
 ## Examples
 
-Refer to the [python_examples/](https://github.com/apache/iggy/tree/master/foreign/python/python_examples) directory for usage examples.
+Refer to the [python_examples/](https://github.com/apache/messenger/tree/master/foreign/python/python_examples) directory for usage examples.
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/apache/iggy/blob/master/foreign/python/CONTRIBUTING.md) for development setup and guidelines.
+See [CONTRIBUTING.md](https://github.com/apache/messenger/blob/master/foreign/python/CONTRIBUTING.md) for development setup and guidelines.
 
 ## License
 
-Licensed under the Apache License 2.0. See [LICENSE](https://github.com/apache/iggy/blob/master/foreign/python/LICENSE) for details.
+Licensed under the Apache License 2.0. See [LICENSE](https://github.com/apache/messenger/blob/master/foreign/python/LICENSE) for details.

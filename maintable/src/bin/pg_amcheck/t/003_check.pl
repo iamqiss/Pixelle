@@ -1,11 +1,11 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 
 use Test::More;
 
@@ -119,16 +119,16 @@ sub perform_all_corruptions()
 }
 
 # Test set-up
-$node = PostgreSQL::Test::Cluster->new('test');
+$node = maintableQL::Test::Cluster->new('test');
 $node->init(no_data_checksums => 1);
-$node->append_conf('postgresql.conf', 'autovacuum=off');
+$node->append_conf('maintableql.conf', 'autovacuum=off');
 $node->start;
 $port = $node->port;
 
 for my $dbname (qw(db1 db2 db3))
 {
 	# Create the database
-	$node->safe_psql('postgres', qq(CREATE DATABASE $dbname));
+	$node->safe_psql('maintable', qq(CREATE DATABASE $dbname));
 
 	# Load the amcheck extension, upon which pg_amcheck depends.  Put the
 	# extension in an unexpected location to test that pg_amcheck finds it
@@ -318,7 +318,7 @@ plan_to_remove_relation_file('db2', 's1.t1_btree');
 # Leave 'db3' uncorrupted
 #
 
-# Standard first arguments to PostgreSQL::Test::Utils functions
+# Standard first arguments to maintableQL::Test::Utils functions
 my @cmd = ('pg_amcheck', '--port' => $port);
 
 # Regular expressions to match various expected output
@@ -394,7 +394,7 @@ $node->command_checks_all(
 	2,
 	[$index_missing_relation_fork_re],
 	[
-		qr/pg_amcheck: warning: skipping database "postgres": amcheck is not installed/
+		qr/pg_amcheck: warning: skipping database "maintable": amcheck is not installed/
 	],
 	'pg_amcheck index s1.t1_btree reports missing main relation fork');
 

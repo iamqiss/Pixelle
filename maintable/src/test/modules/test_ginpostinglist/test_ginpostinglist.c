@@ -3,14 +3,14 @@
  * test_ginpostinglist.c
  *		Test varbyte-encoding in ginpostinglist.c
  *
- * Copyright (c) 2019-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2019-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/test/modules/test_ginpostinglist/test_ginpostinglist.c
  *
  * -------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/gin_private.h"
 #include "access/ginblock.h"

@@ -26,7 +26,7 @@ namespace net {
 namespace address {
 
 /***
- * @brief Logical address used in configuration and API to specify desired transport in a compact way, e.g. iggy:quic://localhost:8080.
+ * @brief Logical address used in configuration and API to specify desired transport in a compact way, e.g. messenger:quic://localhost:8080.
  */
 class LogicalAddress {
 private:

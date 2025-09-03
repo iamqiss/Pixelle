@@ -22,17 +22,17 @@ pub fn footer() -> Html {
     html! {
         <footer class="footer">
             <div class="footer-content">
-                <a href="https://iggy.apache.org" target="_blank" rel="noopener noreferrer">
-                    {"iggy.apache.org"}
+                <a href="https://messenger.apache.org" target="_blank" rel="noopener noreferrer">
+                    {"messenger.apache.org"}
                 </a>
                 <span class="separator">{"|"}</span>
-                <a href="https://github.com/apache/iggy" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/apache/messenger" target="_blank" rel="noopener noreferrer">
                     {"GitHub"}
                 </a>
                 <span class="separator">{"|"}</span>
                 {"v"}{env!("CARGO_PKG_VERSION")}
                 <span class="separator">{"|"}</span>
-                {" 2025 Apache Iggy (Incubating). Built with ❤️ for the message streaming community."}
+                {" 2025 Apache Messenger (Incubating). Built with ❤️ for the message streaming community."}
             </div>
         </footer>
     }

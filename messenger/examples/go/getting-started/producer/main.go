@@ -20,14 +20,14 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/apache/iggy/examples/go/common"
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
+	"github.com/apache/messenger/examples/go/common"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
 	"log"
 	"net"
 	"time"
 
-	"github.com/apache/iggy/foreign/go/iggycli"
-	"github.com/apache/iggy/foreign/go/tcp"
+	"github.com/apache/messenger/foreign/go/messengercli"
+	"github.com/apache/messenger/foreign/go/tcp"
 )
 
 var (
@@ -38,8 +38,8 @@ var (
 )
 
 func main() {
-	client, err := iggycli.NewIggyClient(
-		iggycli.WithTcp(
+	client, err := messengercli.NewMessengerClient(
+		messengercli.WithTcp(
 			tcp.WithServerAddress(getTcpServerAddr()),
 		),
 	)
@@ -56,7 +56,7 @@ func main() {
 	}
 }
 
-func initSystem(client iggycli.Client) {
+func initSystem(client messengercli.Client) {
 	if _, err := client.CreateStream("sample-stream", &StreamId); err != nil {
 		log.Printf("WARN: Stream already exists or error: %v", err)
 	}
@@ -68,7 +68,7 @@ func initSystem(client iggycli.Client) {
 		"sample-topic",
 		1,
 		iggcon.CompressionAlgorithmNone,
-		iggcon.IggyExpiryNeverExpire,
+		iggcon.MessengerExpiryNeverExpire,
 		0,
 		nil,
 		&TopicId); err != nil {
@@ -77,7 +77,7 @@ func initSystem(client iggycli.Client) {
 	log.Println("Topic was created.")
 }
 
-func produceMessages(client iggycli.Client) error {
+func produceMessages(client messengercli.Client) error {
 	interval := 500 * time.Millisecond
 	log.Printf(
 		"Messages will be sent to stream: %d, topic: %d, partition: %d with interval %s.",
@@ -98,11 +98,11 @@ func produceMessages(client iggycli.Client) error {
 		}
 		<-ticker.C
 
-		var messages = make([]iggcon.IggyMessage, 0, messagesPerBatch)
+		var messages = make([]iggcon.MessengerMessage, 0, messagesPerBatch)
 		for i := 0; i < messagesPerBatch; i++ {
 			currentID++
 			payload := fmt.Sprintf("message-%d", currentID)
-			message, _ := iggcon.NewIggyMessage([]byte(payload))
+			message, _ := iggcon.NewMessengerMessage([]byte(payload))
 			messages = append(messages, message)
 		}
 

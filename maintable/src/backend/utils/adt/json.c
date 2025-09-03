@@ -3,7 +3,7 @@
  * json.c
  *		JSON data type support.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -11,7 +11,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_proc.h"
 #include "catalog/pg_type.h"
@@ -326,7 +326,7 @@ JsonEncodeDateTime(char *buf, Datum value, Oid typid, const int *tzp)
 					EncodeSpecialDate(date, buf);
 				else
 				{
-					j2date(date + POSTGRES_EPOCH_JDATE,
+					j2date(date + MAINTABLE_EPOCH_JDATE,
 						   &(tm.tm_year), &(tm.tm_mon), &(tm.tm_mday));
 					EncodeDateOnly(&tm, USE_XSD_DATES, buf);
 				}

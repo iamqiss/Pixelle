@@ -24,13 +24,13 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::store_consumer_offset::StoreConsumerOffset;
+use messenger_common::MessengerError;
+use messenger_common::store_consumer_offset::StoreConsumerOffset;
 use tracing::debug;
 
 impl ServerCommandHandler for StoreConsumerOffset {
     fn code(&self) -> u32 {
-        iggy_common::STORE_CONSUMER_OFFSET_CODE
+        messenger_common::STORE_CONSUMER_OFFSET_CODE
     }
 
     async fn handle(
@@ -39,7 +39,7 @@ impl ServerCommandHandler for StoreConsumerOffset {
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
         let system = system.read().await;
         system
@@ -61,13 +61,13 @@ impl ServerCommandHandler for StoreConsumerOffset {
 }
 
 impl BinaryServerCommand for StoreConsumerOffset {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::StoreConsumerOffset(store_consumer_offset) => Ok(store_consumer_offset),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

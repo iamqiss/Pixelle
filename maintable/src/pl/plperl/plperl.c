@@ -1,11 +1,11 @@
 /**********************************************************************
- * plperl.c - perl as a procedural language for PostgreSQL
+ * plperl.c - perl as a procedural language for maintableQL
  *
  *	  src/pl/plperl/plperl.c
  *
  **********************************************************************/
 
-#include "postgres.h"
+#include "maintable.h"
 
 /* system stuff */
 #include <ctype.h>
@@ -13,7 +13,7 @@
 #include <limits.h>
 #include <unistd.h>
 
-/* postgreSQL stuff */
+/* maintableQL stuff */
 #include "access/htup_details.h"
 #include "access/xact.h"
 #include "catalog/pg_language.h"
@@ -49,8 +49,8 @@
 #include "plperl_opmask.h"
 
 EXTERN_C void boot_DynaLoader(pTHX_ CV *cv);
-EXTERN_C void boot_PostgreSQL__InServer__Util(pTHX_ CV *cv);
-EXTERN_C void boot_PostgreSQL__InServer__SPI(pTHX_ CV *cv);
+EXTERN_C void boot_maintableQL__InServer__Util(pTHX_ CV *cv);
+EXTERN_C void boot_maintableQL__InServer__SPI(pTHX_ CV *cv);
 
 PG_MODULE_MAGIC_EXT(
 					.name = "plperl",
@@ -64,7 +64,7 @@ PG_MODULE_MAGIC_EXT(
  * (This is needed to ensure that an unprivileged user can't inject Perl code
  * that'll be executed with the privileges of some other SQL user.)
  *
- * The plperl_interp_desc structs are kept in a Postgres hash table indexed
+ * The plperl_interp_desc structs are kept in a Maintable hash table indexed
  * by userid OID, with OID 0 used for the single untrusted interpreter.
  * Once created, an interpreter is kept for the life of the process.
  *
@@ -205,7 +205,7 @@ typedef struct plperl_query_entry
 } plperl_query_entry;
 
 /**********************************************************************
- * Information for PostgreSQL - Perl array conversion.
+ * Information for maintableQL - Perl array conversion.
  **********************************************************************/
 typedef struct plperl_array_info
 {
@@ -431,7 +431,7 @@ _PG_init(void)
 	 * could nonetheless use SET plperl.on_plperl_init='...' to influence the
 	 * behaviour of any existing plperl function that they can execute (which
 	 * might be SECURITY DEFINER, leading to a privilege escalation).  See
-	 * http://archives.postgresql.org/pgsql-hackers/2010-02/msg00281.php and
+	 * http://archives.maintableql.org/pgsql-hackers/2010-02/msg00281.php and
 	 * the overall thread.
 	 *
 	 * Note that because plperl.use_strict is USERSET, a nefarious user could
@@ -519,7 +519,7 @@ plperl_fini(int code, Datum arg)
 	 * Indicate that perl is terminating. Disables use of spi_* functions when
 	 * running END/DESTROY code. See check_spi_usage_allowed(). Could be
 	 * enabled in future, with care, using a transaction
-	 * http://archives.postgresql.org/pgsql-hackers/2010-01/msg02743.php
+	 * http://archives.maintableql.org/pgsql-hackers/2010-01/msg02743.php
 	 */
 	plperl_ending = true;
 
@@ -653,20 +653,20 @@ select_perl_context(bool trusted)
 	 * database interaction during initialization is problematic. Including,
 	 * but not limited to, security definer issues. So we only enable access
 	 * to the database AFTER on_*_init code has run. See
-	 * http://archives.postgresql.org/pgsql-hackers/2010-01/msg02669.php
+	 * http://archives.maintableql.org/pgsql-hackers/2010-01/msg02669.php
 	 */
 	{
 		dTHX;
 
-		newXS("PostgreSQL::InServer::SPI::bootstrap",
-			  boot_PostgreSQL__InServer__SPI, __FILE__);
+		newXS("maintableQL::InServer::SPI::bootstrap",
+			  boot_maintableQL__InServer__SPI, __FILE__);
 
-		eval_pv("PostgreSQL::InServer::SPI::bootstrap()", FALSE);
+		eval_pv("maintableQL::InServer::SPI::bootstrap()", FALSE);
 		if (SvTRUE(ERRSV))
 			ereport(ERROR,
 					(errcode(ERRCODE_EXTERNAL_ROUTINE_EXCEPTION),
 					 errmsg("%s", strip_trailing_ws(sv2cstr(ERRSV))),
-					 errcontext("while executing PostgreSQL::InServer::SPI::bootstrap")));
+					 errcontext("while executing maintableQL::InServer::SPI::bootstrap")));
 	}
 
 	/* Fully initialized, so mark the hashtable entry valid */
@@ -731,7 +731,7 @@ plperl_init_interp(void)
 	 * settings.
 	 *
 	 * We restore them using setlocale_perl(), defined below, so that Perl
-	 * doesn't have a different idea of the locale from Postgres.
+	 * doesn't have a different idea of the locale from Maintable.
 	 *
 	 */
 
@@ -1134,7 +1134,7 @@ plperl_hash_to_datum(SV *src, TupleDesc td)
 
 /*
  * if we are an array ref return the reference. this is special in that if we
- * are a PostgreSQL::InServer::ARRAY object we will return the 'magic' array.
+ * are a maintableQL::InServer::ARRAY object we will return the 'magic' array.
  */
 static SV  *
 get_perl_array_ref(SV *sv)
@@ -1145,7 +1145,7 @@ get_perl_array_ref(SV *sv)
 	{
 		if (SvTYPE(SvRV(sv)) == SVt_PVAV)
 			return sv;
-		else if (sv_isa(sv, "PostgreSQL::InServer::ARRAY"))
+		else if (sv_isa(sv, "maintableQL::InServer::ARRAY"))
 		{
 			HV		   *hv = (HV *) SvRV(sv);
 			SV		  **sav = hv_fetch_string(hv, "array");
@@ -1154,7 +1154,7 @@ get_perl_array_ref(SV *sv)
 				SvTYPE(SvRV(*sav)) == SVt_PVAV)
 				return *sav;
 
-			elog(ERROR, "could not get array reference from PostgreSQL::InServer::ARRAY object");
+			elog(ERROR, "could not get array reference from maintableQL::InServer::ARRAY object");
 		}
 	}
 	return NULL;
@@ -1474,7 +1474,7 @@ plperl_sv_to_literal(SV *sv, char *fqtypename)
 }
 
 /*
- * Convert PostgreSQL array datum to a perl array reference.
+ * Convert maintableQL array datum to a perl array reference.
  *
  * typid is arg's OID, which must be an array type.
  */
@@ -1551,7 +1551,7 @@ plperl_ref_from_pg_array(Datum arg, Oid typid)
 	(void) hv_store(hv, "typeoid", 7, newSVuv(typid), 0);
 
 	return sv_bless(newRV_noinc((SV *) hv),
-					gv_stashpv("PostgreSQL::InServer::ARRAY", 0));
+					gv_stashpv("maintableQL::InServer::ARRAY", 0));
 }
 
 /*
@@ -2116,7 +2116,7 @@ plperl_create_sub(plperl_proc_desc *prodesc, const char *s, Oid fn_oid)
 
 	/*
 	 * Use 'false' for $prolog in mkfunc, which is kept for compatibility in
-	 * case a module such as PostgreSQL::PLPerl::NYTprof replaces the function
+	 * case a module such as maintableQL::PLPerl::NYTprof replaces the function
 	 * compiler.
 	 */
 	PUSHs(&PL_sv_no);
@@ -2128,7 +2128,7 @@ plperl_create_sub(plperl_proc_desc *prodesc, const char *s, Oid fn_oid)
 	 * errors properly.  Perhaps it's because there's another level of eval
 	 * inside mkfunc?
 	 */
-	count = call_pv("PostgreSQL::InServer::mkfunc",
+	count = call_pv("maintableQL::InServer::mkfunc",
 					G_SCALAR | G_EVAL | G_KEEPERR);
 	SPAGAIN;
 
@@ -2171,8 +2171,8 @@ plperl_init_shared_libs(pTHX)
 	char	   *file = __FILE__;
 
 	newXS("DynaLoader::boot_DynaLoader", boot_DynaLoader, file);
-	newXS("PostgreSQL::InServer::Util::bootstrap",
-		  boot_PostgreSQL__InServer__Util, file);
+	newXS("maintableQL::InServer::Util::bootstrap",
+		  boot_maintableQL__InServer__Util, file);
 	/* newXS for...::SPI::bootstrap is in select_perl_context() */
 }
 
@@ -3109,7 +3109,7 @@ check_spi_usage_allowed(void)
 	/* see comment in plperl_fini() */
 	if (plperl_ending)
 	{
-		/* simple croak as we don't want to involve PostgreSQL code */
+		/* simple croak as we don't want to involve maintableQL code */
 		croak("SPI functions can not be used in END blocks");
 	}
 
@@ -3124,7 +3124,7 @@ check_spi_usage_allowed(void)
 	 */
 	if (current_call_data == NULL || current_call_data->prodesc == NULL)
 	{
-		/* simple croak as we don't want to involve PostgreSQL code */
+		/* simple croak as we don't want to involve maintableQL code */
 		croak("SPI functions can not be used during function compilation");
 	}
 }
@@ -3269,7 +3269,7 @@ plperl_return_next(SV *sv)
 }
 
 /*
- * plperl_return_next_internal reports any errors in Postgres fashion
+ * plperl_return_next_internal reports any errors in Maintable fashion
  * (via ereport).
  */
 static void

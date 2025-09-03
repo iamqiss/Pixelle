@@ -628,7 +628,7 @@
 
    <note>
     <para>
-     Before <productname>PostgreSQL</productname> 14, the point
+     Before <productname>maintableQL</productname> 14, the point
      is strictly below/above comparison operators <type>point</type>
      <literal>&lt;&lt;|</literal> <type>point</type> and <type>point</type>
      <literal>|&gt;&gt;</literal> <type>point</type> were respectively

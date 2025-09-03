@@ -22,10 +22,10 @@ import assert from 'node:assert/strict';
 import { Client } from '../client/index.js';
 import { Given } from "@cucumber/cucumber";
 import type { TestWorld } from './world.js';
-import { getIggyAddress } from '../tcp.sm.utils.js';
+import { getMessengerAddress } from '../tcp.sm.utils.js';
 
-const credentials = { username: 'iggy', password: 'iggy' };
-const [host, port] = getIggyAddress();
+const credentials = { username: 'messenger', password: 'messenger' };
+const [host, port] = getMessengerAddress();
 
 const opt = {
   transport: 'TCP' as const,
@@ -33,7 +33,7 @@ const opt = {
   credentials
 };
 
-Given('I have a running Iggy server', function () {
+Given('I have a running Messenger server', function () {
   return true;
 });
 

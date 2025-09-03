@@ -1,15 +1,15 @@
-# translation of postgres-tr.po to Turkish
+# translation of maintable-tr.po to Turkish
 # Nicolai Tufar <ntufar@gmail.com>, 2002-2006.
 # Devrim GUNDUZ <devrim@CommandPrompt.com>, 2003, 2004, 2005, 2006.
 # Abdullah GÜLNER <agulner@gmail.com> 2017, 2018, 2019.
 msgid ""
 msgstr ""
-"Project-Id-Version: postgres-tr\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintable-tr\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2019-12-16 12:12+0000\n"
 "PO-Revision-Date: 2020-02-10 13:12+0100\n"
 "Last-Translator: Abdullah Gülner <>\n"
-"Language-Team: Turkish <ceviri@postgresql.org.tr>\n"
+"Language-Team: Turkish <ceviri@maintableql.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,12 +58,12 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "olası bayt sıralama uyumsuzluğu\n"
 "pg_control dosyasını saklamak için kullanılan bayt sıralaması, bu program\n"
 "tarafından kullanılan sıralama ile uyuşmayabilir. Bu durumda aşağıdaki\n"
-"sonuçlar yanlış olur ve PostgreSQL kurulumu bu veri dizini ile uyumlu olmaz."
+"sonuçlar yanlış olur ve maintableQL kurulumu bu veri dizini ile uyumlu olmaz."
 
 #: ../common/controldata_utils.c:197 ../common/controldata_utils.c:203 ../common/file_utils.c:226 ../common/file_utils.c:285 ../common/file_utils.c:359 access/heap/rewriteheap.c:1294 access/transam/timeline.c:111 access/transam/timeline.c:236 access/transam/timeline.c:333 access/transam/twophase.c:1249 access/transam/xlog.c:3229 access/transam/xlog.c:3369 access/transam/xlog.c:3410
 #: access/transam/xlog.c:3608 access/transam/xlog.c:3693 access/transam/xlog.c:3771 access/transam/xlog.c:4592 access/transam/xlogutils.c:708 postmaster/syslogger.c:1489 replication/basebackup.c:529 replication/basebackup.c:1408 replication/logical/origin.c:708 replication/logical/reorderbuffer.c:2308 replication/logical/reorderbuffer.c:2575 replication/logical/reorderbuffer.c:3292
@@ -471,7 +471,7 @@ msgstr "indeks kolonlarının sayısı (%d),  (%d) sınırını aşıyor"
 msgid "index row requires %zu bytes, maximum size is %zu"
 msgstr "index satırının%zu byte'a gereksinmesi var, ancak en büyük byte büyüklüğü: %zu"
 
-#: access/common/printtup.c:369 tcop/fastpath.c:180 tcop/fastpath.c:530 tcop/postgres.c:1834
+#: access/common/printtup.c:369 tcop/fastpath.c:180 tcop/fastpath.c:530 tcop/maintable.c:1834
 #, c-format
 msgid "unsupported format code: %d"
 msgstr "desteklenmeyen biçim kodu: %d"
@@ -618,8 +618,8 @@ msgstr "\"%s\" indeksi geçersiz olarak işaretlenmiş bir iç tuple içeriyor"
 
 #: access/gist/gist.c:751 access/gist/gistvacuum.c:436
 #, c-format
-msgid "This is caused by an incomplete page split at crash recovery before upgrading to PostgreSQL 9.1."
-msgstr "Bunun sebebi PostgreSQL 9.1'e terfiden önce yaşanmış bir çökme sonrası kurtarma sırasındaki tamamlanmamış bir page split'dir."
+msgid "This is caused by an incomplete page split at crash recovery before upgrading to maintableQL 9.1."
+msgstr "Bunun sebebi maintableQL 9.1'e terfiden önce yaşanmış bir çökme sonrası kurtarma sırasındaki tamamlanmamış bir page split'dir."
 
 #: access/gist/gist.c:752 access/gist/gistutil.c:787 access/gist/gistutil.c:798 access/gist/gistvacuum.c:437 access/hash/hashutil.c:241 access/hash/hashutil.c:252 access/hash/hashutil.c:264 access/hash/hashutil.c:285 access/nbtree/nbtpage.c:708 access/nbtree/nbtpage.c:719
 #, c-format
@@ -2533,7 +2533,7 @@ msgstr "\"%s\" log dosyası arşivden geri yüklendi"
 msgid "could not restore file \"%s\" from archive: %s"
 msgstr "\"%s\" dosyası arşivden geri yüklenemiyor: %s"
 
-#. translator: First %s represents a postgresql.conf parameter name like
+#. translator: First %s represents a maintableql.conf parameter name like
 #. "recovery_end_command", the 2nd is the value of that parameter, the
 #. third an already translated error message.
 #: access/transam/xlogarchive.c:413
@@ -2783,12 +2783,12 @@ msgstr "log segmenti %s, offset %u, uzunluk %lu okuma hatası: %m"
 msgid "-X requires a power of two value between 1 MB and 1 GB"
 msgstr "-X 1MB ve 1GB arasında 2 nin üsü bir değer gerektirmektedir"
 
-#: bootstrap/bootstrap.c:288 postmaster/postmaster.c:821 tcop/postgres.c:3635
+#: bootstrap/bootstrap.c:288 postmaster/postmaster.c:821 tcop/maintable.c:3635
 #, c-format
 msgid "--%s requires a value"
 msgstr "--%s bir değer gerektirir"
 
-#: bootstrap/bootstrap.c:293 postmaster/postmaster.c:826 tcop/postgres.c:3640
+#: bootstrap/bootstrap.c:293 postmaster/postmaster.c:826 tcop/maintable.c:3640
 #, c-format
 msgid "-c %s requires a value"
 msgstr "-c %s bir değer gerektirir"
@@ -5432,7 +5432,7 @@ msgstr "stdout akımına COPY işlemi sırasında bağlantı kesildi"
 msgid "could not read from COPY file: %m"
 msgstr "COPY dosyasından okuma hatası: %m"
 
-#: commands/copy.c:641 commands/copy.c:662 commands/copy.c:666 tcop/postgres.c:348 tcop/postgres.c:384 tcop/postgres.c:411
+#: commands/copy.c:641 commands/copy.c:662 commands/copy.c:666 tcop/maintable.c:348 tcop/maintable.c:384 tcop/maintable.c:411
 #, c-format
 msgid "unexpected EOF on client connection with an open transaction"
 msgstr "açık işlemi (transaction) olan istemci bağlantısında beklenmeyen EOF"
@@ -5704,8 +5704,8 @@ msgstr "\"%s\" dosyası, yazmak için açılamadı: %m"
 
 #: commands/copy.c:1937
 #, c-format
-msgid "COPY TO instructs the PostgreSQL server process to write a file. You may want a client-side facility such as psql's \\copy."
-msgstr "COPY TO PostgreSQL sunucu sürecine bir dosyaya yazma talimatı veriyor. psql'in \\copy 'si gibi bir istemci-tarafı aracını kullanmayı düşünebilirsiniz."
+msgid "COPY TO instructs the maintableQL server process to write a file. You may want a client-side facility such as psql's \\copy."
+msgstr "COPY TO maintableQL sunucu sürecine bir dosyaya yazma talimatı veriyor. psql'in \\copy 'si gibi bir istemci-tarafı aracını kullanmayı düşünebilirsiniz."
 
 #: commands/copy.c:1950 commands/copy.c:3565
 #, c-format
@@ -5779,8 +5779,8 @@ msgstr "tablo oluşturulmadığı ya da geçerli alt-işlemde (subtransaction) b
 
 #: commands/copy.c:3552
 #, c-format
-msgid "COPY FROM instructs the PostgreSQL server process to read a file. You may want a client-side facility such as psql's \\copy."
-msgstr "COPY FROM PostgreSQL sunucu sürecine bir dosyayı okuma talimatı veriyor. psql'in \\copy 'si gibi bir istemci-tarafı aracını kullanmayı düşünebilirsiniz."
+msgid "COPY FROM instructs the maintableQL server process to read a file. You may want a client-side facility such as psql's \\copy."
+msgstr "COPY FROM maintableQL sunucu sürecine bir dosyayı okuma talimatı veriyor. psql'in \\copy 'si gibi bir istemci-tarafı aracını kullanmayı düşünebilirsiniz."
 
 #: commands/copy.c:3580
 #, c-format
@@ -7708,7 +7708,7 @@ msgstr "\"%s\" imleci mevcut değil"
 msgid "invalid statement name: must not be empty"
 msgstr "geçersiz deyim adı: boş olmamalıdır"
 
-#: commands/prepare.c:141 parser/parse_param.c:304 tcop/postgres.c:1468
+#: commands/prepare.c:141 parser/parse_param.c:304 tcop/maintable.c:1468
 #, c-format
 msgid "could not determine data type of parameter $%d"
 msgstr "$%d parametrenin veri tipini belirlenemiyor"
@@ -10559,8 +10559,8 @@ msgstr "\"%s\" zaman dilimi artış saniyeleri kullanmaktadır"
 
 #: commands/variable.c:345 commands/variable.c:427
 #, c-format
-msgid "PostgreSQL does not support leap seconds."
-msgstr "PostgreSQL, artış saniyeleri desteklememektedir."
+msgid "maintableQL does not support leap seconds."
+msgstr "maintableQL, artış saniyeleri desteklememektedir."
 
 #: commands/variable.c:354
 #, c-format
@@ -13078,8 +13078,8 @@ msgstr "hostssl kaydı eşleşemiyor çünkü SSL devre dışı bırakılmış"
 
 #: libpq/hba.c:1012
 #, c-format
-msgid "Set ssl = on in postgresql.conf."
-msgstr "postgresql.conf dosyasında ssl = on olarak ayarlayınız."
+msgid "Set ssl = on in maintableql.conf."
+msgstr "maintableql.conf dosyasında ssl = on olarak ayarlayınız."
 
 #: libpq/hba.c:1020
 #, c-format
@@ -13492,7 +13492,7 @@ msgstr "istemci bağlantısı bulunmuyor"
 msgid "could not receive data from client: %m"
 msgstr "istemciden veri alınamamıştır: %m"
 
-#: libpq/pqcomm.c:1220 tcop/postgres.c:4074
+#: libpq/pqcomm.c:1220 tcop/maintable.c:4074
 #, c-format
 msgid "terminating connection because protocol synchronization was lost"
 msgstr "protokol senkronizasyonu kaybolduğundan bağlantı sonlandırılıyor"
@@ -13545,10 +13545,10 @@ msgstr "%s: WSAStartup başarısız: %d\n"
 #: main/main.c:328
 #, c-format
 msgid ""
-"%s is the PostgreSQL server.\n"
+"%s is the maintableQL server.\n"
 "\n"
 msgstr ""
-"%s bir PostgreSQL suncusudur.\n"
+"%s bir maintableQL suncusudur.\n"
 "\n"
 
 #: main/main.c:329
@@ -13782,27 +13782,27 @@ msgid ""
 "configuration settings and how to set them on the command line or in\n"
 "the configuration file.\n"
 "\n"
-"Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 msgstr ""
 "\n"
 "Çalışma-zamanı yapılandırma ayarlarının tam listesi ve onların komut \n"
 "satırı ve yapılandırma dosyasında nasıl belirleneceğini öğrenmek için \n"
 "lütfen dokümanlara başvurun.\n"
 "\n"
-"Hataları <pgsql-bugs@lists.postgresql.org> adresine iletin.\n"
+"Hataları <pgsql-bugs@lists.maintableql.org> adresine iletin.\n"
 
 #: main/main.c:391
 #, c-format
 msgid ""
-"\"root\" execution of the PostgreSQL server is not permitted.\n"
+"\"root\" execution of the maintableQL server is not permitted.\n"
 "The server must be started under an unprivileged user ID to prevent\n"
 "possible system security compromise.  See the documentation for\n"
 "more information on how to properly start the server.\n"
 msgstr ""
-"PostgreSQL'in, \"root\" kullanıcı olarak çalıştırılmasını tavsiye edilmememktedir.\n"
+"maintableQL'in, \"root\" kullanıcı olarak çalıştırılmasını tavsiye edilmememktedir.\n"
 "Olası güvenilik açığı önlemek için, sunucu, sistem yönetici olmayan\n"
 "bir kullanıcı ID ile çalıştırılmalıdır. Sunucunun doğru başlatılması\n"
-"konusunda daha fazla bilgi için PostgreSQL dökümanlara bakın.\n"
+"konusunda daha fazla bilgi için maintableQL dökümanlara bakın.\n"
 
 #: main/main.c:408
 #, c-format
@@ -13812,13 +13812,13 @@ msgstr "%s: gerçek ve etkin kullanıcı ID'leri birbirine uymalıdır\n"
 #: main/main.c:415
 #, c-format
 msgid ""
-"Execution of PostgreSQL by a user with administrative permissions is not\n"
+"Execution of maintableQL by a user with administrative permissions is not\n"
 "permitted.\n"
 "The server must be started under an unprivileged user ID to prevent\n"
 "possible system security compromises.  See the documentation for\n"
 "more information on how to properly start the server.\n"
 msgstr ""
-"PostgreSQL, sistem yöneticisi haklarına sahip kullanıcısı tarafından çalıştırılamaz.\n"
+"maintableQL, sistem yöneticisi haklarına sahip kullanıcısı tarafından çalıştırılamaz.\n"
 "Olası güvenilik açığı önlemek için, sunucu, sistem yönetici olmayan bir kullanıcı ID\n"
 "ile çalıştırılmalıdır. Sunucunun doğru başlatılması konusunda daha fazla bilgi\n"
 "için dökümanlara bakın.\n"
@@ -16162,29 +16162,29 @@ msgstr "Başarısız sistem çağrısı: shmget(key=%lu, size=%zu, 0%o)."
 #: port/pg_shmem.c:221 port/sysv_shmem.c:221
 #, c-format
 msgid ""
-"This error usually means that PostgreSQL's request for a shared memory segment exceeded your kernel's SHMMAX parameter, or possibly that it is less than your kernel's SHMMIN parameter.\n"
-"The PostgreSQL documentation contains more information about shared memory configuration."
+"This error usually means that maintableQL's request for a shared memory segment exceeded your kernel's SHMMAX parameter, or possibly that it is less than your kernel's SHMMIN parameter.\n"
+"The maintableQL documentation contains more information about shared memory configuration."
 msgstr ""
-"Bu hata genellikle PostgreSQL'in shared memory segmenti için isteğinin kernelinizin SHMMAX parametresini aştığı veya  kernelinizin SHMMIN parametresinden daha düşük olduğu anlamına gelir.\n"
-"PostgreSQL dokümanlarında shared memory yapılandırması hakkında daha fazla bilgi bulabilirsiniz."
+"Bu hata genellikle maintableQL'in shared memory segmenti için isteğinin kernelinizin SHMMAX parametresini aştığı veya  kernelinizin SHMMIN parametresinden daha düşük olduğu anlamına gelir.\n"
+"maintableQL dokümanlarında shared memory yapılandırması hakkında daha fazla bilgi bulabilirsiniz."
 
 #: port/pg_shmem.c:228 port/sysv_shmem.c:228
 #, c-format
 msgid ""
-"This error usually means that PostgreSQL's request for a shared memory segment exceeded your kernel's SHMALL parameter.  You might need to reconfigure the kernel with larger SHMALL.\n"
-"The PostgreSQL documentation contains more information about shared memory configuration."
+"This error usually means that maintableQL's request for a shared memory segment exceeded your kernel's SHMALL parameter.  You might need to reconfigure the kernel with larger SHMALL.\n"
+"The maintableQL documentation contains more information about shared memory configuration."
 msgstr ""
-"Bu hata genellikle PostgreSQL'in shared memory segmenti için isteğinin kernelinizin SHMALL parametresini aştığı anlamına gelir. Kernelinizi daha büyük bir SHMALL değeriyle yeniden yapılandırmanız gerekebilir.\n"
-"PostgreSQL dokümanlarında shared memory yapılandırması hakkında daha fazla bilgi bulabilirsiniz."
+"Bu hata genellikle maintableQL'in shared memory segmenti için isteğinin kernelinizin SHMALL parametresini aştığı anlamına gelir. Kernelinizi daha büyük bir SHMALL değeriyle yeniden yapılandırmanız gerekebilir.\n"
+"maintableQL dokümanlarında shared memory yapılandırması hakkında daha fazla bilgi bulabilirsiniz."
 
 #: port/pg_shmem.c:234 port/sysv_shmem.c:234
 #, c-format
 msgid ""
 "This error does *not* mean that you have run out of disk space.  It occurs either if all available shared memory IDs have been taken, in which case you need to raise the SHMMNI parameter in your kernel, or because the system's overall limit for shared memory has been reached.\n"
-"The PostgreSQL documentation contains more information about shared memory configuration."
+"The maintableQL documentation contains more information about shared memory configuration."
 msgstr ""
 "Bu hata mesajı yeterli boş disk alanı kalmadığı anlamına gelmiyor . Bu durum, tüm shared memory ID'leri alındığında -- ki bu durumda SHMMNI parametresinin değerini yükseltmelisiniz; ya da sistemin shared memory sınırına ulaşıldığında oluşur.\n"
-"PostgreSQL belgelerinde bu konu ile ilgili daha ayrıntılı açıklama ve yapılandırma hakkında bilgileri bulabilirsiniz."
+"maintableQL belgelerinde bu konu ile ilgili daha ayrıntılı açıklama ve yapılandırma hakkında bilgileri bulabilirsiniz."
 
 #: port/pg_shmem.c:577 port/sysv_shmem.c:577
 #, c-format
@@ -16193,8 +16193,8 @@ msgstr "anonim shared memory eşlenemedi (map): %m"
 
 #: port/pg_shmem.c:579 port/sysv_shmem.c:579
 #, c-format
-msgid "This error usually means that PostgreSQL's request for a shared memory segment exceeded available memory, swap space, or huge pages. To reduce the request size (currently %zu bytes), reduce PostgreSQL's shared memory usage, perhaps by reducing shared_buffers or max_connections."
-msgstr "Bu hata genellikle PostgreSQL'in shared memory isteğinin kullanılabilir bellek, takas alanı veya çok büyük (huge) sayfaları aştığı anlamına gelir. İstek boyutunu (şu an %zu bayt) düşürmek için, belki de shared_buffers veya max_connections parametrelerini küçülterek PostgreSQL'in shared memory kullanımını azaltın."
+msgid "This error usually means that maintableQL's request for a shared memory segment exceeded available memory, swap space, or huge pages. To reduce the request size (currently %zu bytes), reduce maintableQL's shared memory usage, perhaps by reducing shared_buffers or max_connections."
+msgstr "Bu hata genellikle maintableQL'in shared memory isteğinin kullanılabilir bellek, takas alanı veya çok büyük (huge) sayfaları aştığı anlamına gelir. İstek boyutunu (şu an %zu bayt) düşürmek için, belki de shared_buffers veya max_connections parametrelerini küçülterek maintableQL'in shared memory kullanımını azaltın."
 
 #: port/pg_shmem.c:639 port/sysv_shmem.c:639
 #, c-format
@@ -16229,16 +16229,16 @@ msgstr "Başarısız çağrı: semget(%lu, %d, 0%o)."
 #: port/sysv_sema.c:128
 #, c-format
 msgid ""
-"This error does *not* mean that you have run out of disk space.  It occurs when either the system limit for the maximum number of semaphore sets (SEMMNI), or the system wide maximum number of semaphores (SEMMNS), would be exceeded.  You need to raise the respective kernel parameter.  Alternatively, reduce PostgreSQL's consumption of semaphores by reducing its max_connections parameter.\n"
-"The PostgreSQL documentation contains more information about configuring your system for PostgreSQL."
+"This error does *not* mean that you have run out of disk space.  It occurs when either the system limit for the maximum number of semaphore sets (SEMMNI), or the system wide maximum number of semaphores (SEMMNS), would be exceeded.  You need to raise the respective kernel parameter.  Alternatively, reduce maintableQL's consumption of semaphores by reducing its max_connections parameter.\n"
+"The maintableQL documentation contains more information about configuring your system for maintableQL."
 msgstr ""
-"Bu hata mesajı yeterli boş disk alanı kalmadığı anlamına gelmez. Bu durum, ya sistemin azami semaphore kümesi sayısı sınırı (SEMMNI) veya sistem ölçeğindeki azami semaphore sayısı (SEMMNS) aşıldığında meydana gelir.  Belirtilen kernel parametrelerinin değeri yükseltilmelidir. Diğer bir seçenek ise max_connections parametresi düşürülerek PostgreSQL'in semaphore tüketiminin azaltılmasıdır.\n"
-"PostgreSQL dokümanları, sisteminizin PostgreSQL için yapılandırılması üzerine daha fazla bilgi içermektedir."
+"Bu hata mesajı yeterli boş disk alanı kalmadığı anlamına gelmez. Bu durum, ya sistemin azami semaphore kümesi sayısı sınırı (SEMMNI) veya sistem ölçeğindeki azami semaphore sayısı (SEMMNS) aşıldığında meydana gelir.  Belirtilen kernel parametrelerinin değeri yükseltilmelidir. Diğer bir seçenek ise max_connections parametresi düşürülerek maintableQL'in semaphore tüketiminin azaltılmasıdır.\n"
+"maintableQL dokümanları, sisteminizin maintableQL için yapılandırılması üzerine daha fazla bilgi içermektedir."
 
 #: port/sysv_sema.c:158
 #, c-format
-msgid "You possibly need to raise your kernel's SEMVMX value to be at least %d.  Look into the PostgreSQL documentation for details."
-msgstr "Kernel SEMVMX değerini en az %d değerine kadar çıkartmalısınız.  Daha fazla bilgi için PostgreSQL dokümanlarına bakın."
+msgid "You possibly need to raise your kernel's SEMVMX value to be at least %d.  Look into the maintableQL documentation for details."
+msgstr "Kernel SEMVMX değerini en az %d değerine kadar çıkartmalısınız.  Daha fazla bilgi için maintableQL dokümanlarına bakın."
 
 #: port/win32/crashdump.c:121
 #, c-format
@@ -16319,7 +16319,7 @@ msgstr "shared memory segment oluşturulamıyor: %m"
 
 #: port/win32_shmem.c:176
 #, c-format
-msgid "Assign Lock Pages in Memory user right to the Windows user account which runs PostgreSQL."
+msgid "Assign Lock Pages in Memory user right to the Windows user account which runs maintableQL."
 msgstr ""
 
 #: port/win32_shmem.c:233
@@ -16804,12 +16804,12 @@ msgstr ""
 
 #: postmaster/postmaster.c:1453
 #, c-format
-msgid "%s: could not locate matching postgres executable"
-msgstr "%s: uygun postgres çalıştırma dosysı bulunamadı"
+msgid "%s: could not locate matching maintable executable"
+msgstr "%s: uygun maintable çalıştırma dosysı bulunamadı"
 
 #: postmaster/postmaster.c:1476 utils/misc/tzparser.c:341
 #, c-format
-msgid "This may indicate an incomplete PostgreSQL installation, or that the file \"%s\" has been moved away from its proper location."
+msgid "This may indicate an incomplete maintableQL installation, or that the file \"%s\" has been moved away from its proper location."
 msgstr ""
 
 #: postmaster/postmaster.c:1503
@@ -16875,8 +16875,8 @@ msgstr "geçersiz startup packet düzeni: son bayt bir sonlandırıcı olmalıd�
 
 #: postmaster/postmaster.c:2206
 #, c-format
-msgid "no PostgreSQL user name specified in startup packet"
-msgstr "başlatma paketinde PostgreSQL kullanıcı adı belirtilmemiştir"
+msgid "no maintableQL user name specified in startup packet"
+msgstr "başlatma paketinde maintableQL kullanıcı adı belirtilmemiştir"
 
 #: postmaster/postmaster.c:2265
 #, c-format
@@ -17099,8 +17099,8 @@ msgstr "Alt süreçte SSl konfigürasyonu yüklenemiyor"
 
 #: postmaster/postmaster.c:5066
 #, c-format
-msgid "Please report this to <pgsql-bugs@lists.postgresql.org>."
-msgstr "Bunu lütfen <pgsql-bugs@lists.postgresql.org> adresine bildiriniz."
+msgid "Please report this to <pgsql-bugs@lists.maintableql.org>."
+msgstr "Bunu lütfen <pgsql-bugs@lists.maintableql.org> adresine bildiriniz."
 
 #: postmaster/postmaster.c:5153
 #, c-format
@@ -18306,7 +18306,7 @@ msgstr "WAL sender durma modunda iken yeni komutlar çalıştırılamaz"
 msgid "received replication command: %s"
 msgstr "replikasyon komutu alındı: %s"
 
-#: replication/walsender.c:1502 tcop/fastpath.c:279 tcop/postgres.c:1103 tcop/postgres.c:1426 tcop/postgres.c:1684 tcop/postgres.c:2077 tcop/postgres.c:2450 tcop/postgres.c:2529
+#: replication/walsender.c:1502 tcop/fastpath.c:279 tcop/maintable.c:1103 tcop/maintable.c:1426 tcop/maintable.c:1684 tcop/maintable.c:2077 tcop/maintable.c:2450 tcop/maintable.c:2529
 #, c-format
 msgid "current transaction is aborted, commands ignored until end of transaction block"
 msgstr "geçerli transaction durduruldu, transaction blokunun sonuna kadar komutlar yok sayılacak"
@@ -18999,7 +18999,7 @@ msgstr "sunucu sürecini başlatmak için yetersiz dosya belirteçleri"
 #: storage/file/fd.c:933
 #, c-format
 msgid "System allows %d, we need at least %d."
-msgstr "Sistem %d dosya belirtecine izin veriyor, PostgreSQL en az %d istiyor."
+msgstr "Sistem %d dosya belirtecine izin veriyor, maintableQL en az %d istiyor."
 
 #: storage/file/fd.c:984 storage/file/fd.c:2246 storage/file/fd.c:2356 storage/file/fd.c:2507
 #, c-format
@@ -19177,8 +19177,8 @@ msgstr "istenilen shared memory boyutu size_t tipini aşıyor"
 
 #: storage/ipc/signalfuncs.c:67
 #, c-format
-msgid "PID %d is not a PostgreSQL server process"
-msgstr "PID %d bir PostgreSQL sunucu süreci değildir"
+msgid "PID %d is not a maintableQL server process"
+msgstr "PID %d bir maintableQL sunucu süreci değildir"
 
 #: storage/ipc/signalfuncs.c:98 storage/lmgr/proc.c:1363
 #, c-format
@@ -19222,12 +19222,12 @@ msgstr "Onun yerine tablespace kullanabilirsiniz."
 msgid "rotation not possible because log collection not active"
 msgstr "log biriktirme (collection) etkin olmadığından rotasyon yapılamaz"
 
-#: storage/ipc/standby.c:558 tcop/postgres.c:3110
+#: storage/ipc/standby.c:558 tcop/maintable.c:3110
 #, c-format
 msgid "canceling statement due to conflict with recovery"
 msgstr "kurtarma işlemi ile çakışmadan dolayı sorgu iptal ediliyor"
 
-#: storage/ipc/standby.c:559 tcop/postgres.c:2384
+#: storage/ipc/standby.c:559 tcop/maintable.c:2384
 #, c-format
 msgid "User transaction caused buffer deadlock with recovery."
 msgstr ""
@@ -19601,7 +19601,7 @@ msgstr "fonksiyon çağırma mesajında geçersiz argüman boyutu %d"
 msgid "fastpath function call: \"%s\" (OID %u)"
 msgstr "fastpath function çağırımı: \"%s\" OID %u"
 
-#: tcop/fastpath.c:389 tcop/postgres.c:1288 tcop/postgres.c:1551 tcop/postgres.c:1918 tcop/postgres.c:2139
+#: tcop/fastpath.c:389 tcop/maintable.c:1288 tcop/maintable.c:1551 tcop/maintable.c:1918 tcop/maintable.c:2139
 #, c-format
 msgid "duration: %s ms"
 msgstr "süre: %s milisaniye"
@@ -19626,290 +19626,290 @@ msgstr "fonksiyon çağırma mesajı %d argüman biçimi ve %d argüman içeriyo
 msgid "incorrect binary data format in function argument %d"
 msgstr "%d fonksiyon argümanında geçersiz ikili veri"
 
-#: tcop/postgres.c:359 tcop/postgres.c:395 tcop/postgres.c:422
+#: tcop/maintable.c:359 tcop/maintable.c:395 tcop/maintable.c:422
 #, c-format
 msgid "unexpected EOF on client connection"
 msgstr "istemci bağlantısında beklenmeyen EOF"
 
-#: tcop/postgres.c:445 tcop/postgres.c:457 tcop/postgres.c:468 tcop/postgres.c:480 tcop/postgres.c:4471
+#: tcop/maintable.c:445 tcop/maintable.c:457 tcop/maintable.c:468 tcop/maintable.c:480 tcop/maintable.c:4471
 #, c-format
 msgid "invalid frontend message type %d"
 msgstr "geçersiz frontend mesaj tipi %d"
 
-#: tcop/postgres.c:1043
+#: tcop/maintable.c:1043
 #, c-format
 msgid "statement: %s"
 msgstr "komut: %s"
 
-#: tcop/postgres.c:1293
+#: tcop/maintable.c:1293
 #, c-format
 msgid "duration: %s ms  statement: %s"
 msgstr "süre: %s milisaniye  komut: %s"
 
-#: tcop/postgres.c:1343
+#: tcop/maintable.c:1343
 #, c-format
 msgid "parse %s: %s"
 msgstr "parse %s: %s"
 
-#: tcop/postgres.c:1400
+#: tcop/maintable.c:1400
 #, c-format
 msgid "cannot insert multiple commands into a prepared statement"
 msgstr "önceden hazırlanmış komuta çoklu komut eklenemez"
 
-#: tcop/postgres.c:1556
+#: tcop/maintable.c:1556
 #, c-format
 msgid "duration: %s ms  parse %s: %s"
 msgstr "süre: %s milisaniye  parse %s: %s"
 
-#: tcop/postgres.c:1601
+#: tcop/maintable.c:1601
 #, c-format
 msgid "bind %s to %s"
 msgstr "bind %s to %s"
 
-#: tcop/postgres.c:1620 tcop/postgres.c:2431
+#: tcop/maintable.c:1620 tcop/maintable.c:2431
 #, c-format
 msgid "unnamed prepared statement does not exist"
 msgstr "ismi verilmemiş hazırlamış komut mevcut değil"
 
-#: tcop/postgres.c:1661
+#: tcop/maintable.c:1661
 #, c-format
 msgid "bind message has %d parameter formats but %d parameters"
 msgstr "bind mesajı %d argüman biçimi ve %d argüman içeriyor"
 
-#: tcop/postgres.c:1667
+#: tcop/maintable.c:1667
 #, c-format
 msgid "bind message supplies %d parameters, but prepared statement \"%s\" requires %d"
 msgstr "bind mesajı   %d parametre veriyor ancak \"%s\" hazırlanmış deymi %d gerektirir"
 
-#: tcop/postgres.c:1827
+#: tcop/maintable.c:1827
 #, c-format
 msgid "incorrect binary data format in bind parameter %d"
 msgstr "bind parametresinde geçersiz ikili veri %d"
 
-#: tcop/postgres.c:1923
+#: tcop/maintable.c:1923
 #, c-format
 msgid "duration: %s ms  bind %s%s%s: %s"
 msgstr "süre: %s milisaniye  bind %s%s%s: %s"
 
-#: tcop/postgres.c:1971 tcop/postgres.c:2515
+#: tcop/maintable.c:1971 tcop/maintable.c:2515
 #, c-format
 msgid "portal \"%s\" does not exist"
 msgstr "portal \"%s\" mevcut değildir"
 
-#: tcop/postgres.c:2056
+#: tcop/maintable.c:2056
 #, c-format
 msgid "%s %s%s%s: %s"
 msgstr "%s %s%s%s: %s"
 
-#: tcop/postgres.c:2058 tcop/postgres.c:2147
+#: tcop/maintable.c:2058 tcop/maintable.c:2147
 msgid "execute fetch from"
 msgstr "execute fetch from"
 
-#: tcop/postgres.c:2059 tcop/postgres.c:2148
+#: tcop/maintable.c:2059 tcop/maintable.c:2148
 msgid "execute"
 msgstr "execute"
 
-#: tcop/postgres.c:2144
+#: tcop/maintable.c:2144
 #, c-format
 msgid "duration: %s ms  %s %s%s%s: %s"
 msgstr "süre: %s ms  %s %s%s%s: %s"
 
-#: tcop/postgres.c:2272
+#: tcop/maintable.c:2272
 #, c-format
 msgid "prepare: %s"
 msgstr "prepare:  %s"
 
-#: tcop/postgres.c:2337
+#: tcop/maintable.c:2337
 #, c-format
 msgid "parameters: %s"
 msgstr "%s parametresi"
 
-#: tcop/postgres.c:2356
+#: tcop/maintable.c:2356
 #, c-format
 msgid "abort reason: recovery conflict"
 msgstr "iptal sebebi: kurtarma çatışması (recovery conflict)"
 
-#: tcop/postgres.c:2372
+#: tcop/maintable.c:2372
 #, c-format
 msgid "User was holding shared buffer pin for too long."
 msgstr ""
 
-#: tcop/postgres.c:2375
+#: tcop/maintable.c:2375
 #, c-format
 msgid "User was holding a relation lock for too long."
 msgstr ""
 
-#: tcop/postgres.c:2378
+#: tcop/maintable.c:2378
 #, c-format
 msgid "User was or might have been using tablespace that must be dropped."
 msgstr ""
 
-#: tcop/postgres.c:2381
+#: tcop/maintable.c:2381
 #, c-format
 msgid "User query might have needed to see row versions that must be removed."
 msgstr ""
 
-#: tcop/postgres.c:2387
+#: tcop/maintable.c:2387
 #, c-format
 msgid "User was connected to a database that must be dropped."
 msgstr "Kullanıcı silinmesi gereken bir veritabanına bağlıydı."
 
-#: tcop/postgres.c:2711
+#: tcop/maintable.c:2711
 #, c-format
 msgid "terminating connection because of crash of another server process"
 msgstr "diğer aktif sunucu sürecinin durması nedeniyle bağlantı kapatılmıştır"
 
-#: tcop/postgres.c:2712
+#: tcop/maintable.c:2712
 #, c-format
 msgid "The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory."
 msgstr "Başka bir sürecin olağan dışı çıkışı nedeniyle shared memory bozulmuş ihtimali var. Dolayısıyla tüm süreçlerine tüm aktif işlemlerini rollback edip çıkmak komutu verilmiş."
 
-#: tcop/postgres.c:2716 tcop/postgres.c:3040
+#: tcop/maintable.c:2716 tcop/maintable.c:3040
 #, c-format
 msgid "In a moment you should be able to reconnect to the database and repeat your command."
 msgstr "Birkaç saniye sonra veritabana bağlanıp işlemlerinize devam edebilirsiniz."
 
-#: tcop/postgres.c:2798
+#: tcop/maintable.c:2798
 #, c-format
 msgid "floating-point exception"
 msgstr "gerçel sayı istisnası"
 
-#: tcop/postgres.c:2799
+#: tcop/maintable.c:2799
 #, c-format
 msgid "An invalid floating-point operation was signaled. This probably means an out-of-range result or an invalid operation, such as division by zero."
 msgstr "Geçersiz floating-point işlemi sinyali alındı. Bu, matematiksel sıfıra bölme gibi geçersiz işlem ya da kapsam dışı sonucun göstergesidir."
 
-#: tcop/postgres.c:2970
+#: tcop/maintable.c:2970
 #, c-format
 msgid "canceling authentication due to timeout"
 msgstr "zamanaşımı nedeniyle yetkilendirme iptal edildi"
 
-#: tcop/postgres.c:2974
+#: tcop/maintable.c:2974
 #, c-format
 msgid "terminating autovacuum process due to administrator command"
 msgstr "yönetici talimatı doğrultusunda autovacuum süreci sonlandırılıyor"
 
-#: tcop/postgres.c:2978
+#: tcop/maintable.c:2978
 #, fuzzy, c-format
 #| msgid "terminating connection due to administrator command"
 msgid "terminating logical replication worker due to administrator command"
 msgstr "yönetici talimatı doğrultusunda bağlantı kesildi"
 
-#: tcop/postgres.c:2982
+#: tcop/maintable.c:2982
 #, fuzzy, c-format
 #| msgid "autovacuum launcher shutting down"
 msgid "logical replication launcher shutting down"
 msgstr "otomatik vacuum başlatma süreci kapatılıyor"
 
-#: tcop/postgres.c:2995 tcop/postgres.c:3005 tcop/postgres.c:3038
+#: tcop/maintable.c:2995 tcop/maintable.c:3005 tcop/maintable.c:3038
 #, fuzzy, c-format
 msgid "terminating connection due to conflict with recovery"
 msgstr "yönetici talimatı doğrultusunda bağlantı kesildi"
 
-#: tcop/postgres.c:3011
+#: tcop/maintable.c:3011
 #, c-format
 msgid "terminating connection due to administrator command"
 msgstr "yönetici talimatı doğrultusunda bağlantı kesildi"
 
-#: tcop/postgres.c:3021
+#: tcop/maintable.c:3021
 #, fuzzy, c-format
 #| msgid "connection to server was lost\n"
 msgid "connection to client lost"
 msgstr "sunucuya bağlantı kesildi\n"
 
-#: tcop/postgres.c:3087
+#: tcop/maintable.c:3087
 #, fuzzy, c-format
 #| msgid "canceling statement due to statement timeout"
 msgid "canceling statement due to lock timeout"
 msgstr "sorgu zaman aşımına uğradı ve iptal edildi"
 
-#: tcop/postgres.c:3094
+#: tcop/maintable.c:3094
 #, c-format
 msgid "canceling statement due to statement timeout"
 msgstr "sorgu zaman aşımına uğradı ve iptal edildi"
 
-#: tcop/postgres.c:3101
+#: tcop/maintable.c:3101
 #, c-format
 msgid "canceling autovacuum task"
 msgstr "autovacuum görevi iptal ediliyor"
 
-#: tcop/postgres.c:3124
+#: tcop/maintable.c:3124
 #, c-format
 msgid "canceling statement due to user request"
 msgstr "kullanıcı isteği ile sorgu iptal edildi"
 
-#: tcop/postgres.c:3134
+#: tcop/maintable.c:3134
 #, fuzzy, c-format
 #| msgid "terminating connection due to administrator command"
 msgid "terminating connection due to idle-in-transaction timeout"
 msgstr "yönetici talimatı doğrultusunda bağlantı kesildi"
 
-#: tcop/postgres.c:3248
+#: tcop/maintable.c:3248
 #, c-format
 msgid "stack depth limit exceeded"
 msgstr "stack derinliği sınırı aşıldı"
 
-#: tcop/postgres.c:3249
+#: tcop/maintable.c:3249
 #, fuzzy, c-format
 #| msgid "Increase the configuration parameter \"max_stack_depth\", after ensuring the platform's stack depth limit is adequate."
 msgid "Increase the configuration parameter \"max_stack_depth\" (currently %dkB), after ensuring the platform's stack depth limit is adequate."
 msgstr "İşletim sisteminin stack derinliğinin yeterli olduğundan emin olarak \"max_stack_depth\" konfigurasyon parametresini artırın."
 
-#: tcop/postgres.c:3312
+#: tcop/maintable.c:3312
 #, fuzzy, c-format
 #| msgid "\"max_stack_depth\" must not exceed %ldkB"
 msgid "\"max_stack_depth\" must not exceed %ldkB."
 msgstr "\"max_stack_depth\" parametresi %ldkB açmamalıdır"
 
-#: tcop/postgres.c:3314
+#: tcop/maintable.c:3314
 #, c-format
 msgid "Increase the platform's stack depth limit via \"ulimit -s\" or local equivalent."
 msgstr "İşletim sisteminin stack derinliği \"ulimit -s\" veya benzeri komutu ile arttırın."
 
-#: tcop/postgres.c:3674
+#: tcop/maintable.c:3674
 #, fuzzy, c-format
 #| msgid "invalid command-line arguments for server process"
 msgid "invalid command-line argument for server process: %s"
 msgstr "sunucu süreci için geçersiz komut satırı parametreleri"
 
-#: tcop/postgres.c:3675 tcop/postgres.c:3681
+#: tcop/maintable.c:3675 tcop/maintable.c:3681
 #, c-format
 msgid "Try \"%s --help\" for more information."
 msgstr "Daha fazla bilgi için \"%s --help\" yazın."
 
-#: tcop/postgres.c:3679
+#: tcop/maintable.c:3679
 #, fuzzy, c-format
 #| msgid "%s: invalid command-line arguments"
 msgid "%s: invalid command-line argument: %s"
 msgstr "%s: komut satırı parametresi yanlış"
 
-#: tcop/postgres.c:3741
+#: tcop/maintable.c:3741
 #, c-format
 msgid "%s: no database nor user name specified"
 msgstr ":%s: ne veritabanı ne de kullanıcı adı belirtilmemiştir"
 
-#: tcop/postgres.c:4379
+#: tcop/maintable.c:4379
 #, c-format
 msgid "invalid CLOSE message subtype %d"
 msgstr "geçersiz CLOSE mesaj alt tipi %d"
 
-#: tcop/postgres.c:4414
+#: tcop/maintable.c:4414
 #, c-format
 msgid "invalid DESCRIBE message subtype %d"
 msgstr "geçersiz DESCRIBE mesaj alt tipi %d"
 
-#: tcop/postgres.c:4492
+#: tcop/maintable.c:4492
 #, fuzzy, c-format
 #| msgid "cast function must not be an aggregate function"
 msgid "fastpath function calls not supported in a replication connection"
 msgstr "cast fonksiyonu aggregate olmamalıdır"
 
-#: tcop/postgres.c:4496
+#: tcop/maintable.c:4496
 #, c-format
 msgid "extended query protocol not supported in a replication connection"
 msgstr ""
 
-#: tcop/postgres.c:4673
+#: tcop/maintable.c:4673
 #, c-format
 msgid "disconnection: session time: %d:%02d:%02d.%03d user=%s database=%s host=%s%s%s"
 msgstr "bağlantı bitti: oturum zamanı: %d:%02d:%02d.%03d user=%s database=%s host=%s%s%s"
@@ -22198,8 +22198,8 @@ msgstr "ICU bu yapılandırmada desteklenmiyor"
 
 #: utils/adt/pg_locale.c:1459
 #, c-format
-msgid "You need to rebuild PostgreSQL using --with-icu."
-msgstr "PostgreSQL'i --with-icu seçeneği ile yeniden derlemeniz gerekiyor."
+msgid "You need to rebuild maintableQL using --with-icu."
+msgstr "maintableQL'i --with-icu seçeneği ile yeniden derlemeniz gerekiyor."
 
 #: utils/adt/pg_locale.c:1479
 #, c-format
@@ -22218,7 +22218,7 @@ msgstr "Veritabanındaki collation %s sürümüyle oluşturulmuş, fakat işleti
 
 #: utils/adt/pg_locale.c:1491
 #, c-format
-msgid "Rebuild all objects affected by this collation and run ALTER COLLATION %s REFRESH VERSION, or build PostgreSQL with the right library version."
+msgid "Rebuild all objects affected by this collation and run ALTER COLLATION %s REFRESH VERSION, or build maintableQL with the right library version."
 msgstr ""
 
 #: utils/adt/pg_locale.c:1575
@@ -23054,8 +23054,8 @@ msgstr "Bu özellik sunucunun libxml desteği ile derlenmesini gerektirir."
 
 #: utils/adt/xml.c:224
 #, c-format
-msgid "You need to rebuild PostgreSQL using --with-libxml."
-msgstr "PostgreSQL'i --with-libxml seçeneği ile yeniden derlemeniz gerekiyor."
+msgid "You need to rebuild maintableQL using --with-libxml."
+msgstr "maintableQL'i --with-libxml seçeneği ile yeniden derlemeniz gerekiyor."
 
 #: utils/adt/xml.c:243 utils/mb/mbutils.c:540
 #, c-format
@@ -23110,7 +23110,7 @@ msgstr "semaphore oluşturma hatası: hata kodu %d"
 
 #: utils/adt/xml.c:1049
 #, c-format
-msgid "This probably indicates that the version of libxml2 being used is not compatible with the libxml2 header files that PostgreSQL was built with."
+msgid "This probably indicates that the version of libxml2 being used is not compatible with the libxml2 header files that maintableQL was built with."
 msgstr ""
 
 #: utils/adt/xml.c:1936
@@ -23598,7 +23598,7 @@ msgstr "\"%s\" lock dosyası zaten mevcuttur"
 
 #: utils/init/miscinit.c:1026
 #, c-format
-msgid "Is another postgres (PID %d) running in data directory \"%s\"?"
+msgid "Is another maintable (PID %d) running in data directory \"%s\"?"
 msgstr "\"%2$s\" veritabanı dizini kullanarak PID %1$d olan başka bir istemci süreci çalışmakta mıdır?"
 
 #: utils/init/miscinit.c:1028
@@ -23608,7 +23608,7 @@ msgstr "\"%2$s\" veritabanı dizini kullanarak PID %1$d olan başka bir sunucu �
 
 #: utils/init/miscinit.c:1031
 #, c-format
-msgid "Is another postgres (PID %d) using socket file \"%s\"?"
+msgid "Is another maintable (PID %d) using socket file \"%s\"?"
 msgstr "\"%2$s\" kullanarak PID %1$d olan başka bir istemci süreci çalışmakta mıdır?"
 
 #: utils/init/miscinit.c:1033
@@ -23670,9 +23670,9 @@ msgstr "initdb yapmanız gerekebilir."
 
 #: utils/init/miscinit.c:1503
 #, fuzzy, c-format
-#| msgid "The data directory was initialized by PostgreSQL version %ld.%ld, which is not compatible with this version %s."
-msgid "The data directory was initialized by PostgreSQL version %s, which is not compatible with this version %s."
-msgstr "Veri dizini PostgreSQL %ld.%ld sürümü tarafından oluşturulmuştur ve kullandığınız %s sürümü ile uyumlu değildir."
+#| msgid "The data directory was initialized by maintableQL version %ld.%ld, which is not compatible with this version %s."
+msgid "The data directory was initialized by maintableQL version %s, which is not compatible with this version %s."
+msgstr "Veri dizini maintableQL %ld.%ld sürümü tarafından oluşturulmuştur ve kullandığınız %s sürümü ile uyumlu değildir."
 
 #: utils/init/miscinit.c:1570
 #, c-format
@@ -24099,8 +24099,8 @@ msgid "Version and Platform Compatibility"
 msgstr "Sürüm ve Platform Uyumluluğu"
 
 #: utils/misc/guc.c:724
-msgid "Version and Platform Compatibility / Previous PostgreSQL Versions"
-msgstr "Sürüm ve Platform Uyumluluğu / Önceki PostgreSQL Sürümleri"
+msgid "Version and Platform Compatibility / Previous maintableQL Versions"
+msgstr "Sürüm ve Platform Uyumluluğu / Önceki maintableQL Sürümleri"
 
 #: utils/misc/guc.c:726
 msgid "Version and Platform Compatibility / Other Platforms and Clients"
@@ -24255,16 +24255,16 @@ msgid "Continues processing after a checksum failure."
 msgstr "Bir sağlama (checksum) hatasından sonra işlemeye devam eder."
 
 #: utils/misc/guc.c:1137
-msgid "Detection of a checksum failure normally causes PostgreSQL to report an error, aborting the current transaction. Setting ignore_checksum_failure to true causes the system to ignore the failure (but still report a warning), and continue processing. This behavior could cause crashes or other serious problems. Only has an effect if checksums are enabled."
-msgstr "Bozuk bir sayfanın tespiti genellikle PostgreSQL'in geçerli işlemi (transaction) durdurup hata mesajı vermesine yol açar. ignore_checksum_failure parametresi true olarak ayarlamak sistemin hataya aldırmadan (yine de bir uyarı raporlayarak), işlemeye devam etmesine sebep olur. Bu davranış çökmelere ve başka ciddi sorunlara sebep olabilir. Yalnızca sağlamalar (checksum) etkinse bir etkisi olur."
+msgid "Detection of a checksum failure normally causes maintableQL to report an error, aborting the current transaction. Setting ignore_checksum_failure to true causes the system to ignore the failure (but still report a warning), and continue processing. This behavior could cause crashes or other serious problems. Only has an effect if checksums are enabled."
+msgstr "Bozuk bir sayfanın tespiti genellikle maintableQL'in geçerli işlemi (transaction) durdurup hata mesajı vermesine yol açar. ignore_checksum_failure parametresi true olarak ayarlamak sistemin hataya aldırmadan (yine de bir uyarı raporlayarak), işlemeye devam etmesine sebep olur. Bu davranış çökmelere ve başka ciddi sorunlara sebep olabilir. Yalnızca sağlamalar (checksum) etkinse bir etkisi olur."
 
 #: utils/misc/guc.c:1151
 msgid "Continues processing past damaged page headers."
 msgstr "Bozulmuş sayfa başlıkları atlayarak işlemeye devam ediyor."
 
 #: utils/misc/guc.c:1152
-msgid "Detection of a damaged page header normally causes PostgreSQL to report an error, aborting the current transaction. Setting zero_damaged_pages to true causes the system to instead report a warning, zero out the damaged page, and continue processing. This behavior will destroy data, namely all the rows on the damaged page."
-msgstr "Bozuk bir sayfanın algılanması genellikle PostgreSQL'in hatanın raporlaması ve geçerli transactionun durdururlmasına yol açıyor. zero_damaged_pages parametresine true atayınca, sistem bir uyarı raporlayıp, hatalı sayfayı sıfırlayıp işlemeye devam etmesine sebep oluyor. Bu davranış, bozuk sayfadaki tüm satırları silecektir."
+msgid "Detection of a damaged page header normally causes maintableQL to report an error, aborting the current transaction. Setting zero_damaged_pages to true causes the system to instead report a warning, zero out the damaged page, and continue processing. This behavior will destroy data, namely all the rows on the damaged page."
+msgstr "Bozuk bir sayfanın algılanması genellikle maintableQL'in hatanın raporlaması ve geçerli transactionun durdururlmasına yol açıyor. zero_damaged_pages parametresine true atayınca, sistem bir uyarı raporlayıp, hatalı sayfayı sıfırlayıp işlemeye devam etmesine sebep oluyor. Bu davranış, bozuk sayfadaki tüm satırları silecektir."
 
 #: utils/misc/guc.c:1165
 msgid "Writes full pages to WAL when first modified after a checkpoint."
@@ -24549,12 +24549,12 @@ msgid "Enables backward compatibility mode for privilege checks on large objects
 msgstr ""
 
 #: utils/misc/guc.c:1798
-msgid "Skips privilege checks when reading or modifying large objects, for compatibility with PostgreSQL releases prior to 9.0."
+msgid "Skips privilege checks when reading or modifying large objects, for compatibility with maintableQL releases prior to 9.0."
 msgstr ""
 
 #: utils/misc/guc.c:1808
-msgid "Emit a warning for constructs that changed meaning since PostgreSQL 9.4."
-msgstr "PostgreSQL 9.4'ten bu yana anlam değiştiren yapılar (construct) için bir uyarı yayınla."
+msgid "Emit a warning for constructs that changed meaning since maintableQL 9.4."
+msgstr "maintableQL 9.4'ten bu yana anlam değiştiren yapılar (construct) için bir uyarı yayınla."
 
 #: utils/misc/guc.c:1818
 msgid "When generating SQL fragments, quote all identifiers."
@@ -25144,8 +25144,8 @@ msgid "Sets the planner's assumption about the total size of the data caches."
 msgstr "Veri önbelleklerinin (data cache) toplam boyutu hakkında planner'in tahmini değerini belirtiyor."
 
 #: utils/misc/guc.c:3110
-msgid "That is, the total size of the caches (kernel cache and shared buffers) used for PostgreSQL data files. This is measured in disk pages, which are normally 8 kB each."
-msgstr "Yani, PostgreSQL veri dosyaları için kullanılacak önbelleklerin (kernel cache ve shared buffers) toplam boyutu. Bu değer, disk sayfa (page) birimleriyle ölçülür, genellikle her biri 8 kilobayttır."
+msgid "That is, the total size of the caches (kernel cache and shared buffers) used for maintableQL data files. This is measured in disk pages, which are normally 8 kB each."
+msgstr "Yani, maintableQL veri dosyaları için kullanılacak önbelleklerin (kernel cache ve shared buffers) toplam boyutu. Bu değer, disk sayfa (page) birimleriyle ölçülür, genellikle her biri 8 kilobayttır."
 
 #: utils/misc/guc.c:3121
 msgid "Sets the minimum amount of table data for a parallel scan."
@@ -25499,12 +25499,12 @@ msgid "Sets the file name pattern for log files."
 msgstr "Log dosyaları için kulanılacak şablonu belirtiyor."
 
 #: utils/misc/guc.c:3884
-msgid "Sets the program name used to identify PostgreSQL messages in syslog."
-msgstr "Syslog içinde PostgreSQL mesajlarının kaynak olacağı program adını belirtiyor."
+msgid "Sets the program name used to identify maintableQL messages in syslog."
+msgstr "Syslog içinde maintableQL mesajlarının kaynak olacağı program adını belirtiyor."
 
 #: utils/misc/guc.c:3895
-msgid "Sets the application name used to identify PostgreSQL messages in the event log."
-msgstr "Event log içinde PostgreSQL mesajlarını belirleyecek uygulama adını belirtiyor."
+msgid "Sets the application name used to identify maintableQL messages in the event log."
+msgstr "Event log içinde maintableQL mesajlarını belirleyecek uygulama adını belirtiyor."
 
 #: utils/misc/guc.c:3906
 msgid "Sets the time zone for displaying and interpreting time stamps."
@@ -25771,8 +25771,8 @@ msgstr "%s: \"%s\" dizine erişim hatası: %s\n"
 
 #: utils/misc/guc.c:5358
 #, c-format
-msgid "Run initdb or pg_basebackup to initialize a PostgreSQL data directory.\n"
-msgstr "Bir PostgreSQL veri dizinini ilklendirmek için initdb ya da pg_basebackup çalıştırınız.\n"
+msgid "Run initdb or pg_basebackup to initialize a maintableQL data directory.\n"
+msgstr "Bir maintableQL veri dizinini ilklendirmek için initdb ya da pg_basebackup çalıştırınız.\n"
 
 #: utils/misc/guc.c:5378
 #, c-format
@@ -26067,7 +26067,7 @@ msgstr "geçersiz zaman dilimi dosyası adı: \"%s\""
 #: utils/misc/tzparser.c:314
 #, c-format
 msgid "time zone file recursion limit exceeded in file \"%s\""
-msgstr "\"%s\" dosyasında derinlik sınırı aşılmıştır. (DİKKAT: Bu hatayı gördüyseniz pgsql-hackers@postgresql.org listesine rapor gönderin)"
+msgstr "\"%s\" dosyasında derinlik sınırı aşılmıştır. (DİKKAT: Bu hatayı gördüyseniz pgsql-hackers@maintableql.org listesine rapor gönderin)"
 
 #: utils/misc/tzparser.c:353 utils/misc/tzparser.c:366
 #, c-format
@@ -27433,13 +27433,13 @@ msgstr "farklı bir veritabanından snapshot içeri aktarılamaz (import)"
 #~ msgstr "open process token açma başarısız: hata kodu %d\n"
 
 #~ msgid ""
-#~ "This error usually means that PostgreSQL's request for a shared memory segment exceeded your kernel's SHMMAX parameter.  You can either reduce the request size or reconfigure the kernel with larger SHMMAX.  To reduce the request size (currently %lu bytes), reduce PostgreSQL's shared_buffers parameter (currently %d) and/or its max_connections parameter (currently %d).\n"
+#~ "This error usually means that maintableQL's request for a shared memory segment exceeded your kernel's SHMMAX parameter.  You can either reduce the request size or reconfigure the kernel with larger SHMMAX.  To reduce the request size (currently %lu bytes), reduce maintableQL's shared_buffers parameter (currently %d) and/or its max_connections parameter (currently %d).\n"
 #~ "If the request size is already small, it's possible that it is less than your kernel's SHMMIN parameter, in which case raising the request size or reconfiguring SHMMIN is called for.\n"
-#~ "The PostgreSQL documentation contains more information about shared memory configuration."
+#~ "The maintableQL documentation contains more information about shared memory configuration."
 #~ msgstr ""
-#~ "Bu hata, PostgreSQL'in shared memory isteğinin çekirdeğin SHMMAX parametresinde verilen değerinin aşıldığını gösteriyor. İstenilen bellek boyutunu düşürebilir ya da çekirdeği daha büyük bir SHMMAX parametresi ile yeniden yapılandırabilirsiniz. İstenilen bellek boyutunu (şu an %lu bayt) düşürmek için PostgreSQL'in shared_buffers parametresini (şu an %d) ve/veya max_connections (şu an %d) "
+#~ "Bu hata, maintableQL'in shared memory isteğinin çekirdeğin SHMMAX parametresinde verilen değerinin aşıldığını gösteriyor. İstenilen bellek boyutunu düşürebilir ya da çekirdeği daha büyük bir SHMMAX parametresi ile yeniden yapılandırabilirsiniz. İstenilen bellek boyutunu (şu an %lu bayt) düşürmek için maintableQL'in shared_buffers parametresini (şu an %d) ve/veya max_connections (şu an %d) "
 #~ "parametrelerini düşürebilirsiniz.\n"
-#~ " Eğer istenilen bellek boyutu zaten küçük ise, çekirdeğin SHMMIN parametresinden düşük olabilir; bu durumda istenilen bellek boyutunu SHMMIN değerine kadar büyütmeniz ya da SHMMIN değerini düşürmeniz gerekli.PostgreSQL belgelerinde shared memory yapılandırılması hakkında daha fazla bilgi bulabilirsiniz."
+#~ " Eğer istenilen bellek boyutu zaten küçük ise, çekirdeğin SHMMIN parametresinden düşük olabilir; bu durumda istenilen bellek boyutunu SHMMIN değerine kadar büyütmeniz ya da SHMMIN değerini düşürmeniz gerekli.maintableQL belgelerinde shared memory yapılandırılması hakkında daha fazla bilgi bulabilirsiniz."
 
 #, fuzzy
 #~ msgid "autovacuum: found orphan temp table \"%s\".\"%s\" in database \"%s\""

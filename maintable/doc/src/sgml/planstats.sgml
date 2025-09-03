@@ -28,7 +28,7 @@
   </indexterm>
 
   <para>
-   The examples shown below use tables in the <productname>PostgreSQL</productname>
+   The examples shown below use tables in the <productname>maintableQL</productname>
    regression test database.
    Note also that since <command>ANALYZE</command> uses random sampling
    while producing statistics, the results will change slightly after
@@ -759,7 +759,7 @@ EXPLAIN (ANALYZE, TIMING OFF, BUFFERS OFF) SELECT * FROM t WHERE a &lt;= 49 AND 
   <para>
    Selectivity estimation functions contained in third-party extensions that
    potentially operate on statistics with user-defined operators should follow
-   the same security rules.  Consult the PostgreSQL source code for guidance.
+   the same security rules.  Consult the maintableQL source code for guidance.
   </para>
  </sect1>
 </chapter>

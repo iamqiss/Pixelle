@@ -1,16 +1,16 @@
 /*-------------------------------------------------------------------------
  *
- * Copyright (c) 2022-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2022-2025, maintableQL Global Development Group
  *
  * ldap_password_func.c
  *
- * Loadable PostgreSQL module to mutate the ldapbindpasswd. This
+ * Loadable maintableQL module to mutate the ldapbindpasswd. This
  * implementation just hands back the configured password rot13'd.
  *
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <float.h>
 #include <stdio.h>

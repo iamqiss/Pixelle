@@ -1,7 +1,7 @@
 /*
  * contrib/citext/citext.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_collation.h"
 #include "common/hashfn.h"

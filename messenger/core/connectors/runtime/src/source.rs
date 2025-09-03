@@ -19,10 +19,10 @@
 use dashmap::DashMap;
 use dlopen2::wrapper::Container;
 use flume::{Receiver, Sender};
-use iggy::prelude::{
-    DirectConfig, HeaderKey, HeaderValue, IggyClient, IggyDuration, IggyError, IggyMessage,
+use messenger::prelude::{
+    DirectConfig, HeaderKey, HeaderValue, MessengerClient, MessengerDuration, MessengerError, MessengerMessage,
 };
-use iggy_connector_sdk::{
+use messenger_connector_sdk::{
     ConnectorState, DecodedMessage, Error, ProducedMessages, StreamEncoder, TopicMetadata,
     transforms::Transform,
 };
@@ -47,7 +47,7 @@ pub static SOURCE_SENDERS: Lazy<DashMap<u32, Sender<ProducedMessages>>> = Lazy::
 
 pub async fn init(
     source_configs: HashMap<String, SourceConfig>,
-    iggy_client: &IggyClient,
+    messenger_client: &MessengerClient,
     state_path: &str,
 ) -> Result<HashMap<String, SourceConnector>, RuntimeError> {
     let mut source_connectors: HashMap<String, SourceConnector> = HashMap::new();
@@ -141,10 +141,10 @@ pub async fn init(
 
         for stream in config.streams.iter() {
             let linger_time =
-                IggyDuration::from_str(stream.linger_time.as_deref().unwrap_or("5ms"))
+                MessengerDuration::from_str(stream.linger_time.as_deref().unwrap_or("5ms"))
                     .expect("Invalid send interval");
             let batch_length = stream.batch_length.unwrap_or(1000);
-            let producer = iggy_client
+            let producer = messenger_client
                 .producer(&stream.stream, &stream.topic)?
                 .direct(
                     DirectConfig::builder()
@@ -241,7 +241,7 @@ pub fn handle(sources: Vec<SourceConnectorWrapper>) {
                         number += 1;
                     }
 
-                    let Ok(iggy_messages) = process_messages(
+                    let Ok(messenger_messages) = process_messages(
                         plugin_id,
                         &encoder,
                         &topic_metadata,
@@ -256,7 +256,7 @@ pub fn handle(sources: Vec<SourceConnectorWrapper>) {
                         continue;
                     };
 
-                    if let Err(error) = producer.send(iggy_messages).await {
+                    if let Err(error) = producer.send(messenger_messages).await {
                         error!(
                             "Failed to send {count} messages to stream: {}, topic: {} by source connector with ID: {plugin_id}. {error}",
                             producer.stream(),
@@ -299,8 +299,8 @@ fn process_messages(
     topic_metadata: &TopicMetadata,
     messages: Vec<DecodedMessage>,
     transforms: &Vec<Arc<dyn Transform>>,
-) -> Result<Vec<IggyMessage>, Error> {
-    let mut iggy_messages = Vec::with_capacity(messages.len());
+) -> Result<Vec<MessengerMessage>, Error> {
+    let mut messenger_messages = Vec::with_capacity(messages.len());
     for message in messages {
         let mut current_message = Some(message);
         for transform in transforms.iter() {
@@ -324,17 +324,17 @@ fn process_messages(
             continue;
         };
 
-        let Ok(iggy_message) = build_iggy_message(payload, message.id, message.headers) else {
+        let Ok(messenger_message) = build_messenger_message(payload, message.id, message.headers) else {
             error!(
-                "Failed to build Iggy message for source connector with ID: {id}, stream: {}, topic: {}",
+                "Failed to build Messenger message for source connector with ID: {id}, stream: {}, topic: {}",
                 topic_metadata.stream, topic_metadata.topic
             );
             continue;
         };
 
-        iggy_messages.push(iggy_message);
+        messenger_messages.push(messenger_message);
     }
-    Ok(iggy_messages)
+    Ok(messenger_messages)
 }
 
 extern "C" fn handle_produced_messages(
@@ -356,25 +356,25 @@ extern "C" fn handle_produced_messages(
     }
 }
 
-fn build_iggy_message(
+fn build_messenger_message(
     payload: Vec<u8>,
     id: Option<u128>,
     headers: Option<HashMap<HeaderKey, HeaderValue>>,
-) -> Result<IggyMessage, IggyError> {
+) -> Result<MessengerMessage, MessengerError> {
     match (id, headers) {
-        (Some(id), Some(h)) => IggyMessage::builder()
+        (Some(id), Some(h)) => MessengerMessage::builder()
             .payload(payload.into())
             .id(id)
             .user_headers(h)
             .build(),
-        (Some(id), None) => IggyMessage::builder()
+        (Some(id), None) => MessengerMessage::builder()
             .payload(payload.into())
             .id(id)
             .build(),
-        (None, Some(h)) => IggyMessage::builder()
+        (None, Some(h)) => MessengerMessage::builder()
             .payload(payload.into())
             .user_headers(h)
             .build(),
-        (None, None) => IggyMessage::builder().payload(payload.into()).build(),
+        (None, None) => MessengerMessage::builder().payload(payload.into()).build(),
     }
 }

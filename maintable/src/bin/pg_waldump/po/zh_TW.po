@@ -1,12 +1,12 @@
 # Traditional Chinese message translation file for pg_waldump
-# Copyright (C) 2023 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_waldump (PostgreSQL) package.
+# Copyright (C) 2023 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_waldump (maintableQL) package.
 # Zhenbang Wei <znbang@gmail.com>, 2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_waldump (PostgreSQL) 16\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_waldump (maintableQL) 16\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-09-11 20:48+0000\n"
 "PO-Revision-Date: 2023-11-06 08:50+0800\n"
 "Last-Translator: Zhenbang Wei <znbang@gmail.com>\n"
@@ -114,7 +114,7 @@ msgid "could not read from file %s, offset %d: read %d of %d"
 msgstr "無法從檔案 %s 讀取，位移 %d: 已讀取 %d / %d"
 
 # commands/vacuum.c:2258 commands/vacuumlazy.c:489 commands/vacuumlazy.c:770
-# nodes/print.c:86 storage/lmgr/deadlock.c:888 tcop/postgres.c:3285
+# nodes/print.c:86 storage/lmgr/deadlock.c:888 tcop/maintable.c:3285
 #: pg_waldump.c:511
 #, c-format
 msgid "%s"
@@ -141,9 +141,9 @@ msgstr "無法關閉檔案 \"%s\": %m"
 #: pg_waldump.c:754
 #, c-format
 msgid ""
-"%s decodes and displays PostgreSQL write-ahead logs for debugging.\n"
+"%s decodes and displays maintableQL write-ahead logs for debugging.\n"
 "\n"
-msgstr "%s 解碼並顯示 PostgreSQL 的 write-ahead 日誌以進行除錯。\n"
+msgstr "%s 解碼並顯示 maintableQL 的 write-ahead 日誌以進行除錯。\n"
 
 #: pg_waldump.c:756
 #, c-format
@@ -414,7 +414,7 @@ msgstr[0] "第一筆記錄在 %X/%X 之後，位於 %X/%X，跳過 %u 個位元�
 msgid "error in WAL record at %X/%X: %s"
 msgstr "WAL 記錄在 %X/%X 出現錯誤: %s"
 
-# tcop/postgres.c:2636 tcop/postgres.c:2652
+# tcop/maintable.c:2636 tcop/maintable.c:2652
 #: pg_waldump.c:1317
 #, c-format
 msgid "Try \"%s --help\" for more information."

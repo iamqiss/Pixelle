@@ -22,7 +22,7 @@
 use super::TimeSeriesCalculation;
 use crate::analytics::record::BenchmarkRecord;
 use bench_report::time_series::{TimePoint, TimeSeries, TimeSeriesKind};
-use iggy::prelude::IggyDuration;
+use messenger::prelude::MessengerDuration;
 use tracing::warn;
 
 /// Calculator for latency time series
@@ -30,7 +30,7 @@ pub struct LatencyTimeSeriesCalculator;
 
 impl TimeSeriesCalculation for LatencyTimeSeriesCalculator {
     // This implementation is using actual latency values and average latencies per bucket
-    fn calculate(&self, records: &[BenchmarkRecord], bucket_size: IggyDuration) -> TimeSeries {
+    fn calculate(&self, records: &[BenchmarkRecord], bucket_size: MessengerDuration) -> TimeSeries {
         if records.len() < 2 {
             warn!("Not enough records to calculate latency");
             return TimeSeries {

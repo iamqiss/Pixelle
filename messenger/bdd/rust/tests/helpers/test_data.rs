@@ -17,16 +17,16 @@
  */
 
 use bytes::Bytes;
-use iggy::prelude::IggyMessage;
+use messenger::prelude::MessengerMessage;
 
 #[must_use]
-pub fn create_test_messages(count: u32) -> Vec<IggyMessage> {
+pub fn create_test_messages(count: u32) -> Vec<MessengerMessage> {
     let mut messages = Vec::new();
     for i in 0..count {
         let id = u128::from(i + 1);
         let payload = Bytes::from(format!("test message {i}"));
         messages.push(
-            IggyMessage::builder()
+            MessengerMessage::builder()
                 .id(id)
                 .payload(payload)
                 .build()

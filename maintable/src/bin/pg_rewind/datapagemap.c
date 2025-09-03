@@ -5,12 +5,12 @@
  *
  * This is a fairly simple bitmap.
  *
- * Copyright (c) 2013-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2013-2025, maintableQL Global Development Group
  *
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "common/logging.h"
 #include "datapagemap.h"

@@ -9,7 +9,7 @@
 
   <para>
    To supplement the trigger mechanism discussed in <xref linkend="triggers"/>,
-   <productname>PostgreSQL</productname> also provides event triggers.  Unlike regular
+   <productname>maintableQL</productname> also provides event triggers.  Unlike regular
    triggers, which are attached to a single table and capture only DML events,
    event triggers are global to a particular database and are capable of
    capturing DDL events.
@@ -46,7 +46,7 @@
      setting <xref linkend="guc-event-triggers"/> to <literal>false</literal>
      either in a connection string or configuration file. Alternatively, you can
      restart the system in single-user mode (as event triggers are
-     disabled in this mode). See the <xref linkend="app-postgres"/> reference
+     disabled in this mode). See the <xref linkend="app-maintable"/> reference
      page for details about using single-user mode.
      The <literal>login</literal> event will also fire on standby servers.
      To prevent servers from becoming inaccessible, such triggers must avoid
@@ -291,7 +291,7 @@ typedef struct EventTriggerData
       <term><structfield>parsetree</structfield></term>
       <listitem>
        <para>
-        A pointer to the parse tree of the command.  Check the PostgreSQL
+        A pointer to the parse tree of the command.  Check the maintableQL
         source code for details.  The parse tree structure is subject to change
         without notice.
        </para>
@@ -337,7 +337,7 @@ typedef struct EventTriggerData
    <para>
     This is the source code of the trigger function:
 <programlisting><![CDATA[
-#include "postgres.h"
+#include "maintable.h"
 
 #include "commands/event_trigger.h"
 #include "fmgr.h"

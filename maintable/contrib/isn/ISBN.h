@@ -1,6 +1,6 @@
 /*
  * ISBN.h
- *	  PostgreSQL type definitions for ISNs (ISBN, ISMN, ISSN, EAN13, UPC)
+ *	  maintableQL type definitions for ISNs (ISBN, ISMN, ISSN, EAN13, UPC)
  *
  * Information recompiled by Kronuz on June 20, 2006
  * http://www.isbn-international.org/

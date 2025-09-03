@@ -1,11 +1,11 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 
 use Test::More;
 
@@ -18,14 +18,14 @@ my $filler_size = 1900;
 #
 # Test set-up
 #
-$node = PostgreSQL::Test::Cluster->new('test');
+$node = maintableQL::Test::Cluster->new('test');
 $node->init(no_data_checksums => 1);
-$node->append_conf('postgresql.conf', 'autovacuum=off');
+$node->append_conf('maintableql.conf', 'autovacuum=off');
 $node->start;
-$blksize = int($node->safe_psql('postgres', 'SHOW block_size;'));
-$node->safe_psql('postgres', q(CREATE EXTENSION amcheck));
+$blksize = int($node->safe_psql('maintable', 'SHOW block_size;'));
+$node->safe_psql('maintable', q(CREATE EXTENSION amcheck));
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 		CREATE OR REPLACE FUNCTION  random_string( INT ) RETURNS text AS $$
 		SELECT string_agg(substring('0123456789abcdefghijklmnopqrstuvwxyz', ceil(random() * 36)::integer, 1), '') from generate_series(1, $1);
 		$$ LANGUAGE SQL;));
@@ -44,7 +44,7 @@ sub invalid_entry_order_leaf_page_test
 	my $indexname = "test_gin_idx";
 
 	$node->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
 		DROP TABLE IF EXISTS $relname;
 		CREATE TABLE $relname (a text[]);
 		INSERT INTO $relname (a) VALUES ('{aaaaa,bbbbb}');
@@ -62,7 +62,7 @@ sub invalid_entry_order_leaf_page_test
 	$node->start;
 
 	my ($result, $stdout, $stderr) =
-	  $node->psql('postgres', qq(SELECT gin_index_check('$indexname')));
+	  $node->psql('maintable', qq(SELECT gin_index_check('$indexname')));
 	my $expected =
 	  "index \"$indexname\" has wrong tuple order on entry tree page, block 1, offset 2, rightlink 4294967295";
 	like($stderr, qr/$expected/);
@@ -76,7 +76,7 @@ sub invalid_entry_order_inner_page_test
 	# to break the order in the inner page we need at least 3 items (rightmost key in the inner level is not checked for the order)
 	# so fill table until we have 2 splits
 	$node->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
 		DROP TABLE IF EXISTS $relname;
 		CREATE TABLE $relname (a text[]);
 		INSERT INTO $relname (a) VALUES (('{' || 'pppppppppp' || random_string($filler_size) ||'}')::text[]);
@@ -101,7 +101,7 @@ sub invalid_entry_order_inner_page_test
 	$node->start;
 
 	my ($result, $stdout, $stderr) =
-	  $node->psql('postgres', qq(SELECT gin_index_check('$indexname')));
+	  $node->psql('maintable', qq(SELECT gin_index_check('$indexname')));
 	my $expected =
 	  "index \"$indexname\" has wrong tuple order on entry tree page, block 1, offset 2, rightlink 4294967295";
 	like($stderr, qr/$expected/);
@@ -113,7 +113,7 @@ sub invalid_entry_columns_order_test
 	my $indexname = "test_gin_idx";
 
 	$node->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
 		DROP TABLE IF EXISTS $relname;
 		CREATE TABLE $relname (a text[],b text[]);
 		INSERT INTO $relname (a,b) VALUES ('{aaa}','{bbb}');
@@ -142,7 +142,7 @@ sub invalid_entry_columns_order_test
 	$node->start;
 
 	my ($result, $stdout, $stderr) =
-	  $node->psql('postgres', qq(SELECT gin_index_check('$indexname')));
+	  $node->psql('maintable', qq(SELECT gin_index_check('$indexname')));
 	my $expected =
 	  "index \"$indexname\" has wrong tuple order on entry tree page, block 1, offset 2, rightlink 4294967295";
 	like($stderr, qr/$expected/);
@@ -155,7 +155,7 @@ sub inconsistent_with_parent_key__parent_key_corrupted_test
 
 	# fill the table until we have a split
 	$node->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
 		DROP TABLE IF EXISTS $relname;
 		CREATE TABLE $relname (a text[]);
 		INSERT INTO $relname (a) VALUES (('{' || 'llllllllll' || random_string($filler_size) ||'}')::text[]);
@@ -177,7 +177,7 @@ sub inconsistent_with_parent_key__parent_key_corrupted_test
 	$node->start;
 
 	my ($result, $stdout, $stderr) =
-	  $node->psql('postgres', qq(SELECT gin_index_check('$indexname')));
+	  $node->psql('maintable', qq(SELECT gin_index_check('$indexname')));
 	my $expected =
 	  "index \"$indexname\" has inconsistent records on page 3 offset 3";
 	like($stderr, qr/$expected/);
@@ -190,7 +190,7 @@ sub inconsistent_with_parent_key__child_key_corrupted_test
 
 	# fill the table until we have a split
 	$node->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
 		DROP TABLE IF EXISTS $relname;
 		CREATE TABLE $relname (a text[]);
 		INSERT INTO $relname (a) VALUES (('{' || 'llllllllll' || random_string($filler_size) ||'}')::text[]);
@@ -212,7 +212,7 @@ sub inconsistent_with_parent_key__child_key_corrupted_test
 	$node->start;
 
 	my ($result, $stdout, $stderr) =
-	  $node->psql('postgres', qq(SELECT gin_index_check('$indexname')));
+	  $node->psql('maintable', qq(SELECT gin_index_check('$indexname')));
 	my $expected =
 	  "index \"$indexname\" has inconsistent records on page 3 offset 3";
 	like($stderr, qr/$expected/);
@@ -224,7 +224,7 @@ sub inconsistent_with_parent_key__parent_key_corrupted_posting_tree_test
 	my $indexname = "test_gin_idx";
 
 	$node->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
 		DROP TABLE IF EXISTS $relname;
 		CREATE TABLE $relname (a text[]);
 		INSERT INTO $relname (a) select ('{aaaaa}') from generate_series(1,10000);
@@ -246,7 +246,7 @@ sub inconsistent_with_parent_key__parent_key_corrupted_posting_tree_test
 	$node->start;
 
 	my ($result, $stdout, $stderr) =
-	  $node->psql('postgres', qq(SELECT gin_index_check('$indexname')));
+	  $node->psql('maintable', qq(SELECT gin_index_check('$indexname')));
 	my $expected =
 	  "index \"$indexname\": tid exceeds parent's high key in postingTree leaf on block 4";
 	like($stderr, qr/$expected/);
@@ -259,7 +259,7 @@ sub relation_filepath
 	my ($relname) = @_;
 
 	my $pgdata = $node->data_dir;
-	my $rel = $node->safe_psql('postgres',
+	my $rel = $node->safe_psql('maintable',
 		qq(SELECT pg_relation_filepath('$relname')));
 	die "path not found for relation $relname" unless defined $rel;
 	return "$pgdata/$rel";

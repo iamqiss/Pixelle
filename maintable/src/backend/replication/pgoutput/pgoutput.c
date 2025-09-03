@@ -3,14 +3,14 @@
  * pgoutput.c
  *		Logical Replication output plugin
  *
- * Copyright (c) 2012-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2012-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  src/backend/replication/pgoutput/pgoutput.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/tupconvert.h"
 #include "catalog/partition.h"

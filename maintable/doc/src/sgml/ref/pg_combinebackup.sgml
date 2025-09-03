@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pg_combinebackup.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-pgcombinebackup">
@@ -325,7 +325,7 @@ PostgreSQL documentation
   <title>Environment</title>
 
   <para>
-   This utility, like most other <productname>PostgreSQL</productname> utilities,
+   This utility, like most other <productname>maintableQL</productname> utilities,
    uses the environment variables supported by <application>libpq</application>
    (see <xref linkend="libpq-envars"/>).
   </para>

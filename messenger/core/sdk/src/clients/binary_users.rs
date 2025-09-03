@@ -16,21 +16,21 @@
  * under the License.
  */
 
-use crate::prelude::IggyClient;
+use crate::prelude::MessengerClient;
 use async_trait::async_trait;
-use iggy_binary_protocol::UserClient;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{
-    Identifier, IdentityInfo, IggyError, Permissions, UserInfo, UserInfoDetails, UserStatus,
+use messenger_binary_protocol::UserClient;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{
+    Identifier, IdentityInfo, MessengerError, Permissions, UserInfo, UserInfoDetails, UserStatus,
 };
 
 #[async_trait]
-impl UserClient for IggyClient {
-    async fn get_user(&self, user_id: &Identifier) -> Result<Option<UserInfoDetails>, IggyError> {
+impl UserClient for MessengerClient {
+    async fn get_user(&self, user_id: &Identifier) -> Result<Option<UserInfoDetails>, MessengerError> {
         self.client.read().await.get_user(user_id).await
     }
 
-    async fn get_users(&self) -> Result<Vec<UserInfo>, IggyError> {
+    async fn get_users(&self) -> Result<Vec<UserInfo>, MessengerError> {
         self.client.read().await.get_users().await
     }
 
@@ -40,7 +40,7 @@ impl UserClient for IggyClient {
         password: &str,
         status: UserStatus,
         permissions: Option<Permissions>,
-    ) -> Result<UserInfoDetails, IggyError> {
+    ) -> Result<UserInfoDetails, MessengerError> {
         self.client
             .read()
             .await
@@ -48,7 +48,7 @@ impl UserClient for IggyClient {
             .await
     }
 
-    async fn delete_user(&self, user_id: &Identifier) -> Result<(), IggyError> {
+    async fn delete_user(&self, user_id: &Identifier) -> Result<(), MessengerError> {
         self.client.read().await.delete_user(user_id).await
     }
 
@@ -57,7 +57,7 @@ impl UserClient for IggyClient {
         user_id: &Identifier,
         username: Option<&str>,
         status: Option<UserStatus>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.client
             .read()
             .await
@@ -69,7 +69,7 @@ impl UserClient for IggyClient {
         &self,
         user_id: &Identifier,
         permissions: Option<Permissions>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.client
             .read()
             .await
@@ -82,7 +82,7 @@ impl UserClient for IggyClient {
         user_id: &Identifier,
         current_password: &str,
         new_password: &str,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.client
             .read()
             .await
@@ -90,7 +90,7 @@ impl UserClient for IggyClient {
             .await
     }
 
-    async fn login_user(&self, username: &str, password: &str) -> Result<IdentityInfo, IggyError> {
+    async fn login_user(&self, username: &str, password: &str) -> Result<IdentityInfo, MessengerError> {
         self.client
             .read()
             .await
@@ -98,7 +98,7 @@ impl UserClient for IggyClient {
             .await
     }
 
-    async fn logout_user(&self) -> Result<(), IggyError> {
+    async fn logout_user(&self) -> Result<(), MessengerError> {
         self.client.read().await.logout_user().await
     }
 }

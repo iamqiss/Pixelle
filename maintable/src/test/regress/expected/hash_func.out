@@ -78,7 +78,7 @@ WHERE  hashchar(v)::bit(32) != hashcharextended(v, 0)::bit(32)
 SELECT v as value, hashname(v)::bit(32) as standard,
        hashnameextended(v, 0)::bit(32) as extended0,
        hashnameextended(v, 1)::bit(32) as extended1
-FROM   (VALUES (NULL), ('PostgreSQL'), ('eIpUEtqmY89'), ('AXKEJBTK'),
+FROM   (VALUES (NULL), ('maintableQL'), ('eIpUEtqmY89'), ('AXKEJBTK'),
         ('muop28x03'), ('yi3nm0d73')) x(v)
 WHERE  hashname(v)::bit(32) != hashnameextended(v, 0)::bit(32)
        OR hashname(v)::bit(32) = hashnameextended(v, 1)::bit(32);
@@ -89,7 +89,7 @@ WHERE  hashname(v)::bit(32) != hashnameextended(v, 0)::bit(32)
 SELECT v as value, hashtext(v)::bit(32) as standard,
        hashtextextended(v, 0)::bit(32) as extended0,
        hashtextextended(v, 1)::bit(32) as extended1
-FROM   (VALUES (NULL), ('PostgreSQL'), ('eIpUEtqmY89'), ('AXKEJBTK'),
+FROM   (VALUES (NULL), ('maintableQL'), ('eIpUEtqmY89'), ('AXKEJBTK'),
         ('muop28x03'), ('yi3nm0d73')) x(v)
 WHERE  hashtext(v)::bit(32) != hashtextextended(v, 0)::bit(32)
        OR hashtext(v)::bit(32) = hashtextextended(v, 1)::bit(32);
@@ -187,7 +187,7 @@ ERROR:  could not identify an extended hash function for type bit varying
 SELECT v as value, hashbpchar(v)::bit(32) as standard,
        hashbpcharextended(v, 0)::bit(32) as extended0,
        hashbpcharextended(v, 1)::bit(32) as extended1
-FROM   (VALUES (NULL), ('PostgreSQL'), ('eIpUEtqmY89'), ('AXKEJBTK'),
+FROM   (VALUES (NULL), ('maintableQL'), ('eIpUEtqmY89'), ('AXKEJBTK'),
         ('muop28x03'), ('yi3nm0d73')) x(v)
 WHERE  hashbpchar(v)::bit(32) != hashbpcharextended(v, 0)::bit(32)
        OR hashbpchar(v)::bit(32) = hashbpcharextended(v, 1)::bit(32);

@@ -4,7 +4,7 @@
  * src/pl/plpython/plpy_procedure.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "catalog/pg_proc.h"

@@ -12,7 +12,7 @@
  </indexterm>
 
   <para>
-   <productname>PostgreSQL</productname>, like any database software, requires that certain tasks
+   <productname>maintableQL</productname>, like any database software, requires that certain tasks
    be performed regularly to achieve optimum performance. The tasks
    discussed here are <emphasis>required</emphasis>, but they
    are repetitive in nature and can easily be automated using standard
@@ -27,7 +27,7 @@
    regular schedule.  Without a recent backup, you have no chance of recovery
    after a catastrophe (disk failure, fire, mistakenly dropping a critical
    table, etc.).  The backup and recovery mechanisms available in
-   <productname>PostgreSQL</productname> are discussed at length in
+   <productname>maintableQL</productname> are discussed at length in
    <xref linkend="backup"/>.
   </para>
 
@@ -46,14 +46,14 @@
 
   <para>
    <ulink
-   url="https://bucardo.org/check_postgres/"><application>check_postgres</application></ulink>
+   url="https://bucardo.org/check_maintable/"><application>check_maintable</application></ulink>
    is available for monitoring database health and reporting unusual
-   conditions.  <application>check_postgres</application> integrates with
+   conditions.  <application>check_maintable</application> integrates with
    Nagios and MRTG, but can be run standalone too.
   </para>
 
   <para>
-   <productname>PostgreSQL</productname> is low-maintenance compared
+   <productname>maintableQL</productname> is low-maintenance compared
    to some other database management systems.  Nonetheless,
    appropriate attention to these tasks will go far towards ensuring a
    pleasant and productive experience with the system.
@@ -67,7 +67,7 @@
   </indexterm>
 
   <para>
-   <productname>PostgreSQL</productname> databases require periodic
+   <productname>maintableQL</productname> databases require periodic
    maintenance known as <firstterm>vacuuming</firstterm>.  For many installations, it
    is sufficient to let vacuuming be performed by the <firstterm>autovacuum
    daemon</firstterm>, which is described in <xref linkend="autovacuum"/>.  You might
@@ -86,7 +86,7 @@
    <title>Vacuuming Basics</title>
 
    <para>
-    <productname>PostgreSQL</productname>'s
+    <productname>maintableQL</productname>'s
     <link linkend="sql-vacuum"><command>VACUUM</command></link> command has to
     process each table on a regular basis for several reasons:
 
@@ -98,7 +98,7 @@
 
      <listitem>
       <simpara>To update data statistics used by the
-      <productname>PostgreSQL</productname> query planner.</simpara>
+      <productname>maintableQL</productname> query planner.</simpara>
      </listitem>
 
      <listitem>
@@ -153,7 +153,7 @@
    </indexterm>
 
    <para>
-    In <productname>PostgreSQL</productname>, an
+    In <productname>maintableQL</productname>, an
     <command>UPDATE</command> or <command>DELETE</command> of a row does not
     immediately remove the old version of the row.
     This approach is necessary to gain the benefits of multiversion
@@ -268,7 +268,7 @@
    </indexterm>
 
    <para>
-    The <productname>PostgreSQL</productname> query planner relies on
+    The <productname>maintableQL</productname> query planner relies on
     statistical information about the contents of tables in order to
     generate good plans for queries.  These statistics are gathered by
     the <link linkend="sql-analyze"><command>ANALYZE</command></link> command,
@@ -384,9 +384,9 @@
    </para>
 
    <para>
-    Second, it allows <productname>PostgreSQL</productname> to answer some
+    Second, it allows <productname>maintableQL</productname> to answer some
     queries using only the index, without reference to the underlying table.
-    Since <productname>PostgreSQL</productname> indexes don't contain tuple
+    Since <productname>maintableQL</productname> indexes don't contain tuple
     visibility information, a normal index scan fetches the heap tuple for each
     matching index entry, to check whether it should be seen by the current
     transaction.
@@ -414,7 +414,7 @@
     </indexterm>
 
    <para>
-    <productname>PostgreSQL</productname>'s
+    <productname>maintableQL</productname>'s
     <link linkend="mvcc-intro">MVCC</link> transaction semantics
     depend on being able to compare transaction ID (<acronym>XID</acronym>)
     numbers: a row version with an insertion XID greater than the current
@@ -446,7 +446,7 @@
     the next two billion transactions, no matter which normal XID we are
     talking about. If the row version still exists after more than two billion
     transactions, it will suddenly appear to be in the future. To
-    prevent this, <productname>PostgreSQL</productname> reserves a special XID,
+    prevent this, <productname>maintableQL</productname> reserves a special XID,
     <literal>FrozenTransactionId</literal>, which does not follow the normal XID
     comparison rules and is always considered older
     than every normal XID.
@@ -459,7 +459,7 @@
 
    <note>
     <para>
-     In <productname>PostgreSQL</productname> versions before 9.4, freezing was
+     In <productname>maintableQL</productname> versions before 9.4, freezing was
      implemented by actually replacing a row's insertion XID
      with <literal>FrozenTransactionId</literal>, which was visible in the
      row's <structname>xmin</structname> system column.  Newer versions just set a flag
@@ -748,7 +748,7 @@ HINT:  Execute a database-wide VACUUM in that database.
      scenario is if you wish to <command>TRUNCATE</command> or <command>DROP</command> unneeded
      tables to avoid needing to <command>VACUUM</command> them.  The three-million-transaction
      safety margin exists to let the administrator do this. See the
-     <xref linkend="app-postgres"/> reference page for details about using single-user mode.
+     <xref linkend="app-maintable"/> reference page for details about using single-user mode.
     </para>
    </note>
 
@@ -863,7 +863,7 @@ HINT:  Execute a database-wide VACUUM in that database.
     <secondary>general information</secondary>
    </indexterm>
    <para>
-    <productname>PostgreSQL</productname> has an optional but highly
+    <productname>maintableQL</productname> has an optional but highly
     recommended feature called <firstterm>autovacuum</firstterm>,
     whose purpose is to automate the execution of
     <command>VACUUM</command> and <command>ANALYZE</command> commands.
@@ -985,7 +985,7 @@ analyze threshold = analyze base threshold + analyze scale factor * number of tu
 
    <para>
     The default thresholds and scale factors are taken from
-    <filename>postgresql.conf</filename>, but it is possible to override them
+    <filename>maintableql.conf</filename>, but it is possible to override them
     (and many other autovacuum control parameters) on a per-table basis; see
     <xref linkend="sql-createtable-storage-parameters"/> for more information.
     If a setting has been changed via a table's storage parameters, that value
@@ -1115,11 +1115,11 @@ analyze threshold = analyze base threshold + analyze scale factor * number of tu
 
   <para>
    If you simply direct the <systemitem>stderr</systemitem> of
-   <command>postgres</command> into a
+   <command>maintable</command> into a
    file, you will have log output, but
    the only way to truncate the log file is to stop and restart
    the server. This might be acceptable if you are using
-   <productname>PostgreSQL</productname> in a development environment,
+   <productname>maintableQL</productname> in a development environment,
    but few production servers would find this behavior acceptable.
   </para>
 
@@ -1128,7 +1128,7 @@ analyze threshold = analyze base threshold + analyze scale factor * number of tu
    <systemitem>stderr</systemitem> output to some type of log rotation program.
    There is a built-in log rotation facility, which you can use by
    setting the configuration parameter <varname>logging_collector</varname> to
-   <literal>true</literal> in <filename>postgresql.conf</filename>.  The control
+   <literal>true</literal> in <filename>maintableql.conf</filename>.  The control
    parameters for this program are described in <xref
    linkend="runtime-config-logging-where"/>. You can also use this approach
    to capture the log data in machine readable <acronym>CSV</acronym>
@@ -1140,7 +1140,7 @@ analyze threshold = analyze base threshold + analyze scale factor * number of tu
    program if you have one that you are already using with other
    server software. For example, the <application>rotatelogs</application>
    tool included in the <productname>Apache</productname> distribution
-   can be used with <productname>PostgreSQL</productname>.  One way to
+   can be used with <productname>maintableQL</productname>.  One way to
    do this is to pipe the server's
    <systemitem>stderr</systemitem> output to the desired program.
    If you start the server with
@@ -1155,7 +1155,7 @@ pg_ctl start | rotatelogs /var/log/pgsql_log 86400
 
   <para>
    You can combine these approaches by setting up <application>logrotate</application>
-   to collect log files produced by <productname>PostgreSQL</productname> built-in
+   to collect log files produced by <productname>maintableQL</productname> built-in
    logging collector.  In this case, the logging collector defines the names and
    location of the log files, while <application>logrotate</application>
    periodically archives these files.  When initiating log rotation,
@@ -1163,7 +1163,7 @@ pg_ctl start | rotatelogs /var/log/pgsql_log 86400
    sends further output to the new file.  This is commonly done with a
    <literal>postrotate</literal> script that sends a <literal>SIGHUP</literal>
    signal to the application, which then reopens the log file.
-   In <productname>PostgreSQL</productname>, you can run <command>pg_ctl</command>
+   In <productname>maintableQL</productname>, you can run <command>pg_ctl</command>
    with the <literal>logrotate</literal> option instead.  When the server receives
    this command, the server either switches to a new log file or reopens the
    existing file, depending on the logging configuration
@@ -1189,7 +1189,7 @@ pg_ctl start | rotatelogs /var/log/pgsql_log 86400
    <application>syslog</application> deal with file rotation. To do this, set the
    configuration parameter <varname>log_destination</varname> to <literal>syslog</literal>
    (to log to <application>syslog</application> only) in
-   <filename>postgresql.conf</filename>. Then you can send a <literal>SIGHUP</literal>
+   <filename>maintableql.conf</filename>. Then you can send a <literal>SIGHUP</literal>
    signal to the <application>syslog</application> daemon whenever you want to force it
    to start writing a new log file.  If you want to automate log
    rotation, the <application>logrotate</application> program can be
@@ -1219,7 +1219,7 @@ pg_ctl start | rotatelogs /var/log/pgsql_log 86400
    <ulink url="https://pgbadger.darold.net/"><productname>pgBadger</productname></ulink>
    is an external project that does sophisticated log file analysis.
    <ulink
-   url="https://bucardo.org/check_postgres/"><productname>check_postgres</productname></ulink>
+   url="https://bucardo.org/check_maintable/"><productname>check_maintable</productname></ulink>
    provides Nagios alerts when important messages appear in the log
    files, as well as detection of many other extraordinary conditions.
   </para>

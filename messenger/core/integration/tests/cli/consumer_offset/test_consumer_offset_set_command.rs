@@ -17,12 +17,12 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestConsumerId, TestHelpCmd,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestConsumerId, TestHelpCmd,
     TestStreamId, TestTopicId, USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use predicates::str::diff;
 use serial_test::parallel;
 use std::str::FromStr;
@@ -95,7 +95,7 @@ impl TestConsumerOffsetSetCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestConsumerOffsetSetCmd {
+impl MessengerCmdTestCase for TestConsumerOffsetSetCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let stream = client
             .create_stream(&self.stream_name, Some(self.stream_id))
@@ -110,14 +110,14 @@ impl IggyCmdTestCase for TestConsumerOffsetSetCmd {
                 Default::default(),
                 None,
                 Some(self.topic_id),
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 MaxTopicSize::ServerDefault,
             )
             .await;
         assert!(topic.is_ok());
 
         let mut messages = (1..=self.stored_offset + 1)
-            .filter_map(|id| IggyMessage::from_str(format!("Test message {id}").as_str()).ok())
+            .filter_map(|id| MessengerMessage::from_str(format!("Test message {id}").as_str()).ok())
             .collect::<Vec<_>>();
 
         let send_status = client
@@ -131,8 +131,8 @@ impl IggyCmdTestCase for TestConsumerOffsetSetCmd {
         assert!(send_status.is_ok());
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("consumer-offset")
             .arg("set")
             .args(self.to_args())
@@ -214,7 +214,7 @@ impl IggyCmdTestCase for TestConsumerOffsetSetCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
     let test_parameters = vec![
         (
@@ -264,9 +264,9 @@ pub async fn should_be_successful() {
         ),
     ];
 
-    iggy_cmd_test.setup().await;
+    messenger_cmd_test.setup().await;
     for (using_stream_id, using_topic_id, using_consumer_id) in test_parameters {
-        iggy_cmd_test
+        messenger_cmd_test
             .execute_test(TestConsumerOffsetSetCmd::new(
                 1,
                 String::from("consumer"),
@@ -287,9 +287,9 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["consumer-offset", "set", "--help"],
             format!(
@@ -300,14 +300,14 @@ Stream ID can be specified as a stream name or ID
 Topic ID can be specified as a topic name or ID
 
 Examples:
- iggy consumer-offset set 1 3 5 1 100
- iggy consumer-offset set consumer 3 5 1 100
- iggy consumer-offset set 1 stream 5 1 100
- iggy consumer-offset set 1 3 topic 1 100
- iggy consumer-offset set consumer stream 5 1 100
- iggy consumer-offset set consumer 3 topic 1 100
- iggy consumer-offset set 1 stream topic 1 100
- iggy consumer-offset set consumer stream topic 1 100
+ messenger consumer-offset set 1 3 5 1 100
+ messenger consumer-offset set consumer 3 5 1 100
+ messenger consumer-offset set 1 stream 5 1 100
+ messenger consumer-offset set 1 3 topic 1 100
+ messenger consumer-offset set consumer stream 5 1 100
+ messenger consumer-offset set consumer 3 topic 1 100
+ messenger consumer-offset set 1 stream topic 1 100
+ messenger consumer-offset set consumer stream topic 1 100
 
 {USAGE_PREFIX} consumer-offset set [OPTIONS] <CONSUMER_ID> <STREAM_ID> <TOPIC_ID> <PARTITION_ID> <OFFSET>
 
@@ -354,9 +354,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["consumer-offset", "set", "-h"],
             format!(

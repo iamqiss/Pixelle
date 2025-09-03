@@ -3,7 +3,7 @@
  *
  * pl_gram.y			- Parser for the PL/pgSQL procedural language
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/namespace.h"
 #include "catalog/pg_proc.h"
@@ -2945,7 +2945,7 @@ read_datatype(int tok, YYSTYPE *yylvalp, YYLTYPE *yyllocp, yyscan_t yyscanner)
 	 *
 	 * Like the core parser, we ignore the specific numbers and sizes of
 	 * dimensions; arrays of different dimensionality are still the same type
-	 * in Postgres.
+	 * in Maintable.
 	 */
 	if (result)
 	{

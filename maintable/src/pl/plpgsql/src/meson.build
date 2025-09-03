@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 plpgsql_sources = files(
   'pl_comp.c',
@@ -51,7 +51,7 @@ endif
 
 plpgsql = shared_module('plpgsql',
   plpgsql_sources,
-  c_pch: pch_postgres_h,
+  c_pch: pch_maintable_h,
   include_directories: include_directories('.'),
   kwargs: pg_mod_args,
 )

@@ -20,7 +20,7 @@
  * same state as after fork() on a Unix system.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -29,7 +29,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 
@@ -380,7 +380,7 @@ internal_forkexec(const char *child_kind, int child_slot,
 	}
 
 	/* set up argv properly */
-	argv[0] = "postgres";
+	argv[0] = "maintable";
 	snprintf(forkav, MAXPGPATH, "--forkchild=%s", child_kind);
 	argv[1] = forkav;
 	/* Insert temp file name after --forkchild argument */
@@ -390,11 +390,11 @@ internal_forkexec(const char *child_kind, int child_slot,
 	/* Fire off execv in child */
 	if ((pid = fork_process()) == 0)
 	{
-		if (execv(postgres_exec_path, argv) < 0)
+		if (execv(maintable_exec_path, argv) < 0)
 		{
 			ereport(LOG,
 					(errmsg("could not execute server process \"%s\": %m",
-							postgres_exec_path)));
+							maintable_exec_path)));
 			/* We're already in the child process here, can't return */
 			exit(1);
 		}
@@ -468,7 +468,7 @@ retry:
 	sprintf(paramHandleStr, "%lu", (DWORD) paramHandle);
 #endif
 	l = snprintf(cmdLine, sizeof(cmdLine) - 1, "\"%s\" --forkchild=\"%s\" %s",
-				 postgres_exec_path, child_kind, paramHandleStr);
+				 maintable_exec_path, child_kind, paramHandleStr);
 	if (l >= sizeof(cmdLine))
 	{
 		ereport(LOG,

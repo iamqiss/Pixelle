@@ -3,14 +3,14 @@
  * waitfuncs.c
  *		Functions for SQL access to syntheses of multiple contention types.
  *
- * Copyright (c) 2002-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2002-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/backend/utils/adt/waitfuncs.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_type.h"
 #include "storage/predicate_internals.h"

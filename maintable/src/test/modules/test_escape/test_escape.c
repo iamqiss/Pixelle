@@ -1,13 +1,13 @@
 /*
  * test_escape.c Test escape functions
  *
- * Copyright (c) 2022-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2022-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/test/modules/test_escape/test_escape.c
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -883,7 +883,7 @@ usage(const char *hint)
 	if (hint)
 		fprintf(stderr, "Error: %s\n\n", hint);
 
-	printf("PostgreSQL escape function test\n"
+	printf("maintableQL escape function test\n"
 		   "\n"
 		   "Usage:\n"
 		   "  test_escape --conninfo=CONNINFO [OPTIONS]\n"

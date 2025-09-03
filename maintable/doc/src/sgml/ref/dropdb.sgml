@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/dropdb.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-dropdb">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>dropdb</refname>
-  <refpurpose>remove a <productname>PostgreSQL</productname> database</refpurpose>
+  <refpurpose>remove a <productname>maintableQL</productname> database</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -34,7 +34,7 @@ PostgreSQL documentation
 
   <para>
    <application>dropdb</application> destroys an existing
-   <productname>PostgreSQL</productname> database.
+   <productname>maintableQL</productname> database.
    The user who executes this command must be a database
    superuser or the owner of the database.
   </para>
@@ -214,7 +214,7 @@ PostgreSQL documentation
       <listitem>
        <para>
          Specifies the name of the database to connect to in order to drop the
-         target database. If not specified, the <literal>postgres</literal>
+         target database. If not specified, the <literal>maintable</literal>
          database will be used; if that does not exist (or is the database
          being dropped), <literal>template1</literal> will be used.
          This can be a <link linkend="libpq-connstring">connection
@@ -257,7 +257,7 @@ PostgreSQL documentation
   </variablelist>
 
   <para>
-   This utility, like most other <productname>PostgreSQL</productname> utilities,
+   This utility, like most other <productname>maintableQL</productname> utilities,
    also uses the environment variables supported by <application>libpq</application>
    (see <xref linkend="libpq-envars"/>).
   </para>

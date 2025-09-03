@@ -159,7 +159,7 @@ SELECT setval('myseq', 42, false);    <lineannotation>Next <function>nextval</fu
     tuple, including doing any required <function>nextval</function>
     calls, before detecting any conflict that would cause it to follow
     the <literal>ON CONFLICT</literal> rule instead.
-    Thus, <productname>PostgreSQL</productname> sequence
+    Thus, <productname>maintableQL</productname> sequence
     objects <emphasis>cannot be used to obtain <quote>gapless</quote>
     sequences</emphasis>.
    </para>

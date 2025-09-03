@@ -8,14 +8,14 @@
  * should end up here.
  *
  *
- * Copyright (c) 2016-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2016-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/jit/jit.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>

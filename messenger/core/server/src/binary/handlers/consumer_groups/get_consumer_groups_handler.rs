@@ -25,13 +25,13 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::get_consumer_groups::GetConsumerGroups;
+use messenger_common::MessengerError;
+use messenger_common::get_consumer_groups::GetConsumerGroups;
 use tracing::debug;
 
 impl ServerCommandHandler for GetConsumerGroups {
     fn code(&self) -> u32 {
-        iggy_common::GET_CONSUMER_GROUPS_CODE
+        messenger_common::GET_CONSUMER_GROUPS_CODE
     }
 
     async fn handle(
@@ -40,7 +40,7 @@ impl ServerCommandHandler for GetConsumerGroups {
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
         let system = system.read().await;
         let consumer_groups = system
@@ -58,13 +58,13 @@ impl ServerCommandHandler for GetConsumerGroups {
 }
 
 impl BinaryServerCommand for GetConsumerGroups {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::GetConsumerGroups(get_consumer_groups) => Ok(get_consumer_groups),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

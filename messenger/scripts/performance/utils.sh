@@ -18,10 +18,10 @@
 # under the License.
 
 # Example bench command:
-# target/release/iggy-bench --message-size 1000 --messages-per-batch 1000 --message-batches 1000 pinned-producer --streams 8 --producers 8 tcp output --remark "test"
+# target/release/messenger-bench --message-size 1000 --messages-per-batch 1000 --message-batches 1000 pinned-producer --streams 8 --producers 8 tcp output --remark "test"
 
 # Function to get the current git tag containing "server" or commit SHA1
-function get_git_iggy_server_tag_or_sha1() {
+function get_git_messenger_server_tag_or_sha1() {
     local dir="$1"
 
     if [ -d "$dir" ]; then
@@ -150,7 +150,7 @@ function construct_bench_command() {
     esac
 
     local commit_hash
-    commit_hash=$(get_git_iggy_server_tag_or_sha1 .) || {
+    commit_hash=$(get_git_messenger_server_tag_or_sha1 .) || {
         echo "Failed to get git commit or tag."
         exit 1
     }

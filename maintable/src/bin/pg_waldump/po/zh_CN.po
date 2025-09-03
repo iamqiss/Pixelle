@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_waldump
-# Copyright (C) 2019 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_waldump (PostgreSQL) package.
+# Copyright (C) 2019 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_waldump (maintableQL) package.
 # FIRST AUTHOR <zhangjie2@cn.fujitsu.com>, 2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_waldump (PostgreSQL) 13\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_waldump (maintableQL) 13\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2020-06-05 01:45+0000\n"
 "PO-Revision-Date: 2020-06-23 18:00+0800\n"
 "Last-Translator: Jie Zhang <zhangjie2@cn.fujitsu.com>\n"
@@ -82,10 +82,10 @@ msgstr "无法从文件%1$s读取，偏移量%2$u，读取%4$zu中的%3$d"
 #: pg_waldump.c:720
 #, c-format
 msgid ""
-"%s decodes and displays PostgreSQL write-ahead logs for debugging.\n"
+"%s decodes and displays maintableQL write-ahead logs for debugging.\n"
 "\n"
 msgstr ""
-"%s 为了调试，解码并显示PostgreSQL预写日志.\n"
+"%s 为了调试，解码并显示maintableQL预写日志.\n"
 "\n"
 
 #: pg_waldump.c:722

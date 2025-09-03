@@ -23,13 +23,13 @@ use crate::binary::sender::SenderKind;
 use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
-use iggy_common::IggyError;
-use iggy_common::get_stream::GetStream;
+use messenger_common::MessengerError;
+use messenger_common::get_stream::GetStream;
 use tracing::debug;
 
 impl ServerCommandHandler for GetStream {
     fn code(&self) -> u32 {
-        iggy_common::GET_STREAM_CODE
+        messenger_common::GET_STREAM_CODE
     }
 
     async fn handle(
@@ -38,7 +38,7 @@ impl ServerCommandHandler for GetStream {
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
         let system = system.read().await;
         let Ok(stream) = system.try_find_stream(session, &self.stream_id) else {
@@ -62,10 +62,10 @@ impl BinaryServerCommand for GetStream {
         sender: &mut SenderKind,
         code: u32,
         length: u32,
-    ) -> Result<Self, IggyError> {
+    ) -> Result<Self, MessengerError> {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::GetStream(get_stream) => Ok(get_stream),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

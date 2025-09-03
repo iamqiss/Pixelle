@@ -30,7 +30,7 @@ The best way to understand this is that WAL CRCs protect records entering the
 WAL stream, and data page verification protects blocks entering the shared
 buffer pool. They are similar in purpose, yet completely separate.  Together
 they ensure we are able to detect errors in data re-entering
-PostgreSQL-controlled memory. Note also that the WAL checksum is a 32-bit CRC,
+maintableQL-controlled memory. Note also that the WAL checksum is a 32-bit CRC,
 whereas the page checksum is only 16-bits.
 
 Any write of a data block can cause a torn page if the write is unsuccessful.

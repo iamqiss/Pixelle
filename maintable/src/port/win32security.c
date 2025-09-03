@@ -3,7 +3,7 @@
  * win32security.c
  *	  Microsoft Windows Win32 Security Support Functions
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/port/win32security.c
@@ -12,9 +12,9 @@
  */
 
 #ifndef FRONTEND
-#include "postgres.h"
+#include "maintable.h"
 #else
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #endif
 
 static void log_error(const char *fmt,...) pg_attribute_printf(1, 2);
@@ -96,7 +96,7 @@ pgwin32_is_admin(void)
  * true:
  *
  * 1) Standard error is not valid (always the case for services, and pg_ctl
- *	  running as a service "passes" that down to postgres,
+ *	  running as a service "passes" that down to maintable,
  *	  c.f. CreateRestrictedProcess())
  * 2) We are running as LocalSystem (only used by services)
  * 3) Our token contains SECURITY_SERVICE_RID (automatically added to the

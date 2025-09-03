@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/explain.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-explain">
@@ -55,7 +55,7 @@ EXPLAIN [ ( <replaceable class="parameter">option</replaceable> [, ...] ) ] <rep
 
   <para>
    This command displays the execution plan that the
-   <productname>PostgreSQL</productname> planner generates for the
+   <productname>maintableQL</productname> planner generates for the
    supplied statement.  The execution plan shows how the table(s)
    referenced by the statement will be scanned &mdash; by plain sequential scan,
    index scan, etc. &mdash; and if multiple tables are referenced, what join
@@ -351,7 +351,7 @@ ROLLBACK;
   <title>Notes</title>
 
   <para>
-   In order to allow the <productname>PostgreSQL</productname> query
+   In order to allow the <productname>maintableQL</productname> query
    planner to make reasonably informed decisions when optimizing
    queries, the <link
    linkend="catalog-pg-statistic"><structname>pg_statistic</structname></link>
@@ -516,7 +516,7 @@ EXPLAIN ANALYZE EXECUTE query(100, 200);
    Of course, the specific numbers shown here depend on the actual
    contents of the tables involved.  Also note that the numbers, and
    even the selected query strategy, might vary between
-   <productname>PostgreSQL</productname> releases due to planner
+   <productname>maintableQL</productname> releases due to planner
    improvements. In addition, the <command>ANALYZE</command> command
    uses random sampling to estimate data statistics; therefore, it is
    possible for cost estimates to change after a fresh run of
@@ -569,7 +569,7 @@ EXPLAIN (GENERIC_PLAN)
   </para>
 
   <para>
-   The following syntax was used before <productname>PostgreSQL</productname>
+   The following syntax was used before <productname>maintableQL</productname>
    version 9.0 and is still supported:
 <synopsis>
 EXPLAIN [ ANALYZE ] [ VERBOSE ] <replaceable class="parameter">statement</replaceable>

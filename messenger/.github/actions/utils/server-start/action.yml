@@ -16,7 +16,7 @@
 # under the License.
 
 name: server-start
-description: Start Iggy server and wait for readiness
+description: Start Messenger server and wait for readiness
 inputs:
   mode:
     description: "How to run the server: cargo|bin"
@@ -25,7 +25,7 @@ inputs:
   cargo-bin:
     description: "Cargo binary name (when mode=cargo)"
     required: false
-    default: "iggy-server"
+    default: "messenger-server"
   cargo-profile:
     description: "Cargo profile: release|debug"
     required: false
@@ -85,8 +85,8 @@ runs:
         : "${RUNNER_TEMP:?}"
         LOG_FILE="${{ inputs.log-file || '' }}"
         PID_FILE="${{ inputs.pid-file || '' }}"
-        [ -n "$LOG_FILE" ] || LOG_FILE="$RUNNER_TEMP/iggy-server.log"
-        [ -n "$PID_FILE" ] || PID_FILE="$RUNNER_TEMP/iggy-server.pid"
+        [ -n "$LOG_FILE" ] || LOG_FILE="$RUNNER_TEMP/messenger-server.log"
+        [ -n "$PID_FILE" ] || PID_FILE="$RUNNER_TEMP/messenger-server.pid"
         echo "LOG_FILE=$LOG_FILE" >> "$GITHUB_ENV"
         echo "PID_FILE=$PID_FILE" >> "$GITHUB_ENV"
 

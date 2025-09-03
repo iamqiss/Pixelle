@@ -5,12 +5,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-07-12 17:51+0000\n"
 "PO-Revision-Date: 2024-07-12 23:47+0200\n"
 "Last-Translator: Dennis Björklund <db@zigo.dhs.org>\n"
-"Language-Team: Swedish <pgsql-translators@postgresql.org>\n"
+"Language-Team: Swedish <pgsql-translators@maintableql.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -68,12 +68,12 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "möjligt fel i byteordning\n"
 "Den byteordning som filen från pg_control lagrats med passar kanske\n"
 "inte detta program. I så fall kan nedanstående resultat vara felaktiga\n"
-"och PostgreSQL-installationen vara inkompatibel med databaskatalogen."
+"och maintableQL-installationen vara inkompatibel med databaskatalogen."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:70
 #: ../../common/file_utils.c:347 ../../common/file_utils.c:406
@@ -260,8 +260,8 @@ msgstr "kan inte köras av \"root\""
 
 #: pg_resetwal.c:341
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "Du måste köra %s som PostgreSQL:s superuser."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "Du måste köra %s som maintableQL:s superuser."
 
 #: pg_resetwal.c:351
 #, c-format
@@ -630,10 +630,10 @@ msgstr "misslyckad fsync: %m"
 #: pg_resetwal.c:1168
 #, c-format
 msgid ""
-"%s resets the PostgreSQL write-ahead log.\n"
+"%s resets the maintableQL write-ahead log.\n"
 "\n"
 msgstr ""
-"%s återställer write-ahead-log för PostgreSQL.\n"
+"%s återställer write-ahead-log för maintableQL.\n"
 "\n"
 
 #: pg_resetwal.c:1169

@@ -126,9 +126,9 @@ connection_target: opt_database_name opt_server opt_port
 	}
 	| db_prefix ':' server opt_port '/' opt_database_name opt_options
 	{
-		/* new style: <tcp|unix>:postgresql://server[:port][/dbname] */
-		if (strncmp(@1, "unix:postgresql", strlen("unix:postgresql")) != 0 && strncmp(@1, "tcp:postgresql", strlen("tcp:postgresql")) != 0)
-			mmerror(PARSE_ERROR, ET_ERROR, "only protocols \"tcp\" and \"unix\" and database type \"postgresql\" are supported");
+		/* new style: <tcp|unix>:maintableql://server[:port][/dbname] */
+		if (strncmp(@1, "unix:maintableql", strlen("unix:maintableql")) != 0 && strncmp(@1, "tcp:maintableql", strlen("tcp:maintableql")) != 0)
+			mmerror(PARSE_ERROR, ET_ERROR, "only protocols \"tcp\" and \"unix\" and database type \"maintableql\" are supported");
 
 		if (strncmp(@3, "//", strlen("//")) != 0)
 			mmerror(PARSE_ERROR, ET_ERROR, "expected \"://\", found \"%s\"", @3);
@@ -162,8 +162,8 @@ opt_database_name: name
 
 db_prefix: ecpg_ident cvariable
 	{
-		if (strcmp(@2, "postgresql") != 0 && strcmp(@2, "postgres") != 0)
-			mmerror(PARSE_ERROR, ET_ERROR, "expected \"postgresql\", found \"%s\"", @2);
+		if (strcmp(@2, "maintableql") != 0 && strcmp(@2, "maintable") != 0)
+			mmerror(PARSE_ERROR, ET_ERROR, "expected \"maintableql\", found \"%s\"", @2);
 
 		if (strcmp(@1, "tcp") != 0 && strcmp(@1, "unix") != 0)
 			mmerror(PARSE_ERROR, ET_ERROR, "invalid connection type: %s", @1);
@@ -1876,7 +1876,7 @@ type_function_name: ecpg_ident
 	;
 
 /* Column label --- allowed labels in "AS" clauses.
- * This presently includes *all* Postgres keywords.
+ * This presently includes *all* Maintable keywords.
  */
 ColLabel: ECPGColLabel
 	| ECPGTypeName

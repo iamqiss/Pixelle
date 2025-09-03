@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Tests for peer authentication and user name map.
 # The test is skipped if the platform does not support peer authentication,
@@ -7,8 +7,8 @@
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 if (!$use_unix_sockets)
 {
@@ -69,11 +69,11 @@ sub test_role
 	}
 }
 
-my $node = PostgreSQL::Test::Cluster->new('node');
+my $node = maintableQL::Test::Cluster->new('node');
 $node->init;
-$node->append_conf('postgresql.conf', "log_connections = authentication\n");
+$node->append_conf('maintableql.conf', "log_connections = authentication\n");
 # Needed to allow connect_fails to inspect postmaster log:
-$node->append_conf('postgresql.conf', "log_min_messages = debug2");
+$node->append_conf('maintableql.conf', "log_min_messages = debug2");
 $node->start;
 
 # Set pg_hba.conf with the peer authentication.
@@ -81,7 +81,7 @@ reset_pg_hba($node, 'peer');
 
 # Check if peer authentication is supported on this platform.
 my $log_offset = -s $node->logfile;
-$node->psql('postgres');
+$node->psql('maintable');
 if ($node->log_contains(
 		qr/peer authentication is not supported on this platform/,
 		$log_offset))
@@ -90,22 +90,22 @@ if ($node->log_contains(
 }
 
 # Add a database role and a group, to use for the user name map.
-$node->safe_psql('postgres', qq{CREATE ROLE testmapuser LOGIN});
-$node->safe_psql('postgres', "CREATE ROLE testmapgroup NOLOGIN");
-$node->safe_psql('postgres', "GRANT testmapgroup TO testmapuser");
+$node->safe_psql('maintable', qq{CREATE ROLE testmapuser LOGIN});
+$node->safe_psql('maintable', "CREATE ROLE testmapgroup NOLOGIN");
+$node->safe_psql('maintable', "GRANT testmapgroup TO testmapuser");
 # Note the double quotes here.
-$node->safe_psql('postgres', 'CREATE ROLE "testmapgroupliteral\\1" LOGIN');
-$node->safe_psql('postgres', 'GRANT "testmapgroupliteral\\1" TO testmapuser');
+$node->safe_psql('maintable', 'CREATE ROLE "testmapgroupliteral\\1" LOGIN');
+$node->safe_psql('maintable', 'GRANT "testmapgroupliteral\\1" TO testmapuser');
 
 # Extract as well the system user for the user name map.
 my $system_user =
-  $node->safe_psql('postgres',
+  $node->safe_psql('maintable',
 	q(select (string_to_array(SYSTEM_USER, ':'))[2]));
 
 # While on it, check the status of huge pages, that can be either on
 # or off, but never unknown.
 my $huge_pages_status =
-  $node->safe_psql('postgres', q(SHOW huge_pages_status;));
+  $node->safe_psql('maintable', q(SHOW huge_pages_status;));
 isnt($huge_pages_status, 'unknown', "check huge_pages_status");
 
 # Tests without the user name map.
@@ -213,7 +213,7 @@ test_role(
 
 # Create target role for \1 tests.
 my $mapped_name = "test${regex_test_string}map${regex_test_string}user";
-$node->safe_psql('postgres', "CREATE ROLE $mapped_name LOGIN");
+$node->safe_psql('maintable', "CREATE ROLE $mapped_name LOGIN");
 
 # Success as the regular expression matches and \1 is replaced in the given
 # subexpression.

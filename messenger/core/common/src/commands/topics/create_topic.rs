@@ -22,8 +22,8 @@ use crate::CompressionAlgorithm;
 use crate::Identifier;
 use crate::Sizeable;
 use crate::Validatable;
-use crate::error::IggyError;
-use crate::utils::expiry::IggyExpiry;
+use crate::error::MessengerError;
+use crate::utils::expiry::MessengerExpiry;
 use crate::utils::topic_size::MaxTopicSize;
 use crate::{CREATE_TOPIC_CODE, Command};
 use bytes::{BufMut, Bytes, BytesMut};
@@ -53,7 +53,7 @@ pub struct CreateTopic {
     /// Compression algorithm for the topic.
     pub compression_algorithm: CompressionAlgorithm,
     /// Message expiry, if `NeverExpire` then messages will never expire.
-    pub message_expiry: IggyExpiry,
+    pub message_expiry: MessengerExpiry,
     /// Max topic size, if `Unlimited` then topic size is unlimited.
     /// Can't be lower than segment size in the config.
     pub max_topic_size: MaxTopicSize,
@@ -76,7 +76,7 @@ impl Default for CreateTopic {
             topic_id: Some(1),
             partitions_count: 1,
             compression_algorithm: CompressionAlgorithm::None,
-            message_expiry: IggyExpiry::NeverExpire,
+            message_expiry: MessengerExpiry::NeverExpire,
             max_topic_size: MaxTopicSize::ServerDefault,
             replication_factor: None,
             name: "topic".to_string(),
@@ -84,26 +84,26 @@ impl Default for CreateTopic {
     }
 }
 
-impl Validatable<IggyError> for CreateTopic {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for CreateTopic {
+    fn validate(&self) -> Result<(), MessengerError> {
         if let Some(topic_id) = self.topic_id
             && topic_id == 0
         {
-            return Err(IggyError::InvalidTopicId);
+            return Err(MessengerError::InvalidTopicId);
         }
 
         if self.name.is_empty() || self.name.len() > MAX_NAME_LENGTH {
-            return Err(IggyError::InvalidTopicName);
+            return Err(MessengerError::InvalidTopicName);
         }
 
         if !(0..=MAX_PARTITIONS_COUNT).contains(&self.partitions_count) {
-            return Err(IggyError::TooManyPartitions);
+            return Err(MessengerError::TooManyPartitions);
         }
 
         if let Some(replication_factor) = self.replication_factor
             && replication_factor == 0
         {
-            return Err(IggyError::InvalidReplicationFactor);
+            return Err(MessengerError::InvalidReplicationFactor);
         }
 
         Ok(())
@@ -130,9 +130,9 @@ impl BytesSerializable for CreateTopic {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> std::result::Result<CreateTopic, IggyError> {
+    fn from_bytes(bytes: Bytes) -> std::result::Result<CreateTopic, MessengerError> {
         if bytes.len() < 18 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
         let mut position = 0;
         let stream_id = Identifier::from_bytes(bytes.clone())?;
@@ -140,25 +140,25 @@ impl BytesSerializable for CreateTopic {
         let topic_id = u32::from_le_bytes(
             bytes[position..position + 4]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let topic_id = if topic_id == 0 { None } else { Some(topic_id) };
         let partitions_count = u32::from_le_bytes(
             bytes[position + 4..position + 8]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let compression_algorithm = CompressionAlgorithm::from_code(bytes[position + 8])?;
         let message_expiry = u64::from_le_bytes(
             bytes[position + 9..position + 17]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
-        let message_expiry: IggyExpiry = message_expiry.into();
+        let message_expiry: MessengerExpiry = message_expiry.into();
         let max_topic_size = u64::from_le_bytes(
             bytes[position + 17..position + 25]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let max_topic_size: MaxTopicSize = max_topic_size.into();
         let replication_factor = match bytes[position + 25] {
@@ -167,10 +167,10 @@ impl BytesSerializable for CreateTopic {
         };
         let name_length = bytes[position + 26];
         let name = from_utf8(&bytes[position + 27..(position + 27 + name_length as usize)])
-            .map_err(|_| IggyError::InvalidUtf8)?
+            .map_err(|_| MessengerError::InvalidUtf8)?
             .to_string();
         if name.len() != name_length as usize {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
         let command = CreateTopic {
             stream_id,
@@ -213,7 +213,7 @@ mod tests {
             stream_id: Identifier::numeric(1).unwrap(),
             topic_id: Some(2),
             partitions_count: 3,
-            message_expiry: IggyExpiry::NeverExpire,
+            message_expiry: MessengerExpiry::NeverExpire,
             compression_algorithm: CompressionAlgorithm::None,
             max_topic_size: MaxTopicSize::ServerDefault,
             replication_factor: Some(1),
@@ -229,7 +229,7 @@ mod tests {
         let compression_algorithm = CompressionAlgorithm::from_code(bytes[position + 8]).unwrap();
         let message_expiry =
             u64::from_le_bytes(bytes[position + 9..position + 17].try_into().unwrap());
-        let message_expiry: IggyExpiry = message_expiry.into();
+        let message_expiry: MessengerExpiry = message_expiry.into();
         let max_topic_size =
             u64::from_le_bytes(bytes[position + 17..position + 25].try_into().unwrap());
         let max_topic_size: MaxTopicSize = max_topic_size.into();
@@ -258,7 +258,7 @@ mod tests {
         let partitions_count = 3u32;
         let compression_algorithm = CompressionAlgorithm::None;
         let name = "test".to_string();
-        let message_expiry = IggyExpiry::NeverExpire;
+        let message_expiry = MessengerExpiry::NeverExpire;
         let max_topic_size = MaxTopicSize::ServerDefault;
         let replication_factor = 1;
         let stream_id_bytes = stream_id.to_bytes();

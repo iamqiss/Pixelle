@@ -18,14 +18,14 @@
 
 use crate::BytesSerializable;
 use crate::Identifier;
-use crate::IggyMessageView;
+use crate::MessengerMessageView;
 use crate::PartitioningKind;
 use crate::Sizeable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::types::message::partitioning::Partitioning;
 use crate::{Command, SEND_MESSAGES_CODE};
-use crate::{INDEX_SIZE, IggyMessage, IggyMessagesBatch};
+use crate::{INDEX_SIZE, MessengerMessage, MessengerMessagesBatch};
 use base64::{Engine as _, engine::general_purpose::STANDARD as BASE64};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::de::{self, MapAccess, Visitor};
@@ -51,7 +51,7 @@ pub struct SendMessages {
     /// To which partition the messages should be sent - either provided by the client or calculated by the server.
     pub partitioning: Partitioning,
     /// Messages collection
-    pub batch: IggyMessagesBatch,
+    pub batch: MessengerMessagesBatch,
 }
 
 impl SendMessages {
@@ -59,7 +59,7 @@ impl SendMessages {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitioning: &Partitioning,
-        messages: &[IggyMessage],
+        messages: &[MessengerMessage],
     ) -> Bytes {
         let stream_id_field_size = stream_id.get_buffer_size();
         let topic_id_field_size = topic_id.get_buffer_size();
@@ -134,7 +134,7 @@ impl Default for SendMessages {
             stream_id: Identifier::default(),
             topic_id: Identifier::default(),
             partitioning: Partitioning::default(),
-            batch: IggyMessagesBatch::empty(),
+            batch: MessengerMessagesBatch::empty(),
         }
     }
 }
@@ -145,13 +145,13 @@ impl Command for SendMessages {
     }
 }
 
-impl Validatable<IggyError> for SendMessages {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for SendMessages {
+    fn validate(&self) -> Result<(), MessengerError> {
         if self.partitioning.value.len() > 255
             || (self.partitioning.kind != PartitioningKind::Balanced
                 && self.partitioning.value.is_empty())
         {
-            return Err(IggyError::InvalidKeyValueLength);
+            return Err(MessengerError::InvalidKeyValueLength);
         }
 
         self.batch.validate()?;
@@ -165,7 +165,7 @@ impl BytesSerializable for SendMessages {
         panic!("should not be used")
     }
 
-    fn from_bytes(_bytes: Bytes) -> Result<SendMessages, IggyError> {
+    fn from_bytes(_bytes: Bytes) -> Result<SendMessages, MessengerError> {
         panic!("should not be used")
     }
 }
@@ -195,7 +195,7 @@ impl Serialize for SendMessages {
         let messages: Vec<HashMap<&str, serde_json::Value>> = self
             .batch
             .iter()
-            .map(|msg_view: IggyMessageView<'_>| {
+            .map(|msg_view: MessengerMessageView<'_>| {
                 let mut map = HashMap::with_capacity(self.batch.count() as usize);
                 map.insert("id", serde_json::to_value(msg_view.header().id()).unwrap());
 
@@ -290,7 +290,7 @@ impl<'de> Deserialize<'de> for SendMessages {
                             }
 
                             let message_data: Vec<serde_json::Value> = map.next_value()?;
-                            let mut iggy_messages = Vec::new();
+                            let mut messenger_messages = Vec::new();
 
                             for msg in message_data {
                                 let id =
@@ -316,8 +316,8 @@ impl<'de> Deserialize<'de> for SendMessages {
                                     None
                                 };
 
-                                let iggy_message = if let Some(headers) = headers_map {
-                                    IggyMessage::builder()
+                                let messenger_message = if let Some(headers) = headers_map {
+                                    MessengerMessage::builder()
                                         .id(id)
                                         .payload(payload_bytes.into())
                                         .user_headers(headers)
@@ -328,7 +328,7 @@ impl<'de> Deserialize<'de> for SendMessages {
                                             ))
                                         })?
                                 } else {
-                                    IggyMessage::builder()
+                                    MessengerMessage::builder()
                                         .id(id)
                                         .payload(payload_bytes.into())
                                         .build()
@@ -339,10 +339,10 @@ impl<'de> Deserialize<'de> for SendMessages {
                                         })?
                                 };
 
-                                iggy_messages.push(iggy_message);
+                                messenger_messages.push(messenger_message);
                             }
 
-                            messages = Some(iggy_messages);
+                            messages = Some(messenger_messages);
                         }
                     }
                 }
@@ -351,7 +351,7 @@ impl<'de> Deserialize<'de> for SendMessages {
                     partitioning.ok_or_else(|| de::Error::missing_field("partitioning"))?;
                 let messages = messages.ok_or_else(|| de::Error::missing_field("messages"))?;
 
-                let batch = IggyMessagesBatch::from(&messages);
+                let batch = MessengerMessagesBatch::from(&messages);
 
                 Ok(SendMessages {
                     metadata_length: 0, // this field is used only for TCP/QUIC

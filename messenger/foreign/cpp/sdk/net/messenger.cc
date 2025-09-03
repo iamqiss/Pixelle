@@ -14,19 +14,19 @@
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
 // under the License.
-#include "iggy.h"
+#include "messenger.h"
 
-icp::net::IggyProtocolProvider::IggyProtocolProvider() {
+icp::net::MessengerProtocolProvider::MessengerProtocolProvider() {
     for (const auto& protocol : this->supportedProtocols) {
         this->supportedProtocolLookup[protocol.getName()] = protocol;
     }
 }
 
-const std::vector<icp::net::protocol::ProtocolDefinition>& icp::net::IggyProtocolProvider::getSupportedProtocols() const {
+const std::vector<icp::net::protocol::ProtocolDefinition>& icp::net::MessengerProtocolProvider::getSupportedProtocols() const {
     return this->supportedProtocols;
 }
 
-const icp::net::protocol::ProtocolDefinition& icp::net::IggyProtocolProvider::getProtocolDefinition(const std::string& protocol) const {
+const icp::net::protocol::ProtocolDefinition& icp::net::MessengerProtocolProvider::getProtocolDefinition(const std::string& protocol) const {
     auto normalizedName = icp::net::protocol::normalizeProtocolName(protocol);
     auto it = this->supportedProtocolLookup.find(normalizedName);
     if (it != this->supportedProtocolLookup.end()) {
@@ -36,6 +36,6 @@ const icp::net::protocol::ProtocolDefinition& icp::net::IggyProtocolProvider::ge
     }
 }
 
-const bool icp::net::IggyProtocolProvider::isSupported(const std::string& protocol) const {
+const bool icp::net::MessengerProtocolProvider::isSupported(const std::string& protocol) const {
     return this->supportedProtocolLookup.count(icp::net::protocol::normalizeProtocolName(protocol)) > 0;
 }

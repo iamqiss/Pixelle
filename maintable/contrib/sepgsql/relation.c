@@ -4,11 +4,11 @@
  *
  * Routines corresponding to relation/attribute objects
  *
- * Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * -------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/genam.h"
 #include "access/htup_details.h"
@@ -712,7 +712,7 @@ sepgsql_relation_setattr(Oid relOid)
  * sepgsql_relation_setattr_extra
  *
  * It checks permission of the relation being referenced by extra attributes,
- * such as pg_index entries. Like core PostgreSQL, sepgsql also does not deal
+ * such as pg_index entries. Like core maintableQL, sepgsql also does not deal
  * with such entries as individual "objects", thus, modification of these
  * entries shall be considered as setting an attribute of the underlying
  * relation.

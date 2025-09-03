@@ -17,7 +17,7 @@
  * under the License.
  */
 
-import { fetchIggyApi } from '$lib/api/fetchApi';
+import { fetchMessengerApi } from '$lib/api/fetchApi';
 import { handleFetchErrors } from '$lib/api/handleFetchErrors';
 import { partitionMessagesDetailsMapper } from '$lib/domain/MessageDetails';
 import { topicDetailsMapper } from '$lib/domain/TopicDetails';
@@ -29,7 +29,7 @@ export const load = async ({ params, cookies, url }) => {
   const direction = url.searchParams.get('direction') || 'desc';
 
   const getPartitionMessages = async () => {
-    const initialResult = await fetchIggyApi({
+    const initialResult = await fetchMessengerApi({
       method: 'GET',
       path: `/streams/${+params.streamId}/topics/${+params.topicId}/messages`,
       cookies,
@@ -50,7 +50,7 @@ export const load = async ({ params, cookies, url }) => {
       url.searchParams.get('offset') ??
       (direction === 'desc' ? Math.max(0, totalMessages - MESSAGES_PER_PAGE).toString() : '0');
 
-    const result = await fetchIggyApi({
+    const result = await fetchMessengerApi({
       method: 'GET',
       path: `/streams/${+params.streamId}/topics/${+params.topicId}/messages`,
       cookies,
@@ -68,7 +68,7 @@ export const load = async ({ params, cookies, url }) => {
   };
 
   const getTopic = async () => {
-    const result = await fetchIggyApi({
+    const result = await fetchMessengerApi({
       method: 'GET',
       path: `/streams/${+params.streamId}/topics/${+params.topicId}`,
       cookies

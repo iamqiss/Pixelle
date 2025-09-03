@@ -22,10 +22,10 @@ import (
 )
 
 const (
-	// IggyExpiryServerDefault use the default expiry time from the server
-	IggyExpiryServerDefault Duration = 0
-	// IggyExpiryNeverExpire never expire
-	IggyExpiryNeverExpire Duration = math.MaxUint64
+	// MessengerExpiryServerDefault use the default expiry time from the server
+	MessengerExpiryServerDefault Duration = 0
+	// MessengerExpiryNeverExpire never expire
+	MessengerExpiryNeverExpire Duration = math.MaxUint64
 )
 
 // Duration represents the expiration duration in microsecond (µs).

@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * optimizer.h
- *	  External API for the Postgres planner.
+ *	  External API for the Maintable planner.
  *
  * This header is meant to define everything that the core planner
  * exposes for use by non-planner modules.
@@ -12,7 +12,7 @@
  * example.  For the most part, however, code outside the core planner
  * should not need to include any optimizer/ header except this one.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/optimizer/optimizer.h

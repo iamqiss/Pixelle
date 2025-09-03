@@ -16,12 +16,12 @@
 # under the License.
 
 Feature: Basic Messaging Operations
-  As a developer using Apache Iggy
+  As a developer using Apache Messenger
   I want to perform basic messaging operations
   So that I can send and receive messages through the platform
 
   Background:
-    Given I have a running Iggy server
+    Given I have a running Messenger server
     And I am authenticated as the root user
 
   Scenario: Create stream and send messages

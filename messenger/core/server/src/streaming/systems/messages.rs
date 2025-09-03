@@ -16,16 +16,16 @@
  * under the License.
  */
 
-use crate::binary::handlers::messages::poll_messages_handler::IggyPollMetadata;
-use crate::streaming::segments::{IggyIndexesMut, IggyMessagesBatchMut, IggyMessagesBatchSet};
+use crate::binary::handlers::messages::poll_messages_handler::MessengerPollMetadata;
+use crate::streaming::segments::{MessengerIndexesMut, MessengerMessagesBatchMut, MessengerMessagesBatchSet};
 use crate::streaming::session::Session;
 use crate::streaming::systems::COMPONENT;
 use crate::streaming::systems::system::System;
 use crate::streaming::utils::PooledBuffer;
 use error_set::ErrContext;
-use iggy_common::{
-    BytesSerializable, Confirmation, Consumer, EncryptorKind, IGGY_MESSAGE_HEADER_SIZE, Identifier,
-    IggyError, Partitioning, PollingStrategy,
+use messenger_common::{
+    BytesSerializable, Confirmation, Consumer, EncryptorKind, MESSENGER_MESSAGE_HEADER_SIZE, Identifier,
+    MessengerError, Partitioning, PollingStrategy,
 };
 use tracing::{error, trace};
 
@@ -38,10 +38,10 @@ impl System {
         topic_id: &Identifier,
         partition_id: Option<u32>,
         args: PollingArgs,
-    ) -> Result<(IggyPollMetadata, IggyMessagesBatchSet), IggyError> {
+    ) -> Result<(MessengerPollMetadata, MessengerMessagesBatchSet), MessengerError> {
         self.ensure_authenticated(session)?;
         if args.count == 0 {
-            return Err(IggyError::InvalidMessagesCount);
+            return Err(MessengerError::InvalidMessagesCount);
         }
 
         let topic = self.find_topic(session, stream_id, topic_id).with_error_context(|error| format!("{COMPONENT} (error: {error}) - topic not found for stream ID: {stream_id}, topic_id: {topic_id}"))?;
@@ -55,7 +55,7 @@ impl System {
             ))?;
 
         if !topic.has_partitions() {
-            return Err(IggyError::NoPartitions(topic.topic_id, topic.stream_id));
+            return Err(MessengerError::NoPartitions(topic.topic_id, topic.stream_id));
         }
 
         // There might be no partition assigned, if it's the consumer group member without any partitions.
@@ -63,7 +63,7 @@ impl System {
             .resolve_consumer_with_partition_id(consumer, session.client_id, partition_id, true)
             .await
             .with_error_context(|error| format!("{COMPONENT} (error: {error}) - failed to resolve consumer with partition id, consumer: {consumer}, client ID: {}, partition ID: {:?}", session.client_id, partition_id))? else {
-            return Ok((IggyPollMetadata::new(0, 0), IggyMessagesBatchSet::empty()));
+            return Ok((MessengerPollMetadata::new(0, 0), MessengerMessagesBatchSet::empty()));
         };
 
         let (metadata, batch_set) = topic
@@ -99,9 +99,9 @@ impl System {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitioning: &Partitioning,
-        messages: IggyMessagesBatchMut,
+        messages: MessengerMessagesBatchMut,
         confirmation: Option<Confirmation>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.ensure_authenticated(session)?;
         let topic = self.find_topic(session, stream_id, topic_id).with_error_context(|error| format!("{COMPONENT} (error: {error}) - topic not found for stream_id: {stream_id}, topic_id: {topic_id}"))?;
         self.permissioner.append_messages(
@@ -138,7 +138,7 @@ impl System {
         topic_id: Identifier,
         partition_id: u32,
         fsync: bool,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.ensure_authenticated(session)?;
         let topic = self.find_topic(session, &stream_id, &topic_id).with_error_context(|error| format!("{COMPONENT} (error: {error}) - topic not found for stream ID: {stream_id}, topic_id: {topic_id}"))?;
         self.permissioner.append_messages(
@@ -157,14 +157,14 @@ impl System {
 
     async fn decrypt_messages(
         &self,
-        batches: IggyMessagesBatchSet,
+        batches: MessengerMessagesBatchSet,
         encryptor: &EncryptorKind,
-    ) -> Result<IggyMessagesBatchSet, IggyError> {
+    ) -> Result<MessengerMessagesBatchSet, MessengerError> {
         let mut decrypted_batches = Vec::with_capacity(batches.containers_count());
         for batch in batches.iter() {
             let count = batch.count();
 
-            let mut indexes = IggyIndexesMut::with_capacity(batch.count() as usize, 0);
+            let mut indexes = MessengerIndexesMut::with_capacity(batch.count() as usize, 0);
             let mut decrypted_messages = PooledBuffer::with_capacity(batch.size() as usize);
             let mut position = 0;
 
@@ -181,7 +181,7 @@ impl System {
                         if let Some(user_headers) = message.user_headers() {
                             decrypted_messages.extend_from_slice(user_headers);
                         }
-                        position += IGGY_MESSAGE_HEADER_SIZE
+                        position += MESSENGER_MESSAGE_HEADER_SIZE
                             + payload.len()
                             + message.header().user_headers_length();
                         indexes.insert(0, position as u32, 0);
@@ -193,21 +193,21 @@ impl System {
                 }
             }
             let decrypted_batch =
-                IggyMessagesBatchMut::from_indexes_and_messages(count, indexes, decrypted_messages);
+                MessengerMessagesBatchMut::from_indexes_and_messages(count, indexes, decrypted_messages);
             decrypted_batches.push(decrypted_batch);
         }
 
-        Ok(IggyMessagesBatchSet::from_vec(decrypted_batches))
+        Ok(MessengerMessagesBatchSet::from_vec(decrypted_batches))
     }
 
     fn encrypt_messages(
         &self,
-        batch: IggyMessagesBatchMut,
+        batch: MessengerMessagesBatchMut,
         encryptor: &EncryptorKind,
-    ) -> Result<IggyMessagesBatchMut, IggyError> {
+    ) -> Result<MessengerMessagesBatchMut, MessengerError> {
         let mut encrypted_messages = PooledBuffer::with_capacity(batch.size() as usize * 2);
         let count = batch.count();
-        let mut indexes = IggyIndexesMut::with_capacity(batch.count() as usize, 0);
+        let mut indexes = MessengerIndexesMut::with_capacity(batch.count() as usize, 0);
         let mut position = 0;
 
         for message in batch.iter() {
@@ -228,7 +228,7 @@ impl System {
                     if let Some(user_headers_bytes) = user_headers_bytes {
                         encrypted_messages.extend_from_slice(user_headers_bytes);
                     }
-                    position += IGGY_MESSAGE_HEADER_SIZE
+                    position += MESSENGER_MESSAGE_HEADER_SIZE
                         + encrypted_payload.len()
                         + user_headers_length as usize;
                     indexes.insert(0, position as u32, 0);
@@ -240,7 +240,7 @@ impl System {
             }
         }
 
-        Ok(IggyMessagesBatchMut::from_indexes_and_messages(
+        Ok(MessengerMessagesBatchMut::from_indexes_and_messages(
             count,
             indexes,
             encrypted_messages,

@@ -1,10 +1,10 @@
-# Copyright (c) 2025, PostgreSQL Global Development Group
+# Copyright (c) 2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 
@@ -47,7 +47,7 @@ my $node_sync = create_node('sync');
 # just to have one test not use the default auto-tuning
 
 $node_sync->append_conf(
-	'postgresql.conf', qq(
+	'maintableql.conf', qq(
 io_max_concurrency=4
 ));
 
@@ -68,7 +68,7 @@ sub create_node
 
 	my $io_method = shift;
 
-	my $node = PostgreSQL::Test::Cluster->new($io_method);
+	my $node = maintableQL::Test::Cluster->new($io_method);
 
 	# Want to test initdb for each IO method, otherwise we could just reuse
 	# the cluster.
@@ -87,7 +87,7 @@ sub create_node
 	$node->init(extra => [ '-c', "io_method=$io_method" ]);
 
 	$node->append_conf(
-		'postgresql.conf', qq(
+		'maintableql.conf', qq(
 shared_preload_libraries=test_aio
 log_min_messages = 'DEBUG3'
 log_statement=all
@@ -103,7 +103,7 @@ temp_buffers=100
 	# not worth the complication of only appending if the variable is set in
 	# in TEMP_CONFIG.
 	$node->append_conf(
-		'postgresql.conf', qq(
+		'maintableql.conf', qq(
 io_method=$io_method
 ));
 
@@ -119,7 +119,7 @@ sub have_io_uring
 	# options. We need to use -C to deal with running as administrator on
 	# windows, the superuser check is omitted if -C is used.
 	my ($stdout, $stderr) =
-	  run_command [qw(postgres -C invalid -c io_method=invalid)];
+	  run_command [qw(maintable -C invalid -c io_method=invalid)];
 	die "can't determine supported io_method values"
 	  unless $stderr =~ m/Available values: ([^\.]+)\./;
 	my $methods = $1;
@@ -165,7 +165,7 @@ sub query_wait_block
 	$psql->{run}->pump_nb();
 	ok(1, "$io_method: $name: issued sql");
 
-	$node->poll_query_until('postgres',
+	$node->poll_query_until('maintable',
 		qq(SELECT wait_event FROM pg_stat_activity WHERE pid = $pid),
 		$waitfor);
 	ok(1, "$io_method: $name: observed $waitfor wait event");
@@ -217,7 +217,7 @@ sub test_handle
 	my $io_method = shift;
 	my $node = shift;
 
-	my $psql = $node->background_psql('postgres', on_error_stop => 0);
+	my $psql = $node->background_psql('maintable', on_error_stop => 0);
 
 	# leak warning: implicit xact
 	psql_like(
@@ -323,7 +323,7 @@ sub test_batchmode
 	my $io_method = shift;
 	my $node = shift;
 
-	my $psql = $node->background_psql('postgres', on_error_stop => 0);
+	my $psql = $node->background_psql('maintable', on_error_stop => 0);
 
 	# In a build with RELCACHE_FORCE_RELEASE and CATCACHE_FORCE_RELEASE, just
 	# using SELECT batch_start() causes spurious test failures, because the
@@ -383,7 +383,7 @@ sub test_io_error
 	my $node = shift;
 	my ($ret, $output);
 
-	my $psql = $node->background_psql('postgres', on_error_stop => 0);
+	my $psql = $node->background_psql('maintable', on_error_stop => 0);
 
 	$psql->query_safe(
 		qq(
@@ -435,8 +435,8 @@ sub test_startwait_io
 	my $node = shift;
 	my ($ret, $output);
 
-	my $psql_a = $node->background_psql('postgres', on_error_stop => 0);
-	my $psql_b = $node->background_psql('postgres', on_error_stop => 0);
+	my $psql_a = $node->background_psql('maintable', on_error_stop => 0);
+	my $psql_b = $node->background_psql('maintable', on_error_stop => 0);
 
 
 	### Verify behavior for normal tables
@@ -610,8 +610,8 @@ sub test_complete_foreign
 	my $node = shift;
 	my ($ret, $output);
 
-	my $psql_a = $node->background_psql('postgres', on_error_stop => 0);
-	my $psql_b = $node->background_psql('postgres', on_error_stop => 0);
+	my $psql_a = $node->background_psql('maintable', on_error_stop => 0);
+	my $psql_b = $node->background_psql('maintable', on_error_stop => 0);
 
 	# Issue IO without waiting for completion, then sleep
 	$psql_a->query_safe(
@@ -680,7 +680,7 @@ sub test_close_fd
 	my $node = shift;
 	my ($ret, $output);
 
-	my $psql = $node->background_psql('postgres', on_error_stop => 0);
+	my $psql = $node->background_psql('maintable', on_error_stop => 0);
 
 	psql_like(
 		$io_method,
@@ -730,7 +730,7 @@ sub test_inject
 	my $node = shift;
 	my ($ret, $output);
 
-	my $psql = $node->background_psql('postgres', on_error_stop => 0);
+	my $psql = $node->background_psql('maintable', on_error_stop => 0);
 
 	# injected what we'd expect
 	$psql->query_safe(qq(SELECT inj_io_short_read_attach(8192);));
@@ -864,7 +864,7 @@ sub test_inject_worker
 	my $node = shift;
 	my ($ret, $output);
 
-	my $psql = $node->background_psql('postgres', on_error_stop => 0);
+	my $psql = $node->background_psql('maintable', on_error_stop => 0);
 
 	# trigger a failure to reopen, should error out, but should recover
 	$psql->query_safe(
@@ -901,7 +901,7 @@ sub test_invalidate
 	my $io_method = shift;
 	my $node = shift;
 
-	my $psql = $node->background_psql('postgres', on_error_stop => 0);
+	my $psql = $node->background_psql('maintable', on_error_stop => 0);
 
 	foreach my $persistency (qw(normal unlogged temporary))
 	{
@@ -959,8 +959,8 @@ sub test_zero
 	my $io_method = shift;
 	my $node = shift;
 
-	my $psql_a = $node->background_psql('postgres', on_error_stop => 0);
-	my $psql_b = $node->background_psql('postgres', on_error_stop => 0);
+	my $psql_a = $node->background_psql('maintable', on_error_stop => 0);
+	my $psql_b = $node->background_psql('maintable', on_error_stop => 0);
 
 	foreach my $persistency (qw(normal temporary))
 	{
@@ -1157,7 +1157,7 @@ sub test_checksum
 	my $io_method = shift;
 	my $node = shift;
 
-	my $psql_a = $node->background_psql('postgres', on_error_stop => 0);
+	my $psql_a = $node->background_psql('maintable', on_error_stop => 0);
 
 	$psql_a->query_safe(
 		qq(
@@ -1184,7 +1184,7 @@ SELECT modify_rel_block('pg_shseclabel', 3, corrupt_checksum=>true);
 
 	# Check that page validity errors are detected, checksums stats increase, normal rel
 	my ($cs_count_before, $cs_ts_before) =
-	  checksum_failures($psql_a, 'postgres');
+	  checksum_failures($psql_a, 'maintable');
 	psql_like(
 		$io_method,
 		$psql_a,
@@ -1196,7 +1196,7 @@ SELECT read_rel_block_ll('tbl_normal', 3, nblocks=>1, zero_on_error=>false);),
 	);
 
 	my ($cs_count_after, $cs_ts_after) =
-	  checksum_failures($psql_a, 'postgres');
+	  checksum_failures($psql_a, 'maintable');
 
 	cmp_ok($cs_count_before + 1,
 		'<=', $cs_count_after,
@@ -1206,7 +1206,7 @@ SELECT read_rel_block_ll('tbl_normal', 3, nblocks=>1, zero_on_error=>false);),
 
 
 	# Check that page validity errors are detected, checksums stats increase, temp rel
-	($cs_count_after, $cs_ts_after) = checksum_failures($psql_a, 'postgres');
+	($cs_count_after, $cs_ts_after) = checksum_failures($psql_a, 'maintable');
 	psql_like(
 		$io_method,
 		$psql_a,
@@ -1217,7 +1217,7 @@ SELECT read_rel_block_ll('tbl_temp', 4, nblocks=>2, zero_on_error=>false);),
 		qr/^psql:<stdin>:\d+: ERROR:  invalid page in block 4 of relation "base\/\d+\/t\d+_\d+"$/
 	);
 
-	($cs_count_after, $cs_ts_after) = checksum_failures($psql_a, 'postgres');
+	($cs_count_after, $cs_ts_after) = checksum_failures($psql_a, 'maintable');
 
 	cmp_ok($cs_count_before + 1,
 		'<=', $cs_count_after,
@@ -1266,9 +1266,9 @@ sub test_checksum_createdb
 	my $io_method = shift;
 	my $node = shift;
 
-	my $psql = $node->background_psql('postgres', on_error_stop => 0);
+	my $psql = $node->background_psql('maintable', on_error_stop => 0);
 
-	$node->safe_psql('postgres',
+	$node->safe_psql('maintable',
 		'CREATE DATABASE regression_createdb_source');
 
 	$node->safe_psql(
@@ -1329,7 +1329,7 @@ sub test_ignore_checksum
 	my $io_method = shift;
 	my $node = shift;
 
-	my $psql = $node->background_psql('postgres', on_error_stop => 0);
+	my $psql = $node->background_psql('maintable', on_error_stop => 0);
 
 	# Test setup
 	$psql->query_safe(
@@ -1496,11 +1496,11 @@ sub test_generic
 	my $io_method = shift;
 	my $node = shift;
 
-	is($node->safe_psql('postgres', 'SHOW io_method'),
+	is($node->safe_psql('maintable', 'SHOW io_method'),
 		$io_method, "$io_method: io_method set correctly");
 
 	$node->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
 CREATE EXTENSION test_aio;
 CREATE TABLE tbl_corr(data int not null) WITH (AUTOVACUUM_ENABLED = false);
 CREATE TABLE tbl_ok(data int not null) WITH (AUTOVACUUM_ENABLED = false);

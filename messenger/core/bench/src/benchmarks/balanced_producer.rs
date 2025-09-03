@@ -17,24 +17,24 @@
  */
 
 use super::benchmark::Benchmarkable;
-use crate::args::common::IggyBenchArgs;
+use crate::args::common::MessengerBenchArgs;
 use crate::benchmarks::common::build_producer_futures;
 use async_trait::async_trait;
 use bench_report::benchmark_kind::BenchmarkKind;
 use bench_report::individual_metrics::BenchmarkIndividualMetrics;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::ClientFactory;
 use std::sync::Arc;
 use tokio::task::JoinSet;
 use tracing::info;
 
 pub struct BalancedProducerBenchmark {
-    args: Arc<IggyBenchArgs>,
+    args: Arc<MessengerBenchArgs>,
     client_factory: Arc<dyn ClientFactory>,
 }
 
 impl BalancedProducerBenchmark {
-    pub fn new(args: Arc<IggyBenchArgs>, client_factory: Arc<dyn ClientFactory>) -> Self {
+    pub fn new(args: Arc<MessengerBenchArgs>, client_factory: Arc<dyn ClientFactory>) -> Self {
         Self {
             args,
             client_factory,
@@ -46,7 +46,7 @@ impl BalancedProducerBenchmark {
 impl Benchmarkable for BalancedProducerBenchmark {
     async fn run(
         &mut self,
-    ) -> Result<JoinSet<Result<BenchmarkIndividualMetrics, IggyError>>, IggyError> {
+    ) -> Result<JoinSet<Result<BenchmarkIndividualMetrics, MessengerError>>, MessengerError> {
         self.init_streams().await?;
         let cf = &self.client_factory;
         let args = self.args.clone();
@@ -64,7 +64,7 @@ impl Benchmarkable for BalancedProducerBenchmark {
         self.args.kind()
     }
 
-    fn args(&self) -> &IggyBenchArgs {
+    fn args(&self) -> &MessengerBenchArgs {
         &self.args
     }
 

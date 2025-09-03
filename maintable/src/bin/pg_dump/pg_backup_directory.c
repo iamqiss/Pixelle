@@ -19,7 +19,7 @@
  *	sync.
  *
  *
- *	Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ *	Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *	Portions Copyright (c) 1994, Regents of the University of California
  *	Portions Copyright (c) 2000, Philip Warner
  *
@@ -34,7 +34,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <dirent.h>
 #include <sys/stat.h>

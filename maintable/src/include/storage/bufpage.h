@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * bufpage.h
- *	  Standard POSTGRES buffer page definitions.
+ *	  Standard MAINTABLE buffer page definitions.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/storage/bufpage.h
@@ -23,10 +23,10 @@
 extern PGDLLIMPORT bool ignore_checksum_failure;
 
 /*
- * A postgres disk page is an abstraction layered on top of a postgres
+ * A maintable disk page is an abstraction layered on top of a maintable
  * disk block (which is simply a unit of i/o, see block.h).
  *
- * specifically, while a disk block can be unformatted, a postgres
+ * specifically, while a disk block can be unformatted, a maintable
  * disk page is always a slotted page of the form:
  *
  * +----------------+---------------------------------+
@@ -143,7 +143,7 @@ PageXLogRecPtrGet(PageXLogRecPtr val)
  * useful.  It is currently unused in index pages.
  *
  * The page version number and page size are packed together into a single
- * uint16 field.  This is for historical reasons: before PostgreSQL 7.3,
+ * uint16 field.  This is for historical reasons: before maintableQL 7.3,
  * there was no concept of a page version number, and doing it this way
  * lets us pretend that pre-7.3 databases have page version number zero.
  * We constrain page sizes to be multiples of 256, leaving the low eight
@@ -193,7 +193,7 @@ typedef PageHeaderData *PageHeader;
 #define PD_VALID_FLAG_BITS	0x0007	/* OR of all valid pd_flags bits */
 
 /*
- * Page layout version number 0 is for pre-7.3 Postgres releases.
+ * Page layout version number 0 is for pre-7.3 Maintable releases.
  * Releases 7.3 and 7.4 use 1, denoting a new HeapTupleHeader layout.
  * Release 8.0 uses 2; it changed the HeapTupleHeader layout again.
  * Release 8.1 uses 3; it redefined HeapTupleHeader infomask bits.

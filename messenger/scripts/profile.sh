@@ -38,8 +38,8 @@ if [[ -z "${PROFILED_APP_NAME}" || -z "${PROFILING_MODE}" ]]; then
 fi
 
 # Check if the app name and profiling mode are valid
-if [[ "${PROFILED_APP_NAME}" != "iggy-bench" ]] && [[ "${PROFILED_APP_NAME}" != "iggy-server" ]]; then
-    echo "Invalid app name. Please use 'iggy-bench' or 'iggy-server'."
+if [[ "${PROFILED_APP_NAME}" != "messenger-bench" ]] && [[ "${PROFILED_APP_NAME}" != "messenger-server" ]]; then
+    echo "Invalid app name. Please use 'messenger-bench' or 'messenger-server'."
     exit 1
 fi
 
@@ -114,25 +114,25 @@ BENCH_POLL_LOG_FILE="profiling_bench_poll_${GIT_INFO}.log"
 FLAMEGRAPH_SEND_SVG="flamegraph_send_${PROFILING_MODE}_${PROFILED_APP_NAME}_${GIT_INFO}.svg"
 FLAMEGRAPH_POLL_SVG="flamegraph_poll_${PROFILING_MODE}_${PROFILED_APP_NAME}_${GIT_INFO}.svg"
 
-# Start iggy-server and capture its PID
-echo "Running iggy-server, log will be in ${SERVER_LOG_FILE}..."
-target/release/iggy-server > "${SERVER_LOG_FILE}" 2>&1 &
+# Start messenger-server and capture its PID
+echo "Running messenger-server, log will be in ${SERVER_LOG_FILE}..."
+target/release/messenger-server > "${SERVER_LOG_FILE}" 2>&1 &
 sleep 1
 
-# Run iggy-bench pinned-producer tcp
-echo "Running iggy-bench pinned-producer tcp..."
-if [[ "${PROFILED_APP_NAME}" == "iggy-server" ]]; then
-    # Start flamegraph for iggy-server (send)
-    echo "Starting flamegraph (send) on iggy-server..."
+# Run messenger-bench pinned-producer tcp
+echo "Running messenger-bench pinned-producer tcp..."
+if [[ "${PROFILED_APP_NAME}" == "messenger-server" ]]; then
+    # Start flamegraph for messenger-server (send)
+    echo "Starting flamegraph (send) on messenger-server..."
 
     if [[ "${PROFILING_MODE}" == "cpu" ]]; then
-        flamegraph -o "${FLAMEGRAPH_SEND_SVG}" --pid "$(pgrep iggy-server)" 2>&1 &
+        flamegraph -o "${FLAMEGRAPH_SEND_SVG}" --pid "$(pgrep messenger-server)" 2>&1 &
     else
-        perf record -a -g -p "$(pgrep iggy-server)" -o perf_server_send.data -- sleep 30 2>&1 &
+        perf record -a -g -p "$(pgrep messenger-server)" -o perf_server_send.data -- sleep 30 2>&1 &
     fi
     sleep 1
 
-    target/release/iggy-bench pinned-producer tcp > "${BENCH_SEND_LOG_FILE}"
+    target/release/messenger-bench pinned-producer tcp > "${BENCH_SEND_LOG_FILE}"
 
     # Trigger flamegraph (send) completion
     send_signal "perf" "TERM"
@@ -145,21 +145,21 @@ if [[ "${PROFILED_APP_NAME}" == "iggy-server" ]]; then
         perf script --header -i perf_server_send.data > perf_server_send.stacks
         rm perf_server_send.data
         /tmp/FlameGraph/stackcollapse-perf.pl < perf_server_send.stacks | /tmp/FlameGraph/flamegraph.pl --color=io \
-            --title="iggy-server send I/O Flame Graph" --countname="I/O" > "${FLAMEGRAPH_SEND_SVG}"
+            --title="messenger-server send I/O Flame Graph" --countname="I/O" > "${FLAMEGRAPH_SEND_SVG}"
     fi
 
-    # Start flamegraph for iggy-server (poll)
+    # Start flamegraph for messenger-server (poll)
     echo "Starting flamegraph (poll)..."
     if [[ "${PROFILING_MODE}" == "cpu" ]]; then
-        flamegraph -o "${FLAMEGRAPH_POLL_SVG}" --pid "$(pgrep iggy-server)" 2>&1 &
+        flamegraph -o "${FLAMEGRAPH_POLL_SVG}" --pid "$(pgrep messenger-server)" 2>&1 &
     else
-        perf record -a -g -p "$(pgrep iggy-server)" -o perf_server_poll.data -- sleep 30 2>&1 &
+        perf record -a -g -p "$(pgrep messenger-server)" -o perf_server_poll.data -- sleep 30 2>&1 &
     fi
     sleep 1
 
-    # Run iggy-bench pinned-consumer tcp
-    echo "Running iggy-bench pinned-consumer tcp..."
-    target/release/iggy-bench pinned-consumer tcp > "${BENCH_POLL_LOG_FILE}"
+    # Run messenger-bench pinned-consumer tcp
+    echo "Running messenger-bench pinned-consumer tcp..."
+    target/release/messenger-bench pinned-consumer tcp > "${BENCH_POLL_LOG_FILE}"
 
     # Trigger flamegraph (poll) completion
     send_signal "perf" "TERM"
@@ -172,35 +172,35 @@ if [[ "${PROFILED_APP_NAME}" == "iggy-server" ]]; then
         perf script --header -i perf_server_poll.data > perf_server_poll.stacks
         rm perf_server_poll.data
         /tmp/FlameGraph/stackcollapse-perf.pl < perf_server_poll.stacks | /tmp/FlameGraph/flamegraph.pl --color=io \
-            --title="iggy-server poll I/O Flame Graph" --countname="I/O" > "${FLAMEGRAPH_POLL_SVG}"
+            --title="messenger-server poll I/O Flame Graph" --countname="I/O" > "${FLAMEGRAPH_POLL_SVG}"
     fi
 else
-    echo "Starting flamegraph (send) on iggy-bench..."
+    echo "Starting flamegraph (send) on messenger-bench..."
     if [[ "${PROFILING_MODE}" == "cpu" ]]; then
-        cargo flamegraph --bin iggy-bench -o "${FLAMEGRAPH_SEND_SVG}" -- pinned-producer tcp > "${BENCH_SEND_LOG_FILE}"
+        cargo flamegraph --bin messenger-bench -o "${FLAMEGRAPH_SEND_SVG}" -- pinned-producer tcp > "${BENCH_SEND_LOG_FILE}"
     else
-        perf record -a -g -o perf_bench_send.data -- target/release/iggy-bench pinned-producer tcp > "${BENCH_SEND_LOG_FILE}"
+        perf record -a -g -o perf_bench_send.data -- target/release/messenger-bench pinned-producer tcp > "${BENCH_SEND_LOG_FILE}"
         perf script --header -i perf_bench_send.data > perf_bench_send.stacks
         /tmp/FlameGraph/stackcollapse-perf.pl < perf_bench_send.stacks | /tmp/FlameGraph/flamegraph.pl --color=io \
-            --title="iggy client send I/O Flame Graph" --countname="I/O" > "${FLAMEGRAPH_SEND_SVG}"
+            --title="messenger client send I/O Flame Graph" --countname="I/O" > "${FLAMEGRAPH_SEND_SVG}"
     fi
 
     sleep 1
 
-    echo "Starting flamegraph (poll) on iggy-bench..."
+    echo "Starting flamegraph (poll) on messenger-bench..."
     if [[ "${PROFILING_MODE}" == "cpu" ]]; then
-        cargo flamegraph --bin iggy-bench -o "${FLAMEGRAPH_POLL_SVG}" -- pinned-consumer tcp > "${BENCH_POLL_LOG_FILE}"
+        cargo flamegraph --bin messenger-bench -o "${FLAMEGRAPH_POLL_SVG}" -- pinned-consumer tcp > "${BENCH_POLL_LOG_FILE}"
     else
-        perf record -a -g -o perf_bench_poll.data -- target/release/iggy-bench pinned-consumer tcp > "${BENCH_POLL_LOG_FILE}"
+        perf record -a -g -o perf_bench_poll.data -- target/release/messenger-bench pinned-consumer tcp > "${BENCH_POLL_LOG_FILE}"
         perf script --header -i perf_bench_poll.data > perf_bench_poll.stacks
         /tmp/FlameGraph/stackcollapse-perf.pl < perf_bench_poll.stacks | /tmp/FlameGraph/flamegraph.pl --color=io \
-            --title="iggy client poll I/O Flame Graph" --countname="I/O" > "${FLAMEGRAPH_POLL_SVG}"
+            --title="messenger client poll I/O Flame Graph" --countname="I/O" > "${FLAMEGRAPH_POLL_SVG}"
     fi
 fi
 
 # Gracefully stop the server
-send_signal "iggy-server" "TERM"
-wait_for_process "iggy-server" 10
+send_signal "messenger-server" "TERM"
+wait_for_process "messenger-server" 10
 
 # Display results
 echo

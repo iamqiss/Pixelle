@@ -1,16 +1,16 @@
-# Swedish message translation file for postgresql
+# Swedish message translation file for maintableql
 # Dennis Björklund <db@zigo.dhs.org>, 2003, 2004, 2005, 2006, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 # Peter Eisentraut <peter_e@gmx.net>, 2013.
 # Mats Erik Andersson <bsd@gisladisker.se>, 2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-07-12 17:52+0000\n"
 "PO-Revision-Date: 2024-07-12 22:17+0200\n"
 "Last-Translator: Dennis Björklund <db@zigo.dhs.org>\n"
-"Language-Team: Swedish <pgsql-translators@postgresql.org>\n"
+"Language-Team: Swedish <pgsql-translators@maintableql.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -429,10 +429,10 @@ msgstr "misslyckades att skapa kommentar (databasen skapades): %s"
 #: createdb.c:297
 #, c-format
 msgid ""
-"%s creates a PostgreSQL database.\n"
+"%s creates a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s skapar en PostgreSQL-databas.\n"
+"%s skapar en maintableQL-databas.\n"
 "\n"
 
 #: createdb.c:299
@@ -602,10 +602,10 @@ msgstr "misslyckades med att skapa ny roll: %s"
 #: createuser.c:414
 #, c-format
 msgid ""
-"%s creates a new PostgreSQL role.\n"
+"%s creates a new maintableQL role.\n"
 "\n"
 msgstr ""
-"%s skapar en ny PostgreSQL-roll.\n"
+"%s skapar en ny maintableQL-roll.\n"
 "\n"
 
 #: createuser.c:416 dropuser.c:171
@@ -770,10 +770,10 @@ msgstr "borttagning av databas misslyckades: %s"
 #: dropdb.c:171
 #, c-format
 msgid ""
-"%s removes a PostgreSQL database.\n"
+"%s removes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s tar bort en PostgreSQL-databas.\n"
+"%s tar bort en maintableQL-databas.\n"
 "\n"
 
 #: dropdb.c:173
@@ -818,9 +818,9 @@ msgstr "borttagning av rollen \"%s\" misslyckades: %s"
 #: dropuser.c:169
 #, c-format
 msgid ""
-"%s removes a PostgreSQL role.\n"
+"%s removes a maintableQL role.\n"
 "\n"
-msgstr "%s tar bort en PostgreSQL-roll.\n"
+msgstr "%s tar bort en maintableQL-roll.\n"
 
 #: dropuser.c:174
 #, c-format
@@ -874,10 +874,10 @@ msgstr "okänt\n"
 #: pg_isready.c:225
 #, c-format
 msgid ""
-"%s issues a connection check to a PostgreSQL database.\n"
+"%s issues a connection check to a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s utför en anslutningskontroll mot en PostgreSQL-databas.\n"
+"%s utför en anslutningskontroll mot en maintableQL-databas.\n"
 "\n"
 
 #: pg_isready.c:227
@@ -939,8 +939,8 @@ msgstr "kan inte omindexera alla databaser och samtidigt en specifik databas"
 #: vacuumdb.c:536 vacuumdb.c:543 vacuumdb.c:550 vacuumdb.c:557 vacuumdb.c:562
 #: vacuumdb.c:566 vacuumdb.c:570 vacuumdb.c:574
 #, c-format
-msgid "cannot use the \"%s\" option on server versions older than PostgreSQL %s"
-msgstr "flaggan \"%s\" kan inte användas på serverversioner äldre än PostgreSQL %s"
+msgid "cannot use the \"%s\" option on server versions older than maintableQL %s"
+msgstr "flaggan \"%s\" kan inte användas på serverversioner äldre än maintableQL %s"
 
 #: reindexdb.c:584
 #, c-format
@@ -975,10 +975,10 @@ msgstr "%s: omindexering av databasen \"%s\"\n"
 #: reindexdb.c:867
 #, c-format
 msgid ""
-"%s reindexes a PostgreSQL database.\n"
+"%s reindexes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s indexerar om en PostgreSQL-databas.\n"
+"%s indexerar om en maintableQL-databas.\n"
 "\n"
 
 #: reindexdb.c:871
@@ -1123,10 +1123,10 @@ msgstr "städning av databasen \"%s\" misslyckades: %s"
 #: vacuumdb.c:1146
 #, c-format
 msgid ""
-"%s cleans and analyzes a PostgreSQL database.\n"
+"%s cleans and analyzes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s städar och analyserar en PostgreSQL-databas.\n"
+"%s städar och analyserar en maintableQL-databas.\n"
 "\n"
 
 #: vacuumdb.c:1150

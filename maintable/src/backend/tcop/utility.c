@@ -1,11 +1,11 @@
 /*-------------------------------------------------------------------------
  *
  * utility.c
- *	  Contains functions which control the execution of the POSTGRES utility
+ *	  Contains functions which control the execution of the MAINTABLE utility
  *	  commands.  At one time acted as an interface between the Lisp and C
  *	  systems.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -14,7 +14,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/reloptions.h"
 #include "access/twophase.h"

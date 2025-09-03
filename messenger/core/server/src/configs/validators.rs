@@ -30,10 +30,10 @@ use crate::configs::system::SegmentConfig;
 use crate::server_error::ConfigError;
 use crate::streaming::segments::*;
 use error_set::ErrContext;
-use iggy_common::CompressionAlgorithm;
-use iggy_common::IggyExpiry;
-use iggy_common::MaxTopicSize;
-use iggy_common::Validatable;
+use messenger_common::CompressionAlgorithm;
+use messenger_common::MessengerExpiry;
+use messenger_common::MaxTopicSize;
+use messenger_common::Validatable;
 use tracing::error;
 
 impl Validatable<ConfigError> for ServerConfig {
@@ -75,12 +75,12 @@ impl Validatable<ConfigError> for ServerConfig {
             MaxTopicSize::ServerDefault => Err(ConfigError::InvalidConfiguration),
         }?;
 
-        if let IggyExpiry::ServerDefault = self.system.segment.message_expiry {
+        if let MessengerExpiry::ServerDefault = self.system.segment.message_expiry {
             return Err(ConfigError::InvalidConfiguration);
         }
 
         if self.http.enabled
-            && let IggyExpiry::ServerDefault = self.http.jwt.access_token_expiry
+            && let MessengerExpiry::ServerDefault = self.http.jwt.access_token_expiry
         {
             return Err(ConfigError::InvalidConfiguration);
         }

@@ -1,39 +1,39 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test connection limits, i.e. max_connections, reserved_connections
 # and superuser_reserved_connections.
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Initialize the server with specific low connection limits
-my $node = PostgreSQL::Test::Cluster->new('primary');
+my $node = maintableQL::Test::Cluster->new('primary');
 $node->init(
 	auth_extra => [
 		'--create-role' =>
 		  'regress_regular,regress_reserved,regress_superuser',
 	]);
-$node->append_conf('postgresql.conf', "max_connections = 6");
-$node->append_conf('postgresql.conf', "reserved_connections = 2");
-$node->append_conf('postgresql.conf', "superuser_reserved_connections = 1");
-$node->append_conf('postgresql.conf',
+$node->append_conf('maintableql.conf', "max_connections = 6");
+$node->append_conf('maintableql.conf', "reserved_connections = 2");
+$node->append_conf('maintableql.conf', "superuser_reserved_connections = 1");
+$node->append_conf('maintableql.conf',
 	"log_connections = 'receipt,authentication,authorization'");
-$node->append_conf('postgresql.conf', "log_min_messages=debug2");
+$node->append_conf('maintableql.conf', "log_min_messages=debug2");
 $node->start;
 
 $node->safe_psql(
-	'postgres', qq{
+	'maintable', qq{
 CREATE USER regress_regular LOGIN;
 CREATE USER regress_reserved LOGIN;
 GRANT pg_use_reserved_connections TO regress_reserved;
 CREATE USER regress_superuser LOGIN SUPERUSER;
 });
 
-# With the limits we set in postgresql.conf, we can establish:
+# With the limits we set in maintableql.conf, we can establish:
 # - 3 connections for any user with no special privileges
 # - 2 more connections for users belonging to "pg_use_reserved_connections"
 # - 1 more connection for superuser
@@ -43,7 +43,7 @@ sub background_psql_as_user
 	my $user = shift;
 
 	return $node->background_psql(
-		'postgres',
+		'maintable',
 		on_error_die => 1,
 		extra_params => [ '--username' => $user ]);
 }
@@ -82,7 +82,7 @@ push(@sessions, background_psql_as_user('regress_regular'));
 push(@sessions, background_psql_as_user('regress_regular'));
 connect_fails_wait(
 	$node,
-	"dbname=postgres user=regress_regular",
+	"dbname=maintable user=regress_regular",
 	"regular connections limit",
 	expected_stderr =>
 	  qr/FATAL:  remaining connection slots are reserved for roles with privileges of the "pg_use_reserved_connections" role/
@@ -92,7 +92,7 @@ push(@sessions, background_psql_as_user('regress_reserved'));
 push(@sessions, background_psql_as_user('regress_reserved'));
 connect_fails_wait(
 	$node,
-	"dbname=postgres user=regress_reserved",
+	"dbname=maintable user=regress_reserved",
 	"reserved_connections limit",
 	expected_stderr =>
 	  qr/FATAL:  remaining connection slots are reserved for roles with the SUPERUSER attribute/
@@ -101,7 +101,7 @@ connect_fails_wait(
 push(@sessions, background_psql_as_user('regress_superuser'));
 connect_fails_wait(
 	$node,
-	"dbname=postgres user=regress_superuser",
+	"dbname=maintable user=regress_superuser",
 	"superuser_reserved_connections limit",
 	expected_stderr => qr/FATAL:  sorry, too many clients already/);
 

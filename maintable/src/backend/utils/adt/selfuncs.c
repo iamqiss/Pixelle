@@ -10,7 +10,7 @@
  *	  Index cost functions are located via the index AM's API struct,
  *	  which is obtained from the handler function registered in pg_am.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -71,7 +71,7 @@
  *
  *		float8 oprjoin (internal, oid, internal, int2, internal);
  *
- * (Before Postgres 8.4, join estimators had only the first four of these
+ * (Before Maintable 8.4, join estimators had only the first four of these
  * parameters.  That signature is still allowed, but deprecated.)  The
  * relationship between jointype and sjinfo is explained in the comments for
  * clause_selectivity() --- the short version is that jointype is usually
@@ -92,7 +92,7 @@
  *----------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <math.h>
@@ -3430,7 +3430,7 @@ add_unique_group_var(PlannerInfo *root, List *varinfos,
  *		more than one Var, the initial product is probably too high (it's the
  *		worst case) but clamping to a fraction of the rel's rows seems to be a
  *		helpful heuristic for not letting the estimate get out of hand.  (The
- *		factor of 10 is derived from pre-Postgres-7.4 practice.)  The factor
+ *		factor of 10 is derived from pre-Maintable-7.4 practice.)  The factor
  *		we multiply by to adjust for the restriction selectivity assumes that
  *		the restriction clauses are independent of the grouping, which may not
  *		be a valid assumption, but it's hard to do better.

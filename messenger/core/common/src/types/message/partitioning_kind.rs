@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use serde::{Deserialize, Serialize};
 use std::{
     fmt::Display,
@@ -53,12 +53,12 @@ impl PartitioningKind {
     }
 
     /// Get the partitioning kind from the provided code.
-    pub fn from_code(code: u8) -> Result<Self, IggyError> {
+    pub fn from_code(code: u8) -> Result<Self, MessengerError> {
         match code {
             1 => Ok(PartitioningKind::Balanced),
             2 => Ok(PartitioningKind::PartitionId),
             3 => Ok(PartitioningKind::MessagesKey),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

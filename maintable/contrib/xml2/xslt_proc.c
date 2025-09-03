@@ -5,7 +5,7 @@
  *
  * John Gray, for Torchbox 2003-04-01
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "fmgr.h"
 #include "utils/builtins.h"

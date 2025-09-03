@@ -20,14 +20,14 @@ use crate::channels::server_command::BackgroundServerCommand;
 use crate::configs::server::PersonalAccessTokenCleanerConfig;
 use crate::streaming::systems::system::SharedSystem;
 use flume::Sender;
-use iggy_common::IggyDuration;
-use iggy_common::IggyTimestamp;
+use messenger_common::MessengerDuration;
+use messenger_common::MessengerTimestamp;
 use tokio::time;
 use tracing::{debug, error, info, instrument};
 
 pub struct PersonalAccessTokenCleaner {
     enabled: bool,
-    interval: IggyDuration,
+    interval: MessengerDuration,
     sender: Sender<CleanPersonalAccessTokensCommand>,
 }
 
@@ -83,7 +83,7 @@ impl BackgroundServerCommand<CleanPersonalAccessTokensCommand>
     #[instrument(skip_all, name = "trace_clean_personal_access_tokens")]
     async fn execute(&mut self, system: &SharedSystem, _command: CleanPersonalAccessTokensCommand) {
         let system = system.read().await;
-        let now = IggyTimestamp::now();
+        let now = MessengerTimestamp::now();
         let mut deleted_tokens_count = 0;
         for (_, user) in system.users.iter() {
             let expired_tokens = user

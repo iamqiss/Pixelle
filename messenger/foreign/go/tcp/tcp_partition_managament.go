@@ -18,11 +18,11 @@
 package tcp
 
 import (
-	binaryserialization "github.com/apache/iggy/foreign/go/binary_serialization"
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
+	binaryserialization "github.com/apache/messenger/foreign/go/binary_serialization"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
 )
 
-func (tms *IggyTcpClient) CreatePartitions(streamId iggcon.Identifier, topicId iggcon.Identifier, partitionsCount uint32) error {
+func (tms *MessengerTcpClient) CreatePartitions(streamId iggcon.Identifier, topicId iggcon.Identifier, partitionsCount uint32) error {
 	message := binaryserialization.CreatePartitions(iggcon.CreatePartitionsRequest{
 		StreamId:        streamId,
 		TopicId:         topicId,
@@ -32,7 +32,7 @@ func (tms *IggyTcpClient) CreatePartitions(streamId iggcon.Identifier, topicId i
 	return err
 }
 
-func (tms *IggyTcpClient) DeletePartitions(streamId iggcon.Identifier, topicId iggcon.Identifier, partitionsCount uint32) error {
+func (tms *MessengerTcpClient) DeletePartitions(streamId iggcon.Identifier, topicId iggcon.Identifier, partitionsCount uint32) error {
 	message := binaryserialization.DeletePartitions(iggcon.DeletePartitionsRequest{
 		StreamId:        streamId,
 		TopicId:         topicId,

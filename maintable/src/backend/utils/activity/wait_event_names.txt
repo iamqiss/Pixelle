@@ -1,8 +1,8 @@
 #
 # wait_event_names.txt
-#      PostgreSQL wait events
+#      maintableQL wait events
 #
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 #
 # This list serves as the basis for generating source and documentation files
 # related to wait events.
@@ -336,7 +336,7 @@ SerializablePredicateList	"Waiting to access the list of predicate locks held by
 SyncRep	"Waiting to read or update information about the state of synchronous replication."
 BackgroundWorker	"Waiting to read or update background worker state."
 DynamicSharedMemoryControl	"Waiting to read or update dynamic shared memory allocation information."
-AutoFile	"Waiting to update the <filename>postgresql.auto.conf</filename> file."
+AutoFile	"Waiting to update the <filename>maintableql.auto.conf</filename> file."
 ReplicationSlotAllocation	"Waiting to allocate or free a replication slot."
 ReplicationSlotControl	"Waiting to read or update replication slot state."
 CommitTs	"Waiting to read or update the last value set for a transaction commit timestamp."

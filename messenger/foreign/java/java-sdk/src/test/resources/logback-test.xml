@@ -30,7 +30,7 @@
         </encoder>
     </appender>
 
-    <logger name="rs.iggy" level="DEBUG"/>
+    <logger name="rs.messenger" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>

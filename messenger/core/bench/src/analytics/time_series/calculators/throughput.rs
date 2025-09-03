@@ -23,7 +23,7 @@
 use super::TimeSeriesCalculation;
 use crate::analytics::record::BenchmarkRecord;
 use bench_report::time_series::{TimePoint, TimeSeries, TimeSeriesKind};
-use iggy::prelude::IggyDuration;
+use messenger::prelude::MessengerDuration;
 
 /// Common functionality for throughput calculations
 pub trait ThroughputCalculation {
@@ -78,7 +78,7 @@ impl<T: ThroughputCalculation> ThroughputTimeSeriesCalculator<T> {
 }
 
 impl<T: ThroughputCalculation> TimeSeriesCalculation for ThroughputTimeSeriesCalculator<T> {
-    fn calculate(&self, records: &[BenchmarkRecord], bucket_size: IggyDuration) -> TimeSeries {
+    fn calculate(&self, records: &[BenchmarkRecord], bucket_size: MessengerDuration) -> TimeSeries {
         if records.len() < 2 {
             return TimeSeries {
                 points: Vec::new(),

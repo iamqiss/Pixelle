@@ -1,4 +1,4 @@
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 
 # logical decoding on standby : test logical decoding,
 # recovery conflict and standby promotion.
@@ -6,8 +6,8 @@
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Time::HiRes qw(usleep);
 use Test::More;
 
@@ -18,12 +18,12 @@ if ($ENV{enable_injection_points} ne 'yes')
 
 my ($stdout, $stderr, $cascading_stdout, $cascading_stderr, $handle);
 
-my $node_primary = PostgreSQL::Test::Cluster->new('primary');
-my $node_standby = PostgreSQL::Test::Cluster->new('standby');
+my $node_primary = maintableQL::Test::Cluster->new('primary');
+my $node_standby = maintableQL::Test::Cluster->new('standby');
 my $node_cascading_standby =
-  PostgreSQL::Test::Cluster->new('cascading_standby');
-my $node_subscriber = PostgreSQL::Test::Cluster->new('subscriber');
-my $default_timeout = $PostgreSQL::Test::Utils::timeout_default;
+  maintableQL::Test::Cluster->new('cascading_standby');
+my $node_subscriber = maintableQL::Test::Cluster->new('subscriber');
+my $default_timeout = $maintableQL::Test::Utils::timeout_default;
 my $res;
 
 # Name for the physical slot on primary
@@ -37,7 +37,7 @@ sub wait_for_xmins
 	my ($node, $slotname, $check_expr) = @_;
 
 	$node->poll_query_until(
-		'postgres', qq[
+		'maintable', qq[
 		SELECT $check_expr
 		FROM pg_catalog.pg_replication_slots
 		WHERE slot_name = '$slotname';
@@ -64,9 +64,9 @@ sub drop_logical_slots
 	my $active_slot = $slot_prefix . 'activeslot';
 	my $inactive_slot = $slot_prefix . 'inactiveslot';
 
-	$node_standby->psql('postgres',
+	$node_standby->psql('maintable',
 		qq[SELECT pg_drop_replication_slot('$inactive_slot')]);
-	$node_standby->psql('postgres',
+	$node_standby->psql('maintable',
 		qq[SELECT pg_drop_replication_slot('$active_slot')]);
 }
 
@@ -142,7 +142,7 @@ sub change_hot_standby_feedback_and_wait_for_xmins
 	my ($hsf, $invalidated) = @_;
 
 	$node_standby->append_conf(
-		'postgresql.conf', qq[
+		'maintableql.conf', qq[
 	hot_standby_feedback = $hsf
 	]);
 
@@ -179,14 +179,14 @@ sub check_slots_conflict_reason
 	my $inactive_slot = $slot_prefix . 'inactiveslot';
 
 	$res = $node_standby->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
 			 select invalidation_reason from pg_replication_slots where slot_name = '$active_slot' and conflicting;)
 	);
 
 	is($res, "$reason", "$active_slot reason for conflict is $reason");
 
 	$res = $node_standby->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
 			 select invalidation_reason from pg_replication_slots where slot_name = '$inactive_slot' and conflicting;)
 	);
 
@@ -235,7 +235,7 @@ sub check_for_invalidation
 
 	# Verify that pg_stat_database_conflicts.confl_active_logicalslot has been updated
 	ok( $node_standby->poll_query_until(
-			'postgres',
+			'maintable',
 			"select (confl_active_logicalslot = 1) from pg_stat_database_conflicts where datname = 'testdb'",
 			't'),
 		'confl_active_logicalslot updated'
@@ -291,7 +291,7 @@ sub wait_until_vacuum_can_remove
 
 $node_primary->init(allows_streaming => 1, has_archiving => 1);
 $node_primary->append_conf(
-	'postgresql.conf', q{
+	'maintableql.conf', q{
 wal_level = 'logical'
 max_replication_slots = 4
 max_wal_senders = 4
@@ -308,7 +308,7 @@ if (!$node_primary->check_extension('injection_points'))
 	plan skip_all => 'Extension injection_points not installed';
 }
 
-$node_primary->psql('postgres', q[CREATE DATABASE testdb]);
+$node_primary->psql('maintable', q[CREATE DATABASE testdb]);
 
 $node_primary->safe_psql('testdb',
 	qq[SELECT * FROM pg_create_physical_replication_slot('$primary_slotname');]
@@ -316,7 +316,7 @@ $node_primary->safe_psql('testdb',
 
 # Check conflicting is NULL for physical slot
 $res = $node_primary->safe_psql(
-	'postgres', qq[
+	'maintable', qq[
 		 SELECT conflicting is null FROM pg_replication_slots where slot_name = '$primary_slotname';]
 );
 
@@ -338,7 +338,7 @@ $node_standby->init_from_backup(
 	has_streaming => 1,
 	has_restoring => 1);
 $node_standby->append_conf(
-	'postgresql.conf',
+	'maintableql.conf',
 	qq[primary_slot_name = '$primary_slotname'
        max_replication_slots = 5]);
 $node_standby->start;
@@ -358,7 +358,7 @@ $psql_subscriber{run} = IPC::Run::start(
 	[
 		'psql', '--no-psqlrc', '--no-align',
 		'--file' => '-',
-		'--dbname' => $node_subscriber->connstr('postgres')
+		'--dbname' => $node_subscriber->connstr('maintable')
 	],
 	'<' => \$psql_subscriber{subscriber_stdin},
 	'>' => \$psql_subscriber{subscriber_stdout},
@@ -373,7 +373,7 @@ $psql_subscriber{run} = IPC::Run::start(
 # create the logical slots
 $node_standby->create_logical_slot_on_standby($node_primary, 'restart_test');
 $node_standby->stop;
-$node_standby->append_conf('postgresql.conf', qq[hot_standby = off]);
+$node_standby->append_conf('maintableql.conf', qq[hot_standby = off]);
 
 # Use run_log instead of $node_standby->start because this test expects
 # that the server ends with an error during startup.
@@ -385,8 +385,8 @@ run_log(
 		'start',
 	]);
 
-# wait for postgres to terminate
-foreach my $i (0 .. 10 * $PostgreSQL::Test::Utils::timeout_default)
+# wait for maintable to terminate
+foreach my $i (0 .. 10 * $maintableQL::Test::Utils::timeout_default)
 {
 	last if !-f $node_standby->data_dir . '/postmaster.pid';
 	usleep(100_000);
@@ -398,9 +398,9 @@ ok( $logfile =~
 	  qr/FATAL: .* logical replication slot ".*" exists on the standby, but "hot_standby" = "off"/,
 	"the standby ends with an error during startup because hot_standby was disabled"
 );
-$node_standby->adjust_conf('postgresql.conf', 'hot_standby', 'on');
+$node_standby->adjust_conf('maintableql.conf', 'hot_standby', 'on');
 $node_standby->start;
-$node_standby->safe_psql('postgres',
+$node_standby->safe_psql('maintable',
 	qq[SELECT pg_drop_replication_slot('restart_test')]);
 
 ##################################################
@@ -478,7 +478,7 @@ $stdout_recv = $node_standby->pg_recvlogical_upto(
 chomp($stdout_recv);
 is($stdout_recv, '', 'pg_recvlogical acknowledged changes');
 
-$node_primary->safe_psql('postgres', 'CREATE DATABASE otherdb');
+$node_primary->safe_psql('maintable', 'CREATE DATABASE otherdb');
 
 # Wait for catchup to ensure that the new database is visible to other sessions
 # on the standby.
@@ -497,21 +497,21 @@ ok( $stderr =~
 ##################################################
 
 # Create a table on the primary
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"CREATE TABLE tab_rep (a int primary key)");
 
 # Create a table (same structure) on the subscriber node
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	"CREATE TABLE tab_rep (a int primary key)");
 
 # Create a publication on the primary
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"CREATE PUBLICATION tap_pub for table tab_rep");
 
 $node_primary->wait_for_replay_catchup($node_standby);
 
 # Subscribe on the standby
-my $standby_connstr = $node_standby->connstr . ' dbname=postgres';
+my $standby_connstr = $node_standby->connstr . ' dbname=maintable';
 
 # Not using safe_psql() here as it would wait for activity on the primary
 # and we wouldn't be able to launch pg_log_standby_snapshot() on the primary
@@ -536,7 +536,7 @@ $psql_subscriber{run}->finish;
 $node_subscriber->wait_for_subscription_sync($node_standby, 'tap_sub');
 
 # Insert some rows on the primary
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	qq[INSERT INTO tab_rep select generate_series(1,10);]);
 
 $node_primary->wait_for_replay_catchup($node_standby);
@@ -544,11 +544,11 @@ $node_standby->wait_for_catchup('tap_sub');
 
 # Check that the subscriber can see the rows inserted in the primary
 $result =
-  $node_subscriber->safe_psql('postgres', "SELECT count(*) FROM tab_rep");
+  $node_subscriber->safe_psql('maintable', "SELECT count(*) FROM tab_rep");
 is($result, qq(10), 'check replicated inserts after subscription on standby');
 
 # We do not need the subscription and the subscriber anymore
-$node_subscriber->safe_psql('postgres', "DROP SUBSCRIPTION tap_sub");
+$node_subscriber->safe_psql('maintable', "DROP SUBSCRIPTION tap_sub");
 $node_subscriber->stop;
 
 # Create the injection_points extension
@@ -591,7 +591,7 @@ check_slots_conflict_reason('vacuum_full_', 'rows_removed');
 
 # Attempting to alter an invalidated slot should result in an error
 ($result, $stdout, $stderr) = $node_standby->psql(
-	'postgres',
+	'maintable',
 	qq[ALTER_REPLICATION_SLOT vacuum_full_inactiveslot (failover);],
 	replication => 'database');
 ok( $stderr =~
@@ -617,7 +617,7 @@ check_pg_recvlogical_stderr($handle,
 
 # Attempt to copy an invalidated logical replication slot
 ($result, $stdout, $stderr) = $node_standby->psql(
-	'postgres',
+	'maintable',
 	qq[select pg_copy_logical_replication_slot('vacuum_full_inactiveslot', 'vacuum_full_inactiveslot_copy');],
 	replication => 'database');
 ok( $stderr =~
@@ -641,7 +641,7 @@ check_slots_conflict_reason('vacuum_full_', 'rows_removed');
 
 # Get the restart_lsn from an invalidated slot
 my $restart_lsn = $node_standby->safe_psql(
-	'postgres',
+	'maintable',
 	"SELECT restart_lsn FROM pg_replication_slots
 		WHERE slot_name = 'vacuum_full_activeslot' AND conflicting;"
 );
@@ -650,20 +650,20 @@ chomp($restart_lsn);
 
 # As pg_walfile_name() can not be executed on the standby,
 # get the WAL file name associated to this lsn from the primary
-my $walfile_name = $node_primary->safe_psql('postgres',
+my $walfile_name = $node_primary->safe_psql('maintable',
 	"SELECT pg_walfile_name('$restart_lsn')");
 
 chomp($walfile_name);
 
 # Generate some activity and switch WAL file on the primary
 $node_primary->advance_wal(1);
-$node_primary->safe_psql('postgres', "checkpoint;");
+$node_primary->safe_psql('maintable', "checkpoint;");
 
 # Wait for the standby to catch up
 $node_primary->wait_for_replay_catchup($node_standby);
 
 # Request a checkpoint on the standby to trigger the WAL file(s) removal
-$node_standby->safe_psql('postgres', 'checkpoint;');
+$node_standby->safe_psql('maintable', 'checkpoint;');
 
 # Verify that the WAL file has not been retained on the standby
 my $standby_walfile = $node_standby->data_dir . '/pg_wal/' . $walfile_name;
@@ -766,7 +766,7 @@ ok( !$node_standby->log_contains(
 
 # Verify that pg_stat_database_conflicts.confl_active_logicalslot has not been updated
 ok( $node_standby->poll_query_until(
-		'postgres',
+		'maintable',
 		"select (confl_active_logicalslot = 0) from pg_stat_database_conflicts where datname = 'testdb'",
 		't'),
 	'confl_active_logicalslot not updated'
@@ -774,7 +774,7 @@ ok( $node_standby->poll_query_until(
 
 # Verify slots are reported as non conflicting in pg_replication_slots
 is( $node_standby->safe_psql(
-		'postgres',
+		'maintable',
 		q[select bool_or(conflicting) from
 		  (select conflicting from pg_replication_slots
 			where slot_type = 'logical')]),
@@ -860,7 +860,7 @@ $node_standby->psql('testdb', q[select pg_stat_reset();]);
 
 # Make primary wal_level replica. This will trigger slot conflict.
 $node_primary->append_conf(
-	'postgresql.conf', q[
+	'maintableql.conf', q[
 wal_level = 'replica'
 ]);
 $node_primary->restart;
@@ -882,7 +882,7 @@ check_pg_recvlogical_stderr($handle,
 
 # Restore primary wal_level
 $node_primary->append_conf(
-	'postgresql.conf', q[
+	'maintableql.conf', q[
 wal_level = 'logical'
 ]);
 $node_primary->restart;
@@ -909,15 +909,15 @@ $handle = make_slot_active($node_standby, 'drop_db_', 1, \$stdout, \$stderr);
 # Create a slot on a database that would not be dropped. This slot should not
 # get dropped.
 $node_standby->create_logical_slot_on_standby($node_primary, 'otherslot',
-	'postgres');
+	'maintable');
 
 # dropdb on the primary to verify slots are dropped on standby
-$node_primary->safe_psql('postgres', q[DROP DATABASE testdb]);
+$node_primary->safe_psql('maintable', q[DROP DATABASE testdb]);
 
 $node_primary->wait_for_replay_catchup($node_standby);
 
 is( $node_standby->safe_psql(
-		'postgres',
+		'maintable',
 		q[SELECT EXISTS(SELECT 1 FROM pg_database WHERE datname = 'testdb')]),
 	'f',
 	'database dropped on standby');
@@ -928,7 +928,7 @@ is($node_standby->slot('otherslot')->{'slot_type'},
 	'logical', 'otherslot on standby not dropped');
 
 # Cleanup : manually drop the slot that was not dropped.
-$node_standby->psql('postgres',
+$node_standby->psql('maintable',
 	q[SELECT pg_drop_replication_slot('otherslot')]);
 
 ##################################################
@@ -938,7 +938,7 @@ $node_standby->psql('postgres',
 
 $node_standby->reload;
 
-$node_primary->psql('postgres', q[CREATE DATABASE testdb]);
+$node_primary->psql('maintable', q[CREATE DATABASE testdb]);
 $node_primary->safe_psql('testdb',
 	qq[CREATE TABLE decoding_test(x integer, y text);]);
 
@@ -960,7 +960,7 @@ $node_cascading_standby->init_from_backup(
 	has_streaming => 1,
 	has_restoring => 1);
 $node_cascading_standby->append_conf(
-	'postgresql.conf',
+	'maintableql.conf',
 	qq[primary_slot_name = '$standby_physical_slotname'
 	   hot_standby_feedback = on]);
 $node_cascading_standby->start;
@@ -1025,7 +1025,7 @@ is($stdout_sql, $expected,
 
 # check that we are decoding pre and post promotion inserted rows
 # with pg_recvlogical that has started before the promotion
-my $pump_timeout = IPC::Run::timer($PostgreSQL::Test::Utils::timeout_default);
+my $pump_timeout = IPC::Run::timer($maintableQL::Test::Utils::timeout_default);
 
 ok(pump_until($handle, $pump_timeout, \$stdout, qr/^.*COMMIT.*COMMIT$/s),
 	'got 2 COMMIT from pg_recvlogical output');

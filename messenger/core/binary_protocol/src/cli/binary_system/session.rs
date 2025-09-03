@@ -18,8 +18,8 @@
 
 use keyring::{Entry, Result};
 
-const SESSION_TOKEN_NAME: &str = "iggy-cli-session";
-const SESSION_KEYRING_SERVICE_NAME: &str = "iggy-cli-session";
+const SESSION_TOKEN_NAME: &str = "messenger-cli-session";
+const SESSION_KEYRING_SERVICE_NAME: &str = "messenger-cli-session";
 
 pub struct ServerSession {
     server_address: String,

@@ -4,7 +4,7 @@
  *	   The front-end (client) implementation of OAuth/OIDC authentication
  *	   using the SASL OAUTHBEARER mechanism.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #ifdef USE_DYNAMIC_OAUTH
 #include <dlfcn.h>
@@ -676,12 +676,12 @@ cleanup:
  * for setting an altsock to signal and returning the correct PGRES_POLLING_*
  * statuses for use by PQconnectPoll().
  */
-static PostgresPollingStatusType
+static MaintablePollingStatusType
 run_user_oauth_flow(PGconn *conn)
 {
 	fe_oauth_state *state = conn->sasl_state;
 	PGoauthBearerRequest *request = state->async_ctx;
-	PostgresPollingStatusType status;
+	MaintablePollingStatusType status;
 
 	if (!request->async)
 	{
@@ -841,7 +841,7 @@ use_builtin_flow(PGconn *conn, fe_oauth_state *state)
 						 conn_sasl_state_func saslstate_impl,
 						 set_conn_altsock_func setaltsock_impl,
 						 set_conn_oauth_token_func settoken_impl);
-	PostgresPollingStatusType (*flow) (PGconn *conn);
+	MaintablePollingStatusType (*flow) (PGconn *conn);
 	void		(*cleanup) (PGconn *conn);
 
 	/*
@@ -947,7 +947,7 @@ use_builtin_flow(PGconn *conn, fe_oauth_state *state)
  * Use the builtin flow in libpq-oauth.a (see libpq-oauth/oauth-curl.h).
  */
 
-extern PostgresPollingStatusType pg_fe_run_oauth_flow(PGconn *conn);
+extern MaintablePollingStatusType pg_fe_run_oauth_flow(PGconn *conn);
 extern void pg_fe_cleanup_oauth_flow(PGconn *conn);
 
 bool

@@ -18,7 +18,7 @@
 
 use crate::streaming::systems::system::System;
 use crate::versioning::SemanticVersion;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use serde::{Deserialize, Serialize};
 use std::collections::hash_map::DefaultHasher;
 use std::fmt::Display;
@@ -47,12 +47,12 @@ pub struct Migration {
 }
 
 impl System {
-    pub(crate) async fn load_version(&mut self) -> Result<(), IggyError> {
+    pub(crate) async fn load_version(&mut self) -> Result<(), MessengerError> {
         let current_version = SemanticVersion::current()?;
         let mut system_info;
         let load_system_info = self.storage.info.load().await;
         if let Err(error) = load_system_info {
-            if let IggyError::ResourceNotFound(_) = error {
+            if let MessengerError::ResourceNotFound(_) = error {
                 info!("System info not found, creating...");
                 system_info = SystemInfo::default();
                 self.update_system_info(&mut system_info, &current_version)
@@ -89,7 +89,7 @@ impl System {
         &self,
         system_info: &mut SystemInfo,
         version: &SemanticVersion,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         system_info.update_version(version);
         self.storage.info.save(system_info).await?;
         Ok(())

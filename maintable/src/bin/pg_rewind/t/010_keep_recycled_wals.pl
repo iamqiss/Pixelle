@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 #
 # Test situation where a target data directory contains
 # WAL files that were already recycled by the new primary.
@@ -6,7 +6,7 @@
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use Test::More;
 
 use FindBin;
@@ -27,7 +27,7 @@ RewindTest::primary_psql("CHECKPOINT");    # last common checkpoint
 # might not be available on Windows.
 my $false = "$^X -e \"exit(1)\"";
 $node_primary->append_conf(
-	'postgresql.conf', qq(
+	'maintableql.conf', qq(
 archive_command = '$false'
 ));
 $node_primary->reload();

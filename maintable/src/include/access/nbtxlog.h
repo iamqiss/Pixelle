@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * nbtxlog.h
- *	  header file for postgres btree xlog routines
+ *	  header file for maintable btree xlog routines
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/access/nbtxlog.h

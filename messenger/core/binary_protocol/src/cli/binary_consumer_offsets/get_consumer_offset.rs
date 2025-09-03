@@ -21,8 +21,8 @@ use crate::cli::cli_command::{CliCommand, PRINT_TARGET};
 use anyhow::Context;
 use async_trait::async_trait;
 use comfy_table::Table;
-use iggy_common::get_consumer_offset::GetConsumerOffset;
-use iggy_common::{Consumer, ConsumerKind, Identifier};
+use messenger_common::get_consumer_offset::GetConsumerOffset;
+use messenger_common::{Consumer, ConsumerKind, Identifier};
 use tracing::{Level, event};
 
 pub struct GetConsumerOffsetCmd {

@@ -20,26 +20,26 @@ use std::collections::HashMap;
 
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::ArgsOptional;
-use iggy::prelude::Client;
-use iggy_binary_protocol::cli::binary_context::common::ContextConfig;
+use messenger::prelude::ArgsOptional;
+use messenger::prelude::Client;
+use messenger_binary_protocol::cli::binary_context::common::ContextConfig;
 use integration::test_server::TestServer;
 use predicates::str::{contains, starts_with};
 use serial_test::parallel;
 
-use crate::cli::common::{IggyCmdCommand, IggyCmdTest, IggyCmdTestCase};
+use crate::cli::common::{MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase};
 
-use super::common::TestIggyContext;
+use super::common::TestMessengerContext;
 
 struct TestContextApplied {
     set_transport_context: Option<String>,
     set_transport_arg: Option<String>,
-    test_iggy_context: TestIggyContext,
+    test_messenger_context: TestMessengerContext,
 }
 
 impl TestContextApplied {
     fn new(set_transport_context: Option<String>, set_transport_arg: Option<String>) -> Self {
-        let test_iggy_context = TestIggyContext::new(
+        let test_messenger_context = TestMessengerContext::new(
             Some(HashMap::from([
                 (
                     "default".to_string(),
@@ -50,7 +50,7 @@ impl TestContextApplied {
                 (
                     "second".to_string(),
                     ContextConfig {
-                        iggy: ArgsOptional {
+                        messenger: ArgsOptional {
                             transport: set_transport_context.clone(),
                             ..Default::default()
                         },
@@ -64,22 +64,22 @@ impl TestContextApplied {
         Self {
             set_transport_context,
             set_transport_arg,
-            test_iggy_context,
+            test_messenger_context,
         }
     }
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestContextApplied {
+impl MessengerCmdTestCase for TestContextApplied {
     async fn prepare_server_state(&mut self, _client: &dyn Client) {
-        self.test_iggy_context.prepare().await;
+        self.test_messenger_context.prepare().await;
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        let cmd = IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        let cmd = MessengerCmdCommand::new()
             .env(
-                "IGGY_HOME",
-                self.test_iggy_context.get_iggy_home().to_str().unwrap(),
+                "MESSENGER_HOME",
+                self.test_messenger_context.get_messenger_home().to_str().unwrap(),
             )
             .with_env_credentials();
 
@@ -141,10 +141,10 @@ impl IggyCmdTestCase for TestContextApplied {
 #[tokio::test]
 #[parallel]
 pub async fn should_apply_context() {
-    let mut iggy_cmd_test = IggyCmdTest::new(true);
-    iggy_cmd_test.setup().await;
+    let mut messenger_cmd_test = MessengerCmdTest::new(true);
+    messenger_cmd_test.setup().await;
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestContextApplied::new(Some("quic".to_string()), None))
         .await;
 }
@@ -152,10 +152,10 @@ pub async fn should_apply_context() {
 #[tokio::test]
 #[parallel]
 pub async fn should_allow_args_to_override_context() {
-    let mut iggy_cmd_test = IggyCmdTest::new(true);
-    iggy_cmd_test.setup().await;
+    let mut messenger_cmd_test = MessengerCmdTest::new(true);
+    messenger_cmd_test.setup().await;
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestContextApplied::new(
             Some("quic".to_string()),
             Some("tcp".to_string()),

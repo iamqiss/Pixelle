@@ -218,7 +218,7 @@ SELECT class, aa
    FROM a_star* x
    WHERE aa ISNULL;
 
--- As of Postgres 7.1, ALTER implicitly recurses,
+-- As of Maintable 7.1, ALTER implicitly recurses,
 -- so this should be same as ALTER a_star*
 
 ALTER TABLE a_star RENAME COLUMN aa TO foo;

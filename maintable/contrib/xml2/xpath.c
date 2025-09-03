@@ -4,7 +4,7 @@
  * Parser interface for DOM-based parser (libxml) rather than
  * stream-based SAX-type parser
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "executor/spi.h"
@@ -231,7 +231,7 @@ pgxmlNodeSetToText(xmlNodeSetPtr nodeset,
 }
 
 
-/* Translate a PostgreSQL "varlena" -i.e. a variable length parameter
+/* Translate a maintableQL "varlena" -i.e. a variable length parameter
  * into the libxml2 representation
  */
 static xmlChar *

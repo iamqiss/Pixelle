@@ -16,20 +16,20 @@
  * under the License.
  */
 
-use super::{IggyIndexesMut, IggyMessagesBatchMut, IggyMessagesBatchSet};
+use super::{MessengerIndexesMut, MessengerMessagesBatchMut, MessengerMessagesBatchSet};
 use crate::streaming::segments::segment::Segment;
 use error_set::ErrContext;
-use iggy_common::{IggyByteSize, IggyError};
+use messenger_common::{MessengerByteSize, MessengerError};
 use std::sync::atomic::Ordering;
 use tracing::trace;
 
 const COMPONENT: &str = "STREAMING_SEGMENT";
 
 impl Segment {
-    pub fn get_messages_size(&self) -> IggyByteSize {
+    pub fn get_messages_size(&self) -> MessengerByteSize {
         let on_disk_size = self.messages_size.load(Ordering::Relaxed);
         let accumulator_size = self.accumulator.size() as u64;
-        IggyByteSize::from(on_disk_size + accumulator_size)
+        MessengerByteSize::from(on_disk_size + accumulator_size)
     }
 
     pub fn get_messages_count(&self) -> u32 {
@@ -44,9 +44,9 @@ impl Segment {
         &self,
         timestamp: u64,
         count: u32,
-    ) -> Result<IggyMessagesBatchSet, IggyError> {
+    ) -> Result<MessengerMessagesBatchSet, MessengerError> {
         if count == 0 {
-            return Ok(IggyMessagesBatchSet::default());
+            return Ok(MessengerMessagesBatchSet::default());
         }
 
         trace!(
@@ -56,7 +56,7 @@ impl Segment {
 
         // Case 0: Accumulator is empty, so all messages have to be on disk
         if self.accumulator.is_empty() {
-            return Ok(IggyMessagesBatchSet::from(
+            return Ok(MessengerMessagesBatchSet::from(
                 self.load_messages_from_disk_by_timestamp(timestamp, count)
                     .await?,
             ));
@@ -67,7 +67,7 @@ impl Segment {
 
         // Case 1: Requested timestamp is higher than any available timestamp
         if timestamp > accumulator_last_timestamp {
-            return Ok(IggyMessagesBatchSet::empty());
+            return Ok(MessengerMessagesBatchSet::empty());
         }
 
         // Case 2: Requested timestamp falls within accumulator range only
@@ -78,7 +78,7 @@ impl Segment {
 
         // Case 3: Timestamp is lower than accumulator's first timestamp
         // Need to get messages from disk and potentially combine with accumulator
-        let messages_from_disk = IggyMessagesBatchSet::from(self
+        let messages_from_disk = MessengerMessagesBatchSet::from(self
             .load_messages_from_disk_by_timestamp(timestamp, count)
             .await
             .with_error_context(|error| {
@@ -112,9 +112,9 @@ impl Segment {
         &self,
         mut offset: u64,
         count: u32,
-    ) -> Result<IggyMessagesBatchSet, IggyError> {
+    ) -> Result<MessengerMessagesBatchSet, MessengerError> {
         if count == 0 {
-            return Ok(IggyMessagesBatchSet::default());
+            return Ok(MessengerMessagesBatchSet::default());
         }
 
         if offset < self.start_offset {
@@ -157,7 +157,7 @@ impl Segment {
             0
         };
 
-        let mut combined_batch_set = IggyMessagesBatchSet::empty();
+        let mut combined_batch_set = MessengerMessagesBatchSet::empty();
 
         // Load messages from disk if needed
         if disk_count > 0 {
@@ -195,7 +195,7 @@ impl Segment {
     }
 
     /// Loads and returns `count` newest message IDs from the log file.
-    pub async fn load_message_ids(&self, count: u32) -> Result<Vec<u128>, IggyError> {
+    pub async fn load_message_ids(&self, count: u32) -> Result<Vec<u128>, MessengerError> {
         let messages_count = self.get_messages_count();
         trace!(
             "Loading message IDs for {messages_count} messages from log file: {}",
@@ -237,7 +237,7 @@ impl Segment {
         Ok(ids)
     }
 
-    pub async fn validate_messages_checksums(&self) -> Result<(), IggyError> {
+    pub async fn validate_messages_checksums(&self) -> Result<(), MessengerError> {
         let messages_count = self.get_messages_count();
         if messages_count == 0 {
             return Ok(());
@@ -272,7 +272,7 @@ impl Segment {
         &self,
         relative_start_offset: u32,
         count: u32,
-    ) -> Result<Option<IggyIndexesMut>, IggyError> {
+    ) -> Result<Option<MessengerIndexesMut>, MessengerError> {
         let indexes = if !self.indexes.is_empty() {
             self.indexes.slice_by_offset(relative_start_offset, count)
         } else {
@@ -289,7 +289,7 @@ impl Segment {
         &self,
         timestamp: u64,
         count: u32,
-    ) -> Result<Option<IggyIndexesMut>, IggyError> {
+    ) -> Result<Option<MessengerIndexesMut>, MessengerError> {
         let indexes = if !self.indexes.is_empty() {
             self.indexes.slice_by_timestamp(timestamp, count)
         } else {
@@ -306,7 +306,7 @@ impl Segment {
         &self,
         start_offset: u64,
         count: u32,
-    ) -> Result<IggyMessagesBatchSet, IggyError> {
+    ) -> Result<MessengerMessagesBatchSet, MessengerError> {
         tracing::trace!(
             "Loading {count} messages from disk, start_offset: {start_offset}, segment start_offset: {}, segment end_offset: {}...",
             self.start_offset,
@@ -319,7 +319,7 @@ impl Segment {
             .await?;
 
         if indexes_to_read.is_none() {
-            return Ok(IggyMessagesBatchSet::empty());
+            return Ok(MessengerMessagesBatchSet::empty());
         }
         let indexes_to_read = indexes_to_read.unwrap();
 
@@ -349,14 +349,14 @@ impl Segment {
             self.end_offset
         );
 
-        Ok(IggyMessagesBatchSet::from(batch))
+        Ok(MessengerMessagesBatchSet::from(batch))
     }
 
     async fn load_messages_from_disk_by_timestamp(
         &self,
         timestamp: u64,
         count: u32,
-    ) -> Result<IggyMessagesBatchMut, IggyError> {
+    ) -> Result<MessengerMessagesBatchMut, MessengerError> {
         tracing::trace!(
             "Loading {count} messages from disk, timestamp: {timestamp}, current_timestamp: {}...",
             self.end_timestamp
@@ -365,7 +365,7 @@ impl Segment {
         let indexes_to_read = self.load_indexes_by_timestamp(timestamp, count).await?;
 
         if indexes_to_read.is_none() {
-            return Ok(IggyMessagesBatchMut::empty());
+            return Ok(MessengerMessagesBatchMut::empty());
         }
 
         let indexes_to_read = indexes_to_read.unwrap();

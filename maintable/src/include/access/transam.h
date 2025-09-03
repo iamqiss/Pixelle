@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * transam.h
- *	  postgres transaction access method support code
+ *	  maintable transaction access method support code
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/access/transam.h

@@ -17,7 +17,7 @@
  */
 
 use async_trait::async_trait;
-use iggy_common::{Identifier, IggyError};
+use messenger_common::{Identifier, MessengerError};
 
 /// This trait defines the methods to interact with the partition module.
 #[async_trait]
@@ -32,7 +32,7 @@ pub trait PartitionClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitions_count: u32,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
     /// Delete last N partitions for a topic by unique ID or name.
     ///
     /// For example, given a topic with 5 partitions, if you delete 2 partitions, the topic will have 3 partitions left (from 1 to 3).
@@ -43,5 +43,5 @@ pub trait PartitionClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitions_count: u32,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
 }

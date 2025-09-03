@@ -1,9 +1,9 @@
 /* ----------
  *	pg_trace.h
  *
- *	Definitions for the PostgreSQL tracing framework
+ *	Definitions for the maintableQL tracing framework
  *
- *	Copyright (c) 2006-2025, PostgreSQL Global Development Group
+ *	Copyright (c) 2006-2025, maintableQL Global Development Group
  *
  *	src/include/pg_trace.h
  * ----------

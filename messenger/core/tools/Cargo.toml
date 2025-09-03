@@ -28,7 +28,7 @@ path = "src/data-seeder/main.rs"
 [dependencies]
 anyhow = { workspace = true }
 clap = { workspace = true }
-iggy = { workspace = true }
+messenger = { workspace = true }
 rand = { workspace = true }
 tokio = { workspace = true }
 tracing = { workspace = true }

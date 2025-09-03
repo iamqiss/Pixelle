@@ -17,8 +17,8 @@
  */
 
 use chrono::{DateTime, Days, Utc};
-use iggy::prelude::{
-    Client, DirectConfig, IggyClient, IggyClientBuilder, IggyDuration, IggyError, IggyMessage,
+use messenger::prelude::{
+    Client, DirectConfig, MessengerClient, MessengerClientBuilder, MessengerDuration, MessengerError, MessengerMessage,
     Partitioning,
 };
 use rand::{
@@ -48,18 +48,18 @@ async fn main() -> Result<(), DataProducerError> {
         .with(EnvFilter::try_from_default_env().unwrap_or(EnvFilter::new("INFO")))
         .init();
     info!("Starting data producer...");
-    let address = env::var("IGGY_ADDRESS").unwrap_or("localhost:8090".to_owned());
-    let username = env::var("IGGY_USERNAME").unwrap_or("iggy".to_owned());
-    let password = env::var("IGGY_PASSWORD").unwrap_or("iggy".to_owned());
-    let stream = env::var("IGGY_STREAM").unwrap_or("qw".to_owned());
-    let topic = env::var("IGGY_TOPIC").unwrap_or("records".to_owned());
+    let address = env::var("MESSENGER_ADDRESS").unwrap_or("localhost:8090".to_owned());
+    let username = env::var("MESSENGER_USERNAME").unwrap_or("messenger".to_owned());
+    let password = env::var("MESSENGER_PASSWORD").unwrap_or("messenger".to_owned());
+    let stream = env::var("MESSENGER_STREAM").unwrap_or("qw".to_owned());
+    let topic = env::var("MESSENGER_TOPIC").unwrap_or("records".to_owned());
     let client = create_client(&address, &username, &password).await?;
     let producer = client
         .producer(&stream, &topic)?
         .direct(
             DirectConfig::builder()
                 .batch_length(1000)
-                .linger_time(IggyDuration::from_str("5ms").unwrap())
+                .linger_time(MessengerDuration::from_str("5ms").unwrap())
                 .build(),
         )
         .partitioning(Partitioning::balanced())
@@ -73,7 +73,7 @@ async fn main() -> Result<(), DataProducerError> {
         let messages = (0..records_count)
             .map(|_| random_record())
             .flat_map(|record| serde_json::to_string(&record).ok())
-            .flat_map(|payload| IggyMessage::from_str(&payload).ok())
+            .flat_map(|payload| MessengerMessage::from_str(&payload).ok())
             .collect::<Vec<_>>();
         producer.send(messages).await?;
         info!("Sent {records_count} messages");
@@ -88,9 +88,9 @@ async fn create_client(
     address: &str,
     username: &str,
     password: &str,
-) -> Result<IggyClient, IggyError> {
-    let connection_string = format!("iggy://{username}:{password}@{address}");
-    let client = IggyClientBuilder::from_connection_string(&connection_string)?.build()?;
+) -> Result<MessengerClient, MessengerError> {
+    let connection_string = format!("messenger://{username}:{password}@{address}");
+    let client = MessengerClientBuilder::from_connection_string(&connection_string)?.build()?;
     client.connect().await?;
     Ok(client)
 }
@@ -141,8 +141,8 @@ fn random_string(size: usize) -> String {
 
 #[derive(Debug, Error)]
 enum DataProducerError {
-    #[error("Iggy client error")]
-    IggyClient(#[from] iggy::prelude::ClientError),
-    #[error("Iggy error")]
-    IggyError(#[from] iggy::prelude::IggyError),
+    #[error("Messenger client error")]
+    MessengerClient(#[from] messenger::prelude::ClientError),
+    #[error("Messenger error")]
+    MessengerError(#[from] messenger::prelude::MessengerError),
 }

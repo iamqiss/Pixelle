@@ -36,11 +36,11 @@ using icp::net::protocol::MessageEncoding;
 using icp::net::protocol::ProtocolDefinition;
 
 /**
- * @brief Provider that declares support and offers defaults for all Iggy C++ supported protocols.
+ * @brief Provider that declares support and offers defaults for all Messenger C++ supported protocols.
  *
- * At this time we support iggy:quic, iggy:tcp (binary messaging) and iggy:http (with JSON messaging).
+ * At this time we support messenger:quic, messenger:tcp (binary messaging) and messenger:http (with JSON messaging).
  */
-class IggyProtocolProvider : public icp::net::protocol::ProtocolProvider {
+class MessengerProtocolProvider : public icp::net::protocol::ProtocolProvider {
 private:
     std::vector<ProtocolDefinition> supportedProtocols = {
         ProtocolDefinition(QUIC_PROTOCOL, DEFAULT_QUIC_PORT, icp::net::transport::QUIC, true, MessageEncoding::BINARY),
@@ -51,7 +51,7 @@ private:
     std::map<std::string, ProtocolDefinition> supportedProtocolLookup;
 
 public:
-    IggyProtocolProvider();
+    MessengerProtocolProvider();
     const std::vector<ProtocolDefinition>& getSupportedProtocols() const override;
     const ProtocolDefinition& getProtocolDefinition(const std::string& protocol) const override;
     const bool isSupported(const std::string& protocol) const override;

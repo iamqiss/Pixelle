@@ -18,11 +18,11 @@
 
 use crate::streaming::common::test_setup::TestSetup;
 use bytes::BytesMut;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use server::configs::cache_indexes::CacheIndexesConfig;
 use server::configs::system::{PartitionConfig, SegmentConfig, SystemConfig};
 use server::streaming::partitions::partition::Partition;
-use server::streaming::segments::IggyMessagesBatchMut;
+use server::streaming::segments::MessengerMessagesBatchMut;
 use std::collections::HashMap;
 use std::str::FromStr;
 use std::sync::Arc;
@@ -33,12 +33,12 @@ use test_case::test_matrix;
  * Below helper functions are here only to make test function name more readable.
  */
 
-fn msg_size(size: u64) -> IggyByteSize {
-    IggyByteSize::from_str(&format!("{size}B")).unwrap()
+fn msg_size(size: u64) -> MessengerByteSize {
+    MessengerByteSize::from_str(&format!("{size}B")).unwrap()
 }
 
-fn segment_size(size: u64) -> IggyByteSize {
-    IggyByteSize::from_str(&format!("{size}B")).unwrap()
+fn segment_size(size: u64) -> MessengerByteSize {
+    MessengerByteSize::from_str(&format!("{size}B")).unwrap()
 }
 
 fn msgs_req_to_save(count: u32) -> u32 {
@@ -81,10 +81,10 @@ fn very_large_batches() -> Vec<u32> {
     [index_cache_none(), index_cache_all(), index_cache_open_segment()])]
 #[tokio::test]
 async fn test_get_messages_by_offset(
-    message_size: IggyByteSize,
+    message_size: MessengerByteSize,
     batch_lengths: Vec<u32>,
     messages_required_to_save: u32,
-    segment_size: IggyByteSize,
+    segment_size: MessengerByteSize,
     cache_indexes: CacheIndexesConfig,
 ) {
     println!(
@@ -120,13 +120,13 @@ async fn test_get_messages_by_offset(
         true,
         config.clone(),
         setup.storage.clone(),
-        IggyExpiry::NeverExpire,
+        MessengerExpiry::NeverExpire,
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU32::new(0)),
-        IggyTimestamp::now(),
+        MessengerTimestamp::now(),
     )
     .await;
 
@@ -158,7 +158,7 @@ async fn test_get_messages_by_offset(
             HeaderValue::from_uint64(123456).unwrap(),
         );
 
-        let message = IggyMessage::builder()
+        let message = MessengerMessage::builder()
             .id(id)
             .payload(payload)
             .user_headers(headers)
@@ -193,7 +193,7 @@ async fn test_get_messages_by_offset(
             .map(|m| m.get_size_bytes().as_bytes_u64() as u32)
             .sum();
 
-        let batch = IggyMessagesBatchMut::from_messages(messages_slice_to_append, messages_size);
+        let batch = MessengerMessagesBatchMut::from_messages(messages_slice_to_append, messages_size);
         assert_eq!(batch.count(), batch_len);
         partition.append_messages(batch, None).await.unwrap();
 

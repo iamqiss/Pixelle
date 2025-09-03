@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_group.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-creategroup">

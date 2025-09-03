@@ -16,12 +16,12 @@
  * under the License.
  */
 
-use crate::{ConnectionStringOptions, IggyDuration, IggyError};
+use crate::{ConnectionStringOptions, MessengerDuration, MessengerError};
 use std::str::FromStr;
 
 #[derive(Debug)]
 pub struct HttpConnectionStringOptions {
-    heartbeat_interval: IggyDuration,
+    heartbeat_interval: MessengerDuration,
     retries: u32,
 }
 
@@ -30,11 +30,11 @@ impl ConnectionStringOptions for HttpConnectionStringOptions {
         Some(self.retries)
     }
 
-    fn heartbeat_interval(&self) -> IggyDuration {
+    fn heartbeat_interval(&self) -> MessengerDuration {
         self.heartbeat_interval
     }
 
-    fn parse_options(options: &str) -> Result<HttpConnectionStringOptions, IggyError> {
+    fn parse_options(options: &str) -> Result<HttpConnectionStringOptions, MessengerError> {
         let options = options.split('&').collect::<Vec<&str>>();
         let mut heartbeat_interval = "5s".to_owned();
         let mut retries = 3;
@@ -42,7 +42,7 @@ impl ConnectionStringOptions for HttpConnectionStringOptions {
         for option in options {
             let option_parts = option.split('=').collect::<Vec<&str>>();
             if option_parts.len() != 2 {
-                return Err(IggyError::InvalidConnectionString);
+                return Err(MessengerError::InvalidConnectionString);
             }
             match option_parts[0] {
                 "heartbeat_interval" => {
@@ -51,16 +51,16 @@ impl ConnectionStringOptions for HttpConnectionStringOptions {
                 "retries" => {
                     retries = option_parts[1]
                         .parse::<u32>()
-                        .map_err(|_| IggyError::InvalidConnectionString)?;
+                        .map_err(|_| MessengerError::InvalidConnectionString)?;
                 }
                 _ => {
-                    return Err(IggyError::InvalidConnectionString);
+                    return Err(MessengerError::InvalidConnectionString);
                 }
             }
         }
 
-        let heartbeat_interval = IggyDuration::from_str(heartbeat_interval.as_str())
-            .map_err(|_| IggyError::InvalidConnectionString)?;
+        let heartbeat_interval = MessengerDuration::from_str(heartbeat_interval.as_str())
+            .map_err(|_| MessengerError::InvalidConnectionString)?;
 
         let connection_string_options =
             HttpConnectionStringOptions::new(heartbeat_interval, retries);
@@ -69,7 +69,7 @@ impl ConnectionStringOptions for HttpConnectionStringOptions {
 }
 
 impl HttpConnectionStringOptions {
-    pub fn new(heartbeat_interval: IggyDuration, retries: u32) -> Self {
+    pub fn new(heartbeat_interval: MessengerDuration, retries: u32) -> Self {
         Self {
             heartbeat_interval,
             retries,
@@ -80,7 +80,7 @@ impl HttpConnectionStringOptions {
 impl Default for HttpConnectionStringOptions {
     fn default() -> Self {
         Self {
-            heartbeat_interval: IggyDuration::from_str("5s").unwrap(),
+            heartbeat_interval: MessengerDuration::from_str("5s").unwrap(),
             retries: 3,
         }
     }

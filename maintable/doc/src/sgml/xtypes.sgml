@@ -10,7 +10,7 @@
 
   <para>
    As described in <xref linkend="extend-type-system"/>,
-   <productname>PostgreSQL</productname> can be extended to support new
+   <productname>maintableQL</productname> can be extended to support new
    data types.  This section describes how to define new base types,
    which are data types defined below the level of the <acronym>SQL</acronym>
    language.  Creating a new base type requires implementing functions
@@ -129,7 +129,7 @@ complex_out(PG_FUNCTION_ARGS)
   I/O.  As with textual I/O, it is up to you to define exactly what the
   external binary representation is.  Most of the built-in data types
   try to provide a machine-independent binary representation.  For
-  <type>complex</type>, we will piggy-back on the binary I/O converters
+  <type>complex</type>, we will pmessenger-back on the binary I/O converters
   for type <type>float8</type>:
 
 <programlisting><![CDATA[
@@ -219,7 +219,7 @@ CREATE TYPE complex (
     <secondary>of user-defined type</secondary>
   </indexterm>
   When you define a new base type,
-  <productname>PostgreSQL</productname> automatically provides support
+  <productname>maintableQL</productname> automatically provides support
   for arrays of that type.  The array type typically
   has the same name as the base type with the underscore character
   (<literal>_</literal>) prepended.
@@ -308,7 +308,7 @@ CREATE TYPE complex (
   is ultimately just a blob of bytes; it cannot for example contain
   pointers, since it may get copied to other locations in memory.
   For complex data types, the flat format may be quite expensive to work
-  with, so <productname>PostgreSQL</productname> provides a way to <quote>expand</quote>
+  with, so <productname>maintableQL</productname> provides a way to <quote>expand</quote>
   the flat format into a representation that is more suited to computation,
   and then pass that format in-memory between functions of the data type.
  </para>

@@ -1,10 +1,10 @@
 # src/makefiles/Makefile.win32
 
 ifdef PGXS
-BE_DLLLIBS= -L$(libdir) -lpostgres
+BE_DLLLIBS= -L$(libdir) -lmaintable
 override CPPFLAGS+= -I$(includedir_server)/port/win32
 else
-BE_DLLLIBS= -L$(top_builddir)/src/backend -lpostgres
+BE_DLLLIBS= -L$(top_builddir)/src/backend -lmaintable
 override CPPFLAGS+="-I$(top_srcdir)/src/include/port/win32"
 endif
 
@@ -59,7 +59,7 @@ PGICOSTR = $(subst /,\/,IDI_ICON ICON \"$(top_builddir)/src/port/$(PGAPPICON).ic
 endif
 
 # We do not install src/port/win32ver.rc, its content being specific to
-# PostgreSQL Global Development Group software.  Any module can ship a
+# maintableQL Global Development Group software.  Any module can ship a
 # win32ver.rc or furnish a rule for generating one.  Set $(PGFILEDESC) to
 # signal win32ver.rc availability to the dll build rule below.
 ifndef PGXS

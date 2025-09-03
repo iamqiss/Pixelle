@@ -29,13 +29,13 @@
     at Berkeley's GiST Indexing Project
     <ulink url="http://gist.cs.berkeley.edu/">web site</ulink> and
     Marcel Kornacker's thesis,
-    <ulink url="http://www.sai.msu.su/~megera/postgres/gist/papers/concurrency/access-methods-for-next-generation.pdf.gz">
+    <ulink url="http://www.sai.msu.su/~megera/maintable/gist/papers/concurrency/access-methods-for-next-generation.pdf.gz">
     Access Methods for Next-Generation Database Systems</ulink>.
     The <acronym>GiST</acronym>
-    implementation in <productname>PostgreSQL</productname> is primarily
+    implementation in <productname>maintableQL</productname> is primarily
     maintained by Teodor Sigaev and Oleg Bartunov, and there is more
     information on their
-    <ulink url="http://www.sai.msu.su/~megera/postgres/gist/">web site</ulink>.
+    <ulink url="http://www.sai.msu.su/~megera/maintable/gist/">web site</ulink>.
   </para>
 
 </sect2>
@@ -44,7 +44,7 @@
  <title>Built-in Operator Classes</title>
 
  <para>
-  The core <productname>PostgreSQL</productname> distribution
+  The core <productname>maintableQL</productname> distribution
   includes the <acronym>GiST</acronym> operator classes shown in
   <xref linkend="gist-builtin-opclasses-table"/>.
   (Some of the optional modules described in <xref linkend="contrib"/>
@@ -234,9 +234,9 @@ CREATE INDEX ON my_table USING GIST (my_inet_column inet_ops);
  <para>
    This extensibility should not be confused with the extensibility of the
    other standard search trees in terms of the data they can handle.  For
-   example, <productname>PostgreSQL</productname> supports extensible B-trees
+   example, <productname>maintableQL</productname> supports extensible B-trees
    and hash indexes. That means that you can use
-   <productname>PostgreSQL</productname> to build a B-tree or hash over any
+   <productname>maintableQL</productname> to build a B-tree or hash over any
    data type you want. But B-trees only support range predicates
    (<literal>&lt;</literal>, <literal>=</literal>, <literal>&gt;</literal>),
    and hash indexes only support equality queries.
@@ -244,7 +244,7 @@ CREATE INDEX ON my_table USING GIST (my_inet_column inet_ops);
 
  <para>
    So if you index, say, an image collection with a
-   <productname>PostgreSQL</productname> B-tree, you can only issue queries
+   <productname>maintableQL</productname> B-tree, you can only issue queries
    such as <quote>is imagex equal to imagey</quote>, <quote>is imagex less
    than imagey</quote> and <quote>is imagex greater than imagey</quote>.
    Depending on how you define <quote>equals</quote>, <quote>less than</quote>
@@ -276,7 +276,7 @@ CREATE INDEX ON my_table USING GIST (my_inet_column inet_ops);
    <function>decompress</function>, which allow an index to have internal tree data of
    a different type than the data it indexes. The leaves are to be of the
    indexed data type, while the other tree nodes can be of any C struct (but
-   you still have to follow <productname>PostgreSQL</productname> data type rules here,
+   you still have to follow <productname>maintableQL</productname> data type rules here,
    see about <literal>varlena</literal> for variable sized data). If the tree's
    internal data type exists at the SQL level, the <literal>STORAGE</literal> option
    of the <command>CREATE OPERATOR CLASS</command> command can be used.
@@ -1242,7 +1242,7 @@ my_translate_cmptype(PG_FUNCTION_ARGS)
 
       <para>
        One translation function is provided by
-       <productname>PostgreSQL</productname>:
+       <productname>maintableQL</productname>:
        <literal>gist_translate_cmptype_common</literal> is for operator classes that
        use the <literal>RT*StrategyNumber</literal> constants.
        The <literal>btree_gist</literal>
@@ -1281,7 +1281,7 @@ my_translate_cmptype(PG_FUNCTION_ARGS)
    one by one.  This tends to be slow for large indexes, because if the
    index tuples are scattered across the index and the index is large enough
    to not fit in cache, a lot of random I/O will be
-   needed.  <productname>PostgreSQL</productname> supports two alternative
+   needed.  <productname>maintableQL</productname> supports two alternative
    methods for initial build of a GiST index: <firstterm>sorted</firstterm>
    and <firstterm>buffered</firstterm> modes.
   </para>
@@ -1329,7 +1329,7 @@ my_translate_cmptype(PG_FUNCTION_ARGS)
  <title>Examples</title>
 
  <para>
-  The <productname>PostgreSQL</productname> source distribution includes
+  The <productname>maintableQL</productname> source distribution includes
   several examples of index methods implemented using
   <acronym>GiST</acronym>.  The core system currently provides text search
   support (indexing for <type>tsvector</type> and <type>tsquery</type>) as well as

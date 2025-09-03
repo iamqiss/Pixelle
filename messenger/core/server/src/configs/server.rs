@@ -26,8 +26,8 @@ use crate::configs::tcp::TcpConfig;
 use crate::server_error::ConfigError;
 use derive_more::Display;
 use error_set::ErrContext;
-use iggy_common::IggyDuration;
-use iggy_common::Validatable;
+use messenger_common::MessengerDuration;
+use messenger_common::Validatable;
 use serde::{Deserialize, Serialize};
 use serde_with::DisplayFromStr;
 use serde_with::serde_as;
@@ -69,7 +69,7 @@ pub struct MessagesMaintenanceConfig {
     pub archiver_enabled: bool,
     pub cleaner_enabled: bool,
     #[serde_as(as = "DisplayFromStr")]
-    pub interval: IggyDuration,
+    pub interval: MessengerDuration,
 }
 
 #[serde_as]
@@ -78,7 +78,7 @@ pub struct StateMaintenanceConfig {
     pub archiver_enabled: bool,
     pub overwrite: bool,
     #[serde_as(as = "DisplayFromStr")]
-    pub interval: IggyDuration,
+    pub interval: MessengerDuration,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -102,7 +102,7 @@ pub struct MessageSaverConfig {
     pub enabled: bool,
     pub enforce_fsync: bool,
     #[serde_as(as = "DisplayFromStr")]
-    pub interval: IggyDuration,
+    pub interval: MessengerDuration,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -116,7 +116,7 @@ pub struct PersonalAccessTokenConfig {
 pub struct PersonalAccessTokenCleanerConfig {
     pub enabled: bool,
     #[serde_as(as = "DisplayFromStr")]
-    pub interval: IggyDuration,
+    pub interval: MessengerDuration,
 }
 
 #[serde_as]
@@ -124,7 +124,7 @@ pub struct PersonalAccessTokenCleanerConfig {
 pub struct HeartbeatConfig {
     pub enabled: bool,
     #[serde_as(as = "DisplayFromStr")]
-    pub interval: IggyDuration,
+    pub interval: MessengerDuration,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]

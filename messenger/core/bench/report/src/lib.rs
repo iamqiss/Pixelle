@@ -26,7 +26,7 @@ use crate::report::BenchmarkReport;
 use actor_kind::ActorKind;
 use charming::Chart;
 use group_metrics_kind::GroupMetricsKind;
-use plotting::chart::IggyChart;
+use plotting::chart::MessengerChart;
 use plotting::chart_kind::ChartKind;
 
 pub use types::*;
@@ -38,7 +38,7 @@ pub fn create_throughput_chart(
 ) -> Chart {
     let title = report.title(ChartKind::Throughput);
 
-    let mut chart = IggyChart::new(&title, &report.subtext(), dark, strip_title_and_subtext)
+    let mut chart = MessengerChart::new(&title, &report.subtext(), dark, strip_title_and_subtext)
         .with_time_x_axis()
         .with_dual_y_axis("Throughput [MB/s]", "Throughput [msg/s]");
 
@@ -103,7 +103,7 @@ pub fn create_latency_chart(
 ) -> Chart {
     let title = report.title(ChartKind::Latency);
 
-    let mut chart = IggyChart::new(&title, &report.subtext(), dark, strip_title_and_subtext)
+    let mut chart = MessengerChart::new(&title, &report.subtext(), dark, strip_title_and_subtext)
         .with_time_x_axis()
         .with_y_axis("Latency [ms]");
 

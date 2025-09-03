@@ -1,7 +1,7 @@
 /*
  * contrib/hstore/hstore_io.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 

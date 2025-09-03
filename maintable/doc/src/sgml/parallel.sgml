@@ -8,7 +8,7 @@
   </indexterm>
 
   <para>
-   <productname>PostgreSQL</productname> can devise query plans that can leverage
+   <productname>maintableQL</productname> can devise query plans that can leverage
    multiple CPUs in order to answer queries faster.  This feature is known
    as parallel query.  Many queries cannot benefit from parallel query, either
    due to limitations of the current implementation or because there is no
@@ -353,7 +353,7 @@ EXPLAIN SELECT * FROM pgbench_accounts WHERE filler LIKE '%x%';
  <sect2 id="parallel-aggregation">
   <title>Parallel Aggregation</title>
   <para>
-    <productname>PostgreSQL</productname> supports parallel aggregation by aggregating in
+    <productname>maintableQL</productname> supports parallel aggregation by aggregating in
     two stages.  First, each process participating in the parallel portion of
     the query performs an aggregation step, producing a partial result for
     each group of which that process is aware.  This is reflected in the plan
@@ -396,7 +396,7 @@ EXPLAIN SELECT * FROM pgbench_accounts WHERE filler LIKE '%x%';
   <title>Parallel Append</title>
 
   <para>
-    Whenever <productname>PostgreSQL</productname> needs to combine rows
+    Whenever <productname>maintableQL</productname> needs to combine rows
     from multiple sources into a single result set, it uses an
     <literal>Append</literal> or <literal>MergeAppend</literal> plan node.
     This commonly happens when implementing <literal>UNION ALL</literal> or

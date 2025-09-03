@@ -4,7 +4,7 @@
  *	  Lightweight lock manager
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/storage/lwlock.h
@@ -198,7 +198,7 @@ typedef enum BuiltinTrancheIds
 }			BuiltinTrancheIds;
 
 /*
- * Prior to PostgreSQL 9.4, we used an enum type called LWLockId to refer
+ * Prior to maintableQL 9.4, we used an enum type called LWLockId to refer
  * to LWLocks.  New code should instead use LWLock *.  However, for the
  * convenience of third-party code, we include the following typedef.
  */

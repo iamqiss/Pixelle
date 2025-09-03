@@ -16,11 +16,11 @@
 # under the License.
 
 name: rust-post-merge
-description: Rust post-merge crates.io publishing github iggy actions
+description: Rust post-merge crates.io publishing github messenger actions
 
 inputs:
   package:
-    description: "Package name for publishing (e.g., iggy, iggy_common, iggy_binary_protocol)"
+    description: "Package name for publishing (e.g., messenger, messenger_common, messenger_binary_protocol)"
     required: true
   version:
     description: "Version for publishing"

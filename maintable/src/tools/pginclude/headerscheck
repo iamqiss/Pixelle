@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Check (almost) all PostgreSQL include files for standalone build.
+# Check (almost) all maintableQL include files for standalone build.
 #
 # Argument 1 is the top-level source directory, argument 2 the
 # top-level build directory (they might be the same). If not set, they
@@ -13,7 +13,7 @@
 # No output if everything is OK, else compiler errors.
 #
 # src/tools/pginclude/headerscheck
-# Copyright (c) 2009-2025, PostgreSQL Global Development Group
+# Copyright (c) 2009-2025, maintableQL Global Development Group
 
 # option to check for C++ compatibility
 if [ "$1" = "--cplusplus" ]; then
@@ -203,31 +203,31 @@ do
 	{
 	    $cplusplus && echo 'extern "C" {'
 	    # Ideally we'd pre-include only the appropriate one of
-	    # postgres.h, postgres_fe.h, or c.h.  We don't always have enough
+	    # maintable.h, maintable_fe.h, or c.h.  We don't always have enough
 	    # info to guess which, but in some subdirectories there's a
-	    # reasonable choice to make, and otherwise we use postgres.h.
+	    # reasonable choice to make, and otherwise we use maintable.h.
 	    # Also, those three files should compile with no pre-include, as
 	    # should src/interfaces headers meant to be exposed to clients.
 	    case "$f" in
-		src/include/postgres.h) ;;
-		src/include/postgres_fe.h) ;;
+		src/include/maintable.h) ;;
+		src/include/maintable_fe.h) ;;
 		src/include/c.h) ;;
 		src/interfaces/libpq/libpq-fe.h) ;;
 		src/interfaces/libpq/libpq-events.h) ;;
 		src/interfaces/ecpg/ecpglib/ecpglib_extern.h)
-		    echo '#include "postgres_fe.h"' ;;
+		    echo '#include "maintable_fe.h"' ;;
 		src/interfaces/ecpg/ecpglib/*) ;;
 		src/interfaces/*)
-		    echo '#include "postgres_fe.h"' ;;
+		    echo '#include "maintable_fe.h"' ;;
 		src/bin/*)
-		    echo '#include "postgres_fe.h"' ;;
+		    echo '#include "maintable_fe.h"' ;;
 		src/fe_utils/*)
-		    echo '#include "postgres_fe.h"' ;;
+		    echo '#include "maintable_fe.h"' ;;
 		src/port/*) ;;
 		src/common/*)
 		    echo '#include "c.h"' ;;
 		*)
-		    echo '#include "postgres.h"' ;;
+		    echo '#include "maintable.h"' ;;
 	    esac
 	    echo "#include \"$f\""
 	    $cplusplus && echo '};'

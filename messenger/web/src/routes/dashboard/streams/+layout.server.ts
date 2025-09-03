@@ -17,13 +17,13 @@
  * under the License.
  */
 
-import { fetchIggyApi } from '$lib/api/fetchApi';
+import { fetchMessengerApi } from '$lib/api/fetchApi';
 import { handleFetchErrors } from '$lib/api/handleFetchErrors';
 import { streamMapper, type Stream } from '$lib/domain/Stream';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ cookies }) => {
-  const result = await fetchIggyApi({
+  const result = await fetchMessengerApi({
     method: 'GET',
     path: '/streams',
     cookies

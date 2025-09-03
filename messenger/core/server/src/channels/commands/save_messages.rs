@@ -21,14 +21,14 @@ use crate::configs::server::MessageSaverConfig;
 use crate::configs::server::ServerConfig;
 use crate::streaming::systems::system::SharedSystem;
 use flume::{Receiver, Sender};
-use iggy_common::IggyDuration;
+use messenger_common::MessengerDuration;
 use tokio::time;
 use tracing::{error, info, instrument, warn};
 
 pub struct MessagesSaver {
     enabled: bool,
     enforce_fsync: bool,
-    interval: IggyDuration,
+    interval: MessengerDuration,
     sender: Sender<SaveMessagesCommand>,
 }
 

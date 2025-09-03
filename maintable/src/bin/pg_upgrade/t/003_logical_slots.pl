@@ -1,4 +1,4 @@
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 
 # Tests for upgrading logical replication slots
 
@@ -7,20 +7,20 @@ use warnings FATAL => 'all';
 
 use File::Find qw(find);
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Can be changed to test the other modes
 my $mode = $ENV{PG_TEST_PG_UPGRADE_MODE} || '--copy';
 
 # Initialize old cluster
-my $oldpub = PostgreSQL::Test::Cluster->new('oldpub');
+my $oldpub = maintableQL::Test::Cluster->new('oldpub');
 $oldpub->init(allows_streaming => 'logical');
-$oldpub->append_conf('postgresql.conf', 'autovacuum = off');
+$oldpub->append_conf('maintableql.conf', 'autovacuum = off');
 
 # Initialize new cluster
-my $newpub = PostgreSQL::Test::Cluster->new('newpub');
+my $newpub = maintableQL::Test::Cluster->new('newpub');
 $newpub->init(allows_streaming => 'logical');
 
 # During upgrade, when pg_restore performs CREATE DATABASE, bgwriter or
@@ -32,7 +32,7 @@ $newpub->init(allows_streaming => 'logical');
 # higher in this test because we use wal_level as logical via
 # allows_streaming => 'logical' which in turn set shared_buffers as 1MB.
 $newpub->append_conf(
-	'postgresql.conf', q{
+	'maintableql.conf', q{
 bgwriter_lru_maxpages = 0
 checkpoint_timeout = 1h
 });
@@ -52,7 +52,7 @@ my @pg_upgrade_cmd = (
 # In a VPATH build, we'll be started in the source directory, but we want
 # to run pg_upgrade in the build directory so that any files generated finish
 # in it, like delete_old_cluster.{sh,bat}.
-chdir ${PostgreSQL::Test::Utils::tmp_check};
+chdir ${maintableQL::Test::Utils::tmp_check};
 
 # ------------------------------
 # TEST: Confirm pg_upgrade fails when the new cluster has wrong GUC values
@@ -61,7 +61,7 @@ chdir ${PostgreSQL::Test::Utils::tmp_check};
 # 1. Create two slots on the old cluster
 $oldpub->start;
 $oldpub->safe_psql(
-	'postgres', qq[
+	'maintable', qq[
 	SELECT pg_create_logical_replication_slot('test_slot1', 'test_decoding');
 	SELECT pg_create_logical_replication_slot('test_slot2', 'test_decoding');
 ]);
@@ -69,7 +69,7 @@ $oldpub->stop();
 
 # 2. Set 'max_replication_slots' to be less than the number of slots (2)
 #	 present on the old cluster.
-$newpub->append_conf('postgresql.conf', "max_replication_slots = 1");
+$newpub->append_conf('maintableql.conf', "max_replication_slots = 1");
 
 # pg_upgrade will fail because the new cluster has insufficient
 # max_replication_slots
@@ -87,7 +87,7 @@ ok(-d $newpub->data_dir . "/pg_upgrade_output.d",
 
 # Set 'max_replication_slots' to match the number of slots (2) present on the
 # old cluster. Both slots will be used for subsequent tests.
-$newpub->append_conf('postgresql.conf', "max_replication_slots = 2");
+$newpub->append_conf('maintableql.conf', "max_replication_slots = 2");
 
 
 # ------------------------------
@@ -104,7 +104,7 @@ $newpub->append_conf('postgresql.conf', "max_replication_slots = 2");
 #	 unconsumed WAL record.
 $oldpub->start;
 $oldpub->safe_psql(
-	'postgres', qq[
+	'maintable', qq[
 		CREATE TABLE tbl AS SELECT generate_series(1, 10) AS a;
 		SELECT pg_replication_slot_advance('test_slot2', pg_current_wal_lsn());
 		SELECT count(*) FROM pg_logical_emit_message('false', 'prefix', 'This is a non-transactional message');
@@ -155,23 +155,23 @@ like(
 
 # Preparations for the subsequent test:
 # 1. Setup logical replication (first, cleanup slots from the previous tests)
-my $old_connstr = $oldpub->connstr . ' dbname=postgres';
+my $old_connstr = $oldpub->connstr . ' dbname=maintable';
 
 $oldpub->start;
 $oldpub->safe_psql(
-	'postgres', qq[
+	'maintable', qq[
 	SELECT * FROM pg_drop_replication_slot('test_slot1');
 	SELECT * FROM pg_drop_replication_slot('test_slot2');
 	CREATE PUBLICATION regress_pub FOR ALL TABLES;
 ]);
 
 # Initialize subscriber cluster
-my $sub = PostgreSQL::Test::Cluster->new('sub');
+my $sub = maintableQL::Test::Cluster->new('sub');
 $sub->init();
 
 $sub->start;
 $sub->safe_psql(
-	'postgres', qq[
+	'maintable', qq[
 	CREATE TABLE tbl (a int);
 	CREATE SUBSCRIPTION regress_sub CONNECTION '$old_connstr' PUBLICATION regress_pub WITH (two_phase = 'true', failover = 'true')
 ]);
@@ -180,11 +180,11 @@ $sub->wait_for_subscription_sync($oldpub, 'regress_sub');
 # Also wait for two-phase to be enabled
 my $twophase_query =
   "SELECT count(1) = 0 FROM pg_subscription WHERE subtwophasestate NOT IN ('e');";
-$sub->poll_query_until('postgres', $twophase_query)
+$sub->poll_query_until('maintable', $twophase_query)
   or die "Timed out while waiting for subscriber to enable twophase";
 
 # 2. Temporarily disable the subscription
-$sub->safe_psql('postgres', "ALTER SUBSCRIPTION regress_sub DISABLE");
+$sub->safe_psql('maintable', "ALTER SUBSCRIPTION regress_sub DISABLE");
 $oldpub->stop;
 
 # pg_upgrade should be successful
@@ -192,23 +192,23 @@ command_ok([@pg_upgrade_cmd], 'run of pg_upgrade of old cluster');
 
 # Check that the slot 'regress_sub' has migrated to the new cluster
 $newpub->start;
-my $result = $newpub->safe_psql('postgres',
+my $result = $newpub->safe_psql('maintable',
 	"SELECT slot_name, two_phase, failover FROM pg_replication_slots");
 is($result, qq(regress_sub|t|t), 'check the slot exists on new cluster');
 
 # Update the connection
-my $new_connstr = $newpub->connstr . ' dbname=postgres';
+my $new_connstr = $newpub->connstr . ' dbname=maintable';
 $sub->safe_psql(
-	'postgres', qq[
+	'maintable', qq[
 	ALTER SUBSCRIPTION regress_sub CONNECTION '$new_connstr';
 	ALTER SUBSCRIPTION regress_sub ENABLE;
 ]);
 
 # Check whether changes on the new publisher get replicated to the subscriber
-$newpub->safe_psql('postgres',
+$newpub->safe_psql('maintable',
 	"INSERT INTO tbl VALUES (generate_series(11, 20))");
 $newpub->wait_for_catchup('regress_sub');
-$result = $sub->safe_psql('postgres', "SELECT count(*) FROM tbl");
+$result = $sub->safe_psql('maintable', "SELECT count(*) FROM tbl");
 is($result, qq(20), 'check changes are replicated to the sub');
 
 # Clean up

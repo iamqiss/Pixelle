@@ -6,7 +6,7 @@
  *	  contrib/pg_buffercache/pg_buffercache_pages.c
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "access/relation.h"

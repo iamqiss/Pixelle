@@ -2,7 +2,7 @@
 
 # src/tools/find_typedef
 
-# This script attempts to find all typedef's in the postgres binaries
+# This script attempts to find all typedef's in the maintable binaries
 # by using 'objdump' or local equivalent to print typedef debugging symbols.
 # We need this because pgindent needs a list of typedef names.
 #
@@ -27,7 +27,7 @@
 
 
 if [ "$#" -eq 0 -o ! -d "$1" ]
-then	echo "Usage:  $0 postgres_binary_directory [...]" 1>&2
+then	echo "Usage:  $0 maintable_binary_directory [...]" 1>&2
 	exit 1
 fi
 

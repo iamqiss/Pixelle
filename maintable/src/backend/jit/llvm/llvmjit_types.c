@@ -16,7 +16,7 @@
  * bitcode.
  *
  *
- * Copyright (c) 2016-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2016-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/jit/llvm/llvmjit_types.c
@@ -24,7 +24,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup.h"
 #include "access/htup_details.h"

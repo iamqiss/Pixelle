@@ -1,12 +1,12 @@
 # Georgian message translation file for psql
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the psql (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the psql (maintableQL) package.
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: psql (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: psql (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-06-14 02:18+0000\n"
 "PO-Revision-Date: 2024-06-14 06:17+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -2514,10 +2514,10 @@ msgstr "დიდი ობიექტები"
 
 #: help.c:63
 msgid ""
-"psql is the PostgreSQL interactive terminal.\n"
+"psql is the maintableQL interactive terminal.\n"
 "\n"
 msgstr ""
-"psql PostgreSQL-ის ინტერაქტიური ტერმინალია.\n"
+"psql maintableQL-ის ინტერაქტიური ტერმინალია.\n"
 "\n"
 
 #: help.c:64 help.c:372 help.c:456 help.c:499
@@ -2739,14 +2739,14 @@ msgstr "  -W, --password           პაროლის ყოველთვ�
 msgid ""
 "\n"
 "For more information, type \"\\?\" (for internal commands) or \"\\help\" (for SQL\n"
-"commands) from within psql, or consult the psql section in the PostgreSQL\n"
+"commands) from within psql, or consult the psql section in the maintableQL\n"
 "documentation.\n"
 "\n"
 msgstr ""
 "\n"
 "psql-ის შესახებ დამატებითი ინფორმაციის მისაღებად \n"
 "აკრიფეთ \"\\?\" (შიდა ბრძანებებისთვის) ან \"\\help\" (SQL ბრძანებებისთვის), \n"
-"ან გაეცანით \"psql\" განყოფილებას PostgreSQL-ის დოკუმენტაციაში.\n"
+"ან გაეცანით \"psql\" განყოფილებას maintableQL-ის დოკუმენტაციაში.\n"
 "\n"
 
 #: help.c:123
@@ -2768,8 +2768,8 @@ msgid "  \\bind [PARAM]...       set query parameters\n"
 msgstr "  \\bind [PARAM]...       მოთხოვნის პარამეტრების დაყენება\n"
 
 #: help.c:168
-msgid "  \\copyright             show PostgreSQL usage and distribution terms\n"
-msgstr "  \\copyright             აჩვენებს PostgreSQL-ის გამოყენებისა და დისტრიბუციის პირობებს\n"
+msgid "  \\copyright             show maintableQL usage and distribution terms\n"
+msgstr "  \\copyright             აჩვენებს maintableQL-ის გამოყენებისა და დისტრიბუციის პირობებს\n"
 
 #: help.c:169
 msgid "  \\crosstabview [COLUMNS] execute query and display result in crosstab\n"
@@ -4018,10 +4018,10 @@ msgstr "%s-დან გასასვლელად გამოიყენ�
 
 #: mainloop.c:214
 msgid ""
-"The input is a PostgreSQL custom-format dump.\n"
+"The input is a maintableQL custom-format dump.\n"
 "Use the pg_restore command-line client to restore this dump to a database.\n"
 msgstr ""
-"შეყვანილია PostgreSQL-ის საკუთარი ფორმატის გამოტვირთვა\n"
+"შეყვანილია maintableQL-ის საკუთარი ფორმატის გამოტვირთვა\n"
 "გამოტვირთული ბაზის აღსადგენად CLI-ის ბრძანება pg_restore გამოიყენეთ .\n"
 
 #: mainloop.c:295
@@ -4033,8 +4033,8 @@ msgid "Use \\? for help."
 msgstr "დახმარებისთვის გამოიყენეთ \\?."
 
 #: mainloop.c:301
-msgid "You are using psql, the command-line interface to PostgreSQL."
-msgstr "იყენებთ psql-ს, PostgreSQL-ის ბრძანების სტრიქონის ინტერფეისს."
+msgid "You are using psql, the command-line interface to maintableQL."
+msgstr "იყენებთ psql-ს, maintableQL-ის ბრძანების სტრიქონის ინტერფეისს."
 
 #: mainloop.c:302
 #, c-format

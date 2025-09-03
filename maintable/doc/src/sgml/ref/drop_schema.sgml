@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_schema.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-dropschema">
@@ -114,7 +114,7 @@ DROP SCHEMA mystuff CASCADE;
    <command>DROP SCHEMA</command> is fully conforming with the SQL
    standard, except that the standard only allows one schema to be
    dropped per command, and apart from the
-   <literal>IF EXISTS</literal> option, which is a <productname>PostgreSQL</productname>
+   <literal>IF EXISTS</literal> option, which is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

@@ -21,7 +21,7 @@ use std::path::PathBuf;
 use vergen_git2::{BuildBuilder, CargoBuilder, Emitter, Git2Builder, RustcBuilder, SysinfoBuilder};
 
 fn main() -> Result<(), Box<dyn error::Error>> {
-    if option_env!("IGGY_CI_BUILD") == Some("true") {
+    if option_env!("MESSENGER_CI_BUILD") == Some("true") {
         Emitter::default()
             .add_instructions(&BuildBuilder::all_build()?)?
             .add_instructions(&CargoBuilder::all_cargo()?)?
@@ -42,7 +42,7 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         );
     } else {
         println!(
-            "cargo:info=Skipping build script because CI environment variable IGGY_CI_BUILD is not set to 'true'"
+            "cargo:info=Skipping build script because CI environment variable MESSENGER_CI_BUILD is not set to 'true'"
         );
     }
 

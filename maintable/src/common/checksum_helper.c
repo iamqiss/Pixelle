@@ -3,7 +3,7 @@
  * checksum_helper.c
  *	  Compute a checksum of any of various types using common routines
  *
- * Portions Copyright (c) 2016-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2016-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  src/common/checksum_helper.c
@@ -12,9 +12,9 @@
  */
 
 #ifndef FRONTEND
-#include "postgres.h"
+#include "maintable.h"
 #else
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #endif
 
 #include "common/checksum_helper.h"

@@ -17,13 +17,13 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, USAGE_PREFIX,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
 use humantime::Duration as HumanDuration;
 use humantime::format_duration;
-use iggy::prelude::Client;
+use messenger::prelude::Client;
 use predicates::str::starts_with;
 use serial_test::parallel;
 use std::time::Duration;
@@ -49,11 +49,11 @@ impl TestPatCreateCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestPatCreateCmd {
+impl MessengerCmdTestCase for TestPatCreateCmd {
     async fn prepare_server_state(&mut self, _client: &dyn Client) {}
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("pat")
             .arg("create")
             .args(self.to_args())
@@ -98,19 +98,19 @@ impl IggyCmdTestCase for TestPatCreateCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestPatCreateCmd::new(String::from("main"), None))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestPatCreateCmd::new(
             String::from("client"),
             Some(vec!["1day".to_owned()]),
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestPatCreateCmd::new(
             String::from("sensor"),
             Some(vec!["3weeks".to_owned()]),
@@ -121,9 +121,9 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["pat", "create", "--help"],
             format!(
@@ -134,9 +134,9 @@ a token, instead of the regular credentials (username and password)
 In quiet mode only the personal access token name is printed
 
 Examples
- iggy pat create name
- iggy pat create client 1day
- iggy pat create sensor 3weeks
+ messenger pat create name
+ messenger pat create client 1day
+ messenger pat create sensor 3weeks
 
 {USAGE_PREFIX} pat create [OPTIONS] <NAME> [EXPIRY]...
 
@@ -153,7 +153,7 @@ Options:
   -s, --store-token
           Store token in an underlying platform-specific secure store
 {CLAP_INDENT}
-          Generated token is stored in a platform-specific secure storage without revealing its content to the user. It can be used to authenticate on iggy server using associated name and -n/--token-name command line option instead of -u/--username and -p/--password or -t/--token. In quiet mode only the token name is printed. This option can only be used for creating tokens which does not have expiry time set.
+          Generated token is stored in a platform-specific secure storage without revealing its content to the user. It can be used to authenticate on messenger server using associated name and -n/--token-name command line option instead of -u/--username and -p/--password or -t/--token. In quiet mode only the token name is printed. This option can only be used for creating tokens which does not have expiry time set.
 
   -h, --help
           Print help (see a summary with '-h')
@@ -166,9 +166,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["pat", "create", "-h"],
             format!(

@@ -55,7 +55,7 @@
 
  <para>
   The <acronym>GIN</acronym>
-  implementation in <productname>PostgreSQL</productname> is primarily
+  implementation in <productname>maintableQL</productname> is primarily
   maintained by Teodor Sigaev and Oleg Bartunov. There is more
   information about <acronym>GIN</acronym> on their
   <ulink url="http://www.sai.msu.su/~megera/wiki/Gin">website</ulink>.
@@ -66,7 +66,7 @@
  <title>Built-in Operator Classes</title>
 
  <para>
-  The core <productname>PostgreSQL</productname> distribution
+  The core <productname>maintableQL</productname> distribution
   includes the <acronym>GIN</acronym> operator classes shown in
   <xref linkend="gin-builtin-opclasses-table"/>.
   (Some of the optional modules described in <xref linkend="contrib"/>
@@ -479,7 +479,7 @@
  </para>
 
  <para>
-  As of <productname>PostgreSQL</productname> 9.1, null key values can be
+  As of <productname>maintableQL</productname> 9.1, null key values can be
   included in the index.  Also, placeholder nulls are included in the index
   for indexed items that are null or contain no keys according to
   <function>extractValue</function>.  This allows searches that should find empty
@@ -627,7 +627,7 @@
     <para>
      The primary goal of developing <acronym>GIN</acronym> indexes was
      to create support for highly scalable full-text search in
-     <productname>PostgreSQL</productname>, and there are often situations when
+     <productname>maintableQL</productname>, and there are often situations when
      a full-text search returns a very large set of results.  Moreover, this
      often happens when the query contains very frequent words, so that the
      large result set is not even useful.  Since reading many
@@ -677,7 +677,7 @@
  <title>Examples</title>
 
  <para>
-  The core <productname>PostgreSQL</productname> distribution
+  The core <productname>maintableQL</productname> distribution
   includes the <acronym>GIN</acronym> operator classes previously shown in
   <xref linkend="gin-builtin-opclasses-table"/>.
   The following <filename>contrib</filename> modules also contain

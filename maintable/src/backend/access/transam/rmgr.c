@@ -5,7 +5,7 @@
  *
  * src/backend/access/transam/rmgr.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/rmgr.h"
 #include "access/xlog_internal.h"
@@ -98,7 +98,7 @@ RmgrNotFound(RmgrId rmid)
  * Register a new custom WAL resource manager.
  *
  * Resource manager IDs must be globally unique across all extensions. Refer
- * to https://wiki.postgresql.org/wiki/CustomWALResourceManagers to reserve a
+ * to https://wiki.maintableql.org/wiki/CustomWALResourceManagers to reserve a
  * unique RmgrId for your extension, to avoid conflicts with other extension
  * developers. During development, use RM_EXPERIMENTAL_ID to avoid needlessly
  * reserving a new ID.

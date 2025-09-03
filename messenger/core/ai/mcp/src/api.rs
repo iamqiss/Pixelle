@@ -20,11 +20,11 @@ use crate::{
     Permissions,
     configs::{HttpApiConfig, configure_cors},
     error::McpRuntimeError,
-    service::IggyService,
+    service::MessengerService,
 };
 use axum::{Json, Router, routing::get};
 use axum_server::tls_rustls::RustlsConfig;
-use iggy::prelude::{Consumer, IggyClient};
+use messenger::prelude::{Consumer, MessengerClient};
 use rmcp::{
     serde_json,
     transport::{
@@ -37,15 +37,15 @@ use tracing::{error, info};
 
 pub async fn init(
     config: HttpApiConfig,
-    iggy_client: Arc<IggyClient>,
-    iggy_consumer: Arc<Consumer>,
+    messenger_client: Arc<MessengerClient>,
+    messenger_consumer: Arc<Consumer>,
     permissions: Permissions,
 ) -> Result<(), McpRuntimeError> {
     let service = StreamableHttpService::new(
         move || {
-            Ok(IggyService::new(
-                iggy_client.clone(),
-                iggy_consumer.clone(),
+            Ok(MessengerService::new(
+                messenger_client.clone(),
+                messenger_consumer.clone(),
                 permissions,
             ))
         },
@@ -64,7 +64,7 @@ pub async fn init(
     }
 
     let mut app = Router::new()
-        .route("/", get(|| async { "Iggy MCP Server" }))
+        .route("/", get(|| async { "Messenger MCP Server" }))
         .route(
             "/health",
             get(|| async { Json(serde_json::json!({ "status": "healthy" })) }),

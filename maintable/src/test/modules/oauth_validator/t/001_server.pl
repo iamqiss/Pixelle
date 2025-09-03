@@ -3,7 +3,7 @@
 # Tests the libpq builtin OAuth flow, as well as server-side HBA and validator
 # setup.
 #
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 #
 
 use strict;
@@ -11,8 +11,8 @@ use warnings FATAL => 'all';
 
 use JSON::PP     qw(encode_json);
 use MIME::Base64 qw(encode_base64);
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 use FindBin;
@@ -43,21 +43,21 @@ if ($ENV{with_python} ne 'yes')
 	plan skip_all => 'OAuth tests require --with-python to run';
 }
 
-my $node = PostgreSQL::Test::Cluster->new('primary');
+my $node = maintableQL::Test::Cluster->new('primary');
 $node->init;
-$node->append_conf('postgresql.conf', "log_connections = all\n");
-$node->append_conf('postgresql.conf',
+$node->append_conf('maintableql.conf', "log_connections = all\n");
+$node->append_conf('maintableql.conf',
 	"oauth_validator_libraries = 'validator'\n");
 # Needed to allow connect_fails to inspect postmaster log:
-$node->append_conf('postgresql.conf', "log_min_messages = debug2");
+$node->append_conf('maintableql.conf', "log_min_messages = debug2");
 $node->start;
 
-$node->safe_psql('postgres', 'CREATE USER test;');
-$node->safe_psql('postgres', 'CREATE USER testalt;');
-$node->safe_psql('postgres', 'CREATE USER testparam;');
+$node->safe_psql('maintable', 'CREATE USER test;');
+$node->safe_psql('maintable', 'CREATE USER testalt;');
+$node->safe_psql('maintable', 'CREATE USER testparam;');
 
 # Save a background connection for later configuration changes.
-my $bgconn = $node->background_psql('postgres');
+my $bgconn = $node->background_psql('maintable');
 
 my $webserver = OAuth::Server->new();
 $webserver->run();
@@ -77,9 +77,9 @@ my $issuer = "http://127.0.0.1:$port";
 unlink($node->data_dir . '/pg_hba.conf');
 $node->append_conf(
 	'pg_hba.conf', qq{
-local all test      oauth issuer="$issuer"       scope="openid postgres"
-local all testalt   oauth issuer="$issuer/.well-known/oauth-authorization-server/alternate" scope="openid postgres alt"
-local all testparam oauth issuer="$issuer/param" scope="openid postgres"
+local all test      oauth issuer="$issuer"       scope="openid maintable"
+local all testalt   oauth issuer="$issuer/.well-known/oauth-authorization-server/alternate" scope="openid maintable alt"
+local all testparam oauth issuer="$issuer/param" scope="openid maintable"
 });
 $node->reload;
 
@@ -91,15 +91,15 @@ my $contents = $bgconn->query_safe(
 		 FROM pg_hba_file_rules
 		 ORDER BY rule_number;));
 is( $contents,
-	qq{1|oauth|\{issuer=$issuer,"scope=openid postgres",validator=validator\}
-2|oauth|\{issuer=$issuer/.well-known/oauth-authorization-server/alternate,"scope=openid postgres alt",validator=validator\}
-3|oauth|\{issuer=$issuer/param,"scope=openid postgres",validator=validator\}},
+	qq{1|oauth|\{issuer=$issuer,"scope=openid maintable",validator=validator\}
+2|oauth|\{issuer=$issuer/.well-known/oauth-authorization-server/alternate,"scope=openid maintable alt",validator=validator\}
+3|oauth|\{issuer=$issuer/param,"scope=openid maintable",validator=validator\}},
 	"pg_hba_file_rules recreates OAuth HBA settings");
 
 # To test against HTTP rather than HTTPS, we need to enable PGOAUTHDEBUG. But
 # first, check to make sure the client refuses such connections by default.
 $node->connect_fails(
-	"user=test dbname=postgres oauth_issuer=$issuer oauth_client_id=f02c6361-0635",
+	"user=test dbname=maintable oauth_issuer=$issuer oauth_client_id=f02c6361-0635",
 	"HTTPS is required without debug mode",
 	expected_stderr =>
 	  qr@OAuth discovery URI "\Q$issuer\E/.well-known/openid-configuration" must use HTTPS@
@@ -109,13 +109,13 @@ $ENV{PGOAUTHDEBUG} = "UNSAFE";
 
 my $user = "test";
 $node->connect_ok(
-	"user=$user dbname=postgres oauth_issuer=$issuer oauth_client_id=f02c6361-0635",
+	"user=$user dbname=maintable oauth_issuer=$issuer oauth_client_id=f02c6361-0635",
 	"connect as test",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@,
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@,
 	log_like => [
 		qr/oauth_validator: token="9243959234", role="$user"/,
-		qr/oauth_validator: issuer="\Q$issuer\E", scope="openid postgres"/,
+		qr/oauth_validator: issuer="\Q$issuer\E", scope="openid maintable"/,
 		qr/connection authenticated: identity="test" method=oauth/,
 		qr/connection authorized/,
 	]);
@@ -124,20 +124,20 @@ $node->connect_ok(
 # OAuth-style discovery document.
 $user = "testalt";
 $node->connect_ok(
-	"user=$user dbname=postgres oauth_issuer=$issuer/alternate oauth_client_id=f02c6361-0636",
+	"user=$user dbname=maintable oauth_issuer=$issuer/alternate oauth_client_id=f02c6361-0636",
 	"connect as testalt",
 	expected_stderr =>
-	  qr@Visit https://example\.org/ and enter the code: postgresuser@,
+	  qr@Visit https://example\.org/ and enter the code: maintableuser@,
 	log_like => [
 		qr/oauth_validator: token="9243959234-alt", role="$user"/,
-		qr|oauth_validator: issuer="\Q$issuer/.well-known/oauth-authorization-server/alternate\E", scope="openid postgres alt"|,
+		qr|oauth_validator: issuer="\Q$issuer/.well-known/oauth-authorization-server/alternate\E", scope="openid maintable alt"|,
 		qr/connection authenticated: identity="testalt" method=oauth/,
 		qr/connection authorized/,
 	]);
 
 # The issuer linked by the server must match the client's oauth_issuer setting.
 $node->connect_fails(
-	"user=$user dbname=postgres oauth_issuer=$issuer oauth_client_id=f02c6361-0636",
+	"user=$user dbname=maintable oauth_issuer=$issuer oauth_client_id=f02c6361-0636",
 	"oauth_issuer must match discovery",
 	expected_stderr =>
 	  qr@server's discovery document at \Q$issuer/.well-known/oauth-authorization-server/alternate\E \(issuer "\Q$issuer/alternate\E"\) is incompatible with oauth_issuer \(\Q$issuer\E\)@
@@ -177,7 +177,7 @@ $user = "test";
 foreach my $c (@cases)
 {
 	my $connstr =
-	  "user=$user dbname=postgres oauth_issuer=$issuer oauth_client_id=f02c6361-0635 require_auth=$c->{'require_auth'}";
+	  "user=$user dbname=maintable oauth_issuer=$issuer oauth_client_id=f02c6361-0635 require_auth=$c->{'require_auth'}";
 
 	if (defined $c->{'failure'})
 	{
@@ -192,7 +192,7 @@ foreach my $c (@cases)
 			$connstr,
 			"require_auth=$c->{'require_auth'} succeeds",
 			expected_stderr =>
-			  qr@Visit https://example\.com/ and enter the code: postgresuser@
+			  qr@Visit https://example\.com/ and enter the code: maintableuser@
 		);
 	}
 }
@@ -207,15 +207,15 @@ my $vschars_esc =
   " !\"#\$%&\\'()*+,-./0123456789:;<=>?\@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
 $node->connect_ok(
-	"user=$user dbname=postgres oauth_issuer=$issuer oauth_client_id='$vschars_esc'",
+	"user=$user dbname=maintable oauth_issuer=$issuer oauth_client_id='$vschars_esc'",
 	"escapable characters: client_id",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@);
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@);
 $node->connect_ok(
-	"user=$user dbname=postgres oauth_issuer=$issuer oauth_client_id='$vschars_esc' oauth_client_secret='$vschars_esc'",
+	"user=$user dbname=maintable oauth_issuer=$issuer oauth_client_id='$vschars_esc' oauth_client_secret='$vschars_esc'",
 	"escapable characters: client_id and secret",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@);
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@);
 
 #
 # Further tests rely on support for specific behaviors in oauth_server.py. To
@@ -225,7 +225,7 @@ $node->connect_ok(
 #
 
 my $common_connstr =
-  "user=testparam dbname=postgres oauth_issuer=$issuer/param ";
+  "user=testparam dbname=maintable oauth_issuer=$issuer/param ";
 my $base_connstr = $common_connstr;
 
 sub connstr
@@ -243,46 +243,46 @@ $node->connect_ok(
 	connstr(),
 	"connect to /param",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@);
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@);
 
 $node->connect_ok(
 	connstr(stage => 'token', retries => 1),
 	"token retry",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@);
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@);
 $node->connect_ok(
 	connstr(stage => 'token', retries => 2),
 	"token retry (twice)",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@);
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@);
 $node->connect_ok(
 	connstr(stage => 'all', retries => 1, interval => 2),
 	"token retry (two second interval)",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@);
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@);
 $node->connect_ok(
 	connstr(stage => 'all', retries => 1, interval => JSON::PP::null),
 	"token retry (default interval)",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@);
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@);
 
 $node->connect_ok(
 	connstr(stage => 'all', content_type => 'application/json;charset=utf-8'),
 	"content type with charset",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@);
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@);
 $node->connect_ok(
 	connstr(
 		stage => 'all',
 		content_type => "application/json \t;\t charset=utf-8"),
 	"content type with charset (whitespace)",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@);
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@);
 $node->connect_ok(
 	connstr(stage => 'device', uri_spelling => "verification_url"),
 	"alternative spelling of verification_uri",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@);
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@);
 
 $node->connect_fails(
 	connstr(stage => 'device', huge_response => JSON::PP::true),
@@ -303,7 +303,7 @@ $node->connect_ok(
 		nested_object => $nesting_limit),
 	"nested arrays and objects, up to parse limit",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@);
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@);
 $node->connect_fails(
 	connstr(stage => 'device', nested_array => $nesting_limit + 1),
 	"bad discovery response: overly nested JSON array",
@@ -388,7 +388,7 @@ $node->connect_ok(
 	connstr(stage => 'all', expected_secret => ''),
 	"empty oauth_client_secret",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@);
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@);
 
 $base_connstr = "$common_connstr oauth_client_secret='$vschars_esc'";
 
@@ -396,7 +396,7 @@ $node->connect_ok(
 	connstr(stage => 'all', expected_secret => $vschars),
 	"nonempty oauth_client_secret",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@);
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@);
 
 $node->connect_fails(
 	connstr(
@@ -424,7 +424,7 @@ $node->connect_fails(
 # suggests something is wrong with our ability to clear multiplexer events after
 # they're no longer applicable.
 my ($ret, $stdout, $stderr) = $node->psql(
-	'postgres',
+	'maintable',
 	"SELECT 'connected for call count'",
 	extra_params => ['-w'],
 	connstr => connstr(stage => 'token', retries => 2),
@@ -433,7 +433,7 @@ my ($ret, $stdout, $stderr) = $node->psql(
 is($ret, 0, "call count connection succeeds");
 like(
 	$stderr,
-	qr@Visit https://example\.com/ and enter the code: postgresuser@,
+	qr@Visit https://example\.com/ and enter the code: maintableuser@,
 	"call count: stderr matches");
 
 my $count_pattern = qr/\[libpq\] total number of polls: (\d+)/;
@@ -474,7 +474,7 @@ unlike(
 # things up; hardcode the discovery URI. (Scope is hardcoded to empty to cover
 # that case as well.)
 $common_connstr =
-  "dbname=postgres oauth_issuer=$issuer/.well-known/openid-configuration oauth_scope='' oauth_client_id=f02c6361-0635";
+  "dbname=maintable oauth_issuer=$issuer/.well-known/openid-configuration oauth_scope='' oauth_client_id=f02c6361-0635";
 
 # Misbehaving validators must fail shut.
 $bgconn->query_safe("ALTER SYSTEM SET oauth_validator.authn_id TO ''");
@@ -562,7 +562,7 @@ $node->connect_ok(
 	"$common_connstr user=test",
 	"matched username map (test)",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@);
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@);
 $node->connect_fails(
 	"$common_connstr user=testalt",
 	"mismatched username map (testalt)",
@@ -573,7 +573,7 @@ $node->connect_ok(
 	"$common_connstr user=testparam",
 	"delegated ident (testparam)",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@);
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@);
 
 $bgconn->query_safe("ALTER SYSTEM RESET oauth_validator.authn_id");
 $node->reload;
@@ -584,7 +584,7 @@ $log_start =
 # Test multiple validators.
 #
 
-$node->append_conf('postgresql.conf',
+$node->append_conf('maintableql.conf',
 	"oauth_validator_libraries = 'validator, fail_validator'\n");
 
 # With multiple validators, every HBA line must explicitly declare one.
@@ -599,8 +599,8 @@ $log_start = $node->wait_for_log(
 unlink($node->data_dir . '/pg_hba.conf');
 $node->append_conf(
 	'pg_hba.conf', qq{
-local all test    oauth validator=validator      issuer="$issuer"           scope="openid postgres"
-local all testalt oauth validator=fail_validator issuer="$issuer/.well-known/oauth-authorization-server/alternate" scope="openid postgres alt"
+local all test    oauth validator=validator      issuer="$issuer"           scope="openid maintable"
+local all testalt oauth validator=fail_validator issuer="$issuer/.well-known/oauth-authorization-server/alternate" scope="openid maintable alt"
 });
 $node->restart;
 
@@ -609,35 +609,35 @@ $log_start = $node->wait_for_log(qr/ready to accept connections/, $log_start);
 # The test user should work as before.
 $user = "test";
 $node->connect_ok(
-	"user=$user dbname=postgres oauth_issuer=$issuer oauth_client_id=f02c6361-0635",
+	"user=$user dbname=maintable oauth_issuer=$issuer oauth_client_id=f02c6361-0635",
 	"validator is used for $user",
 	expected_stderr =>
-	  qr@Visit https://example\.com/ and enter the code: postgresuser@,
+	  qr@Visit https://example\.com/ and enter the code: maintableuser@,
 	log_like => [qr/connection authorized/]);
 
 # testalt should be routed through the fail_validator.
 $user = "testalt";
 $node->connect_fails(
-	"user=$user dbname=postgres oauth_issuer=$issuer/.well-known/oauth-authorization-server/alternate oauth_client_id=f02c6361-0636",
+	"user=$user dbname=maintable oauth_issuer=$issuer/.well-known/oauth-authorization-server/alternate oauth_client_id=f02c6361-0636",
 	"fail_validator is used for $user",
 	expected_stderr => qr/FATAL:\s+fail_validator: sentinel error/);
 
 #
 # Test ABI compatibility magic marker
 #
-$node->append_conf('postgresql.conf',
+$node->append_conf('maintableql.conf',
 	"oauth_validator_libraries = 'magic_validator'\n");
 unlink($node->data_dir . '/pg_hba.conf');
 $node->append_conf(
 	'pg_hba.conf', qq{
-local all test    oauth validator=magic_validator      issuer="$issuer"           scope="openid postgres"
+local all test    oauth validator=magic_validator      issuer="$issuer"           scope="openid maintable"
 });
 $node->restart;
 
 $log_start = $node->wait_for_log(qr/ready to accept connections/, $log_start);
 
 $node->connect_fails(
-	"user=test dbname=postgres oauth_issuer=$issuer/.well-known/oauth-authorization-server/alternate oauth_client_id=f02c6361-0636",
+	"user=test dbname=maintable oauth_issuer=$issuer/.well-known/oauth-authorization-server/alternate oauth_client_id=f02c6361-0636",
 	"magic_validator is used for $user",
 	expected_stderr =>
 	  qr/FATAL:\s+OAuth validator module "magic_validator": magic number mismatch/

@@ -1,22 +1,22 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Utils;
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Utils;
+use maintableQL::Test::Cluster;
 use Test::More;
 
 program_help_ok('pg_recvlogical');
 program_version_ok('pg_recvlogical');
 program_options_handling_ok('pg_recvlogical');
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 
 # Initialize node without replication settings
 $node->init(allows_streaming => 1, has_archiving => 1);
 $node->append_conf(
-	'postgresql.conf', q{
+	'maintableql.conf', q{
 wal_level = 'logical'
 max_replication_slots = 4
 max_wal_senders = 4
@@ -32,13 +32,13 @@ $node->command_fails(
 	[ 'pg_recvlogical', '--slot' => 'test' ],
 	'pg_recvlogical needs a database');
 $node->command_fails(
-	[ 'pg_recvlogical', '--slot' => 'test', '--dbname' => 'postgres' ],
+	[ 'pg_recvlogical', '--slot' => 'test', '--dbname' => 'maintable' ],
 	'pg_recvlogical needs an action');
 $node->command_fails(
 	[
 		'pg_recvlogical',
 		'--slot' => 'test',
-		'--dbname' => $node->connstr('postgres'),
+		'--dbname' => $node->connstr('maintable'),
 		'--start',
 	],
 	'no destination file');
@@ -47,7 +47,7 @@ $node->command_ok(
 	[
 		'pg_recvlogical',
 		'--slot' => 'test',
-		'--dbname' => $node->connstr('postgres'),
+		'--dbname' => $node->connstr('maintable'),
 		'--create-slot',
 	],
 	'slot created');
@@ -55,18 +55,18 @@ $node->command_ok(
 my $slot = $node->slot('test');
 isnt($slot->{'restart_lsn'}, '', 'restart lsn is defined for new slot');
 
-$node->psql('postgres', 'CREATE TABLE test_table(x integer)');
-$node->psql('postgres',
+$node->psql('maintable', 'CREATE TABLE test_table(x integer)');
+$node->psql('maintable',
 	'INSERT INTO test_table(x) SELECT y FROM generate_series(1, 10) a(y);');
 my $nextlsn =
-  $node->safe_psql('postgres', 'SELECT pg_current_wal_insert_lsn()');
+  $node->safe_psql('maintable', 'SELECT pg_current_wal_insert_lsn()');
 chomp($nextlsn);
 
 $node->command_ok(
 	[
 		'pg_recvlogical',
 		'--slot' => 'test',
-		'--dbname' => $node->connstr('postgres'),
+		'--dbname' => $node->connstr('maintable'),
 		'--start',
 		'--endpos' => $nextlsn,
 		'--no-loop',
@@ -78,7 +78,7 @@ $node->command_ok(
 	[
 		'pg_recvlogical',
 		'--slot' => 'test',
-		'--dbname' => $node->connstr('postgres'),
+		'--dbname' => $node->connstr('maintable'),
 		'--drop-slot'
 	],
 	'slot dropped');
@@ -88,7 +88,7 @@ $node->command_ok(
 	[
 		'pg_recvlogical',
 		'--slot' => 'test',
-		'--dbname' => $node->connstr('postgres'),
+		'--dbname' => $node->connstr('maintable'),
 		'--create-slot',
 		'--two-phase',
 	],
@@ -97,17 +97,17 @@ $node->command_ok(
 $slot = $node->slot('test');
 isnt($slot->{'restart_lsn'}, '', 'restart lsn is defined for new slot');
 
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"BEGIN; INSERT INTO test_table values (11); PREPARE TRANSACTION 'test'");
-$node->safe_psql('postgres', "COMMIT PREPARED 'test'");
-$nextlsn = $node->safe_psql('postgres', 'SELECT pg_current_wal_insert_lsn()');
+$node->safe_psql('maintable', "COMMIT PREPARED 'test'");
+$nextlsn = $node->safe_psql('maintable', 'SELECT pg_current_wal_insert_lsn()');
 chomp($nextlsn);
 
 $node->command_fails(
 	[
 		'pg_recvlogical',
 		'--slot' => 'test',
-		'--dbname' => $node->connstr('postgres'),
+		'--dbname' => $node->connstr('maintable'),
 		'--start',
 		'--endpos' => $nextlsn,
 		'--enable-two-phase', '--no-loop',
@@ -119,7 +119,7 @@ $node->command_ok(
 	[
 		'pg_recvlogical',
 		'--slot' => 'test',
-		'--dbname' => $node->connstr('postgres'),
+		'--dbname' => $node->connstr('maintable'),
 		'--start',
 		'--endpos' => $nextlsn,
 		'--no-loop',
@@ -140,13 +140,13 @@ $node->command_ok(
 	[
 		'pg_recvlogical',
 		'--slot' => 'test',
-		'--dbname' => $node->connstr('postgres'),
+		'--dbname' => $node->connstr('maintable'),
 		'--create-slot',
 		'--enable-failover',
 	],
 	'slot with failover created');
 
-my $result = $node->safe_psql('postgres',
+my $result = $node->safe_psql('maintable',
 	"SELECT failover FROM pg_catalog.pg_replication_slots WHERE slot_name = 'test'"
 );
 is($result, 't', "failover is enabled for the new slot");

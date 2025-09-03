@@ -21,7 +21,7 @@ use crate::cli::cli_command::{CliCommand, PRINT_TARGET};
 use anyhow::Context;
 use async_trait::async_trait;
 use comfy_table::Table;
-use iggy_common::get_stats::GetStats;
+use messenger_common::get_stats::GetStats;
 use std::fmt::Display;
 use std::time::SystemTime;
 use tracing::{Level, event};
@@ -79,11 +79,11 @@ impl CliCommand for GetStatsCmd {
 
                 table.set_header(vec!["Server property", "Value"]);
                 table.add_row(vec![
-                    "Iggy Server PID",
+                    "Messenger Server PID",
                     format!("{}", stats.process_id).as_str(),
                 ]);
                 table.add_row(vec![
-                    "Iggy Server CPU Usage",
+                    "Messenger Server CPU Usage",
                     format!("{:.4} %", stats.cpu_usage).as_str(),
                 ]);
                 table.add_row(vec![
@@ -91,7 +91,7 @@ impl CliCommand for GetStatsCmd {
                     format!("{:.4} %", stats.total_cpu_usage).as_str(),
                 ]);
                 table.add_row(vec![
-                    "Iggy Server Memory Usage",
+                    "Messenger Server Memory Usage",
                     stats.memory_usage.as_bytes_u64().to_string().as_str(),
                 ]);
 
@@ -104,7 +104,7 @@ impl CliCommand for GetStatsCmd {
                     stats.available_memory.as_bytes_u64().to_string().as_str(),
                 ]);
                 table.add_row(vec![
-                    "Iggy Server Run Time",
+                    "Messenger Server Run Time",
                     stats.run_time.as_secs().to_string().as_str(),
                 ]);
 
@@ -168,11 +168,11 @@ impl CliCommand for GetStatsCmd {
             GetStatsOutput::List => {
                 let mut list = Vec::new();
 
-                list.push(format!("Iggy Server PID|{}", stats.process_id));
-                list.push(format!("Iggy Server CPU Usage|{:.4} %", stats.cpu_usage));
+                list.push(format!("Messenger Server PID|{}", stats.process_id));
+                list.push(format!("Messenger Server CPU Usage|{:.4} %", stats.cpu_usage));
                 list.push(format!("Total CPU Usage|{:.4} %", stats.total_cpu_usage));
                 list.push(format!(
-                    "Iggy Server Memory Usage|{}",
+                    "Messenger Server Memory Usage|{}",
                     stats.memory_usage.as_bytes_u64()
                 ));
                 list.push(format!(
@@ -183,7 +183,7 @@ impl CliCommand for GetStatsCmd {
                     "Available Memory (RAM)|{}",
                     stats.available_memory.as_bytes_u64()
                 ));
-                list.push(format!("Iggy Server Run Time|{}", stats.run_time.as_secs()));
+                list.push(format!("Messenger Server Run Time|{}", stats.run_time.as_secs()));
 
                 let start_time_utc = stats.start_time + SystemTime::UNIX_EPOCH;
                 list.push(format!("Start Time (UTC)|{start_time_utc}"));

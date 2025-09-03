@@ -16,38 +16,38 @@
  * under the License.
  */
 
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use std::io::IoSlice;
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt};
 use tracing::debug;
 
 const STATUS_OK: &[u8] = &[0; 4];
 
-pub(crate) async fn read<T>(stream: &mut T, buffer: &mut [u8]) -> Result<usize, IggyError>
+pub(crate) async fn read<T>(stream: &mut T, buffer: &mut [u8]) -> Result<usize, MessengerError>
 where
     T: AsyncRead + AsyncWrite + Unpin,
 {
     match stream.read_exact(buffer).await {
-        Ok(0) => Err(IggyError::ConnectionClosed),
+        Ok(0) => Err(MessengerError::ConnectionClosed),
         Ok(read_bytes) => Ok(read_bytes),
         Err(error) => {
             if error.kind() == std::io::ErrorKind::UnexpectedEof {
-                Err(IggyError::ConnectionClosed)
+                Err(MessengerError::ConnectionClosed)
             } else {
-                Err(IggyError::TcpError)
+                Err(MessengerError::TcpError)
             }
         }
     }
 }
 
-pub(crate) async fn send_empty_ok_response<T>(stream: &mut T) -> Result<(), IggyError>
+pub(crate) async fn send_empty_ok_response<T>(stream: &mut T) -> Result<(), MessengerError>
 where
     T: AsyncRead + AsyncWrite + Unpin,
 {
     send_ok_response(stream, &[]).await
 }
 
-pub(crate) async fn send_ok_response<T>(stream: &mut T, payload: &[u8]) -> Result<(), IggyError>
+pub(crate) async fn send_ok_response<T>(stream: &mut T, payload: &[u8]) -> Result<(), MessengerError>
 where
     T: AsyncRead + AsyncWrite + Unpin,
 {
@@ -58,7 +58,7 @@ pub(crate) async fn send_ok_response_vectored<T>(
     stream: &mut T,
     length: &[u8],
     slices: Vec<IoSlice<'_>>,
-) -> Result<(), IggyError>
+) -> Result<(), MessengerError>
 where
     T: AsyncRead + AsyncWrite + Unpin,
 {
@@ -67,8 +67,8 @@ where
 
 pub(crate) async fn send_error_response<T>(
     stream: &mut T,
-    error: IggyError,
-) -> Result<(), IggyError>
+    error: MessengerError,
+) -> Result<(), MessengerError>
 where
     T: AsyncRead + AsyncWrite + Unpin,
 {
@@ -79,7 +79,7 @@ pub(crate) async fn send_response<T>(
     stream: &mut T,
     status: &[u8],
     payload: &[u8],
-) -> Result<(), IggyError>
+) -> Result<(), MessengerError>
 where
     T: AsyncRead + AsyncWrite + Unpin,
 {
@@ -92,7 +92,7 @@ where
     stream
         .write_all(&[status, &length, payload].as_slice().concat())
         .await
-        .map_err(|_| IggyError::TcpError)?;
+        .map_err(|_| MessengerError::TcpError)?;
     debug!("Sent response with status: {:?}", status);
     Ok(())
 }
@@ -102,7 +102,7 @@ pub(crate) async fn send_response_vectored<T>(
     status: &[u8],
     length: &[u8],
     mut slices: Vec<IoSlice<'_>>,
-) -> Result<(), IggyError>
+) -> Result<(), MessengerError>
 where
     T: AsyncReadExt + AsyncWriteExt + Unpin,
 {
@@ -118,7 +118,7 @@ where
         let bytes_written = stream
             .write_vectored(slice_refs)
             .await
-            .map_err(|_| IggyError::TcpError)?;
+            .map_err(|_| MessengerError::TcpError)?;
         IoSlice::advance_slices(&mut slice_refs, bytes_written);
     }
     debug!("Sent response with status: {:?}", status);

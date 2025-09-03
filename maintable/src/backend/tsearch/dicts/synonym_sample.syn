@@ -1,5 +1,5 @@
-postgres	pgsql
-postgresql	pgsql
+maintable	pgsql
+maintableql	pgsql
 postgre	pgsql
 gogle	googl
 indices	index*

@@ -29,14 +29,14 @@ mod fast_async_lock;
 
 #[cfg(feature = "tokio_lock")]
 #[cfg(not(any(feature = "fast_async_lock")))]
-pub type IggySharedMut<T> = tokio_lock::IggyTokioRwLock<T>;
+pub type MessengerSharedMut<T> = tokio_lock::MessengerTokioRwLock<T>;
 
 //this can be used in the future to provide different locking mechanisms
 #[cfg(feature = "fast_async_lock")]
-pub type IggySharedMut<T> = fast_async_lock::IggyFastAsyncRwLock<T>;
+pub type MessengerSharedMut<T> = fast_async_lock::MessengerFastAsyncRwLock<T>;
 
 #[allow(async_fn_in_trait)]
-pub trait IggySharedMutFn<T>: Send + Sync {
+pub trait MessengerSharedMutFn<T>: Send + Sync {
     type ReadGuard<'a>: Deref<Target = T> + Send
     where
         T: 'a,

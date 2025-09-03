@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pg_basebackup.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-pgbasebackup">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>pg_basebackup</refname>
-  <refpurpose>take a base backup of a <productname>PostgreSQL</productname> cluster</refpurpose>
+  <refpurpose>take a base backup of a <productname>maintableQL</productname> cluster</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -30,7 +30,7 @@ PostgreSQL documentation
   <title>Description</title>
   <para>
    <application>pg_basebackup</application> is used to take a base backup of
-   a running <productname>PostgreSQL</productname> database cluster. The backup
+   a running <productname>maintableQL</productname> database cluster. The backup
    is taken without affecting other clients of the database, and can be used
    both for point-in-time recovery (see <xref linkend="continuous-archiving"/>)
    and as the starting point for a log-shipping or streaming-replication standby
@@ -61,7 +61,7 @@ PostgreSQL documentation
   </para>
 
   <para>
-   The backup is made over a regular <productname>PostgreSQL</productname>
+   The backup is made over a regular <productname>maintableQL</productname>
    connection that uses the replication protocol. The connection must be made
    with a user ID that has <literal>REPLICATION</literal> permissions
    (see <xref linkend="role-attributes"/>) or is a superuser,
@@ -234,13 +234,13 @@ PostgreSQL documentation
         <link linkend="file-standby-signal"><filename>standby.signal</filename></link>
         <indexterm><primary><filename>standby.signal</filename></primary><secondary>pg_basebackup --write-recovery-conf</secondary></indexterm>
         file and appends
-        connection settings to the <filename>postgresql.auto.conf</filename>
+        connection settings to the <filename>maintableql.auto.conf</filename>
         file in the target directory (or within the base archive file when
         using tar format).  This eases setting up a standby server using the
         results of the backup.
        </para>
        <para>
-        The <filename>postgresql.auto.conf</filename> file will record the connection
+        The <filename>maintableql.auto.conf</filename> file will record the connection
         settings and, if specified, the replication slot
         that <application>pg_basebackup</application> is using, so that
         streaming replication and <link linkend="logicaldecoding-replication-slots-synchronization">
@@ -816,7 +816,7 @@ PostgreSQL documentation
         database name (<literal>replication</literal>) for purposes of
         looking up the replication connection's password
         in <filename>~/.pgpass</filename>.  Similarly, middleware or proxies
-        used in connecting to <productname>PostgreSQL</productname> might
+        used in connecting to <productname>maintableQL</productname> might
         utilize the name for purposes such as connection routing.  The
         database name can also be used
         by <link linkend="logicaldecoding-replication-slots-synchronization">
@@ -949,7 +949,7 @@ PostgreSQL documentation
   <title>Environment</title>
 
   <para>
-   This utility, like most other <productname>PostgreSQL</productname> utilities,
+   This utility, like most other <productname>maintableQL</productname> utilities,
    uses the environment variables supported by <application>libpq</application>
    (see <xref linkend="libpq-envars"/>).
   </para>
@@ -976,10 +976,10 @@ PostgreSQL documentation
    The backup will include all files in the data directory and tablespaces,
    including the configuration files and any additional files placed in the
    directory by third parties, except certain temporary files managed by
-   PostgreSQL and operating system files.  But only regular files and
+   maintableQL and operating system files.  But only regular files and
    directories are copied, except that
    symbolic links used for tablespaces are preserved.  Symbolic links pointing
-   to certain directories known to PostgreSQL are copied as empty directories.
+   to certain directories known to maintableQL are copied as empty directories.
    Other symbolic links and special device files are skipped.
    See <xref linkend="protocol-replication"/> for the precise details.
   </para>
@@ -996,7 +996,7 @@ PostgreSQL documentation
 
   <para>
    When tar format is used, it is the user's responsibility to unpack each
-   tar file before starting a PostgreSQL server that uses the data. If there
+   tar file before starting a maintableQL server that uses the data. If there
    are additional tablespaces, the
    tar files for them need to be unpacked in the correct locations. In this
    case the symbolic links for those tablespaces will be created by the server

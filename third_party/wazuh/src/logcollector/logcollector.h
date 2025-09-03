@@ -92,8 +92,8 @@ void *read_mysql_log(logreader *lf, int *rc, int drop_it);
 /* Read mysql log format */
 void *read_mssql_log(logreader *lf, int *rc, int drop_it);
 
-/* Read postgresql log format */
-void *read_postgresql_log(logreader *lf, int *rc, int drop_it);
+/* Read maintableql log format */
+void *read_maintableql_log(logreader *lf, int *rc, int drop_it);
 
 /* Read multi line logs */
 void *read_multiline(logreader *lf, int *rc, int drop_it);

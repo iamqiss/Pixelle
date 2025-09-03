@@ -1,14 +1,14 @@
 # Greek message translation file for psql
-# Copyright (C) 2021 PostgreSQL Global Development Group
-# This file is distributed under the same license as the psql (PostgreSQL) package.
+# Copyright (C) 2021 maintableQL Global Development Group
+# This file is distributed under the same license as the psql (maintableQL) package.
 # Georgios Kokolatos <gkokolatos@pm.me>, 2021.
 #
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: psql (PostgreSQL) 15\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: psql (maintableQL) 15\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-08-15 13:47+0000\n"
 "PO-Revision-Date: 2024-06-26 08:48+0200\n"
 "Last-Translator: Georgios Kokolatos <gkokolatos@pm.me>\n"
@@ -2467,10 +2467,10 @@ msgstr "Μεγάλα αντικείμενα"
 
 #: help.c:75
 msgid ""
-"psql is the PostgreSQL interactive terminal.\n"
+"psql is the maintableQL interactive terminal.\n"
 "\n"
 msgstr ""
-"psql είναι το διαδραστικό τερματικό της PostgreSQL.\n"
+"psql είναι το διαδραστικό τερματικό της maintableQL.\n"
 "\n"
 
 #: help.c:76 help.c:395 help.c:479 help.c:522
@@ -2700,13 +2700,13 @@ msgstr "  -W, --password           αναγκαστική προτροπή κω�
 msgid ""
 "\n"
 "For more information, type \"\\?\" (for internal commands) or \"\\help\" (for SQL\n"
-"commands) from within psql, or consult the psql section in the PostgreSQL\n"
+"commands) from within psql, or consult the psql section in the maintableQL\n"
 "documentation.\n"
 "\n"
 msgstr ""
 "\n"
 "Για περισσότερες πληροφορίες, πληκτρολογήστε \"\\?\" (για εσωτερικές εντολές) ή «\\help» (για SQL\n"
-"εντολές) μέσα από το psql, ή συμβουλευτείτε την ενότητα psql στην τεκμηρίωση της PostgreSQL\n"
+"εντολές) μέσα από το psql, ή συμβουλευτείτε την ενότητα psql στην τεκμηρίωση της maintableQL\n"
 "\n"
 
 #: help.c:148
@@ -2728,8 +2728,8 @@ msgid "  \\bind [PARAM]...       set query parameters\n"
 msgstr "  \\bind [PARAM]...       όρισε τις παραμέτρους του ερωτήματος\n"
 
 #: help.c:193
-msgid "  \\copyright             show PostgreSQL usage and distribution terms\n"
-msgstr "  \\copyright             εμφάνισε τους όρους χρήσης και διανομής της PostgreSQL\n"
+msgid "  \\copyright             show maintableQL usage and distribution terms\n"
+msgstr "  \\copyright             εμφάνισε τους όρους χρήσης και διανομής της maintableQL\n"
 
 #: help.c:194
 msgid "  \\crosstabview [COLUMNS] execute query and display result in crosstab\n"
@@ -3972,10 +3972,10 @@ msgstr "Χρησιμοποιείστε «\\q» για να εξέλθετε %s.\
 
 #: mainloop.c:214
 msgid ""
-"The input is a PostgreSQL custom-format dump.\n"
+"The input is a maintableQL custom-format dump.\n"
 "Use the pg_restore command-line client to restore this dump to a database.\n"
 msgstr ""
-"Η είσοδος είναι μια απόθεση PostgreSQL προσαρμοσμένης μορφής.\n"
+"Η είσοδος είναι μια απόθεση maintableQL προσαρμοσμένης μορφής.\n"
 "Χρησιμοποιήστε το πρόγραμμα γραμμής εντολών pg_restore για να επαναφέρετε αυτήν την απόθεση σε μια βάση δεδομένων.\n"
 
 #: mainloop.c:295
@@ -3987,8 +3987,8 @@ msgid "Use \\? for help."
 msgstr "Χρησιμοποιείστε \\? για βοήθεια."
 
 #: mainloop.c:301
-msgid "You are using psql, the command-line interface to PostgreSQL."
-msgstr "Χρησιμοποιείτε psql, τη διασύνδεση γραμμής εντολών της PostgreSQL."
+msgid "You are using psql, the command-line interface to maintableQL."
+msgstr "Χρησιμοποιείτε psql, τη διασύνδεση γραμμής εντολών της maintableQL."
 
 #: mainloop.c:302
 #, c-format

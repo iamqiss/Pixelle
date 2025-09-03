@@ -18,12 +18,12 @@
 
 use crate::http::http_client::HttpClient;
 use crate::http::http_transport::HttpTransport;
-use crate::prelude::IggyError;
+use crate::prelude::MessengerError;
 use async_trait::async_trait;
-use iggy_binary_protocol::ConsumerGroupClient;
-use iggy_common::Identifier;
-use iggy_common::create_consumer_group::CreateConsumerGroup;
-use iggy_common::{ConsumerGroup, ConsumerGroupDetails};
+use messenger_binary_protocol::ConsumerGroupClient;
+use messenger_common::Identifier;
+use messenger_common::create_consumer_group::CreateConsumerGroup;
+use messenger_common::{ConsumerGroup, ConsumerGroupDetails};
 
 #[async_trait]
 impl ConsumerGroupClient for HttpClient {
@@ -32,7 +32,7 @@ impl ConsumerGroupClient for HttpClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<Option<ConsumerGroupDetails>, IggyError> {
+    ) -> Result<Option<ConsumerGroupDetails>, MessengerError> {
         let response = self
             .get(&format!(
                 "{}/{}",
@@ -41,7 +41,7 @@ impl ConsumerGroupClient for HttpClient {
             ))
             .await;
         if let Err(error) = response {
-            if matches!(error, IggyError::ResourceNotFound(_)) {
+            if matches!(error, MessengerError::ResourceNotFound(_)) {
                 return Ok(None);
             }
 
@@ -51,7 +51,7 @@ impl ConsumerGroupClient for HttpClient {
         let consumer_group = response?
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(Some(consumer_group))
     }
 
@@ -59,14 +59,14 @@ impl ConsumerGroupClient for HttpClient {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<Vec<ConsumerGroup>, IggyError> {
+    ) -> Result<Vec<ConsumerGroup>, MessengerError> {
         let response = self
             .get(&get_path(&stream_id.as_cow_str(), &topic_id.as_cow_str()))
             .await?;
         let consumer_groups = response
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(consumer_groups)
     }
 
@@ -76,7 +76,7 @@ impl ConsumerGroupClient for HttpClient {
         topic_id: &Identifier,
         name: &str,
         group_id: Option<u32>,
-    ) -> Result<ConsumerGroupDetails, IggyError> {
+    ) -> Result<ConsumerGroupDetails, MessengerError> {
         let response = self
             .post(
                 &get_path(&stream_id.as_cow_str(), &topic_id.as_cow_str()),
@@ -91,7 +91,7 @@ impl ConsumerGroupClient for HttpClient {
         let consumer_group = response
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(consumer_group)
     }
 
@@ -100,7 +100,7 @@ impl ConsumerGroupClient for HttpClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let path = format!(
             "{}/{}",
             get_path(&stream_id.as_cow_str(), &topic_id.as_cow_str()),
@@ -115,8 +115,8 @@ impl ConsumerGroupClient for HttpClient {
         _: &Identifier,
         _: &Identifier,
         _: &Identifier,
-    ) -> Result<(), IggyError> {
-        Err(IggyError::FeatureUnavailable)
+    ) -> Result<(), MessengerError> {
+        Err(MessengerError::FeatureUnavailable)
     }
 
     async fn leave_consumer_group(
@@ -124,8 +124,8 @@ impl ConsumerGroupClient for HttpClient {
         _: &Identifier,
         _: &Identifier,
         _: &Identifier,
-    ) -> Result<(), IggyError> {
-        Err(IggyError::FeatureUnavailable)
+    ) -> Result<(), MessengerError> {
+        Err(MessengerError::FeatureUnavailable)
     }
 }
 

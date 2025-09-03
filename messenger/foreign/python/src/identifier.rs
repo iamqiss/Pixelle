@@ -18,7 +18,7 @@
 
 use std::str::FromStr;
 
-use iggy::prelude::{IdKind, Identifier};
+use messenger::prelude::{IdKind, Identifier};
 use pyo3::prelude::*;
 use pyo3_stub_gen::impl_stub_type;
 

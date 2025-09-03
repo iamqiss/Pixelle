@@ -1,12 +1,12 @@
 # Georgian message translation file for pg_resetwal
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_resetwal (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_resetwal (maintableQL) package.
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_resetwal (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_resetwal (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-05-02 22:20+0000\n"
 "PO-Revision-Date: 2025-05-03 01:24+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -69,11 +69,11 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "ბაიტების მიმდევრობის შესაძლო შეუსაბამობა pg_control ფაილის შესანახად გამოყენებული \n"
 "ბაიტების მიმდევრობა შესაძლოა არ ემთხვეოდეს ამ პროგრამის მიერ გამოყენებულს. ამ შემთხვევაში  ქვემოთ \n"
-"მოცემული შედეგები არასწორი იქნება და PostgreSQL ეს აგება ამ მონაცემთა საქაღალდესთან შეუთავსებელი იქნება."
+"მოცემული შედეგები არასწორი იქნება და maintableQL ეს აგება ამ მონაცემთა საქაღალდესთან შეუთავსებელი იქნება."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:69
 #: ../../common/file_utils.c:370 ../../common/file_utils.c:428
@@ -260,8 +260,8 @@ msgstr "root-ით ვერ გაეშვება"
 
 #: pg_resetwal.c:360
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "%s PostgreSQL-ის ზემომხმარებლით უნდა გაუშვათ."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "%s maintableQL-ის ზემომხმარებლით უნდა გაუშვათ."
 
 #: pg_resetwal.c:370
 #, c-format
@@ -638,10 +638,10 @@ msgstr "fsync error: %m"
 #: pg_resetwal.c:1192
 #, c-format
 msgid ""
-"%s resets the PostgreSQL write-ahead log.\n"
+"%s resets the maintableQL write-ahead log.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL-ის წინასწარ-ჩაწერად ჟურნალს საწყის მნიშვნელობაზე აბრუნებს.\n"
+"%s maintableQL-ის წინასწარ-ჩაწერად ჟურნალს საწყის მნიშვნელობაზე აბრუნებს.\n"
 "\n"
 
 #: pg_resetwal.c:1193

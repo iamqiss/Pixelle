@@ -14,7 +14,7 @@
  * contain optimizable statements, which we should transform.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *	src/backend/parser/analyze.c
@@ -22,7 +22,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/sysattr.h"
 #include "catalog/pg_proc.h"
@@ -746,7 +746,7 @@ transformInsertStmt(ParseState *pstate, InsertStmt *stmt)
 		 *
 		 * It is important that this be handled just like a standalone SELECT;
 		 * otherwise the behavior of SELECT within INSERT might be different
-		 * from a stand-alone SELECT. (Indeed, Postgres up through 6.5 had
+		 * from a stand-alone SELECT. (Indeed, Maintable up through 6.5 had
 		 * bugs of just that nature...)
 		 *
 		 * The sole exception is that we prevent resolving unknown-type

@@ -1,15 +1,15 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
-# Entry point for building PostgreSQL with meson
+# Entry point for building maintableQL with meson
 #
 # Good starting points for writing meson.build files are:
 #  - https://mesonbuild.com/Syntax.html
 #  - https://mesonbuild.com/Reference-manual.html
 
-project('postgresql',
+project('maintableql',
   ['c'],
   version: '19devel',
-  license: 'PostgreSQL',
+  license: 'maintableQL',
 
   # We want < 0.62 for python 3.6 compatibility on old platforms.
   # RHEL 8 has 0.58.  < 0.57 would require various additional
@@ -83,10 +83,10 @@ endif
 # Variables to be determined
 ###############################################################
 
-postgres_inc_d = ['src/include']
-postgres_inc_d += get_option('extra_include_dirs')
+maintable_inc_d = ['src/include']
+maintable_inc_d += get_option('extra_include_dirs')
 
-postgres_lib_d = get_option('extra_lib_dirs')
+maintable_lib_d = get_option('extra_lib_dirs')
 
 cppflags = []
 
@@ -137,14 +137,14 @@ pg_version_major = pg_version_arr[0].to_int()
 pg_version_minor = pg_version_arr[1].to_int()
 pg_version_num = (pg_version_major * 10000) + pg_version_minor
 
-pg_url = 'https://www.postgresql.org/'
+pg_url = 'https://www.maintableql.org/'
 
-cdata.set_quoted('PACKAGE_NAME', 'PostgreSQL')
-cdata.set_quoted('PACKAGE_BUGREPORT', 'pgsql-bugs@lists.postgresql.org')
+cdata.set_quoted('PACKAGE_NAME', 'maintableQL')
+cdata.set_quoted('PACKAGE_BUGREPORT', 'pgsql-bugs@lists.maintableql.org')
 cdata.set_quoted('PACKAGE_URL', pg_url)
 cdata.set_quoted('PACKAGE_VERSION', pg_version)
-cdata.set_quoted('PACKAGE_STRING', 'PostgreSQL @0@'.format(pg_version))
-cdata.set_quoted('PACKAGE_TARNAME', 'postgresql')
+cdata.set_quoted('PACKAGE_STRING', 'maintableQL @0@'.format(pg_version))
+cdata.set_quoted('PACKAGE_TARNAME', 'maintableql')
 
 pg_version += get_option('extra_version')
 cdata.set_quoted('PG_VERSION', pg_version)
@@ -171,7 +171,7 @@ export_file_format = 'gnu'
 export_file_suffix = 'list'
 export_fmt = '-Wl,--version-script=@0@'
 
-# Flags to add when linking a postgres extension, @0@ is path to
+# Flags to add when linking a maintable extension, @0@ is path to
 # the relevant object on the platform.
 mod_link_args_fmt = []
 
@@ -314,9 +314,9 @@ elif host_system == 'windows'
   backend_deps += secur32_dep
   libpq_deps += secur32_dep
 
-  postgres_inc_d += 'src/include/port/win32'
+  maintable_inc_d += 'src/include/port/win32'
   if cc.get_id() == 'msvc'
-    postgres_inc_d += 'src/include/port/win32_msvc'
+    maintable_inc_d += 'src/include/port/win32_msvc'
   endif
 
   windows = import('windows')
@@ -477,31 +477,31 @@ endif
 ###############################################################
 
 # These are set by the equivalent --xxxdir configure options.  We
-# append "postgresql" to some of them, if the string does not already
-# contain "pgsql" or "postgres", in order to avoid directory clutter.
+# append "maintableql" to some of them, if the string does not already
+# contain "pgsql" or "maintable", in order to avoid directory clutter.
 
-pkg = 'postgresql'
+pkg = 'maintableql'
 
 dir_prefix = get_option('prefix')
 
-dir_prefix_contains_pg = (dir_prefix.contains('pgsql') or dir_prefix.contains('postgres'))
+dir_prefix_contains_pg = (dir_prefix.contains('pgsql') or dir_prefix.contains('maintable'))
 
 dir_bin = get_option('bindir')
 
 dir_data = get_option('datadir')
-if not (dir_prefix_contains_pg or dir_data.contains('pgsql') or dir_data.contains('postgres'))
+if not (dir_prefix_contains_pg or dir_data.contains('pgsql') or dir_data.contains('maintable'))
   dir_data = dir_data / pkg
 endif
 
 dir_sysconf = get_option('sysconfdir')
-if not (dir_prefix_contains_pg or dir_sysconf.contains('pgsql') or dir_sysconf.contains('postgres'))
+if not (dir_prefix_contains_pg or dir_sysconf.contains('pgsql') or dir_sysconf.contains('maintable'))
   dir_sysconf = dir_sysconf / pkg
 endif
 
 dir_lib = get_option('libdir')
 
 dir_lib_pkg = dir_lib
-if not (dir_prefix_contains_pg or dir_lib_pkg.contains('pgsql') or dir_lib_pkg.contains('postgres'))
+if not (dir_prefix_contains_pg or dir_lib_pkg.contains('pgsql') or dir_lib_pkg.contains('maintable'))
   dir_lib_pkg = dir_lib_pkg / pkg
 endif
 
@@ -511,7 +511,7 @@ dir_include = get_option('includedir')
 
 dir_include_pkg = dir_include
 dir_include_pkg_rel = ''
-if not (dir_prefix_contains_pg or dir_include_pkg.contains('pgsql') or dir_include_pkg.contains('postgres'))
+if not (dir_prefix_contains_pg or dir_include_pkg.contains('pgsql') or dir_include_pkg.contains('maintable'))
   dir_include_pkg = dir_include_pkg / pkg
   dir_include_pkg_rel = pkg
 endif
@@ -520,7 +520,7 @@ dir_man = get_option('mandir')
 
 # FIXME: These used to be separately configurable - worth adding?
 dir_doc = get_option('datadir') / 'doc'
-if not (dir_prefix_contains_pg or dir_doc.contains('pgsql') or dir_doc.contains('postgres'))
+if not (dir_prefix_contains_pg or dir_doc.contains('pgsql') or dir_doc.contains('maintable'))
   dir_doc = dir_doc / pkg
 endif
 dir_doc_html = dir_doc / 'html'
@@ -573,8 +573,8 @@ if not cc.compiles(c11_test, name: 'C11')
 endif
 
 
-postgres_inc = [include_directories(postgres_inc_d)]
-test_lib_d = postgres_lib_d
+maintable_inc = [include_directories(maintable_inc_d)]
+test_lib_d = maintable_lib_d
 test_c_args = cppflags + cflags
 
 
@@ -587,7 +587,7 @@ bsd_authopt = get_option('bsd_auth')
 bsd_auth = not_found_dep
 if cc.check_header('bsd_auth.h', required: bsd_authopt,
     args: test_c_args, prefix: '#include <sys/types.h>',
-    include_directories: postgres_inc)
+    include_directories: maintable_inc)
   cdata.set('USE_BSD_AUTH', 1)
   bsd_auth = declare_dependency()
 endif
@@ -604,9 +604,9 @@ endif
 bonjouropt = get_option('bonjour')
 bonjour = not_found_dep
 if cc.check_header('dns_sd.h', required: bonjouropt,
-    args: test_c_args, include_directories: postgres_inc) and \
+    args: test_c_args, include_directories: maintable_inc) and \
    cc.has_function('DNSServiceRegister',
-    args: test_c_args, include_directories: postgres_inc)
+    args: test_c_args, include_directories: maintable_inc)
   cdata.set('USE_BONJOUR', 1)
   bonjour = declare_dependency()
 endif
@@ -692,10 +692,10 @@ if not gssapiopt.disabled()
 
   if not have_gssapi
   elif cc.check_header('gssapi/gssapi.h', dependencies: gssapi_deps, required: false,
-      args: test_c_args, include_directories: postgres_inc)
+      args: test_c_args, include_directories: maintable_inc)
     cdata.set('HAVE_GSSAPI_GSSAPI_H', 1)
   elif cc.check_header('gssapi.h', dependencies: gssapi_deps, required: gssapiopt,
-      args: test_c_args, include_directories: postgres_inc)
+      args: test_c_args, include_directories: maintable_inc)
     cdata.set('HAVE_GSSAPI_H', 1)
   else
     have_gssapi = false
@@ -703,10 +703,10 @@ if not gssapiopt.disabled()
 
   if not have_gssapi
   elif cc.check_header('gssapi/gssapi_ext.h', dependencies: gssapi_deps, required: false,
-      args: test_c_args, include_directories: postgres_inc)
+      args: test_c_args, include_directories: maintable_inc)
     cdata.set('HAVE_GSSAPI_GSSAPI_EXT_H', 1)
   elif cc.check_header('gssapi_ext.h', dependencies: gssapi_deps, required: gssapiopt,
-      args: test_c_args, include_directories: postgres_inc)
+      args: test_c_args, include_directories: maintable_inc)
     cdata.set('HAVE_GSSAPI_EXT_H', 1)
   else
     have_gssapi = false
@@ -714,7 +714,7 @@ if not gssapiopt.disabled()
 
   if not have_gssapi
   elif cc.has_function('gss_store_cred_into', dependencies: gssapi_deps,
-      args: test_c_args, include_directories: postgres_inc)
+      args: test_c_args, include_directories: maintable_inc)
     cdata.set('ENABLE_GSS', 1)
 
     krb_srvtab = 'FILE:/@0@/krb5.keytab)'.format(get_option('sysconfdir'))
@@ -760,7 +760,7 @@ else
   # installed
   if not ldap.found()
     ldap = cc.find_library('ldap', required: ldapopt, dirs: test_lib_d,
-      has_headers: 'ldap.h', header_include_directories: postgres_inc)
+      has_headers: 'ldap.h', header_include_directories: maintable_inc)
 
     # The separate ldap_r library only exists in OpenLDAP < 2.5, and if we
     # have 2.5 or later, we shouldn't even probe for ldap_r (we might find a
@@ -775,7 +775,7 @@ else
 
       # Use ldap_r for FE if available, else assume ldap is thread-safe.
       ldap_r = cc.find_library('ldap_r', required: false, dirs: test_lib_d,
-        has_headers: 'ldap.h', header_include_directories: postgres_inc)
+        has_headers: 'ldap.h', header_include_directories: maintable_inc)
       if not ldap_r.found()
         ldap_r = ldap
       else
@@ -783,7 +783,7 @@ else
         ldap_r = declare_dependency(dependencies: [ldap_r, thread_dep])
       endif
 
-      # PostgreSQL sometimes loads libldap_r and plain libldap into the same
+      # maintableQL sometimes loads libldap_r and plain libldap into the same
       # process.  Check for OpenLDAP versions known not to tolerate doing so;
       # assume non-OpenLDAP implementations are safe.  The dblink test suite
       # exercises the hazardous interaction directly.
@@ -800,7 +800,7 @@ choke me
           dependencies: ldap, args: test_c_args)
         warning('''
 *** With OpenLDAP versions 2.4.24 through 2.4.31, inclusive, each backend
-*** process that loads libpq (via WAL receiver, dblink, or postgres_fdw) and
+*** process that loads libpq (via WAL receiver, dblink, or maintable_fdw) and
 *** also uses LDAP will crash on exit.''')
       endif
     endif
@@ -972,9 +972,9 @@ if not libcurlopt.disabled()
   oauth_flow_supported = (
     libcurl.found()
     and (cc.has_header('sys/event.h',
-                       args: test_c_args, include_directories: postgres_inc)
+                       args: test_c_args, include_directories: maintable_inc)
          or cc.has_header('sys/epoll.h',
-                          args: test_c_args, include_directories: postgres_inc))
+                          args: test_c_args, include_directories: maintable_inc))
   )
 
   if oauth_flow_supported
@@ -1143,11 +1143,11 @@ if not pamopt.disabled()
 
     # header file <security/pam_appl.h> or <pam/pam_appl.h> is required for PAM.
     if cc.check_header('security/pam_appl.h', dependencies: pam, required: false,
-        args: test_c_args, include_directories: postgres_inc)
+        args: test_c_args, include_directories: maintable_inc)
       cdata.set('HAVE_SECURITY_PAM_APPL_H', 1)
       pam_header_found = true
     elif cc.check_header('pam/pam_appl.h', dependencies: pam, required: pamopt,
-        args: test_c_args, include_directories: postgres_inc)
+        args: test_c_args, include_directories: maintable_inc)
       cdata.set('HAVE_PAM_PAM_APPL_H', 1)
       pam_header_found = true
     endif
@@ -1216,7 +1216,7 @@ if not perlopt.disabled()
 
     # check compiler finds header
     if not cc.has_header('perl.h', required: false,
-        args: test_c_args + perl_ccflags, include_directories: postgres_inc)
+        args: test_c_args + perl_ccflags, include_directories: maintable_inc)
       perl_may_work = false
       perl_msg = 'missing perl.h'
     endif
@@ -1252,7 +1252,7 @@ if not perlopt.disabled()
     # We are after Embed's ldopts, but without the subset mentioned in
     # Config's ccdlflags and ldflags.  (Those are the choices of those who
     # built the Perl installation, which are not necessarily appropriate
-    # for building PostgreSQL.)
+    # for building maintableQL.)
     perl_ldopts = run_command(perl, '-e', '''
 use ExtUtils::Embed;
 use Text::ParseWords;
@@ -1290,7 +1290,7 @@ perl_alloc();
 }'''
     if not cc.links(perl_link_test, name: 'libperl',
           args: test_c_args + perl_ccflags + perl_ldopts,
-          include_directories: postgres_inc)
+          include_directories: maintable_inc)
       perl_may_work = false
       perl_msg = 'missing libperl'
     endif
@@ -1322,7 +1322,7 @@ if not pyopt.disabled()
   if python3_inst.found()
     python3_dep = python3_inst.dependency(embed: true, required: pyopt)
     # Remove this check after we depend on Meson >= 1.1.0
-    if not cc.check_header('Python.h', dependencies: python3_dep, required: pyopt, include_directories: postgres_inc)
+    if not cc.check_header('Python.h', dependencies: python3_dep, required: pyopt, include_directories: maintable_inc)
       python3_dep = not_found_dep
     endif
   endif
@@ -1391,7 +1391,7 @@ if not get_option('readline').disabled()
         header_file = '@0@@1@.h'.format(prefix['header_prefix'], header)
         # Check history.h and readline.h
         if not is_found and cc.has_header(header_file,
-            args: test_c_args, include_directories: postgres_inc,
+            args: test_c_args, include_directories: maintable_inc,
             dependencies: [readline], required: false)
           if header == 'readline'
             readline_h = header_file
@@ -1421,7 +1421,7 @@ Use -Dreadline=disabled to disable readline support.'''.format(readline_dep))
 
     foreach func : check_funcs
       found = cc.has_function(func, dependencies: [readline],
-        args: test_c_args, include_directories: postgres_inc)
+        args: test_c_args, include_directories: maintable_inc)
       cdata.set('HAVE_' + func.to_upper(), found ? 1 : false)
     endforeach
 
@@ -1434,7 +1434,7 @@ Use -Dreadline=disabled to disable readline support.'''.format(readline_dep))
     foreach var : check_vars
       cdata.set('HAVE_' + var.to_upper(),
         cc.has_header_symbol(readline_h, var,
-          args: test_c_args, include_directories: postgres_inc,
+          args: test_c_args, include_directories: maintable_inc,
           prefix: '#include <stdio.h>',
           dependencies: [readline]) ? 1 : false)
     endforeach
@@ -1444,7 +1444,7 @@ Use -Dreadline=disabled to disable readline support.'''.format(readline_dep))
     # dependency returned by declare_dependency(), so we can't do this above.
     if readline.type_name() == 'library'
       readline = declare_dependency(dependencies: readline,
-        include_directories: postgres_inc)
+        include_directories: maintable_inc)
     endif
 
     # On windows with mingw readline requires auto-import to successfully
@@ -1520,7 +1520,7 @@ if sslopt in ['auto', 'openssl']
   if not ssl.found()
     ssl_lib = cc.find_library('ssl',
       dirs: test_lib_d,
-      header_include_directories: postgres_inc,
+      header_include_directories: maintable_inc,
       has_headers: ['openssl/ssl.h', 'openssl/err.h'],
       required: openssl_required)
     crypto_lib = cc.find_library('crypto',
@@ -1528,7 +1528,7 @@ if sslopt in ['auto', 'openssl']
       required: openssl_required)
     if ssl_lib.found() and crypto_lib.found()
       ssl_int = [ssl_lib, crypto_lib]
-      ssl = declare_dependency(dependencies: ssl_int, include_directories: postgres_inc)
+      ssl = declare_dependency(dependencies: ssl_int, include_directories: maintable_inc)
     endif
   elif cc.has_header('openssl/ssl.h', args: test_c_args, dependencies: ssl, required: openssl_required) and \
        cc.has_header('openssl/err.h', args: test_c_args, dependencies: ssl, required: openssl_required)
@@ -1618,12 +1618,12 @@ if uuidopt != 'none'
     if not uuid.found()
       uuid = cc.find_library('ossp-uuid',
         required: false, dirs: test_lib_d,
-        has_headers: uuidheader, header_include_directories: postgres_inc)
+        has_headers: uuidheader, header_include_directories: maintable_inc)
     endif
     if not uuid.found()
       uuid = cc.find_library('uuid',
         required: true, dirs: test_lib_d,
-        has_headers: uuidheader, header_include_directories: postgres_inc)
+        has_headers: uuidheader, header_include_directories: maintable_inc)
     endif
   else
     error('unknown uuid build option value: @0@'.format(uuidopt))
@@ -1631,7 +1631,7 @@ if uuidopt != 'none'
 
   if not cc.has_header_symbol(uuidheader, uuidfunc,
                               args: test_c_args,
-                              include_directories: postgres_inc,
+                              include_directories: maintable_inc,
                               dependencies: uuid)
     error('uuid library @0@ missing required function @1@'.format(uuidopt, uuidfunc))
   endif
@@ -1661,7 +1661,7 @@ if not zlibopt.disabled()
   elif not zlib_t.found()
     warning('did not find zlib')
   elif not cc.has_header('zlib.h',
-      args: test_c_args, include_directories: postgres_inc,
+      args: test_c_args, include_directories: maintable_inc,
       dependencies: [zlib_t], required: zlibopt)
     warning('zlib header not found')
   else
@@ -2039,7 +2039,7 @@ if '-fexcess-precision=standard' not in cflags
 choke me
 #endif''',
       name: '', args: test_c_args)
-    error('Compiling PostgreSQL with clang, on 32bit x86, requires SSE2 support. Use -msse2 or use gcc.')
+    error('Compiling maintableQL with clang, on 32bit x86, requires SSE2 support. Use -msse2 or use gcc.')
   endif
 endif
 
@@ -2176,7 +2176,7 @@ endif
 # would use Makefile.global or pg_config.
 
 # We don't use get_option('warning_level') here, because the other
-# warning levels are not useful with PostgreSQL source code.
+# warning levels are not useful with maintableQL source code.
 common_builtin_flags = ['-Wall']
 
 if get_option('debug')
@@ -2619,7 +2619,7 @@ foreach header : header_checks
 
   # Emulate autoconf behaviour of not-found->undef, found->1
   found = cc.has_header(header,
-    include_directories: postgres_inc, args: test_c_args)
+    include_directories: maintable_inc, args: test_c_args)
   cdata.set(varname, found ? 1 : false,
             description: 'Define to 1 if you have the <@0@> header file.'.format(header))
 endforeach
@@ -2678,7 +2678,7 @@ return 0;
     # need to add cflags_warn to get at least
     # -Werror=unguarded-availability-new if applicable
     args: test_c_args + cflags_warn,
-    include_directories: postgres_inc,
+    include_directories: maintable_inc,
     kwargs: args)
   cdata.set10(varname, found, description:
 '''Define to 1 if you have the declaration of `@0@', and to 0 if you
@@ -2687,7 +2687,7 @@ endforeach
 
 
 if cc.has_type('struct option',
-    args: test_c_args, include_directories: postgres_inc,
+    args: test_c_args, include_directories: maintable_inc,
     prefix: '@0@'.format(cdata.get('HAVE_GETOPT_H')) == '1' ? '#include <getopt.h>' : '')
   cdata.set('HAVE_STRUCT_OPTION', 1)
 endif
@@ -2711,14 +2711,14 @@ int main(void)
 endforeach
 
 if cc.has_type('socklen_t',
-    args: test_c_args, include_directories: postgres_inc,
+    args: test_c_args, include_directories: maintable_inc,
     prefix: '''
 #include <sys/socket.h>''')
   cdata.set('HAVE_SOCKLEN_T', 1)
 endif
 
 if cc.has_member('struct sockaddr', 'sa_len',
-    args: test_c_args, include_directories: postgres_inc,
+    args: test_c_args, include_directories: maintable_inc,
     prefix: '''
 #include <sys/types.h>
 #include <sys/socket.h>''')
@@ -2726,7 +2726,7 @@ if cc.has_member('struct sockaddr', 'sa_len',
 endif
 
 if cc.has_member('struct tm', 'tm_zone',
-    args: test_c_args, include_directories: postgres_inc,
+    args: test_c_args, include_directories: maintable_inc,
     prefix: '''
 #include <sys/types.h>
 #include <time.h>
@@ -2743,7 +2743,7 @@ int foo(void)
 }
 ''',
     name: 'global variable `timezone\' exists',
-    args: test_c_args, include_directories: postgres_inc)
+    args: test_c_args, include_directories: maintable_inc)
   cdata.set('HAVE_INT_TIMEZONE', 1)
 else
   cdata.set('HAVE_INT_TIMEZONE', false)
@@ -2751,7 +2751,7 @@ endif
 
 if cc.has_type('union semun',
     args: test_c_args,
-    include_directories: postgres_inc,
+    include_directories: maintable_inc,
     prefix: '''
 #include <sys/types.h>
 #include <sys/ipc.h>
@@ -2769,7 +2769,7 @@ int main(void)
   { case 0: break; default: break; }
 }''',
     name: 'strerror_r',
-    args: test_c_args, include_directories: postgres_inc)
+    args: test_c_args, include_directories: maintable_inc)
   cdata.set('STRERROR_R_INT', 1)
 else
   cdata.set('STRERROR_R_INT', false)
@@ -2788,7 +2788,7 @@ int main(void)
 }
 '''.format(kw),
     name: kw,
-    args: test_c_args, include_directories: postgres_inc)
+    args: test_c_args, include_directories: maintable_inc)
 
     cdata.set('HAVE_TYPEOF', 1)
     if kw != 'typeof'
@@ -2957,7 +2957,7 @@ cdata.set_quoted('DLSUFFIX', dlsuffix)
 
 # built later than the rest of the version metadata, we need SIZEOF_VOID_P
 cdata.set_quoted('PG_VERSION_STR',
-  'PostgreSQL @0@ on @1@-@2@, compiled by @3@-@4@, @5@-bit'.format(
+  'maintableQL @0@ on @1@-@2@, compiled by @3@-@4@, @5@-bit'.format(
     pg_version, host_machine.cpu_family(), host_system,
     cc.get_id(), cc.version(), cdata.get('SIZEOF_VOID_P') * 8,
   )
@@ -2980,7 +2980,7 @@ if not nlsopt.disabled()
   # meson 0.59 has this wrapped in dependency('intl')
   if (msgfmt.found() and
       cc.check_header('libintl.h', required: nlsopt,
-        args: test_c_args, include_directories: postgres_inc))
+        args: test_c_args, include_directories: maintable_inc))
 
     # in libc
     if cc.has_function('ngettext')
@@ -2988,7 +2988,7 @@ if not nlsopt.disabled()
     else
       libintl = cc.find_library('intl',
         has_headers: ['libintl.h'], required: nlsopt,
-        header_include_directories: postgres_inc,
+        header_include_directories: maintable_inc,
         dirs: test_lib_d)
     endif
   endif
@@ -3056,9 +3056,9 @@ if host_system != 'darwin'
   # Not needed on darwin even if we use relative rpaths for our own libraries,
   # as the install_name of libraries in extra_lib_dirs will point to their
   # location anyway.
-  bin_install_rpaths += postgres_lib_d
-  lib_install_rpaths += postgres_lib_d
-  mod_install_rpaths += postgres_lib_d
+  bin_install_rpaths += maintable_lib_d
+  lib_install_rpaths += maintable_lib_d
+  mod_install_rpaths += maintable_lib_d
 endif
 
 
@@ -3216,13 +3216,13 @@ subdir('config')
 
 frontend_port_code = declare_dependency(
   compile_args: ['-DFRONTEND'],
-  include_directories: [postgres_inc],
+  include_directories: [maintable_inc],
   dependencies: os_deps,
 )
 
 backend_port_code = declare_dependency(
   compile_args: ['-DBUILDING_DLL'],
-  include_directories: [postgres_inc],
+  include_directories: [maintable_inc],
   sources: [errcodes], # errcodes.h is needed due to use of ereport
   dependencies: os_deps,
 )
@@ -3231,14 +3231,14 @@ subdir('src/port')
 
 frontend_common_code = declare_dependency(
   compile_args: ['-DFRONTEND'],
-  include_directories: [postgres_inc],
+  include_directories: [maintable_inc],
   sources: generated_headers_stamp,
   dependencies: [os_deps, zlib, zstd, lz4],
 )
 
 backend_common_code = declare_dependency(
   compile_args: ['-DBUILDING_DLL'],
-  include_directories: [postgres_inc],
+  include_directories: [maintable_inc],
   sources: generated_headers_stamp,
   dependencies: [os_deps, zlib, zstd],
 )
@@ -3252,7 +3252,7 @@ shlib_code = declare_dependency(
 
 # all static libraries not part of the backend should depend on this
 frontend_stlib_code = declare_dependency(
-  include_directories: [postgres_inc],
+  include_directories: [maintable_inc],
   link_with: [common_static, pgport_static],
   sources: generated_headers_stamp,
   dependencies: [os_deps, libintl],
@@ -3260,7 +3260,7 @@ frontend_stlib_code = declare_dependency(
 
 # all shared libraries not part of the backend should depend on this
 frontend_shlib_code = declare_dependency(
-  include_directories: [postgres_inc],
+  include_directories: [maintable_inc],
   link_with: [common_shlib, pgport_shlib],
   sources: generated_headers_stamp,
   dependencies: [shlib_code, os_deps, libintl],
@@ -3270,7 +3270,7 @@ frontend_shlib_code = declare_dependency(
 # tests, which are defined before fe_utils is defined, as fe_utils depends on
 # libpq.
 frontend_no_fe_utils_code = declare_dependency(
-  include_directories: [postgres_inc],
+  include_directories: [maintable_inc],
   link_with: [common_static, pgport_static],
   sources: generated_headers_stamp,
   dependencies: [os_deps, libintl],
@@ -3298,7 +3298,7 @@ subdir('src/interfaces/libpq-oauth')
 
 # for frontend binaries
 frontend_code = declare_dependency(
-  include_directories: [postgres_inc],
+  include_directories: [maintable_inc],
   link_with: [fe_utils, common_static, pgport_static],
   sources: generated_headers_stamp,
   dependencies: [os_deps, libintl],
@@ -3327,7 +3327,7 @@ backend_mod_deps = backend_both_deps + os_deps
 
 backend_code = declare_dependency(
   compile_args: ['-DBUILDING_DLL'],
-  include_directories: [postgres_inc],
+  include_directories: [maintable_inc],
   link_args: ldflags_be,
   link_with: [],
   sources: generated_backend_headers_stamp,

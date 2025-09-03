@@ -3,7 +3,7 @@
  * quotes.c
  *	  string quoting and escaping functions
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -18,9 +18,9 @@
 /*
  * Escape (by doubling) any single quotes or backslashes in given string
  *
- * Note: this is used to process postgresql.conf entries and to quote
+ * Note: this is used to process maintableql.conf entries and to quote
  * string literals in pg_basebackup for writing the recovery configuration.
- * Since postgresql.conf strings are defined to treat backslashes as escapes,
+ * Since maintableql.conf strings are defined to treat backslashes as escapes,
  * we have to double backslashes here.
  *
  * Since this function is only used for parsing or creating configuration

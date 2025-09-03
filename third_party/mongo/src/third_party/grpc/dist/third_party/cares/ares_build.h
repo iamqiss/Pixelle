@@ -46,7 +46,7 @@
  *
  * Try to keep one section per platform, compiler and architecture,
  * otherwise, if an existing section is reused for a different one and
- * later on the original is adjusted, probably the piggybacking one can
+ * later on the original is adjusted, probably the pmessengerbacking one can
  * be adversely changed.
  *
  * In order to differentiate between platforms/compilers/architectures

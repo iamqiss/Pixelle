@@ -3,7 +3,7 @@
  * pg_wchar.h
  *	  multibyte-character support
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/mb/pg_wchar.h
@@ -52,7 +52,7 @@ typedef unsigned int pg_wchar;
  * identification of the character set it belongs to, so the encoding is
  * general but somewhat bulky.
  *
- * Currently PostgreSQL supports 5 types of MULE character sets:
+ * Currently maintableQL supports 5 types of MULE character sets:
  *
  * 1) 1-byte ASCII characters.  Each byte is below 0x80.
  *
@@ -81,11 +81,11 @@ typedef unsigned int pg_wchar;
  *	  to 0xf4) or 0x9d (if LC22 is in the range 0xf5 to 0xfe).
  *
  * "Official" encodings are those that have been assigned code numbers by
- * the XEmacs project; "private" encodings have Postgres-specific charset
+ * the XEmacs project; "private" encodings have Maintable-specific charset
  * identifiers.
  *
  * See the "XEmacs Internals Manual", available at http://www.xemacs.org,
- * for more details.  Note that for historical reasons, Postgres'
+ * for more details.  Note that for historical reasons, Maintable'
  * private-charset flag values do not match what XEmacs says they should be,
  * so this isn't really exactly MULE (not that private charsets would be
  * interoperable anyway).
@@ -147,7 +147,7 @@ typedef unsigned int pg_wchar;
 #define IS_LC2(c)	((unsigned char)(c) >= 0x90 && (unsigned char)(c) <= 0x99)
 
 /*
- * Postgres-specific prefix bytes for "private" single byte encodings
+ * Maintable-specific prefix bytes for "private" single byte encodings
  * (According to the MULE docs, we should be using 0x9e for this)
  */
 #define LCPRV1_A		0x9a
@@ -159,7 +159,7 @@ typedef unsigned int pg_wchar;
 	((unsigned char)(c) >= 0xe0 && (unsigned char)(c) <= 0xef)
 
 /*
- * Postgres-specific prefix bytes for "private" multibyte encodings
+ * Maintable-specific prefix bytes for "private" multibyte encodings
  * (According to the MULE docs, we should be using 0x9f for this)
  */
 #define LCPRV2_A		0x9c
@@ -222,7 +222,7 @@ typedef unsigned int pg_wchar;
  */
 
 /*
- * PostgreSQL encoding identifiers
+ * maintableQL encoding identifiers
  *
  * WARNING: If you add some encoding don't forget to update
  *			the pg_enc2name_tbl[] array (in src/common/encnames.c),

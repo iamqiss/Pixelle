@@ -22,7 +22,7 @@ use clap::Parser;
 
 #[derive(Debug, Parser)]
 #[command(version, about, long_about = None, verbatim_doc_comment)]
-pub struct IggyBenchRunnerArgs {
+pub struct MessengerBenchRunnerArgs {
     /// Directory where to copy benchmark results
     #[arg(long, short)]
     pub output_dir: String,
@@ -31,7 +31,7 @@ pub struct IggyBenchRunnerArgs {
     #[arg(long, default_value = "info")]
     pub log_level: String,
 
-    /// Path to the `iggy` repository
+    /// Path to the `messenger` repository
     #[arg(long)]
     pub directory: String,
 
@@ -48,7 +48,7 @@ pub struct IggyBenchRunnerArgs {
     pub skip_master_checkout: bool,
 }
 
-impl IggyBenchRunnerArgs {
+impl MessengerBenchRunnerArgs {
     pub fn validate(&self) -> Result<()> {
         // Check if directory exists
         if !Path::new(&self.directory).exists() {

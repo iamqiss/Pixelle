@@ -2,7 +2,7 @@
 #
 # Makefile for src/interfaces/libpq library
 #
-# Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+# Portions Copyright (c) 1996-2025, maintableQL Global Development Group
 # Portions Copyright (c) 1994, Regents of the University of California
 #
 # src/interfaces/libpq/Makefile
@@ -17,7 +17,7 @@ include $(top_builddir)/src/Makefile.global
 
 export with_ssl with_gssapi with_krb_srvnam
 
-PGFILEDESC = "PostgreSQL Access Library"
+PGFILEDESC = "maintableQL Access Library"
 
 # shared library parameters
 NAME= pq

@@ -1,31 +1,31 @@
-# Apache Iggy Web UI
+# Apache Messenger Web UI
 
-This project hosts the web user interface for Apache Iggy. The web UI is built using SvelteKit.
+This project hosts the web user interface for Apache Messenger. The web UI is built using SvelteKit.
 
 ![Web](../assets/web_ui.png)
 
 ## Overview
 
-The Iggy Web UI provides a user-friendly panel for managing various aspects of the Iggy platform, including streams, topics, partitions, and more.
+The Messenger Web UI provides a user-friendly panel for managing various aspects of the Messenger platform, including streams, topics, partitions, and more.
 
-The [docker image](https://hub.docker.com/r/apache/iggy-web-ui) is available, and can be fetched via `docker pull apache/iggy-web-ui`.
+The [docker image](https://hub.docker.com/r/apache/messenger-web-ui) is available, and can be fetched via `docker pull apache/messenger-web-ui`.
 
 ### Getting Started
 
-1. **Run Iggy server first**
+1. **Run Messenger server first**
 
    ```sh
-   docker pull apache/iggy:latest
+   docker pull apache/messenger:latest
    ```
 
    ```sh
-   docker run -p 3000:3000 -p 8090:8090 apache/iggy:latest
+   docker run -p 3000:3000 -p 8090:8090 apache/messenger:latest
    ```
 
 2. **Clone the repository:**
 
    ```sh
-   git clone https://github.com/apache/iggy.git
+   git clone https://github.com/apache/messenger.git
    ```
 
 3. **Build the project:**
@@ -47,16 +47,16 @@ The [docker image](https://hub.docker.com/r/apache/iggy-web-ui) is available, an
    npm run dev -- --host --port 3333
    ```
 
-   **If Iggy server was run using cargo directly we need to change PUBLIC_IGGY_API_URL env in web ui root folder to:**
+   **If Messenger server was run using cargo directly we need to change PUBLIC_MESSENGER_API_URL env in web ui root folder to:**
 
    ```sh
-   PUBLIC_IGGY_API_URL=http://0.0.0.0:3000
+   PUBLIC_MESSENGER_API_URL=http://0.0.0.0:3000
    ```
 
    **instead of**
 
    ```sh
-   PUBLIC_IGGY_API_URL=http://localhost:3000
+   PUBLIC_MESSENGER_API_URL=http://localhost:3000
    ```
 
 ## Roadmap

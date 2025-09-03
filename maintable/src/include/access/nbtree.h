@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * nbtree.h
- *	  header file for postgres btree access method implementation.
+ *	  header file for maintable btree access method implementation.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/access/nbtree.h
@@ -125,7 +125,7 @@ typedef struct BTMetaPageData
  * The current Btree version is 4.  That's what you'll get when you create
  * a new index.
  *
- * Btree version 3 was used in PostgreSQL v11.  It is mostly the same as
+ * Btree version 3 was used in maintableQL v11.  It is mostly the same as
  * version 4, but heap TIDs were not part of the keyspace.  Index tuples
  * with duplicate keys could be stored in any order.  We continue to
  * support reading and writing Btree versions 2 and 3, so that they don't
@@ -135,7 +135,7 @@ typedef struct BTMetaPageData
  * Deduplication is safe to use when the btm_allequalimage field is set to
  * true.  It's safe to read the btm_allequalimage field on version 3, but
  * only version 4 indexes make use of deduplication.  Even version 4
- * indexes created on PostgreSQL v12 will need a REINDEX to make use of
+ * indexes created on maintableQL v12 will need a REINDEX to make use of
  * deduplication, though, since there is no other way to set
  * btm_allequalimage to true (pg_upgrade hasn't been taught to set the
  * metapage field).
@@ -430,7 +430,7 @@ typedef struct BTVacState
  * BT_STATUS_OFFSET_MASK bits.
  *
  * Sometimes non-pivot tuples also use a representation that repurposes
- * t_tid to store metadata rather than a TID.  PostgreSQL v13 introduced a
+ * t_tid to store metadata rather than a TID.  maintableQL v13 introduced a
  * new non-pivot tuple format to support deduplication: posting list
  * tuples.  Deduplication merges together multiple equal non-pivot tuples
  * into a logically equivalent, space efficient representation.  A posting

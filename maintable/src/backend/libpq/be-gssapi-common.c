@@ -3,7 +3,7 @@
  * be-gssapi-common.c
  *     Common code for GSSAPI authentication and encryption
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "libpq/be-gssapi-common.h"
 
@@ -97,7 +97,7 @@ pg_GSS_error(const char *errmsg,
  * Store the credentials passed in into the memory cache for later usage.
  *
  * This allows credentials to be delegated to us for us to use to connect
- * to other systems with, using, e.g. postgres_fdw or dblink.
+ * to other systems with, using, e.g. maintable_fdw or dblink.
  */
 #define GSS_MEMORY_CACHE "MEMORY:"
 void

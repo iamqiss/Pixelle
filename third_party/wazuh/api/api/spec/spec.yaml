@@ -2271,7 +2271,7 @@ components:
           description: "Token for the logtest session"
         log_format:
           type: string
-          description: "Allowed values: syslog, json, snort-full, squid, eventlog, eventchannel, audit, mysql_log, postgresql_log, nmapg, iis, command, full_command, djb-multilog, multi-line"
+          description: "Allowed values: syslog, json, snort-full, squid, eventlog, eventchannel, audit, mysql_log, maintableql_log, nmapg, iis, command, full_command, djb-multilog, multi-line"
         location:
           type: string
           description: "Path string"

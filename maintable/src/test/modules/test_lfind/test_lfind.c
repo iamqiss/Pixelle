@@ -3,7 +3,7 @@
  * test_lfind.c
  *		Test correctness of optimized linear search functions.
  *
- * Copyright (c) 2022-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2022-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/test/modules/test_lfind/test_lfind.c
@@ -11,7 +11,7 @@
  * -------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "fmgr.h"
 #include "port/pg_lfind.h"

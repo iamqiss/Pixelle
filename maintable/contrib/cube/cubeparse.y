@@ -4,7 +4,7 @@
 /* NdBox = [(lowerleft),(upperright)] */
 /* [(xLL(1)...xLL(N)),(xUR(1)...xUR(n))] */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "cubedata.h"
 #include "cubeparse.h"	/* must be after cubedata.h for YYSTYPE and NDBOX */

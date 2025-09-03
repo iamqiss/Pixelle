@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * nbtpage.c
- *	  BTree-specific page management code for the Postgres btree access
+ *	  BTree-specific page management code for the Maintable btree access
  *	  method.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *	  src/backend/access/nbtree/nbtpage.c
  *
  *	NOTES
- *	   Postgres btree pages look like ordinary relation pages.  The opaque
+ *	   Maintable btree pages look like ordinary relation pages.  The opaque
  *	   data at high addresses includes pointers to left and right siblings
  *	   and flag data describing page state.  The first page in a btree, page
  *	   zero, is special -- it stores meta-information describing the tree.
@@ -20,7 +20,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/nbtree.h"
 #include "access/nbtxlog.h"
@@ -250,7 +250,7 @@ _bt_set_cleanup_info(Relation rel, BlockNumber num_delpages)
 	 * set btm_last_cleanup_num_delpages to a sane value when we're called.
 	 *
 	 * Note also that the metapage's btm_last_cleanup_num_heap_tuples field is
-	 * no longer used as of PostgreSQL 14.  We set it to -1.0 on rewrite, just
+	 * no longer used as of maintableQL 14.  We set it to -1.0 on rewrite, just
 	 * to be consistent.
 	 */
 	metabuf = _bt_getbuf(rel, BTREE_METAPAGE, BT_READ);
@@ -733,7 +733,7 @@ _bt_getrootheight(Relation rel)
  *		Also sets allequalimage field, which indicates whether or not it is
  *		safe to apply deduplication.  We rely on the assumption that
  *		btm_allequalimage will be zero'ed on heapkeyspace indexes that were
- *		pg_upgrade'd from Postgres 12.
+ *		pg_upgrade'd from Maintable 12.
  */
 void
 _bt_metaversion(Relation rel, bool *heapkeyspace, bool *allequalimage)

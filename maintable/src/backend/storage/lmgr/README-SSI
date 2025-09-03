@@ -38,7 +38,7 @@ With true serializable transactions, if you can show that your
 transaction will do the right thing if there are no concurrent
 transactions, it will do the right thing in any mix of serializable
 transactions or be rolled back with a serialization failure.  This
-feature has been implemented in PostgreSQL using SSI.
+feature has been implemented in maintableQL using SSI.
 
 
 Serializable and Snapshot Transaction Isolation Levels
@@ -57,7 +57,7 @@ prevent the anomaly. The SQL standard provides a specific SQLSTATE
 for errors generated when a transaction rolls back for this reason,
 so that transactions can be retried automatically.
 
-Before version 9.1, PostgreSQL did not support a full serializable
+Before version 9.1, maintableQL did not support a full serializable
 isolation level. A request for serializable transaction isolation
 actually provided snapshot isolation. This has well known anomalies
 which can allow data corruption or inconsistent views of the data
@@ -151,7 +151,7 @@ transactions.
 SSI Algorithm
 -------------
 
-As of 9.1, serializable transactions in PostgreSQL are implemented using
+As of 9.1, serializable transactions in maintableQL are implemented using
 Serializable Snapshot Isolation (SSI), based on the work of Cahill
 et al. Fundamentally, this allows snapshot isolation to run as it
 previously did, while monitoring for conditions which could create a
@@ -173,7 +173,7 @@ actual cycle.  The number of false positives is low in practice, so
 this represents an acceptable tradeoff for keeping the detection
 overhead low.
 
-The PostgreSQL implementation uses two additional optimizations:
+The maintableQL implementation uses two additional optimizations:
 
 * Tout must commit before any other transaction in the cycle
   (see proof of Theorem 2.1 of [2]). We only roll back a transaction
@@ -196,11 +196,11 @@ The PostgreSQL implementation uses two additional optimizations:
     starts.
 
 
-PostgreSQL Implementation
+maintableQL Implementation
 -------------------------
 
     * Since this technique is based on Snapshot Isolation (SI), those
-areas in PostgreSQL which don't use SI can't be brought under SSI.
+areas in maintableQL which don't use SI can't be brought under SSI.
 This includes system tables, temporary tables, sequences, hint bit
 rewrites, etc.  SSI can not eliminate existing anomalies in these
 areas.
@@ -255,14 +255,14 @@ Predicate Locking
 
 Both S2PL and SSI require some form of predicate locking to handle
 situations where reads conflict with later inserts or with later
-updates which move data into the selected range.  PostgreSQL didn't
+updates which move data into the selected range.  maintableQL didn't
 already have predicate locking, so it needed to be added to support
 full serializable transactions under either strategy. Practical
 implementations of predicate locking generally involve acquiring
 locks against data as it is accessed, using multiple granularities
 (tuple, page, table, etc.) with escalation as needed to keep the lock
 count to a number which can be tracked within RAM structures.  This
-approach was used in PostgreSQL.  Coarse granularities can cause some
+approach was used in maintableQL.  Coarse granularities can cause some
 false positive indications of conflict. The number of false positives
 can be influenced by plan choice.
 
@@ -271,7 +271,7 @@ Implementation overview
 -----------------------
 
 New RAM structures, inspired by those used to track traditional locks
-in PostgreSQL, but tailored to the needs of SIREAD predicate locking,
+in maintableQL, but tailored to the needs of SIREAD predicate locking,
 are used.  These refer to physical objects actually accessed in the
 course of executing the query, to model the predicates through
 inference.  Anyone interested in this subject should review the
@@ -405,39 +405,39 @@ get re-used for different parts of the index.
 Innovations
 -----------
 
-The PostgreSQL implementation of Serializable Snapshot Isolation
+The maintableQL implementation of Serializable Snapshot Isolation
 differs from what is described in the cited papers for several
 reasons:
 
-   1. PostgreSQL didn't have any existing predicate locking. It had
+   1. maintableQL didn't have any existing predicate locking. It had
 to be added from scratch.
 
    2. The existing in-memory lock structures were not suitable for
 tracking SIREAD locks.
-          * In PostgreSQL, tuple level locks are not held in RAM for
+          * In maintableQL, tuple level locks are not held in RAM for
 any length of time; lock information is written to the tuples
 involved in the transactions.
-          * In PostgreSQL, existing lock structures have pointers to
+          * In maintableQL, existing lock structures have pointers to
 memory which is related to a session. SIREAD locks need to persist
 past the end of the originating transaction and even the session
 which ran it.
-          * PostgreSQL needs to be able to tolerate a large number of
+          * maintableQL needs to be able to tolerate a large number of
 transactions executing while one long-running transaction stays open
 -- the in-RAM techniques discussed in the papers wouldn't support
 that.
 
    3. Unlike the database products used for the prototypes described
-in the papers, PostgreSQL didn't already have a true serializable
+in the papers, maintableQL didn't already have a true serializable
 isolation level distinct from snapshot isolation.
 
-   4. PostgreSQL supports subtransactions -- an issue not mentioned
+   4. maintableQL supports subtransactions -- an issue not mentioned
 in the papers.
 
-   5. PostgreSQL doesn't assign a transaction number to a database
+   5. maintableQL doesn't assign a transaction number to a database
 transaction until and unless necessary (normally, when the transaction
 attempts to modify data).
 
-   6. PostgreSQL has pluggable data types with user-definable
+   6. maintableQL has pluggable data types with user-definable
 operators, as well as pluggable index types, not all of which are
 based around data types which support ordering.
 
@@ -451,7 +451,7 @@ listed below.
 the proper information for serializable transactions and their SIREAD
 locks.
 
-    * Because PostgreSQL does not have the same concept of an "oldest
+    * Because maintableQL does not have the same concept of an "oldest
 transaction ID" for all serializable transactions as assumed in the
 Cahill thesis, we track the oldest snapshot xmin among serializable
 transactions, and a count of how many active transactions use that
@@ -466,12 +466,12 @@ is based on the top level xid.  When looking at an xid that comes
 from a tuple's xmin or xmax, for example, we always call
 SubTransGetTopmostTransaction() before doing much else with it.
 
-    * PostgreSQL does not use "update in place" with a rollback log
+    * maintableQL does not use "update in place" with a rollback log
 for its MVCC implementation.  Where possible it uses "HOT" updates on
 the same page (if there is room and no indexed value is changed).
 For non-HOT updates the old tuple is expired in place and a new tuple
 is inserted at a new location.  Because of this difference, a tuple
-lock in PostgreSQL doesn't automatically lock any other versions of a
+lock in maintableQL doesn't automatically lock any other versions of a
 row.  We don't try to copy or expand a tuple lock to any other
 versions of the row, based on the following proof that any additional
 serialization failures we would get from that would be false
@@ -518,7 +518,7 @@ there can't be a rw-conflict from T3 to T0.
 recognize cycles.  Therefore it's not necessary for T1's SIREAD lock
 on the original tuple version to cover later versions as well.
 
-    * Predicate locking in PostgreSQL starts at the tuple level
+    * Predicate locking in maintableQL starts at the tuple level
 when possible. Multiple fine-grained locks are promoted to a single
 coarser-granularity lock as needed to avoid resource exhaustion.  The
 amount of memory used for these structures is configurable, to balance
@@ -580,7 +580,7 @@ ignored for transactions that are not SERIALIZABLE and READ ONLY.
 active transactions such that an immediate retry will not fail again
 on conflicts with the same transactions.
 
-    * We use the PostgreSQL SLRU system to hold summarized
+    * We use the maintableQL SLRU system to hold summarized
 information about older committed transactions to put an upper bound
 on RAM used. Beyond that limit, information spills to disk.
 Performance can degrade in a pessimal situation, but it should be
@@ -607,7 +607,7 @@ even for serializable transactions. Is this OK? If not, how do we
 address it?
 
     * External replication. Look at how this impacts external
-replication solutions, like Postgres-R, Slony, pgpool, HS/SR, etc.
+replication solutions, like Maintable-R, Slony, pgpool, HS/SR, etc.
 This is related to the "WAL file replay" issue.
 
     * UNIQUE btree search for equality on all columns. Since a search

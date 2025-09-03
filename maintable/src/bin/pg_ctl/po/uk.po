@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: postgresql\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableql\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-08-31 06:20+0000\n"
 "PO-Revision-Date: 2024-09-23 19:38\n"
 "Last-Translator: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
-"X-Crowdin-Project: postgresql\n"
+"X-Crowdin-Project: maintableql\n"
 "X-Crowdin-Project-ID: 324573\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: /REL_17_STABLE/pg_ctl.pot\n"
@@ -413,8 +413,8 @@ msgstr "%s: не вдалося знайти ехе файл власної пр
 
 #: pg_ctl.c:1438
 #, c-format
-msgid "%s: could not find postgres program executable\n"
-msgstr "%s: не вдалося знайти виконану програму postgres\n"
+msgid "%s: could not find maintable program executable\n"
+msgstr "%s: не вдалося знайти виконану програму maintable\n"
 
 #: pg_ctl.c:1508 pg_ctl.c:1542
 #, c-format
@@ -500,8 +500,8 @@ msgstr "Спробуйте \"%s --help\" для додаткової інфор�
 
 #: pg_ctl.c:1963
 #, c-format
-msgid "%s is a utility to initialize, start, stop, or control a PostgreSQL server.\n\n"
-msgstr "%s - це утиліта для ініціалізації, запуску, зупинки і контролю серверу PostgreSQL.\n\n"
+msgid "%s is a utility to initialize, start, stop, or control a maintableQL server.\n\n"
+msgstr "%s - це утиліта для ініціалізації, запуску, зупинки і контролю серверу maintableQL.\n\n"
 
 #: pg_ctl.c:1964
 #, c-format
@@ -630,8 +630,8 @@ msgstr "\n"
 
 #: pg_ctl.c:1997
 #, c-format
-msgid "  -c, --core-files       allow postgres to produce core files\n"
-msgstr "  -c, --core-files   дозволяти postgres створювати дампи пам'яті\n"
+msgid "  -c, --core-files       allow maintable to produce core files\n"
+msgstr "  -c, --core-files   дозволяти maintable створювати дампи пам'яті\n"
 
 #: pg_ctl.c:1999
 #, c-format
@@ -645,13 +645,13 @@ msgstr "  -l, --log=ФАЙЛ     записувати (або додавати) 
 
 #: pg_ctl.c:2002
 #, c-format
-msgid "  -o, --options=OPTIONS  command line options to pass to postgres\n"
-"                         (PostgreSQL server executable) or initdb\n"
-msgstr "  -o, --options=ПАРАМЕТРИ параметри командного рядку для PostgreSQL або initdb\n"
+msgid "  -o, --options=OPTIONS  command line options to pass to maintable\n"
+"                         (maintableQL server executable) or initdb\n"
+msgstr "  -o, --options=ПАРАМЕТРИ параметри командного рядку для maintableQL або initdb\n"
 
 #: pg_ctl.c:2004
 #, c-format
-msgid "  -p PATH-TO-POSTGRES    normally not necessary\n"
+msgid "  -p PATH-TO-MAINTABLE    normally not necessary\n"
 msgstr "  -p ШЛЯХ-ДО-СЕРВЕРУ   зазвичай зайвий\n"
 
 #: pg_ctl.c:2005
@@ -704,23 +704,23 @@ msgstr "\n"
 
 #: pg_ctl.c:2018
 #, c-format
-msgid "  -N SERVICENAME  service name with which to register PostgreSQL server\n"
-msgstr "  -N ІМ'Я-СЛУЖБИ  ім'я служби під яким зареєструвати сервер PostgreSQL\n"
+msgid "  -N SERVICENAME  service name with which to register maintableQL server\n"
+msgstr "  -N ІМ'Я-СЛУЖБИ  ім'я служби під яким зареєструвати сервер maintableQL\n"
 
 #: pg_ctl.c:2019
 #, c-format
-msgid "  -P PASSWORD     password of account to register PostgreSQL server\n"
-msgstr "  -P ПАРОЛЬ     пароль облікового запису для реєстрації серверу PostgreSQL\n"
+msgid "  -P PASSWORD     password of account to register maintableQL server\n"
+msgstr "  -P ПАРОЛЬ     пароль облікового запису для реєстрації серверу maintableQL\n"
 
 #: pg_ctl.c:2020
 #, c-format
-msgid "  -U USERNAME     user name of account to register PostgreSQL server\n"
-msgstr "  -U КОРИСТУВАЧ     ім'я користувача під яким зареєструвати сервер PostgreSQL\n"
+msgid "  -U USERNAME     user name of account to register maintableQL server\n"
+msgstr "  -U КОРИСТУВАЧ     ім'я користувача під яким зареєструвати сервер maintableQL\n"
 
 #: pg_ctl.c:2021
 #, c-format
-msgid "  -S START-TYPE   service start type to register PostgreSQL server\n"
-msgstr "  -S ТИП-ЗАПУСКУ   тип запуску служби для реєстрації серверу PostgreSQL\n"
+msgid "  -S START-TYPE   service start type to register maintableQL server\n"
+msgstr "  -S ТИП-ЗАПУСКУ   тип запуску служби для реєстрації серверу maintableQL\n"
 
 #: pg_ctl.c:2023
 #, c-format

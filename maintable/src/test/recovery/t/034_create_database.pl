@@ -1,15 +1,15 @@
 
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 
 # Test WAL replay for CREATE DATABASE .. STRATEGY WAL_LOG.
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $node = PostgreSQL::Test::Cluster->new('node');
+my $node = maintableQL::Test::Cluster->new('node');
 $node->init;
 $node->start;
 
@@ -20,13 +20,13 @@ my $db_template = "template1";
 my $db_new = "test_db_1";
 
 # Create table.  It should persist on the template database.
-$node->safe_psql("postgres",
+$node->safe_psql("maintable",
 	"CREATE DATABASE $db_new STRATEGY WAL_LOG TEMPLATE $db_template;");
 
 $node->safe_psql($db_template, "CREATE TABLE tab_db_after_create_1 (a INT);");
 
 # Flush the changes affecting the template database, then replay them.
-$node->safe_psql("postgres", "CHECKPOINT;");
+$node->safe_psql("maintable", "CHECKPOINT;");
 
 $node->stop('immediate');
 $node->start;

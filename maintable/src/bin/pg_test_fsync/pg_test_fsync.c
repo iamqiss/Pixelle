@@ -2,14 +2,14 @@
  *
  * pg_test_fsync --- tests all supported fsync() methods
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * src/bin/pg_test_fsync/pg_test_fsync.c
  *
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <limits.h>
 #include <sys/stat.h>
@@ -165,7 +165,7 @@ handle_args(int argc, char *argv[])
 		}
 		if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			puts("pg_test_fsync (PostgreSQL) " PG_VERSION);
+			puts("pg_test_fsync (maintableQL) " PG_VERSION);
 			exit(0);
 		}
 	}

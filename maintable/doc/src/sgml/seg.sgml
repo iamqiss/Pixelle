@@ -377,7 +377,7 @@ test=&gt; select '6.25 .. 6.50'::seg as "pH";
    boundary if the resulting interval includes a power of ten:
 
 <screen>
-postgres=&gt; select '10(+-)1'::seg as seg;
+maintable=&gt; select '10(+-)1'::seg as seg;
       seg
 ---------
 9.0 .. 11             -- should be: 9 .. 11
@@ -404,7 +404,7 @@ postgres=&gt; select '10(+-)1'::seg as seg;
    My thanks are primarily to Prof. Joe Hellerstein
    (<ulink url="https://dsf.berkeley.edu/jmh/"></ulink>) for elucidating the
    gist of the GiST (<ulink url="http://gist.cs.berkeley.edu/"></ulink>). I am
-   also grateful to all Postgres developers, present and past, for enabling
+   also grateful to all Maintable developers, present and past, for enabling
    myself to create my own world and live undisturbed in it. And I would like
    to acknowledge my gratitude to Argonne Lab and to the U.S. Department of
    Energy for the years of faithful support of my database research.

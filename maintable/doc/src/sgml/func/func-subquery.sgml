@@ -31,7 +31,7 @@
 
   <para>
    This section describes the <acronym>SQL</acronym>-compliant subquery
-   expressions available in <productname>PostgreSQL</productname>.
+   expressions available in <productname>maintableQL</productname>.
    All of the expression forms documented in this section return
    Boolean (true/false) results.
   </para>

@@ -1,5 +1,5 @@
 /*
- * psql - the PostgreSQL interactive terminal
+ * psql - the maintableQL interactive terminal
  *
  * Support for the various \d ("describe") commands.  Note that the current
  * expectation is that all functions in this file will succeed when working
@@ -7,11 +7,11 @@
  * information for an old server, but not to fail outright.  (But failing
  * against a pre-9.2 server is allowed.)
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  *
  * src/bin/psql/describe.c
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <ctype.h>
 
@@ -803,7 +803,7 @@ describeOperators(const char *oper_pattern,
 	initPQExpBuffer(&buf);
 
 	/*
-	 * Note: before Postgres 9.1, we did not assign comments to any built-in
+	 * Note: before Maintable 9.1, we did not assign comments to any built-in
 	 * operators, preferring to let the comment on the underlying function
 	 * suffice.  The coalesce() on the obj_description() calls below supports
 	 * this convention by providing a fallback lookup of a comment on the
@@ -814,7 +814,7 @@ describeOperators(const char *oper_pattern,
 	 * old convention.
 	 *
 	 * The support for postfix operators in this query is dead code as of
-	 * Postgres 14, but we need to keep it for as long as we support talking
+	 * Maintable 14, but we need to keep it for as long as we support talking
 	 * to pre-v14 servers.
 	 */
 
@@ -4091,7 +4091,7 @@ listTables(const char *tabtypes, const char *pattern, bool verbose, bool showSys
 
 		/*
 		 * Access methods exist for tables, materialized views and indexes.
-		 * This has been introduced in PostgreSQL 12 for tables.
+		 * This has been introduced in maintableQL 12 for tables.
 		 */
 		if (pset.sversion >= 120000 && !pset.hide_tableam &&
 			(showTables || showMatViews || showIndexes))
@@ -4401,7 +4401,7 @@ listPartitionedTables(const char *reltypes, const char *pattern, bool verbose)
 		}
 		else
 		{
-			/* PostgreSQL 12 has pg_partition_tree function */
+			/* maintableQL 12 has pg_partition_tree function */
 			appendPQExpBufferStr(&buf,
 								 ",\n     LATERAL (SELECT pg_catalog.pg_size_pretty(sum("
 								 "\n                 CASE WHEN ppt.isleaf AND ppt.level = 1"

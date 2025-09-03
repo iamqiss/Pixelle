@@ -1,6 +1,6 @@
 # LANGUAGE message translation file for pg_controldata
-# Copyright (C) 2002-2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_controldata (PostgreSQL) package.
+# Copyright (C) 2002-2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_controldata (maintableQL) package.
 #
 # Use these quotes: « %s »
 #
@@ -11,8 +11,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-07-20 21:24+0000\n"
 "PO-Revision-Date: 2024-09-16 16:28+0200\n"
 "Last-Translator: Guillaume Lelarge <guillaume@lelarge.info>\n"
@@ -54,12 +54,12 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "possible incohérence dans l'ordre des octets\n"
 "L'ordre des octets utilisé pour enregistrer le fichier pg_control peut ne\n"
 "pas correspondre à celui utilisé par ce programme. Dans ce cas, les\n"
-"résultats ci-dessous sont incorrects, et l'installation de PostgreSQL\n"
+"résultats ci-dessous sont incorrects, et l'installation de maintableQL\n"
 "est incompatible avec ce répertoire des données."
 
 #: ../../common/controldata_utils.c:230
@@ -91,10 +91,10 @@ msgstr "ne peut pas dupliquer un pointeur nul (erreur interne)\n"
 #: pg_controldata.c:35
 #, c-format
 msgid ""
-"%s displays control information of a PostgreSQL database cluster.\n"
+"%s displays control information of a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s affiche les informations de contrôle de l'instance PostgreSQL.\n"
+"%s affiche les informations de contrôle de l'instance maintableQL.\n"
 "\n"
 
 #: pg_controldata.c:36

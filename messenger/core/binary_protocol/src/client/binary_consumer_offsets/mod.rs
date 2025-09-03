@@ -19,10 +19,10 @@ use crate::ConsumerOffsetClient;
 use crate::client::binary_clients::BinaryClient;
 use crate::utils::auth::fail_if_not_authenticated;
 use crate::utils::mapper;
-use iggy_common::delete_consumer_offset::DeleteConsumerOffset;
-use iggy_common::get_consumer_offset::GetConsumerOffset;
-use iggy_common::store_consumer_offset::StoreConsumerOffset;
-use iggy_common::{Consumer, ConsumerOffsetInfo, Identifier, IggyError};
+use messenger_common::delete_consumer_offset::DeleteConsumerOffset;
+use messenger_common::get_consumer_offset::GetConsumerOffset;
+use messenger_common::store_consumer_offset::StoreConsumerOffset;
+use messenger_common::{Consumer, ConsumerOffsetInfo, Identifier, MessengerError};
 
 #[async_trait::async_trait]
 impl<B: BinaryClient> ConsumerOffsetClient for B {
@@ -33,7 +33,7 @@ impl<B: BinaryClient> ConsumerOffsetClient for B {
         topic_id: &Identifier,
         partition_id: Option<u32>,
         offset: u64,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&StoreConsumerOffset {
             consumer: consumer.clone(),
@@ -52,7 +52,7 @@ impl<B: BinaryClient> ConsumerOffsetClient for B {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partition_id: Option<u32>,
-    ) -> Result<Option<ConsumerOffsetInfo>, IggyError> {
+    ) -> Result<Option<ConsumerOffsetInfo>, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self
             .send_with_response(&GetConsumerOffset {
@@ -75,7 +75,7 @@ impl<B: BinaryClient> ConsumerOffsetClient for B {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partition_id: Option<u32>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&DeleteConsumerOffset {
             consumer: consumer.clone(),

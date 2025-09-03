@@ -1,9 +1,9 @@
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 use strict;
 use warnings FATAL => 'all';
 use Config;
-use PostgreSQL::Test::Utils;
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Utils;
+use maintableQL::Test::Cluster;
 use Test::More;
 
 if (!$ENV{PG_TEST_EXTRA} || $ENV{PG_TEST_EXTRA} !~ /\bload_balance\b/)
@@ -35,7 +35,7 @@ if (!$ENV{PG_TEST_EXTRA} || $ENV{PG_TEST_EXTRA} !~ /\bload_balance\b/)
 
 # Cluster setup which is shared for testing both load balancing methods
 my $can_bind_to_127_0_0_2 =
-  $Config{osname} eq 'linux' || $PostgreSQL::Test::Utils::windows_os;
+  $Config{osname} eq 'linux' || $maintableQL::Test::Utils::windows_os;
 
 # Checks for the requirements for testing load balancing method 2
 if (!$can_bind_to_127_0_0_2)
@@ -53,7 +53,7 @@ else
 	$hosts_path = '/etc/hosts';
 }
 
-my $hosts_content = PostgreSQL::Test::Utils::slurp_file($hosts_path);
+my $hosts_content = maintableQL::Test::Utils::slurp_file($hosts_path);
 
 my $hosts_count = () =
   $hosts_content =~ /127\.0\.0\.[1-3] pg-loadbalancetest/g;
@@ -63,21 +63,21 @@ if ($hosts_count != 3)
 	plan skip_all => "hosts file was not prepared for DNS load balance test";
 }
 
-$PostgreSQL::Test::Cluster::use_tcp = 1;
-$PostgreSQL::Test::Cluster::test_pghost = '127.0.0.1';
-my $port = PostgreSQL::Test::Cluster::get_free_port();
-my $node1 = PostgreSQL::Test::Cluster->new('node1', port => $port);
+$maintableQL::Test::Cluster::use_tcp = 1;
+$maintableQL::Test::Cluster::test_pghost = '127.0.0.1';
+my $port = maintableQL::Test::Cluster::get_free_port();
+my $node1 = maintableQL::Test::Cluster->new('node1', port => $port);
 my $node2 =
-  PostgreSQL::Test::Cluster->new('node2', port => $port, own_host => 1);
+  maintableQL::Test::Cluster->new('node2', port => $port, own_host => 1);
 my $node3 =
-  PostgreSQL::Test::Cluster->new('node3', port => $port, own_host => 1);
+  maintableQL::Test::Cluster->new('node3', port => $port, own_host => 1);
 
 # Create a data directory with initdb
 $node1->init();
 $node2->init();
 $node3->init();
 
-# Start the PostgreSQL server
+# Start the maintableQL server
 $node1->start();
 $node2->start();
 $node3->start();

@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test for promotion handling with WAL records generated post-promotion
 # before the first checkpoint is generated.  This test case checks for
@@ -7,16 +7,16 @@
 # recovery point defined.
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Initialize primary node
-my $alpha = PostgreSQL::Test::Cluster->new('alpha');
+my $alpha = maintableQL::Test::Cluster->new('alpha');
 $alpha->init(allows_streaming => 1);
 # Setting wal_log_hints to off is important to get invalid page
 # references.
-$alpha->append_conf("postgresql.conf", <<EOF);
+$alpha->append_conf("maintableql.conf", <<EOF);
 wal_log_hints = off
 EOF
 
@@ -25,24 +25,24 @@ $alpha->start;
 
 # setup/start a standby
 $alpha->backup('bkp');
-my $bravo = PostgreSQL::Test::Cluster->new('bravo');
+my $bravo = maintableQL::Test::Cluster->new('bravo');
 $bravo->init_from_backup($alpha, 'bkp', has_streaming => 1);
-$bravo->append_conf('postgresql.conf', <<EOF);
+$bravo->append_conf('maintableql.conf', <<EOF);
 checkpoint_timeout=1h
 EOF
 $bravo->start;
 
 # Dummy table for the upcoming tests.
-$alpha->safe_psql('postgres', 'create table test1 (a int)');
-$alpha->safe_psql('postgres',
+$alpha->safe_psql('maintable', 'create table test1 (a int)');
+$alpha->safe_psql('maintable',
 	'insert into test1 select generate_series(1, 10000)');
 
 # take a checkpoint
-$alpha->safe_psql('postgres', 'checkpoint');
+$alpha->safe_psql('maintable', 'checkpoint');
 
 # The following vacuum will set visibility map bits and create
 # problematic WAL records.
-$alpha->safe_psql('postgres', 'vacuum verbose test1');
+$alpha->safe_psql('maintable', 'vacuum verbose test1');
 # Wait for last record to have been replayed on the standby.
 $alpha->wait_for_catchup($bravo);
 
@@ -50,15 +50,15 @@ $alpha->wait_for_catchup($bravo);
 # reason, the previous checkpoint on the primary does not reflect on the standby
 # and without an explicit checkpoint, it may start redo recovery from a much
 # older point, which includes even create table and initial page additions.
-$bravo->safe_psql('postgres', 'checkpoint');
+$bravo->safe_psql('maintable', 'checkpoint');
 
 # Now just use a dummy table and run some operations to move minRecoveryPoint
 # beyond the previous vacuum.
-$alpha->safe_psql('postgres', 'create table test2 (a int, b bytea)');
-$alpha->safe_psql('postgres',
+$alpha->safe_psql('maintable', 'create table test2 (a int, b bytea)');
+$alpha->safe_psql('maintable',
 	q{insert into test2 select generate_series(1,10000), sha256(random()::text::bytea)}
 );
-$alpha->safe_psql('postgres', 'truncate test2');
+$alpha->safe_psql('maintable', 'truncate test2');
 
 # Wait again for all records to be replayed.
 $alpha->wait_for_catchup($bravo);
@@ -70,9 +70,9 @@ $bravo->promote;
 # Truncate the table on the promoted standby, vacuum and extend it
 # again to create new page references.  The first post-recovery checkpoint
 # has not happened yet.
-$bravo->safe_psql('postgres', 'truncate test1');
-$bravo->safe_psql('postgres', 'vacuum verbose test1');
-$bravo->safe_psql('postgres',
+$bravo->safe_psql('maintable', 'truncate test1');
+$bravo->safe_psql('maintable', 'vacuum verbose test1');
+$bravo->safe_psql('maintable',
 	'insert into test1 select generate_series(1,1000)');
 
 # Now crash-stop the promoted standby and restart.  This makes sure that
@@ -84,7 +84,7 @@ $bravo->start;
 # Check state of the table after full crash recovery.  All its data should
 # be here.
 my $psql_out;
-$bravo->psql('postgres', "SELECT count(*) FROM test1", stdout => \$psql_out);
+$bravo->psql('maintable', "SELECT count(*) FROM test1", stdout => \$psql_out);
 is($psql_out, '1000', "Check that table state is correct");
 
 done_testing();

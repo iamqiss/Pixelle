@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 pgstattuple_sources = files(
   'pgstatapprox.c',
@@ -14,7 +14,7 @@ endif
 
 pgstattuple = shared_module('pgstattuple',
   pgstattuple_sources,
-  c_pch: pch_postgres_h,
+  c_pch: pch_maintable_h,
   kwargs: contrib_mod_args,
 )
 contrib_targets += pgstattuple

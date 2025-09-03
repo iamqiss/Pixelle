@@ -17,12 +17,12 @@
  */
 
 use async_trait::async_trait;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 
 #[async_trait]
 pub trait ConnectionStream {
-    async fn read(&mut self, buf: &mut [u8]) -> Result<usize, IggyError>;
-    async fn write(&mut self, buf: &[u8]) -> Result<(), IggyError>;
-    async fn flush(&mut self) -> Result<(), IggyError>;
-    async fn shutdown(&mut self) -> Result<(), IggyError>;
+    async fn read(&mut self, buf: &mut [u8]) -> Result<usize, MessengerError>;
+    async fn write(&mut self, buf: &[u8]) -> Result<(), MessengerError>;
+    async fn flush(&mut self) -> Result<(), MessengerError>;
+    async fn shutdown(&mut self) -> Result<(), MessengerError>;
 }

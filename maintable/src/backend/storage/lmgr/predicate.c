@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * predicate.c
- *	  POSTGRES predicate locking
+ *	  MAINTABLE predicate locking
  *	  to support full serializable transaction isolation
  *
  *
@@ -140,7 +140,7 @@
  *	SLRU per-bank locks
  *		- Protects SerialSlruCtl
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -195,7 +195,7 @@
  *									   void *recdata, uint32 len);
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/parallel.h"
 #include "access/slru.h"

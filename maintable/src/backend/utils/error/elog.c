@@ -43,7 +43,7 @@
  * overflow.)
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -52,7 +52,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <fcntl.h>
 #include <time.h>
@@ -779,7 +779,7 @@ static void
 set_stack_entry_domain(ErrorData *edata, const char *domain)
 {
 	/* the default text domain is the backend's */
-	edata->domain = domain ? domain : PG_TEXTDOMAIN("postgres");
+	edata->domain = domain ? domain : PG_TEXTDOMAIN("maintable");
 	/* initialize context_domain the same way (see set_errcontext_domain()) */
 	edata->context_domain = edata->domain;
 }
@@ -1421,7 +1421,7 @@ set_errcontext_domain(const char *domain)
 	CHECK_STACK_DEPTH();
 
 	/* the default text domain is the backend's */
-	edata->context_domain = domain ? domain : PG_TEXTDOMAIN("postgres");
+	edata->context_domain = domain ? domain : PG_TEXTDOMAIN("maintable");
 
 	return 0;					/* return value does not matter */
 }
@@ -1669,7 +1669,7 @@ format_elog_string(const char *fmt,...)
 	edata = &errdata;
 	MemSet(edata, 0, sizeof(ErrorData));
 	/* the default text domain is the backend's */
-	edata->domain = save_format_domain ? save_format_domain : PG_TEXTDOMAIN("postgres");
+	edata->domain = save_format_domain ? save_format_domain : PG_TEXTDOMAIN("maintable");
 	/* set the errno to be used to interpret %m */
 	edata->saved_errno = save_format_errnumber;
 
@@ -1687,7 +1687,7 @@ format_elog_string(const char *fmt,...)
 /*
  * Actual output of the top-of-stack error message
  *
- * In the ereport(ERROR) case this is called from PostgresMain (or not at all,
+ * In the ereport(ERROR) case this is called from MaintableMain (or not at all,
  * if the error is caught by somebody).  For all other severity levels this
  * is called by errfinish.
  */
@@ -2382,7 +2382,7 @@ write_syslog(int level, const char *line)
 	/* Open syslog connection if not done yet */
 	if (!openlog_done)
 	{
-		openlog(syslog_ident ? syslog_ident : "postgres",
+		openlog(syslog_ident ? syslog_ident : "maintable",
 				LOG_PID | LOG_NDELAY | LOG_NOWAIT,
 				syslog_facility);
 		openlog_done = true;
@@ -2479,7 +2479,7 @@ write_syslog(int level, const char *line)
 
 #ifdef WIN32
 /*
- * Get the PostgreSQL equivalent of the Windows ANSI code page.  "ANSI" system
+ * Get the maintableQL equivalent of the Windows ANSI code page.  "ANSI" system
  * interfaces (e.g. CreateFileA()) expect string arguments in this encoding.
  * Every process in a given system will find the same value at all times.
  */
@@ -3688,7 +3688,7 @@ send_message_to_frontend(ErrorData *edata)
 	}
 
 	/*
-	 * This flush is normally not necessary, since postgres.c will flush out
+	 * This flush is normally not necessary, since maintable.c will flush out
 	 * waiting data when control returns to the main loop. But it seems best
 	 * to leave it here, so that the client has some clue what happened if the
 	 * backend dies before getting back to the main loop ... error/notice

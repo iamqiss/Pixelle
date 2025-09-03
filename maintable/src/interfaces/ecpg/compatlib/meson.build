@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 ecpg_compat_sources = files(
   'informix.c',
@@ -43,7 +43,7 @@ ecpg_targets += ecpg_compat_so
 
 pkgconfig.generate(
   name: 'libecpg_compat',
-  description: 'PostgreSQL libecpg_compat library',
+  description: 'maintableQL libecpg_compat library',
   url: pg_url,
   libraries: ecpg_compat_so,
   libraries_private: [frontend_stlib_code, thread_dep],

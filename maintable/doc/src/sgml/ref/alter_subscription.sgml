@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_subscription.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-altersubscription">
@@ -58,7 +58,7 @@ ALTER SUBSCRIPTION <replaceable class="parameter">name</replaceable> RENAME TO <
    part of the publication and we also remove the table synchronization slots
    if there are any. It is necessary to remove these slots so that the resources
    allocated for the subscription on the remote host are released. If due to
-   network breakdown or some other error, <productname>PostgreSQL</productname>
+   network breakdown or some other error, <productname>maintableQL</productname>
    is unable to remove the slots, an error will be reported. To proceed in this
    situation, the user either needs to retry the operation or disassociate the
    slot from the subscription and drop the subscription as explained in
@@ -387,7 +387,7 @@ ALTER SUBSCRIPTION mysub DISABLE;
   <title>Compatibility</title>
 
   <para>
-   <command>ALTER SUBSCRIPTION</command> is a <productname>PostgreSQL</productname>
+   <command>ALTER SUBSCRIPTION</command> is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

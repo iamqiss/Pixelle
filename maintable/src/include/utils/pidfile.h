@@ -3,7 +3,7 @@
  * pidfile.h
  *	  Declarations describing the data directory lock file (postmaster.pid)
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/utils/pidfile.h
@@ -14,7 +14,7 @@
 #define UTILS_PIDFILE_H
 
 /*
- * As of Postgres 10, the contents of the data-directory lock file are:
+ * As of Maintable 10, the contents of the data-directory lock file are:
  *
  * line #
  *		1	postmaster PID (or negative of a standalone backend's PID)

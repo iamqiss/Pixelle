@@ -3,7 +3,7 @@
  * libpq_pipeline.c
  *		Verify libpq pipeline execution functionality
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <sys/select.h>
 #include <sys/time.h>
@@ -299,7 +299,7 @@ test_cancel(PGconn *conn)
 		struct timeval tv;
 		fd_set		input_mask;
 		fd_set		output_mask;
-		PostgresPollingStatusType pollres = PQcancelPoll(cancelConn);
+		MaintablePollingStatusType pollres = PQcancelPoll(cancelConn);
 		int			sock = PQcancelSocket(cancelConn);
 
 		if (pollres == PGRES_POLLING_OK)
@@ -356,7 +356,7 @@ test_cancel(PGconn *conn)
 		struct timeval tv;
 		fd_set		input_mask;
 		fd_set		output_mask;
-		PostgresPollingStatusType pollres = PQcancelPoll(cancelConn);
+		MaintablePollingStatusType pollres = PQcancelPoll(cancelConn);
 		int			sock = PQcancelSocket(cancelConn);
 
 		if (pollres == PGRES_POLLING_OK)

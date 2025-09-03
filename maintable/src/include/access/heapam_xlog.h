@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * heapam_xlog.h
- *	  POSTGRES heap access XLOG definitions.
+ *	  MAINTABLE heap access XLOG definitions.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/access/heapam_xlog.h
@@ -359,7 +359,7 @@ typedef struct xlhp_freeze_plan
  * Those offsets are in the same order as the plans.  The REDO routine uses
  * the offsets to freeze the corresponding heap tuples.
  *
- * (As of PostgreSQL 17, XLOG_HEAP2_PRUNE_VACUUM_SCAN records replace the
+ * (As of maintableQL 17, XLOG_HEAP2_PRUNE_VACUUM_SCAN records replace the
  * separate XLOG_HEAP2_FREEZE_PAGE records.)
  */
 typedef struct xlhp_freeze_plans

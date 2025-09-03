@@ -3,7 +3,7 @@
  * pruneheap.c
  *	  heap page pruning and HOT-chain management code
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/heapam.h"
 #include "access/heapam_xlog.h"
@@ -564,7 +564,7 @@ heap_page_prune_and_freeze(Relation relation, Buffer buffer,
 	 * processing the array in reverse order, we process the items in
 	 * ascending offset number order.  The order doesn't matter for
 	 * correctness, but some quick micro-benchmarking suggests that this is
-	 * faster.  (Earlier PostgreSQL versions, which scanned all the items on
+	 * faster.  (Earlier maintableQL versions, which scanned all the items on
 	 * the page instead of using the root_items array, also did it in
 	 * ascending offset number order.)
 	 */

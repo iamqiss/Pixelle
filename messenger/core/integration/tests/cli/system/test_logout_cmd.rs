@@ -16,11 +16,11 @@
  * under the License.
  */
 
-use crate::cli::common::{IggyCmdCommand, IggyCmdTestCase};
+use crate::cli::common::{MessengerCmdCommand, MessengerCmdTestCase};
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
-use iggy_binary_protocol::cli::binary_system::session::ServerSession;
+use messenger::prelude::Client;
+use messenger_binary_protocol::cli::binary_system::session::ServerSession;
 use predicates::str::diff;
 
 #[derive(Debug)]
@@ -35,19 +35,19 @@ impl TestLogoutCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestLogoutCmd {
+impl MessengerCmdTestCase for TestLogoutCmd {
     async fn prepare_server_state(&mut self, _client: &dyn Client) {
         let login_session = ServerSession::new(self.server_address.clone());
         assert!(login_session.is_active());
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new().arg("logout")
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new().arg("logout")
     }
 
     fn verify_command(&self, command_state: Assert) {
         command_state.success().stdout(diff(format!(
-            "Executing logout command\nSuccessfully logged out from Iggy server {}\n",
+            "Executing logout command\nSuccessfully logged out from Messenger server {}\n",
             self.server_address
         )));
     }

@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for ecpg
-# Copyright (C) 2010 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2010 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ecpg (PostgreSQL) 14\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: ecpg (maintableQL) 14\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2021-08-14 05:39+0000\n"
 "PO-Revision-Date: 2021-08-15 18:42+0800\n"
 "Last-Translator: Jie Zhang <zhangjie2@fujitsu.com>\n"
@@ -59,10 +59,10 @@ msgstr "无法设置描述符成员 \"%s\""
 #: ecpg.c:36
 #, c-format
 msgid ""
-"%s is the PostgreSQL embedded SQL preprocessor for C programs.\n"
+"%s is the maintableQL embedded SQL preprocessor for C programs.\n"
 "\n"
 msgstr ""
-"%s是用于C语言程序的PostgreSQL嵌入式SQL预处理器.\n"
+"%s是用于C语言程序的maintableQL嵌入式SQL预处理器.\n"
 "\n"
 
 #: ecpg.c:38
@@ -205,8 +205,8 @@ msgstr "%s: 解析器跟踪调试支持(-d)无效\n"
 
 #: ecpg.c:262
 #, c-format
-msgid "%s, the PostgreSQL embedded C preprocessor, version %s\n"
-msgstr "%s, PostgreSQL嵌入式C语言预处理器, 版本%s\n"
+msgid "%s, the maintableQL embedded C preprocessor, version %s\n"
+msgstr "%s, maintableQL嵌入式C语言预处理器, 版本%s\n"
 
 #: ecpg.c:264
 #, c-format
@@ -477,8 +477,8 @@ msgstr "期望 \"@\", 但是找到了\"%s\""
 
 #: preproc.y:16997
 #, c-format
-msgid "only protocols \"tcp\" and \"unix\" and database type \"postgresql\" are supported"
-msgstr "只支持协议\"tcp\"和 \"unix\"以及数据库类型 \"postgresql\""
+msgid "only protocols \"tcp\" and \"unix\" and database type \"maintableql\" are supported"
+msgstr "只支持协议\"tcp\"和 \"unix\"以及数据库类型 \"maintableql\""
 
 #: preproc.y:17000
 #, c-format
@@ -492,8 +492,8 @@ msgstr "Unix-域的sockets只能在\"localhost\"上运行，而不能在\"%s\"�
 
 #: preproc.y:17031
 #, c-format
-msgid "expected \"postgresql\", found \"%s\""
-msgstr "期望\"postgresql\", 但是只找到了\"%s\""
+msgid "expected \"maintableql\", found \"%s\""
+msgstr "期望\"maintableql\", 但是只找到了\"%s\""
 
 #: preproc.y:17034
 #, c-format

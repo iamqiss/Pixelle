@@ -18,11 +18,11 @@
 
 use crate::streaming::common::test_setup::TestSetup;
 use bytes::Bytes;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use server::configs::system::{PartitionConfig, SystemConfig};
 use server::state::system::PartitionState;
 use server::streaming::partitions::partition::Partition;
-use server::streaming::segments::IggyMessagesBatchMut;
+use server::streaming::segments::MessengerMessagesBatchMut;
 use std::collections::HashMap;
 use std::str::FromStr;
 use std::sync::Arc;
@@ -51,13 +51,13 @@ async fn should_persist_messages_and_then_load_them_from_disk() {
         true,
         config.clone(),
         setup.storage.clone(),
-        IggyExpiry::NeverExpire,
+        MessengerExpiry::NeverExpire,
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU32::new(0)),
-        IggyTimestamp::now(),
+        MessengerTimestamp::now(),
     )
     .await;
 
@@ -80,13 +80,13 @@ async fn should_persist_messages_and_then_load_them_from_disk() {
             HeaderValue::from_uint64(123456).unwrap(),
         );
 
-        let appended_message = IggyMessage::builder()
+        let appended_message = MessengerMessage::builder()
             .id(id)
             .payload(payload.clone())
             .user_headers(headers.clone())
             .build()
             .expect("Failed to create message with headers");
-        let message = IggyMessage::builder()
+        let message = MessengerMessage::builder()
             .id(id)
             .payload(payload)
             .user_headers(headers)
@@ -103,7 +103,7 @@ async fn should_persist_messages_and_then_load_them_from_disk() {
         .iter()
         .map(|msg| msg.get_size_bytes().as_bytes_u32())
         .sum::<u32>();
-    let batch = IggyMessagesBatchMut::from_messages(&messages, messages_size);
+    let batch = MessengerMessagesBatchMut::from_messages(&messages, messages_size);
     partition.append_messages(batch, None).await.unwrap();
     assert_eq!(
         partition.unsaved_messages_count, 0,
@@ -111,7 +111,7 @@ async fn should_persist_messages_and_then_load_them_from_disk() {
         partition.unsaved_messages_count
     );
 
-    let now = IggyTimestamp::now();
+    let now = MessengerTimestamp::now();
     let mut loaded_partition = Partition::create(
         stream_id,
         topic_id,
@@ -119,7 +119,7 @@ async fn should_persist_messages_and_then_load_them_from_disk() {
         false,
         config.clone(),
         setup.storage.clone(),
-        IggyExpiry::NeverExpire,
+        MessengerExpiry::NeverExpire,
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),

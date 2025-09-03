@@ -55,20 +55,20 @@ async fn validate_custom_env_provider() {
 
     unsafe {
         env::set_var(
-            "IGGY_QUIC_DATAGRAM_SEND_BUFFER_SIZE",
+            "MESSENGER_QUIC_DATAGRAM_SEND_BUFFER_SIZE",
             expected_datagram_send_buffer_size,
         );
         env::set_var(
-            "IGGY_QUIC_CERTIFICATE_SELF_SIGNED",
+            "MESSENGER_QUIC_CERTIFICATE_SELF_SIGNED",
             expected_quic_certificate_self_signed.to_string(),
         );
-        env::set_var("IGGY_HTTP_ENABLED", expected_http_enabled.to_string());
-        env::set_var("IGGY_TCP_ENABLED", expected_tcp_enabled);
+        env::set_var("MESSENGER_HTTP_ENABLED", expected_http_enabled.to_string());
+        env::set_var("MESSENGER_TCP_ENABLED", expected_tcp_enabled);
         env::set_var(
-            "IGGY_MESSAGE_SAVER_ENABLED",
+            "MESSENGER_MESSAGE_SAVER_ENABLED",
             expected_message_saver_enabled.to_string(),
         );
-        env::set_var("IGGY_SYSTEM_SEGMENT_MESSAGE_EXPIRY", "10s");
+        env::set_var("MESSENGER_SYSTEM_SEGMENT_MESSAGE_EXPIRY", "10s");
     }
 
     let config_path = get_root_path().join("../configs/server.toml");
@@ -95,11 +95,11 @@ async fn validate_custom_env_provider() {
     );
 
     unsafe {
-        env::remove_var("IGGY_QUIC_DATAGRAM_SEND_BUFFER_SIZE");
-        env::remove_var("IGGY_QUIC_CERTIFICATE_SELF_SIGNED");
-        env::remove_var("IGGY_HTTP_ENABLED");
-        env::remove_var("IGGY_TCP_ENABLED");
-        env::remove_var("IGGY_MESSAGE_SAVER_ENABLED");
-        env::remove_var("IGGY_SYSTEM_RETENTION_POLICY_MESSAGE_EXPIRY");
+        env::remove_var("MESSENGER_QUIC_DATAGRAM_SEND_BUFFER_SIZE");
+        env::remove_var("MESSENGER_QUIC_CERTIFICATE_SELF_SIGNED");
+        env::remove_var("MESSENGER_HTTP_ENABLED");
+        env::remove_var("MESSENGER_TCP_ENABLED");
+        env::remove_var("MESSENGER_MESSAGE_SAVER_ENABLED");
+        env::remove_var("MESSENGER_SYSTEM_RETENTION_POLICY_MESSAGE_EXPIRY");
     }
 }

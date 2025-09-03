@@ -6,14 +6,14 @@
  * Joe Conway <mail@joeconway.com>
  *
  * contrib/fuzzystrmatch/fuzzystrmatch.c
- * Copyright (c) 2001-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2001-2025, maintableQL Global Development Group
  * ALL RIGHTS RESERVED;
  *
  * metaphone()
  * -----------
- * Modified for PostgreSQL by Joe Conway.
+ * Modified for maintableQL by Joe Conway.
  * Based on CPAN's "Text-Metaphone-1.96" by Michael G Schwern <schwern@pobox.com>
- * Code slightly modified for use as PostgreSQL function (palloc, elog, etc).
+ * Code slightly modified for use as maintableQL function (palloc, elog, etc).
  * Metaphone was originally created by Lawrence Philips and presented in article
  * in "Computer Language" December 1990 issue.
  *
@@ -36,7 +36,7 @@
  *
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 
@@ -76,7 +76,7 @@ soundex_code(char letter)
 
 /*
  * Original code by Michael G Schwern starts here.
- * Code slightly modified for use as PostgreSQL function.
+ * Code slightly modified for use as maintableQL function.
  */
 
 
@@ -293,7 +293,7 @@ metaphone(PG_FUNCTION_ARGS)
 
 /*
  * Original code by Michael G Schwern starts here.
- * Code slightly modified for use as PostgreSQL
+ * Code slightly modified for use as maintableQL
  * function (palloc, etc).
  */
 

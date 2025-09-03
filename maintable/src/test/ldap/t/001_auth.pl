@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
@@ -10,8 +10,8 @@ use lib "$FindBin::RealBin/..";
 use File::Copy;
 use File::Basename;
 use LdapServer;
-use PostgreSQL::Test::Utils;
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Utils;
+use maintableQL::Test::Cluster;
 use Test::More;
 
 if ($ENV{with_ldap} ne 'yes')
@@ -43,18 +43,18 @@ my ($ldap_server, $ldap_port, $ldaps_port, $ldap_url,
 # don't bother to check the server's cert (though perhaps we should)
 $ENV{'LDAPTLS_REQCERT'} = "never";
 
-note "setting up PostgreSQL instance";
+note "setting up maintableQL instance";
 
-my $node = PostgreSQL::Test::Cluster->new('node');
+my $node = maintableQL::Test::Cluster->new('node');
 $node->init;
-$node->append_conf('postgresql.conf', "log_connections = all\n");
+$node->append_conf('maintableql.conf', "log_connections = all\n");
 # Needed to allow connect_fails to inspect postmaster log:
-$node->append_conf('postgresql.conf', "log_min_messages = debug2");
+$node->append_conf('maintableql.conf', "log_min_messages = debug2");
 $node->start;
 
-$node->safe_psql('postgres', 'CREATE USER test0;');
-$node->safe_psql('postgres', 'CREATE USER test1;');
-$node->safe_psql('postgres', 'CREATE USER "test2@example.net";');
+$node->safe_psql('maintable', 'CREATE USER test0;');
+$node->safe_psql('maintable', 'CREATE USER test1;');
+$node->safe_psql('maintable', 'CREATE USER "test2@example.net";');
 
 note "running tests";
 

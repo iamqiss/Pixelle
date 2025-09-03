@@ -21,7 +21,7 @@ use crate::streaming::partitions::partition::Partition;
 use crate::streaming::polling_consumer::PollingConsumer;
 use crate::streaming::segments::*;
 use error_set::ErrContext;
-use iggy_common::{Confirmation, IggyError, IggyTimestamp, Sizeable};
+use messenger_common::{Confirmation, MessengerError, MessengerTimestamp, Sizeable};
 use std::sync::atomic::Ordering;
 use tracing::trace;
 
@@ -29,9 +29,9 @@ impl Partition {
     /// Retrieves messages by timestamp (up to a specified count).
     pub async fn get_messages_by_timestamp(
         &self,
-        timestamp: IggyTimestamp,
+        timestamp: MessengerTimestamp,
         count: u32,
-    ) -> Result<IggyMessagesBatchSet, IggyError> {
+    ) -> Result<MessengerMessagesBatchSet, MessengerError> {
         trace!(
             "Getting {count} messages by timestamp: {} for partition: {}...",
             timestamp.as_micros(),
@@ -39,7 +39,7 @@ impl Partition {
         );
 
         if self.segments.is_empty() || count == 0 {
-            return Ok(IggyMessagesBatchSet::empty());
+            return Ok(MessengerMessagesBatchSet::empty());
         }
 
         let query_ts = timestamp.as_micros();
@@ -58,14 +58,14 @@ impl Partition {
         &self,
         start_offset: u64,
         count: u32,
-    ) -> Result<IggyMessagesBatchSet, IggyError> {
+    ) -> Result<MessengerMessagesBatchSet, MessengerError> {
         trace!(
             "Getting {count} messages for start offset: {start_offset} for partition: {}, current offset: {}...",
             self.partition_id, self.current_offset
         );
 
         if self.segments.is_empty() || start_offset > self.current_offset || count == 0 {
-            return Ok(IggyMessagesBatchSet::empty());
+            return Ok(MessengerMessagesBatchSet::empty());
         }
 
         let start_segment_idx = match self
@@ -74,7 +74,7 @@ impl Partition {
             .rposition(|segment| segment.start_offset() <= start_offset)
         {
             Some(idx) => idx,
-            None => return Ok(IggyMessagesBatchSet::empty()),
+            None => return Ok(MessengerMessagesBatchSet::empty()),
         };
 
         let relevant_segments: Vec<&Segment> = self.segments[start_segment_idx..].iter().collect();
@@ -83,9 +83,9 @@ impl Partition {
     }
 
     // Retrieves the first messages (up to a specified count).
-    pub async fn get_first_messages(&self, count: u32) -> Result<IggyMessagesBatchSet, IggyError> {
+    pub async fn get_first_messages(&self, count: u32) -> Result<MessengerMessagesBatchSet, MessengerError> {
         if self.segments.is_empty() {
-            return Ok(IggyMessagesBatchSet::empty());
+            return Ok(MessengerMessagesBatchSet::empty());
         }
         let oldest_available_offset = self.segments[0].start_offset();
         self.get_messages_by_offset(oldest_available_offset, count)
@@ -93,7 +93,7 @@ impl Partition {
     }
 
     // Retrieves the last messages (up to a specified count).
-    pub async fn get_last_messages(&self, count: u32) -> Result<IggyMessagesBatchSet, IggyError> {
+    pub async fn get_last_messages(&self, count: u32) -> Result<MessengerMessagesBatchSet, MessengerError> {
         let mut requested_count = count as u64;
         if requested_count > self.current_offset + 1 {
             requested_count = self.current_offset + 1
@@ -108,7 +108,7 @@ impl Partition {
         &self,
         consumer: PollingConsumer,
         count: u32,
-    ) -> Result<IggyMessagesBatchSet, IggyError> {
+    ) -> Result<MessengerMessagesBatchSet, MessengerError> {
         let (consumer_offsets, consumer_id) = match consumer {
             PollingConsumer::Consumer(consumer_id, _) => (&self.consumer_offsets, consumer_id),
             PollingConsumer::ConsumerGroup(group_id, _) => (&self.consumer_group_offsets, group_id),
@@ -129,7 +129,7 @@ impl Partition {
                 "Consumer: {} has the latest offset: {} for partition: {}, returning empty messages...",
                 consumer_id, consumer_offset.offset, self.partition_id
             );
-            return Ok(IggyMessagesBatchSet::empty());
+            return Ok(MessengerMessagesBatchSet::empty());
         }
 
         let offset = consumer_offset.offset + 1;
@@ -146,10 +146,10 @@ impl Partition {
         segments: Vec<&Segment>,
         offset: u64,
         count: u32,
-    ) -> Result<IggyMessagesBatchSet, IggyError> {
+    ) -> Result<MessengerMessagesBatchSet, MessengerError> {
         let mut remaining_count = count;
         let mut current_offset = offset;
-        let mut batches = IggyMessagesBatchSet::empty();
+        let mut batches = MessengerMessagesBatchSet::empty();
 
         for segment in segments {
             if remaining_count == 0 {
@@ -190,9 +190,9 @@ impl Partition {
         segments: Vec<&Segment>,
         timestamp: u64,
         count: u32,
-    ) -> Result<IggyMessagesBatchSet, IggyError> {
+    ) -> Result<MessengerMessagesBatchSet, MessengerError> {
         let mut remaining_count = count;
-        let mut batches = IggyMessagesBatchSet::empty();
+        let mut batches = MessengerMessagesBatchSet::empty();
 
         for segment in segments {
             if remaining_count == 0 {
@@ -220,9 +220,9 @@ impl Partition {
 
     pub async fn append_messages(
         &mut self,
-        batch: IggyMessagesBatchMut,
+        batch: MessengerMessagesBatchMut,
         confirmation: Option<Confirmation>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         if batch.count() == 0 {
             return Ok(());
         }
@@ -234,7 +234,7 @@ impl Partition {
             self.partition_id
         );
 
-        let last_segment = self.segments.last_mut().ok_or(IggyError::SegmentNotFound)?;
+        let last_segment = self.segments.last_mut().ok_or(MessengerError::SegmentNotFound)?;
         if last_segment.is_closed() {
             let start_offset = last_segment.end_offset() + 1;
             trace!(
@@ -255,7 +255,7 @@ impl Partition {
         let batch_messages_count = batch.count();
         let batch_messages_size = batch.get_size_bytes();
 
-        let last_segment = self.segments.last_mut().ok_or(IggyError::SegmentNotFound)?;
+        let last_segment = self.segments.last_mut().ok_or(MessengerError::SegmentNotFound)?;
         last_segment
             .append_batch(current_offset, batch, self.message_deduplicator.as_ref())
                  .await
@@ -333,13 +333,13 @@ impl Partition {
         self.messages_count.load(Ordering::SeqCst)
     }
 
-    pub async fn flush_unsaved_buffer(&mut self, fsync: bool) -> Result<(), IggyError> {
+    pub async fn flush_unsaved_buffer(&mut self, fsync: bool) -> Result<(), MessengerError> {
         let _fsync = fsync;
         if self.unsaved_messages_count == 0 {
             return Ok(());
         }
 
-        let last_segment = self.segments.last_mut().ok_or(IggyError::SegmentNotFound)?;
+        let last_segment = self.segments.last_mut().ok_or(MessengerError::SegmentNotFound)?;
         trace!(
             "Segment with start offset: {} for partition with ID: {} will be forcefully persisted on disk...",
             last_segment.start_offset(),
@@ -367,7 +367,7 @@ mod tests {
     use crate::streaming::storage::SystemStorage;
     use crate::streaming::utils::MemoryPool;
     use bytes::Bytes;
-    use iggy_common::{IggyExpiry, IggyMessage};
+    use messenger_common::{MessengerExpiry, MessengerMessage};
     use std::sync::Arc;
     use std::sync::atomic::{AtomicU32, AtomicU64};
     use tempfile::TempDir;
@@ -381,7 +381,7 @@ mod tests {
             .iter()
             .map(|m| m.get_size_bytes().as_bytes_u32())
             .sum();
-        let batch = IggyMessagesBatchMut::from_messages(&messages, messages_size);
+        let batch = MessengerMessagesBatchMut::from_messages(&messages, messages_size);
 
         partition.append_messages(batch, None).await.unwrap();
 
@@ -400,7 +400,7 @@ mod tests {
             .iter()
             .map(|m| m.get_size_bytes().as_bytes_u32())
             .sum();
-        let batch = IggyMessagesBatchMut::from_messages(&messages, messages_size);
+        let batch = MessengerMessagesBatchMut::from_messages(&messages, messages_size);
         let messages_count = messages.len() as u32;
         assert_eq!(batch.count(), messages_count);
         let unique_messages_count = 3;
@@ -430,7 +430,7 @@ mod tests {
             .iter()
             .map(|m| m.get_size_bytes().as_bytes_u32())
             .sum();
-        let batch = IggyMessagesBatchMut::from_messages(&messages, messages_size);
+        let batch = MessengerMessagesBatchMut::from_messages(&messages, messages_size);
 
         partition.append_messages(batch, None).await.unwrap();
 
@@ -461,7 +461,7 @@ mod tests {
             .iter()
             .map(|m| m.get_size_bytes().as_bytes_u32())
             .sum();
-        let batch = IggyMessagesBatchMut::from_messages(&messages, messages_size);
+        let batch = MessengerMessagesBatchMut::from_messages(&messages, messages_size);
 
         partition.append_messages(batch, None).await.unwrap();
 
@@ -492,7 +492,7 @@ mod tests {
             .iter()
             .map(|m| m.get_size_bytes().as_bytes_u32())
             .sum();
-        let batch = IggyMessagesBatchMut::from_messages(&messages, messages_size);
+        let batch = MessengerMessagesBatchMut::from_messages(&messages, messages_size);
 
         partition.append_messages(batch, None).await.unwrap();
 
@@ -525,7 +525,7 @@ mod tests {
             .iter()
             .map(|m| m.get_size_bytes().as_bytes_u32())
             .sum();
-        let batch = IggyMessagesBatchMut::from_messages(&messages, messages_size);
+        let batch = MessengerMessagesBatchMut::from_messages(&messages, messages_size);
 
         partition.append_messages(batch, None).await.unwrap();
 
@@ -563,7 +563,7 @@ mod tests {
             .iter()
             .map(|m| m.get_size_bytes().as_bytes_u32())
             .sum();
-        let initial_batch = IggyMessagesBatchMut::from_messages(&initial_messages, initial_size);
+        let initial_batch = MessengerMessagesBatchMut::from_messages(&initial_messages, initial_size);
         partition
             .append_messages(initial_batch, None)
             .await
@@ -581,7 +581,7 @@ mod tests {
             .map(|m| m.get_size_bytes().as_bytes_u32())
             .sum();
         let duplicate_batch =
-            IggyMessagesBatchMut::from_messages(&duplicate_messages, duplicate_size);
+            MessengerMessagesBatchMut::from_messages(&duplicate_messages, duplicate_size);
         partition
             .append_messages(duplicate_batch, None)
             .await
@@ -611,7 +611,7 @@ mod tests {
             .iter()
             .map(|m| m.get_size_bytes().as_bytes_u32())
             .sum();
-        let batch = IggyMessagesBatchMut::from_messages(&messages, messages_size);
+        let batch = MessengerMessagesBatchMut::from_messages(&messages, messages_size);
 
         partition.append_messages(batch, None).await.unwrap();
 
@@ -640,7 +640,7 @@ mod tests {
             .iter()
             .map(|m| m.get_size_bytes().as_bytes_u32())
             .sum();
-        let batch1 = IggyMessagesBatchMut::from_messages(&batch1, batch1_size);
+        let batch1 = MessengerMessagesBatchMut::from_messages(&batch1, batch1_size);
         partition.append_messages(batch1, None).await.unwrap();
 
         // Second batch with mix of new and duplicate messages
@@ -654,7 +654,7 @@ mod tests {
             .iter()
             .map(|m| m.get_size_bytes().as_bytes_u32())
             .sum();
-        let batch2 = IggyMessagesBatchMut::from_messages(&batch2, batch2_size);
+        let batch2 = MessengerMessagesBatchMut::from_messages(&batch2, batch2_size);
         partition.append_messages(batch2, None).await.unwrap();
 
         let loaded_messages = partition.get_messages_by_offset(0, 10).await.unwrap();
@@ -692,7 +692,7 @@ mod tests {
             .iter()
             .map(|m| m.get_size_bytes().as_bytes_u32())
             .sum();
-        let batch = IggyMessagesBatchMut::from_messages(&messages, messages_size);
+        let batch = MessengerMessagesBatchMut::from_messages(&messages, messages_size);
 
         partition.append_messages(batch, None).await.unwrap();
 
@@ -732,20 +732,20 @@ mod tests {
                 with_segment,
                 config,
                 storage,
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 Arc::new(AtomicU64::new(0)),
                 Arc::new(AtomicU64::new(0)),
                 Arc::new(AtomicU64::new(0)),
                 Arc::new(AtomicU64::new(0)),
                 Arc::new(AtomicU32::new(0)),
-                IggyTimestamp::now(),
+                MessengerTimestamp::now(),
             )
             .await,
             temp_dir,
         )
     }
 
-    fn create_messages() -> Vec<IggyMessage> {
+    fn create_messages() -> Vec<MessengerMessage> {
         vec![
             create_message(1, "message 1"),
             create_message(2, "message 2"),
@@ -756,8 +756,8 @@ mod tests {
         ]
     }
 
-    fn create_message(id: u128, payload: &str) -> IggyMessage {
-        IggyMessage::builder()
+    fn create_message(id: u128, payload: &str) -> MessengerMessage {
+        MessengerMessage::builder()
             .id(id)
             .payload(Bytes::from(payload.to_string()))
             .build()

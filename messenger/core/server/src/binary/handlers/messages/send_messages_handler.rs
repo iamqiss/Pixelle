@@ -18,27 +18,27 @@
 
 use crate::binary::command::{BinaryServerCommand, ServerCommandHandler};
 use crate::binary::sender::SenderKind;
-use crate::streaming::segments::{IggyIndexesMut, IggyMessagesBatchMut};
+use crate::streaming::segments::{MessengerIndexesMut, MessengerMessagesBatchMut};
 use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use crate::streaming::utils::PooledBuffer;
 use anyhow::Result;
-use iggy_common::INDEX_SIZE;
-use iggy_common::Identifier;
-use iggy_common::Sizeable;
-use iggy_common::{IggyError, Partitioning, SendMessages, Validatable};
+use messenger_common::INDEX_SIZE;
+use messenger_common::Identifier;
+use messenger_common::Sizeable;
+use messenger_common::{MessengerError, Partitioning, SendMessages, Validatable};
 use tracing::instrument;
 
 impl ServerCommandHandler for SendMessages {
     fn code(&self) -> u32 {
-        iggy_common::SEND_MESSAGES_CODE
+        messenger_common::SEND_MESSAGES_CODE
     }
 
     #[instrument(skip_all, name = "trace_send_messages", fields(
-        iggy_user_id = session.get_user_id(),
-        iggy_client_id = session.client_id,
-        iggy_stream_id = self.stream_id.as_string(),
-        iggy_topic_id = self.topic_id.as_string(),
+        messenger_user_id = session.get_user_id(),
+        messenger_client_id = session.client_id,
+        messenger_stream_id = self.stream_id.as_string(),
+        messenger_topic_id = self.topic_id.as_string(),
         partitioning = %self.partitioning
     ))]
     async fn handle(
@@ -47,7 +47,7 @@ impl ServerCommandHandler for SendMessages {
         length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let total_payload_size = length as usize - std::mem::size_of::<u32>();
         let metadata_len_field_size = std::mem::size_of::<u32>();
 
@@ -90,8 +90,8 @@ impl ServerCommandHandler for SendMessages {
         unsafe { messages_buffer.set_len(messages_size) };
         sender.read(&mut messages_buffer).await?;
 
-        let indexes = IggyIndexesMut::from_bytes(indexes_buffer, 0);
-        let batch = IggyMessagesBatchMut::from_indexes_and_messages(
+        let indexes = MessengerIndexesMut::from_bytes(indexes_buffer, 0);
+        let batch = MessengerMessagesBatchMut::from_indexes_and_messages(
             messages_count,
             indexes,
             messages_buffer,
@@ -122,7 +122,7 @@ impl BinaryServerCommand for SendMessages {
         _sender: &mut SenderKind,
         _code: u32,
         _length: u32,
-    ) -> Result<Self, IggyError>
+    ) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {

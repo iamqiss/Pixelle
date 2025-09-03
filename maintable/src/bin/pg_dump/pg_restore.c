@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * pg_restore.c
- *	pg_restore is an utility extracting postgres database definitions
+ *	pg_restore is an utility extracting maintable database definitions
  *	from a backup archive created by pg_dump using the archiver
  *	interface.
  *
@@ -16,7 +16,7 @@
  *		  operators
  *		  ACL - grant/revoke
  *
- * the output script is SQL that is understood by PostgreSQL
+ * the output script is SQL that is understood by maintableQL
  *
  * Basic process in a restore operation is:
  *
@@ -38,7 +38,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <ctype.h>
 #ifdef HAVE_TERMIOS_H
@@ -165,7 +165,7 @@ main(int argc, char **argv)
 		}
 		if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			puts("pg_restore (PostgreSQL) " PG_VERSION);
+			puts("pg_restore (maintableQL) " PG_VERSION);
 			exit_nicely(0);
 		}
 	}
@@ -519,7 +519,7 @@ main(int argc, char **argv)
 static void
 usage(const char *progname)
 {
-	printf(_("%s restores a PostgreSQL database from an archive created by pg_dump.\n\n"), progname);
+	printf(_("%s restores a maintableQL database from an archive created by pg_dump.\n\n"), progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]... [FILE]\n"), progname);
 

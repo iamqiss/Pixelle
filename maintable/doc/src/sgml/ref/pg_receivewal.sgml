@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pg_receivewal.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-pgreceivewal">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>pg_receivewal</refname>
-  <refpurpose>stream write-ahead logs from a <productname>PostgreSQL</productname> server</refpurpose>
+  <refpurpose>stream write-ahead logs from a <productname>maintableQL</productname> server</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -30,7 +30,7 @@ PostgreSQL documentation
   <title>Description</title>
   <para>
    <application>pg_receivewal</application> is used to stream the write-ahead log
-   from a running <productname>PostgreSQL</productname> cluster. The write-ahead
+   from a running <productname>maintableQL</productname> cluster. The write-ahead
    log is streamed using the streaming replication protocol, and is written
    to a local directory of files. This directory can be used as the archive
    location for doing a restore using point-in-time recovery (see
@@ -48,7 +48,7 @@ PostgreSQL documentation
   </para>
 
   <para>
-   Unlike the WAL receiver of a PostgreSQL standby server, <application>pg_receivewal</application>
+   Unlike the WAL receiver of a maintableQL standby server, <application>pg_receivewal</application>
    by default flushes WAL data only when a WAL file is closed.
    The option <option>--synchronous</option> must be specified to flush WAL data
    in real time. Since <application>pg_receivewal</application> does not
@@ -66,7 +66,7 @@ PostgreSQL documentation
 
   <para>
    The write-ahead log is streamed over a regular
-   <productname>PostgreSQL</productname> connection and uses the replication
+   <productname>maintableQL</productname> connection and uses the replication
    protocol. The connection must be made with a user having
    <literal>REPLICATION</literal> permissions (see
    <xref linkend="role-attributes"/>) or a superuser, and
@@ -95,7 +95,7 @@ PostgreSQL documentation
       <command>READ_REPLICATION_SLOT</command> command is issued to retrieve
       the slot's <literal>restart_lsn</literal> to use as the starting point.
       This option is only available when streaming write-ahead logs from
-      <productname>PostgreSQL</productname> 15 and up.
+      <productname>maintableQL</productname> 15 and up.
      </para>
     </listitem>
 
@@ -275,7 +275,7 @@ PostgreSQL documentation
        </para>
        <para>
         The compression method can be set to <literal>gzip</literal>,
-        <literal>lz4</literal> (if <productname>PostgreSQL</productname>
+        <literal>lz4</literal> (if <productname>maintableQL</productname>
         was compiled with <option>--with-lz4</option>) or
         <literal>none</literal> for no compression.
         A compression detail string can optionally be specified.  If the
@@ -323,7 +323,7 @@ PostgreSQL documentation
         database name (<literal>replication</literal>) for purposes of
         looking up the replication connection's password
         in <filename>~/.pgpass</filename>.  Similarly, middleware or proxies
-        used in connecting to <productname>PostgreSQL</productname> might
+        used in connecting to <productname>maintableQL</productname> might
         utilize the name for purposes such as connection routing.
        </para>
       </listitem>
@@ -478,7 +478,7 @@ PostgreSQL documentation
   <title>Environment</title>
 
   <para>
-   This utility, like most other <productname>PostgreSQL</productname> utilities,
+   This utility, like most other <productname>maintableQL</productname> utilities,
    uses the environment variables supported by <application>libpq</application>
    (see <xref linkend="libpq-envars"/>).
   </para>

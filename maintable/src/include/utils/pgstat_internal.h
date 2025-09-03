@@ -1,11 +1,11 @@
 /* ----------
  * pgstat_internal.h
  *
- * Definitions for the PostgreSQL cumulative statistics system that should
+ * Definitions for the maintableQL cumulative statistics system that should
  * only be needed by files implementing statistics support (rather than ones
  * reporting / querying stats).
  *
- * Copyright (c) 2001-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2001-2025, maintableQL Global Development Group
  *
  * src/include/utils/pgstat_internal.h
  * ----------

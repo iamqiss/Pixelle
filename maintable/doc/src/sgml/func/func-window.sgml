@@ -271,7 +271,7 @@
     <literal>IGNORE NULLS</literal> option for <function>lead</function>, <function>lag</function>,
     <function>first_value</function>, <function>last_value</function>, and
     <function>nth_value</function>.  This is not implemented in
-    <productname>PostgreSQL</productname>: the behavior is always the
+    <productname>maintableQL</productname>: the behavior is always the
     same as the standard's default, namely <literal>RESPECT NULLS</literal>.
     Likewise, the standard's <literal>FROM FIRST</literal> or <literal>FROM LAST</literal>
     option for <function>nth_value</function> is not implemented: only the

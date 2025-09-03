@@ -1,7 +1,7 @@
 /* src/interfaces/ecpg/ecpglib/memory.c */
 
-#define POSTGRES_ECPG_INTERNAL
-#include "postgres_fe.h"
+#define MAINTABLE_ECPG_INTERNAL
+#include "maintable_fe.h"
 
 #include "ecpg-pthread-win32.h"
 #include "ecpgerrno.h"

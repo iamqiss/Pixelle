@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/dropuser.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-dropuser">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>dropuser</refname>
-  <refpurpose>remove a <productname>PostgreSQL</productname> user account</refpurpose>
+  <refpurpose>remove a <productname>maintableQL</productname> user account</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -34,7 +34,7 @@ PostgreSQL documentation
 
   <para>
    <application>dropuser</application> removes an existing
-   <productname>PostgreSQL</productname> user.
+   <productname>maintableQL</productname> user.
    Superusers can use this command to remove any role; otherwise, only
    non-superuser roles can be removed, and only by a user who possesses
    the <literal>CREATEROLE</literal> privilege and has been granted
@@ -62,7 +62,7 @@ PostgreSQL documentation
       <term><replaceable class="parameter">username</replaceable></term>
       <listitem>
        <para>
-        Specifies the name of the <productname>PostgreSQL</productname> user to be removed.
+        Specifies the name of the <productname>maintableQL</productname> user to be removed.
         You will be prompted for a name if none is specified on the command
         line and the <option>-i</option>/<option>--interactive</option> option
         is used.
@@ -235,7 +235,7 @@ PostgreSQL documentation
   </variablelist>
 
   <para>
-   This utility, like most other <productname>PostgreSQL</productname> utilities,
+   This utility, like most other <productname>maintableQL</productname> utilities,
    also uses the environment variables supported by <application>libpq</application>
    (see <xref linkend="libpq-envars"/>).
   </para>

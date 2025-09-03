@@ -1,19 +1,19 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Verify that ALTER TABLE optimizes certain operations as expected
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Initialize a test cluster
-my $node = PostgreSQL::Test::Cluster->new('primary');
+my $node = maintableQL::Test::Cluster->new('primary');
 $node->init();
 # Turn message level up to DEBUG1 so that we get the messages we want to see
-$node->append_conf('postgresql.conf', 'client_min_messages = DEBUG1');
+$node->append_conf('maintableql.conf', 'client_min_messages = DEBUG1');
 $node->start;
 
 # Run a SQL command and return psql's stderr (including debug messages)
@@ -23,7 +23,7 @@ sub run_sql_command
 	my $stderr;
 
 	$node->psql(
-		'postgres',
+		'maintable',
 		$sql,
 		stderr => \$stderr,
 		on_error_die => 1,

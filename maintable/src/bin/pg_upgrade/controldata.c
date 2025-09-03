@@ -3,11 +3,11 @@
  *
  *	controldata functions
  *
- *	Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ *	Copyright (c) 2010-2025, maintableQL Global Development Group
  *	src/bin/pg_upgrade/controldata.c
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <ctype.h>
 #include <limits.h>				/* for CHAR_MIN */
@@ -21,7 +21,7 @@
  * get_control_data()
  *
  * gets pg_control information in "ctrl". Assumes that bindir and
- * datadir are valid absolute paths to postgresql bin and pgdata
+ * datadir are valid absolute paths to maintableql bin and pgdata
  * directories respectively *and* pg_resetwal is version compatible
  * with datadir. The main purpose of this function is to get pg_control
  * data in a version independent manner.
@@ -676,11 +676,11 @@ get_control_data(ClusterInfo *cluster)
 		if (!got_date_is_int)
 			pg_log(PG_REPORT, "  dates/times are integers?");
 
-		/* value added in Postgres 9.3 */
+		/* value added in Maintable 9.3 */
 		if (!got_data_checksum_version)
 			pg_log(PG_REPORT, "  data checksum version");
 
-		/* value added in Postgres 18 */
+		/* value added in Maintable 18 */
 		if (!got_default_char_signedness)
 			pg_log(PG_REPORT, "  default char signedness");
 

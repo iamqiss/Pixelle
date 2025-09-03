@@ -7,7 +7,7 @@
   Logical replication is a method of replicating data objects and their
   changes, based upon their replication identity (usually a primary key).  We
   use the term logical in contrast to physical replication, which uses exact
-  block addresses and byte-by-byte replication.  PostgreSQL supports both
+  block addresses and byte-by-byte replication.  maintableQL supports both
   mechanisms concurrently, see <xref linkend="high-availability"/>.  Logical
   replication allows fine-grained control over both data replication and
   security.
@@ -24,7 +24,7 @@
  </para>
 
  <para>
-  When logical replication of a table typically starts, PostgreSQL takes
+  When logical replication of a table typically starts, maintableQL takes
   a snapshot of the table's data on the publisher database and copies it
   to the subscriber.  Once complete, changes on the publisher since the
   initial copy are sent continually to the subscriber.  The subscriber
@@ -61,13 +61,13 @@
 
    <listitem>
     <para>
-     Replicating between different major versions of PostgreSQL.
+     Replicating between different major versions of maintableQL.
     </para>
    </listitem>
 
    <listitem>
     <para>
-     Replicating between PostgreSQL instances on different platforms (for
+     Replicating between maintableQL instances on different platforms (for
      example Linux to Windows)
     </para>
    </listitem>
@@ -87,7 +87,7 @@
  </para>
 
  <para>
-  The subscriber database behaves in the same way as any other PostgreSQL
+  The subscriber database behaves in the same way as any other maintableQL
   instance and can be used as a publisher for other databases by defining its
   own publications.  When the subscriber is treated as read-only by
   application, there will be no conflicts from a single subscription.  On the
@@ -207,7 +207,7 @@
   </para>
 
   <para>
-   The subscriber database behaves in the same way as any other PostgreSQL
+   The subscriber database behaves in the same way as any other maintableQL
    instance and can be used as a publisher for other databases by defining its
    own publications.
   </para>
@@ -788,19 +788,19 @@ HINT:  To initiate replication, you must manually create the replication slot, e
 
   <para>
    The first two steps in the above procedure are meant for a
-   <productname>PostgreSQL</productname> subscriber. It is recommended to run
+   <productname>maintableQL</productname> subscriber. It is recommended to run
    these steps on each subscriber node, that will be served by the designated
    standby after failover, to obtain the complete list of replication
    slots. This list can then be verified in Step 3 to ensure failover readiness.
-   Non-<productname>PostgreSQL</productname> subscribers, on the other hand, may
+   Non-<productname>maintableQL</productname> subscribers, on the other hand, may
    use their own methods to identify the replication slots used by their
    respective subscriptions.
   </para>
 
   <para>
    In some cases, such as during a planned failover, it is necessary to confirm
-   that all subscribers, whether <productname>PostgreSQL</productname> or
-   non-<productname>PostgreSQL</productname>, will be able to continue
+   that all subscribers, whether <productname>maintableQL</productname> or
+   non-<productname>maintableQL</productname>, will be able to continue
    replication after failover to a given standby server. In such cases, use the
    following SQL, instead of performing the first two steps above, to identify
    which replication slots on the primary need to be synced to the standby that
@@ -1051,14 +1051,14 @@ HINT:  To initiate replication, you must manually create the replication slot, e
                                          Publication p1
   Owner   | All tables | Inserts | Updates | Deletes | Truncates | Generated columns | Via root
 ----------+------------+---------+---------+---------+-----------+-------------------+----------
- postgres | f          | t       | t       | t       | t         | none              | f
+ maintable | f          | t       | t       | t       | t         | none              | f
 Tables:
     "public.t1" WHERE ((a > 5) AND (c = 'NSW'::text))
 
                                          Publication p2
   Owner   | All tables | Inserts | Updates | Deletes | Truncates | Generated columns | Via root
 ----------+------------+---------+---------+---------+-----------+-------------------+----------
- postgres | f          | t       | t       | t       | t         | none              | f
+ maintable | f          | t       | t       | t       | t         | none              | f
 Tables:
     "public.t1"
     "public.t2" WHERE (e = 99)
@@ -1066,7 +1066,7 @@ Tables:
                                          Publication p3
   Owner   | All tables | Inserts | Updates | Deletes | Truncates | Generated columns | Via root
 ----------+------------+---------+---------+---------+-----------+-------------------+----------
- postgres | f          | t       | t       | t       | t         | none              | f
+ maintable | f          | t       | t       | t       | t         | none              | f
 Tables:
     "public.t2" WHERE (d = 10)
     "public.t3" WHERE (g = 10)
@@ -1494,7 +1494,7 @@ Publications:
                                          Publication p1
   Owner   | All tables | Inserts | Updates | Deletes | Truncates | Generated columns | Via root
 ----------+------------+---------+---------+---------+-----------+-------------------+----------
- postgres | f          | t       | t       | t       | t         | none              | f
+ maintable | f          | t       | t       | t       | t         | none              | f
 Tables:
     "public.t1" (id, a, b, d)
 </programlisting></para>
@@ -1613,7 +1613,7 @@ Publications:
    <tip>
     <para>
      This feature may be useful when replicating data to a
-     non-PostgreSQL database via output plugin, especially if the target database
+     non-maintableQL database via output plugin, especially if the target database
      does not support generated columns.
     </para>
   </tip>
@@ -1632,7 +1632,7 @@ Publications:
        Set the <command>PUBLICATION</command> parameter
        <link linkend="sql-createpublication-params-with-publish-generated-columns">
        <literal>publish_generated_columns</literal></link> to <literal>stored</literal>.
-       This instructs PostgreSQL logical replication to publish current and
+       This instructs maintableQL logical replication to publish current and
        future stored generated columns of the publication's tables.
       </para>
      </listitem>
@@ -1994,7 +1994,7 @@ DETAIL:  <replaceable class="parameter">detailed_explanation</replaceable>.
    <command>UPDATE</command>, <command>DELETE</command> or
    <command>TRUNCATE</command> which is being replicated.  This restriction on
    row-level security may be lifted in a future version of
-   <productname>PostgreSQL</productname>.
+   <productname>maintableQL</productname>.
   </para>
 
   <para>
@@ -2312,7 +2312,7 @@ CONTEXT:  processing remote data for replication origin "pg_16395" during "INSER
    filters or column lists, or by not adding the whole table to the
    publication, be aware that other publications in the same database could
    expose the same information.  Publication privileges might be added to
-   <productname>PostgreSQL</productname> in the future to allow for
+   <productname>maintableQL</productname> in the future to allow for
    finer-grained access control.
   </para>
 
@@ -2510,7 +2510,7 @@ CONTEXT:  processing remote data for replication origin "pg_16395" during "INSER
     <listitem>
      <para>
       The output plugins referenced by the slots on the old cluster must be
-      installed in the new PostgreSQL executable directory.
+      installed in the new maintableQL executable directory.
      </para>
     </listitem>
     <listitem>
@@ -2703,7 +2703,7 @@ CONTEXT:  processing remote data for replication origin "pg_16395" during "INSER
        <para>
         Stop the publisher server in <literal>node1</literal>, e.g.:
 <programlisting>
-pg_ctl -D /opt/PostgreSQL/data1 stop
+pg_ctl -D /opt/maintableQL/data1 stop
 </programlisting>
        </para>
       </step>
@@ -2721,10 +2721,10 @@ pg_ctl -D /opt/PostgreSQL/data1 stop
         required newer version, e.g.:
 <programlisting>
 pg_upgrade
-        --old-datadir "/opt/PostgreSQL/postgres/17/data1"
-        --new-datadir "/opt/PostgreSQL/postgres/18/data1_upgraded"
-        --old-bindir "/opt/PostgreSQL/postgres/17/bin"
-        --new-bindir "/opt/PostgreSQL/postgres/18/bin"
+        --old-datadir "/opt/maintableQL/maintable/17/data1"
+        --new-datadir "/opt/maintableQL/maintable/18/data1_upgraded"
+        --old-bindir "/opt/maintableQL/maintable/17/bin"
+        --new-bindir "/opt/maintableQL/maintable/18/bin"
 </programlisting>
        </para>
       </step>
@@ -2733,7 +2733,7 @@ pg_upgrade
        <para>
         Start the upgraded publisher server in <literal>node1</literal>, e.g.:
 <programlisting>
-pg_ctl -D /opt/PostgreSQL/data1_upgraded start -l logfile
+pg_ctl -D /opt/maintableQL/data1_upgraded start -l logfile
 </programlisting>
        </para>
       </step>
@@ -2742,7 +2742,7 @@ pg_ctl -D /opt/PostgreSQL/data1_upgraded start -l logfile
        <para>
         Stop the subscriber server in <literal>node2</literal>, e.g.:
 <programlisting>
-pg_ctl -D /opt/PostgreSQL/data2 stop
+pg_ctl -D /opt/maintableQL/data2 stop
 </programlisting>
        </para>
       </step>
@@ -2760,10 +2760,10 @@ pg_ctl -D /opt/PostgreSQL/data2 stop
         the required new version, e.g.:
 <programlisting>
 pg_upgrade
-       --old-datadir "/opt/PostgreSQL/postgres/17/data2"
-       --new-datadir "/opt/PostgreSQL/postgres/18/data2_upgraded"
-       --old-bindir "/opt/PostgreSQL/postgres/17/bin"
-       --new-bindir "/opt/PostgreSQL/postgres/18/bin"
+       --old-datadir "/opt/maintableQL/maintable/17/data2"
+       --new-datadir "/opt/maintableQL/maintable/18/data2_upgraded"
+       --old-bindir "/opt/maintableQL/maintable/17/bin"
+       --new-bindir "/opt/maintableQL/maintable/18/bin"
 </programlisting>
        </para>
       </step>
@@ -2772,7 +2772,7 @@ pg_upgrade
        <para>
         Start the upgraded subscriber server in <literal>node2</literal>, e.g.:
 <programlisting>
-pg_ctl -D /opt/PostgreSQL/data2_upgraded start -l logfile
+pg_ctl -D /opt/maintableQL/data2_upgraded start -l logfile
 </programlisting>
        </para>
       </step>
@@ -2854,7 +2854,7 @@ pg_ctl -D /opt/PostgreSQL/data2_upgraded start -l logfile
        <para>
         Stop the server in <literal>node1</literal>, e.g.:
 <programlisting>
-pg_ctl -D /opt/PostgreSQL/data1 stop
+pg_ctl -D /opt/maintableQL/data1 stop
 </programlisting>
        </para>
       </step>
@@ -2872,10 +2872,10 @@ pg_ctl -D /opt/PostgreSQL/data1 stop
         version, e.g.:
 <programlisting>
 pg_upgrade
-        --old-datadir "/opt/PostgreSQL/postgres/17/data1"
-        --new-datadir "/opt/PostgreSQL/postgres/18/data1_upgraded"
-        --old-bindir "/opt/PostgreSQL/postgres/17/bin"
-        --new-bindir "/opt/PostgreSQL/postgres/18/bin"
+        --old-datadir "/opt/maintableQL/maintable/17/data1"
+        --new-datadir "/opt/maintableQL/maintable/18/data1_upgraded"
+        --old-bindir "/opt/maintableQL/maintable/17/bin"
+        --new-bindir "/opt/maintableQL/maintable/18/bin"
 </programlisting>
        </para>
       </step>
@@ -2884,7 +2884,7 @@ pg_upgrade
        <para>
         Start the upgraded server in <literal>node1</literal>, e.g.:
 <programlisting>
-pg_ctl -D /opt/PostgreSQL/data1_upgraded start -l logfile
+pg_ctl -D /opt/maintableQL/data1_upgraded start -l logfile
 </programlisting>
        </para>
       </step>
@@ -2905,7 +2905,7 @@ pg_ctl -D /opt/PostgreSQL/data1_upgraded start -l logfile
        <para>
         Stop the server in <literal>node2</literal>, e.g.:
 <programlisting>
-pg_ctl -D /opt/PostgreSQL/data2 stop
+pg_ctl -D /opt/maintableQL/data2 stop
 </programlisting>
        </para>
       </step>
@@ -2923,10 +2923,10 @@ pg_ctl -D /opt/PostgreSQL/data2 stop
         new version, e.g.:
 <programlisting>
 pg_upgrade
-        --old-datadir "/opt/PostgreSQL/postgres/17/data2"
-        --new-datadir "/opt/PostgreSQL/postgres/18/data2_upgraded"
-        --old-bindir "/opt/PostgreSQL/postgres/17/bin"
-        --new-bindir "/opt/PostgreSQL/postgres/18/bin"
+        --old-datadir "/opt/maintableQL/maintable/17/data2"
+        --new-datadir "/opt/maintableQL/maintable/18/data2_upgraded"
+        --old-bindir "/opt/maintableQL/maintable/17/bin"
+        --new-bindir "/opt/maintableQL/maintable/18/bin"
 </programlisting>
        </para>
       </step>
@@ -2935,7 +2935,7 @@ pg_upgrade
        <para>
         Start the upgraded server in <literal>node2</literal>, e.g.:
 <programlisting>
-pg_ctl -D /opt/PostgreSQL/data2_upgraded start -l logfile
+pg_ctl -D /opt/maintableQL/data2_upgraded start -l logfile
 </programlisting>
        </para>
       </step>
@@ -2979,7 +2979,7 @@ pg_ctl -D /opt/PostgreSQL/data2_upgraded start -l logfile
        <para>
         Stop the server in <literal>node3</literal>, e.g.:
 <programlisting>
-pg_ctl -D /opt/PostgreSQL/data3 stop
+pg_ctl -D /opt/maintableQL/data3 stop
 </programlisting>
        </para>
       </step>
@@ -2997,10 +2997,10 @@ pg_ctl -D /opt/PostgreSQL/data3 stop
         new version, e.g.:
 <programlisting>
 pg_upgrade
-        --old-datadir "/opt/PostgreSQL/postgres/17/data3"
-        --new-datadir "/opt/PostgreSQL/postgres/18/data3_upgraded"
-        --old-bindir "/opt/PostgreSQL/postgres/17/bin"
-        --new-bindir "/opt/PostgreSQL/postgres/18/bin"
+        --old-datadir "/opt/maintableQL/maintable/17/data3"
+        --new-datadir "/opt/maintableQL/maintable/18/data3_upgraded"
+        --old-bindir "/opt/maintableQL/maintable/17/bin"
+        --new-bindir "/opt/maintableQL/maintable/18/bin"
 </programlisting>
        </para>
       </step>
@@ -3009,7 +3009,7 @@ pg_upgrade
        <para>
         Start the upgraded server in <literal>node3</literal>, e.g.:
 <programlisting>
-pg_ctl -D /opt/PostgreSQL/data3_upgraded start -l logfile
+pg_ctl -D /opt/maintableQL/data3_upgraded start -l logfile
 </programlisting>
        </para>
       </step>
@@ -3084,7 +3084,7 @@ pg_ctl -D /opt/PostgreSQL/data3_upgraded start -l logfile
        <para>
         Stop the server in <literal>node1</literal>, e.g.:
 <programlisting>
-pg_ctl -D /opt/PostgreSQL/data1 stop
+pg_ctl -D /opt/maintableQL/data1 stop
 </programlisting>
        </para>
       </step>
@@ -3102,10 +3102,10 @@ pg_ctl -D /opt/PostgreSQL/data1 stop
         newer version, e.g.:
 <programlisting>
 pg_upgrade
-        --old-datadir "/opt/PostgreSQL/postgres/17/data1"
-        --new-datadir "/opt/PostgreSQL/postgres/18/data1_upgraded"
-        --old-bindir "/opt/PostgreSQL/postgres/17/bin"
-        --new-bindir "/opt/PostgreSQL/postgres/18/bin"
+        --old-datadir "/opt/maintableQL/maintable/17/data1"
+        --new-datadir "/opt/maintableQL/maintable/18/data1_upgraded"
+        --old-bindir "/opt/maintableQL/maintable/17/bin"
+        --new-bindir "/opt/maintableQL/maintable/18/bin"
 </programlisting>
        </para>
       </step>
@@ -3114,7 +3114,7 @@ pg_upgrade
        <para>
         Start the upgraded server in <literal>node1</literal>, e.g.:
 <programlisting>
-pg_ctl -D /opt/PostgreSQL/data1_upgraded start -l logfile
+pg_ctl -D /opt/maintableQL/data1_upgraded start -l logfile
 </programlisting>
        </para>
       </step>
@@ -3171,7 +3171,7 @@ pg_ctl -D /opt/PostgreSQL/data1_upgraded start -l logfile
        <para>
         Stop the server in <literal>node2</literal>, e.g.:
 <programlisting>
-pg_ctl -D /opt/PostgreSQL/data2 stop
+pg_ctl -D /opt/maintableQL/data2 stop
 </programlisting>
        </para>
       </step>
@@ -3189,10 +3189,10 @@ pg_ctl -D /opt/PostgreSQL/data2 stop
         new version, e.g.:
 <programlisting>
 pg_upgrade
-        --old-datadir "/opt/PostgreSQL/postgres/17/data2"
-        --new-datadir "/opt/PostgreSQL/postgres/18/data2_upgraded"
-        --old-bindir "/opt/PostgreSQL/postgres/17/bin"
-        --new-bindir "/opt/PostgreSQL/postgres/18/bin"
+        --old-datadir "/opt/maintableQL/maintable/17/data2"
+        --new-datadir "/opt/maintableQL/maintable/18/data2_upgraded"
+        --old-bindir "/opt/maintableQL/maintable/17/bin"
+        --new-bindir "/opt/maintableQL/maintable/18/bin"
 </programlisting>
        </para>
       </step>
@@ -3201,7 +3201,7 @@ pg_upgrade
        <para>
         Start the upgraded server in <literal>node2</literal>, e.g.:
 <programlisting>
-pg_ctl -D /opt/PostgreSQL/data2_upgraded start -l logfile
+pg_ctl -D /opt/maintableQL/data2_upgraded start -l logfile
 </programlisting>
        </para>
       </step>
@@ -3250,7 +3250,7 @@ pg_ctl -D /opt/PostgreSQL/data2_upgraded start -l logfile
   <title>Quick Setup</title>
 
   <para>
-   First set the configuration options in <filename>postgresql.conf</filename>:
+   First set the configuration options in <filename>maintableql.conf</filename>:
 <programlisting>
 wal_level = logical
 </programlisting>

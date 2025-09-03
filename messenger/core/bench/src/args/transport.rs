@@ -82,7 +82,7 @@ impl BenchmarkTransportProps for BenchmarkTransportCommand {
 
 #[derive(Parser, Debug, Clone)]
 pub struct HttpArgs {
-    /// Address of the HTTP iggy-server
+    /// Address of the HTTP messenger-server
     #[arg(long, default_value_t = DEFAULT_HTTP_SERVER_ADDRESS.to_owned())]
     pub server_address: String,
 
@@ -119,7 +119,7 @@ impl BenchmarkTransportProps for HttpArgs {
 
 #[derive(Parser, Debug, Clone)]
 pub struct TcpArgs {
-    /// Address of the TCP iggy-server
+    /// Address of the TCP messenger-server
     #[arg(long, default_value_t = DEFAULT_TCP_SERVER_ADDRESS.to_owned())]
     pub server_address: String,
 

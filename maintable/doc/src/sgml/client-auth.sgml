@@ -9,7 +9,7 @@
 
  <para>
   When a client application connects to the database server, it
-  specifies which <productname>PostgreSQL</productname> database user name it
+  specifies which <productname>maintableQL</productname> database user name it
   wants to connect as, much the same way one logs into a Unix computer
   as a particular user. Within the SQL environment the active database
   user name determines access privileges to database objects &mdash; see
@@ -20,7 +20,7 @@
  <note>
   <para>
    As explained in <xref linkend="user-manag"/>,
-   <productname>PostgreSQL</productname> actually does privilege
+   <productname>maintableQL</productname> actually does privilege
    management in terms of <quote>roles</quote>.  In this chapter, we
    consistently use <firstterm>database user</firstterm> to mean <quote>role with the
    <literal>LOGIN</literal> privilege</quote>.
@@ -36,14 +36,14 @@
  </para>
 
  <para>
-  <productname>PostgreSQL</productname> offers a number of different
+  <productname>maintableQL</productname> offers a number of different
   client authentication methods. The method used to authenticate a
   particular client connection can be selected on the basis of
   (client) host address, database, and user.
  </para>
 
  <para>
-  <productname>PostgreSQL</productname> database user names are logically
+  <productname>maintableQL</productname> database user names are logically
   separate from user names of the operating system in which the server
   runs. If all the users of a particular server also have accounts on
   the server's machine, it makes sense to assign database user names
@@ -281,7 +281,7 @@ include_dir         <replaceable>directory</replaceable>
        replication connections do not specify any particular database whereas
        logical replication connections do specify it.
        Otherwise, this is the name of a specific
-       <productname>PostgreSQL</productname> database or a regular expression.
+       <productname>maintableQL</productname> database or a regular expression.
        Multiple database names and/or regular expressions can be supplied by
        separating them with commas.
       </para>
@@ -289,7 +289,7 @@ include_dir         <replaceable>directory</replaceable>
        If the database name starts with a slash (<literal>/</literal>), the
        remainder of the name is treated as a regular expression.
        (See <xref linkend="posix-syntax-details"/> for details of
-       <productname>PostgreSQL</productname>'s regular expression syntax.)
+       <productname>maintableQL</productname>'s regular expression syntax.)
       </para>
       <para>
        A separate file containing database names and/or regular expressions
@@ -308,7 +308,7 @@ include_dir         <replaceable>directory</replaceable>
        database user, a regular expression (when starting with a slash
        (<literal>/</literal>), or a group name preceded by <literal>+</literal>.
        (Recall that there is no real distinction between users and groups
-       in <productname>PostgreSQL</productname>; a <literal>+</literal> mark really means
+       in <productname>maintableQL</productname>; a <literal>+</literal> mark really means
        <quote>match any of the roles that are directly or indirectly members
        of this role</quote>, while a name without a <literal>+</literal> mark matches
        only that specific role.) For this purpose, a superuser is only
@@ -322,7 +322,7 @@ include_dir         <replaceable>directory</replaceable>
        If the user name starts with a slash (<literal>/</literal>), the
        remainder of the name is treated as a regular expression.
        (See <xref linkend="posix-syntax-details"/> for details of
-       <productname>PostgreSQL</productname>'s regular expression syntax.)
+       <productname>maintableQL</productname>'s regular expression syntax.)
       </para>
       <para>
        A separate file containing user names and/or regular expressions can
@@ -492,8 +492,8 @@ include_dir         <replaceable>directory</replaceable>
          <para>
           Allow the connection unconditionally. This method
           allows anyone that can connect to the
-          <productname>PostgreSQL</productname> database server to login as
-          any <productname>PostgreSQL</productname> user they wish,
+          <productname>maintableQL</productname> database server to login as
+          any <productname>maintableQL</productname> user they wish,
           without the need for a password or any other authentication.  See <xref
           linkend="auth-trust"/> for details.
          </para>
@@ -535,7 +535,7 @@ include_dir         <replaceable>directory</replaceable>
           <para>
            Support for MD5-encrypted passwords is deprecated and will be
            removed in a future release of
-           <productname>PostgreSQL</productname>.  Refer to
+           <productname>maintableQL</productname>.  Refer to
            <xref linkend="auth-password"/> for details about migrating to
            another password type.
           </para>
@@ -836,17 +836,17 @@ host    all             all             localhost               trust
 host    "/^db\d{2,4}$"  all             localhost               trust
 
 # Allow any user from any host with IP address 192.168.93.x to connect
-# to database "postgres" as the same user name that ident reports for
+# to database "maintable" as the same user name that ident reports for
 # the connection (typically the operating system user name).
 #
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
-host    postgres        all             192.168.93.0/24         ident
+host    maintable        all             192.168.93.0/24         ident
 
 # Allow any user from host 192.168.12.10 to connect to database
-# "postgres" if the user's password is correctly supplied.
+# "maintable" if the user's password is correctly supplied.
 #
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
-host    postgres        all             192.168.12.10/32        scram-sha-256
+host    maintable        all             192.168.12.10/32        scram-sha-256
 
 # Allow any user from hosts in the example.com domain to connect to
 # any database if the user's password is correctly supplied.
@@ -874,7 +874,7 @@ host    all             all             192.168.12.10/32        gss
 
 # Allow users from 192.168.x.x hosts to connect to any database, if
 # they pass the ident check.  If, for example, ident says the user is
-# "bryanh" and he requests to connect as PostgreSQL user "guest1", the
+# "bryanh" and he requests to connect as maintableQL user "guest1", the
 # connection is allowed if there is an entry in pg_ident.conf for map
 # "omicron" that says "bryanh" is allowed to connect as "guest1".
 #
@@ -1002,7 +1002,7 @@ local   db1,db2,@demodbs  all                                   md5
    If the <replaceable>system-username</replaceable> field starts with a slash (<literal>/</literal>),
    the remainder of the field is treated as a regular expression.
    (See <xref linkend="posix-syntax-details"/> for details of
-   <productname>PostgreSQL</productname>'s regular expression syntax.)  The regular
+   <productname>maintableQL</productname>'s regular expression syntax.)  The regular
    expression can include a single capture, or parenthesized subexpression.
    The portion of the system user name that matched the capture can then
    be referenced in the <replaceable>database-username</replaceable>
@@ -1048,7 +1048,7 @@ mymap   /^(.*)@otherdomain\.com$   guest
    operating system user name <literal>bryanh</literal>, <literal>ann</literal>, or
    <literal>robert</literal> would not be granted access. Unix user
    <literal>robert</literal> would only be allowed access when he tries to
-   connect as <productname>PostgreSQL</productname> user <literal>bob</literal>, not
+   connect as <productname>maintableQL</productname> user <literal>bob</literal>, not
    as <literal>robert</literal> or anyone else. <literal>ann</literal> would
    only be allowed to connect as <literal>ann</literal>. User
    <literal>bryanh</literal> would be allowed to connect as either
@@ -1074,7 +1074,7 @@ omicron         bryanh                  guest1
   <title>Authentication Methods</title>
 
   <para>
-   <productname>PostgreSQL</productname> provides various methods for
+   <productname>maintableQL</productname> provides various methods for
    authenticating users:
 
    <itemizedlist>
@@ -1182,7 +1182,7 @@ omicron         bryanh                  guest1
 
    <para>
     When <literal>trust</literal> authentication is specified,
-    <productname>PostgreSQL</productname> assumes that anyone who can
+    <productname>maintableQL</productname> assumes that anyone who can
     connect to the server is authorized to access the database with
     whatever database user name they specify (even superuser names).
     Of course, restrictions made in the <literal>database</literal> and
@@ -1289,7 +1289,7 @@ omicron         bryanh                  guest1
       <warning>
        <para>
         Support for MD5-encrypted passwords is deprecated and will be removed
-        in a future release of <productname>PostgreSQL</productname>.  Refer to
+        in a future release of <productname>maintableQL</productname>.  Refer to
         the text below for details about migrating to another password type.
        </para>
       </warning>
@@ -1312,7 +1312,7 @@ omicron         bryanh                  guest1
    </variablelist>
 
    <para>
-    <productname>PostgreSQL</productname> database passwords are
+    <productname>maintableQL</productname> database passwords are
     separate from operating system user passwords. The password for
     each database user is stored in the <literal>pg_authid</literal> system
     catalog. Passwords can be managed with the SQL commands
@@ -1341,7 +1341,7 @@ omicron         bryanh                  guest1
     the <literal>md5</literal> setting, then it can be used only for
     the <literal>md5</literal> and <literal>password</literal> authentication
     method specifications (again, with the password transmitted in plain text
-    in the latter case).  (Previous PostgreSQL releases supported storing the
+    in the latter case).  (Previous maintableQL releases supported storing the
     password on the server in plain text.  This is no longer possible.)  To
     check the currently stored password hashes, see the system
     catalog <literal>pg_authid</literal>.
@@ -1352,7 +1352,7 @@ omicron         bryanh                  guest1
     to <literal>scram-sha-256</literal>, after having ensured that all client
     libraries in use are new enough to support SCRAM,
     set <literal>password_encryption = 'scram-sha-256'</literal>
-    in <filename>postgresql.conf</filename>, make all users set new passwords,
+    in <filename>maintableql.conf</filename>, make all users set new passwords,
     and change the authentication method specifications
     in <filename>pg_hba.conf</filename> to <literal>scram-sha-256</literal>.
    </para>
@@ -1369,7 +1369,7 @@ omicron         bryanh                  guest1
     <productname>GSSAPI</productname> is an industry-standard protocol
     for secure authentication defined in
     <ulink url="https://datatracker.ietf.org/doc/html/rfc2743">RFC 2743</ulink>.
-    <productname>PostgreSQL</productname>
+    <productname>maintableQL</productname>
     supports <productname>GSSAPI</productname> for authentication,
     communications encryption, or both.
     <productname>GSSAPI</productname> provides automatic authentication
@@ -1381,7 +1381,7 @@ omicron         bryanh                  guest1
    </para>
 
    <para>
-    GSSAPI support has to be enabled when <productname>PostgreSQL</productname> is built;
+    GSSAPI support has to be enabled when <productname>maintableQL</productname> is built;
     see <xref linkend="installation"/> for more information.
    </para>
 
@@ -1391,7 +1391,7 @@ omicron         bryanh                  guest1
     principal (authentication identity) name in the format
     <literal><replaceable>servicename</replaceable>/<replaceable>hostname</replaceable>@<replaceable>realm</replaceable></literal>.
     The principal name used by a particular installation is not encoded in
-    the <productname>PostgreSQL</productname> server in any way; rather it
+    the <productname>maintableQL</productname> server in any way; rather it
     is specified in the <firstterm>keytab</firstterm> file that the server
     reads to determine its identity.  If multiple principals are listed in
     the keytab file, the server will accept any one of them.
@@ -1402,7 +1402,7 @@ omicron         bryanh                  guest1
    <para>
     When connecting, the client must know the principal name of the server
     it intends to connect to.  The <replaceable>servicename</replaceable>
-    part of the principal is ordinarily <literal>postgres</literal>,
+    part of the principal is ordinarily <literal>maintable</literal>,
     but another value can be selected via <application>libpq</application>'s
     <xref linkend="libpq-connect-krbsrvname"/> connection parameter.
     The <replaceable>hostname</replaceable> part is the fully qualified
@@ -1416,16 +1416,16 @@ omicron         bryanh                  guest1
     (and it must have a valid ticket for this principal).  To
     use <productname>GSSAPI</productname> for authentication, the client
     principal must be associated with
-    a <productname>PostgreSQL</productname> database user name.
+    a <productname>maintableQL</productname> database user name.
     The <filename>pg_ident.conf</filename> configuration file can be used
     to map principals to user names; for example,
     <literal>pgusername@realm</literal> could be mapped to just <literal>pgusername</literal>.
     Alternatively, you can use the full <literal>username@realm</literal> principal as
-    the role name in <productname>PostgreSQL</productname> without any mapping.
+    the role name in <productname>maintableQL</productname> without any mapping.
    </para>
 
    <para>
-    <productname>PostgreSQL</productname> also supports mapping
+    <productname>maintableQL</productname> also supports mapping
     client principals to user names by just stripping the realm from
     the principal.  This method is supported for backwards compatibility and is
     strongly discouraged as it is then impossible to distinguish different users
@@ -1443,11 +1443,11 @@ omicron         bryanh                  guest1
     The location of the server's keytab file is specified by the <xref
     linkend="guc-krb-server-keyfile"/> configuration parameter.
     For security reasons, it is recommended to use a separate keytab
-    just for the <productname>PostgreSQL</productname> server rather
+    just for the <productname>maintableQL</productname> server rather
     than allowing the server to read the system keytab file.
     Make sure that your server keytab file is readable (and preferably
-    only readable, not writable) by the <productname>PostgreSQL</productname>
-    server account.  (See also <xref linkend="postgres-user"/>.)
+    only readable, not writable) by the <productname>maintableQL</productname>
+    server account.  (See also <xref linkend="maintable-user"/>.)
    </para>
 
    <para>
@@ -1456,8 +1456,8 @@ omicron         bryanh                  guest1
     doing this using the <application>kadmin</application> tool of
     MIT Kerberos:
 <screen>
-<prompt>kadmin% </prompt><userinput>addprinc -randkey postgres/server.my.domain.org</userinput>
-<prompt>kadmin% </prompt><userinput>ktadd -k krb5.keytab postgres/server.my.domain.org</userinput>
+<prompt>kadmin% </prompt><userinput>addprinc -randkey maintable/server.my.domain.org</userinput>
+<prompt>kadmin% </prompt><userinput>ktadd -k krb5.keytab maintable/server.my.domain.org</userinput>
 </screen>
    </para>
 
@@ -1477,7 +1477,7 @@ omicron         bryanh                  guest1
         also used.  It is recommended to
         leave <literal>include_realm</literal> set to the default (1) and to
         provide an explicit mapping in <filename>pg_ident.conf</filename> to convert
-        principal names to <productname>PostgreSQL</productname> user names.
+        principal names to <productname>maintableQL</productname> user names.
        </para>
       </listitem>
      </varlistentry>
@@ -1534,7 +1534,7 @@ omicron         bryanh                  guest1
    <para>
     <productname>SSPI</productname> is a <productname>Windows</productname>
     technology for secure authentication with single sign-on.
-    <productname>PostgreSQL</productname> will use SSPI in
+    <productname>maintableQL</productname> will use SSPI in
     <literal>negotiate</literal> mode, which will use
     <productname>Kerberos</productname> when possible and automatically
     fall back to <productname>NTLM</productname> in other cases.
@@ -1569,7 +1569,7 @@ omicron         bryanh                  guest1
         also used.  It is recommended to
         leave <literal>include_realm</literal> set to the default (1) and to
         provide an explicit mapping in <filename>pg_ident.conf</filename> to convert
-        principal names to <productname>PostgreSQL</productname> user names.
+        principal names to <productname>maintableQL</productname> user names.
        </para>
       </listitem>
      </varlistentry>
@@ -1690,7 +1690,7 @@ omicron         bryanh                  guest1
     is to answer questions like <quote>What user initiated the
     connection that goes out of your port <replaceable>X</replaceable>
     and connects to my port <replaceable>Y</replaceable>?</quote>.
-    Since <productname>PostgreSQL</productname> knows both <replaceable>X</replaceable> and
+    Since <productname>maintableQL</productname> knows both <replaceable>X</replaceable> and
     <replaceable>Y</replaceable> when a physical connection is established, it
     can interrogate the ident server on the host of the connecting
     client and can theoretically determine the operating system user
@@ -1720,8 +1720,8 @@ omicron         bryanh                  guest1
     Some ident servers have a nonstandard option that causes the returned
     user name to be encrypted, using a key that only the originating
     machine's administrator knows.  This option <emphasis>must not</emphasis> be
-    used when using the ident server with <productname>PostgreSQL</productname>,
-    since <productname>PostgreSQL</productname> does not have any way to decrypt the
+    used when using the ident server with <productname>maintableQL</productname>,
+    since <productname>maintableQL</productname> does not have any way to decrypt the
     returned string to determine the actual user name.
    </para>
   </sect1>
@@ -1850,7 +1850,7 @@ omicron         bryanh                  guest1
       <term><literal>ldaptls</literal></term>
       <listitem>
        <para>
-        Set to 1 to make the connection between PostgreSQL and the LDAP server
+        Set to 1 to make the connection between maintableQL and the LDAP server
         use TLS encryption.  This uses the <literal>StartTLS</literal>
         operation per <ulink url="https://datatracker.ietf.org/doc/html/rfc4513">RFC 4513</ulink>.
         See also the <literal>ldapscheme</literal> option for an alternative.
@@ -1863,8 +1863,8 @@ omicron         bryanh                  guest1
    <para>
     Note that using <literal>ldapscheme</literal> or
     <literal>ldaptls</literal> only encrypts the traffic between the
-    PostgreSQL server and the LDAP server.  The connection between the
-    PostgreSQL server and the PostgreSQL client will still be unencrypted
+    maintableQL server and the LDAP server.  The connection between the
+    maintableQL server and the maintableQL client will still be unencrypted
     unless SSL is used there as well.
    </para>
 
@@ -2013,7 +2013,7 @@ ldap[s]://<replaceable>host</replaceable>[:<replaceable>port</replaceable>]/<rep
    </para>
 
    <para>
-     If <productname>PostgreSQL</productname> was compiled with
+     If <productname>maintableQL</productname> was compiled with
      <productname>OpenLDAP</productname> as the LDAP client library, the
      <literal>ldapserver</literal> setting may be omitted.  In that case, a
      list of host names and ports is looked up via
@@ -2028,7 +2028,7 @@ ldap[s]://<replaceable>host</replaceable>[:<replaceable>port</replaceable>]/<rep
 host ... ldap ldapserver=ldap.example.net ldapprefix="cn=" ldapsuffix=", dc=example, dc=net"
 </programlisting>
     When a connection to the database server as database
-    user <literal>someuser</literal> is requested, PostgreSQL will attempt to
+    user <literal>someuser</literal> is requested, maintableQL will attempt to
     bind to the LDAP server using the DN <literal>cn=someuser, dc=example,
     dc=net</literal> and the password provided by the client.  If that connection
     succeeds, the database access is granted.
@@ -2050,7 +2050,7 @@ host ... ldap ldapurl="ldaps://ldap.example.net:49151" ldapprefix="cn=" ldapsuff
 host ... ldap ldapserver=ldap.example.net ldapbasedn="dc=example, dc=net" ldapsearchattribute=uid
 </programlisting>
     When a connection to the database server as database
-    user <literal>someuser</literal> is requested, PostgreSQL will attempt to
+    user <literal>someuser</literal> is requested, maintableQL will attempt to
     bind anonymously (since <literal>ldapbinddn</literal> was not specified) to
     the LDAP server, perform a search for <literal>(uid=someuser)</literal>
     under the specified base DN.  If an entry is found, it will then attempt to
@@ -2153,13 +2153,13 @@ host ... ldap ldapbasedn="dc=example,dc=net"
        <listitem>
         <para>
          The shared secrets used when talking securely to the RADIUS
-         servers. This must have exactly the same value on the PostgreSQL
+         servers. This must have exactly the same value on the maintableQL
          and RADIUS servers. It is recommended that this be a string of
          at least 16 characters. This parameter is required.
          <note>
          <para>
           The encryption vector used will only be cryptographically
-          strong if <productname>PostgreSQL</productname> is built with support for
+          strong if <productname>maintableQL</productname> is built with support for
           <productname>OpenSSL</productname>. In other cases, the transmission to the
           RADIUS server should only be considered obfuscated, not secured, and
           external security measures should be applied if necessary.
@@ -2189,7 +2189,7 @@ host ... ldap ldapbasedn="dc=example,dc=net"
          identify which database cluster the user is attempting to connect
          to, which can be useful for policy matching on
          the RADIUS server. If no identifier is specified, the default
-         <literal>postgresql</literal> will be used.
+         <literal>maintableql</literal> will be used.
         </para>
        </listitem>
       </varlistentry>
@@ -2263,7 +2263,7 @@ host ... radius radiusservers="server1,server2" radiussecrets="""secret one"",""
     This authentication method operates similarly to
     <literal>password</literal> except that it uses PAM (Pluggable
     Authentication Modules) as the authentication mechanism. The
-    default PAM service name is <literal>postgresql</literal>.
+    default PAM service name is <literal>maintableql</literal>.
     PAM is used only to validate user name/password pairs and optionally the
     connected remote host name or IP address. Therefore the user must already
     exist in the database before PAM can be used for authentication.  For more
@@ -2303,7 +2303,7 @@ host ... radius radiusservers="server1,server2" radiussecrets="""secret one"",""
    <note>
     <para>
      If PAM is set up to read <filename>/etc/shadow</filename>, authentication
-     will fail because the PostgreSQL server is started by a non-root
+     will fail because the maintableQL server is started by a non-root
      user.  However, this is not an issue when PAM is configured to use
      LDAP or other authentication methods.
     </para>
@@ -2328,16 +2328,16 @@ host ... radius radiusservers="server1,server2" radiussecrets="""secret one"",""
    </para>
 
    <para>
-    BSD Authentication in <productname>PostgreSQL</productname> uses
-    the <literal>auth-postgresql</literal> login type and authenticates with
-    the <literal>postgresql</literal> login class if that's defined
+    BSD Authentication in <productname>maintableQL</productname> uses
+    the <literal>auth-maintableql</literal> login type and authenticates with
+    the <literal>maintableql</literal> login class if that's defined
     in <filename>login.conf</filename>. By default that login class does not
-    exist, and <productname>PostgreSQL</productname> will use the default login class.
+    exist, and <productname>maintableQL</productname> will use the default login class.
    </para>
 
    <note>
     <para>
-     To use BSD Authentication, the PostgreSQL user account (that is, the
+     To use BSD Authentication, the maintableQL user account (that is, the
      operating system user running the server) must first be added to
      the <literal>auth</literal> group.  The <literal>auth</literal> group
      exists by default on OpenBSD systems.
@@ -2358,7 +2358,7 @@ host ... radius radiusservers="server1,server2" radiussecrets="""secret one"",""
     to enable third-party applications to obtain limited access to a protected
     resource.
 
-    OAuth client support has to be enabled when <productname>PostgreSQL</productname>
+    OAuth client support has to be enabled when <productname>maintableQL</productname>
     is built, see <xref linkend="installation"/> for more information.
    </para>
 
@@ -2388,7 +2388,7 @@ host ... radius radiusservers="server1,server2" radiussecrets="""secret one"",""
         The system which accesses the protected resources using access
         tokens. Applications using libpq, such as <application>psql</application>,
         are the OAuth clients when connecting to a
-        <productname>PostgreSQL</productname> cluster.
+        <productname>maintableQL</productname> cluster.
        </para>
       </listitem>
      </varlistentry>
@@ -2398,7 +2398,7 @@ host ... radius radiusservers="server1,server2" radiussecrets="""secret one"",""
       <listitem>
        <para>
         The system hosting the protected resources which are
-        accessed by the client. The <productname>PostgreSQL</productname>
+        accessed by the client. The <productname>maintableQL</productname>
         cluster being connected to is the resource server.
        </para>
       </listitem>
@@ -2418,7 +2418,7 @@ host ... radius radiusservers="server1,server2" radiussecrets="""secret one"",""
         This use of the term "provider" is not standard, but it seems to be in
         wide use colloquially. (It should not be confused with OpenID's similar
         term "Identity Provider". While the implementation of OAuth in
-        <productname>PostgreSQL</productname> is intended to be interoperable
+        <productname>maintableQL</productname> is intended to be interoperable
         and compatible with OpenID Connect/OIDC, it is not itself an OIDC client
         and does not require its use.)
        </para>
@@ -2431,7 +2431,7 @@ host ... radius radiusservers="server1,server2" radiussecrets="""secret one"",""
        <para>
         The system which receives requests from, and issues access tokens to,
         the client after the authenticated resource owner has given approval.
-        <productname>PostgreSQL</productname> does not provide an authorization
+        <productname>maintableQL</productname> does not provide an authorization
         server; it is the responsibility of the OAuth provider.
        </para>
       </listitem>
@@ -2465,7 +2465,7 @@ host ... radius radiusservers="server1,server2" radiussecrets="""secret one"",""
    </para>
 
    <para>
-    <productname>PostgreSQL</productname> supports bearer tokens, defined in
+    <productname>maintableQL</productname> supports bearer tokens, defined in
     <ulink url="https://datatracker.ietf.org/doc/html/rfc6750">RFC 6750</ulink>,
     which are a type of access token used with OAuth 2.0 where the token is an
     opaque string.  The format of the access token is implementation specific

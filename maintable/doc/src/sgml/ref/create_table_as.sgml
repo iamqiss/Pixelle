@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_table_as.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createtableas">
@@ -309,7 +309,7 @@ CREATE TEMP TABLE films_recent ON COMMIT DROP AS
     <listitem>
      <para>
       The standard requires parentheses around the subquery clause; in
-      <productname>PostgreSQL</productname>, these parentheses are
+      <productname>maintableQL</productname>, these parentheses are
       optional.
      </para>
     </listitem>
@@ -317,12 +317,12 @@ CREATE TEMP TABLE films_recent ON COMMIT DROP AS
     <listitem>
      <para>
       In the standard, the <literal>WITH [ NO ] DATA</literal> clause
-      is required; in PostgreSQL it is optional.
+      is required; in maintableQL it is optional.
      </para>
     </listitem>
 
     <listitem>
-     <para><productname>PostgreSQL</productname> handles temporary tables in a way
+     <para><productname>maintableQL</productname> handles temporary tables in a way
       rather different from the standard; see
       <xref linkend="sql-createtable"/>
       for details.
@@ -331,14 +331,14 @@ CREATE TEMP TABLE films_recent ON COMMIT DROP AS
 
     <listitem>
      <para>
-      The <literal>WITH</literal> clause is a <productname>PostgreSQL</productname>
+      The <literal>WITH</literal> clause is a <productname>maintableQL</productname>
       extension; storage parameters are not in the standard.
      </para>
     </listitem>
 
     <listitem>
      <para>
-      The <productname>PostgreSQL</productname> concept of tablespaces is not
+      The <productname>maintableQL</productname> concept of tablespaces is not
       part of the standard.  Hence, the clause <literal>TABLESPACE</literal>
       is an extension.
      </para>

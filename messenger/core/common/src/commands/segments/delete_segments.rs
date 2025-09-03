@@ -19,7 +19,7 @@ use crate::BytesSerializable;
 use crate::Identifier;
 use crate::Sizeable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, DELETE_SEGMENTS_CODE};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -63,8 +63,8 @@ impl Default for DeleteSegments {
     }
 }
 
-impl Validatable<IggyError> for DeleteSegments {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for DeleteSegments {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -86,9 +86,9 @@ impl BytesSerializable for DeleteSegments {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> std::result::Result<DeleteSegments, IggyError> {
+    fn from_bytes(bytes: Bytes) -> std::result::Result<DeleteSegments, MessengerError> {
         if bytes.len() < 10 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let mut position = 0;
@@ -99,13 +99,13 @@ impl BytesSerializable for DeleteSegments {
         let partition_id = u32::from_le_bytes(
             bytes[position..position + std::mem::size_of::<u32>()]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         position += std::mem::size_of::<u32>();
         let segments_count = u32::from_le_bytes(
             bytes[position..position + std::mem::size_of::<u32>()]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let command = DeleteSegments {
             stream_id,
@@ -150,14 +150,14 @@ mod tests {
         let partition_id = u32::from_le_bytes(
             bytes[position..position + std::mem::size_of::<u32>()]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)
+                .map_err(|_| MessengerError::InvalidNumberEncoding)
                 .unwrap(),
         );
         position += std::mem::size_of::<u32>();
         let segments_count = u32::from_le_bytes(
             bytes[position..position + std::mem::size_of::<u32>()]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)
+                .map_err(|_| MessengerError::InvalidNumberEncoding)
                 .unwrap(),
         );
 

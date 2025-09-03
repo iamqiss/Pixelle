@@ -18,7 +18,7 @@
 
 use crate::args::common::ListMode;
 use clap::{Args, Subcommand};
-use iggy::prelude::Identifier;
+use messenger::prelude::Identifier;
 
 #[derive(Debug, Clone, Subcommand)]
 pub(crate) enum ConsumerGroupAction {
@@ -29,10 +29,10 @@ pub(crate) enum ConsumerGroupAction {
     /// If group ID is not provided then the server will automatically assign it
     ///
     /// Examples:
-    ///  iggy consumer-group create 1 1 prod
-    ///  iggy consumer-group create stream 2 test
-    ///  iggy consumer-group create 2 topic receiver
-    ///  iggy consumer-group create -g 4 stream topic group
+    ///  messenger consumer-group create 1 1 prod
+    ///  messenger consumer-group create stream 2 test
+    ///  messenger consumer-group create 2 topic receiver
+    ///  messenger consumer-group create -g 4 stream topic group
     #[clap(verbatim_doc_comment, visible_alias = "c")]
     Create(ConsumerGroupCreateArgs),
     /// Delete consumer group with given ID for given stream ID and topic ID
@@ -42,14 +42,14 @@ pub(crate) enum ConsumerGroupAction {
     /// Consumer group ID can be specified as a consumer group name or ID
     ///
     /// Examples:
-    ///  iggy consumer-group delete 1 2 3
-    ///  iggy consumer-group delete stream 2 3
-    ///  iggy consumer-group delete 1 topic 3
-    ///  iggy consumer-group delete 1 2 group
-    ///  iggy consumer-group delete stream topic 3
-    ///  iggy consumer-group delete 1 topic group
-    ///  iggy consumer-group delete stream 2 group
-    ///  iggy consumer-group delete stream topic group
+    ///  messenger consumer-group delete 1 2 3
+    ///  messenger consumer-group delete stream 2 3
+    ///  messenger consumer-group delete 1 topic 3
+    ///  messenger consumer-group delete 1 2 group
+    ///  messenger consumer-group delete stream topic 3
+    ///  messenger consumer-group delete 1 topic group
+    ///  messenger consumer-group delete stream 2 group
+    ///  messenger consumer-group delete stream topic group
     #[clap(verbatim_doc_comment, visible_alias = "d")]
     Delete(ConsumerGroupDeleteArgs),
     /// Get details of a single consumer group with given ID for given stream ID and topic ID
@@ -59,14 +59,14 @@ pub(crate) enum ConsumerGroupAction {
     /// Consumer group ID can be specified as a consumer group name or ID
     ///
     /// Examples:
-    ///  iggy consumer-group get 1 2 3
-    ///  iggy consumer-group get stream 2 3
-    ///  iggy consumer-group get 1 topic 3
-    ///  iggy consumer-group get 1 2 group
-    ///  iggy consumer-group get stream topic 3
-    ///  iggy consumer-group get 1 topic group
-    ///  iggy consumer-group get stream 2 group
-    ///  iggy consumer-group get stream topic group
+    ///  messenger consumer-group get 1 2 3
+    ///  messenger consumer-group get stream 2 3
+    ///  messenger consumer-group get 1 topic 3
+    ///  messenger consumer-group get 1 2 group
+    ///  messenger consumer-group get stream topic 3
+    ///  messenger consumer-group get 1 topic group
+    ///  messenger consumer-group get stream 2 group
+    ///  messenger consumer-group get stream topic group
     #[clap(verbatim_doc_comment, visible_alias = "g")]
     Get(ConsumerGroupGetArgs),
     /// List all consumer groups for given stream ID and topic ID
@@ -75,10 +75,10 @@ pub(crate) enum ConsumerGroupAction {
     /// Topic ID can be specified as a topic name or ID
     ///
     /// Examples:
-    ///  iggy consumer-group list 1 1
-    ///  iggy consumer-group list stream 2 --list-mode table
-    ///  iggy consumer-group list 3 topic -l table
-    ///  iggy consumer-group list production sensor -l table
+    ///  messenger consumer-group list 1 1
+    ///  messenger consumer-group list stream 2 --list-mode table
+    ///  messenger consumer-group list 3 topic -l table
+    ///  messenger consumer-group list production sensor -l table
     #[clap(verbatim_doc_comment, visible_alias = "l")]
     List(ConsumerGroupListArgs),
 }

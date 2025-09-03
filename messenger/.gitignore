@@ -12,8 +12,8 @@ local_state*
 /rust-clippy-results.sarif
 /performance_results*
 .env
-/iggy_release
-/iggy_release_tmp
+/messenger_release
+/messenger_release_tmp
 /**/obj
 /**/bin
 !/foreign/python/src/bin

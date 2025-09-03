@@ -60,7 +60,7 @@
  *	alignment).
  */
 
-#include "postgres.h"
+#include "maintable.h"
 #include "miscadmin.h"
 #include "port/pg_bswap.h"
 

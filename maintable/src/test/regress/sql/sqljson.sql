@@ -497,7 +497,7 @@ SELECT JSON_SERIALIZE('12' RETURNING sqljson_char2);
 -- Bug #18657: JsonValueExpr.raw_expr was not initialized in ExecInitExprRec()
 -- causing the Aggrefs contained in it to also not be initialized, which led
 -- to a crash in ExecBuildAggTrans() as mentioned in the bug report:
--- https://postgr.es/m/18657-1b90ccce2b16bdb8@postgresql.org
+-- https://postgr.es/m/18657-1b90ccce2b16bdb8@maintableql.org
 CREATE FUNCTION volatile_one() RETURNS int AS $$ BEGIN RETURN 1; END; $$ LANGUAGE plpgsql VOLATILE;
 CREATE FUNCTION stable_one() RETURNS int AS $$ BEGIN RETURN 1; END; $$ LANGUAGE plpgsql STABLE;
 EXPLAIN (VERBOSE, COSTS OFF) SELECT JSON_OBJECT('a': JSON_OBJECTAGG('b': volatile_one() RETURNING text) FORMAT JSON);

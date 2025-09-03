@@ -17,13 +17,13 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, TestStreamId,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, TestStreamId,
     TestTopicId, USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
 use bytes::Bytes;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use predicates::str::{contains, starts_with};
 use serial_test::parallel;
 use std::collections::HashMap;
@@ -119,7 +119,7 @@ impl TestMessagePollCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestMessagePollCmd {
+impl MessengerCmdTestCase for TestMessagePollCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let stream = client
             .create_stream(&self.stream_name, self.stream_id.into())
@@ -134,7 +134,7 @@ impl IggyCmdTestCase for TestMessagePollCmd {
                 Default::default(),
                 None,
                 Some(self.topic_id),
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 MaxTopicSize::ServerDefault,
             )
             .await;
@@ -145,7 +145,7 @@ impl IggyCmdTestCase for TestMessagePollCmd {
             .iter()
             .map(|s| {
                 let payload = Bytes::from(s.as_bytes().to_vec());
-                IggyMessage::builder()
+                MessengerMessage::builder()
                     .payload(payload)
                     .user_headers(HashMap::from([self.headers.clone()]))
                     .build()
@@ -164,8 +164,8 @@ impl IggyCmdTestCase for TestMessagePollCmd {
         assert!(send_status.is_ok());
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("message")
             .arg("poll")
             .args(self.to_args())
@@ -253,7 +253,7 @@ impl IggyCmdTestCase for TestMessagePollCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
     let test_messages: Vec<String> = vec![
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit".into(),
@@ -324,11 +324,11 @@ pub async fn should_be_successful() {
         ),
     ];
 
-    iggy_cmd_test.setup().await;
+    messenger_cmd_test.setup().await;
     for (partition_id, message_count, strategy, using_stream_id, using_topic_id, show_headers) in
         test_parameters
     {
-        iggy_cmd_test
+        messenger_cmd_test
             .execute_test(TestMessagePollCmd::new(
                 1,
                 String::from("stream"),
@@ -351,9 +351,9 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["message", "poll", "--help"],
             format!(
@@ -363,10 +363,10 @@ Stream ID can be specified as a stream name or ID
 Topic ID can be specified as a topic name or ID
 
 Examples:
- iggy message poll --offset 0 1 2 1
- iggy message poll --offset 0 stream 2 1
- iggy message poll --offset 0 1 topic 1
- iggy message poll --offset 0 stream topic 1
+ messenger message poll --offset 0 1 2 1
+ messenger message poll --offset 0 stream 2 1
+ messenger message poll --offset 0 1 topic 1
+ messenger message poll --offset 0 stream topic 1
 
 {USAGE_PREFIX} message poll [OPTIONS] <--offset <OFFSET>|--first|--last|--next> <STREAM_ID> <TOPIC_ID> <PARTITION_ID>
 
@@ -447,9 +447,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["message", "poll", "-h"],
             format!(

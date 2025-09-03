@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{BytesSerializable, Identifier, PollingKind, PollingStrategy, Sizeable, Validatable};
 use crate::{Command, POLL_MESSAGES_CODE};
 use crate::{Consumer, ConsumerKind};
@@ -129,8 +129,8 @@ impl Command for PollMessages {
     }
 }
 
-impl Validatable<IggyError> for PollMessages {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for PollMessages {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -148,9 +148,9 @@ impl BytesSerializable for PollMessages {
         )
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError> {
         if bytes.len() < 29 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let mut position = 0;
@@ -168,7 +168,7 @@ impl BytesSerializable for PollMessages {
         let partition_id = u32::from_le_bytes(
             bytes[position..position + 4]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let partition_id = match partition_id {
             0 => None,
@@ -179,7 +179,7 @@ impl BytesSerializable for PollMessages {
         let value = u64::from_le_bytes(
             bytes[position..position + 8]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let strategy = PollingStrategy {
             kind: polling_kind,
@@ -188,7 +188,7 @@ impl BytesSerializable for PollMessages {
         let count = u32::from_le_bytes(
             bytes[position + 8..position + 12]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let auto_commit = bytes[position + 12];
         let auto_commit = matches!(auto_commit, 1);

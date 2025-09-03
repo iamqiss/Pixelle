@@ -17,7 +17,7 @@
  */
 
 use bytes::Bytes;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::{
     tcp_client::TcpClientFactory,
     test_server::{ClientFactory, IpAddrKind, SYSTEM_PATH_ENV_VAR, TestServer, login_root},
@@ -48,11 +48,11 @@ async fn should_fill_data_with_headers_and_verify_after_restart_using_api(encryp
 
     if encryption {
         env_vars.insert(
-            "IGGY_SYSTEM_ENCRYPTION_ENABLED".to_string(),
+            "MESSENGER_SYSTEM_ENCRYPTION_ENABLED".to_string(),
             "true".to_string(),
         );
         env_vars.insert(
-            "IGGY_SYSTEM_ENCRYPTION_KEY".to_string(),
+            "MESSENGER_SYSTEM_ENCRYPTION_KEY".to_string(),
             "/rvT1xP4V8u1EAhk4xDdqzqM2UOPXyy9XYkl4uRShgE=".to_string(),
         );
     }
@@ -69,7 +69,7 @@ async fn should_fill_data_with_headers_and_verify_after_restart_using_api(encryp
     }
     .create_client()
     .await;
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
     login_root(&client).await;
 
     // 3. Create test stream and topic
@@ -89,7 +89,7 @@ async fn should_fill_data_with_headers_and_verify_after_restart_using_api(encryp
             CompressionAlgorithm::default(),
             None,
             Some(topic_id),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await
@@ -118,7 +118,7 @@ async fn should_fill_data_with_headers_and_verify_after_restart_using_api(encryp
             HeaderValue::from_bool(encryption).unwrap(),
         );
 
-        let message = IggyMessage::builder()
+        let message = MessengerMessage::builder()
             .id((i + 1) as u128)
             .payload(Bytes::from(format!(
                 "Message batch 1 index {i} with encryption {encryption}"
@@ -238,7 +238,7 @@ async fn should_fill_data_with_headers_and_verify_after_restart_using_api(encryp
     }
     .create_client()
     .await;
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
     login_root(&client).await;
 
     // 9. Send second batch of messages with different headers
@@ -263,7 +263,7 @@ async fn should_fill_data_with_headers_and_verify_after_restart_using_api(encryp
             HeaderValue::from_bool(encryption).unwrap(),
         );
 
-        let message = IggyMessage::builder()
+        let message = MessengerMessage::builder()
             .id((messages_per_batch + i + 1) as u128)
             .payload(Bytes::from(format!(
                 "Message batch 2 index {i} with encryption {encryption}"

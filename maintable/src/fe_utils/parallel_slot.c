@@ -4,7 +4,7 @@
  *		Parallel support for front-end parallel database connections
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/fe_utils/parallel_slot.c
@@ -16,7 +16,7 @@
 #error FD_SETSIZE needs to have been increased
 #endif
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <sys/select.h>
 

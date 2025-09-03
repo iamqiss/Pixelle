@@ -1,14 +1,14 @@
-# Korean message translation file for PostgreSQL server
+# Korean message translation file for maintableQL server
 # Ioseph Kim <ioseph@uri.sarang.net>, 2016.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: postgres (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintable (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-01-17 04:41+0000\n"
 "PO-Revision-Date: 2025-01-20 16:44+0900\n"
 "Last-Translator: Ioseph Kim <ioseph@uri.sarang.net>\n"
-"Language-Team: Korean Team <kr@postgresql.org>\n"
+"Language-Team: Korean Team <kr@maintableql.org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -146,13 +146,13 @@ msgid ""
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, "
 "and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "바이트 순서가 일치하지 않습니다.\n"
 "pg_control 파일을 저장하는 데 사용된 바이트 순서는 \n"
 "이 프로그램에서 사용하는 순서와 일치해야 합니다.  이 경우 아래 결과는 올바르"
 "지 않으며\n"
-"현재 PostgreSQL 설치본과 이 데이터 디렉터리가 호환하지 않습니다."
+"현재 maintableQL 설치본과 이 데이터 디렉터리가 호환하지 않습니다."
 
 #: ../common/controldata_utils.c:225 ../common/controldata_utils.c:230
 #: ../common/file_utils.c:70 ../common/file_utils.c:347
@@ -1102,7 +1102,7 @@ msgid "index row requires %zu bytes, maximum size is %zu"
 msgstr "인덱스 행(row)은 %zu 바이트를 필요로 함, 최대 크기는 %zu"
 
 #: access/common/printtup.c:292 commands/explain.c:5376 tcop/fastpath.c:107
-#: tcop/fastpath.c:454 tcop/postgres.c:1956
+#: tcop/fastpath.c:454 tcop/maintable.c:1956
 #, c-format
 msgid "unsupported format code: %d"
 msgstr "지원하지 않는 포맷 코드: %d"
@@ -1283,9 +1283,9 @@ msgstr "\"%s\" 인덱스에 잘못된 내부 튜플이 있다고 확인되었습
 #, c-format
 msgid ""
 "This is caused by an incomplete page split at crash recovery before "
-"upgrading to PostgreSQL 9.1."
+"upgrading to maintableQL 9.1."
 msgstr ""
-"이 문제는 PostgreSQL 9.1 버전으로 업그레이드 하기 전에 장애 복구 처리에서 잘"
+"이 문제는 maintableQL 9.1 버전으로 업그레이드 하기 전에 장애 복구 처리에서 잘"
 "못된 페이지 분리 때문에 발생했습니다."
 
 #: access/gist/gist.c:763 access/gist/gistutil.c:800 access/gist/gistutil.c:811
@@ -2913,13 +2913,13 @@ msgstr "\"max_wal_size\" 값은 \"wal_segment_size\" 값의 최소 2배 이상�
 
 #: access/transam/xlog.c:4662 catalog/namespace.c:4696
 #: commands/tablespace.c:1210 commands/user.c:2529 commands/variable.c:72
-#: replication/slot.c:2429 tcop/postgres.c:3715 utils/error/elog.c:2247
+#: replication/slot.c:2429 tcop/maintable.c:3715 utils/error/elog.c:2247
 #, c-format
 msgid "List syntax is invalid."
 msgstr "목록 문법이 틀렸습니다."
 
 #: access/transam/xlog.c:4708 commands/user.c:2545 commands/variable.c:173
-#: tcop/postgres.c:3731 utils/error/elog.c:2273
+#: tcop/maintable.c:3731 utils/error/elog.c:2273
 #, c-format
 msgid "Unrecognized key word: \"%s\"."
 msgstr "알 수 없는 키워드: \"%s\""
@@ -3286,7 +3286,7 @@ msgstr "\"restore_command\" 작업이 0을 반환했지만, stat() 작업 실패
 msgid "could not restore file \"%s\" from archive: %s"
 msgstr "아카이브에서 \"%s\" 파일 복원 실패: %s"
 
-#. translator: First %s represents a postgresql.conf parameter name like
+#. translator: First %s represents a maintableql.conf parameter name like
 #. "recovery_end_command", the 2nd is the value of that parameter, the
 #. third an already translated error message.
 #: access/transam/xlogarchive.c:346
@@ -4537,12 +4537,12 @@ msgstr "long-distance 모드를 활성화 할 수 없음: %s"
 msgid "invalid timeline %lld"
 msgstr "잘못된 타임라인 번호 %lld"
 
-#: bootstrap/bootstrap.c:239 postmaster/postmaster.c:623 tcop/postgres.c:3946
+#: bootstrap/bootstrap.c:239 postmaster/postmaster.c:623 tcop/maintable.c:3946
 #, c-format
 msgid "--%s requires a value"
 msgstr "--%s 옵션은 해당 값을 지정해야 합니다"
 
-#: bootstrap/bootstrap.c:244 postmaster/postmaster.c:628 tcop/postgres.c:3951
+#: bootstrap/bootstrap.c:244 postmaster/postmaster.c:628 tcop/maintable.c:3951
 #, c-format
 msgid "-c %s requires a value"
 msgstr "-c %s 옵션은 해당 값을 지정해야 합니다"
@@ -7884,10 +7884,10 @@ msgstr ""
 #: commands/copyfrom.c:1742
 #, c-format
 msgid ""
-"COPY FROM instructs the PostgreSQL server process to read a file. You may "
+"COPY FROM instructs the maintableQL server process to read a file. You may "
 "want a client-side facility such as psql's \\copy."
 msgstr ""
-"COPY FROM 명령은 PostgreSQL 서버 프로세스가 한 파일을 읽어 처리합니다. 클라이"
+"COPY FROM 명령은 maintableQL 서버 프로세스가 한 파일을 읽어 처리합니다. 클라이"
 "언트 쪽에 있는 파일을 읽어 처리 하려면, psql의 \\copy 내장 명령어를 사용하세"
 "요."
 
@@ -7942,7 +7942,7 @@ msgid "could not read from COPY file: %m"
 msgstr "COPY 명령에 사용할 파일을 읽을 수 없습니다: %m"
 
 #: commands/copyfromparse.c:278 commands/copyfromparse.c:303
-#: replication/walsender.c:756 replication/walsender.c:782 tcop/postgres.c:381
+#: replication/walsender.c:756 replication/walsender.c:782 tcop/maintable.c:381
 #, c-format
 msgid "unexpected EOF on client connection with an open transaction"
 msgstr "열린 트랜잭션과 함께 클라이언트 연결에서 예상치 않은 EOF 발견됨"
@@ -8200,10 +8200,10 @@ msgstr "\"%s\" 파일 열기 실패: %m"
 #: commands/copyto.c:693
 #, c-format
 msgid ""
-"COPY TO instructs the PostgreSQL server process to write a file. You may "
+"COPY TO instructs the maintableQL server process to write a file. You may "
 "want a client-side facility such as psql's \\copy."
 msgstr ""
-"COPY TO 명령은 PostgreSQL 서버 프로세스가 작업하기 때문에, 서버에 그 결과가 "
+"COPY TO 명령은 maintableQL 서버 프로세스가 작업하기 때문에, 서버에 그 결과가 "
 "저장된다. 클라이언트 쪽에서 그 결과를 저장하려면, psql \\copy 명령으로 처리"
 "할 수 있다."
 
@@ -8464,12 +8464,12 @@ msgstr ""
 #, c-format
 msgid ""
 "Rebuild all objects in the template database that use the default collation "
-"and run ALTER DATABASE %s REFRESH COLLATION VERSION, or build PostgreSQL "
+"and run ALTER DATABASE %s REFRESH COLLATION VERSION, or build maintableQL "
 "with the right library version."
 msgstr ""
 "템플릿 데이터베이스 내 모든 객체를 기본 문자 정렬 규칙을 사용하도록 다시 만들"
 "고, ALTER DATABASE %s REFRESH COLLATION VERSION 명령을 실행하거나, 바른 버전"
-"의 라이브러리를 사용해서 PostgreSQL 엔진을 다시 만드십시오."
+"의 라이브러리를 사용해서 maintableQL 엔진을 다시 만드십시오."
 
 #: commands/dbcommands.c:1298 commands/dbcommands.c:2041
 #, c-format
@@ -9038,9 +9038,9 @@ msgstr "\"%s\" 확장 모듈 제어 파일 열기 실패: %m."
 #: commands/extension.c:510
 #, c-format
 msgid ""
-"The extension must first be installed on the system where PostgreSQL is "
+"The extension must first be installed on the system where maintableQL is "
 "running."
-msgstr "해당 확장 모듈은 PostgreSQL 시작 전에 먼저 설치 되어 있어야합니다."
+msgstr "해당 확장 모듈은 maintableQL 시작 전에 먼저 설치 되어 있어야합니다."
 
 #: commands/extension.c:514
 #, c-format
@@ -14399,8 +14399,8 @@ msgstr "\"%s\" time zone 에서 leap second를 사용합니다"
 
 #: commands/variable.c:353 commands/variable.c:435
 #, c-format
-msgid "PostgreSQL does not support leap seconds."
-msgstr "PostgreSQL에서는 leap second를 지원하지 않습니다"
+msgid "maintableQL does not support leap seconds."
+msgstr "maintableQL에서는 leap second를 지원하지 않습니다"
 
 #: commands/variable.c:362
 #, c-format
@@ -16799,8 +16799,8 @@ msgstr "SSL 기능이 꺼져있어 hostssl 설정을 사용할 수 없습니다"
 
 #: libpq/hba.c:1381
 #, c-format
-msgid "Set \"ssl = on\" in postgresql.conf."
-msgstr "postgresql.conf 파일에 \"ssl = on\" 설정을 하세요."
+msgid "Set \"ssl = on\" in maintableql.conf."
+msgstr "maintableql.conf 파일에 \"ssl = on\" 설정을 하세요."
 
 #: libpq/hba.c:1389
 #, c-format
@@ -17239,7 +17239,7 @@ msgstr "클라이언트 연결이 없음"
 msgid "could not receive data from client: %m"
 msgstr "클라이언트에게 데이터를 받을 수 없습니다: %m"
 
-#: libpq/pqcomm.c:1149 tcop/postgres.c:4533
+#: libpq/pqcomm.c:1149 tcop/maintable.c:4533
 #, c-format
 msgid "terminating connection because protocol synchronization was lost"
 msgstr "프로토콜 동기화 작업 실패로 연결을 종료합니다"
@@ -17311,10 +17311,10 @@ msgstr "%s: WSAStartup 작업 실패: %d\n"
 #: main/main.c:324
 #, c-format
 msgid ""
-"%s is the PostgreSQL server.\n"
+"%s is the maintableQL server.\n"
 "\n"
 msgstr ""
-"%s 프로그램은 PostgreSQL 서버입니다.\n"
+"%s 프로그램은 maintableQL 서버입니다.\n"
 "\n"
 
 #: main/main.c:325
@@ -17556,7 +17556,7 @@ msgstr ""
 "\n"
 "이 실시간 환경 변수용 설정값들의 자세한 사용법과\n"
 "서버 환경 설정 파일에 어떻게 지정하고 사용하는지에 대한 사항은\n"
-"PostgreSQL 문서를 참조하세요.\n"
+"maintableQL 문서를 참조하세요.\n"
 "\n"
 "문제점 보고 주소: <%s>\n"
 
@@ -17568,12 +17568,12 @@ msgstr "%s 홈페이지: <%s>\n"
 #: main/main.c:386
 #, c-format
 msgid ""
-"\"root\" execution of the PostgreSQL server is not permitted.\n"
+"\"root\" execution of the maintableQL server is not permitted.\n"
 "The server must be started under an unprivileged user ID to prevent\n"
 "possible system security compromise.  See the documentation for\n"
 "more information on how to properly start the server.\n"
 msgstr ""
-"시스템 보안 관련 문제로, PostgreSQL server를 \"root\" ID로 실행할 수 없습니"
+"시스템 보안 관련 문제로, maintableQL server를 \"root\" ID로 실행할 수 없습니"
 "다.\n"
 "반드시 일반 사용자 ID(시스템 관리자 권한이 없는 ID)로 서버를 실행하십시오.\n"
 "Server를 어떻게 안전하게 기동하는가 하는 것은 문서를 참조하시기 바랍니다.\n"
@@ -17586,13 +17586,13 @@ msgstr "%s: real 또는 effective user ID 들은 반드시 일치되어야 한�
 #: main/main.c:410
 #, c-format
 msgid ""
-"Execution of PostgreSQL by a user with administrative permissions is not\n"
+"Execution of maintableQL by a user with administrative permissions is not\n"
 "permitted.\n"
 "The server must be started under an unprivileged user ID to prevent\n"
 "possible system security compromises.  See the documentation for\n"
 "more information on how to properly start the server.\n"
 msgstr ""
-"시스템 보안 관련 문제로, PostgreSQL server를 시스템 관리자 ID로 실행할 수 없"
+"시스템 보안 관련 문제로, maintableQL server를 시스템 관리자 ID로 실행할 수 없"
 "습니다.\n"
 "반드시 일반 사용자 ID(시스템 관리자 권한이 없는 ID)로 서버를 실행하십시오.\n"
 "Server를 어떻게 안전하게 기동하는가 하는 것은 문서를 참조하시기 바랍니다.\n"
@@ -19937,7 +19937,7 @@ msgstr "op ANY/ALL (array) 는 set 을 return 하지 않는 연산자가 요구 
 msgid "inconsistent types deduced for parameter $%d"
 msgstr "inconsistent types deduced for parameter $%d"
 
-#: parser/parse_param.c:309 tcop/postgres.c:744
+#: parser/parse_param.c:309 tcop/maintable.c:744
 #, c-format
 msgid "could not determine data type of parameter $%d"
 msgstr "$%d 매개 변수의 자료형을 알수가 없습니다."
@@ -20725,28 +20725,28 @@ msgstr "shmget(키=%lu, 크기=%zu, 0%o) 시스템 콜 실패"
 #: port/pg_shmem.c:229 port/sysv_shmem.c:229
 #, c-format
 msgid ""
-"This error usually means that PostgreSQL's request for a shared memory "
+"This error usually means that maintableQL's request for a shared memory "
 "segment exceeded your kernel's SHMMAX parameter, or possibly that it is less "
 "than your kernel's SHMMIN parameter.\n"
-"The PostgreSQL documentation contains more information about shared memory "
+"The maintableQL documentation contains more information about shared memory "
 "configuration."
 msgstr ""
-"이 오류를 일반적으로 PostgreSQL에서 사용할 공유 메모리 크기가 커널의 SHMMAX "
+"이 오류를 일반적으로 maintableQL에서 사용할 공유 메모리 크기가 커널의 SHMMAX "
 "값보다 크거나, SHMMIN 값보다 적은 경우 발생합니다.\n"
-"공유 메모리 설정에 대한 보다 자세한 내용은 PostgreSQL 문서를 참조하십시오."
+"공유 메모리 설정에 대한 보다 자세한 내용은 maintableQL 문서를 참조하십시오."
 
 #: port/pg_shmem.c:236 port/sysv_shmem.c:236
 #, c-format
 msgid ""
-"This error usually means that PostgreSQL's request for a shared memory "
+"This error usually means that maintableQL's request for a shared memory "
 "segment exceeded your kernel's SHMALL parameter.  You might need to "
 "reconfigure the kernel with larger SHMALL.\n"
-"The PostgreSQL documentation contains more information about shared memory "
+"The maintableQL documentation contains more information about shared memory "
 "configuration."
 msgstr ""
-"이 오류를 일반적으로 PostgreSQL에서 사용할 공유 크기가 커널의 SHMALL 값보다 "
+"이 오류를 일반적으로 maintableQL에서 사용할 공유 크기가 커널의 SHMALL 값보다 "
 "큰 경우 발생합니다.  커널 환경 변수인 SHMALL 값을 좀 더 크게 설정하세요.\n"
-"공유 메모리 설정에 대한 보다 자세한 내용은 PostgreSQL 문서를 참조하십시오."
+"공유 메모리 설정에 대한 보다 자세한 내용은 maintableQL 문서를 참조하십시오."
 
 #: port/pg_shmem.c:242 port/sysv_shmem.c:242
 #, c-format
@@ -20755,14 +20755,14 @@ msgid ""
 "either if all available shared memory IDs have been taken, in which case you "
 "need to raise the SHMMNI parameter in your kernel, or because the system's "
 "overall limit for shared memory has been reached.\n"
-"The PostgreSQL documentation contains more information about shared memory "
+"The maintableQL documentation contains more information about shared memory "
 "configuration."
 msgstr ""
 "이 오류는 서버를 실행하는데 필요한 디스크 공간이 부족해서 발생한 것이 아닙니"
 "다.  이 오류는 서버가 사용할 공유 메모리 ID를 선점하지 못했을 때 발생합니"
 "다.  커널 환경 설정값인 SHMMNI 값을 늘리거나,  시스템의 가용 공유 메모리량을 "
 "확보하세요.\n"
-"공유 메모리 설정에 대한 보다 자세한 내용은 PostgreSQL 문서를 참조하십시오."
+"공유 메모리 설정에 대한 보다 자세한 내용은 maintableQL 문서를 참조하십시오."
 
 #: port/pg_shmem.c:584 port/sysv_shmem.c:584 port/win32_shmem.c:646
 #, c-format
@@ -20777,12 +20777,12 @@ msgstr "가용 공유 메모리 확보 실패: %m"
 #: port/pg_shmem.c:657 port/sysv_shmem.c:657
 #, c-format
 msgid ""
-"This error usually means that PostgreSQL's request for a shared memory "
+"This error usually means that maintableQL's request for a shared memory "
 "segment exceeded available memory, swap space, or huge pages. To reduce the "
-"request size (currently %zu bytes), reduce PostgreSQL's shared memory usage, "
+"request size (currently %zu bytes), reduce maintableQL's shared memory usage, "
 "perhaps by reducing \"shared_buffers\" or \"max_connections\"."
 msgstr ""
-"이 오류는 일반적으로 PostgreSQL에서 사용할 공유 메모리를 확보하지 못 했을 때 "
+"이 오류는 일반적으로 maintableQL에서 사용할 공유 메모리를 확보하지 못 했을 때 "
 "발생합니다(물리 메모리, 스왑, huge page).  현재 요구 크기(%zu 바이트)를 좀 줄"
 "여 보십시오. 줄이는 방법은, \"shared_buffers\"나 \"max_connections\" 값"
 "을 줄여 보십시오."
@@ -20827,28 +20827,28 @@ msgid ""
 "when either the system limit for the maximum number of semaphore sets "
 "(SEMMNI), or the system wide maximum number of semaphores (SEMMNS), would be "
 "exceeded.  You need to raise the respective kernel parameter.  "
-"Alternatively, reduce PostgreSQL's consumption of semaphores by reducing its "
+"Alternatively, reduce maintableQL's consumption of semaphores by reducing its "
 "\"max_connections\" parameter.\n"
-"The PostgreSQL documentation contains more information about configuring "
-"your system for PostgreSQL."
+"The maintableQL documentation contains more information about configuring "
+"your system for maintableQL."
 msgstr ""
 "이 오류는 서버를 실행하는데 필요한 디스크 공간이 부족해서 발생한 것이 아닙니"
 "다.\n"
 "이 오류는 시스템에서 지정한 최소 세마포어 수(SEMMNI)가 너무 크거나, 최대 세마"
 "포어 수(SEMMNS)가 너무 적어서 서버를 실행할 수 없을 때 발생합니다. 이에 따"
 "라, 정상적으로 서버가 실행되려면, 시스템 값들을 조정할 필요가 있습니다. 아니"
-"면, 다른 방법으로, PostgreSQL의 환경 설정에서 \"max_connections\" 값을 줄여서 세"
+"면, 다른 방법으로, maintableQL의 환경 설정에서 \"max_connections\" 값을 줄여서 세"
 "마포어 사용 수를 줄여보십시오.\n"
-"보다 자세한 내용은 PostgreSQL 관리자 메뉴얼을 참조 하십시오."
+"보다 자세한 내용은 maintableQL 관리자 메뉴얼을 참조 하십시오."
 
 #: port/sysv_sema.c:161
 #, c-format
 msgid ""
 "You possibly need to raise your kernel's SEMVMX value to be at least %d.  "
-"Look into the PostgreSQL documentation for details."
+"Look into the maintableQL documentation for details."
 msgstr ""
 "커널의 SEMVMX 값을 적어도 %d 정도로 늘려야할 필요가 있는 것 같습니다.  자세"
-"한 것은 PostgreSQL 문서를 참조하세요."
+"한 것은 maintableQL 문서를 참조하세요."
 
 #: port/win32/crashdump.c:119
 #, c-format
@@ -20936,8 +20936,8 @@ msgstr "\"%s\" 사용자 권한을 활성화 할 수 없음"
 #: port/win32_shmem.c:185
 #, c-format
 msgid ""
-"Assign user right \"%s\" to the Windows user account which runs PostgreSQL."
-msgstr "PostgreSQL을 실행할 윈도우즈 사용자 계정에 \"%s\" 권한을 부여하세요."
+"Assign user right \"%s\" to the Windows user account which runs maintableQL."
+msgstr "maintableQL을 실행할 윈도우즈 사용자 계정에 \"%s\" 권한을 부여하세요."
 
 #: port/win32_shmem.c:244
 #, c-format
@@ -21050,7 +21050,7 @@ msgid ""
 "background worker \"%s\": parallel workers may not be configured for restart"
 msgstr "\"%s\" 백그라운드 작업자: 이 병렬 작업자는 재실행 설정이 없음"
 
-#: postmaster/bgworker.c:715 tcop/postgres.c:3312
+#: postmaster/bgworker.c:715 tcop/maintable.c:3312
 #, c-format
 msgid "terminating background worker \"%s\" due to administrator command"
 msgstr "관리자 명령에 의해 \"%s\" 백그라운드 작업자를 종료합니다."
@@ -21380,16 +21380,16 @@ msgstr "%s: 실행 가능 경로를 확정할 수 없음"
 
 #: postmaster/postmaster.c:1447
 #, c-format
-msgid "%s: could not locate matching postgres executable"
-msgstr "%s: 실행가능한 postgres 프로그램을 찾을 수 없습니다"
+msgid "%s: could not locate matching maintable executable"
+msgstr "%s: 실행가능한 maintable 프로그램을 찾을 수 없습니다"
 
 #: postmaster/postmaster.c:1470 utils/misc/tzparser.c:341
 #, c-format
 msgid ""
-"This may indicate an incomplete PostgreSQL installation, or that the file "
+"This may indicate an incomplete maintableQL installation, or that the file "
 "\"%s\" has been moved away from its proper location."
 msgstr ""
-"이 문제는 PostgreSQL 설치가 불완전하게 되었거나, \"%s\" 파일이 올바른 위치에 "
+"이 문제는 maintableQL 설치가 불완전하게 되었거나, \"%s\" 파일이 올바른 위치에 "
 "있지 않아서 발생했습니다."
 
 #: postmaster/postmaster.c:1497
@@ -23429,9 +23429,9 @@ msgstr "물리적 복제를 위한 WAL 송신기에서 SQL 명령을 실행할 �
 msgid "received replication command: %s"
 msgstr "수신된 복제 명령: %s"
 
-#: replication/walsender.c:2076 tcop/fastpath.c:209 tcop/postgres.c:1142
-#: tcop/postgres.c:1500 tcop/postgres.c:1752 tcop/postgres.c:2234
-#: tcop/postgres.c:2672 tcop/postgres.c:2749
+#: replication/walsender.c:2076 tcop/fastpath.c:209 tcop/maintable.c:1142
+#: tcop/maintable.c:1500 tcop/maintable.c:1752 tcop/maintable.c:2234
+#: tcop/maintable.c:2672 tcop/maintable.c:2749
 #, c-format
 msgid ""
 "current transaction is aborted, commands ignored until end of transaction "
@@ -24492,8 +24492,8 @@ msgstr "지정한 공유 메모리 사이즈가 size_t 크기를 초과했습니
 
 #: storage/ipc/signalfuncs.c:72
 #, c-format
-msgid "PID %d is not a PostgreSQL backend process"
-msgstr "PID %d 프로그램은 PostgreSQL 백엔드 프로세스가 아닙니다"
+msgid "PID %d is not a maintableQL backend process"
+msgstr "PID %d 프로그램은 maintableQL 백엔드 프로세스가 아닙니다"
 
 #: storage/ipc/signalfuncs.c:109 storage/lmgr/proc.c:1453
 #: utils/adt/mcxtfuncs.c:182
@@ -24552,12 +24552,12 @@ msgstr "%ld.%03d ms 기다린 뒤에도 여전히 복구 중: %s"
 msgid "recovery finished waiting after %ld.%03d ms: %s"
 msgstr "%ld.%03d ms 기다려서 복구 완료: %s"
 
-#: storage/ipc/standby.c:920 tcop/postgres.c:3196
+#: storage/ipc/standby.c:920 tcop/maintable.c:3196
 #, c-format
 msgid "canceling statement due to conflict with recovery"
 msgstr "복구 작업 중 충돌이 발생해 작업을 중지합니다."
 
-#: storage/ipc/standby.c:921 tcop/postgres.c:2557
+#: storage/ipc/standby.c:921 tcop/maintable.c:2557
 #, c-format
 msgid "User transaction caused buffer deadlock with recovery."
 msgstr "복구 작업 중 사용자 트랜잭션이 버퍼 데드락을 만들었습니다."
@@ -25115,8 +25115,8 @@ msgstr "잘못된 시작 패킷 레이아웃: 마지막 바이트로 종결문�
 
 #: tcop/backend_startup.c:802
 #, c-format
-msgid "no PostgreSQL user name specified in startup packet"
-msgstr "시작 패킷에서 지정한 사용자는 PostgreSQL 사용자 이름이 아닙니다"
+msgid "no maintableQL user name specified in startup packet"
+msgstr "시작 패킷에서 지정한 사용자는 maintableQL 사용자 이름이 아닙니다"
 
 #: tcop/fastpath.c:142 utils/fmgr/fmgr.c:2161
 #, c-format
@@ -25133,8 +25133,8 @@ msgstr "fastpath 인터페이스를 이용한 \"%s\" 함수 호출 실패"
 msgid "fastpath function call: \"%s\" (OID %u)"
 msgstr "fastpath 함수 호출: \"%s\" (OID %u)"
 
-#: tcop/fastpath.c:313 tcop/postgres.c:1369 tcop/postgres.c:1605
-#: tcop/postgres.c:2071 tcop/postgres.c:2333
+#: tcop/fastpath.c:313 tcop/maintable.c:1369 tcop/maintable.c:1605
+#: tcop/maintable.c:2071 tcop/maintable.c:2333
 #, c-format
 msgid "duration: %s ms"
 msgstr "실행시간: %s ms"
@@ -25164,42 +25164,42 @@ msgstr "함수 호출 메시지 안에 있는 잘못된 %d 인자 크기"
 msgid "incorrect binary data format in function argument %d"
 msgstr "함수 인자 %d 안에 잘못된 바이너리 자료 형식 발견됨"
 
-#: tcop/postgres.c:467 tcop/postgres.c:5012
+#: tcop/maintable.c:467 tcop/maintable.c:5012
 #, c-format
 msgid "invalid frontend message type %d"
 msgstr "잘못된 frontend 메시지 형태 %d"
 
-#: tcop/postgres.c:1076
+#: tcop/maintable.c:1076
 #, c-format
 msgid "statement: %s"
 msgstr "명령 구문: %s"
 
-#: tcop/postgres.c:1374
+#: tcop/maintable.c:1374
 #, c-format
 msgid "duration: %s ms  statement: %s"
 msgstr "실행시간: %s ms  명령 구문: %s"
 
-#: tcop/postgres.c:1480
+#: tcop/maintable.c:1480
 #, c-format
 msgid "cannot insert multiple commands into a prepared statement"
 msgstr "준비된 명령 구문에는 다중 명령을 삽입할 수 없습니다"
 
-#: tcop/postgres.c:1610
+#: tcop/maintable.c:1610
 #, c-format
 msgid "duration: %s ms  parse %s: %s"
 msgstr "실행시간: %s ms  %s 구문분석: %s"
 
-#: tcop/postgres.c:1677 tcop/postgres.c:2653
+#: tcop/maintable.c:1677 tcop/maintable.c:2653
 #, c-format
 msgid "unnamed prepared statement does not exist"
 msgstr "이름없는 준비된 명령 구문(unnamed prepared statement) 없음"
 
-#: tcop/postgres.c:1729
+#: tcop/maintable.c:1729
 #, c-format
 msgid "bind message has %d parameter formats but %d parameters"
 msgstr "바인드 메시지는 %d 매개 변수 형태지만, %d 매개 변수여야함"
 
-#: tcop/postgres.c:1735
+#: tcop/maintable.c:1735
 #, c-format
 msgid ""
 "bind message supplies %d parameters, but prepared statement \"%s\" requires "
@@ -25208,115 +25208,115 @@ msgstr ""
 "바인드 메시지는 %d개의 매개 변수를 지원하지만, \"%s\" 준비된 명령 구문"
 "(prepared statement)에서는%d 개의 매개 변수가 필요합니다"
 
-#: tcop/postgres.c:1949
+#: tcop/maintable.c:1949
 #, c-format
 msgid "incorrect binary data format in bind parameter %d"
 msgstr "바인드 매개 변수 %d 안에 잘못된 바이너리 자료 형태가 있음"
 
-#: tcop/postgres.c:2076
+#: tcop/maintable.c:2076
 #, c-format
 msgid "duration: %s ms  bind %s%s%s: %s"
 msgstr "실행시간: %s ms  %s%s%s 접속: %s"
 
-#: tcop/postgres.c:2131 tcop/postgres.c:2735
+#: tcop/maintable.c:2131 tcop/maintable.c:2735
 #, c-format
 msgid "portal \"%s\" does not exist"
 msgstr "\"%s\" portal 없음"
 
-#: tcop/postgres.c:2213
+#: tcop/maintable.c:2213
 #, c-format
 msgid "%s %s%s%s: %s"
 msgstr "%s %s%s%s: %s"
 
-#: tcop/postgres.c:2215 tcop/postgres.c:2341
+#: tcop/maintable.c:2215 tcop/maintable.c:2341
 msgid "execute fetch from"
 msgstr "자료뽑기"
 
-#: tcop/postgres.c:2216 tcop/postgres.c:2342
+#: tcop/maintable.c:2216 tcop/maintable.c:2342
 msgid "execute"
 msgstr "쿼리실행"
 
-#: tcop/postgres.c:2338
+#: tcop/maintable.c:2338
 #, c-format
 msgid "duration: %s ms  %s %s%s%s: %s"
 msgstr "수행시간: %s ms  %s %s%s%s: %s"
 
-#: tcop/postgres.c:2486
+#: tcop/maintable.c:2486
 #, c-format
 msgid "prepare: %s"
 msgstr "prepare: %s"
 
-#: tcop/postgres.c:2511
+#: tcop/maintable.c:2511
 #, c-format
 msgid "Parameters: %s"
 msgstr "매개 변수: %s"
 
-#: tcop/postgres.c:2526
+#: tcop/maintable.c:2526
 #, c-format
 msgid "Abort reason: recovery conflict"
 msgstr "중지 이유: 복구 충돌"
 
-#: tcop/postgres.c:2542
+#: tcop/maintable.c:2542
 #, c-format
 msgid "User was holding shared buffer pin for too long."
 msgstr "사용자가 너무 오랫동안 공유 버퍼 핀을 붙잡고 있습니다."
 
-#: tcop/postgres.c:2545
+#: tcop/maintable.c:2545
 #, c-format
 msgid "User was holding a relation lock for too long."
 msgstr "사용자가 너무 오랫동안 릴레이션 잠금을 하고 있습니다."
 
-#: tcop/postgres.c:2548
+#: tcop/maintable.c:2548
 #, c-format
 msgid "User was or might have been using tablespace that must be dropped."
 msgstr "삭제할 테이블스페이스를 사용자가 사용했거나, 사용하고 있습니다."
 
-#: tcop/postgres.c:2551
+#: tcop/maintable.c:2551
 #, c-format
 msgid "User query might have needed to see row versions that must be removed."
 msgstr "사용자 쿼리가 삭제해야할 로우 버전를 볼 필요가 있는 것 같습니다."
 
-#: tcop/postgres.c:2554
+#: tcop/maintable.c:2554
 #, c-format
 msgid "User was using a logical replication slot that must be invalidated."
 msgstr "사용자가 잘못된 논리 복제 슬롯을 사용했습니다."
 
-#: tcop/postgres.c:2560
+#: tcop/maintable.c:2560
 #, c-format
 msgid "User was connected to a database that must be dropped."
 msgstr "삭제 되어져야할 데이터베이스에 사용자가 접속해 있습니다."
 
-#: tcop/postgres.c:2599
+#: tcop/maintable.c:2599
 #, c-format
 msgid "portal \"%s\" parameter $%d = %s"
 msgstr "\"%s\" 포탈 $%d 매개 변수 = %s"
 
-#: tcop/postgres.c:2602
+#: tcop/maintable.c:2602
 #, c-format
 msgid "portal \"%s\" parameter $%d"
 msgstr "\"%s\" 포탈 $%d 매개 변수"
 
-#: tcop/postgres.c:2608
+#: tcop/maintable.c:2608
 #, c-format
 msgid "unnamed portal parameter $%d = %s"
 msgstr "이름없는 포탈 $%d 매개 변수 = %s"
 
-#: tcop/postgres.c:2611
+#: tcop/maintable.c:2611
 #, c-format
 msgid "unnamed portal parameter $%d"
 msgstr "이름없는 포탈 $%d 매개 변수"
 
-#: tcop/postgres.c:2955
+#: tcop/maintable.c:2955
 #, c-format
 msgid "terminating connection because of unexpected SIGQUIT signal"
 msgstr "예상치 못한 SIGQUIT 신호로 연결을 끝냅니다"
 
-#: tcop/postgres.c:2961
+#: tcop/maintable.c:2961
 #, c-format
 msgid "terminating connection because of crash of another server process"
 msgstr "다른 서버 프로세스가 손상을 입어 현재 연결을 중지합니다"
 
-#: tcop/postgres.c:2962
+#: tcop/maintable.c:2962
 #, c-format
 msgid ""
 "The postmaster has commanded this server process to roll back the current "
@@ -25327,24 +25327,24 @@ msgstr ""
 "와의 연결을 끊으라는 명령을 보냈습니다. 왜냐하면, 다른 서버 프로세스가 비정상"
 "적으로 중지되어 공유 메모리가 손상되었을 가능성이 있기 때문입니다"
 
-#: tcop/postgres.c:2966 tcop/postgres.c:3219
+#: tcop/maintable.c:2966 tcop/maintable.c:3219
 #, c-format
 msgid ""
 "In a moment you should be able to reconnect to the database and repeat your "
 "command."
 msgstr "잠시 뒤에 다시 연결 해서 작업을 계속 하십시오"
 
-#: tcop/postgres.c:2973
+#: tcop/maintable.c:2973
 #, c-format
 msgid "terminating connection due to immediate shutdown command"
 msgstr "immediate 종료 명령으로 연결을 끝냅니다"
 
-#: tcop/postgres.c:3051
+#: tcop/maintable.c:3051
 #, c-format
 msgid "floating-point exception"
 msgstr "부동소수점 예외발생"
 
-#: tcop/postgres.c:3052
+#: tcop/maintable.c:3052
 #, c-format
 msgid ""
 "An invalid floating-point operation was signaled. This probably means an out-"
@@ -25353,77 +25353,77 @@ msgstr ""
 "잘못된 부동소수점 작업이 감지 되었습니다. 이것은 아마도 결과값 범위초과나 0으"
 "로 나누는 작업과 같은 잘못된 연산 때문에 발생한 것 같습니다"
 
-#: tcop/postgres.c:3217
+#: tcop/maintable.c:3217
 #, c-format
 msgid "terminating connection due to conflict with recovery"
 msgstr "복구 작업 중 충돌로 연결을 끝냅니다"
 
-#: tcop/postgres.c:3289
+#: tcop/maintable.c:3289
 #, c-format
 msgid "canceling authentication due to timeout"
 msgstr "시간 초과로 인증 작업을 취소합니다."
 
-#: tcop/postgres.c:3293
+#: tcop/maintable.c:3293
 #, c-format
 msgid "terminating autovacuum process due to administrator command"
 msgstr "관리자 명령으로 인해 자동 청소 프로세스를 끝냅니다"
 
-#: tcop/postgres.c:3297
+#: tcop/maintable.c:3297
 #, c-format
 msgid "terminating logical replication worker due to administrator command"
 msgstr "관리자 요청에 의해서 논리 복제 작업자를 끝냅니다"
 
-#: tcop/postgres.c:3317
+#: tcop/maintable.c:3317
 #, c-format
 msgid "terminating connection due to administrator command"
 msgstr "관리자 요청에 의해서 연결을 끝냅니다"
 
-#: tcop/postgres.c:3348
+#: tcop/maintable.c:3348
 #, c-format
 msgid "connection to client lost"
 msgstr "서버로부터 연결이 끊어졌습니다."
 
-#: tcop/postgres.c:3400
+#: tcop/maintable.c:3400
 #, c-format
 msgid "canceling statement due to lock timeout"
 msgstr "잠금 대기 시간 초과로 작업을 취소합니다."
 
-#: tcop/postgres.c:3407
+#: tcop/maintable.c:3407
 #, c-format
 msgid "canceling statement due to statement timeout"
 msgstr "명령실행시간 초과로 작업을 취소합니다."
 
-#: tcop/postgres.c:3414
+#: tcop/maintable.c:3414
 #, c-format
 msgid "canceling autovacuum task"
 msgstr "자동 청소 작업을 취소하는 중"
 
-#: tcop/postgres.c:3427
+#: tcop/maintable.c:3427
 #, c-format
 msgid "canceling statement due to user request"
 msgstr "사용자 요청에 의해 작업을 취소합니다."
 
-#: tcop/postgres.c:3448
+#: tcop/maintable.c:3448
 #, c-format
 msgid "terminating connection due to idle-in-transaction timeout"
 msgstr "idle-in-transaction 시간 초과로 연결을 끝냅니다"
 
-#: tcop/postgres.c:3461
+#: tcop/maintable.c:3461
 #, c-format
 msgid "terminating connection due to transaction timeout"
 msgstr "트랜잭션 시간(transaction_timeout) 초과로 연결을 끝냅니다"
 
-#: tcop/postgres.c:3474
+#: tcop/maintable.c:3474
 #, c-format
 msgid "terminating connection due to idle-session timeout"
 msgstr "idle-session 시간 초과로 연결을 끝냅니다"
 
-#: tcop/postgres.c:3564
+#: tcop/maintable.c:3564
 #, c-format
 msgid "stack depth limit exceeded"
 msgstr "스택 깊이를 초과했습니다"
 
-#: tcop/postgres.c:3565
+#: tcop/maintable.c:3565
 #, c-format
 msgid ""
 "Increase the configuration parameter \"max_stack_depth\" (currently %dkB), "
@@ -25432,29 +25432,29 @@ msgstr ""
 "먼저 OS에서 지원하는 스택 depth 최대값을 확인한 뒤, 허용범위 안에서 "
 "\"max_stack_depth\" (현재값: %dkB) 매개 변수 값의 설정치를 증가시키세요."
 
-#: tcop/postgres.c:3612
+#: tcop/maintable.c:3612
 #, c-format
 msgid "\"max_stack_depth\" must not exceed %ldkB."
 msgstr "\"max_stack_depth\" 값은 %ldkB를 초과할 수 없습니다"
 
-#: tcop/postgres.c:3614
+#: tcop/maintable.c:3614
 #, c-format
 msgid ""
 "Increase the platform's stack depth limit via \"ulimit -s\" or local "
 "equivalent."
 msgstr "OS의 \"ulimit -s\" 명령과 같은 것으로 스택 깊이를 늘려주십시오."
 
-#: tcop/postgres.c:3637
+#: tcop/maintable.c:3637
 #, c-format
 msgid "\"client_connection_check_interval\" must be set to 0 on this platform."
 msgstr "이 플랫폼에서는 \"client_connection_check_interval\" 값은 0 이어야 합니다."
 
-#: tcop/postgres.c:3658
+#: tcop/maintable.c:3658
 #, c-format
 msgid "Cannot enable parameter when \"log_statement_stats\" is true."
 msgstr "\"log_statement_stats\" 값이 true 일 때는 이 값을 활성화할 수 없습니다"
 
-#: tcop/postgres.c:3673
+#: tcop/maintable.c:3673
 #, c-format
 msgid ""
 "Cannot enable \"log_statement_stats\" when \"log_parser_stats\", "
@@ -25463,47 +25463,47 @@ msgstr ""
 "\"log_parser_stats\", \"log_planner_stats\", \"log_executor_stats\" 설정값들 "
 "중 하나가 true 일 때는 \"log_statement_stats\" 설정을 활성화할 수 없습니다"
 
-#: tcop/postgres.c:4098
+#: tcop/maintable.c:4098
 #, c-format
 msgid "invalid command-line argument for server process: %s"
 msgstr "서버 프로세스의 명령행 인자가 잘못되었습니다: %s"
 
-#: tcop/postgres.c:4099 tcop/postgres.c:4105
+#: tcop/maintable.c:4099 tcop/maintable.c:4105
 #, c-format
 msgid "Try \"%s --help\" for more information."
 msgstr "자세한 사항은 \"%s --help\" 명령으로 살펴보세요."
 
-#: tcop/postgres.c:4103
+#: tcop/maintable.c:4103
 #, c-format
 msgid "%s: invalid command-line argument: %s"
 msgstr "%s: 잘못된 명령행 인자: %s"
 
-#: tcop/postgres.c:4156
+#: tcop/maintable.c:4156
 #, c-format
 msgid "%s: no database nor user name specified"
 msgstr "%s: 데이터베이스와 사용자를 지정하지 않았습니다"
 
-#: tcop/postgres.c:4909
+#: tcop/maintable.c:4909
 #, c-format
 msgid "invalid CLOSE message subtype %d"
 msgstr "잘못된 CLOSE 메시지 서브타입 %d"
 
-#: tcop/postgres.c:4946
+#: tcop/maintable.c:4946
 #, c-format
 msgid "invalid DESCRIBE message subtype %d"
 msgstr "잘못된 DESCRIBE 메시지 서브타입 %d"
 
-#: tcop/postgres.c:5033
+#: tcop/maintable.c:5033
 #, c-format
 msgid "fastpath function calls not supported in a replication connection"
 msgstr "복제 연결에서는 fastpath 함수 호출을 지원하지 않습니다"
 
-#: tcop/postgres.c:5037
+#: tcop/maintable.c:5037
 #, c-format
 msgid "extended query protocol not supported in a replication connection"
 msgstr "복제 연결에서는 확장된 쿼리 프로토콜을 지원하지 않습니다"
 
-#: tcop/postgres.c:5217
+#: tcop/maintable.c:5217
 #, c-format
 msgid ""
 "disconnection: session time: %d:%02d:%02d.%03d user=%s database=%s "
@@ -27899,8 +27899,8 @@ msgstr ""
 
 #: utils/adt/mcxtfuncs.c:173
 #, c-format
-msgid "PID %d is not a PostgreSQL server process"
-msgstr "PID %d 프로그램은 PostgreSQL 서버 프로세스가 아닙니다"
+msgid "PID %d is not a maintableQL server process"
+msgstr "PID %d 프로그램은 maintableQL 서버 프로세스가 아닙니다"
 
 #: utils/adt/misc.c:237
 #, c-format
@@ -28309,10 +28309,10 @@ msgstr ""
 #, c-format
 msgid ""
 "Rebuild all objects affected by this collation and run ALTER COLLATION %s "
-"REFRESH VERSION, or build PostgreSQL with the right library version."
+"REFRESH VERSION, or build maintableQL with the right library version."
 msgstr ""
 "해당 정렬 규칙과 연관된 모든 객체를 다시 만들고, ALTER COLLATION %s REFRESH "
-"VERSION 명령을 실행하거나, 바른 라이브러리 버전을 지정해서, PostgreSQL을 빌드"
+"VERSION 명령을 실행하거나, 바른 라이브러리 버전을 지정해서, maintableQL을 빌드"
 "하세요."
 
 #: utils/adt/pg_locale.c:1772 utils/adt/pg_locale.c:2556
@@ -29381,9 +29381,9 @@ msgstr "XML 오류 핸들러를 설정할 수 없음"
 #, c-format
 msgid ""
 "This probably indicates that the version of libxml2 being used is not "
-"compatible with the libxml2 header files that PostgreSQL was built with."
+"compatible with the libxml2 header files that maintableQL was built with."
 msgstr ""
-"이 문제는 PostgreSQL 서버를 만들 때 사용한 libxml2 헤더 파일이 호환성이 없는 "
+"이 문제는 maintableQL 서버를 만들 때 사용한 libxml2 헤더 파일이 호환성이 없는 "
 "것 같습니다."
 
 #: utils/adt/xml.c:2281
@@ -29928,9 +29928,9 @@ msgstr "\"%s\" 잠금 파일이 이미 있음"
 
 #: utils/init/miscinit.c:1358
 #, c-format
-msgid "Is another postgres (PID %d) running in data directory \"%s\"?"
+msgid "Is another maintable (PID %d) running in data directory \"%s\"?"
 msgstr ""
-"다른 postgres 프로그램(PID %d)이 \"%s\" 데이터 디렉터리를 사용해서 실행중입니"
+"다른 maintable 프로그램(PID %d)이 \"%s\" 데이터 디렉터리를 사용해서 실행중입니"
 "까?"
 
 #: utils/init/miscinit.c:1360
@@ -29942,9 +29942,9 @@ msgstr ""
 
 #: utils/init/miscinit.c:1363
 #, c-format
-msgid "Is another postgres (PID %d) using socket file \"%s\"?"
+msgid "Is another maintable (PID %d) using socket file \"%s\"?"
 msgstr ""
-"다른 postgres 프로그램(PID %d)이 \"%s\" 소켓 파일을 사용해서 실행중입니까?"
+"다른 maintable 프로그램(PID %d)이 \"%s\" 소켓 파일을 사용해서 실행중입니까?"
 
 #: utils/init/miscinit.c:1365
 #, c-format
@@ -30011,10 +30011,10 @@ msgstr "initdb 명령을 실행해 새 클러스터를 만들어야 할 수도 �
 #: utils/init/miscinit.c:1813
 #, c-format
 msgid ""
-"The data directory was initialized by PostgreSQL version %s, which is not "
+"The data directory was initialized by maintableQL version %s, which is not "
 "compatible with this version %s."
 msgstr ""
-"이 데이터 디렉터리는 PostgreSQL %s 버전으로 초기화 되어있는데, 이 서버의 %s "
+"이 데이터 디렉터리는 maintableQL %s 버전으로 초기화 되어있는데, 이 서버의 %s "
 "버전은 이 버전과 호환성이 없습니다."
 
 #: utils/init/postinit.c:259
@@ -30144,11 +30144,11 @@ msgstr ""
 #, c-format
 msgid ""
 "Rebuild all objects in this database that use the default collation and run "
-"ALTER DATABASE %s REFRESH COLLATION VERSION, or build PostgreSQL with the "
+"ALTER DATABASE %s REFRESH COLLATION VERSION, or build maintableQL with the "
 "right library version."
 msgstr ""
 "해당 정렬 규칙과 연관된 모든 객체를 다시 만들고, ALTER COLLATION %s REFRESH "
-"VERSION 명령을 실행하거나, 바른 라이브러리 버전을 지정해서, PostgreSQL을 빌드"
+"VERSION 명령을 실행하거나, 바른 라이브러리 버전을 지정해서, maintableQL을 빌드"
 "하세요."
 
 #: utils/init/postinit.c:904
@@ -30374,9 +30374,9 @@ msgstr "%s: \"%s\" 디렉터리에 액세스할 수 없음: %m\n"
 #: utils/misc/guc.c:1806
 #, c-format
 msgid ""
-"Run initdb or pg_basebackup to initialize a PostgreSQL data directory.\n"
+"Run initdb or pg_basebackup to initialize a maintableQL data directory.\n"
 msgstr ""
-"initdb 명령이나, pg_basebackup 명령으로 PostgreSQL 데이터 디렉터리를 초기화 "
+"initdb 명령이나, pg_basebackup 명령으로 maintableQL 데이터 디렉터리를 초기화 "
 "하세요.\n"
 
 #: utils/misc/guc.c:1830
@@ -30736,8 +30736,8 @@ msgid "Lock Management"
 msgstr "잠금 관리"
 
 #: utils/misc/guc_tables.c:715
-msgid "Version and Platform Compatibility / Previous PostgreSQL Versions"
-msgstr "버전과 플랫폼 호환성 / 이전 PostgreSQL 버전"
+msgid "Version and Platform Compatibility / Previous maintableQL Versions"
+msgstr "버전과 플랫폼 호환성 / 이전 maintableQL 버전"
 
 #: utils/misc/guc_tables.c:716
 msgid "Version and Platform Compatibility / Other Platforms and Clients"
@@ -30936,13 +30936,13 @@ msgstr "체크섬 실패 후 처리 계속 함"
 
 #: utils/misc/guc_tables.c:1101
 msgid ""
-"Detection of a checksum failure normally causes PostgreSQL to report an "
+"Detection of a checksum failure normally causes maintableQL to report an "
 "error, aborting the current transaction. Setting ignore_checksum_failure to "
 "true causes the system to ignore the failure (but still report a warning), "
 "and continue processing. This behavior could cause crashes or other serious "
 "problems. Only has an effect if checksums are enabled."
 msgstr ""
-"일반적으로 손상된 페이지 헤더를 발견하게 되면, PostgreSQL에서는 오류를 발생하"
+"일반적으로 손상된 페이지 헤더를 발견하게 되면, maintableQL에서는 오류를 발생하"
 "고, 현재 트랜잭션을 중지합니다. ignore_checksum_failure 값을 true로 지정하"
 "면, 이런 손상된 페이지를 발견하면, 경고 메시지를 보여주고, 계속 진행합니다. "
 "이 기능을 사용한다 함은 서버 비정상 종료나 기타 심각한 문제가 일어 날 수 있습"
@@ -30955,13 +30955,13 @@ msgstr "손상된 자료 헤더 발견시 작업 진행 여부 선택"
 
 #: utils/misc/guc_tables.c:1116
 msgid ""
-"Detection of a damaged page header normally causes PostgreSQL to report an "
+"Detection of a damaged page header normally causes maintableQL to report an "
 "error, aborting the current transaction. Setting \"zero_damaged_pages\" to "
 "true causes the system to instead report a warning, zero out the damaged "
 "page, and continue processing. This behavior will destroy data, namely all "
 "the rows on the damaged page."
 msgstr ""
-"일반적으로 손상된 페이지 헤더를 발견하게 되면, PostgreSQL에서는 오류를 발생하"
+"일반적으로 손상된 페이지 헤더를 발견하게 되면, maintableQL에서는 오류를 발생하"
 "고, 현재 트랜잭션을 중지합니다. \"zero_damaged_pages\" 값을 true로 지정하면, 이"
 "런 손상된 페이지를 발견하면, 경고 메시지를 보여주고, 그 페이지의 크기를 0으"
 "로 만들고 작업을 계속 진행합니다. 이 기능을 사용한다 함은 손상된 자료를 없애"
@@ -30975,14 +30975,14 @@ msgstr "잘못된 페이지 실패 후 복구 계속 함"
 #: utils/misc/guc_tables.c:1130
 msgid ""
 "Detection of WAL records having references to invalid pages during recovery "
-"causes PostgreSQL to raise a PANIC-level error, aborting the recovery. "
+"causes maintableQL to raise a PANIC-level error, aborting the recovery. "
 "Setting \"ignore_invalid_pages\" to true causes the system to ignore invalid "
 "page references in WAL records (but still report a warning), and continue "
 "recovery. This behavior may cause crashes, data loss, propagate or hide "
 "corruption, or other serious problems. Only has an effect during recovery or "
 "in standby mode."
 msgstr ""
-"PostgreSQL은 WAL 기반 복구 작업에서 해당 페이지가 잘못되어 있으면, PANIC 오류"
+"maintableQL은 WAL 기반 복구 작업에서 해당 페이지가 잘못되어 있으면, PANIC 오류"
 "를 내고 복구 작업을 중지하고 멈춥니다.  \"ignore_invalid_pages\" 값을  true로 지"
 "정하면, 이런 손상된 페이지가 있을 때, 경고 메시지를 보여주고, 복구 작업 계속 "
 "진행합니다. 이 기능을 사용하면 서버 비정상 종료나 자료 손실 숨은 손상, 기타 "
@@ -31362,9 +31362,9 @@ msgstr "대형 개체에 대한 접근 권한 검사를 위한 하위 호환성�
 #: utils/misc/guc_tables.c:1854
 msgid ""
 "Skips privilege checks when reading or modifying large objects, for "
-"compatibility with PostgreSQL releases prior to 9.0."
+"compatibility with maintableQL releases prior to 9.0."
 msgstr ""
-"PostgreSQL 9.0 이전 버전의 호환성을 위해 대형 개체에 대한 읽기, 변경 시 접근 "
+"maintableQL 9.0 이전 버전의 호환성을 위해 대형 개체에 대한 읽기, 변경 시 접근 "
 "권한 검사를 안 하도록 설정함"
 
 #: utils/misc/guc_tables.c:1864
@@ -32260,10 +32260,10 @@ msgstr "디스크 캐시 총 크기에 대한 계획 관리자의 가정을 설�
 #: utils/misc/guc_tables.c:3501
 msgid ""
 "That is, the total size of the caches (kernel cache and shared buffers) used "
-"for PostgreSQL data files. This is measured in disk pages, which are "
+"for maintableQL data files. This is measured in disk pages, which are "
 "normally 8 kB each."
 msgstr ""
-"즉, PostgreSQL에서 사용하는 총 캐시 크기입니다(커널 캐시와 공유 버퍼 모두 포"
+"즉, maintableQL에서 사용하는 총 캐시 크기입니다(커널 캐시와 공유 버퍼 모두 포"
 "함). 이 값은 디스크 페이지 단위로 측정되며, 일반적으로 각각 8kB입니다."
 
 #: utils/misc/guc_tables.c:3512
@@ -32709,15 +32709,15 @@ msgid "Sets the file name pattern for log files."
 msgstr "로그 파일의 파일 이름 패턴을 설정합니다."
 
 #: utils/misc/guc_tables.c:4364
-msgid "Sets the program name used to identify PostgreSQL messages in syslog."
-msgstr "syslog에서 구분할 PostgreSQL 메시지에 사용될 프로그램 이름을 지정."
+msgid "Sets the program name used to identify maintableQL messages in syslog."
+msgstr "syslog에서 구분할 maintableQL 메시지에 사용될 프로그램 이름을 지정."
 
 #: utils/misc/guc_tables.c:4375
 msgid ""
-"Sets the application name used to identify PostgreSQL messages in the event "
+"Sets the application name used to identify maintableQL messages in the event "
 "log."
 msgstr ""
-"이벤트 로그에서 PostgreSQL 메시지 식별자로 사용할 응용프로그램 이름 지정"
+"이벤트 로그에서 maintableQL 메시지 식별자로 사용할 응용프로그램 이름 지정"
 
 #: utils/misc/guc_tables.c:4386
 msgid "Sets the time zone for displaying and interpreting time stamps."

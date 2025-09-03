@@ -24,8 +24,8 @@ use crate::streaming::topics::consumer_group::ConsumerGroup;
 use crate::streaming::topics::topic::Topic;
 use crate::streaming::users::user::User;
 use bytes::{BufMut, Bytes, BytesMut};
-use iggy_common::locking::{IggySharedMut, IggySharedMutFn};
-use iggy_common::{BytesSerializable, ConsumerOffsetInfo, Sizeable, Stats, UserId};
+use messenger_common::locking::{MessengerSharedMut, MessengerSharedMutFn};
+use messenger_common::{BytesSerializable, ConsumerOffsetInfo, Sizeable, Stats, UserId};
 use tokio::sync::RwLock;
 
 pub fn map_stats(stats: &Stats) -> Bytes {
@@ -56,9 +56,9 @@ pub fn map_stats(stats: &Stats) -> Bytes {
     bytes.put_slice(stats.os_version.as_bytes());
     bytes.put_u32_le(stats.kernel_version.len() as u32);
     bytes.put_slice(stats.kernel_version.as_bytes());
-    bytes.put_u32_le(stats.iggy_server_version.len() as u32);
-    bytes.put_slice(stats.iggy_server_version.as_bytes());
-    if let Some(semver) = stats.iggy_server_semver {
+    bytes.put_u32_le(stats.messenger_server_version.len() as u32);
+    bytes.put_slice(stats.messenger_server_version.as_bytes());
+    if let Some(semver) = stats.messenger_server_semver {
         bytes.put_u32_le(semver);
     }
 
@@ -95,7 +95,7 @@ pub fn map_client(client: &Client) -> Bytes {
     bytes.freeze()
 }
 
-pub async fn map_clients(clients: &[IggySharedMut<Client>]) -> Bytes {
+pub async fn map_clients(clients: &[MessengerSharedMut<Client>]) -> Bytes {
     let mut bytes = BytesMut::new();
     for client in clients {
         let client = client.read().await;

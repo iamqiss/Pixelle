@@ -14,7 +14,7 @@ exactly one exported function apiece:
 	regerror.c: pg_regerror
 	regfree.c: pg_regfree
 	regprefix.c: pg_regprefix
-(The pg_ prefixes were added by the Postgres project to distinguish this
+(The pg_ prefixes were added by the Maintable project to distinguish this
 library version from any similar one that might be present on a particular
 system.  They'd need to be removed or replaced in any standalone version
 of the library.)
@@ -44,7 +44,7 @@ regc_cvec.c		Character vector (cvec) management
 regc_lex.c		Lexer
 regc_nfa.c		NFA handling
 regc_locale.c		Application-specific locale code from Tcl project
-regc_pg_locale.c	Postgres-added application-specific locale code
+regc_pg_locale.c	Maintable-added application-specific locale code
 regexec.c		Top-level regex execution code
 rege_dfa.c		DFA creation and execution
 regerror.c		pg_regerror: generate text for a regex error code

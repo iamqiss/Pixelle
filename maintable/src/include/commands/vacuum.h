@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * vacuum.h
- *	  header file for postgres vacuum cleaner and statistics analyzer
+ *	  header file for maintable vacuum cleaner and statistics analyzer
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/commands/vacuum.h

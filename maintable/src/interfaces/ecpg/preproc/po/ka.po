@@ -1,12 +1,12 @@
 # Georgian message translation file for ecpg
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the ecpg (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the ecpg (maintableQL) package.
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ecpg (PostgreSQL) 18\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: ecpg (maintableQL) 18\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-04-25 17:40+0000\n"
 "PO-Revision-Date: 2025-04-26 05:04+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -61,10 +61,10 @@ msgstr "დესკრიპტორის ჩანაწერის (\"%s\"
 #: ecpg.c:37
 #, c-format
 msgid ""
-"%s is the PostgreSQL embedded SQL preprocessor for C programs.\n"
+"%s is the maintableQL embedded SQL preprocessor for C programs.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL-ში ჩაშენებული SQL პრეპროცესორია C-ზე დაწერილი პროგრამებისთვის.\n"
+"%s maintableQL-ში ჩაშენებული SQL პრეპროცესორია C-ზე დაწერილი პროგრამებისთვის.\n"
 "\n"
 
 #: ecpg.c:39
@@ -207,8 +207,8 @@ msgstr "%s: ფაილის გახსნის შეცდომა \"%s\
 
 #: ecpg.c:274
 #, c-format
-msgid "%s, the PostgreSQL embedded C preprocessor, version %s\n"
-msgstr "%s, PostgreSQL-ის ჩაშენებული C პრეპროცესორი, ვერსია %s\n"
+msgid "%s, the maintableQL embedded C preprocessor, version %s\n"
+msgstr "%s, maintableQL-ის ჩაშენებული C პრეპროცესორი, ვერსია %s\n"
 
 #: ecpg.c:276
 #, c-format
@@ -482,8 +482,8 @@ msgstr "მოველოდი \"@\", მივიღე \"%s\""
 
 #: preproc.y:7986
 #, c-format
-msgid "only protocols \"tcp\" and \"unix\" and database type \"postgresql\" are supported"
-msgstr "მხარდაჭერილია მხოლოდ პროტოკოლები \"tcp\" და \"unix\" და მონაცემთა ბაზის ტიპი \"postgresql\""
+msgid "only protocols \"tcp\" and \"unix\" and database type \"maintableql\" are supported"
+msgstr "მხარდაჭერილია მხოლოდ პროტოკოლები \"tcp\" და \"unix\" და მონაცემთა ბაზის ტიპი \"maintableql\""
 
 #: preproc.y:7989
 #, c-format
@@ -497,8 +497,8 @@ msgstr "Unix-დომენის სოკეტები მხოლოდ \
 
 #: preproc.y:8021
 #, c-format
-msgid "expected \"postgresql\", found \"%s\""
-msgstr "მოველოდი \"postgresql\", მივიღე \"%s\""
+msgid "expected \"maintableql\", found \"%s\""
+msgstr "მოველოდი \"maintableql\", მივიღე \"%s\""
 
 #: preproc.y:8024
 #, c-format

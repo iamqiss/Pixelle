@@ -21,14 +21,14 @@ import (
 	"testing"
 )
 
-func TestIggyError_Error(t *testing.T) {
-	iggyErr := &IggyError{
+func TestMessengerError_Error(t *testing.T) {
+	messengerErr := &MessengerError{
 		Code:    42,
 		Message: "test_error",
 	}
 
 	expectedErrorString := "42: 'test_error'"
-	actualErrorString := iggyErr.Error()
+	actualErrorString := messengerErr.Error()
 
 	if expectedErrorString != actualErrorString {
 		t.Errorf("Error() method mismatch, expected: %s, got: %s", expectedErrorString, actualErrorString)

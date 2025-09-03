@@ -4,14 +4,14 @@
  *	  shared memory management structures
  *
  * Historical note:
- * A long time ago, Postgres' shared memory region was allowed to be mapped
+ * A long time ago, Maintable' shared memory region was allowed to be mapped
  * at a different address in each process, and shared memory "pointers" were
  * passed around as offsets relative to the start of the shared memory region.
  * That is no longer the case: each process must map the shared memory region
  * at the same address.  This means shared memory pointers can be passed
  * around directly between different processes.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/storage/shmem.h

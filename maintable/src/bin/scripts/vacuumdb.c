@@ -2,7 +2,7 @@
  *
  * vacuumdb
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/bin/scripts/vacuumdb.c
@@ -10,7 +10,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <limits.h>
 
@@ -556,84 +556,84 @@ vacuum_one_database(ConnParams *cparams,
 	if (vacopts->disable_page_skipping && PQserverVersion(conn) < 90600)
 	{
 		PQfinish(conn);
-		pg_fatal("cannot use the \"%s\" option on server versions older than PostgreSQL %s",
+		pg_fatal("cannot use the \"%s\" option on server versions older than maintableQL %s",
 				 "disable-page-skipping", "9.6");
 	}
 
 	if (vacopts->no_index_cleanup && PQserverVersion(conn) < 120000)
 	{
 		PQfinish(conn);
-		pg_fatal("cannot use the \"%s\" option on server versions older than PostgreSQL %s",
+		pg_fatal("cannot use the \"%s\" option on server versions older than maintableQL %s",
 				 "no-index-cleanup", "12");
 	}
 
 	if (vacopts->force_index_cleanup && PQserverVersion(conn) < 120000)
 	{
 		PQfinish(conn);
-		pg_fatal("cannot use the \"%s\" option on server versions older than PostgreSQL %s",
+		pg_fatal("cannot use the \"%s\" option on server versions older than maintableQL %s",
 				 "force-index-cleanup", "12");
 	}
 
 	if (!vacopts->do_truncate && PQserverVersion(conn) < 120000)
 	{
 		PQfinish(conn);
-		pg_fatal("cannot use the \"%s\" option on server versions older than PostgreSQL %s",
+		pg_fatal("cannot use the \"%s\" option on server versions older than maintableQL %s",
 				 "no-truncate", "12");
 	}
 
 	if (!vacopts->process_main && PQserverVersion(conn) < 160000)
 	{
 		PQfinish(conn);
-		pg_fatal("cannot use the \"%s\" option on server versions older than PostgreSQL %s",
+		pg_fatal("cannot use the \"%s\" option on server versions older than maintableQL %s",
 				 "no-process-main", "16");
 	}
 
 	if (!vacopts->process_toast && PQserverVersion(conn) < 140000)
 	{
 		PQfinish(conn);
-		pg_fatal("cannot use the \"%s\" option on server versions older than PostgreSQL %s",
+		pg_fatal("cannot use the \"%s\" option on server versions older than maintableQL %s",
 				 "no-process-toast", "14");
 	}
 
 	if (vacopts->skip_locked && PQserverVersion(conn) < 120000)
 	{
 		PQfinish(conn);
-		pg_fatal("cannot use the \"%s\" option on server versions older than PostgreSQL %s",
+		pg_fatal("cannot use the \"%s\" option on server versions older than maintableQL %s",
 				 "skip-locked", "12");
 	}
 
 	if (vacopts->min_xid_age != 0 && PQserverVersion(conn) < 90600)
 	{
 		PQfinish(conn);
-		pg_fatal("cannot use the \"%s\" option on server versions older than PostgreSQL %s",
+		pg_fatal("cannot use the \"%s\" option on server versions older than maintableQL %s",
 				 "--min-xid-age", "9.6");
 	}
 
 	if (vacopts->min_mxid_age != 0 && PQserverVersion(conn) < 90600)
 	{
 		PQfinish(conn);
-		pg_fatal("cannot use the \"%s\" option on server versions older than PostgreSQL %s",
+		pg_fatal("cannot use the \"%s\" option on server versions older than maintableQL %s",
 				 "--min-mxid-age", "9.6");
 	}
 
 	if (vacopts->parallel_workers >= 0 && PQserverVersion(conn) < 130000)
 	{
 		PQfinish(conn);
-		pg_fatal("cannot use the \"%s\" option on server versions older than PostgreSQL %s",
+		pg_fatal("cannot use the \"%s\" option on server versions older than maintableQL %s",
 				 "--parallel", "13");
 	}
 
 	if (vacopts->buffer_usage_limit && PQserverVersion(conn) < 160000)
 	{
 		PQfinish(conn);
-		pg_fatal("cannot use the \"%s\" option on server versions older than PostgreSQL %s",
+		pg_fatal("cannot use the \"%s\" option on server versions older than maintableQL %s",
 				 "--buffer-usage-limit", "16");
 	}
 
 	if (vacopts->missing_stats_only && PQserverVersion(conn) < 150000)
 	{
 		PQfinish(conn);
-		pg_fatal("cannot use the \"%s\" option on server versions older than PostgreSQL %s",
+		pg_fatal("cannot use the \"%s\" option on server versions older than maintableQL %s",
 				 "--missing-stats-only", "15");
 	}
 
@@ -1349,7 +1349,7 @@ run_vacuum_command(PGconn *conn, const char *sql, bool echo,
 static void
 help(const char *progname)
 {
-	printf(_("%s cleans and analyzes a PostgreSQL database.\n\n"), progname);
+	printf(_("%s cleans and analyzes a maintableQL database.\n\n"), progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]... [DBNAME]\n"), progname);
 	printf(_("\nOptions:\n"));

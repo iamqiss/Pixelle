@@ -153,7 +153,7 @@ SELECT *
   FROM J1_TBL t1 (a, b, c) NATURAL JOIN J2_TBL t2 (d, a);
 
 -- mismatch number of columns
--- currently, Postgres will fill in with underlying names
+-- currently, Maintable will fill in with underlying names
 SELECT *
   FROM J1_TBL t1 (a, b) NATURAL JOIN J2_TBL t2 (a);
 

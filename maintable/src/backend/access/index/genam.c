@@ -3,7 +3,7 @@
  * genam.c
  *	  general index access method routines
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -17,7 +17,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/genam.h"
 #include "access/heapam.h"
@@ -781,7 +781,7 @@ systable_endscan_ordered(SysScanDesc sysscan)
  * systable_inplace_update_begin --- update a row "in place" (overwrite it)
  *
  * Overwriting violates both MVCC and transactional safety, so the uses of
- * this function in Postgres are extremely limited.  Nonetheless we find some
+ * this function in Maintable are extremely limited.  Nonetheless we find some
  * places to use it.  See README.tuplock section "Locking to write
  * inplace-updated tables" and later sections for expectations of readers and
  * writers of a table that gets inplace updates.  Standard flow:

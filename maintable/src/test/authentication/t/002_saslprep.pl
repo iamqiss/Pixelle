@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test password normalization in SCRAM.
 #
@@ -7,8 +7,8 @@
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 if (!$use_unix_sockets)
 {
@@ -60,7 +60,7 @@ sub test_login
 
 # Initialize primary node. Force UTF-8 encoding, so that we can use non-ASCII
 # characters in the passwords below.
-my $node = PostgreSQL::Test::Cluster->new('primary');
+my $node = maintableQL::Test::Cluster->new('primary');
 $node->init(extra => [ '--locale=C', '--encoding=UTF8' ]);
 $node->start;
 
@@ -79,7 +79,7 @@ $node->start;
 
 # Create test roles.
 $node->safe_psql(
-	'postgres',
+	'maintable',
 	"SET password_encryption='scram-sha-256';
 SET client_encoding='utf8';
 CREATE ROLE saslpreptest1_role LOGIN PASSWORD 'IX';
@@ -105,7 +105,7 @@ test_login($node, 'saslpreptest4a_role', "\xc2\xaa", 0);
 test_login($node, 'saslpreptest4b_role', "a", 0);
 test_login($node, 'saslpreptest4b_role', "\xc2\xaa", 0);
 
-# Check #6 and #7 - In PostgreSQL, contrary to the spec, if the password
+# Check #6 and #7 - In maintableQL, contrary to the spec, if the password
 # contains prohibited characters, we use it as is, without normalization.
 test_login($node, 'saslpreptest6_role', "foo\x07bar", 0);
 test_login($node, 'saslpreptest6_role', "foobar", 2);

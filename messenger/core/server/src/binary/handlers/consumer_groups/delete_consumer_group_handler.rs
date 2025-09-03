@@ -24,23 +24,23 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::delete_consumer_group::DeleteConsumerGroup;
+use messenger_common::MessengerError;
+use messenger_common::delete_consumer_group::DeleteConsumerGroup;
 use tracing::{debug, instrument};
 
 impl ServerCommandHandler for DeleteConsumerGroup {
     fn code(&self) -> u32 {
-        iggy_common::DELETE_CONSUMER_GROUP_CODE
+        messenger_common::DELETE_CONSUMER_GROUP_CODE
     }
 
-    #[instrument(skip_all, name = "trace_delete_consumer_group", fields(iggy_user_id = session.get_user_id(), iggy_client_id = session.client_id, iggy_stream_id = self.stream_id.as_string(), iggy_topic_id = self.topic_id.as_string()))]
+    #[instrument(skip_all, name = "trace_delete_consumer_group", fields(messenger_user_id = session.get_user_id(), messenger_client_id = session.client_id, messenger_stream_id = self.stream_id.as_string(), messenger_topic_id = self.topic_id.as_string()))]
     async fn handle(
         self,
         sender: &mut SenderKind,
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
 
         let mut system = system.write().await;
@@ -79,13 +79,13 @@ impl ServerCommandHandler for DeleteConsumerGroup {
 }
 
 impl BinaryServerCommand for DeleteConsumerGroup {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::DeleteConsumerGroup(delete_consumer_group) => Ok(delete_consumer_group),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

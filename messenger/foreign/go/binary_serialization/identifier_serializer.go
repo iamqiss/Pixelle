@@ -18,7 +18,7 @@
 package binaryserialization
 
 import (
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
 )
 
 func SerializeIdentifier(identifier iggcon.Identifier) []byte {

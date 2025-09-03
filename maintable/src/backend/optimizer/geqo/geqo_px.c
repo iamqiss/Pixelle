@@ -33,7 +33,7 @@
 /*															 */
 /*************************************************************/
 
-#include "postgres.h"
+#include "maintable.h"
 #include "optimizer/geqo.h"
 
 #if defined(PX)

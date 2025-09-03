@@ -3,7 +3,7 @@
  * unaccent.c
  *	  Text search unaccent dictionary
  *
- * Copyright (c) 2009-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2009-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  contrib/unaccent/unaccent.c
@@ -11,7 +11,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_ts_dict.h"
 #include "commands/defrem.h"

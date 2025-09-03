@@ -1,13 +1,13 @@
 /*-------------------------------------------------------------------------
  *
  * ginfast.c
- *	  Fast insert routines for the Postgres inverted index access method.
+ *	  Fast insert routines for the Maintable inverted index access method.
  *	  Pending entries are stored in linear list of pages.  Later on
  *	  (typically during VACUUM), ginInsertCleanup() will be invoked to
  *	  transfer pending entries into the regular index structure.  This
  *	  wins because bulk insertion is much more efficient than retail.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -16,7 +16,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/gin_private.h"
 #include "access/ginxlog.h"

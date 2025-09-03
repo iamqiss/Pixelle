@@ -14,7 +14,7 @@ if test "$PERL"; then
     $AWK '{ if ([$]1 == 5 && ([$]2 >= 14)) exit 1; else exit 0;}'
   then
     AC_MSG_ERROR([
-*** The installed version of Perl, $PERL, is too old to use with PostgreSQL.
+*** The installed version of Perl, $PERL, is too old to use with maintableQL.
 *** Perl version 5.14 or later is required, but this is $pgac_perl_version.])
   fi
 fi
@@ -51,13 +51,13 @@ AC_DEFUN([PGAC_CHECK_PERL_CONFIGS],
 # Perl was compiled with a different compiler.  Moreover, although Perl likes
 # to put stuff like -D_LARGEFILE_SOURCE and -D_FILE_OFFSET_BITS=64 here, it
 # would be fatal to try to compile PL/Perl to a different libc ABI than core
-# Postgres uses.  The available information says that most symbols that affect
+# Maintable uses.  The available information says that most symbols that affect
 # Perl's own ABI begin with letters, so it's almost sufficient to adopt -D
 # switches for symbols not beginning with underscore.
 
 # Some exceptions are the Windows-specific -D_USE_32BIT_TIME_T and
 # -D__MINGW_USE_VC2005_COMPAT. To be exact, Windows offers several 32-bit ABIs.
-# Perl is sensitive to sizeof(time_t), one of the ABI dimensions.  PostgreSQL
+# Perl is sensitive to sizeof(time_t), one of the ABI dimensions.  maintableQL
 # doesn't support building with pre-MSVC-2005 compilers, but it does support
 # linking to Perl built with such a compiler.  MSVC-built Perl 5.13.4 and
 # later report -D_USE_32BIT_TIME_T in $Config{ccflags} if applicable, but
@@ -85,7 +85,7 @@ AC_MSG_RESULT([$perl_embed_ccflags])
 # We are after Embed's ldopts, but without the subset mentioned in
 # Config's ccdlflags and ldflags.  (Those are the choices of those who
 # built the Perl installation, which are not necessarily appropriate
-# for building PostgreSQL.)
+# for building maintableQL.)
 AC_DEFUN([PGAC_CHECK_PERL_EMBED_LDFLAGS],
 [AC_REQUIRE([PGAC_PATH_PERL])
 AC_MSG_CHECKING(for flags to link embedded Perl)

@@ -1,17 +1,17 @@
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 #
 # Test we handle interrupted DROP DATABASE correctly.
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $node = PostgreSQL::Test::Cluster->new('node');
+my $node = maintableQL::Test::Cluster->new('node');
 $node->init;
 $node->append_conf(
-	"postgresql.conf", qq(
+	"maintableql.conf", qq(
 autovacuum = off
 max_prepared_transactions=5
 log_min_duration_statement=0
@@ -27,7 +27,7 @@ $node->start;
 # required race conditions (see testing further down)...
 
 $node->safe_psql(
-	"postgres", qq(
+	"maintable", qq(
 CREATE DATABASE regression_invalid;
 UPDATE pg_database SET datconnlimit = -2 WHERE datname = 'regression_invalid';
 ));
@@ -43,13 +43,13 @@ like(
 	"can't connect to invalid database - error message");
 
 is( $node->psql(
-		'postgres', 'ALTER DATABASE regression_invalid CONNECTION LIMIT 10'),
+		'maintable', 'ALTER DATABASE regression_invalid CONNECTION LIMIT 10'),
 	2,
 	"can't ALTER invalid database");
 
 # check invalid database can't be used as a template
 is( $node->psql(
-		'postgres',
+		'maintable',
 		'CREATE DATABASE copy_invalid TEMPLATE regression_invalid'),
 	3,
 	"can't use invalid database as template");
@@ -60,7 +60,7 @@ is( $node->psql(
 # row of the invalid database to have an outdated datfrozenxid.
 $psql_stderr = '';
 $node->psql(
-	'postgres',
+	'maintable',
 	qq(
 UPDATE pg_database SET datfrozenxid = '123456' WHERE datname = 'regression_invalid';
 DROP TABLE IF EXISTS foo_tbl; CREATE TABLE foo_tbl();
@@ -74,14 +74,14 @@ unlike(
 
 # But we need to be able to drop an invalid database.
 is( $node->psql(
-		'postgres', 'DROP DATABASE regression_invalid',
+		'maintable', 'DROP DATABASE regression_invalid',
 		stdout => \$psql_stdout,
 		stderr => \$psql_stderr),
 	0,
 	"can DROP invalid database");
 
 # Ensure database is gone
-is($node->psql('postgres', 'DROP DATABASE regression_invalid'),
+is($node->psql('maintable', 'DROP DATABASE regression_invalid'),
 	3, "can't drop already dropped database");
 
 
@@ -91,8 +91,8 @@ is($node->psql('postgres', 'DROP DATABASE regression_invalid'),
 # dropping the database, making it a suitable point to wait.  Since relcache
 # init reads pg_tablespace, establish each connection before locking.  This
 # avoids a connection-time hang with debug_discard_caches.
-my $cancel = $node->background_psql('postgres', on_error_stop => 1);
-my $bgpsql = $node->background_psql('postgres', on_error_stop => 0);
+my $cancel = $node->background_psql('maintable', on_error_stop => 1);
+my $bgpsql = $node->background_psql('maintable', on_error_stop => 0);
 my $pid = $bgpsql->query('SELECT pg_backend_pid()');
 
 # create the database, prevent drop database via lock held by a 2PC transaction

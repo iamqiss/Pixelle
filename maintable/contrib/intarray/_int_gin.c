@@ -1,7 +1,7 @@
 /*
  * contrib/intarray/_int_gin.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "_int.h"
 #include "access/gin.h"

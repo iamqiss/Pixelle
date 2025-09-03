@@ -19,14 +19,14 @@
 use crate::utils::auth::fail_if_not_authenticated;
 use crate::utils::mapper;
 use crate::{BinaryClient, TopicClient};
-use iggy_common::create_topic::CreateTopic;
-use iggy_common::delete_topic::DeleteTopic;
-use iggy_common::get_topic::GetTopic;
-use iggy_common::get_topics::GetTopics;
-use iggy_common::purge_topic::PurgeTopic;
-use iggy_common::update_topic::UpdateTopic;
-use iggy_common::{
-    CompressionAlgorithm, Identifier, IggyError, IggyExpiry, MaxTopicSize, Topic, TopicDetails,
+use messenger_common::create_topic::CreateTopic;
+use messenger_common::delete_topic::DeleteTopic;
+use messenger_common::get_topic::GetTopic;
+use messenger_common::get_topics::GetTopics;
+use messenger_common::purge_topic::PurgeTopic;
+use messenger_common::update_topic::UpdateTopic;
+use messenger_common::{
+    CompressionAlgorithm, Identifier, MessengerError, MessengerExpiry, MaxTopicSize, Topic, TopicDetails,
 };
 
 #[async_trait::async_trait]
@@ -35,7 +35,7 @@ impl<B: BinaryClient> TopicClient for B {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<Option<TopicDetails>, IggyError> {
+    ) -> Result<Option<TopicDetails>, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self
             .send_with_response(&GetTopic {
@@ -50,7 +50,7 @@ impl<B: BinaryClient> TopicClient for B {
         mapper::map_topic(response).map(Some)
     }
 
-    async fn get_topics(&self, stream_id: &Identifier) -> Result<Vec<Topic>, IggyError> {
+    async fn get_topics(&self, stream_id: &Identifier) -> Result<Vec<Topic>, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self
             .send_with_response(&GetTopics {
@@ -68,9 +68,9 @@ impl<B: BinaryClient> TopicClient for B {
         compression_algorithm: CompressionAlgorithm,
         replication_factor: Option<u8>,
         topic_id: Option<u32>,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         max_topic_size: MaxTopicSize,
-    ) -> Result<TopicDetails, IggyError> {
+    ) -> Result<TopicDetails, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self
             .send_with_response(&CreateTopic {
@@ -94,9 +94,9 @@ impl<B: BinaryClient> TopicClient for B {
         name: &str,
         compression_algorithm: CompressionAlgorithm,
         replication_factor: Option<u8>,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         max_topic_size: MaxTopicSize,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&UpdateTopic {
             stream_id: stream_id.clone(),
@@ -115,7 +115,7 @@ impl<B: BinaryClient> TopicClient for B {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&DeleteTopic {
             stream_id: stream_id.clone(),
@@ -129,7 +129,7 @@ impl<B: BinaryClient> TopicClient for B {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&PurgeTopic {
             stream_id: stream_id.clone(),

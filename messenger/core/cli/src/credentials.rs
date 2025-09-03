@@ -17,17 +17,17 @@
  */
 
 use crate::args::CliOptions;
-use crate::error::{CmdToolError, IggyCmdError};
+use crate::error::{CmdToolError, MessengerCmdError};
 use anyhow::{Context, bail};
-use iggy::clients::client::IggyClient;
-use iggy::prelude::{Args, IggyError, PersonalAccessTokenClient, UserClient};
-use iggy_binary_protocol::cli::binary_system::session::ServerSession;
+use messenger::clients::client::MessengerClient;
+use messenger::prelude::{Args, MessengerError, PersonalAccessTokenClient, UserClient};
+use messenger_binary_protocol::cli::binary_system::session::ServerSession;
 use passterm::{Stream, isatty, prompt_password_stdin, prompt_password_tty};
 use std::env::var;
 
 #[cfg(feature = "login-session")]
 mod credentials_login_session {
-    pub(crate) use iggy_binary_protocol::cli::cli_command::PRINT_TARGET;
+    pub(crate) use messenger_binary_protocol::cli::cli_command::PRINT_TARGET;
     pub(crate) use keyring::Entry;
     pub(crate) use tracing::{Level, event};
 }
@@ -35,46 +35,46 @@ mod credentials_login_session {
 #[cfg(feature = "login-session")]
 use credentials_login_session::*;
 
-static ENV_IGGY_USERNAME: &str = "IGGY_USERNAME";
-static ENV_IGGY_PASSWORD: &str = "IGGY_PASSWORD";
+static ENV_MESSENGER_USERNAME: &str = "MESSENGER_USERNAME";
+static ENV_MESSENGER_PASSWORD: &str = "MESSENGER_PASSWORD";
 
-struct IggyUserClient {
+struct MessengerUserClient {
     username: String,
     password: String,
 }
 
 enum Credentials {
-    UserNameAndPassword(IggyUserClient),
+    UserNameAndPassword(MessengerUserClient),
     PersonalAccessToken(String),
     SessionWithToken(String, String),
 }
 
-pub(crate) struct IggyCredentials<'a> {
+pub(crate) struct MessengerCredentials<'a> {
     credentials: Option<Credentials>,
-    iggy_client: Option<&'a IggyClient>,
+    messenger_client: Option<&'a MessengerClient>,
     login_required: bool,
 }
 
-impl<'a> IggyCredentials<'a> {
+impl<'a> MessengerCredentials<'a> {
     pub(crate) fn new(
         cli_options: &CliOptions,
-        iggy_args: &Args,
+        messenger_args: &Args,
         login_required: bool,
     ) -> anyhow::Result<Self, anyhow::Error> {
         if !login_required {
             return Ok(Self {
                 credentials: None,
-                iggy_client: None,
+                messenger_client: None,
                 login_required,
             });
         }
 
-        if let Some(server_address) = iggy_args.get_server_address() {
+        if let Some(server_address) = messenger_args.get_server_address() {
             let server_session = ServerSession::new(server_address.clone());
             if let Some(token) = server_session.get_token() {
                 return Ok(Self {
                     credentials: Some(Credentials::SessionWithToken(token, server_address)),
-                    iggy_client: None,
+                    messenger_client: None,
                     login_required,
                 });
             }
@@ -82,9 +82,9 @@ impl<'a> IggyCredentials<'a> {
 
         #[cfg(feature = "login-session")]
         if let Some(token_name) = &cli_options.token_name {
-            return match iggy_args.get_server_address() {
+            return match messenger_args.get_server_address() {
                 Some(server_address) => {
-                    let server_address = format!("iggy:{server_address}");
+                    let server_address = format!("messenger:{server_address}");
                     event!(target: PRINT_TARGET, Level::DEBUG,"Checking token presence under service: {} and name: {}",
                     server_address, token_name);
                     let entry = Entry::new(&server_address, token_name)?;
@@ -92,18 +92,18 @@ impl<'a> IggyCredentials<'a> {
 
                     Ok(Self {
                         credentials: Some(Credentials::PersonalAccessToken(token)),
-                        iggy_client: None,
+                        messenger_client: None,
                         login_required,
                     })
                 }
-                None => Err(IggyCmdError::CmdToolError(CmdToolError::MissingServerAddress).into()),
+                None => Err(MessengerCmdError::CmdToolError(CmdToolError::MissingServerAddress).into()),
             };
         }
 
         if let Some(token) = &cli_options.token {
             Ok(Self {
                 credentials: Some(Credentials::PersonalAccessToken(token.clone())),
-                iggy_client: None,
+                messenger_client: None,
                 login_required,
             })
         } else if let Some(username) = &cli_options.username {
@@ -119,33 +119,33 @@ impl<'a> IggyCredentials<'a> {
             };
 
             Ok(Self {
-                credentials: Some(Credentials::UserNameAndPassword(IggyUserClient {
+                credentials: Some(Credentials::UserNameAndPassword(MessengerUserClient {
                     username: username.clone(),
                     password,
                 })),
-                iggy_client: None,
+                messenger_client: None,
                 login_required,
             })
-        } else if var(ENV_IGGY_USERNAME).is_ok() && var(ENV_IGGY_PASSWORD).is_ok() {
+        } else if var(ENV_MESSENGER_USERNAME).is_ok() && var(ENV_MESSENGER_PASSWORD).is_ok() {
             Ok(Self {
-                credentials: Some(Credentials::UserNameAndPassword(IggyUserClient {
-                    username: var(ENV_IGGY_USERNAME)?,
-                    password: var(ENV_IGGY_PASSWORD)?,
+                credentials: Some(Credentials::UserNameAndPassword(MessengerUserClient {
+                    username: var(ENV_MESSENGER_USERNAME)?,
+                    password: var(ENV_MESSENGER_PASSWORD)?,
                 })),
-                iggy_client: None,
+                messenger_client: None,
                 login_required,
             })
         } else {
-            Err(IggyCmdError::CmdToolError(CmdToolError::MissingCredentials).into())
+            Err(MessengerCmdError::CmdToolError(CmdToolError::MissingCredentials).into())
         }
     }
 
-    pub(crate) fn set_iggy_client(&mut self, iggy_client: &'a IggyClient) {
-        self.iggy_client = Some(iggy_client);
+    pub(crate) fn set_messenger_client(&mut self, messenger_client: &'a MessengerClient) {
+        self.messenger_client = Some(messenger_client);
     }
 
     pub(crate) async fn login_user(&self) -> anyhow::Result<(), anyhow::Error> {
-        if let Some(client) = self.iggy_client
+        if let Some(client) = self.messenger_client
             && self.login_required
         {
             let credentials = self.credentials.as_ref().unwrap();
@@ -177,14 +177,14 @@ impl<'a> IggyCredentials<'a> {
                     if let Err(err) = login_result {
                         if matches!(
                             err,
-                            IggyError::Unauthenticated
-                                | IggyError::ResourceNotFound(_)
-                                | IggyError::PersonalAccessTokenExpired(_, _)
+                            MessengerError::Unauthenticated
+                                | MessengerError::ResourceNotFound(_)
+                                | MessengerError::PersonalAccessTokenExpired(_, _)
                         ) {
                             let server_session = ServerSession::new(server_address.clone());
                             server_session.delete()?;
                             bail!(
-                                "Login session expired for Iggy server: {server_address}, please login again or use other authentication method"
+                                "Login session expired for Messenger server: {server_address}, please login again or use other authentication method"
                             );
                         } else {
                             bail!("Problem with server login with token: {token_value}");
@@ -198,7 +198,7 @@ impl<'a> IggyCredentials<'a> {
     }
 
     pub(crate) async fn logout_user(&self) -> anyhow::Result<(), anyhow::Error> {
-        if let Some(client) = self.iggy_client
+        if let Some(client) = self.messenger_client
             && self.login_required
         {
             client

@@ -17,27 +17,27 @@
  */
 
 use crate::{
-    BytesSerializable, INDEX_SIZE, IggyByteSize, IggyIndexes, IggyMessage, IggyMessageView,
-    IggyMessageViewIterator, MAX_PAYLOAD_SIZE, Sizeable, Validatable, error::IggyError,
+    BytesSerializable, INDEX_SIZE, MessengerByteSize, MessengerIndexes, MessengerMessage, MessengerMessageView,
+    MessengerMessageViewIterator, MAX_PAYLOAD_SIZE, Sizeable, Validatable, error::MessengerError,
 };
 use bytes::{BufMut, Bytes, BytesMut};
 use std::ops::{Deref, Index};
 
 /// An immutable messages container that holds a buffer of messages
 #[derive(Clone, Debug, PartialEq)]
-pub struct IggyMessagesBatch {
+pub struct MessengerMessagesBatch {
     /// The number of messages in the batch
     count: u32,
     /// The byte-indexes of messages in the buffer, represented as array of u32's. Offsets are relative.
     /// Each index consists of offset, position (byte offset in the buffer) and timestamp.
-    indexes: IggyIndexes,
+    indexes: MessengerIndexes,
     /// The buffer containing the messages
     messages: Bytes,
 }
 
-impl IggyMessagesBatch {
+impl MessengerMessagesBatch {
     /// Create a batch from indexes buffer and messages buffer
-    pub fn new(indexes: IggyIndexes, messages: Bytes, count: u32) -> Self {
+    pub fn new(indexes: MessengerIndexes, messages: Bytes, count: u32) -> Self {
         Self {
             count,
             indexes,
@@ -47,12 +47,12 @@ impl IggyMessagesBatch {
 
     /// Creates a empty messages batch
     pub fn empty() -> Self {
-        Self::new(IggyIndexes::empty(), BytesMut::new().freeze(), 0)
+        Self::new(MessengerIndexes::empty(), BytesMut::new().freeze(), 0)
     }
 
     /// Create iterator over messages
-    pub fn iter(&self) -> IggyMessageViewIterator<'_> {
-        IggyMessageViewIterator::new(&self.messages)
+    pub fn iter(&self) -> MessengerMessageViewIterator<'_> {
+        MessengerMessageViewIterator::new(&self.messages)
     }
 
     /// Get the number of messages
@@ -81,12 +81,12 @@ impl IggyMessagesBatch {
     }
 
     /// Take the indexes from the batch
-    pub fn take_indexes(&mut self) -> IggyIndexes {
+    pub fn take_indexes(&mut self) -> MessengerIndexes {
         std::mem::take(&mut self.indexes)
     }
 
     /// Decompose the batch into its components
-    pub fn decompose(self) -> (u32, IggyIndexes, Bytes) {
+    pub fn decompose(self) -> (u32, MessengerIndexes, Bytes) {
         (self.count, self.indexes, self.messages)
     }
 
@@ -155,16 +155,16 @@ impl IggyMessagesBatch {
 
     /// Get the message at the specified index.
     /// Returns None if the index is out of bounds.
-    pub fn get(&self, index: usize) -> Option<IggyMessageView<'_>> {
+    pub fn get(&self, index: usize) -> Option<MessengerMessageView<'_>> {
         if let Some((start, end)) = self.get_message_boundaries(index) {
-            Some(IggyMessageView::new(&self.messages[start..end]))
+            Some(MessengerMessageView::new(&self.messages[start..end]))
         } else {
             None
         }
     }
 }
 
-impl Index<usize> for IggyMessagesBatch {
+impl Index<usize> for MessengerMessagesBatch {
     type Output = [u8];
 
     fn index(&self, index: usize) -> &Self::Output {
@@ -183,12 +183,12 @@ impl Index<usize> for IggyMessagesBatch {
     }
 }
 
-impl BytesSerializable for IggyMessagesBatch {
+impl BytesSerializable for MessengerMessagesBatch {
     fn to_bytes(&self) -> Bytes {
         panic!("should not be used");
     }
 
-    fn from_bytes(_bytes: Bytes) -> Result<Self, IggyError> {
+    fn from_bytes(_bytes: Bytes) -> Result<Self, MessengerError> {
         panic!("don't use");
     }
 
@@ -203,10 +203,10 @@ impl BytesSerializable for IggyMessagesBatch {
     }
 }
 
-impl Validatable<IggyError> for IggyMessagesBatch {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for MessengerMessagesBatch {
+    fn validate(&self) -> Result<(), MessengerError> {
         if self.is_empty() {
-            return Err(IggyError::InvalidMessagesCount);
+            return Err(MessengerError::InvalidMessagesCount);
         }
 
         let indexes_count = self.indexes.count();
@@ -218,7 +218,7 @@ impl Validatable<IggyError> for IggyMessagesBatch {
                 indexes_size,
                 INDEX_SIZE
             );
-            return Err(IggyError::InvalidIndexesByteSize(indexes_size));
+            return Err(MessengerError::InvalidIndexesByteSize(indexes_size));
         }
 
         if indexes_count != self.count() {
@@ -227,7 +227,7 @@ impl Validatable<IggyError> for IggyMessagesBatch {
                 indexes_count,
                 self.count()
             );
-            return Err(IggyError::InvalidIndexesCount(indexes_count, self.count()));
+            return Err(MessengerError::InvalidIndexesCount(indexes_count, self.count()));
         }
 
         let mut messages_count = 0;
@@ -237,7 +237,7 @@ impl Validatable<IggyError> for IggyMessagesBatch {
             if let Some(index_view) = self.indexes.get(i) {
                 if index_view.offset() != 0 {
                     tracing::error!("Non-zero offset {} at index: {}", index_view.offset(), i);
-                    return Err(IggyError::NonZeroOffset(index_view.offset() as u64, i));
+                    return Err(MessengerError::NonZeroOffset(index_view.offset() as u64, i));
                 }
                 if index_view.timestamp() != 0 {
                     tracing::error!(
@@ -245,11 +245,11 @@ impl Validatable<IggyError> for IggyMessagesBatch {
                         index_view.timestamp(),
                         i
                     );
-                    return Err(IggyError::NonZeroTimestamp(index_view.timestamp(), i));
+                    return Err(MessengerError::NonZeroTimestamp(index_view.timestamp(), i));
                 }
             } else {
                 tracing::error!("Index {} is missing", i);
-                return Err(IggyError::MissingIndex(i));
+                return Err(MessengerError::MissingIndex(i));
             }
 
             if let Some(message) = self.get(i as usize) {
@@ -259,14 +259,14 @@ impl Validatable<IggyError> for IggyMessagesBatch {
                         message.payload().len(),
                         MAX_PAYLOAD_SIZE
                     );
-                    return Err(IggyError::TooBigMessagePayload);
+                    return Err(MessengerError::TooBigMessagePayload);
                 }
 
                 messages_size += message.size();
                 messages_count += 1;
             } else {
                 tracing::error!("Missing index {}", i);
-                return Err(IggyError::MissingIndex(i));
+                return Err(MessengerError::MissingIndex(i));
             }
         }
 
@@ -276,7 +276,7 @@ impl Validatable<IggyError> for IggyMessagesBatch {
                 indexes_count,
                 messages_count
             );
-            return Err(IggyError::InvalidMessagesCount);
+            return Err(MessengerError::InvalidMessagesCount);
         }
 
         if messages_size != self.messages.len() {
@@ -285,7 +285,7 @@ impl Validatable<IggyError> for IggyMessagesBatch {
                 messages_size,
                 self.messages.len() as u64
             );
-            return Err(IggyError::InvalidMessagesSize(
+            return Err(MessengerError::InvalidMessagesSize(
                 messages_size as u32,
                 self.messages.len() as u32,
             ));
@@ -295,23 +295,23 @@ impl Validatable<IggyError> for IggyMessagesBatch {
     }
 }
 
-impl Sizeable for IggyMessagesBatch {
-    fn get_size_bytes(&self) -> IggyByteSize {
-        IggyByteSize::from(self.messages.len() as u64)
+impl Sizeable for MessengerMessagesBatch {
+    fn get_size_bytes(&self) -> MessengerByteSize {
+        MessengerByteSize::from(self.messages.len() as u64)
     }
 }
 
-impl Deref for IggyMessagesBatch {
+impl Deref for MessengerMessagesBatch {
     type Target = [u8];
     fn deref(&self) -> &Self::Target {
         self.buffer()
     }
 }
 
-/// Converts a slice of IggyMessage objects into an IggyMessagesBatch.
+/// Converts a slice of MessengerMessage objects into an MessengerMessagesBatch.
 ///
 /// This trait implementation enables idiomatic conversion from message slices:
-/// `let batch = IggyMessagesBatch::from(messages_slice);`
+/// `let batch = MessengerMessagesBatch::from(messages_slice);`
 ///
 /// 1. Messages are serialized into a contiguous buffer
 /// 2. Index entries are created for each message with:
@@ -327,8 +327,8 @@ impl Deref for IggyMessagesBatch {
 /// - Assign timestamps
 /// - Write the entire message batch and index data to disk without additional allocations
 /// - Update the offset and timestamp fields in-place before persistence
-impl From<&[IggyMessage]> for IggyMessagesBatch {
-    fn from(messages: &[IggyMessage]) -> Self {
+impl From<&[MessengerMessage]> for MessengerMessagesBatch {
+    fn from(messages: &[MessengerMessage]) -> Self {
         if messages.is_empty() {
             return Self::empty();
         }
@@ -354,7 +354,7 @@ impl From<&[IggyMessage]> for IggyMessagesBatch {
             indexes_buffer.put_u64_le(0);
         }
 
-        let indexes = IggyIndexes::new(indexes_buffer.freeze(), 0);
+        let indexes = MessengerIndexes::new(indexes_buffer.freeze(), 0);
 
         Self {
             count: messages_count,
@@ -364,20 +364,20 @@ impl From<&[IggyMessage]> for IggyMessagesBatch {
     }
 }
 
-/// Converts a reference to `Vec<IggyMessage>` into an IggyMessagesBatch.
+/// Converts a reference to `Vec<MessengerMessage>` into an MessengerMessagesBatch.
 ///
 /// This implementation delegates to the slice implementation via `as_slice()`.
 /// It's provided for convenience so it's possible to use `&messages` without
 /// explicit slice conversion.
-impl From<&Vec<IggyMessage>> for IggyMessagesBatch {
-    fn from(messages: &Vec<IggyMessage>) -> Self {
+impl From<&Vec<MessengerMessage>> for MessengerMessagesBatch {
+    fn from(messages: &Vec<MessengerMessage>) -> Self {
         Self::from(messages.as_slice())
     }
 }
 
-/// Converts a `Vec<IggyMessage>` into an IggyMessagesBatch.
-impl From<Vec<IggyMessage>> for IggyMessagesBatch {
-    fn from(messages: Vec<IggyMessage>) -> Self {
+/// Converts a `Vec<MessengerMessage>` into an MessengerMessagesBatch.
+impl From<Vec<MessengerMessage>> for MessengerMessagesBatch {
+    fn from(messages: Vec<MessengerMessage>) -> Self {
         Self::from(messages.as_slice())
     }
 }

@@ -17,8 +17,8 @@
  */
 
 use async_trait::async_trait;
-use iggy_common::{
-    ClientInfo, ClientInfoDetails, IggyDuration, IggyError, Snapshot, SnapshotCompression, Stats,
+use messenger_common::{
+    ClientInfo, ClientInfoDetails, MessengerDuration, MessengerError, Snapshot, SnapshotCompression, Stats,
     SystemSnapshotType,
 };
 
@@ -28,22 +28,22 @@ pub trait SystemClient {
     /// Get the stats of the system such as PID, memory usage, streams count etc.
     ///
     /// Authentication is required, and the permission to read the server info.
-    async fn get_stats(&self) -> Result<Stats, IggyError>;
+    async fn get_stats(&self) -> Result<Stats, MessengerError>;
     /// Get the info about the currently connected client (not to be confused with the user).
     ///
     /// Authentication is required.
-    async fn get_me(&self) -> Result<ClientInfoDetails, IggyError>;
+    async fn get_me(&self) -> Result<ClientInfoDetails, MessengerError>;
     /// Get the info about a specific client by unique ID (not to be confused with the user).
     ///
     /// Authentication is required, and the permission to read the server info.
-    async fn get_client(&self, client_id: u32) -> Result<Option<ClientInfoDetails>, IggyError>;
+    async fn get_client(&self, client_id: u32) -> Result<Option<ClientInfoDetails>, MessengerError>;
     /// Get the info about all the currently connected clients (not to be confused with the users).
     ///
     /// Authentication is required, and the permission to read the server info.
-    async fn get_clients(&self) -> Result<Vec<ClientInfo>, IggyError>;
+    async fn get_clients(&self) -> Result<Vec<ClientInfo>, MessengerError>;
     /// Ping the server to check if it's alive.
-    async fn ping(&self) -> Result<(), IggyError>;
-    async fn heartbeat_interval(&self) -> IggyDuration;
+    async fn ping(&self) -> Result<(), MessengerError>;
+    async fn heartbeat_interval(&self) -> MessengerDuration;
     /// Capture and package the current system state as a snapshot.
     ///
     /// Authentication is required.
@@ -51,5 +51,5 @@ pub trait SystemClient {
         &self,
         compression: SnapshotCompression,
         snapshot_types: Vec<SystemSnapshotType>,
-    ) -> Result<Snapshot, IggyError>;
+    ) -> Result<Snapshot, MessengerError>;
 }

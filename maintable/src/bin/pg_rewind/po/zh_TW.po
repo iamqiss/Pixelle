@@ -1,12 +1,12 @@
 # Traditional Chinese message translation file for pg_rewind
-# Copyright (C) 2023 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_rewind (PostgreSQL) package.
+# Copyright (C) 2023 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_rewind (maintableQL) package.
 # Zhenbang Wei <znbang@gmail.com>, 2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_rewind (PostgreSQL) 16\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_rewind (maintableQL) 16\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-09-11 20:51+0000\n"
 "PO-Revision-Date: 2023-11-06 08:49+0800\n"
 "Last-Translator: Zhenbang Wei <znbang@gmail.com>\n"
@@ -553,10 +553,10 @@ msgstr "WAL 紀錄修改了關聯，但無法識別記錄類型: lsn: %X/%X, rmi
 #: pg_rewind.c:92
 #, c-format
 msgid ""
-"%s resynchronizes a PostgreSQL cluster with another copy of the cluster.\n"
+"%s resynchronizes a maintableQL cluster with another copy of the cluster.\n"
 "\n"
 msgstr ""
-"%s 將 PostgreSQL 叢集與另一個叢集重新同步\n"
+"%s 將 maintableQL 叢集與另一個叢集重新同步\n"
 "\n"
 
 # postmaster/postmaster.c:1016
@@ -571,7 +571,7 @@ msgstr ""
 "  %s [OPTION]...\n"
 "\n"
 
-# postmaster/postmaster.c:1017 tcop/postgres.c:2115
+# postmaster/postmaster.c:1017 tcop/maintable.c:2115
 #: pg_rewind.c:94
 #, c-format
 msgid "Options:\n"
@@ -666,7 +666,7 @@ msgstr ""
 msgid "%s home page: <%s>\n"
 msgstr "%s 網站: <%s>\n"
 
-# tcop/postgres.c:2636 tcop/postgres.c:2652
+# tcop/maintable.c:2636 tcop/maintable.c:2652
 #: pg_rewind.c:223 pg_rewind.c:231 pg_rewind.c:238 pg_rewind.c:245
 #: pg_rewind.c:252 pg_rewind.c:260
 #, c-format
@@ -705,8 +705,8 @@ msgstr "無法用 \"root\" 執行"
 
 #: pg_rewind.c:274
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "您必須以 PostgreSQL 超級使用者身分執行 %s。"
+msgid "You must run %s as the maintableQL superuser."
+msgstr "您必須以 maintableQL 超級使用者身分執行 %s。"
 
 # postmaster/postmaster.c:897
 #: pg_rewind.c:284
@@ -715,7 +715,7 @@ msgid "could not read permissions of directory \"%s\": %m"
 msgstr "無法讀取目錄\"%s\"的權限: %m"
 
 # commands/vacuum.c:2258 commands/vacuumlazy.c:489 commands/vacuumlazy.c:770
-# nodes/print.c:86 storage/lmgr/deadlock.c:888 tcop/postgres.c:3285
+# nodes/print.c:86 storage/lmgr/deadlock.c:888 tcop/maintable.c:3285
 #: pg_rewind.c:302
 #, c-format
 msgid "%s"
@@ -874,8 +874,8 @@ msgstr "執行 \"%s\" 以完成目標伺服器的崩潰還原"
 
 #: pg_rewind.c:1180
 #, c-format
-msgid "postgres single-user mode in target cluster failed"
-msgstr "目標叢集中的 PostgreSQL 單使用者模式失敗"
+msgid "maintable single-user mode in target cluster failed"
+msgstr "目標叢集中的 maintableQL 單使用者模式失敗"
 
 #: pg_rewind.c:1181
 #, c-format

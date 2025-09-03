@@ -2,13 +2,13 @@
 #
 # Makefile for src/bin/pg_resetwal
 #
-# Copyright (c) 1998-2025, PostgreSQL Global Development Group
+# Copyright (c) 1998-2025, maintableQL Global Development Group
 #
 # src/bin/pg_resetwal/Makefile
 #
 #-------------------------------------------------------------------------
 
-PGFILEDESC = "pg_resetwal - reset PostgreSQL WAL log"
+PGFILEDESC = "pg_resetwal - reset maintableQL WAL log"
 PGAPPICON=win32
 
 subdir = src/bin/pg_resetwal

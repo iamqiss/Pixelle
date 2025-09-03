@@ -61,12 +61,12 @@ stop_pid() {
 
 print_logs_if_any() {
   local dir="$1"
-  if compgen -G "$dir/local_data/logs/iggy*" > /dev/null; then
+  if compgen -G "$dir/local_data/logs/messenger*" > /dev/null; then
     echo "---- $dir/local_data/logs ----"
-    cat "$dir"/local_data/logs/iggy* || true
+    cat "$dir"/local_data/logs/messenger* || true
     echo "------------------------------"
   else
-    echo "(no iggy logs found in $dir/local_data/logs)"
+    echo "(no messenger logs found in $dir/local_data/logs)"
   fi
 }
 
@@ -118,17 +118,17 @@ REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 cd "$REPO_ROOT"
 
 # Free the port proactively (best-effort)
-pkill -f iggy-server >/dev/null 2>&1 || true
+pkill -f messenger-server >/dev/null 2>&1 || true
 
-TMP_ROOT="$(mktemp -d -t iggy-backcompat-XXXXXX)"
+TMP_ROOT="$(mktemp -d -t messenger-backcompat-XXXXXX)"
 MASTER_DIR="$TMP_ROOT/master"
 PR_DIR="$REPO_ROOT"  # assume script is run from PR checkout
 MASTER_LOG="$TMP_ROOT/server-master.stdout.log"
 PR_LOG="$TMP_ROOT/server-pr.stdout.log"
 
 cleanup() {
-  # Stop any leftover iggy-server
-  pkill -f iggy-server >/dev/null 2>&1 || true
+  # Stop any leftover messenger-server
+  pkill -f messenger-server >/dev/null 2>&1 || true
   git worktree remove --force "$MASTER_DIR" >/dev/null 2>&1 || true
   if [[ "$KEEP_TMP" != "true" ]]; then
     rm -rf "$TMP_ROOT" || true
@@ -151,16 +151,16 @@ ok "worktree at $MASTER_DIR"
 # -----------------------------
 pushd "$MASTER_DIR" >/dev/null
 
-info "Building iggy-server & benches (baseline: $MASTER_REF)"
-IGGY_CI_BUILD=true cargo build --bins
+info "Building messenger-server & benches (baseline: $MASTER_REF)"
+MESSENGER_CI_BUILD=true cargo build --bins
 ok "built baseline"
 
-info "Starting iggy-server (baseline)"
+info "Starting messenger-server (baseline)"
 set +e
-( nohup target/debug/iggy-server >"$MASTER_LOG" 2>&1 & echo $! > "$TMP_ROOT/master.pid" )
+( nohup target/debug/messenger-server >"$MASTER_LOG" 2>&1 & echo $! > "$TMP_ROOT/master.pid" )
 set -e
 MASTER_PID="$(cat "$TMP_ROOT/master.pid")"
-ok "iggy-server started (pid $MASTER_PID), logs: $MASTER_LOG"
+ok "messenger-server started (pid $MASTER_PID), logs: $MASTER_LOG"
 
 info "Waiting for $HOST:$PORT to be ready (up to ${WAIT_SECS}s)"
 if ! wait_for_port "$HOST" "$PORT"; then
@@ -173,24 +173,24 @@ ok "server is ready"
 
 # Producer bench (baseline)
 info "Running producer bench on baseline"
-BENCH_CMD=( target/debug/iggy-bench --verbose --message-batches "$BATCHES" --messages-per-batch "$MSGS_PER_BATCH" pinned-producer tcp )
+BENCH_CMD=( target/debug/messenger-bench --verbose --message-batches "$BATCHES" --messages-per-batch "$MSGS_PER_BATCH" pinned-producer tcp )
 if command -v timeout >/dev/null 2>&1; then timeout 60s "${BENCH_CMD[@]}"; else "${BENCH_CMD[@]}"; fi
 ok "producer bench done"
 
 # Consumer bench (baseline)
 info "Running consumer bench on baseline"
-BENCH_CMD=( target/debug/iggy-bench --verbose --message-batches "$BATCHES" --messages-per-batch "$MSGS_PER_BATCH" pinned-consumer tcp )
+BENCH_CMD=( target/debug/messenger-bench --verbose --message-batches "$BATCHES" --messages-per-batch "$MSGS_PER_BATCH" pinned-consumer tcp )
 if command -v timeout >/dev/null 2>&1; then timeout 60s "${BENCH_CMD[@]}"; else "${BENCH_CMD[@]}"; fi
 ok "consumer bench done (baseline)"
 
 # Stop baseline server
 info "Stopping baseline server"
-stop_pid "$MASTER_PID" "iggy-server(baseline)"
+stop_pid "$MASTER_PID" "messenger-server(baseline)"
 print_logs_if_any "$MASTER_DIR"
 
 # Clean baseline logs (like CI step)
-if compgen -G "local_data/logs/iggy*" > /dev/null; then
-  rm -f local_data/logs/iggy* || true
+if compgen -G "local_data/logs/messenger*" > /dev/null; then
+  rm -f local_data/logs/messenger* || true
 fi
 
 # Snapshot local_data/
@@ -208,8 +208,8 @@ info "Ensuring PR ref is present: $PR_REF"
 git rev-parse --verify "$PR_REF^{commit}" >/dev/null 2>&1 || die "PR_REF '$PR_REF' not found"
 git checkout -q "$PR_REF"
 
-info "Building iggy-server & benches (PR: $PR_REF)"
-IGGY_CI_BUILD=true cargo build --bins
+info "Building messenger-server & benches (PR: $PR_REF)"
+MESSENGER_CI_BUILD=true cargo build --bins
 ok "built PR"
 
 info "Restoring baseline local_data/ into PR workspace"
@@ -220,12 +220,12 @@ ok "restored local_data/"
 # -----------------------------
 # 4) Run PR server & consumer bench
 # -----------------------------
-info "Starting iggy-server (PR)"
+info "Starting messenger-server (PR)"
 set +e
-( nohup target/debug/iggy-server >"$PR_LOG" 2>&1 & echo $! > "$TMP_ROOT/pr.pid" )
+( nohup target/debug/messenger-server >"$PR_LOG" 2>&1 & echo $! > "$TMP_ROOT/pr.pid" )
 set -e
 PR_PID="$(cat "$TMP_ROOT/pr.pid")"
-ok "iggy-server (PR) started (pid $PR_PID), logs: $PR_LOG"
+ok "messenger-server (PR) started (pid $PR_PID), logs: $PR_LOG"
 
 info "Waiting for $HOST:$PORT to be ready (up to ${WAIT_SECS}s)"
 if ! wait_for_port "$HOST" "$PORT"; then
@@ -238,13 +238,13 @@ ok "PR server is ready"
 
 # Only consumer bench against PR
 info "Running consumer bench on PR (compat check)"
-BENCH_CMD=( target/debug/iggy-bench --verbose --message-batches "$BATCHES" --messages-per-batch "$MSGS_PER_BATCH" pinned-consumer tcp )
+BENCH_CMD=( target/debug/messenger-bench --verbose --message-batches "$BATCHES" --messages-per-batch "$MSGS_PER_BATCH" pinned-consumer tcp )
 if command -v timeout >/dev/null 2>&1; then timeout 60s "${BENCH_CMD[@]}"; else "${BENCH_CMD[@]}"; fi
 ok "consumer bench done (PR)"
 
 # Stop PR server
 info "Stopping PR server"
-stop_pid "$PR_PID" "iggy-server(PR)"
+stop_pid "$PR_PID" "messenger-server(PR)"
 print_logs_if_any "$PR_DIR"
 
 ok "backwards-compatibility check PASSED"

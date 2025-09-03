@@ -17,7 +17,7 @@
  * the backend's "backend/libpq" is quite separate from "interfaces/libpq".
  * All that remains is similarities of names to trap the unwary...
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *	src/backend/libpq/pqcomm.c
@@ -51,7 +51,7 @@
  *
  *------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #ifdef HAVE_POLL_H
 #include <poll.h>
@@ -224,8 +224,8 @@ pq_init(ClientSocket *client_sock)
 
 		/*
 		 * This is a Win32 socket optimization.  The OS send buffer should be
-		 * large enough to send the whole Postgres send buffer in one go, or
-		 * performance suffers.  The Postgres send buffer can be enlarged if a
+		 * large enough to send the whole Maintable send buffer in one go, or
+		 * performance suffers.  The Maintable send buffer can be enlarged if a
 		 * very large message needs to be sent, but we won't attempt to
 		 * enlarge the OS buffer if that happens, so somewhat arbitrarily
 		 * ensure that the OS buffer is at least PQ_SEND_BUFFER_SIZE * 4.

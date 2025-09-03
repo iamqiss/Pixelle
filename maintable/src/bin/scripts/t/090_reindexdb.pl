@@ -1,18 +1,18 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 program_help_ok('reindexdb');
 program_version_ok('reindexdb');
 program_options_handling_ok('reindexdb');
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init;
 $node->start;
 
@@ -22,24 +22,24 @@ $ENV{PGOPTIONS} = '--client-min-messages=WARNING';
 my $tbspace_path = $node->basedir . '/regress_reindex_tbspace';
 mkdir $tbspace_path or die "cannot create directory $tbspace_path";
 my $tbspace_name = 'reindex_tbspace';
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"CREATE TABLESPACE $tbspace_name LOCATION '$tbspace_path';");
 
 # Use text as data type to get a toast table.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	'CREATE TABLE test1 (a text); CREATE INDEX test1x ON test1 (a);');
 # Collect toast table and index names of this relation, for later use.
-my $toast_table = $node->safe_psql('postgres',
+my $toast_table = $node->safe_psql('maintable',
 	"SELECT reltoastrelid::regclass FROM pg_class WHERE oid = 'test1'::regclass;"
 );
-my $toast_index = $node->safe_psql('postgres',
+my $toast_index = $node->safe_psql('maintable',
 	"SELECT indexrelid::regclass FROM pg_index WHERE indrelid = '$toast_table'::regclass;"
 );
 
 # Set of SQL queries to cross-check the state of relfilenodes across
 # REINDEX operations.  A set of relfilenodes is saved from the catalogs
 # and then compared with pg_class.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	'CREATE TABLE index_relfilenodes (parent regclass, indname text, indoid oid, relfilenode oid);'
 );
 # Save the relfilenode of a set of toast indexes, one from the catalog
@@ -79,12 +79,12 @@ my $compare_relfilenodes = qq(SELECT b.parent::regclass,
   ORDER BY b.parent::text, b.indname::text);
 
 # Save the set of relfilenodes and compare them.
-$node->safe_psql('postgres', $save_relfilenodes);
+$node->safe_psql('maintable', $save_relfilenodes);
 $node->issues_sql_like(
-	[ 'reindexdb', 'postgres' ],
-	qr/statement: REINDEX DATABASE postgres;/,
+	[ 'reindexdb', 'maintable' ],
+	qr/statement: REINDEX DATABASE maintable;/,
 	'SQL REINDEX run');
-my $relnode_info = $node->safe_psql('postgres', $compare_relfilenodes);
+my $relnode_info = $node->safe_psql('maintable', $compare_relfilenodes);
 is( $relnode_info,
 	qq(pg_constraint|pg_constraint_oid_index|OID is unchanged|relfilenode is unchanged
 pg_constraint|pg_toast.pg_toast_<oid>_index|OID is unchanged|relfilenode is unchanged
@@ -93,13 +93,13 @@ test1|test1x|OID is unchanged|relfilenode has changed),
 	'relfilenode change after REINDEX DATABASE');
 
 # Re-save and run the second one.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"TRUNCATE index_relfilenodes; $save_relfilenodes");
 $node->issues_sql_like(
-	[ 'reindexdb', '--system', 'postgres' ],
-	qr/statement: REINDEX SYSTEM postgres;/,
+	[ 'reindexdb', '--system', 'maintable' ],
+	qr/statement: REINDEX SYSTEM maintable;/,
 	'reindex system tables');
-$relnode_info = $node->safe_psql('postgres', $compare_relfilenodes);
+$relnode_info = $node->safe_psql('maintable', $compare_relfilenodes);
 is( $relnode_info,
 	qq(pg_constraint|pg_constraint_oid_index|OID is unchanged|relfilenode has changed
 pg_constraint|pg_toast.pg_toast_<oid>_index|OID is unchanged|relfilenode has changed
@@ -108,7 +108,7 @@ test1|test1x|OID is unchanged|relfilenode is unchanged),
 	'relfilenode change after REINDEX SYSTEM');
 
 $node->issues_sql_like(
-	[ 'reindexdb', '--table' => 'test1', 'postgres' ],
+	[ 'reindexdb', '--table' => 'test1', 'maintable' ],
 	qr/statement: REINDEX TABLE public\.test1;/,
 	'reindex specific table');
 $node->issues_sql_like(
@@ -116,20 +116,20 @@ $node->issues_sql_like(
 		'reindexdb',
 		'--table' => 'test1',
 		'--tablespace' => $tbspace_name,
-		'postgres',
+		'maintable',
 	],
 	qr/statement: REINDEX \(TABLESPACE $tbspace_name\) TABLE public\.test1;/,
 	'reindex specific table on tablespace');
 $node->issues_sql_like(
-	[ 'reindexdb', '--index' => 'test1x', 'postgres' ],
+	[ 'reindexdb', '--index' => 'test1x', 'maintable' ],
 	qr/statement: REINDEX INDEX public\.test1x;/,
 	'reindex specific index');
 $node->issues_sql_like(
-	[ 'reindexdb', '--schema' => 'pg_catalog', 'postgres' ],
+	[ 'reindexdb', '--schema' => 'pg_catalog', 'maintable' ],
 	qr/statement: REINDEX SCHEMA pg_catalog;/,
 	'reindex specific schema');
 $node->issues_sql_like(
-	[ 'reindexdb', '--verbose', '--table' => 'test1', 'postgres' ],
+	[ 'reindexdb', '--verbose', '--table' => 'test1', 'maintable' ],
 	qr/statement: REINDEX \(VERBOSE\) TABLE public\.test1;/,
 	'reindex with verbose output');
 $node->issues_sql_like(
@@ -138,7 +138,7 @@ $node->issues_sql_like(
 		'--verbose',
 		'--table' => 'test1',
 		'--tablespace' => $tbspace_name,
-		'postgres',
+		'maintable',
 	],
 	qr/statement: REINDEX \(VERBOSE, TABLESPACE $tbspace_name\) TABLE public\.test1;/,
 	'reindex with verbose output and tablespace');
@@ -146,13 +146,13 @@ $node->issues_sql_like(
 # Same with --concurrently.
 # Save the state of the relations and compare them after the DATABASE
 # rebuild.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"TRUNCATE index_relfilenodes; $save_relfilenodes");
 $node->issues_sql_like(
-	[ 'reindexdb', '--concurrently', 'postgres' ],
-	qr/statement: REINDEX DATABASE CONCURRENTLY postgres;/,
+	[ 'reindexdb', '--concurrently', 'maintable' ],
+	qr/statement: REINDEX DATABASE CONCURRENTLY maintable;/,
 	'SQL REINDEX CONCURRENTLY run');
-$relnode_info = $node->safe_psql('postgres', $compare_relfilenodes);
+$relnode_info = $node->safe_psql('maintable', $compare_relfilenodes);
 is( $relnode_info,
 	qq(pg_constraint|pg_constraint_oid_index|OID is unchanged|relfilenode is unchanged
 pg_constraint|pg_toast.pg_toast_<oid>_index|OID is unchanged|relfilenode is unchanged
@@ -161,25 +161,25 @@ test1|test1x|OID has changed|relfilenode has changed),
 	'OID change after REINDEX DATABASE CONCURRENTLY');
 
 $node->issues_sql_like(
-	[ 'reindexdb', '--concurrently', '--table' => 'test1', 'postgres' ],
+	[ 'reindexdb', '--concurrently', '--table' => 'test1', 'maintable' ],
 	qr/statement: REINDEX TABLE CONCURRENTLY public\.test1;/,
 	'reindex specific table concurrently');
 $node->issues_sql_like(
-	[ 'reindexdb', '--concurrently', '--index' => 'test1x', 'postgres' ],
+	[ 'reindexdb', '--concurrently', '--index' => 'test1x', 'maintable' ],
 	qr/statement: REINDEX INDEX CONCURRENTLY public\.test1x;/,
 	'reindex specific index concurrently');
 $node->issues_sql_like(
-	[ 'reindexdb', '--concurrently', '--schema' => 'public', 'postgres' ],
+	[ 'reindexdb', '--concurrently', '--schema' => 'public', 'maintable' ],
 	qr/statement: REINDEX SCHEMA CONCURRENTLY public;/,
 	'reindex specific schema concurrently');
 $node->command_fails(
-	[ 'reindexdb', '--concurrently', '--system', 'postgres' ],
+	[ 'reindexdb', '--concurrently', '--system', 'maintable' ],
 	'reindex system tables concurrently');
 $node->issues_sql_like(
 	[
 		'reindexdb', '--concurrently', '--verbose',
 		'--table' => 'test1',
-		'postgres',
+		'maintable',
 	],
 	qr/statement: REINDEX \(VERBOSE\) TABLE CONCURRENTLY public\.test1;/,
 	'reindex with verbose output concurrently');
@@ -190,7 +190,7 @@ $node->issues_sql_like(
 		'--verbose',
 		'--table' => 'test1',
 		'--tablespace' => $tbspace_name,
-		'postgres',
+		'maintable',
 	],
 	qr/statement: REINDEX \(VERBOSE, TABLESPACE $tbspace_name\) TABLE CONCURRENTLY public\.test1;/,
 	'reindex concurrently with verbose output and tablespace');
@@ -205,7 +205,7 @@ $node->command_checks_all(
 		'reindexdb',
 		'--table' => $toast_table,
 		'--tablespace' => $tbspace_name,
-		'postgres',
+		'maintable',
 	],
 	1,
 	[],
@@ -217,7 +217,7 @@ $node->command_checks_all(
 		'--concurrently',
 		'--table' => $toast_table,
 		'--tablespace' => $tbspace_name,
-		'postgres',
+		'maintable',
 	],
 	1,
 	[],
@@ -228,7 +228,7 @@ $node->command_checks_all(
 		'reindexdb',
 		'--index' => $toast_index,
 		'--tablespace' => $tbspace_name,
-		'postgres',
+		'maintable',
 	],
 	1,
 	[],
@@ -240,7 +240,7 @@ $node->command_checks_all(
 		'--concurrently',
 		'--index' => $toast_index,
 		'--tablespace' => $tbspace_name,
-		'postgres',
+		'maintable',
 	],
 	1,
 	[],
@@ -259,7 +259,7 @@ $node->command_ok(
 
 # parallel processing
 $node->safe_psql(
-	'postgres', q|
+	'maintable', q|
 	CREATE SCHEMA s1;
 	CREATE TABLE s1.t1(id integer);
 	CREATE INDEX ON s1.t1(id);
@@ -273,7 +273,7 @@ $node->safe_psql(
 |);
 
 $node->command_fails(
-	[ 'reindexdb', '--jobs' => '2', '--system', 'postgres' ],
+	[ 'reindexdb', '--jobs' => '2', '--system', 'maintable' ],
 	'parallel reindexdb cannot process system catalogs');
 $node->command_ok(
 	[
@@ -283,7 +283,7 @@ $node->command_ok(
 		'--index' => 's2.i2',
 		'--index' => 's1.t1_id_idx',
 		'--index' => 's2.t2_id_idx',
-		'postgres',
+		'maintable',
 	],
 	'parallel reindexdb for indices');
 # Note that the ordering of the commands is not stable, so the second
@@ -294,7 +294,7 @@ $node->issues_sql_like(
 		'--jobs' => '2',
 		'--schema' => 's1',
 		'--schema' => 's2',
-		'postgres',
+		'maintable',
 	],
 	qr/statement:\ REINDEX TABLE s1.t1;/,
 	'parallel reindexdb for schemas does a per-table REINDEX');
@@ -305,21 +305,21 @@ $node->command_ok(
 		'reindexdb',
 		'--jobs' => '2',
 		'--concurrently',
-		'--dbname' => 'postgres',
+		'--dbname' => 'maintable',
 	],
 	'parallel reindexdb on database, concurrently');
 
 # combinations of objects
 $node->issues_sql_like(
-	[ 'reindexdb', '--system', '--table' => 'test1', 'postgres' ],
-	qr/statement:\ REINDEX SYSTEM postgres;/,
+	[ 'reindexdb', '--system', '--table' => 'test1', 'maintable' ],
+	qr/statement:\ REINDEX SYSTEM maintable;/,
 	'specify both --system and --table');
 $node->issues_sql_like(
-	[ 'reindexdb', '--system', '--index' => 'test1x', 'postgres' ],
+	[ 'reindexdb', '--system', '--index' => 'test1x', 'maintable' ],
 	qr/statement:\ REINDEX INDEX public.test1x;/,
 	'specify both --system and --index');
 $node->issues_sql_like(
-	[ 'reindexdb', '--system', '--schema' => 'pg_catalog', 'postgres' ],
+	[ 'reindexdb', '--system', '--schema' => 'pg_catalog', 'maintable' ],
 	qr/statement:\ REINDEX SCHEMA pg_catalog;/,
 	'specify both --system and --schema');
 

@@ -1,15 +1,15 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $tempdir = PostgreSQL::Test::Utils::tempdir;
-my $tempdir_short = PostgreSQL::Test::Utils::tempdir_short;
+my $tempdir = maintableQL::Test::Utils::tempdir;
+my $tempdir_short = maintableQL::Test::Utils::tempdir_short;
 
 program_help_ok('pg_ctl');
 program_version_ok('pg_ctl');
@@ -27,17 +27,17 @@ command_ok(
 	'pg_ctl initdb');
 command_ok([ $ENV{PG_REGRESS}, '--config-auth', "$tempdir/data" ],
 	'configure authentication');
-my $node_port = PostgreSQL::Test::Cluster::get_free_port();
-open my $conf, '>>', "$tempdir/data/postgresql.conf" or die $!;
+my $node_port = maintableQL::Test::Cluster::get_free_port();
+open my $conf, '>>', "$tempdir/data/maintableql.conf" or die $!;
 print $conf "fsync = off\n";
 print $conf "port = $node_port\n";
-print $conf PostgreSQL::Test::Utils::slurp_file($ENV{TEMP_CONFIG})
+print $conf maintableQL::Test::Utils::slurp_file($ENV{TEMP_CONFIG})
   if defined $ENV{TEMP_CONFIG};
 
 if ($use_unix_sockets)
 {
 	print $conf "listen_addresses = ''\n";
-	$tempdir_short =~ s!\\!/!g if $PostgreSQL::Test::Utils::windows_os;
+	$tempdir_short =~ s!\\!/!g if $maintableQL::Test::Utils::windows_os;
 	print $conf "unix_socket_directories = '$tempdir_short'\n";
 }
 else
@@ -48,7 +48,7 @@ close $conf;
 my $ctlcmd = [
 	'pg_ctl', 'start',
 	'--pgdata' => "$tempdir/data",
-	'--log' => "$PostgreSQL::Test::Utils::log_path/001_start_stop_server.log"
+	'--log' => "$maintableQL::Test::Utils::log_path/001_start_stop_server.log"
 ];
 command_like($ctlcmd, qr/done.*server started/s, 'pg_ctl start');
 

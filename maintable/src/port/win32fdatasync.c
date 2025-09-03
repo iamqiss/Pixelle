@@ -4,7 +4,7 @@
  *	   Win32 fdatasync() replacement
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * src/port/win32fdatasync.c
  *
@@ -12,9 +12,9 @@
  */
 
 #ifdef FRONTEND
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #else
-#include "postgres.h"
+#include "maintable.h"
 #endif
 
 #include "port/win32ntdll.h"

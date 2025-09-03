@@ -2,10 +2,10 @@
  * oracle_compat.c
  *	Oracle compatible functions.
  *
- * Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  *	Author: Edmund Mergl <E.Mergl@bawue.de>
- *	Multibyte enhancement: Tatsuo Ishii <ishii@postgresql.org>
+ *	Multibyte enhancement: Tatsuo Ishii <ishii@maintableql.org>
  *
  *
  * IDENTIFICATION
@@ -13,7 +13,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "common/int.h"
 #include "mb/pg_wchar.h"

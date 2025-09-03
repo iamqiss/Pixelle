@@ -62,7 +62,7 @@ function recreate(option: ClientConfig, timer = 1000): Promise<Socket> {
 
 type SocketError = Error & { code?: string };
 
-export class IggyConnection extends EventEmitter {
+export class MessengerConnection extends EventEmitter {
   public config: ClientConfig
   public socket: Socket;
 

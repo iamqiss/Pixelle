@@ -25,8 +25,8 @@ import (
 )
 
 func TestTcp(t *testing.T) {
-	//there should be no conflicts, but clean up iggy/local_data from time to time
-	//this assumes there is a running iggy server
+	//there should be no conflicts, but clean up messenger/local_data from time to time
+	//this assumes there is a running messenger server
 	gomega.RegisterFailHandler(ginkgo.Fail)
 	ginkgo.RunSpecs(t, "My Feature Suite")
 }

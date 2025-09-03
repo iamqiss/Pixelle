@@ -1,23 +1,23 @@
 
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 
 # This regression test checks the behavior of the btree validation in the
 # presence of breaking sort order changes.
 #
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $node = PostgreSQL::Test::Cluster->new('test');
+my $node = maintableQL::Test::Cluster->new('test');
 $node->init;
-$node->append_conf('postgresql.conf', 'autovacuum = off');
+$node->append_conf('maintableql.conf', 'autovacuum = off');
 $node->start;
 
 # Create a custom operator class and an index which uses it.
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 	CREATE EXTENSION amcheck;
 
 	CREATE FUNCTION ok_cmp (int4, int4)
@@ -141,7 +141,7 @@ my ($result, $stdout, $stderr);
 
 # We have not yet broken the index, so we should get no corruption
 $result = $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 	SELECT bt_index_check('bttest_unique_idx1', true, true);
 ));
 is($result, '', 'run amcheck on non-broken bttest_unique_idx1');
@@ -149,14 +149,14 @@ is($result, '', 'run amcheck on non-broken bttest_unique_idx1');
 # Change the operator class to use a function which considers certain different
 # values to be equal.
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 	UPDATE pg_catalog.pg_amproc SET
 		   amproc = 'bad_cmp1'::regproc
 	WHERE amproc = 'ok_cmp1'::regproc;
 ));
 
 ($result, $stdout, $stderr) = $node->psql(
-	'postgres', q(
+	'maintable', q(
 	SELECT bt_index_check('bttest_unique_idx1', true, true);
 ));
 ok( $stderr =~ /index uniqueness is violated for index "bttest_unique_idx1"/,
@@ -174,21 +174,21 @@ ok( $stderr =~ /index uniqueness is violated for index "bttest_unique_idx1"/,
 # Due to bad cmp function we expect amcheck to detect item order violation,
 # but no uniqueness violation.
 ($result, $stdout, $stderr) = $node->psql(
-	'postgres', q(
+	'maintable', q(
 	SELECT bt_index_check('bttest_unique_idx2', true, true);
 ));
 ok( $stderr =~ /item order invariant violated for index "bttest_unique_idx2"/,
 	'detected item order invariant violation for index "bttest_unique_idx2"');
 
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 	UPDATE pg_catalog.pg_amproc SET
 		   amproc = 'ok_cmp2'::regproc
 	WHERE amproc = 'bad_cmp2'::regproc;
 ));
 
 ($result, $stdout, $stderr) = $node->psql(
-	'postgres', q(
+	'maintable', q(
 	SELECT bt_index_check('bttest_unique_idx2', true, true);
 ));
 ok( $stderr =~ /index uniqueness is violated for index "bttest_unique_idx2"/,
@@ -205,7 +205,7 @@ ok( $stderr =~ /index uniqueness is violated for index "bttest_unique_idx2"/,
 # Due to bad cmp function we expect amcheck to detect item order violation,
 # but no uniqueness violation.
 ($result, $stdout, $stderr) = $node->psql(
-	'postgres', q(
+	'maintable', q(
 	SELECT bt_index_check('bttest_unique_idx3', true, true);
 ));
 ok( $stderr =~ /item order invariant violated for index "bttest_unique_idx3"/,
@@ -214,7 +214,7 @@ ok( $stderr =~ /item order invariant violated for index "bttest_unique_idx3"/,
 # For unique index deduplication is possible only for same values, but
 # with different visibility.
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 	DELETE FROM bttest_unique3 WHERE 380 <= i AND i <= 420;
 	INSERT INTO bttest_unique3 (SELECT * FROM generate_series(380, 420));
 	INSERT INTO bttest_unique3 VALUES (400);
@@ -227,14 +227,14 @@ $node->safe_psql(
 ));
 
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 	UPDATE pg_catalog.pg_amproc SET
 		   amproc = 'ok_cmp3'::regproc
 	WHERE amproc = 'bad_cmp3'::regproc;
 ));
 
 ($result, $stdout, $stderr) = $node->psql(
-	'postgres', q(
+	'maintable', q(
 	SELECT bt_index_check('bttest_unique_idx3', true, true);
 ));
 ok( $stderr =~ /index uniqueness is violated for index "bttest_unique_idx3"/,

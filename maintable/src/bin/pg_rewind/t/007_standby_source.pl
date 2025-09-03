@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 #
 # Test using a standby server as the source.
@@ -26,16 +26,16 @@
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use Test::More;
 
 use FindBin;
 use lib $FindBin::RealBin;
 use File::Copy;
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Cluster;
 use RewindTest;
 
-my $tmp_folder = PostgreSQL::Test::Utils::tempdir;
+my $tmp_folder = maintableQL::Test::Utils::tempdir;
 
 my $node_a;
 my $node_b;
@@ -50,29 +50,29 @@ start_primary();
 $node_a = $node_primary;
 
 # Create a test table and insert a row in primary.
-$node_a->safe_psql('postgres', "CREATE TABLE tbl1 (d text)");
-$node_a->safe_psql('postgres', "INSERT INTO tbl1 VALUES ('in A')");
+$node_a->safe_psql('maintable', "CREATE TABLE tbl1 (d text)");
+$node_a->safe_psql('maintable', "INSERT INTO tbl1 VALUES ('in A')");
 primary_psql("CHECKPOINT");
 
 # Set up node B and C, as cascaded standbys
 #
 # A (primary) <--- B (standby) <--- C (standby)
 $node_a->backup('my_backup');
-$node_b = PostgreSQL::Test::Cluster->new('node_b');
+$node_b = maintableQL::Test::Cluster->new('node_b');
 $node_b->init_from_backup($node_a, 'my_backup', has_streaming => 1);
 $node_b->set_standby_mode();
 $node_b->start;
 
 $node_b->backup('my_backup');
-$node_c = PostgreSQL::Test::Cluster->new('node_c');
+$node_c = maintableQL::Test::Cluster->new('node_c');
 $node_c->init_from_backup($node_b, 'my_backup', has_streaming => 1);
 $node_c->set_standby_mode();
 $node_c->start;
 
 # Insert additional data on A, and wait for both standbys to catch up.
-$node_a->safe_psql('postgres',
+$node_a->safe_psql('maintable',
 	"INSERT INTO tbl1 values ('in A, before promotion')");
-$node_a->safe_psql('postgres', 'CHECKPOINT');
+$node_a->safe_psql('maintable', 'CHECKPOINT');
 
 my $lsn = $node_a->lsn('write');
 $node_a->wait_for_catchup('node_b', 'write', $lsn);
@@ -88,7 +88,7 @@ $node_c->promote;
 # Insert a row in A. This causes A/B and C to have "diverged", so that it's
 # no longer possible to just apply the standby's logs over primary directory
 # - you need to rewind.
-$node_a->safe_psql('postgres',
+$node_a->safe_psql('maintable',
 	"INSERT INTO tbl1 VALUES ('in A, after C was promoted')");
 
 # make sure it's replicated to B before we continue
@@ -96,7 +96,7 @@ $node_a->wait_for_catchup('node_b');
 
 # Also insert a new row in the standby, which won't be present in the
 # old primary.
-$node_c->safe_psql('postgres',
+$node_c->safe_psql('maintable',
 	"INSERT INTO tbl1 VALUES ('in C, after C was promoted')");
 
 
@@ -108,10 +108,10 @@ my $node_c_pgdata = $node_c->data_dir;
 # Stop the node and be ready to perform the rewind.
 $node_c->stop('fast');
 
-# Keep a temporary postgresql.conf or it would be overwritten during the rewind.
+# Keep a temporary maintableql.conf or it would be overwritten during the rewind.
 copy(
-	"$node_c_pgdata/postgresql.conf",
-	"$tmp_folder/node_c-postgresql.conf.tmp");
+	"$node_c_pgdata/maintableql.conf",
+	"$tmp_folder/node_c-maintableql.conf.tmp");
 
 {
 	# Temporarily unset PGAPPNAME so that the server doesn't
@@ -126,7 +126,7 @@ copy(
 		[
 			'pg_rewind',
 			'--debug',
-			'--source-server' => $node_b->connstr('postgres'),
+			'--source-server' => $node_b->connstr('maintable'),
 			'--target-pgdata' => $node_c_pgdata,
 			'--no-sync',
 			'--write-recovery-conf',
@@ -134,10 +134,10 @@ copy(
 		'pg_rewind remote');
 }
 
-# Now move back postgresql.conf with old settings
+# Now move back maintableql.conf with old settings
 move(
-	"$tmp_folder/node_c-postgresql.conf.tmp",
-	"$node_c_pgdata/postgresql.conf");
+	"$tmp_folder/node_c-maintableql.conf.tmp",
+	"$node_c_pgdata/maintableql.conf");
 
 # Restart the node.
 $node_c->start;
@@ -158,7 +158,7 @@ in A, after C was promoted
 	'table content after rewind');
 
 # Insert another row, and observe that it's cascaded from A to B to C.
-$node_a->safe_psql('postgres',
+$node_a->safe_psql('maintable',
 	"INSERT INTO tbl1 values ('in A, after rewind')");
 
 $node_b->wait_for_replay_catchup('node_c', $node_a);

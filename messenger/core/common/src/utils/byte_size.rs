@@ -16,8 +16,8 @@
  * under the License.
  */
 
-use super::duration::IggyDuration;
-use crate::IggyError;
+use super::duration::MessengerDuration;
+use crate::MessengerError;
 use byte_unit::{Byte, UnitType};
 use core::fmt;
 use serde::{Deserialize, Serialize};
@@ -35,34 +35,34 @@ use std::{
 /// # Example
 ///
 /// ```
-/// use iggy_common::IggyByteSize;
+/// use messenger_common::MessengerByteSize;
 /// use std::str::FromStr;
 ///
-/// let size = IggyByteSize::from(568_000_000_u64);
+/// let size = MessengerByteSize::from(568_000_000_u64);
 /// assert_eq!(568_000_000, size.as_bytes_u64());
 /// assert_eq!("568.00 MB", size.as_human_string());
 /// assert_eq!("568.00 MB", format!("{}", size));
 ///
-/// let size = IggyByteSize::from(0_u64);
+/// let size = MessengerByteSize::from(0_u64);
 /// assert_eq!("unlimited", size.as_human_string_with_zero_as_unlimited());
 /// assert_eq!("0 B", size.as_human_string());
 /// assert_eq!(0, size.as_bytes_u64());
 ///
-/// let size = IggyByteSize::from_str("1 GB").unwrap();
+/// let size = MessengerByteSize::from_str("1 GB").unwrap();
 /// assert_eq!(1_000_000_000, size.as_bytes_u64());
 /// assert_eq!("1.00 GB", size.as_human_string());
 /// assert_eq!("1.00 GB", format!("{}", size));
 /// ```
 #[derive(Debug, Copy, Clone, PartialEq, Serialize, Deserialize)]
-pub struct IggyByteSize(Byte);
+pub struct MessengerByteSize(Byte);
 
-impl Default for IggyByteSize {
+impl Default for MessengerByteSize {
     fn default() -> Self {
         Self(Byte::from_u64(0))
     }
 }
 
-impl IggyByteSize {
+impl MessengerByteSize {
     pub const fn new(bytes: u64) -> Self {
         Self(Byte::from_u64(bytes))
     }
@@ -97,7 +97,7 @@ impl IggyByteSize {
     }
 
     /// Calculates the throughput based on the provided duration and returns a human-readable string.
-    pub(crate) fn _as_human_throughput_string(&self, duration: &IggyDuration) -> String {
+    pub(crate) fn _as_human_throughput_string(&self, duration: &MessengerDuration) -> String {
         if duration.is_zero() {
             return "0 B/s".to_string();
         }
@@ -107,92 +107,92 @@ impl IggyByteSize {
     }
 }
 
-/// Converts a `u64` bytes to `IggyByteSize`.
-impl From<u64> for IggyByteSize {
+/// Converts a `u64` bytes to `MessengerByteSize`.
+impl From<u64> for MessengerByteSize {
     fn from(byte_size: u64) -> Self {
-        IggyByteSize(Byte::from_u64(byte_size))
+        MessengerByteSize(Byte::from_u64(byte_size))
     }
 }
 
-/// Converts an `Option<u64>` bytes to `IggyByteSize`.
-impl From<Option<u64>> for IggyByteSize {
+/// Converts an `Option<u64>` bytes to `MessengerByteSize`.
+impl From<Option<u64>> for MessengerByteSize {
     fn from(byte_size: Option<u64>) -> Self {
         match byte_size {
-            Some(value) => IggyByteSize(Byte::from_u64(value)),
-            None => IggyByteSize(Byte::from_u64(0)),
+            Some(value) => MessengerByteSize(Byte::from_u64(value)),
+            None => MessengerByteSize(Byte::from_u64(0)),
         }
     }
 }
 
-impl FromStr for IggyByteSize {
-    type Err = IggyError;
+impl FromStr for MessengerByteSize {
+    type Err = MessengerError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         if matches!(s, "0" | "unlimited" | "Unlimited" | "none" | "None") {
-            Ok(IggyByteSize(Byte::from_u64(0)))
+            Ok(MessengerByteSize(Byte::from_u64(0)))
         } else {
-            Ok(IggyByteSize(
-                Byte::from_str(s).map_err(|_| IggyError::InvalidSizeBytes)?,
+            Ok(MessengerByteSize(
+                Byte::from_str(s).map_err(|_| MessengerError::InvalidSizeBytes)?,
             ))
         }
     }
 }
 
-impl PartialEq<u64> for IggyByteSize {
+impl PartialEq<u64> for MessengerByteSize {
     fn eq(&self, other: &u64) -> bool {
         self.as_bytes_u64() == *other
     }
 }
 
-impl PartialOrd<u64> for IggyByteSize {
+impl PartialOrd<u64> for MessengerByteSize {
     fn partial_cmp(&self, other: &u64) -> Option<std::cmp::Ordering> {
         self.as_bytes_u64().partial_cmp(other)
     }
 }
 
-impl PartialOrd<IggyByteSize> for IggyByteSize {
-    fn partial_cmp(&self, other: &IggyByteSize) -> Option<std::cmp::Ordering> {
+impl PartialOrd<MessengerByteSize> for MessengerByteSize {
+    fn partial_cmp(&self, other: &MessengerByteSize) -> Option<std::cmp::Ordering> {
         self.as_bytes_u64().partial_cmp(&other.as_bytes_u64())
     }
 }
 
-impl fmt::Display for IggyByteSize {
+impl fmt::Display for MessengerByteSize {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.as_human_string())
     }
 }
 
-impl Add for IggyByteSize {
+impl Add for MessengerByteSize {
     type Output = Self;
 
     fn add(self, rhs: Self) -> Self::Output {
-        IggyByteSize(Byte::from_u64(self.as_bytes_u64() + rhs.as_bytes_u64()))
+        MessengerByteSize(Byte::from_u64(self.as_bytes_u64() + rhs.as_bytes_u64()))
     }
 }
 
-impl AddAssign for IggyByteSize {
+impl AddAssign for MessengerByteSize {
     fn add_assign(&mut self, rhs: Self) {
         self.0 = Byte::from_u64(self.as_bytes_u64() + rhs.as_bytes_u64());
     }
 }
 
-impl Sub for IggyByteSize {
+impl Sub for MessengerByteSize {
     type Output = Self;
 
     fn sub(self, rhs: Self) -> Self::Output {
-        IggyByteSize(Byte::from_u64(self.as_bytes_u64() - rhs.as_bytes_u64()))
+        MessengerByteSize(Byte::from_u64(self.as_bytes_u64() - rhs.as_bytes_u64()))
     }
 }
 
-impl SubAssign for IggyByteSize {
+impl SubAssign for MessengerByteSize {
     fn sub_assign(&mut self, rhs: Self) {
         self.0 = Byte::from_u64(self.as_bytes_u64() - rhs.as_bytes_u64());
     }
 }
 
-impl Sum for IggyByteSize {
+impl Sum for MessengerByteSize {
     fn sum<I: Iterator<Item = Self>>(iter: I) -> Self {
-        iter.fold(IggyByteSize::default(), |acc, ibs| acc + ibs)
+        iter.fold(MessengerByteSize::default(), |acc, ibs| acc + ibs)
     }
 }
 
@@ -202,67 +202,67 @@ mod tests {
 
     #[test]
     fn test_from_u64_ok() {
-        let byte_size = IggyByteSize::from(123456789);
+        let byte_size = MessengerByteSize::from(123456789);
         assert_eq!(byte_size.as_bytes_u64(), 123456789);
     }
 
     #[test]
     fn test_from_u64_zero() {
-        let byte_size = IggyByteSize::from(0);
+        let byte_size = MessengerByteSize::from(0);
         assert_eq!(byte_size.as_bytes_u64(), 0);
     }
 
     #[test]
     fn test_from_str_ok() {
-        let byte_size = IggyByteSize::from_str("123456789").unwrap();
+        let byte_size = MessengerByteSize::from_str("123456789").unwrap();
         assert_eq!(byte_size.as_bytes_u64(), 123456789);
     }
 
     #[test]
     fn test_from_str_zero() {
-        let byte_size = IggyByteSize::from_str("0").unwrap();
+        let byte_size = MessengerByteSize::from_str("0").unwrap();
         assert_eq!(byte_size.as_bytes_u64(), 0);
     }
 
     #[test]
     fn test_from_str_invalid() {
-        let byte_size = IggyByteSize::from_str("invalid");
+        let byte_size = MessengerByteSize::from_str("invalid");
         assert!(byte_size.is_err());
     }
 
     #[test]
     fn test_from_str_gigabyte() {
-        let byte_size = IggyByteSize::from_str("1 GiB").unwrap();
+        let byte_size = MessengerByteSize::from_str("1 GiB").unwrap();
         assert_eq!(byte_size.as_bytes_u64(), 1024 * 1024 * 1024);
 
-        let byte_size = IggyByteSize::from_str("1 GB").unwrap();
+        let byte_size = MessengerByteSize::from_str("1 GB").unwrap();
         assert_eq!(byte_size.as_bytes_u64(), 1000 * 1000 * 1000);
     }
 
     #[test]
     fn test_from_str_megabyte() {
-        let byte_size = IggyByteSize::from_str("1 MiB").unwrap();
+        let byte_size = MessengerByteSize::from_str("1 MiB").unwrap();
         assert_eq!(byte_size.as_bytes_u64(), 1024 * 1024);
 
-        let byte_size = IggyByteSize::from_str("1 MB").unwrap();
+        let byte_size = MessengerByteSize::from_str("1 MB").unwrap();
         assert_eq!(byte_size.as_bytes_u64(), 1000 * 1000);
     }
 
     #[test]
     fn test_to_human_string_ok() {
-        let byte_size = IggyByteSize::from(1_073_000_000);
+        let byte_size = MessengerByteSize::from(1_073_000_000);
         assert_eq!(byte_size.as_human_string(), "1.07 GB");
     }
 
     #[test]
     fn test_to_human_string_zero() {
-        let byte_size = IggyByteSize::from(0);
+        let byte_size = MessengerByteSize::from(0);
         assert_eq!(byte_size.as_human_string(), "0 B");
     }
 
     #[test]
     fn test_to_human_string_special_zero() {
-        let byte_size = IggyByteSize::from(0);
+        let byte_size = MessengerByteSize::from(0);
         assert_eq!(
             byte_size.as_human_string_with_zero_as_unlimited(),
             "unlimited"
@@ -271,8 +271,8 @@ mod tests {
 
     #[test]
     fn test_throughput_ok() {
-        let byte_size = IggyByteSize::from(1_073_000_000);
-        let duration = IggyDuration::from_str("10s").unwrap();
+        let byte_size = MessengerByteSize::from(1_073_000_000);
+        let duration = MessengerDuration::from_str("10s").unwrap();
         assert_eq!(
             byte_size._as_human_throughput_string(&duration),
             "107.30 MB/s"
@@ -281,29 +281,29 @@ mod tests {
 
     #[test]
     fn test_throughput_zero_size() {
-        let byte_size = IggyByteSize::from(0);
-        let duration = IggyDuration::from_str("10s").unwrap();
+        let byte_size = MessengerByteSize::from(0);
+        let duration = MessengerDuration::from_str("10s").unwrap();
         assert_eq!(byte_size._as_human_throughput_string(&duration), "0 B/s");
     }
 
     #[test]
     fn test_throughput_zero_duration() {
-        let byte_size = IggyByteSize::from(1_073_000_000);
-        let duration = IggyDuration::from_str("0s").unwrap();
+        let byte_size = MessengerByteSize::from(1_073_000_000);
+        let duration = MessengerDuration::from_str("0s").unwrap();
         assert_eq!(byte_size._as_human_throughput_string(&duration), "0 B/s");
     }
 
     #[test]
     fn test_throughput_very_low() {
-        let byte_size = IggyByteSize::from(8);
-        let duration = IggyDuration::from_str("1s").unwrap();
+        let byte_size = MessengerByteSize::from(8);
+        let duration = MessengerDuration::from_str("1s").unwrap();
         assert_eq!(byte_size._as_human_throughput_string(&duration), "8 B/s");
     }
 
     #[test]
     fn test_throughput_very_high() {
-        let byte_size = IggyByteSize::from(u64::MAX);
-        let duration = IggyDuration::from_str("1s").unwrap();
+        let byte_size = MessengerByteSize::from(u64::MAX);
+        let duration = MessengerDuration::from_str("1s").unwrap();
         assert_eq!(
             byte_size._as_human_throughput_string(&duration),
             "18.45 EB/s"
@@ -312,7 +312,7 @@ mod tests {
 
     #[test]
     fn test_order() {
-        assert!(IggyByteSize::from(u64::MAX) > IggyByteSize::from(u64::MIN))
+        assert!(MessengerByteSize::from(u64::MAX) > MessengerByteSize::from(u64::MIN))
     }
 
     #[test]
@@ -320,8 +320,8 @@ mod tests {
         let r = 1..10;
         assert_eq!(
             r.clone().sum::<u64>(),
-            r.map(IggyByteSize::from)
-                .sum::<IggyByteSize>()
+            r.map(MessengerByteSize::from)
+                .sum::<MessengerByteSize>()
                 .as_bytes_u64()
         );
     }

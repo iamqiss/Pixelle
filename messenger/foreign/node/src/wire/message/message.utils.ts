@@ -24,9 +24,9 @@ import { serializeHeaders, type Headers } from './header.utils.js';
 import { serializeIdentifier, type Id } from '../identifier.utils.js';
 import { serializePartitioning, type Partitioning } from './partitioning.utils.js';
 import { parse as parseUUID } from '../uuid.utils.js';
-import { serializeIggyMessageHeader } from './iggy-header.utils.js';
+import { serializeMessengerMessageHeader } from './messenger-header.utils.js';
 
-const debug = Debug('iggy:client');
+const debug = Debug('messenger:client');
 
 /** index size per messages in bit */
 const INDEX_SIZE = 16;
@@ -79,17 +79,17 @@ export const serializeMessage = (msg: CreateMessage) => {
   const bId = serializeMessageId(id);
   const bUserHeaders = serializeHeaders(headers);
   const bPayload = 'string' === typeof payload ? Buffer.from(payload) : payload
-  const bIggyMessageHeader = serializeIggyMessageHeader(bId, bPayload, bUserHeaders);
+  const bMessengerMessageHeader = serializeMessengerMessageHeader(bId, bPayload, bUserHeaders);
   
   const r = Buffer.concat([
-    bIggyMessageHeader,
+    bMessengerMessageHeader,
     bPayload,
     bUserHeaders
   ]);
 
   debug(
     'id', bId.length, bId.toString('hex'),
-    'iggyHeaders', bIggyMessageHeader.length, bIggyMessageHeader.toString('hex'),
+    'messengerHeaders', bMessengerMessageHeader.length, bMessengerMessageHeader.toString('hex'),
     'userHeaders', bUserHeaders.length, bUserHeaders.toString('hex'),
     'payload', bPayload.length, bPayload.toString('hex'),
     'full len', r.length //, r.toString('hex')

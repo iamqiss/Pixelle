@@ -1,6 +1,6 @@
 # LANGUAGE message translation file for initdb
-# Copyright (C) 2004-2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the initdb (PostgreSQL) package.
+# Copyright (C) 2004-2022 maintableQL Global Development Group
+# This file is distributed under the same license as the initdb (maintableQL) package.
 #
 # Use these quotes: « %s »
 #
@@ -10,8 +10,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-10-29 18:21+0000\n"
 "PO-Revision-Date: 2024-10-30 07:41+0100\n"
 "Last-Translator: Guillaume Lelarge <guillaume@lelarge.info>\n"
@@ -429,8 +429,8 @@ msgstr "lancement du script bootstrap..."
 
 #: initdb.c:1548
 #, c-format
-msgid "input file \"%s\" does not belong to PostgreSQL %s"
-msgstr "le fichier en entrée « %s » n'appartient pas à PostgreSQL %s"
+msgid "input file \"%s\" does not belong to maintableQL %s"
+msgstr "le fichier en entrée « %s » n'appartient pas à maintableQL %s"
 
 #: initdb.c:1550
 #, c-format
@@ -553,10 +553,10 @@ msgstr "Utilisation de la balise de langage « %s » pour la locale ICU « %s »
 #: initdb.c:2499
 #, c-format
 msgid ""
-"%s initializes a PostgreSQL database cluster.\n"
+"%s initializes a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s initialise une instance PostgreSQL.\n"
+"%s initialise une instance maintableQL.\n"
 "\n"
 
 #: initdb.c:2500

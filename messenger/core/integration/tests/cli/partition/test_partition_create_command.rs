@@ -17,15 +17,15 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, TestStreamId,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, TestStreamId,
     TestTopicId, USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
-use iggy::prelude::CompressionAlgorithm;
-use iggy::prelude::IggyExpiry;
-use iggy::prelude::MaxTopicSize;
+use messenger::prelude::Client;
+use messenger::prelude::CompressionAlgorithm;
+use messenger::prelude::MessengerExpiry;
+use messenger::prelude::MaxTopicSize;
 use predicates::str::diff;
 use serial_test::parallel;
 
@@ -85,7 +85,7 @@ impl TestPartitionCreateCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestPartitionCreateCmd {
+impl MessengerCmdTestCase for TestPartitionCreateCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let stream = client
             .create_stream(&self.stream_name, self.stream_id.into())
@@ -100,15 +100,15 @@ impl IggyCmdTestCase for TestPartitionCreateCmd {
                 self.compression_algorithm,
                 None,
                 Some(self.topic_id),
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 MaxTopicSize::ServerDefault,
             )
             .await;
         assert!(topic.is_ok());
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("partition")
             .arg("create")
             .args(self.to_args())
@@ -174,10 +174,10 @@ impl IggyCmdTestCase for TestPartitionCreateCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestPartitionCreateCmd::new(
             1,
             String::from("main"),
@@ -190,7 +190,7 @@ pub async fn should_be_successful() {
             TestTopicId::Numeric,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestPartitionCreateCmd::new(
             2,
             String::from("stream"),
@@ -203,7 +203,7 @@ pub async fn should_be_successful() {
             TestTopicId::Numeric,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestPartitionCreateCmd::new(
             4,
             String::from("development"),
@@ -216,7 +216,7 @@ pub async fn should_be_successful() {
             TestTopicId::Named,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestPartitionCreateCmd::new(
             2,
             String::from("production"),
@@ -234,9 +234,9 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["partition", "create", "--help"],
             format!(
@@ -247,10 +247,10 @@ Stream ID can be specified as a stream name or ID
 Topic ID can be specified as a topic name or ID
 
 Examples
- iggy partition create 1 1 10
- iggy partition create prod 2 2
- iggy partition create test sensor 2
- iggy partition create 1 sensor 16
+ messenger partition create 1 1 10
+ messenger partition create prod 2 2
+ messenger partition create test sensor 2
+ messenger partition create 1 sensor 16
 
 {USAGE_PREFIX} partition create <STREAM_ID> <TOPIC_ID> <PARTITIONS_COUNT>
 
@@ -280,9 +280,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["partition", "create", "-h"],
             format!(

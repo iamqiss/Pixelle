@@ -1,6 +1,6 @@
 # LANGUAGE message translation file for pg_dump
-# Copyright (C) 2004-2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_dump (PostgreSQL) package.
+# Copyright (C) 2004-2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_dump (maintableQL) package.
 #
 # Use these quotes: « %s »
 #
@@ -10,8 +10,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-08-29 17:52+0000\n"
 "PO-Revision-Date: 2024-09-16 16:28+0200\n"
 "Last-Translator: Guillaume Lelarge <guillaume@lelarge.info>\n"
@@ -2580,19 +2580,19 @@ msgstr "n'a pas pu se connecter à la base de données « %s »"
 #: pg_dumpall.c:486
 #, c-format
 msgid ""
-"could not connect to databases \"postgres\" or \"template1\"\n"
+"could not connect to databases \"maintable\" or \"template1\"\n"
 "Please specify an alternative database."
 msgstr ""
-"n'a pas pu se connecter aux bases « postgres » et « template1 ».\n"
+"n'a pas pu se connecter aux bases « maintable » et « template1 ».\n"
 "Merci de préciser une autre base de données."
 
 #: pg_dumpall.c:634
 #, c-format
 msgid ""
-"%s extracts a PostgreSQL database cluster into an SQL script file.\n"
+"%s extracts a maintableQL database cluster into an SQL script file.\n"
 "\n"
 msgstr ""
-"%s extrait un cluster de bases de données PostgreSQL dans un fichier de\n"
+"%s extrait un cluster de bases de données maintableQL dans un fichier de\n"
 "commandes SQL.\n"
 "\n"
 
@@ -2788,10 +2788,10 @@ msgstr "erreurs ignorées lors de la restauration : %d"
 #: pg_restore.c:451
 #, c-format
 msgid ""
-"%s restores a PostgreSQL database from an archive created by pg_dump.\n"
+"%s restores a maintableQL database from an archive created by pg_dump.\n"
 "\n"
 msgstr ""
-"%s restaure une base de données PostgreSQL à partir d'une archive créée\n"
+"%s restaure une base de données maintableQL à partir d'une archive créée\n"
 "par pg_dump.\n"
 "\n"
 

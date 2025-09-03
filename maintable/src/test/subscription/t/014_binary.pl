@@ -1,21 +1,21 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Binary mode logical replication test
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Create and initialize a publisher node
-my $node_publisher = PostgreSQL::Test::Cluster->new('publisher');
+my $node_publisher = maintableQL::Test::Cluster->new('publisher');
 $node_publisher->init(allows_streaming => 'logical');
 $node_publisher->start;
 
 # Create and initialize subscriber node
-my $node_subscriber = PostgreSQL::Test::Cluster->new('subscriber');
+my $node_subscriber = maintableQL::Test::Cluster->new('subscriber');
 $node_subscriber->init;
 $node_subscriber->start;
 
@@ -33,11 +33,11 @@ my $ddl = qq(
 		c TEXT[]
 		););
 
-$node_publisher->safe_psql('postgres', $ddl);
-$node_subscriber->safe_psql('postgres', $ddl);
+$node_publisher->safe_psql('maintable', $ddl);
+$node_subscriber->safe_psql('maintable', $ddl);
 
 # Configure logical replication
-$node_publisher->safe_psql('postgres',
+$node_publisher->safe_psql('maintable',
 	"CREATE PUBLICATION tpub FOR ALL TABLES");
 
 # ------------------------------------------------------
@@ -46,7 +46,7 @@ $node_publisher->safe_psql('postgres',
 
 # Insert some content before creating a subscription
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
     INSERT INTO public.test_numerical (a, b, c, d) VALUES
 		(1, 1.2, 1.3, 10),
         (2, 2.2, 2.3, 20);
@@ -55,8 +55,8 @@ $node_publisher->safe_psql(
         ('{3,1,2}', '{1.3, 1.1, 1.2}', '{"three", "one", "two"}');
 	));
 
-my $publisher_connstring = $node_publisher->connstr . ' dbname=postgres';
-$node_subscriber->safe_psql('postgres',
+my $publisher_connstring = $node_publisher->connstr . ' dbname=maintable';
+$node_subscriber->safe_psql('maintable',
 		"CREATE SUBSCRIPTION tsub CONNECTION '$publisher_connstring' "
 	  . "PUBLICATION tpub WITH (slot_name = tpub_slot, binary = true)");
 
@@ -74,7 +74,7 @@ my $sync_check = qq(
 );
 
 # Check the synced data on the subscriber
-my $result = $node_subscriber->safe_psql('postgres', $sync_check);
+my $result = $node_subscriber->safe_psql('maintable', $sync_check);
 
 is( $result, '1|1.2|1.3|10
 2|2.2|2.3|20
@@ -87,7 +87,7 @@ is( $result, '1|1.2|1.3|10
 
 # Insert some content and make sure it's replicated across
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	INSERT INTO public.test_arrays (a, b, c) VALUES
 		('{2,1,3}', '{1.2, 1.1, 1.3}', '{"two", "one", "three"}'),
 		('{1,3,2}', '{1.1, 1.3, 1.2}', '{"one", "three", "two"}');
@@ -99,7 +99,7 @@ $node_publisher->safe_psql(
 
 $node_publisher->wait_for_catchup('tsub');
 
-$result = $node_subscriber->safe_psql('postgres',
+$result = $node_subscriber->safe_psql('maintable',
 	"SELECT a, b, c, d FROM test_numerical ORDER BY a");
 
 is( $result, '1|1.2|1.3|10
@@ -109,14 +109,14 @@ is( $result, '1|1.2|1.3|10
 
 # Test updates as well
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	UPDATE public.test_arrays SET b[1] = 42, c = NULL;
 	UPDATE public.test_numerical SET b = 42, c = NULL;
 	));
 
 $node_publisher->wait_for_catchup('tsub');
 
-$result = $node_subscriber->safe_psql('postgres',
+$result = $node_subscriber->safe_psql('maintable',
 	"SELECT a, b, c FROM test_arrays ORDER BY a");
 
 is( $result, '{1,2,3}|{42,1.2,1.3}|
@@ -124,7 +124,7 @@ is( $result, '{1,2,3}|{42,1.2,1.3}|
 {2,1,3}|{42,1.1,1.3}|
 {3,1,2}|{42,1.1,1.2}|', 'check updated replicated data on subscriber');
 
-$result = $node_subscriber->safe_psql('postgres',
+$result = $node_subscriber->safe_psql('maintable',
 	"SELECT a, b, c, d FROM test_numerical ORDER BY a");
 
 is( $result, '1|42||10
@@ -137,18 +137,18 @@ is( $result, '1|42||10
 # ------------------------------------------------------------------------------
 
 # Test to reset back to text formatting, and then to binary again
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	"ALTER SUBSCRIPTION tsub SET (binary = false);");
 
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	INSERT INTO public.test_numerical (a, b, c, d) VALUES
 		(5, 5.2, 5.3, 50);
 	));
 
 $node_publisher->wait_for_catchup('tsub');
 
-$result = $node_subscriber->safe_psql('postgres',
+$result = $node_subscriber->safe_psql('maintable',
 	"SELECT a, b, c, d FROM test_numerical ORDER BY a");
 
 is( $result, '1|42||10
@@ -157,18 +157,18 @@ is( $result, '1|42||10
 4|42||40
 5|5.2|5.3|50', 'check replicated data on subscriber');
 
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	"ALTER SUBSCRIPTION tsub SET (binary = true);");
 
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	INSERT INTO public.test_arrays (a, b, c) VALUES
 		('{2,3,1}', '{1.2, 1.3, 1.1}', '{"two", "three", "one"}');
 	));
 
 $node_publisher->wait_for_catchup('tsub');
 
-$result = $node_subscriber->safe_psql('postgres',
+$result = $node_subscriber->safe_psql('maintable',
 	"SELECT a, b, c FROM test_arrays ORDER BY a");
 
 is( $result, '{1,2,3}|{42,1.2,1.3}|
@@ -195,12 +195,12 @@ $ddl = qq(
         a myvarchar
     ););
 
-$node_publisher->safe_psql('postgres', $ddl);
-$node_subscriber->safe_psql('postgres', $ddl);
+$node_publisher->safe_psql('maintable', $ddl);
+$node_subscriber->safe_psql('maintable', $ddl);
 
 # Insert some initial data
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
     INSERT INTO public.test_myvarchar (a) VALUES
 		('a');
     ));
@@ -209,7 +209,7 @@ $node_publisher->safe_psql(
 my $offset = -s $node_subscriber->logfile;
 
 # Refresh the publication to trigger the tablesync
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	"ALTER SUBSCRIPTION tsub REFRESH PUBLICATION");
 
 # It should fail
@@ -228,15 +228,15 @@ $ddl = qq(
         receive = myvarcharrecv
     ););
 
-$node_publisher->safe_psql('postgres', $ddl);
-$node_subscriber->safe_psql('postgres', $ddl);
+$node_publisher->safe_psql('maintable', $ddl);
+$node_subscriber->safe_psql('maintable', $ddl);
 
 # Now tablesync should succeed
 $node_subscriber->wait_for_subscription_sync($node_publisher, 'tsub');
 
 # Check the synced data on the subscriber
 $result =
-  $node_subscriber->safe_psql('postgres', 'SELECT a FROM test_myvarchar;');
+  $node_subscriber->safe_psql('maintable', 'SELECT a FROM test_myvarchar;');
 
 is($result, 'a', 'check synced data on subscriber with custom type');
 
@@ -246,7 +246,7 @@ is($result, 'a', 'check synced data on subscriber with custom type');
 
 # Test syncing tables with mismatching column types
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
     CREATE TABLE public.test_mismatching_types (
         a bigint PRIMARY KEY
     );
@@ -258,7 +258,7 @@ $node_publisher->safe_psql(
 $offset = -s $node_subscriber->logfile;
 
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
     CREATE TABLE public.test_mismatching_types (
         a int PRIMARY KEY
     );
@@ -274,7 +274,7 @@ $offset = -s $node_publisher->logfile;
 
 # Setting binary to false should allow syncing
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
     ALTER SUBSCRIPTION tsub SET (binary = false);));
 
 # Ensure the COPY command is executed in text format on the publisher
@@ -284,7 +284,7 @@ $node_publisher->wait_for_log(
 $node_subscriber->wait_for_subscription_sync($node_publisher, 'tsub');
 
 # Check the synced data on the subscriber
-$result = $node_subscriber->safe_psql('postgres',
+$result = $node_subscriber->safe_psql('maintable',
 	'SELECT a FROM test_mismatching_types ORDER BY a;');
 
 is( $result, '1

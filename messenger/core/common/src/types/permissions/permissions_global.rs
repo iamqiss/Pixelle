@@ -17,7 +17,7 @@
  */
 
 use crate::BytesSerializable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use ahash::AHashMap;
 use bytes::{Buf, BufMut, Bytes, BytesMut};
 use comfy_table::Table;
@@ -277,7 +277,7 @@ impl BytesSerializable for Permissions {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError>
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {

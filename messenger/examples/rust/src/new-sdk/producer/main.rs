@@ -16,9 +16,9 @@
  * under the License.
  */
 
-use iggy::prelude::*;
-use iggy_examples::shared::args::Args;
-use iggy_examples::shared::messages_generator::MessagesGenerator;
+use messenger::prelude::*;
+use messenger_examples::shared::args::Args;
+use messenger_examples::shared::messages_generator::MessagesGenerator;
 use std::error::Error;
 use std::str::FromStr;
 use std::sync::Arc;
@@ -40,9 +40,9 @@ async fn main() -> anyhow::Result<(), Box<dyn Error>> {
     );
     let client_provider_config = Arc::new(ClientProviderConfig::from_args(args.to_sdk_args())?);
     let client = client_provider::get_raw_client(client_provider_config, false).await?;
-    let client = IggyClient::builder().with_client(client).build()?;
+    let client = MessengerClient::builder().with_client(client).build()?;
     client.connect().await?;
-    let interval = IggyDuration::from_str(&args.interval)?;
+    let interval = MessengerDuration::from_str(&args.interval)?;
     let partitioning = if args.balanced_producer {
         Partitioning::balanced()
     } else {
@@ -60,7 +60,7 @@ async fn main() -> anyhow::Result<(), Box<dyn Error>> {
         .create_topic_if_not_exists(
             args.partitions_count,
             None,
-            IggyExpiry::ServerDefault,
+            MessengerExpiry::ServerDefault,
             MaxTopicSize::ServerDefault,
         )
         .build();
@@ -71,7 +71,7 @@ async fn main() -> anyhow::Result<(), Box<dyn Error>> {
 
 async fn produce_messages(
     args: &Args,
-    producer: &IggyProducer,
+    producer: &MessengerProducer,
 ) -> anyhow::Result<(), Box<dyn Error>> {
     let interval = args.get_interval();
     info!(
@@ -94,7 +94,7 @@ async fn produce_messages(
         for _ in 0..args.messages_per_batch {
             let serializable_message = message_generator.generate();
             let json_envelope = serializable_message.to_json_envelope();
-            let message = IggyMessage::from_str(&json_envelope)?;
+            let message = MessengerMessage::from_str(&json_envelope)?;
             messages.push(message);
         }
         producer.send(messages).await?;

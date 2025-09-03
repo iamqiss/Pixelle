@@ -19,18 +19,18 @@
 use crate::streaming::session::Session;
 use crate::streaming::utils::hash;
 use ahash::AHashMap;
-use iggy_common::IggyError;
-use iggy_common::IggyTimestamp;
-use iggy_common::UserId;
-use iggy_common::locking::IggySharedMut;
-use iggy_common::locking::IggySharedMutFn;
+use messenger_common::MessengerError;
+use messenger_common::MessengerTimestamp;
+use messenger_common::UserId;
+use messenger_common::locking::MessengerSharedMut;
+use messenger_common::locking::MessengerSharedMutFn;
 use std::fmt::{Display, Formatter};
 use std::net::SocketAddr;
 use std::sync::Arc;
 
 #[derive(Debug, Default)]
 pub struct ClientManager {
-    clients: AHashMap<u32, IggySharedMut<Client>>,
+    clients: AHashMap<u32, MessengerSharedMut<Client>>,
 }
 
 #[derive(Debug)]
@@ -39,7 +39,7 @@ pub struct Client {
     pub session: Arc<Session>,
     pub transport: Transport,
     pub consumer_groups: Vec<ConsumerGroup>,
-    pub last_heartbeat: IggyTimestamp,
+    pub last_heartbeat: MessengerTimestamp,
 }
 
 #[derive(Debug)]
@@ -73,16 +73,16 @@ impl ClientManager {
             session: session.clone(),
             transport,
             consumer_groups: Vec::new(),
-            last_heartbeat: IggyTimestamp::now(),
+            last_heartbeat: MessengerTimestamp::now(),
         };
-        self.clients.insert(client_id, IggySharedMut::new(client));
+        self.clients.insert(client_id, MessengerSharedMut::new(client));
         session
     }
 
-    pub async fn set_user_id(&mut self, client_id: u32, user_id: UserId) -> Result<(), IggyError> {
+    pub async fn set_user_id(&mut self, client_id: u32, user_id: UserId) -> Result<(), MessengerError> {
         let client = self.clients.get(&client_id);
         if client.is_none() {
-            return Err(IggyError::ClientNotFound(client_id));
+            return Err(MessengerError::ClientNotFound(client_id));
         }
 
         let mut client = client.unwrap().write().await;
@@ -90,10 +90,10 @@ impl ClientManager {
         Ok(())
     }
 
-    pub async fn clear_user_id(&mut self, client_id: u32) -> Result<(), IggyError> {
+    pub async fn clear_user_id(&mut self, client_id: u32) -> Result<(), MessengerError> {
         let client = self.clients.get(&client_id);
         if client.is_none() {
-            return Err(IggyError::ClientNotFound(client_id));
+            return Err(MessengerError::ClientNotFound(client_id));
         }
 
         let mut client = client.unwrap().write().await;
@@ -101,15 +101,15 @@ impl ClientManager {
         Ok(())
     }
 
-    pub fn try_get_client(&self, client_id: u32) -> Option<IggySharedMut<Client>> {
+    pub fn try_get_client(&self, client_id: u32) -> Option<MessengerSharedMut<Client>> {
         self.clients.get(&client_id).cloned()
     }
 
-    pub fn get_clients(&self) -> Vec<IggySharedMut<Client>> {
+    pub fn get_clients(&self) -> Vec<MessengerSharedMut<Client>> {
         self.clients.values().cloned().collect()
     }
 
-    pub async fn delete_clients_for_user(&mut self, user_id: UserId) -> Result<(), IggyError> {
+    pub async fn delete_clients_for_user(&mut self, user_id: UserId) -> Result<(), MessengerError> {
         let mut clients_to_remove = Vec::new();
         for client in self.clients.values() {
             let client = client.read().await;
@@ -127,7 +127,7 @@ impl ClientManager {
         Ok(())
     }
 
-    pub async fn delete_client(&mut self, client_id: u32) -> Option<IggySharedMut<Client>> {
+    pub async fn delete_client(&mut self, client_id: u32) -> Option<MessengerSharedMut<Client>> {
         let client = self.clients.remove(&client_id);
         if let Some(client) = client.as_ref() {
             let client = client.read().await;
@@ -142,10 +142,10 @@ impl ClientManager {
         stream_id: u32,
         topic_id: u32,
         group_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let client = self.clients.get(&client_id);
         if client.is_none() {
-            return Err(IggyError::ClientNotFound(client_id));
+            return Err(MessengerError::ClientNotFound(client_id));
         }
 
         let mut client = client.unwrap().write().await;
@@ -171,10 +171,10 @@ impl ClientManager {
         stream_id: u32,
         topic_id: u32,
         consumer_group_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let client = self.clients.get(&client_id);
         if client.is_none() {
-            return Err(IggyError::ClientNotFound(client_id));
+            return Err(MessengerError::ClientNotFound(client_id));
         }
         let mut client = client.unwrap().write().await;
         for (index, consumer_group) in client.consumer_groups.iter().enumerate() {

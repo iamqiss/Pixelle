@@ -23,7 +23,7 @@
 
 <!--
 
-  Checkstyle configuration for Apache Iggy that is based on the sun_checks.xml file
+  Checkstyle configuration for Apache Messenger that is based on the sun_checks.xml file
   that checks the coding conventions from:
 
     - the Java Language Specification at

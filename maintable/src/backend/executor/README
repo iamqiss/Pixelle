@@ -1,6 +1,6 @@
 src/backend/executor/README
 
-The Postgres Executor
+The Maintable Executor
 =====================
 
 The executor processes a tree of "plan nodes".  The plan tree is essentially

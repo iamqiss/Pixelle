@@ -16,11 +16,11 @@
  * under the License.
  */
 
-use crate::cli::common::{IggyCmdCommand, IggyCmdTest, IggyCmdTestCase};
+use crate::cli::common::{MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase};
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
 use bytes::Bytes;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use predicates::str::{ends_with, is_match, starts_with};
 use serial_test::parallel;
 use std::collections::HashMap;
@@ -75,7 +75,7 @@ impl<'a> TestMessageSendFromFileCmd<'a> {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestMessageSendFromFileCmd<'_> {
+impl MessengerCmdTestCase for TestMessageSendFromFileCmd<'_> {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let stream = client.create_stream(&self.stream_name, None).await;
         assert!(stream.is_ok());
@@ -92,7 +92,7 @@ impl IggyCmdTestCase for TestMessageSendFromFileCmd<'_> {
                 Default::default(),
                 None,
                 None,
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 MaxTopicSize::ServerDefault,
             )
             .await;
@@ -119,7 +119,7 @@ impl IggyCmdTestCase for TestMessageSendFromFileCmd<'_> {
                 .iter()
                 .map(|s| {
                     let payload = Bytes::from(s.as_bytes().to_vec());
-                    IggyMessage::builder()
+                    MessengerMessage::builder()
                         .payload(payload)
                         .user_headers(self.headers.clone())
                         .build()
@@ -128,7 +128,7 @@ impl IggyCmdTestCase for TestMessageSendFromFileCmd<'_> {
                 .collect::<Vec<_>>();
 
             for message in messages.iter() {
-                let message = IggyMessage::builder()
+                let message = MessengerMessage::builder()
                     .id(message.header.id)
                     .payload(message.payload.clone())
                     .user_headers(message.user_headers_map().unwrap().unwrap())
@@ -145,8 +145,8 @@ impl IggyCmdTestCase for TestMessageSendFromFileCmd<'_> {
         }
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("message")
             .arg("send")
             .args(self.to_args())
@@ -232,7 +232,7 @@ impl IggyCmdTestCase for TestMessageSendFromFileCmd<'_> {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
     let test_messages: Vec<&str> = vec![
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
@@ -263,8 +263,8 @@ pub async fn should_be_successful() {
     temp_file.close().unwrap();
     let temp_path_str = temp_path.to_str().unwrap();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestMessageSendFromFileCmd::new(
             true,
             temp_path_str,

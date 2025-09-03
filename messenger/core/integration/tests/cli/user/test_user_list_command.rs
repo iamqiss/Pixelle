@@ -17,13 +17,13 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, OutputFormat, TestHelpCmd,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, OutputFormat, TestHelpCmd,
     USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
-use iggy::prelude::UserStatus;
+use messenger::prelude::Client;
+use messenger::prelude::UserStatus;
 use predicates::str::{contains, starts_with};
 use serial_test::parallel;
 
@@ -48,7 +48,7 @@ impl TestUserListCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestUserListCmd {
+impl MessengerCmdTestCase for TestUserListCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let stream = client
             .create_user(&self.username, "secret", self.status, None)
@@ -56,8 +56,8 @@ impl IggyCmdTestCase for TestUserListCmd {
         assert!(stream.is_ok());
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("user")
             .arg("list")
             .args(self.to_args())
@@ -81,24 +81,24 @@ impl IggyCmdTestCase for TestUserListCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestUserListCmd::new(
             String::from("producer"),
             UserStatus::Active,
             OutputFormat::Default,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserListCmd::new(
             String::from("testing"),
             UserStatus::Inactive,
             OutputFormat::List,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserListCmd::new(
             String::from("misc"),
             UserStatus::Active,
@@ -110,18 +110,18 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["user", "list", "--help"],
             format!(
                 r#"List all users
 
 Examples:
- iggy user list
- iggy user list --list-mode table
- iggy user list -l table
+ messenger user list
+ messenger user list --list-mode table
+ messenger user list -l table
 
 {USAGE_PREFIX} user list [OPTIONS]
 
@@ -143,9 +143,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["user", "list", "-h"],
             format!(

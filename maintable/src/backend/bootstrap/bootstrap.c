@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * bootstrap.c
- *	  routines to support running postgres in 'bootstrap' mode
+ *	  routines to support running maintable in 'bootstrap' mode
  *	bootstrap mode is used to create the initial template database
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 #include <signal.h>
@@ -372,7 +372,7 @@ BootstrapModeMain(int argc, char *argv[], bool check_only)
 	if (pg_link_canary_is_frontend())
 		elog(ERROR, "backend is incorrectly linked to frontend functions");
 
-	InitPostgres(NULL, InvalidOid, NULL, InvalidOid, 0, NULL);
+	InitMaintable(NULL, InvalidOid, NULL, InvalidOid, 0, NULL);
 
 	/* Initialize stuff for bootstrap-file processing */
 	for (i = 0; i < MAXATTR; i++)

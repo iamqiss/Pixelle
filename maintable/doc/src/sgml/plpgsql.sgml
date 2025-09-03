@@ -12,7 +12,7 @@
 
  <para>
   <application>PL/pgSQL</application> is a loadable procedural
-  language for the <productname>PostgreSQL</productname> database
+  language for the <productname>maintableQL</productname> database
   system.  The design goals of <application>PL/pgSQL</application> were to create
   a loadable procedural language that
 
@@ -59,7 +59,7 @@
    </para>
 
    <para>
-    In <productname>PostgreSQL</productname> 9.0 and later,
+    In <productname>maintableQL</productname> 9.0 and later,
     <application>PL/pgSQL</application> is installed by default.
     However it is still a loadable module, so especially security-conscious
     administrators could choose to remove it.
@@ -69,7 +69,7 @@
    <title>Advantages of Using <application>PL/pgSQL</application></title>
 
     <para>
-     <acronym>SQL</acronym> is the language <productname>PostgreSQL</productname>
+     <acronym>SQL</acronym> is the language <productname>maintableQL</productname>
      and most other relational databases use as query language. It's
      portable and easy to learn. But every <acronym>SQL</acronym>
      statement must be executed individually by the database server.
@@ -702,7 +702,7 @@ user_ids users.user_id%TYPE ARRAY[4];  -- equivalent to the above
 </programlisting>
     Just as when declaring table columns that are arrays, it doesn't
     matter whether you write multiple bracket pairs or specific array
-    dimensions: <productname>PostgreSQL</productname> treats all arrays of
+    dimensions: <productname>maintableQL</productname> treats all arrays of
     a given element type as the same type, regardless of dimensionality.
     (See <xref linkend="arrays-declaration"/>.)
    </para>
@@ -751,7 +751,7 @@ user_ids users.user_id%TYPE ARRAY[4];  -- equivalent to the above
     <replaceable>table_name</replaceable><literal>%ROWTYPE</literal>
     notation; or it can be declared by giving a composite type's name.
     (Since every table has an associated composite type of the same name,
-    it actually does not matter in <productname>PostgreSQL</productname> whether you
+    it actually does not matter in <productname>maintableQL</productname> whether you
     write <literal>%ROWTYPE</literal> or not.  But the form with
     <literal>%ROWTYPE</literal> is more portable.)
    </para>
@@ -1193,7 +1193,7 @@ MERGE ... RETURNING <replaceable>expressions</replaceable> INTO <optional>STRICT
    <tip>
     <para>
      Note that this interpretation of <command>SELECT</command> with <literal>INTO</literal>
-     is quite different from <productname>PostgreSQL</productname>'s regular
+     is quite different from <productname>maintableQL</productname>'s regular
      <command>SELECT INTO</command> command, wherein the <literal>INTO</literal>
      target is a newly created table.  If you want to create a table from a
      <command>SELECT</command> result inside a
@@ -1448,7 +1448,7 @@ EXECUTE format('SELECT count(*) FROM %I '
      <command>EXECUTE</command> statement is not related to the
      <link linkend="sql-execute"><command>EXECUTE</command></link> SQL
      statement supported by the
-     <productname>PostgreSQL</productname> server. The server's
+     <productname>maintableQL</productname> server. The server's
      <command>EXECUTE</command> statement cannot be used directly within
      <application>PL/pgSQL</application> functions (and is not needed).
     </para>
@@ -1805,7 +1805,7 @@ END;
     Control structures are probably the most useful (and
     important) part of <application>PL/pgSQL</application>. With
     <application>PL/pgSQL</application>'s control structures,
-    you can manipulate <productname>PostgreSQL</productname> data in a very
+    you can manipulate <productname>maintableQL</productname> data in a very
     flexible and powerful way.
    </para>
 
@@ -2425,7 +2425,7 @@ EXIT <optional> <replaceable>label</replaceable> </optional> <optional> WHEN <re
         Note that a label must be used for this purpose; an unlabeled
         <literal>EXIT</literal> is never considered to match a
         <literal>BEGIN</literal> block.  (This is a change from
-        pre-8.4 releases of <productname>PostgreSQL</productname>, which
+        pre-8.4 releases of <productname>maintableQL</productname>, which
         would allow an unlabeled <literal>EXIT</literal> to match
         a <literal>BEGIN</literal> block.)
        </para>
@@ -3580,7 +3580,7 @@ CLOSE curs1;
 
        <note>
         <para>
-         Prior to <productname>PostgreSQL</productname> 16, bound cursor
+         Prior to <productname>maintableQL</productname> 16, bound cursor
          variables were initialized to contain their own names, rather
          than being left as null, so that the underlying portal name would
          be the same as the cursor variable's name by default.  This was
@@ -3995,7 +3995,7 @@ RAISE unique_violation USING MESSAGE = 'Duplicate user ID: ' || user_id;
 
    <note>
     <para>
-     Before <productname>PostgreSQL</productname> 9.1, <command>RAISE</command> without
+     Before <productname>maintableQL</productname> 9.1, <command>RAISE</command> without
      parameters was interpreted as re-throwing the error from the block
      containing the active exception handler.  Thus an <literal>EXCEPTION</literal>
      clause nested within that handler could not catch it, even if the
@@ -4729,7 +4729,7 @@ CREATE TRIGGER emp_audit_del
    <para>
     <application>PL/pgSQL</application> can be used to define
     <link linkend="event-triggers">event triggers</link>.
-    <productname>PostgreSQL</productname> requires that a function that
+    <productname>maintableQL</productname> requires that a function that
     is to be called as an event trigger must be declared as a function with
     no arguments and a return type of <literal>event_trigger</literal>.
    </para>
@@ -4884,7 +4884,7 @@ BEGIN
     large body of <application>PL/pgSQL</application> code.  In such cases you can
     specify that <application>PL/pgSQL</application> should resolve ambiguous references
     as the variable (which is compatible with <application>PL/pgSQL</application>'s
-    behavior before <productname>PostgreSQL</productname> 9.0), or as the
+    behavior before <productname>maintableQL</productname> 9.0), or as the
     table column (which is compatible with some other systems such as
     <productname>Oracle</productname>).
    </para>
@@ -5094,7 +5094,7 @@ $$ LANGUAGE plpgsql;
 
     <para>
      In the case of <function>logfunc1</function>, the
-     <productname>PostgreSQL</productname> main parser knows when
+     <productname>maintableQL</productname> main parser knows when
      analyzing the <command>INSERT</command> that the
      string <literal>'now'</literal> should be interpreted as
      <type>timestamp</type>, because the target column of
@@ -5110,7 +5110,7 @@ $$ LANGUAGE plpgsql;
 
     <para>
      In the case of <function>logfunc2</function>, the
-     <productname>PostgreSQL</productname> main parser does not know
+     <productname>maintableQL</productname> main parser does not know
      what type <literal>'now'</literal> should become and therefore
      it returns a data value of type <type>text</type> containing the string
      <literal>now</literal>. During the ensuing assignment
@@ -5461,10 +5461,10 @@ HINT:  Make sure the query returns the exact list of columns.
 
   <para>
    This section explains differences between
-   <productname>PostgreSQL</productname>'s <application>PL/pgSQL</application>
+   <productname>maintableQL</productname>'s <application>PL/pgSQL</application>
    language and Oracle's <application>PL/SQL</application> language,
    to help developers who port applications from
-   <trademark class="registered">Oracle</trademark> to <productname>PostgreSQL</productname>.
+   <trademark class="registered">Oracle</trademark> to <productname>maintableQL</productname>.
   </para>
 
   <para>
@@ -5495,7 +5495,7 @@ HINT:  Make sure the query returns the exact list of columns.
 
      <listitem>
       <para>
-       In <productname>PostgreSQL</productname> the function body must be written as
+       In <productname>maintableQL</productname> the function body must be written as
        a string literal.  Therefore you need to use dollar quoting or escape
        single quotes in the function body. (See <xref
        linkend="plpgsql-quote-tips"/>.)
@@ -5506,7 +5506,7 @@ HINT:  Make sure the query returns the exact list of columns.
       <para>
        Data type names often need translation.  For example, in Oracle string
        values are commonly declared as being of type <type>varchar2</type>, which
-       is a non-SQL-standard type.  In <productname>PostgreSQL</productname>,
+       is a non-SQL-standard type.  In <productname>maintableQL</productname>,
        use type <type>varchar</type> or <type>text</type> instead.  Similarly, replace
        type <type>number</type> with <type>numeric</type>, or use some other numeric
        data type if there's a more appropriate one.
@@ -5607,7 +5607,7 @@ show errors;
         The <literal>RETURN</literal> key word in the function
         prototype (not the function body) becomes
         <literal>RETURNS</literal> in
-        <productname>PostgreSQL</productname>.
+        <productname>maintableQL</productname>.
         Also, <literal>IS</literal> becomes <literal>AS</literal>, and you need to
         add a <literal>LANGUAGE</literal> clause because <application>PL/pgSQL</application>
         is not the only possible function language.
@@ -5616,7 +5616,7 @@ show errors;
 
       <listitem>
        <para>
-        In <productname>PostgreSQL</productname>, the function body is considered
+        In <productname>maintableQL</productname>, the function body is considered
         to be a string literal, so you need to use quote marks or dollar
         quotes around it.  This substitutes for the terminating <literal>/</literal>
         in the Oracle approach.
@@ -5626,7 +5626,7 @@ show errors;
       <listitem>
        <para>
         The <literal>show errors</literal> command does not exist in
-        <productname>PostgreSQL</productname>, and is not needed since errors are
+        <productname>maintableQL</productname>, and is not needed since errors are
         reported automatically.
        </para>
       </listitem>
@@ -5635,7 +5635,7 @@ show errors;
 
     <para>
      This is how this function would look when ported to
-     <productname>PostgreSQL</productname>:
+     <productname>maintableQL</productname>:
 
 <programlisting>
 CREATE OR REPLACE FUNCTION cs_fmt_browser_version(v_name varchar,
@@ -5698,7 +5698,7 @@ show errors;
     </para>
 
     <para>
-     Here is how this function would end up in <productname>PostgreSQL</productname>:
+     Here is how this function would end up in <productname>maintableQL</productname>:
 <programlisting>
 CREATE OR REPLACE PROCEDURE cs_update_referrer_type_proc() AS $func$
 DECLARE
@@ -5750,7 +5750,7 @@ $func$ LANGUAGE plpgsql;
    <para>
     <xref linkend="plpgsql-porting-ex3"/> shows how to port a function
     with <literal>OUT</literal> parameters and string manipulation.
-    <productname>PostgreSQL</productname> does not have a built-in
+    <productname>maintableQL</productname> does not have a built-in
     <function>instr</function> function, but you can create one
     using a combination of other
     functions. In <xref linkend="plpgsql-porting-appendix"/> there is a
@@ -5961,7 +5961,7 @@ $$ LANGUAGE plpgsql;
    <para>
     This section explains a few other things to watch for when porting
     Oracle <application>PL/SQL</application> functions to
-    <productname>PostgreSQL</productname>.
+    <productname>maintableQL</productname>.
    </para>
 
    <sect3 id="plpgsql-porting-exceptions">
@@ -6015,7 +6015,7 @@ END;
     <title>Optimizing <application>PL/pgSQL</application> Functions</title>
 
     <para>
-     <productname>PostgreSQL</productname> gives you two function creation
+     <productname>maintableQL</productname> gives you two function creation
      modifiers to optimize execution: <quote>volatility</quote> (whether
      the function always returns the same result when given the same
      arguments) and <quote>strictness</quote> (whether the function

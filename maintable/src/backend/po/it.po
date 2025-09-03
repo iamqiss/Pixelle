@@ -1,26 +1,26 @@
 #
-# postgres.po
-#   Italian message translation file for postgres
+# maintable.po
+#   Italian message translation file for maintable
 #
 # For development and bug report please use:
-# https://github.com/dvarrazzo/postgresql-it
+# https://github.com/dvarrazzo/maintableql-it
 #
-# Copyright (C) 2012-2017 PostgreSQL Global Development Group
+# Copyright (C) 2012-2017 maintableQL Global Development Group
 # Copyright (C) 2010, Associazione Culturale ITPUG
 #
 # Daniele Varrazzo <daniele.varrazzo@gmail.com>, 2012-2017.
 # Vincenzo Romano <vincenzo.romano@itpug.org>
 #
-# This file is distributed under the same license as the PostgreSQL package.
+# This file is distributed under the same license as the maintableQL package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: postgres (PostgreSQL) 15\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintable (maintableQL) 15\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2022-09-26 08:12+0000\n"
 "PO-Revision-Date: 2022-10-30 18:50+0100\n"
 "Last-Translator: Domenico Sgarbossa <sgarbossa.domenico@gmail.com>\n"
-"Language-Team: https://github.com/dvarrazzo/postgresql-it\n"
+"Language-Team: https://github.com/dvarrazzo/maintableql-it\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -105,12 +105,12 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "possibile mancata corrispondenza dell'ordine dei byte\n"
 "L'ordine dei byte utilizzato per memorizzare il file pg_control potrebbe non corrispondere a quello\n"
 "utilizzato da questo programma. In tal caso i risultati seguenti non sarebbero corretti, e\n"
-"l'installazione di PostgreSQL sarebbe incompatibile con questa directory di dati."
+"l'installazione di maintableQL sarebbe incompatibile con questa directory di dati."
 
 #: ../common/controldata_utils.c:189 ../common/controldata_utils.c:194 ../common/file_utils.c:232 ../common/file_utils.c:291 ../common/file_utils.c:365 access/heap/rewriteheap.c:1264 access/transam/timeline.c:111 access/transam/timeline.c:251 access/transam/timeline.c:348 access/transam/twophase.c:1304 access/transam/xlog.c:2941 access/transam/xlog.c:3123 access/transam/xlog.c:3162 access/transam/xlog.c:3357 access/transam/xlog.c:4012
 #: access/transam/xlogrecovery.c:4179 access/transam/xlogrecovery.c:4282 access/transam/xlogutils.c:852 backup/basebackup.c:522 backup/basebackup.c:1519 postmaster/syslogger.c:1560 replication/logical/origin.c:719 replication/logical/reorderbuffer.c:3581 replication/logical/reorderbuffer.c:4130 replication/logical/reorderbuffer.c:4906 replication/logical/snapbuild.c:1712 replication/logical/snapbuild.c:1819 replication/slot.c:1744 replication/walsender.c:631
@@ -690,7 +690,7 @@ msgstr "il numero delle colonne dell'indice (%d) eccede il limite (%d)"
 msgid "index row requires %zu bytes, maximum size is %zu"
 msgstr "la riga dell'indice richiede %zu byte, la dimensione massima è %zu"
 
-#: access/common/printtup.c:292 tcop/fastpath.c:106 tcop/fastpath.c:453 tcop/postgres.c:1921
+#: access/common/printtup.c:292 tcop/fastpath.c:106 tcop/fastpath.c:453 tcop/maintable.c:1921
 #, c-format
 msgid "unsupported format code: %d"
 msgstr "codice di formato non supportato: %d"
@@ -850,8 +850,8 @@ msgstr "l'indice \"%s\" contiene una tupla interna marcata come invalida"
 
 #: access/gist/gist.c:761 access/gist/gistvacuum.c:428
 #, c-format
-msgid "This is caused by an incomplete page split at crash recovery before upgrading to PostgreSQL 9.1."
-msgstr "Ciò è causato da una separazione di pagina incompleta al ripristino del crash prima dell'aggiornamento a PostgreSQL 9.1."
+msgid "This is caused by an incomplete page split at crash recovery before upgrading to maintableQL 9.1."
+msgstr "Ciò è causato da una separazione di pagina incompleta al ripristino del crash prima dell'aggiornamento a maintableQL 9.1."
 
 #: access/gist/gist.c:762 access/gist/gistutil.c:801 access/gist/gistutil.c:812 access/gist/gistvacuum.c:429 access/hash/hashutil.c:227 access/hash/hashutil.c:238 access/hash/hashutil.c:250 access/hash/hashutil.c:271 access/nbtree/nbtpage.c:810 access/nbtree/nbtpage.c:821
 #, c-format
@@ -2419,7 +2419,7 @@ msgstr "restore_command ha restituito uno stato di uscita zero, ma stat() non è
 msgid "could not restore file \"%s\" from archive: %s"
 msgstr "non è stato possibile ripristinare il file \"%s\" dall'archivio: %s"
 
-#. translator: First %s represents a postgresql.conf parameter name like
+#. translator: First %s represents a maintableql.conf parameter name like
 #. "recovery_end_command", the 2nd is the value of that parameter, the
 #. third an already translated error message.
 #: access/transam/xlogarchive.c:376
@@ -3370,12 +3370,12 @@ msgstr "impossibile impostare il conteggio degli operatori di compressione su %d
 msgid "-X requires a power of two value between 1 MB and 1 GB"
 msgstr "-X richiede una potenza di due tra 1 MB e 1 GB"
 
-#: bootstrap/bootstrap.c:280 postmaster/postmaster.c:846 tcop/postgres.c:3894
+#: bootstrap/bootstrap.c:280 postmaster/postmaster.c:846 tcop/maintable.c:3894
 #, c-format
 msgid "--%s requires a value"
 msgstr "--%s richiede un valore"
 
-#: bootstrap/bootstrap.c:285 postmaster/postmaster.c:851 tcop/postgres.c:3899
+#: bootstrap/bootstrap.c:285 postmaster/postmaster.c:851 tcop/maintable.c:3899
 #, c-format
 msgid "-c %s requires a value"
 msgstr "-c %s richiede un valore"
@@ -6487,8 +6487,8 @@ msgstr "La colonna FORCE_NULL \"%s\" non è referenziata da COPY"
 
 #: commands/copyfrom.c:1518
 #, c-format
-msgid "COPY FROM instructs the PostgreSQL server process to read a file. You may want a client-side facility such as psql's \\copy."
-msgstr "COPY TO fa leggere un file dal processo server PostgreSQL. Probabilmente ti serve un sistema lato client, per esempio il comando \\copy di psql."
+msgid "COPY FROM instructs the maintableQL server process to read a file. You may want a client-side facility such as psql's \\copy."
+msgstr "COPY TO fa leggere un file dal processo server maintableQL. Probabilmente ti serve un sistema lato client, per esempio il comando \\copy di psql."
 
 #: commands/copyfrom.c:1531 commands/copyto.c:731
 #, c-format
@@ -6540,7 +6540,7 @@ msgstr "intestazione del file COPY non valida (lunghezza errata)"
 msgid "could not read from COPY file: %m"
 msgstr "lettura dal file COPY fallita: %m"
 
-#: commands/copyfromparse.c:278 commands/copyfromparse.c:303 tcop/postgres.c:358
+#: commands/copyfromparse.c:278 commands/copyfromparse.c:303 tcop/maintable.c:358
 #, c-format
 msgid "unexpected EOF on client connection with an open transaction"
 msgstr "fine-file inaspettato sulla connessione del client con una transazione aperta"
@@ -6757,8 +6757,8 @@ msgstr "apertura del file \"%s\" in scrittura fallita: %m"
 
 #: commands/copyto.c:718
 #, c-format
-msgid "COPY TO instructs the PostgreSQL server process to write a file. You may want a client-side facility such as psql's \\copy."
-msgstr "COPY TO fa scrivere un file al processo server PostgreSQL. Probabilmente ti serve un sistema lato client, per esempio il comando \\copy di psql."
+msgid "COPY TO instructs the maintableQL server process to write a file. You may want a client-side facility such as psql's \\copy."
+msgstr "COPY TO fa scrivere un file al processo server maintableQL. Probabilmente ti serve un sistema lato client, per esempio il comando \\copy di psql."
 
 #: commands/createas.c:215 commands/createas.c:523
 #, c-format
@@ -6922,8 +6922,8 @@ msgstr "Il database del modello è stato creato utilizzando la versione di confr
 
 #: commands/dbcommands.c:1140
 #, c-format
-msgid "Rebuild all objects in the template database that use the default collation and run ALTER DATABASE %s REFRESH COLLATION VERSION, or build PostgreSQL with the right library version."
-msgstr "Ricostruisci tutti gli oggetti nel database dei modelli che utilizzano le regole di confronto predefinite ed eseguono ALTER DATABASE %s REFRESH COLLATION VERSION, oppure compila PostgreSQL con la versione della libreria corretta."
+msgid "Rebuild all objects in the template database that use the default collation and run ALTER DATABASE %s REFRESH COLLATION VERSION, or build maintableQL with the right library version."
+msgstr "Ricostruisci tutti gli oggetti nel database dei modelli che utilizzano le regole di confronto predefinite ed eseguono ALTER DATABASE %s REFRESH COLLATION VERSION, oppure compila maintableQL con la versione della libreria corretta."
 
 #: commands/dbcommands.c:1176 commands/dbcommands.c:1894
 #, c-format
@@ -7441,8 +7441,8 @@ msgstr "Impossibile aprire il file di controllo dell'estensione \"%s\": %m."
 
 #: commands/extension.c:505
 #, c-format
-msgid "The extension must first be installed on the system where PostgreSQL is running."
-msgstr "L'estensione deve essere prima installata sul sistema su cui è in esecuzione PostgreSQL."
+msgid "The extension must first be installed on the system where maintableQL is running."
+msgstr "L'estensione deve essere prima installata sul sistema su cui è in esecuzione maintableQL."
 
 #: commands/extension.c:509
 #, c-format
@@ -12034,8 +12034,8 @@ msgstr "sembra che il fuso orario \"%s\" utilizzi il secondo intercalare"
 
 #: commands/variable.c:345 commands/variable.c:427
 #, c-format
-msgid "PostgreSQL does not support leap seconds."
-msgstr "PostgreSQL non supporta il secondo intercalare."
+msgid "maintableQL does not support leap seconds."
+msgstr "maintableQL non supporta il secondo intercalare."
 
 #: commands/variable.c:354
 #, c-format
@@ -14707,8 +14707,8 @@ msgstr "il record hostssl non può combaciare perché SSL è disabilitato"
 
 #: libpq/hba.c:1004
 #, c-format
-msgid "Set ssl = on in postgresql.conf."
-msgstr "Imposta ssl = on in postgresql.conf."
+msgid "Set ssl = on in maintableql.conf."
+msgstr "Imposta ssl = on in maintableql.conf."
 
 #: libpq/hba.c:1012
 #, c-format
@@ -15124,7 +15124,7 @@ msgstr "c'è alcuna connessione client"
 msgid "could not receive data from client: %m"
 msgstr "ricezione dati dal client fallita: %m"
 
-#: libpq/pqcomm.c:1173 tcop/postgres.c:4359
+#: libpq/pqcomm.c:1173 tcop/maintable.c:4359
 #, c-format
 msgid "terminating connection because protocol synchronization was lost"
 msgstr "la connessione verrà terminata perché la sincronizzazione del protocollo è stata persa"
@@ -15192,10 +15192,10 @@ msgstr "%s: WSAStartup fallita: %d\n"
 #: main/main.c:350
 #, c-format
 msgid ""
-"%s is the PostgreSQL server.\n"
+"%s is the maintableQL server.\n"
 "\n"
 msgstr ""
-"%s è il server PostgreSQL.\n"
+"%s è il server maintableQL.\n"
 "\n"
 
 #: main/main.c:351
@@ -15457,12 +15457,12 @@ msgstr "Pagina iniziale di %s: <%s>\n"
 #: main/main.c:413
 #, c-format
 msgid ""
-"\"root\" execution of the PostgreSQL server is not permitted.\n"
+"\"root\" execution of the maintableQL server is not permitted.\n"
 "The server must be started under an unprivileged user ID to prevent\n"
 "possible system security compromise.  See the documentation for\n"
 "more information on how to properly start the server.\n"
 msgstr ""
-"Non è consentito eseguire il server PostgreSQL come \"root\".\n"
+"Non è consentito eseguire il server maintableQL come \"root\".\n"
 "Il server deve essere avviato con un ID utente non privilegiato per\n"
 "prevenire possibili problemi di sicurezza. Consulta la documentazione\n"
 "per avere maggiori informazioni su come avviare il server correttamente.\n"
@@ -15475,13 +15475,13 @@ msgstr "%s: utente gli ID reale e quello effettivo devono coincidere\n"
 #: main/main.c:437
 #, c-format
 msgid ""
-"Execution of PostgreSQL by a user with administrative permissions is not\n"
+"Execution of maintableQL by a user with administrative permissions is not\n"
 "permitted.\n"
 "The server must be started under an unprivileged user ID to prevent\n"
 "possible system security compromises.  See the documentation for\n"
 "more information on how to properly start the server.\n"
 msgstr ""
-"Non è consentito eseguire il server PostgreSQL con un utente con permessi\n"
+"Non è consentito eseguire il server maintableQL con un utente con permessi\n"
 "amministrativi.\n"
 "Il server deve essere avviato con un ID utente non privilegiato per\n"
 "prevenire possibili problemi di sicurezza. Consulta la documentazione\n"
@@ -17426,7 +17426,7 @@ msgstr "op ANY/ALL (array) richiede che l'operatore non restituisca un insieme"
 msgid "inconsistent types deduced for parameter $%d"
 msgstr "tipi di dati dedotti per il parametro $%d non consistenti"
 
-#: parser/parse_param.c:313 tcop/postgres.c:709
+#: parser/parse_param.c:313 tcop/maintable.c:709
 #, c-format
 msgid "could not determine data type of parameter $%d"
 msgstr "non è stato possibile determinare il tipo di dato del parametro $%d"
@@ -18102,29 +18102,29 @@ msgstr "La chiamata di sistema fallita era shmget(key=%lu, size=%zu, 0%o)."
 #: port/pg_shmem.c:232 port/sysv_shmem.c:232
 #, c-format
 msgid ""
-"This error usually means that PostgreSQL's request for a shared memory segment exceeded your kernel's SHMMAX parameter, or possibly that it is less than your kernel's SHMMIN parameter.\n"
-"The PostgreSQL documentation contains more information about shared memory configuration."
+"This error usually means that maintableQL's request for a shared memory segment exceeded your kernel's SHMMAX parameter, or possibly that it is less than your kernel's SHMMIN parameter.\n"
+"The maintableQL documentation contains more information about shared memory configuration."
 msgstr ""
-"Questo errore di solito vuol dire che la richiesta di PostgreSQL di un segmento di memoria condivisa eccede il valore del parametro SHMMAX del tuo kernel, o anche che sia inferiore del parametro SHMMIN.\n"
-"La documentazione di PostgreSQL contiene ulteriori informazioni sulla configurazione della memoria condivisa."
+"Questo errore di solito vuol dire che la richiesta di maintableQL di un segmento di memoria condivisa eccede il valore del parametro SHMMAX del tuo kernel, o anche che sia inferiore del parametro SHMMIN.\n"
+"La documentazione di maintableQL contiene ulteriori informazioni sulla configurazione della memoria condivisa."
 
 #: port/pg_shmem.c:239 port/sysv_shmem.c:239
 #, c-format
 msgid ""
-"This error usually means that PostgreSQL's request for a shared memory segment exceeded your kernel's SHMALL parameter.  You might need to reconfigure the kernel with larger SHMALL.\n"
-"The PostgreSQL documentation contains more information about shared memory configuration."
+"This error usually means that maintableQL's request for a shared memory segment exceeded your kernel's SHMALL parameter.  You might need to reconfigure the kernel with larger SHMALL.\n"
+"The maintableQL documentation contains more information about shared memory configuration."
 msgstr ""
-"Questo errore di solito vuol dire che la richiesta di PostgreSQL di un segmento di memoria condivisa eccede il valore del parametro SHMALL del tuo kernel. Potresti dover riconfigurare il kernel con uno SHMALL più grande.\n"
-"La documentazione di PostgreSQL contiene ulteriori informazioni sulla configurazione della memoria condivisa."
+"Questo errore di solito vuol dire che la richiesta di maintableQL di un segmento di memoria condivisa eccede il valore del parametro SHMALL del tuo kernel. Potresti dover riconfigurare il kernel con uno SHMALL più grande.\n"
+"La documentazione di maintableQL contiene ulteriori informazioni sulla configurazione della memoria condivisa."
 
 #: port/pg_shmem.c:245 port/sysv_shmem.c:245
 #, c-format
 msgid ""
 "This error does *not* mean that you have run out of disk space.  It occurs either if all available shared memory IDs have been taken, in which case you need to raise the SHMMNI parameter in your kernel, or because the system's overall limit for shared memory has been reached.\n"
-"The PostgreSQL documentation contains more information about shared memory configuration."
+"The maintableQL documentation contains more information about shared memory configuration."
 msgstr ""
 "Questo errore *non* significa che è finito lo spazio su disco. Può succedere se tutti gli ID di memoria condivisa sono stati presi, nel cui caso è necessario aumentare il parametro SHMMNI del tuo kernel, oppure perché il limite globale la memoria condivisa di sistema è stato raggiunto.\n"
-"La documentazione di PostgreSQL contiene ulteriori informazioni sulla configurazione della memoria condivisa."
+"La documentazione di maintableQL contiene ulteriori informazioni sulla configurazione della memoria condivisa."
 
 #: port/pg_shmem.c:633 port/sysv_shmem.c:633
 #, c-format
@@ -18133,8 +18133,8 @@ msgstr "mappatura della memoria condivisa anonima fallita: %m"
 
 #: port/pg_shmem.c:635 port/sysv_shmem.c:635
 #, c-format
-msgid "This error usually means that PostgreSQL's request for a shared memory segment exceeded available memory, swap space, or huge pages. To reduce the request size (currently %zu bytes), reduce PostgreSQL's shared memory usage, perhaps by reducing shared_buffers or max_connections."
-msgstr "Questo errore di solito vuol dire che la richiesta di PostgreSQL di un segmento di memoria condivisa supera la memoria disponibile, lo spazio di swap o le pagine huge. Per ridurre la dimensione richiesta (attualmente %zu byte), riduci l'utilizzo di memoria condivisa di PostgreSQL, ad esempio riducendo shared_buffers o max_connections."
+msgid "This error usually means that maintableQL's request for a shared memory segment exceeded available memory, swap space, or huge pages. To reduce the request size (currently %zu bytes), reduce maintableQL's shared memory usage, perhaps by reducing shared_buffers or max_connections."
+msgstr "Questo errore di solito vuol dire che la richiesta di maintableQL di un segmento di memoria condivisa supera la memoria disponibile, lo spazio di swap o le pagine huge. Per ridurre la dimensione richiesta (attualmente %zu byte), riduci l'utilizzo di memoria condivisa di maintableQL, ad esempio riducendo shared_buffers o max_connections."
 
 #: port/pg_shmem.c:703 port/sysv_shmem.c:703
 #, c-format
@@ -18169,16 +18169,16 @@ msgstr "La chiamata di sistema fallita era semget(%lu, %d, 0%o)."
 #: port/sysv_sema.c:129
 #, c-format
 msgid ""
-"This error does *not* mean that you have run out of disk space.  It occurs when either the system limit for the maximum number of semaphore sets (SEMMNI), or the system wide maximum number of semaphores (SEMMNS), would be exceeded.  You need to raise the respective kernel parameter.  Alternatively, reduce PostgreSQL's consumption of semaphores by reducing its max_connections parameter.\n"
-"The PostgreSQL documentation contains more information about configuring your system for PostgreSQL."
+"This error does *not* mean that you have run out of disk space.  It occurs when either the system limit for the maximum number of semaphore sets (SEMMNI), or the system wide maximum number of semaphores (SEMMNS), would be exceeded.  You need to raise the respective kernel parameter.  Alternatively, reduce maintableQL's consumption of semaphores by reducing its max_connections parameter.\n"
+"The maintableQL documentation contains more information about configuring your system for maintableQL."
 msgstr ""
-"Questo errore *non* significa che è finito lo spazio su disco. Può succedere quando il limite di sistema per il massimo numero di semafori impostati (SEMMNI), oppure il massimo numero di semafori di sistema (SEMMNS), verrebbe superato. È necessario aumentare i rispettivi parametri del kernel. Alternativamente, riduci l'utilizzo di semafori di PostgreSQL riducendo il parametro max_connections.\n"
-"La documentazione di PostgreSQL contiene più informazioni su come configurare il tuo sistema per PostgreSQL."
+"Questo errore *non* significa che è finito lo spazio su disco. Può succedere quando il limite di sistema per il massimo numero di semafori impostati (SEMMNI), oppure il massimo numero di semafori di sistema (SEMMNS), verrebbe superato. È necessario aumentare i rispettivi parametri del kernel. Alternativamente, riduci l'utilizzo di semafori di maintableQL riducendo il parametro max_connections.\n"
+"La documentazione di maintableQL contiene più informazioni su come configurare il tuo sistema per maintableQL."
 
 #: port/sysv_sema.c:159
 #, c-format
-msgid "You possibly need to raise your kernel's SEMVMX value to be at least %d.  Look into the PostgreSQL documentation for details."
-msgstr "Potresti dover aumentare il valore SEMVMX del tuo kernel ad almeno %d. Consulta la documentazione di PostgreSQL per ulteriori dettagli."
+msgid "You possibly need to raise your kernel's SEMVMX value to be at least %d.  Look into the maintableQL documentation for details."
+msgstr "Potresti dover aumentare il valore SEMVMX del tuo kernel ad almeno %d. Consulta la documentazione di maintableQL per ulteriori dettagli."
 
 #: port/win32/crashdump.c:119
 #, c-format
@@ -18259,8 +18259,8 @@ msgstr "impossibile abilitare il diritto utente \"%s\""
 
 #: port/win32_shmem.c:183
 #, c-format
-msgid "Assign user right \"%s\" to the Windows user account which runs PostgreSQL."
-msgstr "Assegna il diritto utente \"%s\" all'account utente di Windows che esegue PostgreSQL."
+msgid "Assign user right \"%s\" to the Windows user account which runs maintableQL."
+msgstr "Assegna il diritto utente \"%s\" all'account utente di Windows che esegue maintableQL."
 
 #: port/win32_shmem.c:241
 #, c-format
@@ -18367,7 +18367,7 @@ msgstr "processo di lavoro in background \"%s\": intervallo di riavvio non valid
 msgid "background worker \"%s\": parallel workers may not be configured for restart"
 msgstr "processo di lavoro in background \"%s\": i worker paralleli non possono essere configurati per il riavvio"
 
-#: postmaster/bgworker.c:730 tcop/postgres.c:3203
+#: postmaster/bgworker.c:730 tcop/maintable.c:3203
 #, c-format
 msgid "terminating background worker \"%s\" due to administrator command"
 msgstr "interruzione del processo di lavoro in background \"%s\" a causa di comando amministrativo"
@@ -18578,13 +18578,13 @@ msgstr "%s: impossibile individuare il mio percorso eseguibile"
 
 #: postmaster/postmaster.c:1555
 #, c-format
-msgid "%s: could not locate matching postgres executable"
-msgstr "%s: eseguibile postgres corrispondente non trovato"
+msgid "%s: could not locate matching maintable executable"
+msgstr "%s: eseguibile maintable corrispondente non trovato"
 
 #: postmaster/postmaster.c:1578 utils/misc/tzparser.c:340
 #, c-format
-msgid "This may indicate an incomplete PostgreSQL installation, or that the file \"%s\" has been moved away from its proper location."
-msgstr "Questo potrebbe indicare una installazione di PostgreSQL incompleta, o che il file \"%s\" sia stato spostato dalla sua posizione corretta."
+msgid "This may indicate an incomplete maintableQL installation, or that the file \"%s\" has been moved away from its proper location."
+msgstr "Questo potrebbe indicare una installazione di maintableQL incompleta, o che il file \"%s\" sia stato spostato dalla sua posizione corretta."
 
 #: postmaster/postmaster.c:1605
 #, c-format
@@ -18669,8 +18669,8 @@ msgstr "formato del pacchetto di avvio non valido: atteso il terminatore all'ult
 
 #: postmaster/postmaster.c:2319
 #, c-format
-msgid "no PostgreSQL user name specified in startup packet"
-msgstr "nessun utente PostgreSQL specificato nel pacchetto di avvio"
+msgid "no maintableQL user name specified in startup packet"
+msgstr "nessun utente maintableQL specificato nel pacchetto di avvio"
 
 #: postmaster/postmaster.c:2383
 #, c-format
@@ -20233,7 +20233,7 @@ msgstr "non è possibile eseguire comandi SQL nel WAL sender di replica fisica"
 msgid "received replication command: %s"
 msgstr "ricevuto comando di replica: %s"
 
-#: replication/walsender.c:1780 tcop/fastpath.c:208 tcop/postgres.c:1114 tcop/postgres.c:1472 tcop/postgres.c:1712 tcop/postgres.c:2181 tcop/postgres.c:2602 tcop/postgres.c:2680
+#: replication/walsender.c:1780 tcop/fastpath.c:208 tcop/maintable.c:1114 tcop/maintable.c:1472 tcop/maintable.c:1712 tcop/maintable.c:2181 tcop/maintable.c:2602 tcop/maintable.c:2680
 #, c-format
 msgid "current transaction is aborted, commands ignored until end of transaction block"
 msgstr "la transazione corrente è interrotta, i comandi saranno ignorati fino alla fine del blocco della transazione"
@@ -21166,8 +21166,8 @@ msgstr "la dimensione richiesta di memoria condivisa supera size_t"
 
 #: storage/ipc/signalfuncs.c:72
 #, c-format
-msgid "PID %d is not a PostgreSQL backend process"
-msgstr "Il PID %d non è un processo di backend di PostgreSQL"
+msgid "PID %d is not a maintableQL backend process"
+msgstr "Il PID %d non è un processo di backend di maintableQL"
 
 #: storage/ipc/signalfuncs.c:104 storage/lmgr/proc.c:1430 utils/adt/mcxtfuncs.c:190
 #, c-format
@@ -21227,12 +21227,12 @@ msgstr "recupero ancora in attesa dopo %ld.%03d ms: %s"
 msgid "recovery finished waiting after %ld.%03d ms: %s"
 msgstr "recupero terminato in attesa dopo %ld.%03d ms: %s"
 
-#: storage/ipc/standby.c:883 tcop/postgres.c:3332
+#: storage/ipc/standby.c:883 tcop/maintable.c:3332
 #, c-format
 msgid "canceling statement due to conflict with recovery"
 msgstr "annullamento dell'istruzione a causa di un conflitto con il ripristino"
 
-#: storage/ipc/standby.c:884 tcop/postgres.c:2487
+#: storage/ipc/standby.c:884 tcop/maintable.c:2487
 #, c-format
 msgid "User transaction caused buffer deadlock with recovery."
 msgstr "La transazione utente ha causato un deadlock del buffer con il ripristino."
@@ -21600,7 +21600,7 @@ msgstr "impossibile chiamare la funzione \"%s\" tramite l'interfaccia fastpath"
 msgid "fastpath function call: \"%s\" (OID %u)"
 msgstr "chiamata funzione fastpath: \"%s\" (OID %u)"
 
-#: tcop/fastpath.c:312 tcop/postgres.c:1341 tcop/postgres.c:1577 tcop/postgres.c:2036 tcop/postgres.c:2268
+#: tcop/fastpath.c:312 tcop/maintable.c:1341 tcop/maintable.c:1577 tcop/maintable.c:2036 tcop/maintable.c:2268
 #, c-format
 msgid "duration: %s ms"
 msgstr "durata: %s ms"
@@ -21630,295 +21630,295 @@ msgstr "la dimensione dell'argomento %d non è valida nel messaggi di chiamata d
 msgid "incorrect binary data format in function argument %d"
 msgstr "formato dei dati binari non corretto nell'argomento %d della funzione"
 
-#: tcop/postgres.c:444 tcop/postgres.c:4811
+#: tcop/maintable.c:444 tcop/maintable.c:4811
 #, c-format
 msgid "invalid frontend message type %d"
 msgstr "messaggio frontend di tipo %d non valido"
 
-#: tcop/postgres.c:1051
+#: tcop/maintable.c:1051
 #, c-format
 msgid "statement: %s"
 msgstr "istruzione: %s"
 
-#: tcop/postgres.c:1346
+#: tcop/maintable.c:1346
 #, c-format
 msgid "duration: %s ms  statement: %s"
 msgstr "durata: %s ms  istruzione: %s"
 
-#: tcop/postgres.c:1452
+#: tcop/maintable.c:1452
 #, c-format
 msgid "cannot insert multiple commands into a prepared statement"
 msgstr "non è possibile inserire comandi multipli in una istruzione preparata"
 
-#: tcop/postgres.c:1582
+#: tcop/maintable.c:1582
 #, c-format
 msgid "duration: %s ms  parse %s: %s"
 msgstr "durata: %s ms  analisi di %s: %s"
 
-#: tcop/postgres.c:1648 tcop/postgres.c:2583
+#: tcop/maintable.c:1648 tcop/maintable.c:2583
 #, c-format
 msgid "unnamed prepared statement does not exist"
 msgstr "l'istruzione preparata senza nome non esiste"
 
-#: tcop/postgres.c:1689
+#: tcop/maintable.c:1689
 #, c-format
 msgid "bind message has %d parameter formats but %d parameters"
 msgstr "il messaggio di bind ha %d formati di parametri ma %d parametri"
 
-#: tcop/postgres.c:1695
+#: tcop/maintable.c:1695
 #, c-format
 msgid "bind message supplies %d parameters, but prepared statement \"%s\" requires %d"
 msgstr "il messaggio di bind fornisce %d parametri, ma l'istruzione preparata \"%s\" ne richiede %d"
 
-#: tcop/postgres.c:1914
+#: tcop/maintable.c:1914
 #, c-format
 msgid "incorrect binary data format in bind parameter %d"
 msgstr "formato del dato binario errato nel parametro di bind %d"
 
-#: tcop/postgres.c:2041
+#: tcop/maintable.c:2041
 #, c-format
 msgid "duration: %s ms  bind %s%s%s: %s"
 msgstr "durata: %s ms  bind %s%s%s: %s"
 
-#: tcop/postgres.c:2091 tcop/postgres.c:2666
+#: tcop/maintable.c:2091 tcop/maintable.c:2666
 #, c-format
 msgid "portal \"%s\" does not exist"
 msgstr "il portale \"%s\" non esiste"
 
-#: tcop/postgres.c:2160
+#: tcop/maintable.c:2160
 #, c-format
 msgid "%s %s%s%s: %s"
 msgstr "%s %s%s%s: %s"
 
-#: tcop/postgres.c:2162 tcop/postgres.c:2276
+#: tcop/maintable.c:2162 tcop/maintable.c:2276
 msgid "execute fetch from"
 msgstr "esecuzione di fetch da"
 
-#: tcop/postgres.c:2163 tcop/postgres.c:2277
+#: tcop/maintable.c:2163 tcop/maintable.c:2277
 msgid "execute"
 msgstr "esecuzione di"
 
-#: tcop/postgres.c:2273
+#: tcop/maintable.c:2273
 #, c-format
 msgid "duration: %s ms  %s %s%s%s: %s"
 msgstr "durata: %s ms  %s %s%s%s: %s"
 
-#: tcop/postgres.c:2419
+#: tcop/maintable.c:2419
 #, c-format
 msgid "prepare: %s"
 msgstr "preparazione: %s"
 
-#: tcop/postgres.c:2444
+#: tcop/maintable.c:2444
 #, c-format
 msgid "parameters: %s"
 msgstr "parametri: %s"
 
-#: tcop/postgres.c:2459
+#: tcop/maintable.c:2459
 #, c-format
 msgid "abort reason: recovery conflict"
 msgstr "motivo dell'interruzione: conflitto di recupero"
 
-#: tcop/postgres.c:2475
+#: tcop/maintable.c:2475
 #, c-format
 msgid "User was holding shared buffer pin for too long."
 msgstr "L'utente stava trattenendo un pin di shared buffer troppo a lungo."
 
-#: tcop/postgres.c:2478
+#: tcop/maintable.c:2478
 #, c-format
 msgid "User was holding a relation lock for too long."
 msgstr "L'utente stava trattenendo un lock di relazione troppo a lungo."
 
-#: tcop/postgres.c:2481
+#: tcop/maintable.c:2481
 #, c-format
 msgid "User was or might have been using tablespace that must be dropped."
 msgstr "L'utente stava usando o potrebbe aver usato un tablespace che deve essere eliminato."
 
-#: tcop/postgres.c:2484
+#: tcop/maintable.c:2484
 #, c-format
 msgid "User query might have needed to see row versions that must be removed."
 msgstr "L'utente potrebbe aver avuto bisogno di vedere versioni di righe che devono essere rimosse."
 
-#: tcop/postgres.c:2490
+#: tcop/maintable.c:2490
 #, c-format
 msgid "User was connected to a database that must be dropped."
 msgstr "L'utente era connesso ad un database che deve essere eliminato."
 
-#: tcop/postgres.c:2529
+#: tcop/maintable.c:2529
 #, c-format
 msgid "portal \"%s\" parameter $%d = %s"
 msgstr "parametro \"%s\" del portale $%d = %s"
 
-#: tcop/postgres.c:2532
+#: tcop/maintable.c:2532
 #, c-format
 msgid "portal \"%s\" parameter $%d"
 msgstr "parametro \"%s\" del portale $%d"
 
-#: tcop/postgres.c:2538
+#: tcop/maintable.c:2538
 #, c-format
 msgid "unnamed portal parameter $%d = %s"
 msgstr "parametro portale senza nome $%d = %s"
 
-#: tcop/postgres.c:2541
+#: tcop/maintable.c:2541
 #, c-format
 msgid "unnamed portal parameter $%d"
 msgstr "parametro portale senza nome $%d"
 
-#: tcop/postgres.c:2886
+#: tcop/maintable.c:2886
 #, c-format
 msgid "terminating connection because of unexpected SIGQUIT signal"
 msgstr "terminazione della connessione a causa di un segnale SIGQUIT imprevisto"
 
-#: tcop/postgres.c:2892
+#: tcop/maintable.c:2892
 #, c-format
 msgid "terminating connection because of crash of another server process"
 msgstr "la connessione è stata terminata a causa del crash di un altro processo del server"
 
-#: tcop/postgres.c:2893
+#: tcop/maintable.c:2893
 #, c-format
 msgid "The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory."
 msgstr "Il postmaster ha obbligato questo processo del server di attuare il roll back della transazione corrente e di uscire, perché un altro processo del server è terminato anormalmente e con possibile corruzione della memoria condivisa."
 
-#: tcop/postgres.c:2897 tcop/postgres.c:3258
+#: tcop/maintable.c:2897 tcop/maintable.c:3258
 #, c-format
 msgid "In a moment you should be able to reconnect to the database and repeat your command."
 msgstr "In un momento sarai in grado di riconnetterti al database e di ripetere il comando."
 
-#: tcop/postgres.c:2904
+#: tcop/maintable.c:2904
 #, c-format
 msgid "terminating connection due to immediate shutdown command"
 msgstr "terminazione della connessione a causa di un comando di spegnimento immediato"
 
-#: tcop/postgres.c:2990
+#: tcop/maintable.c:2990
 #, c-format
 msgid "floating-point exception"
 msgstr "eccezione floating-point"
 
-#: tcop/postgres.c:2991
+#: tcop/maintable.c:2991
 #, c-format
 msgid "An invalid floating-point operation was signaled. This probably means an out-of-range result or an invalid operation, such as division by zero."
 msgstr "Un'operazione in floating-point non valida è stata segnalata. Questo probabilmente sta a significare che il risultato è un valore fuori limite o l'operazione non è valida, ad esempio una divisione per zero."
 
-#: tcop/postgres.c:3162
+#: tcop/maintable.c:3162
 #, c-format
 msgid "canceling authentication due to timeout"
 msgstr "annullamento dell'autenticazione a causa di timeout"
 
-#: tcop/postgres.c:3166
+#: tcop/maintable.c:3166
 #, c-format
 msgid "terminating autovacuum process due to administrator command"
 msgstr "interruzione del processo autovacuum su comando dell'amministratore"
 
-#: tcop/postgres.c:3170
+#: tcop/maintable.c:3170
 #, c-format
 msgid "terminating logical replication worker due to administrator command"
 msgstr "interruzione del worker di replica logica su comando dell'amministratore"
 
-#: tcop/postgres.c:3187 tcop/postgres.c:3197 tcop/postgres.c:3256
+#: tcop/maintable.c:3187 tcop/maintable.c:3197 tcop/maintable.c:3256
 #, c-format
 msgid "terminating connection due to conflict with recovery"
 msgstr "interruzione della connessione a causa di conflitto con il ripristino"
 
-#: tcop/postgres.c:3208
+#: tcop/maintable.c:3208
 #, c-format
 msgid "terminating connection due to administrator command"
 msgstr "interruzione della connessione su comando dell'amministratore"
 
-#: tcop/postgres.c:3239
+#: tcop/maintable.c:3239
 #, c-format
 msgid "connection to client lost"
 msgstr "connessione al client persa"
 
-#: tcop/postgres.c:3309
+#: tcop/maintable.c:3309
 #, c-format
 msgid "canceling statement due to lock timeout"
 msgstr "annullamento dell'istruzione a causa di timeout di lock"
 
-#: tcop/postgres.c:3316
+#: tcop/maintable.c:3316
 #, c-format
 msgid "canceling statement due to statement timeout"
 msgstr "annullamento dell'istruzione a causa di timeout"
 
-#: tcop/postgres.c:3323
+#: tcop/maintable.c:3323
 #, c-format
 msgid "canceling autovacuum task"
 msgstr "annullamento del task di autovacuum"
 
-#: tcop/postgres.c:3346
+#: tcop/maintable.c:3346
 #, c-format
 msgid "canceling statement due to user request"
 msgstr "annullamento dell'istruzione su richiesta dell'utente"
 
-#: tcop/postgres.c:3360
+#: tcop/maintable.c:3360
 #, c-format
 msgid "terminating connection due to idle-in-transaction timeout"
 msgstr "la connessione è stata terminata a causa di timeout di inattività durante una transazione"
 
-#: tcop/postgres.c:3371
+#: tcop/maintable.c:3371
 #, c-format
 msgid "terminating connection due to idle-session timeout"
 msgstr "terminazione della connessione a causa del timeout della sessione inattiva"
 
-#: tcop/postgres.c:3511
+#: tcop/maintable.c:3511
 #, c-format
 msgid "stack depth limit exceeded"
 msgstr "limite di profondità dello stack superato"
 
-#: tcop/postgres.c:3512
+#: tcop/maintable.c:3512
 #, c-format
 msgid "Increase the configuration parameter \"max_stack_depth\" (currently %dkB), after ensuring the platform's stack depth limit is adequate."
 msgstr "Incrementa il parametro di configurazione \"max_stack_depth\" (attualmente %dkB), dopo esserti assicurato che il limite dello stack della piattaforma sia adeguato."
 
-#: tcop/postgres.c:3575
+#: tcop/maintable.c:3575
 #, c-format
 msgid "\"max_stack_depth\" must not exceed %ldkB."
 msgstr "\"max_stack_depth\" non deve superare %ldkB."
 
-#: tcop/postgres.c:3577
+#: tcop/maintable.c:3577
 #, c-format
 msgid "Increase the platform's stack depth limit via \"ulimit -s\" or local equivalent."
 msgstr "Incrementa il limite dello stack della piattaforma usando \"ulimit -s\" on un comando equivalente."
 
-#: tcop/postgres.c:3933
+#: tcop/maintable.c:3933
 #, c-format
 msgid "invalid command-line argument for server process: %s"
 msgstr "argomento della riga di comando non valido per il processo server: %s"
 
-#: tcop/postgres.c:3934 tcop/postgres.c:3940
+#: tcop/maintable.c:3934 tcop/maintable.c:3940
 #, c-format
 msgid "Try \"%s --help\" for more information."
 msgstr "Prova \"%s --help\" per maggiori informazioni."
 
-#: tcop/postgres.c:3938
+#: tcop/maintable.c:3938
 #, c-format
 msgid "%s: invalid command-line argument: %s"
 msgstr "%s: argomento della riga di comando non valido: %s"
 
-#: tcop/postgres.c:3991
+#: tcop/maintable.c:3991
 #, c-format
 msgid "%s: no database nor user name specified"
 msgstr "%s: nessun database né nome utente specificato"
 
-#: tcop/postgres.c:4713
+#: tcop/maintable.c:4713
 #, c-format
 msgid "invalid CLOSE message subtype %d"
 msgstr "sottotipo %d del messaggio CLOSE non valido"
 
-#: tcop/postgres.c:4748
+#: tcop/maintable.c:4748
 #, c-format
 msgid "invalid DESCRIBE message subtype %d"
 msgstr "sottotipo %d del messaggio DESCRIBE non valido"
 
-#: tcop/postgres.c:4832
+#: tcop/maintable.c:4832
 #, c-format
 msgid "fastpath function calls not supported in a replication connection"
 msgstr "le chiamate di funzione fastpath non sono supportate in una connessione di replica"
 
-#: tcop/postgres.c:4836
+#: tcop/maintable.c:4836
 #, c-format
 msgid "extended query protocol not supported in a replication connection"
 msgstr "il protocollo di query esteso non è supportato in una connessione di replica"
 
-#: tcop/postgres.c:5013
+#: tcop/maintable.c:5013
 #, c-format
 msgid "disconnection: session time: %d:%02d:%02d.%03d user=%s database=%s host=%s%s%s"
 msgstr "disconnessione: tempo della sessione: %d:%02d:%02d.%03d utente=%s database=%s host=%s%s%s"
@@ -23943,8 +23943,8 @@ msgstr "Solo gli indirizzi che hanno valori FF ed FE nel 4º e 5º byte da sinis
 
 #: utils/adt/mcxtfuncs.c:182
 #, c-format
-msgid "PID %d is not a PostgreSQL server process"
-msgstr "il PID %d non è un processo del server PostgreSQL"
+msgid "PID %d is not a maintableQL server process"
+msgstr "il PID %d non è un processo del server maintableQL"
 
 #: utils/adt/misc.c:216
 #, c-format
@@ -24305,8 +24305,8 @@ msgstr "L'ordinamento nel database è stato creato usando la versione %s, ma il 
 
 #: utils/adt/pg_locale.c:1660
 #, c-format
-msgid "Rebuild all objects affected by this collation and run ALTER COLLATION %s REFRESH VERSION, or build PostgreSQL with the right library version."
-msgstr "Ricostruisci tutti gli oggetti che usano questo ordinamento ed esegui ALTER COLLATION %s REFRESH VERSION, oppure ricompila PostgreSQL con la versione giusta della libreria."
+msgid "Rebuild all objects affected by this collation and run ALTER COLLATION %s REFRESH VERSION, or build maintableQL with the right library version."
+msgstr "Ricostruisci tutti gli oggetti che usano questo ordinamento ed esegui ALTER COLLATION %s REFRESH VERSION, oppure ricompila maintableQL con la versione giusta della libreria."
 
 #: utils/adt/pg_locale.c:1731
 #, c-format
@@ -25231,8 +25231,8 @@ msgstr "impostazione del gestore di errori XML fallita"
 
 #: utils/adt/xml.c:1048
 #, c-format
-msgid "This probably indicates that the version of libxml2 being used is not compatible with the libxml2 header files that PostgreSQL was built with."
-msgstr "Questo vuol dire probabilmente che la versione di libxml2 in uso non è compatibile con i file di header libxml2 con cui PostgreSQL è stato compilato."
+msgid "This probably indicates that the version of libxml2 being used is not compatible with the libxml2 header files that maintableQL was built with."
+msgstr "Questo vuol dire probabilmente che la versione di libxml2 in uso non è compatibile con i file di header libxml2 con cui maintableQL è stato compilato."
 
 #: utils/adt/xml.c:1935
 msgid "Invalid character value."
@@ -25753,8 +25753,8 @@ msgstr "il file di lock \"%s\" esiste già"
 
 #: utils/init/miscinit.c:1144
 #, c-format
-msgid "Is another postgres (PID %d) running in data directory \"%s\"?"
-msgstr "C'è un altro postgres (PID %d) in esecuzione nella directory dei dati \"%s\"?"
+msgid "Is another maintable (PID %d) running in data directory \"%s\"?"
+msgstr "C'è un altro maintable (PID %d) in esecuzione nella directory dei dati \"%s\"?"
 
 #: utils/init/miscinit.c:1146
 #, c-format
@@ -25763,8 +25763,8 @@ msgstr "C'è un altro postmaster (PID %d) in esecuzione nella directory dei dati
 
 #: utils/init/miscinit.c:1149
 #, c-format
-msgid "Is another postgres (PID %d) using socket file \"%s\"?"
-msgstr "C'è un altro postgres (PID %d) che sta usando il file socket \"%s\"?"
+msgid "Is another maintable (PID %d) using socket file \"%s\"?"
+msgstr "C'è un altro maintable (PID %d) che sta usando il file socket \"%s\"?"
 
 #: utils/init/miscinit.c:1151
 #, c-format
@@ -25823,8 +25823,8 @@ msgstr "Potrebbe essere necessario eseguire initdb."
 
 #: utils/init/miscinit.c:1599
 #, c-format
-msgid "The data directory was initialized by PostgreSQL version %s, which is not compatible with this version %s."
-msgstr "La directory dei dati è stata inizializzata da PostgreSQL versione %s, che non è compatibile con questa versione %s."
+msgid "The data directory was initialized by maintableQL version %s, which is not compatible with this version %s."
+msgstr "La directory dei dati è stata inizializzata da maintableQL versione %s, che non è compatibile con questa versione %s."
 
 #: utils/init/postinit.c:258
 #, c-format
@@ -25931,8 +25931,8 @@ msgstr "Il database è stato creato utilizzando la versione di confronto %s, ma 
 
 #: utils/init/postinit.c:467
 #, c-format
-msgid "Rebuild all objects in this database that use the default collation and run ALTER DATABASE %s REFRESH COLLATION VERSION, or build PostgreSQL with the right library version."
-msgstr "Ricostruisci tutti gli oggetti in questo database che utilizzano le regole di confronto predefinite ed eseguono ALTER DATABASE %s REFRESH COLLATION VERSION, oppure compila PostgreSQL con la versione della libreria corretta."
+msgid "Rebuild all objects in this database that use the default collation and run ALTER DATABASE %s REFRESH COLLATION VERSION, or build maintableQL with the right library version."
+msgstr "Ricostruisci tutti gli oggetti in questo database che utilizzano le regole di confronto predefinite ed eseguono ALTER DATABASE %s REFRESH COLLATION VERSION, oppure compila maintableQL con la versione della libreria corretta."
 
 #: utils/init/postinit.c:835
 #, c-format
@@ -26188,8 +26188,8 @@ msgid "Lock Management"
 msgstr "Gestione dei Lock"
 
 #: utils/misc/guc.c:850
-msgid "Version and Platform Compatibility / Previous PostgreSQL Versions"
-msgstr "Versione e Compatibilità della Piattaforma / Versioni Precedenti di PostgreSQL"
+msgid "Version and Platform Compatibility / Previous maintableQL Versions"
+msgstr "Versione e Compatibilità della Piattaforma / Versioni Precedenti di maintableQL"
 
 #: utils/misc/guc.c:852
 msgid "Version and Platform Compatibility / Other Platforms and Clients"
@@ -26352,25 +26352,25 @@ msgid "Continues processing after a checksum failure."
 msgstr "Condinua l'elaborazione dopo un errore in una somma di controllo."
 
 #: utils/misc/guc.c:1309
-msgid "Detection of a checksum failure normally causes PostgreSQL to report an error, aborting the current transaction. Setting ignore_checksum_failure to true causes the system to ignore the failure (but still report a warning), and continue processing. This behavior could cause crashes or other serious problems. Only has an effect if checksums are enabled."
-msgstr "La rilevazione di un errore in una somma di controllo di solito fa generare a PostgreSQL un errore che fa abortire la transazione corrente. Impostare ignore_checksum_failure a \"true\" fa sì che il sistema ignori l'errore (che viene riportato come un avviso), consentendo al processo di continuare. Questo comportamento potrebbe causare crash o altri problemi gravi. Ha effetto solo se se somme di controllo sono abilitate."
+msgid "Detection of a checksum failure normally causes maintableQL to report an error, aborting the current transaction. Setting ignore_checksum_failure to true causes the system to ignore the failure (but still report a warning), and continue processing. This behavior could cause crashes or other serious problems. Only has an effect if checksums are enabled."
+msgstr "La rilevazione di un errore in una somma di controllo di solito fa generare a maintableQL un errore che fa abortire la transazione corrente. Impostare ignore_checksum_failure a \"true\" fa sì che il sistema ignori l'errore (che viene riportato come un avviso), consentendo al processo di continuare. Questo comportamento potrebbe causare crash o altri problemi gravi. Ha effetto solo se se somme di controllo sono abilitate."
 
 #: utils/misc/guc.c:1323
 msgid "Continues processing past damaged page headers."
 msgstr "Continua l'esecuzione oltre le intestazioni di pagina danneggiate."
 
 #: utils/misc/guc.c:1324
-msgid "Detection of a damaged page header normally causes PostgreSQL to report an error, aborting the current transaction. Setting zero_damaged_pages to true causes the system to instead report a warning, zero out the damaged page, and continue processing. This behavior will destroy data, namely all the rows on the damaged page."
-msgstr "Il rilevamento di una intestazione di pagina danneggiata normalmente fa sì che PostgreSQL segnali un errore, interrompendo la transazione corrente. L'attivazione di zero_damaged_pages fa sì che il sistema invece riporti un warning, azzeri la pagina danneggiata e continui l'esecuzione. Questo comportamento può distruggere dei dati, in particolare tutte quelle righe situate nella pagina danneggiata."
+msgid "Detection of a damaged page header normally causes maintableQL to report an error, aborting the current transaction. Setting zero_damaged_pages to true causes the system to instead report a warning, zero out the damaged page, and continue processing. This behavior will destroy data, namely all the rows on the damaged page."
+msgstr "Il rilevamento di una intestazione di pagina danneggiata normalmente fa sì che maintableQL segnali un errore, interrompendo la transazione corrente. L'attivazione di zero_damaged_pages fa sì che il sistema invece riporti un warning, azzeri la pagina danneggiata e continui l'esecuzione. Questo comportamento può distruggere dei dati, in particolare tutte quelle righe situate nella pagina danneggiata."
 
 #: utils/misc/guc.c:1337
 msgid "Continues recovery after an invalid pages failure."
 msgstr "Continua il ripristino dopo un errore di pagine non valide."
 
 #: utils/misc/guc.c:1338
-msgid "Detection of WAL records having references to invalid pages during recovery causes PostgreSQL to raise a PANIC-level error, aborting the recovery. Setting ignore_invalid_pages to true causes the system to ignore invalid page references in WAL records (but still report a warning), and continue recovery. This behavior may cause crashes, data loss, propagate or hide corruption, or other serious problems. Only has an effect during recovery or in standby mode."
+msgid "Detection of WAL records having references to invalid pages during recovery causes maintableQL to raise a PANIC-level error, aborting the recovery. Setting ignore_invalid_pages to true causes the system to ignore invalid page references in WAL records (but still report a warning), and continue recovery. This behavior may cause crashes, data loss, propagate or hide corruption, or other serious problems. Only has an effect during recovery or in standby mode."
 msgstr ""
-"Il rilevamento di record WAL con riferimenti a pagine non valide durante il ripristino fa sì che PostgreSQL generi un errore di livello PANIC, interrompendo il ripristino. L'impostazione di ignore_invalid_pages su true fa sì che il sistema ignori i riferimenti di pagina non validi nei record WAL (ma segnali comunque un avviso) e continui il ripristino. Questo comportamento può causare arresti anomali, perdita di dati, propagare o nascondere danni o altri "
+"Il rilevamento di record WAL con riferimenti a pagine non valide durante il ripristino fa sì che maintableQL generi un errore di livello PANIC, interrompendo il ripristino. L'impostazione di ignore_invalid_pages su true fa sì che il sistema ignori i riferimenti di pagina non validi nei record WAL (ma segnali comunque un avviso) e continui il ripristino. Questo comportamento può causare arresti anomali, perdita di dati, propagare o nascondere danni o altri "
 "problemi gravi. Ha effetto solo durante il ripristino o in modalità standby."
 
 #: utils/misc/guc.c:1356
@@ -26666,8 +26666,8 @@ msgid "Enables backward compatibility mode for privilege checks on large objects
 msgstr "Abilita la modalità compatibile col passato del controllo dei privilegi sui large object."
 
 #: utils/misc/guc.c:2029
-msgid "Skips privilege checks when reading or modifying large objects, for compatibility with PostgreSQL releases prior to 9.0."
-msgstr "Evita il controllo dei privilegi quando si leggono o modificano large object, per compatibilità con versioni di PostgreSQL precedenti la 9.0."
+msgid "Skips privilege checks when reading or modifying large objects, for compatibility with maintableQL releases prior to 9.0."
+msgstr "Evita il controllo dei privilegi quando si leggono o modificano large object, per compatibilità con versioni di maintableQL precedenti la 9.0."
 
 #: utils/misc/guc.c:2039
 msgid "When generating SQL fragments, quote all identifiers."
@@ -27306,8 +27306,8 @@ msgid "Sets the planner's assumption about the total size of the data caches."
 msgstr "Imposta l'ipotesi del pianificatore sulla dimensione totale delle cache di dati."
 
 #: utils/misc/guc.c:3521
-msgid "That is, the total size of the caches (kernel cache and shared buffers) used for PostgreSQL data files. This is measured in disk pages, which are normally 8 kB each."
-msgstr "Cioè, la dimensione totale delle cache (cache del kernel e buffer condivisi) utilizzate per i file di dati PostgreSQL. Questo è misurato in pagine del disco, che normalmente sono 8 kB ciascuna."
+msgid "That is, the total size of the caches (kernel cache and shared buffers) used for maintableQL data files. This is measured in disk pages, which are normally 8 kB each."
+msgstr "Cioè, la dimensione totale delle cache (cache del kernel e buffer condivisi) utilizzate per i file di dati maintableQL. Questo è misurato in pagine del disco, che normalmente sono 8 kB ciascuna."
 
 #: utils/misc/guc.c:3532
 msgid "Sets the minimum amount of table data for a parallel scan."
@@ -27686,12 +27686,12 @@ msgid "Sets the file name pattern for log files."
 msgstr "Imposta il pattern dei nomi dei file di log."
 
 #: utils/misc/guc.c:4395
-msgid "Sets the program name used to identify PostgreSQL messages in syslog."
-msgstr "Imposta il nome del programma da utilizzato per identificare i messaggi di PostgreSQL in syslog."
+msgid "Sets the program name used to identify maintableQL messages in syslog."
+msgstr "Imposta il nome del programma da utilizzato per identificare i messaggi di maintableQL in syslog."
 
 #: utils/misc/guc.c:4406
-msgid "Sets the application name used to identify PostgreSQL messages in the event log."
-msgstr "Imposta il nome del programma da usarsi per identificare i messaggi di PostgreSQL nel registro degli eventi."
+msgid "Sets the application name used to identify maintableQL messages in the event log."
+msgstr "Imposta il nome del programma da usarsi per identificare i messaggi di maintableQL nel registro degli eventi."
 
 #: utils/misc/guc.c:4417
 msgid "Sets the time zone for displaying and interpreting time stamps."
@@ -28000,8 +28000,8 @@ msgstr "%s: accesso alla directory \"%s\" fallito: %s\n"
 
 #: utils/misc/guc.c:6119
 #, c-format
-msgid "Run initdb or pg_basebackup to initialize a PostgreSQL data directory.\n"
-msgstr "Esegui initdb o pg_basebackup per inizializzare una directory di dati PostgreSQL.\n"
+msgid "Run initdb or pg_basebackup to initialize a maintableQL data directory.\n"
+msgstr "Esegui initdb o pg_basebackup per inizializzare una directory di dati maintableQL.\n"
 
 #: utils/misc/guc.c:6139
 #, c-format

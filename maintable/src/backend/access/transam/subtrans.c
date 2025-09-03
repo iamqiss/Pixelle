@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * subtrans.c
- *		PostgreSQL subtransaction-log manager
+ *		maintableQL subtransaction-log manager
  *
  * The pg_subtrans manager is a pg_xact-like manager that stores the parent
  * transaction Id for each transaction.  It is a fundamental part of the
@@ -19,14 +19,14 @@
  * data across crashes.  During database startup, we simply force the
  * currently-active page of SUBTRANS to zeroes.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/backend/access/transam/subtrans.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/slru.h"
 #include "access/subtrans.h"
@@ -39,7 +39,7 @@
 
 /*
  * Defines for SubTrans page sizes.  A page is the same BLCKSZ as is used
- * everywhere else in Postgres.
+ * everywhere else in Maintable.
  *
  * Note: because TransactionIds are 32 bits and wrap around at 0xFFFFFFFF,
  * SubTrans page numbering also wraps around at
@@ -335,9 +335,9 @@ CheckPointSUBTRANS(void)
 	 * it merely to improve the odds that writing of dirty pages is done by
 	 * the checkpoint process and not by backends.
 	 */
-	TRACE_POSTGRESQL_SUBTRANS_CHECKPOINT_START(true);
+	TRACE_MAINTABLEQL_SUBTRANS_CHECKPOINT_START(true);
 	SimpleLruWriteAll(SubTransCtl, true);
-	TRACE_POSTGRESQL_SUBTRANS_CHECKPOINT_DONE(true);
+	TRACE_MAINTABLEQL_SUBTRANS_CHECKPOINT_DONE(true);
 }
 
 

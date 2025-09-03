@@ -26,7 +26,7 @@
  *	before ExecutorEnd.  This can be omitted only in case of EXPLAIN,
  *	which should also omit ExecutorRun.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -35,7 +35,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/sysattr.h"
 #include "access/table.h"
@@ -1216,7 +1216,7 @@ CheckValidRowMarkRel(Relation rel, RowMarkType markType)
 /*
  * Initialize ResultRelInfo data for one result relation
  *
- * Caution: before Postgres 9.1, this function included the relkind checking
+ * Caution: before Maintable 9.1, this function included the relkind checking
  * that's now in CheckValidResultRel, and it also did ExecOpenIndices if
  * appropriate.  Be sure callers cover those needs.
  */

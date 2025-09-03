@@ -1,12 +1,12 @@
 # PG_CONTROLDATA Translated Messages into the Polish Language
 # Copyright (c) 2005 toczek, xxxtoczekxxx@wp.pl
-# Distributed under the same licensing terms as PostgreSQL itself.
+# Distributed under the same licensing terms as maintableQL itself.
 # Begina Felicysym <begina.felicysym@wp.eu>, 2011, 2012, 2013.
 # grzegorz <begina.felicysym@wp.eu>, 2014, 2015, 2016, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_controldata (PostgreSQL 9.1)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pg_controldata (maintableQL 9.1)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2017-03-14 17:46+0000\n"
 "PO-Revision-Date: 2017-03-14 19:40+0200\n"
 "Last-Translator: grzegorz <begina.felicysym@wp.eu>\n"
@@ -39,21 +39,21 @@ msgid ""
 "WARNING: possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory.\n"
+"the maintableQL installation would be incompatible with this data directory.\n"
 msgstr ""
 "OSTRZEŻENIE: możliwe niepoprawna kolejność bajtów\n"
 "Kolejność bajtów używana do przechowywania plików pg_control może nie "
 "pasować\n"
 "do używanej przez ten program.  W tym przypadku wynik poniżej jest błędny,\n"
-"a instalacja PostgreSQL byłaby niezgodna z tym folderem danych.\n"
+"a instalacja maintableQL byłaby niezgodna z tym folderem danych.\n"
 
 #: pg_controldata.c:33
 #, c-format
 msgid ""
-"%s displays control information of a PostgreSQL database cluster.\n"
+"%s displays control information of a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s wyświetla informacje kontrolne klastra bazy danych PostgreSQL.\n"
+"%s wyświetla informacje kontrolne klastra bazy danych maintableQL.\n"
 "\n"
 
 #: pg_controldata.c:34
@@ -106,8 +106,8 @@ msgstr ""
 
 #: pg_controldata.c:42
 #, c-format
-msgid "Report bugs to <pgsql-bugs@postgresql.org>.\n"
-msgstr "Błędy proszę przesyłać na adres <pgsql-bugs@postgresql.org>.\n"
+msgid "Report bugs to <pgsql-bugs@maintableql.org>.\n"
+msgstr "Błędy proszę przesyłać na adres <pgsql-bugs@maintableql.org>.\n"
 
 #: pg_controldata.c:52
 msgid "starting up"

@@ -16,15 +16,15 @@
  * under the License.
  */
 
-use super::message_view_mut::IggyMessageViewMutIterator;
+use super::message_view_mut::MessengerMessageViewMutIterator;
 use crate::streaming::deduplication::message_deduplicator::MessageDeduplicator;
-use crate::streaming::segments::indexes::IggyIndexesMut;
+use crate::streaming::segments::indexes::MessengerIndexesMut;
 use crate::streaming::utils::PooledBuffer;
 use crate::streaming::utils::random_id;
 use bytes::{BufMut, BytesMut};
-use iggy_common::{
-    BytesSerializable, IGGY_MESSAGE_HEADER_SIZE, INDEX_SIZE, IggyByteSize, IggyError,
-    IggyIndexView, IggyMessage, IggyMessageView, IggyMessageViewIterator, IggyTimestamp,
+use messenger_common::{
+    BytesSerializable, MESSENGER_MESSAGE_HEADER_SIZE, INDEX_SIZE, MessengerByteSize, MessengerError,
+    MessengerIndexView, MessengerMessage, MessengerMessageView, MessengerMessageViewIterator, MessengerTimestamp,
     MAX_PAYLOAD_SIZE, MAX_USER_HEADERS_SIZE, Sizeable, Validatable,
 };
 use lending_iterator::prelude::*;
@@ -33,32 +33,32 @@ use tracing::{error, warn};
 
 /// A container for mutable messages that are being prepared for persistence.
 ///
-/// `IggyMessagesBatchMut` holds both the raw message data in a `BytesMut` buffer
+/// `MessengerMessagesBatchMut` holds both the raw message data in a `BytesMut` buffer
 /// and the corresponding index data that allows for efficient message lookup.
 #[derive(Debug, Default)]
-pub struct IggyMessagesBatchMut {
+pub struct MessengerMessagesBatchMut {
     /// The number of messages in the batch
     count: u32,
 
     /// The index data for all messages in the buffer
-    indexes: IggyIndexesMut,
+    indexes: MessengerIndexesMut,
 
     /// The buffer containing the serialized message data
     messages: PooledBuffer,
 }
 
-impl Sizeable for IggyMessagesBatchMut {
-    fn get_size_bytes(&self) -> IggyByteSize {
-        IggyByteSize::from(self.messages.len() as u64)
+impl Sizeable for MessengerMessagesBatchMut {
+    fn get_size_bytes(&self) -> MessengerByteSize {
+        MessengerByteSize::from(self.messages.len() as u64)
     }
 }
 
-impl IggyMessagesBatchMut {
+impl MessengerMessagesBatchMut {
     /// Creates a new empty messages container
     pub fn empty() -> Self {
         Self {
             count: 0,
-            indexes: IggyIndexesMut::empty(),
+            indexes: MessengerIndexesMut::empty(),
             messages: PooledBuffer::empty(),
         }
     }
@@ -72,7 +72,7 @@ impl IggyMessagesBatchMut {
     /// * `count` - Number of messages in the batch
     pub fn from_indexes_and_messages(
         count: u32,
-        indexes: IggyIndexesMut,
+        indexes: MessengerIndexesMut,
         messages: PooledBuffer,
     ) -> Self {
         Self {
@@ -82,7 +82,7 @@ impl IggyMessagesBatchMut {
         }
     }
 
-    /// Creates a new messages container from a slice of IggyMessage objects.
+    /// Creates a new messages container from a slice of MessengerMessage objects.
     ///
     /// # Note
     /// This function should be used only for testing purposes,
@@ -92,9 +92,9 @@ impl IggyMessagesBatchMut {
     ///
     /// * `messages` - Slice of message objects to store
     /// * `messages_size` - Total size of all messages in bytes
-    pub fn from_messages(messages: &[IggyMessage], messages_size: u32) -> Self {
+    pub fn from_messages(messages: &[MessengerMessage], messages_size: u32) -> Self {
         let mut messages_buffer = PooledBuffer::with_capacity(messages_size as usize);
-        let mut indexes_buffer = IggyIndexesMut::with_capacity(messages.len(), 0);
+        let mut indexes_buffer = MessengerIndexesMut::with_capacity(messages.len(), 0);
         let mut position = 0;
 
         for message in messages {
@@ -108,13 +108,13 @@ impl IggyMessagesBatchMut {
     }
 
     /// Creates a lending iterator that yields mutable views of messages.
-    pub fn iter_mut(&mut self) -> IggyMessageViewMutIterator<'_> {
-        IggyMessageViewMutIterator::new(&mut self.messages)
+    pub fn iter_mut(&mut self) -> MessengerMessageViewMutIterator<'_> {
+        MessengerMessageViewMutIterator::new(&mut self.messages)
     }
 
     /// Creates an iterator that yields immutable views of messages.
-    pub fn iter(&self) -> IggyMessageViewIterator<'_> {
-        IggyMessageViewIterator::new(&self.messages)
+    pub fn iter(&self) -> MessengerMessageViewIterator<'_> {
+        MessengerMessageViewIterator::new(&self.messages)
     }
 
     /// Returns the number of messages in the batch.
@@ -138,7 +138,7 @@ impl IggyMessagesBatchMut {
     ///
     /// # Returns
     ///
-    /// An immutable `IggyMessagesBatch` ready for persistence
+    /// An immutable `MessengerMessagesBatch` ready for persistence
     pub async fn prepare_for_persistence(
         &mut self,
         start_offset: u64,
@@ -162,9 +162,9 @@ impl IggyMessagesBatchMut {
             deduplicator.map(|_| Vec::with_capacity(messages_count as usize));
 
         self.indexes.set_base_position(current_position);
-        let mut iter: IggyMessageViewMutIterator<'_> =
-            IggyMessageViewMutIterator::new(&mut self.messages);
-        let timestamp = IggyTimestamp::now().as_micros();
+        let mut iter: MessengerMessageViewMutIterator<'_> =
+            MessengerMessageViewMutIterator::new(&mut self.messages);
+        let timestamp = MessengerTimestamp::now().as_micros();
 
         while let Some(mut message) = iter.next() {
             message.header_mut().set_offset(curr_abs_offset);
@@ -213,7 +213,7 @@ impl IggyMessagesBatchMut {
         if self.is_empty() {
             return None;
         }
-        Some(IggyMessageView::new(&self.messages).header().offset())
+        Some(MessengerMessageView::new(&self.messages).header().offset())
     }
 
     /// Returns the first timestamp in the batch
@@ -221,7 +221,7 @@ impl IggyMessagesBatchMut {
         if self.is_empty() {
             return None;
         }
-        Some(IggyMessageView::new(&self.messages).header().timestamp())
+        Some(MessengerMessageView::new(&self.messages).header().timestamp())
     }
 
     /// Returns the last timestamp in the batch
@@ -232,7 +232,7 @@ impl IggyMessagesBatchMut {
 
         let last_index = self.count() as usize - 1;
         self.get_message_boundaries(last_index).map(|(start, _)| {
-            IggyMessageView::new(&self.messages[start..])
+            MessengerMessageView::new(&self.messages[start..])
                 .header()
                 .timestamp()
         })
@@ -245,7 +245,7 @@ impl IggyMessagesBatchMut {
         }
         let last_index = self.count() as usize - 1;
         self.get_message_boundaries(last_index).map(|(start, _)| {
-            IggyMessageView::new(&self.messages[start..])
+            MessengerMessageView::new(&self.messages[start..])
                 .header()
                 .offset()
         })
@@ -257,20 +257,20 @@ impl IggyMessagesBatchMut {
     }
 
     /// Decomposes the batch into its constituent parts.
-    pub fn decompose(mut self) -> (IggyIndexesMut, PooledBuffer) {
-        let indexes = std::mem::replace(&mut self.indexes, IggyIndexesMut::empty());
+    pub fn decompose(mut self) -> (MessengerIndexesMut, PooledBuffer) {
+        let indexes = std::mem::replace(&mut self.indexes, MessengerIndexesMut::empty());
         let messages = std::mem::take(&mut self.messages);
 
         (indexes, messages)
     }
 
     /// Take the indexes from the batch
-    pub fn take_indexes(&mut self) -> IggyIndexesMut {
+    pub fn take_indexes(&mut self) -> MessengerIndexesMut {
         std::mem::take(&mut self.indexes)
     }
 
     /// Borrows the indexes from the batch
-    pub fn indexes(&self) -> &IggyIndexesMut {
+    pub fn indexes(&self) -> &MessengerIndexesMut {
         &self.indexes
     }
 
@@ -307,7 +307,7 @@ impl IggyMessagesBatchMut {
         }
     }
 
-    /// Returns a contiguous slice (as a new `IggyMessagesBatch`) of up to `count` messages
+    /// Returns a contiguous slice (as a new `MessengerMessagesBatch`) of up to `count` messages
     /// whose message headers have an offset greater than or equal to the provided `start_offset`.
     pub fn slice_by_offset(&self, start_offset: u64, count: u32) -> Option<Self> {
         if self.is_empty() || count == 0 {
@@ -357,14 +357,14 @@ impl IggyMessagesBatchMut {
             PooledBuffer::with_capacity(last_message_position - first_message_position);
         sub_buffer.put_slice(&self.messages[first_message_position..last_message_position]);
 
-        Some(IggyMessagesBatchMut {
+        Some(MessengerMessagesBatchMut {
             count: sub_indexes.count(),
             indexes: sub_indexes,
             messages: sub_buffer,
         })
     }
 
-    /// Returns a contiguous slice (as a new `IggyMessagesBatch`) of up to `count` messages
+    /// Returns a contiguous slice (as a new `MessengerMessagesBatch`) of up to `count` messages
     /// whose message headers have a timestamp greater than or equal to the provided `timestamp`.
     ///
     /// If no messages meet the criteria, returns `None`.
@@ -428,21 +428,21 @@ impl IggyMessagesBatchMut {
     /// # Returns
     ///
     /// * `Ok(())` - If all messages have correct checksums and offsets.
-    /// * `Err(IggyError)` - If any message has an invalid checksum or offset.
+    /// * `Err(MessengerError)` - If any message has an invalid checksum or offset.
     pub fn validate_checksums_and_offsets(
         &self,
         absolute_start_offset: u64,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let mut current_offset = absolute_start_offset;
         for message in self.iter() {
             let calculated_checksum = message.calculate_checksum();
             let actual_checksum = message.header().checksum();
             let offset = message.header().offset();
             if offset != current_offset {
-                return Err(IggyError::InvalidOffset(offset));
+                return Err(MessengerError::InvalidOffset(offset));
             }
             if calculated_checksum != actual_checksum {
-                return Err(IggyError::InvalidMessageChecksum(
+                return Err(MessengerError::InvalidMessageChecksum(
                     actual_checksum,
                     calculated_checksum,
                     offset,
@@ -461,7 +461,7 @@ impl IggyMessagesBatchMut {
         if start > self.messages.len()
             || end > self.messages.len()
             || start > end
-            || end - start < IGGY_MESSAGE_HEADER_SIZE
+            || end - start < MESSENGER_MESSAGE_HEADER_SIZE
         {
             return None;
         }
@@ -471,21 +471,21 @@ impl IggyMessagesBatchMut {
 
     /// Get the message at the specified index.
     /// Returns None if the index is out of bounds or the message cannot be found.
-    pub fn get(&self, index: usize) -> Option<IggyMessageView<'_>> {
+    pub fn get(&self, index: usize) -> Option<MessengerMessageView<'_>> {
         self.get_message_boundaries(index)
-            .map(|(start, end)| IggyMessageView::new(&self.messages[start..end]))
+            .map(|(start, end)| MessengerMessageView::new(&self.messages[start..end]))
     }
 
     /// This helper function is used to parse newly appended chunks in the `new_buffer`.
     /// The function iterates over the range `[chunk_start..chunk_start + chunk_len]`,
-    /// constructing `IggyMessageView` instances to compute message sizes. For each message,
+    /// constructing `MessengerMessageView` instances to compute message sizes. For each message,
     /// a corresponding index entry is created in `new_indexes`. The `offset_in_new_buffer`
     /// is incremented by each message’s size to preserve the correct offsets for
     /// subsequent messages in the new buffer.
     #[allow(clippy::too_many_arguments)]
     fn rebuild_indexes_for_chunk(
         new_buffer: &BytesMut,
-        new_indexes: &mut IggyIndexesMut,
+        new_indexes: &mut MessengerIndexesMut,
         offset_in_new_buffer: &mut u32,
         chunk_start: usize,
         chunk_len: usize,
@@ -494,7 +494,7 @@ impl IggyMessagesBatchMut {
         let mut current = chunk_start;
 
         while current < chunk_end {
-            let view = IggyMessageView::new(&new_buffer[current..]);
+            let view = MessengerMessageView::new(&new_buffer[current..]);
             let msg_size = view.size();
             *offset_in_new_buffer += msg_size as u32;
             new_indexes.insert(0, *offset_in_new_buffer, 0);
@@ -505,7 +505,7 @@ impl IggyMessagesBatchMut {
 
     /// Removes messages at the specified indexes and returns a new batch.
     ///
-    /// This function efficiently creates a new `IggyMessagesBatchMut` by copying only the
+    /// This function efficiently creates a new `MessengerMessagesBatchMut` by copying only the
     /// messages that should be kept, and rebuilding the index entries. Note that `put()`
     /// can be memmove underneath due to the way memory is handled.
     ///
@@ -515,7 +515,7 @@ impl IggyMessagesBatchMut {
     ///
     /// # Returns
     ///
-    /// A new `IggyMessagesBatchMut` with the specified messages removed
+    /// A new `MessengerMessagesBatchMut` with the specified messages removed
     pub fn remove_messages(&mut self, indexes_to_remove: &[u32], current_position: u32) {
         /*
          *  A temporary list of message boundaries is first collected for each index
@@ -559,7 +559,7 @@ impl IggyMessagesBatchMut {
 
         let mut new_buffer = PooledBuffer::with_capacity(new_size as usize);
         let mut new_indexes =
-            IggyIndexesMut::with_capacity(new_message_count as usize, current_position);
+            MessengerIndexesMut::with_capacity(new_message_count as usize, current_position);
 
         let mut source = std::mem::take(&mut self.messages);
         let mut last_pos = 0_usize;
@@ -607,13 +607,13 @@ impl IggyMessagesBatchMut {
     }
 
     /// Validates that all messages in batch have correct checksums.
-    pub fn validate_checksums(&self) -> Result<(), IggyError> {
+    pub fn validate_checksums(&self) -> Result<(), MessengerError> {
         for message in self.iter() {
             let calculated_checksum = message.calculate_checksum();
             let actual_checksum = message.header().checksum();
             let offset = message.header().offset();
             if calculated_checksum != actual_checksum {
-                return Err(IggyError::InvalidMessageChecksum(
+                return Err(MessengerError::InvalidMessageChecksum(
                     actual_checksum,
                     calculated_checksum,
                     offset,
@@ -624,7 +624,7 @@ impl IggyMessagesBatchMut {
     }
 
     /// Validates the structure of the indexes (sizes, counts, etc.)
-    fn validate_indexes_structure(&self) -> Result<(), IggyError> {
+    fn validate_indexes_structure(&self) -> Result<(), MessengerError> {
         let indexes_count = self.indexes.count();
         let indexes_size = self.indexes.size();
 
@@ -633,7 +633,7 @@ impl IggyMessagesBatchMut {
                 "Indexes size {} is not a multiple of index size {}",
                 indexes_size, INDEX_SIZE
             );
-            return Err(IggyError::InvalidIndexesByteSize(indexes_size));
+            return Err(MessengerError::InvalidIndexesByteSize(indexes_size));
         }
 
         if indexes_count != self.count() {
@@ -642,13 +642,13 @@ impl IggyMessagesBatchMut {
                 indexes_count,
                 self.count()
             );
-            return Err(IggyError::InvalidIndexesCount(indexes_count, self.count()));
+            return Err(MessengerError::InvalidIndexesCount(indexes_count, self.count()));
         }
 
         Ok(())
     }
 
-    fn validate_message_contents(&self) -> Result<(), IggyError> {
+    fn validate_message_contents(&self) -> Result<(), MessengerError> {
         let mut messages_count = 0;
         let mut messages_size = 0;
         let mut prev_offset = 0;
@@ -665,7 +665,7 @@ impl IggyMessagesBatchMut {
                     message.header().offset(),
                     i
                 );
-                return Err(IggyError::InvalidOffset(message.header().offset()));
+                return Err(MessengerError::InvalidOffset(message.header().offset()));
             }
 
             if index.position() < prev_position {
@@ -675,7 +675,7 @@ impl IggyMessagesBatchMut {
                     index.position(),
                     i
                 );
-                return Err(IggyError::CannotReadIndexPosition);
+                return Err(MessengerError::CannotReadIndexPosition);
             }
 
             prev_offset = message.header().offset();
@@ -690,7 +690,7 @@ impl IggyMessagesBatchMut {
                 "Indexes count {} does not match messages count {}",
                 indexes_count, messages_count
             );
-            return Err(IggyError::InvalidMessagesCount);
+            return Err(MessengerError::InvalidMessagesCount);
         }
 
         if messages_size != self.messages.len() {
@@ -699,7 +699,7 @@ impl IggyMessagesBatchMut {
                 messages_size,
                 self.messages.len() as u64
             );
-            return Err(IggyError::InvalidMessagesSize(
+            return Err(MessengerError::InvalidMessagesSize(
                 messages_size as u32,
                 self.messages.len() as u32,
             ));
@@ -709,12 +709,12 @@ impl IggyMessagesBatchMut {
     }
 
     /// Validates a specific index entry
-    fn validate_index_at(&self, i: u32) -> Result<IggyIndexView<'_>, IggyError> {
+    fn validate_index_at(&self, i: u32) -> Result<MessengerIndexView<'_>, MessengerError> {
         let index_view = match self.indexes.get(i) {
             Some(view) => view,
             None => {
                 error!("Index {} is missing", i);
-                return Err(IggyError::MissingIndex(i));
+                return Err(MessengerError::MissingIndex(i));
             }
         };
 
@@ -724,7 +724,7 @@ impl IggyMessagesBatchMut {
                 index_view.offset(),
                 i
             );
-            return Err(IggyError::NonZeroOffset(index_view.offset() as u64, i));
+            return Err(MessengerError::NonZeroOffset(index_view.offset() as u64, i));
         }
 
         if index_view.timestamp() != 0 {
@@ -733,22 +733,22 @@ impl IggyMessagesBatchMut {
                 index_view.timestamp(),
                 i
             );
-            return Err(IggyError::NonZeroTimestamp(index_view.timestamp(), i));
+            return Err(MessengerError::NonZeroTimestamp(index_view.timestamp(), i));
         }
 
         Ok(index_view)
     }
 
     /// Validates a specific message
-    fn validate_message_at(&self, i: u32) -> Result<IggyMessageView<'_>, IggyError> {
+    fn validate_message_at(&self, i: u32) -> Result<MessengerMessageView<'_>, MessengerError> {
         let message = match self.get(i as usize) {
             Some(msg) => msg,
             None => {
                 error!(
                     "Message at index {} is missing, or message size is less than minimum message size {} B (header)",
-                    i, IGGY_MESSAGE_HEADER_SIZE
+                    i, MESSENGER_MESSAGE_HEADER_SIZE
                 );
-                return Err(IggyError::MissingIndex(i));
+                return Err(MessengerError::MissingIndex(i));
             }
         };
 
@@ -758,18 +758,18 @@ impl IggyMessagesBatchMut {
                 message.payload().len(),
                 MAX_PAYLOAD_SIZE
             );
-            return Err(IggyError::TooBigMessagePayload);
+            return Err(MessengerError::TooBigMessagePayload);
         }
 
-        if message.size() < IGGY_MESSAGE_HEADER_SIZE {
+        if message.size() < MESSENGER_MESSAGE_HEADER_SIZE {
             error!(
                 "Message size {} B is less than minimum message size {} B (header)",
                 message.size(),
-                IGGY_MESSAGE_HEADER_SIZE
+                MESSENGER_MESSAGE_HEADER_SIZE
             );
-            return Err(IggyError::TooSmallMessage(
+            return Err(MessengerError::TooSmallMessage(
                 message.size() as u32,
-                IGGY_MESSAGE_HEADER_SIZE as u32,
+                MESSENGER_MESSAGE_HEADER_SIZE as u32,
             ));
         }
 
@@ -781,17 +781,17 @@ impl IggyMessagesBatchMut {
                 user_headers.len(),
                 MAX_USER_HEADERS_SIZE
             );
-            return Err(IggyError::TooBigUserHeaders);
+            return Err(MessengerError::TooBigUserHeaders);
         }
 
         Ok(message)
     }
 }
 
-impl Validatable<IggyError> for IggyMessagesBatchMut {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for MessengerMessagesBatchMut {
+    fn validate(&self) -> Result<(), MessengerError> {
         if self.is_empty() {
-            return Err(IggyError::InvalidMessagesCount);
+            return Err(MessengerError::InvalidMessagesCount);
         }
 
         self.validate_indexes_structure()?;
@@ -800,7 +800,7 @@ impl Validatable<IggyError> for IggyMessagesBatchMut {
     }
 }
 
-impl Index<usize> for IggyMessagesBatchMut {
+impl Index<usize> for MessengerMessagesBatchMut {
     type Output = [u8];
 
     fn index(&self, index: usize) -> &Self::Output {
@@ -819,7 +819,7 @@ impl Index<usize> for IggyMessagesBatchMut {
     }
 }
 
-impl Deref for IggyMessagesBatchMut {
+impl Deref for MessengerMessagesBatchMut {
     type Target = BytesMut;
 
     fn deref(&self) -> &Self::Target {

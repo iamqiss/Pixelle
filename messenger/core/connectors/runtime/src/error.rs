@@ -31,13 +31,13 @@ pub enum RuntimeError {
     #[error("Failed to serialize headers")]
     FailedToSerializeHeaders,
     #[error("Connector SDK error")]
-    ConnectorSdkError(#[from] iggy_connector_sdk::Error),
-    #[error("Iggy client error")]
-    IggyClient(#[from] iggy::prelude::ClientError),
-    #[error("Iggy error")]
-    IggyError(#[from] iggy::prelude::IggyError),
-    #[error("Missing Iggy credentials")]
-    MissingIggyCredentials,
+    ConnectorSdkError(#[from] messenger_connector_sdk::Error),
+    #[error("Messenger client error")]
+    MessengerClient(#[from] messenger::prelude::ClientError),
+    #[error("Messenger error")]
+    MessengerError(#[from] messenger::prelude::MessengerError),
+    #[error("Missing Messenger credentials")]
+    MissingMessengerCredentials,
     #[error("JSON error")]
     JsonError(#[from] serde_json::Error),
     #[error("Sink not found with key: {0}")]
@@ -53,7 +53,7 @@ impl RuntimeError {
         match self {
             RuntimeError::SinkNotFound(_) => "sink_not_found",
             RuntimeError::SourceNotFound(_) => "source_not_found",
-            RuntimeError::MissingIggyCredentials => "invalid_configuration",
+            RuntimeError::MissingMessengerCredentials => "invalid_configuration",
             RuntimeError::InvalidConfiguration(_) => "invalid_configuration",
             _ => "error",
         }

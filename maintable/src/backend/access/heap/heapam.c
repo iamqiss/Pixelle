@@ -3,7 +3,7 @@
  * heapam.c
  *	  heap access method code
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -24,12 +24,12 @@
  *
  * NOTES
  *	  This file contains the heap_ routines which implement
- *	  the POSTGRES heap access method used for all POSTGRES
+ *	  the MAINTABLE heap access method used for all MAINTABLE
  *	  relations.
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/heapam.h"
 #include "access/heaptoast.h"
@@ -888,7 +888,7 @@ heapgettup_advance_block(HeapScanDesc scan, BlockNumber block, ScanDirection dir
  * scan direction will restart the scan, which is a bit odd, but a
  * request with the opposite scan direction will start a fresh scan
  * in the proper direction.  The latter is required behavior for cursors,
- * while the former case is generally undefined behavior in Postgres
+ * while the former case is generally undefined behavior in Maintable
  * so we don't care too much.
  * ----------------
  */
@@ -7040,7 +7040,7 @@ FreezeMultiXactId(MultiXactId multi, uint16 t_infomask,
  * We sometimes force freezing of xmax MultiXactId values long before it is
  * strictly necessary to do so just to ensure the FreezeLimit postcondition.
  * It's worth processing MultiXactIds proactively when it is cheap to do so,
- * and it's convenient to make that happen by piggy-backing it on the "force
+ * and it's convenient to make that happen by pmessenger-backing it on the "force
  * freezing" mechanism.  Conversely, we sometimes delay freezing MultiXactIds
  * because it is expensive right now (though only when it's still possible to
  * do so without violating the FreezeLimit/MultiXactCutoff postcondition).

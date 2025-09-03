@@ -16,10 +16,10 @@
  * under the License.
  */
 
-use crate::cli::common::{IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, USAGE_PREFIX};
+use crate::cli::common::{MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, USAGE_PREFIX};
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
+use messenger::prelude::Client;
 use predicates::str::{contains, starts_with};
 use serial_test::parallel;
 
@@ -41,15 +41,15 @@ impl TestClientGetCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestClientGetCmd {
+impl MessengerCmdTestCase for TestClientGetCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let client_info = client.get_me().await;
         assert!(client_info.is_ok());
         self.client_id = Some(client_info.unwrap().client_id);
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("client")
             .arg("get")
             .arg(self.get_client_id())
@@ -76,18 +76,18 @@ impl IggyCmdTestCase for TestClientGetCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test.execute_test(TestClientGetCmd::new()).await;
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test.execute_test(TestClientGetCmd::new()).await;
 }
 
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["client", "get", "--help"],
             format!(
@@ -96,7 +96,7 @@ pub async fn should_help_match() {
 Client ID is unique numerical identifier not to be confused with the user.
 
 Examples:
- iggy client get 42
+ messenger client get 42
 
 {USAGE_PREFIX} client get <CLIENT_ID>
 
@@ -116,9 +116,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["client", "get", "-h"],
             format!(

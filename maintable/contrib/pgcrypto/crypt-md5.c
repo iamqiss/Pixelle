@@ -6,7 +6,7 @@
  * contrib/pgcrypto/crypt-md5.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "px-crypt.h"
 #include "px.h"

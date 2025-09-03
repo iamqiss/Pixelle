@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_user_mapping.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createusermapping">

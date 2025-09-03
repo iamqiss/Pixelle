@@ -24,23 +24,23 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::update_stream::UpdateStream;
+use messenger_common::MessengerError;
+use messenger_common::update_stream::UpdateStream;
 use tracing::{debug, instrument};
 
 impl ServerCommandHandler for UpdateStream {
     fn code(&self) -> u32 {
-        iggy_common::UPDATE_STREAM_CODE
+        messenger_common::UPDATE_STREAM_CODE
     }
 
-    #[instrument(skip_all, name = "trace_update_stream", fields(iggy_user_id = session.get_user_id(), iggy_client_id = session.client_id, iggy_stream_id = self.stream_id.as_string()))]
+    #[instrument(skip_all, name = "trace_update_stream", fields(messenger_user_id = session.get_user_id(), messenger_client_id = session.client_id, messenger_stream_id = self.stream_id.as_string()))]
     async fn handle(
         self,
         sender: &mut SenderKind,
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
         let stream_id = self.stream_id.clone();
 
@@ -70,10 +70,10 @@ impl BinaryServerCommand for UpdateStream {
         sender: &mut SenderKind,
         code: u32,
         length: u32,
-    ) -> Result<Self, IggyError> {
+    ) -> Result<Self, MessengerError> {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::UpdateStream(update_stream) => Ok(update_stream),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

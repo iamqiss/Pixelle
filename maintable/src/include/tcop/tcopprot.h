@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * tcopprot.h
- *	  prototypes for postgres.c.
+ *	  prototypes for maintable.c.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/tcop/tcopprot.h
@@ -76,11 +76,11 @@ extern void HandleRecoveryConflictInterrupt(ProcSignalReason reason);
 extern void ProcessClientReadInterrupt(bool blocked);
 extern void ProcessClientWriteInterrupt(bool blocked);
 
-extern void process_postgres_switches(int argc, char *argv[],
+extern void process_maintable_switches(int argc, char *argv[],
 									  GucContext ctx, const char **dbname);
-pg_noreturn extern void PostgresSingleUserMain(int argc, char *argv[],
+pg_noreturn extern void MaintableSingleUserMain(int argc, char *argv[],
 											   const char *username);
-pg_noreturn extern void PostgresMain(const char *dbname,
+pg_noreturn extern void MaintableMain(const char *dbname,
 									 const char *username);
 extern void ResetUsage(void);
 extern void ShowUsage(const char *title);

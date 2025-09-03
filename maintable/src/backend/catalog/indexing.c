@@ -4,7 +4,7 @@
  *	  This file contains routines to support indexes defined on system
  *	  catalogs.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/genam.h"
 #include "access/heapam.h"
@@ -351,7 +351,7 @@ CatalogTupleUpdateWithInfo(Relation heapRel, ItemPointer otid, HeapTuple tup,
  *
  * Delete the tuple identified by "tid" in the specified catalog.
  *
- * With Postgres heaps, there is no index work to do at deletion time;
+ * With Maintable heaps, there is no index work to do at deletion time;
  * cleanup will be done later by VACUUM.  However, callers of this function
  * shouldn't have to know that; we'd like a uniform abstraction for all
  * catalog tuple changes.  Hence, provide this currently-trivial wrapper.

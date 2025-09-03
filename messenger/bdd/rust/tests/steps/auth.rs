@@ -18,8 +18,8 @@
 
 use crate::common::global_context::GlobalContext;
 use cucumber::given;
-use iggy::clients::client::IggyClient;
-use iggy::prelude::SystemClient;
+use messenger::clients::client::MessengerClient;
+use messenger::prelude::SystemClient;
 use integration::tcp_client::TcpClientFactory;
 use integration::test_server::{ClientFactory, login_root};
 
@@ -36,7 +36,7 @@ pub async fn given_authenticated_as_root(world: &mut GlobalContext) {
     };
 
     let client = client_factory.create_client().await;
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
 
     client.ping().await.expect("Server should respond to ping");
     login_root(&client).await;

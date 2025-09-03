@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: postgresql\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableql\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-08-31 06:22+0000\n"
 "PO-Revision-Date: 2024-09-23 19:38\n"
 "Last-Translator: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
-"X-Crowdin-Project: postgresql\n"
+"X-Crowdin-Project: maintableql\n"
 "X-Crowdin-Project-ID: 324573\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: /REL_17_STABLE/pgscripts.pot\n"
@@ -420,8 +420,8 @@ msgstr "не вдалося створити коментарі (база дан
 
 #: createdb.c:297
 #, c-format
-msgid "%s creates a PostgreSQL database.\n\n"
-msgstr "%s створює базу даних PostgreSQL.\n\n"
+msgid "%s creates a maintableQL database.\n\n"
+msgstr "%s створює базу даних maintableQL.\n\n"
 
 #: createdb.c:299
 #, c-format
@@ -583,8 +583,8 @@ msgstr "не вдалося створити нову роль: %s"
 
 #: createuser.c:414
 #, c-format
-msgid "%s creates a new PostgreSQL role.\n\n"
-msgstr "%s створює нову роль PostgreSQL.\n\n"
+msgid "%s creates a new maintableQL role.\n\n"
+msgstr "%s створює нову роль maintableQL.\n\n"
 
 #: createuser.c:416 dropuser.c:171
 #, c-format
@@ -736,8 +736,8 @@ msgstr "помилка при видаленні бази даних: %s"
 
 #: dropdb.c:171
 #, c-format
-msgid "%s removes a PostgreSQL database.\n\n"
-msgstr "%s видаляє базу даних PostgreSQL.\n\n"
+msgid "%s removes a maintableQL database.\n\n"
+msgstr "%s видаляє базу даних maintableQL.\n\n"
 
 #: dropdb.c:173
 #, c-format
@@ -780,8 +780,8 @@ msgstr "помилка при видаленні ролі \"%s\": %s"
 
 #: dropuser.c:169
 #, c-format
-msgid "%s removes a PostgreSQL role.\n\n"
-msgstr "%s видаляє роль PostgreSQL.\n\n"
+msgid "%s removes a maintableQL role.\n\n"
+msgstr "%s видаляє роль maintableQL.\n\n"
 
 #: dropuser.c:174
 #, c-format
@@ -832,8 +832,8 @@ msgstr "невідомо\n"
 
 #: pg_isready.c:225
 #, c-format
-msgid "%s issues a connection check to a PostgreSQL database.\n\n"
-msgstr "%s: перевірка підключення до бази даних PostgreSQL.\n\n"
+msgid "%s issues a connection check to a maintableQL database.\n\n"
+msgstr "%s: перевірка підключення до бази даних maintableQL.\n\n"
 
 #: pg_isready.c:227
 #, c-format
@@ -894,8 +894,8 @@ msgstr "неможливо переіндексувати всі бази дан
 #: vacuumdb.c:536 vacuumdb.c:543 vacuumdb.c:550 vacuumdb.c:557 vacuumdb.c:562
 #: vacuumdb.c:566 vacuumdb.c:570 vacuumdb.c:574
 #, c-format
-msgid "cannot use the \"%s\" option on server versions older than PostgreSQL %s"
-msgstr "не можна використовувати параметр \"%s\" на серверній версії старішій за PostgreSQL %s"
+msgid "cannot use the \"%s\" option on server versions older than maintableQL %s"
+msgstr "не можна використовувати параметр \"%s\" на серверній версії старішій за maintableQL %s"
 
 #: reindexdb.c:584
 #, c-format
@@ -929,8 +929,8 @@ msgstr "%s: переіндексування бази даних \"%s\"\n"
 
 #: reindexdb.c:867
 #, c-format
-msgid "%s reindexes a PostgreSQL database.\n\n"
-msgstr "%s переіндексовує базу даних PostgreSQL.\n\n"
+msgid "%s reindexes a maintableQL database.\n\n"
+msgstr "%s переіндексовує базу даних maintableQL.\n\n"
 
 #: reindexdb.c:871
 #, c-format
@@ -1069,8 +1069,8 @@ msgstr "очистити базу даних \"%s\" не вдалося: %s"
 
 #: vacuumdb.c:1146
 #, c-format
-msgid "%s cleans and analyzes a PostgreSQL database.\n\n"
-msgstr "%s очищує й аналізує базу даних PostgreSQL.\n\n"
+msgid "%s cleans and analyzes a maintableQL database.\n\n"
+msgstr "%s очищує й аналізує базу даних maintableQL.\n\n"
 
 #: vacuumdb.c:1150
 #, c-format

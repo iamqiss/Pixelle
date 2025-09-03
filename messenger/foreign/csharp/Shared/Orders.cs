@@ -18,7 +18,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace Apache.Iggy.Shared;
+namespace Apache.Messenger.Shared;
 
 public class OrderCreated : ISerializableMessage
 {

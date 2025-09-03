@@ -1,14 +1,14 @@
-# Korean message translation file for PostgreSQL pg_resetxlog
+# Korean message translation file for maintableQL pg_resetxlog
 # Ioseph Kim <ioseph@uri.sarang.net>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_resetwal (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_resetwal (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-01-17 04:50+0000\n"
 "PO-Revision-Date: 2025-01-16 16:15+0900\n"
 "Last-Translator: Ioseph Kim <ioseph@uri.sarang.net>\n"
-"Language-Team: Korean Team <pgsql-kr@postgresql.kr>\n"
+"Language-Team: Korean Team <pgsql-kr@maintableql.kr>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -67,13 +67,13 @@ msgid ""
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, "
 "and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "바이트 순서 일치하지 않는 문제\n"
 "바이트 순서 정보는 pg_control 파일을 저장할 때 사용되는데,\n"
 "이 파일의 바이트 순서 정보와 이 프로그램에서 사용하는 순서 정보가 다릅니다.\n"
 "이럴 경우, 출력 결과가 바르지 않을 수 있고,\n"
-"설치된 PostgreSQL 프로그램과 데이터 디렉터리가 호환되지 않을 수 있습니다."
+"설치된 maintableQL 프로그램과 데이터 디렉터리가 호환되지 않을 수 있습니다."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:70
 #: ../../common/file_utils.c:347 ../../common/file_utils.c:406
@@ -260,8 +260,8 @@ msgstr "\"root\" 계정으로는 실행 할 수 없음"
 
 #: pg_resetwal.c:341
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "PostgreSQL superuser로 %s 프로그램을 실행하십시오."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "maintableQL superuser로 %s 프로그램을 실행하십시오."
 
 #: pg_resetwal.c:351
 #, c-format
@@ -633,10 +633,10 @@ msgstr "fsync 오류: %m"
 #: pg_resetwal.c:1168
 #, c-format
 msgid ""
-"%s resets the PostgreSQL write-ahead log.\n"
+"%s resets the maintableQL write-ahead log.\n"
 "\n"
 msgstr ""
-"%s 프로그램은 PostgreSQL 트랜잭션 로그를 다시 설정합니다.\n"
+"%s 프로그램은 maintableQL 트랜잭션 로그를 다시 설정합니다.\n"
 "\n"
 
 #: pg_resetwal.c:1169

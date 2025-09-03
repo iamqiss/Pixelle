@@ -3,7 +3,7 @@
 --
 
 SET DATESTYLE = 'ISO';
-SET IntervalStyle to postgres;
+SET IntervalStyle to maintable;
 
 -- check acceptance of "time zone style"
 SELECT INTERVAL '01:00' AS "One hour";
@@ -149,8 +149,8 @@ FROM INTERVAL_MULDIV_TBL;
 
 DROP TABLE INTERVAL_MULDIV_TBL;
 
-SET DATESTYLE = 'postgres';
-SET IntervalStyle to postgres_verbose;
+SET DATESTYLE = 'maintable';
+SET IntervalStyle to maintable_verbose;
 
 SELECT * FROM INTERVAL_TBL;
 
@@ -200,7 +200,7 @@ SELECT justify_interval(interval '-2147483648 months 30 days -1440 hrs');
 
 -- test fractional second input, and detection of duplicate units
 SET DATESTYLE = 'ISO';
-SET IntervalStyle TO postgres;
+SET IntervalStyle TO maintable;
 
 SELECT '1 millisecond'::interval, '1 microsecond'::interval,
        '500 seconds 99 milliseconds 51 microseconds'::interval;
@@ -287,7 +287,7 @@ SELECT  interval '0'                       AS "zero",
         - interval '1 2:03:04'             AS "negative day-time";
 
 -- test input of some not-quite-standard interval values in the sql style
-SET IntervalStyle TO postgres;
+SET IntervalStyle TO maintable;
 SELECT  interval '+1 -1:00:00',
         interval '-1 +1:00:00',
         interval '+1-2 -3 +4:05:06.789',
@@ -336,7 +336,7 @@ select  interval 'P0Y'                    AS "zero",
         interval 'PT-0.1S'                AS "fractional second";
 
 -- test inputting ISO 8601 4.4.2.2 "Alternative Format"
-SET IntervalStyle to postgres;
+SET IntervalStyle to maintable;
 select  interval 'P00021015T103020'       AS "ISO8601 Basic Format",
         interval 'P0002-10-15T10:30:20'   AS "ISO8601 Extended Format";
 
@@ -360,7 +360,7 @@ select interval 'P10.5e4Y';  -- not per spec, but we've historically taken it
 select interval 'P.Y0M3DT4H5M6S';  -- error
 
 -- test a couple rounding cases that changed since 8.3 w/ HAVE_INT64_TIMESTAMP.
-SET IntervalStyle to postgres_verbose;
+SET IntervalStyle to maintable_verbose;
 select interval '-10 mons -3 days +03:55:06.70';
 select interval '1 year 2 mons 3 days 04:05:06.699999';
 select interval '0:0:0.7', interval '@ 0.70 secs', interval '0.7 seconds';
@@ -443,7 +443,7 @@ select interval '-2147483648 years -1 decade';
 select interval '-2147483648 years -1 century';
 select interval '-2147483648 years -1 millennium';
 
--- overflowing with fractional fields - postgres format
+-- overflowing with fractional fields - maintable format
 select interval '0.1 millennium 2147483647 months';
 select interval '0.1 centuries 2147483647 months';
 select interval '0.1 decades 2147483647 months';
@@ -555,13 +555,13 @@ select make_interval(mins := 1, secs := 9223372036800.0);
 select make_interval(mins := -1, secs := -9223372036800.0);
 
 -- test that INT_MIN number is formatted properly
-SET IntervalStyle to postgres;
+SET IntervalStyle to maintable;
 select interval '-2147483647 months -2147483648 days -9223372036854775808 us';
 SET IntervalStyle to sql_standard;
 select interval '-2147483647 months -2147483648 days -9223372036854775808 us';
 SET IntervalStyle to iso_8601;
 select interval '-2147483647 months -2147483648 days -9223372036854775808 us';
-SET IntervalStyle to postgres_verbose;
+SET IntervalStyle to maintable_verbose;
 select interval '-2147483647 months -2147483648 days -9223372036854775808 us';
 
 -- check that '30 days' equals '1 month' according to the hash function

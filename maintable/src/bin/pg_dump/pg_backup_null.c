@@ -21,7 +21,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "fe_utils/string_utils.h"
 #include "libpq/libpq-fs.h"

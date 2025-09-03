@@ -1,20 +1,20 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Tests for subscription stats.
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Create publisher node.
-my $node_publisher = PostgreSQL::Test::Cluster->new('publisher');
+my $node_publisher = maintableQL::Test::Cluster->new('publisher');
 $node_publisher->init(allows_streaming => 'logical');
 $node_publisher->start;
 
 # Create subscriber node.
-my $node_subscriber = PostgreSQL::Test::Cluster->new('subscriber');
+my $node_subscriber = maintableQL::Test::Cluster->new('subscriber');
 $node_subscriber->init;
 $node_subscriber->start;
 
@@ -125,7 +125,7 @@ sub create_sub_pub_w_errors
 	return ($pub_name, $sub_name);
 }
 
-my $db = 'postgres';
+my $db = 'maintable';
 
 # There shouldn't be any subscription errors before starting logical replication.
 my $result = $node_subscriber->safe_psql($db,

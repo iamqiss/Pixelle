@@ -22,7 +22,7 @@ use crate::server_error::ConnectionError;
 use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use crate::tcp::connection_handler::command::ServerCommand;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use std::io::ErrorKind;
 use std::sync::Arc;
 use tracing::{debug, error, info};
@@ -40,7 +40,7 @@ pub(crate) async fn handle_connection(
         let read_length = match sender.read(&mut length_buffer).await {
             Ok(read_length) => read_length,
             Err(error) => {
-                if error.as_code() == IggyError::ConnectionClosed.as_code() {
+                if error.as_code() == MessengerError::ConnectionClosed.as_code() {
                     return Err(ConnectionError::from(error));
                 } else {
                     sender.send_error_response(error).await?;
@@ -50,7 +50,7 @@ pub(crate) async fn handle_connection(
         };
 
         if read_length != INITIAL_BYTES_LENGTH {
-            sender.send_error_response(IggyError::CommandLengthError(format!(
+            sender.send_error_response(MessengerError::CommandLengthError(format!(
                 "Unable to read the TCP request length, expected: {INITIAL_BYTES_LENGTH} bytes, received: {read_length} bytes."
             ))).await?;
             continue;
@@ -70,11 +70,11 @@ pub(crate) async fn handle_connection(
             }
             Err(error) => {
                 error!("Command was not handled successfully, session: {session}, error: {error}.");
-                if let IggyError::ClientNotFound(_) = error {
+                if let MessengerError::ClientNotFound(_) = error {
                     sender.send_error_response(error).await?;
                     debug!("TCP error response was sent to: {session}.");
                     error!("Session: {session} will be deleted.");
-                    return Err(ConnectionError::from(IggyError::ClientNotFound(
+                    return Err(ConnectionError::from(MessengerError::ClientNotFound(
                         session.client_id,
                     )));
                 } else {
@@ -106,7 +106,7 @@ pub(crate) fn handle_error(error: ConnectionError) {
             }
         },
         ConnectionError::SdkError(sdk_error) => match sdk_error {
-            IggyError::ConnectionClosed => {
+            MessengerError::ConnectionClosed => {
                 debug!("Client closed connection.");
             }
             _ => {

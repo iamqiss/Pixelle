@@ -16,15 +16,15 @@
  * under the License.
  */
 
-use crate::cli::common::{IggyCmdTest, USAGE_PREFIX, help::TestHelpCmd};
+use crate::cli::common::{MessengerCmdTest, USAGE_PREFIX, help::TestHelpCmd};
 use serial_test::parallel;
 
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["user", "help"],
             format!(

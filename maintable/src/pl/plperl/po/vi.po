@@ -1,15 +1,15 @@
 # LANGUAGE message translation file for plperl
-# Copyright (C) 2018 PostgreSQL Global Development Group
-# This file is distributed under the same license as the plperl (PostgreSQL) package.
+# Copyright (C) 2018 maintableQL Global Development Group
+# This file is distributed under the same license as the plperl (maintableQL) package.
 # FIRST AUTHOR <kakalot49@gmail.com>, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: plperl (PostgreSQL) 11\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: plperl (maintableQL) 11\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2018-04-22 12:08+0000\n"
 "PO-Revision-Date: 2018-04-29 23:57+0900\n"
-"Language-Team: <pgvn_translators@postgresql.vn>\n"
+"Language-Team: <pgvn_translators@maintableql.vn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -52,8 +52,8 @@ msgstr "%s"
 
 #: plperl.c:674
 #, c-format
-msgid "while executing PostgreSQL::InServer::SPI::bootstrap"
-msgstr "trong khi thực thi PostgreSQL::InServer::SPI::bootstrap"
+msgid "while executing maintableQL::InServer::SPI::bootstrap"
+msgstr "trong khi thực thi maintableQL::InServer::SPI::bootstrap"
 
 #: plperl.c:858
 #, c-format

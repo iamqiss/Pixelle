@@ -18,7 +18,7 @@
 
 use crate::clients::consumer::{AutoCommit, AutoCommitWhen};
 use crate::prelude::{
-    ConsumerKind, EncryptorKind, Identifier, IggyDuration, IggyError, PollingStrategy,
+    ConsumerKind, EncryptorKind, Identifier, MessengerDuration, MessengerError, PollingStrategy,
 };
 use bon::Builder;
 use std::str::FromStr;
@@ -26,7 +26,7 @@ use std::sync::Arc;
 
 #[derive(Builder, Debug, Clone)]
 #[builder(on(String, into))]
-pub struct IggyConsumerConfig {
+pub struct MessengerConsumerConfig {
     /// Identifier of the stream. Must be unique.
     stream_id: Identifier,
     /// Name of the stream. Must be unique.
@@ -53,21 +53,21 @@ pub struct IggyConsumerConfig {
     /// Sets the replication factor for the consumed topic.
     replication_factor: Option<u8>,
     /// The polling interval for messages.
-    polling_interval: IggyDuration,
+    polling_interval: MessengerDuration,
     /// `PollingStrategy` specifies from where to start polling messages. See `PollingStrategy` for details.
     polling_strategy: PollingStrategy,
     /// Sets the polling retry interval in case of server disconnection.
-    polling_retry_interval: IggyDuration,
+    polling_retry_interval: MessengerDuration,
     /// Sets the number of retries and the interval when initializing the consumer if the stream or topic is not found.
     /// Might be useful when the stream or topic is created dynamically by the producer.
     init_retries: Option<u32>,
-    init_interval: IggyDuration,
+    init_interval: MessengerDuration,
     /// Sets a optional client side encryptor for encrypting the messages' payloads. Currently only Aes256Gcm is supported.
     /// Note, this is independent of server side encryption meaning you can add client encryption, server encryption, or both.
     encryptor: Option<Arc<EncryptorKind>>,
 }
 
-impl Default for IggyConsumerConfig {
+impl Default for MessengerConsumerConfig {
     fn default() -> Self {
         let stream_id = Identifier::from_str_value("test_stream").unwrap();
         let topic_id = Identifier::from_str_value("test_topic").unwrap();
@@ -83,20 +83,20 @@ impl Default for IggyConsumerConfig {
             create_topic_if_not_exists: false,
             consumer_name: "test_consumer".to_string(),
             consumer_kind: ConsumerKind::ConsumerGroup,
-            polling_interval: IggyDuration::from_str("5ms").unwrap(),
+            polling_interval: MessengerDuration::from_str("5ms").unwrap(),
             polling_strategy: PollingStrategy::last(),
             partitions_count: 1,
             replication_factor: None,
             encryptor: None,
-            polling_retry_interval: IggyDuration::new_from_secs(1),
+            polling_retry_interval: MessengerDuration::new_from_secs(1),
             init_retries: Some(5),
-            init_interval: IggyDuration::new_from_secs(3),
+            init_interval: MessengerDuration::new_from_secs(3),
         }
     }
 }
 
-impl IggyConsumerConfig {
-    /// Creates a new `IggyConsumerConfig` from the given arguments.
+impl MessengerConsumerConfig {
+    /// Creates a new `MessengerConsumerConfig` from the given arguments.
     ///
     /// # Args
     ///
@@ -121,7 +121,7 @@ impl IggyConsumerConfig {
     ///
     ///
     /// Returns:
-    /// A new `IggyConsumerConfig`.
+    /// A new `MessengerConsumerConfig`.
     ///
     #[allow(clippy::too_many_arguments)]
     pub fn new(
@@ -135,14 +135,14 @@ impl IggyConsumerConfig {
         create_topic_if_not_exists: bool,
         consumer_name: String,
         consumer_kind: ConsumerKind,
-        polling_interval: IggyDuration,
+        polling_interval: MessengerDuration,
         polling_strategy: PollingStrategy,
         partitions_count: u32,
         replication_factor: Option<u8>,
         encryptor: Option<Arc<EncryptorKind>>,
-        polling_retry_interval: IggyDuration,
+        polling_retry_interval: MessengerDuration,
         init_retries: Option<u32>,
-        init_interval: IggyDuration,
+        init_interval: MessengerDuration,
     ) -> Self {
         Self {
             stream_id,
@@ -166,7 +166,7 @@ impl IggyConsumerConfig {
         }
     }
 
-    /// Creates a new `IggyConsumerConfig` from the given arguments.
+    /// Creates a new `MessengerConsumerConfig` from the given arguments.
     ///
     /// # Args
     ///
@@ -176,14 +176,14 @@ impl IggyConsumerConfig {
     /// * `polling_interval` - The interval between polling for new messages.
     ///
     /// Returns:
-    /// A new `IggyConsumerConfig`.
+    /// A new `MessengerConsumerConfig`.
     ///
     pub fn from_stream_topic(
         stream: &str,
         topic: &str,
         batch_length: u32,
-        polling_interval: IggyDuration,
-    ) -> Result<Self, IggyError> {
+        polling_interval: MessengerDuration,
+    ) -> Result<Self, MessengerError> {
         let stream_id = Identifier::from_str_value(stream)?;
         let topic_id = Identifier::from_str_value(topic)?;
 
@@ -203,14 +203,14 @@ impl IggyConsumerConfig {
             partitions_count: 1,
             replication_factor: None,
             encryptor: None,
-            polling_retry_interval: IggyDuration::new_from_secs(1),
+            polling_retry_interval: MessengerDuration::new_from_secs(1),
             init_retries: Some(5),
-            init_interval: IggyDuration::new_from_secs(3),
+            init_interval: MessengerDuration::new_from_secs(3),
         })
     }
 }
 
-impl IggyConsumerConfig {
+impl MessengerConsumerConfig {
     pub fn stream_id(&self) -> &Identifier {
         &self.stream_id
     }
@@ -250,7 +250,7 @@ impl IggyConsumerConfig {
         self.consumer_kind
     }
 
-    pub fn polling_interval(&self) -> IggyDuration {
+    pub fn polling_interval(&self) -> MessengerDuration {
         self.polling_interval
     }
 
@@ -270,7 +270,7 @@ impl IggyConsumerConfig {
         self.encryptor.clone()
     }
 
-    pub fn polling_retry_interval(&self) -> IggyDuration {
+    pub fn polling_retry_interval(&self) -> MessengerDuration {
         self.polling_retry_interval
     }
 
@@ -278,7 +278,7 @@ impl IggyConsumerConfig {
         self.init_retries
     }
 
-    pub fn init_interval(&self) -> IggyDuration {
+    pub fn init_interval(&self) -> MessengerDuration {
         self.init_interval
     }
 }
@@ -293,7 +293,7 @@ mod tests {
         let topic_id = Identifier::from_str_value("test_topic").unwrap();
 
         // Builder is generated by the bon macro
-        let config = IggyConsumerConfig::builder()
+        let config = MessengerConsumerConfig::builder()
             .stream_id(stream_id)
             .stream_name("test_stream".to_string())
             .topic_id(topic_id)
@@ -304,12 +304,12 @@ mod tests {
             .create_topic_if_not_exists(true)
             .consumer_name("test_consumer".to_string())
             .consumer_kind(ConsumerKind::ConsumerGroup)
-            .polling_interval(IggyDuration::from_str("5ms").unwrap())
+            .polling_interval(MessengerDuration::from_str("5ms").unwrap())
             .polling_strategy(PollingStrategy::last())
-            .polling_retry_interval(IggyDuration::new_from_secs(1))
+            .polling_retry_interval(MessengerDuration::new_from_secs(1))
             .partitions_count(1)
             .init_retries(3)
-            .init_interval(IggyDuration::new_from_secs(3))
+            .init_interval(MessengerDuration::new_from_secs(3))
             .build();
 
         assert_eq!(
@@ -333,18 +333,18 @@ mod tests {
         assert_eq!(config.consumer_kind(), ConsumerKind::ConsumerGroup);
         assert_eq!(
             config.polling_interval(),
-            IggyDuration::from_str("5ms").unwrap()
+            MessengerDuration::from_str("5ms").unwrap()
         );
         assert_eq!(config.polling_strategy(), PollingStrategy::last());
         assert_eq!(config.partitions_count(), 1);
 
         assert_eq!(
             config.polling_retry_interval(),
-            IggyDuration::new_from_secs(1)
+            MessengerDuration::new_from_secs(1)
         );
         assert_eq!(config.init_retries(), Some(3));
 
-        assert_eq!(config.init_interval(), IggyDuration::new_from_secs(3));
+        assert_eq!(config.init_interval(), MessengerDuration::new_from_secs(3));
     }
 
     #[test]
@@ -352,7 +352,7 @@ mod tests {
         let stream_id = Identifier::from_str_value("test_stream").unwrap();
         let topic_id = Identifier::from_str_value("test_topic").unwrap();
 
-        let config = IggyConsumerConfig::default();
+        let config = MessengerConsumerConfig::default();
         assert_eq!(config.stream_id(), &stream_id);
         assert_eq!(config.stream_name(), "test_stream");
         assert_eq!(config.topic_id(), &topic_id);
@@ -368,20 +368,20 @@ mod tests {
         assert_eq!(config.consumer_kind(), ConsumerKind::ConsumerGroup);
         assert_eq!(
             config.polling_interval(),
-            IggyDuration::from_str("5ms").unwrap()
+            MessengerDuration::from_str("5ms").unwrap()
         );
         assert_eq!(config.polling_strategy(), PollingStrategy::last());
         assert_eq!(config.partitions_count(), 1);
         assert_eq!(config.replication_factor(), None);
 
-        assert_eq!(config.polling_retry_interval(), IggyDuration::ONE_SECOND);
+        assert_eq!(config.polling_retry_interval(), MessengerDuration::ONE_SECOND);
         assert_eq!(config.init_retries(), Some(5));
-        assert_eq!(config.init_interval(), IggyDuration::new_from_secs(3));
+        assert_eq!(config.init_interval(), MessengerDuration::new_from_secs(3));
     }
 
     #[test]
     fn should_be_new() {
-        let config = IggyConsumerConfig::new(
+        let config = MessengerConsumerConfig::new(
             Identifier::from_str_value("test_stream").unwrap(),
             "test_stream".to_string(),
             Identifier::from_str_value("test_topic").unwrap(),
@@ -392,14 +392,14 @@ mod tests {
             false,
             "test_consumer".to_string(),
             ConsumerKind::ConsumerGroup,
-            IggyDuration::from_str("5ms").unwrap(),
+            MessengerDuration::from_str("5ms").unwrap(),
             PollingStrategy::last(),
             1,
             None,
             None,
-            IggyDuration::new_from_secs(1),
+            MessengerDuration::new_from_secs(1),
             Some(3),
-            IggyDuration::new_from_secs(3),
+            MessengerDuration::new_from_secs(3),
         );
         assert_eq!(
             config.stream_id(),
@@ -422,7 +422,7 @@ mod tests {
         assert_eq!(config.consumer_kind(), ConsumerKind::ConsumerGroup);
         assert_eq!(
             config.polling_interval(),
-            IggyDuration::from_str("5ms").unwrap()
+            MessengerDuration::from_str("5ms").unwrap()
         );
         assert_eq!(config.polling_strategy(), PollingStrategy::last());
         assert_eq!(config.partitions_count(), 1);
@@ -430,19 +430,19 @@ mod tests {
 
         assert_eq!(
             config.polling_retry_interval(),
-            IggyDuration::new_from_secs(1)
+            MessengerDuration::new_from_secs(1)
         );
         assert_eq!(config.init_retries(), Some(3));
-        assert_eq!(config.init_interval(), IggyDuration::new_from_secs(3));
+        assert_eq!(config.init_interval(), MessengerDuration::new_from_secs(3));
     }
 
     #[test]
     fn should_be_from_stream_topic() {
-        let res = IggyConsumerConfig::from_stream_topic(
+        let res = MessengerConsumerConfig::from_stream_topic(
             "test_stream",
             "test_topic",
             100,
-            IggyDuration::from_str("5ms").unwrap(),
+            MessengerDuration::from_str("5ms").unwrap(),
         );
         assert!(res.is_ok());
         let config = res.unwrap();
@@ -456,7 +456,7 @@ mod tests {
         assert_eq!(config.consumer_kind(), ConsumerKind::ConsumerGroup);
         assert_eq!(
             config.polling_interval(),
-            IggyDuration::from_str("5ms").unwrap()
+            MessengerDuration::from_str("5ms").unwrap()
         );
         assert_eq!(config.polling_strategy(), PollingStrategy::last());
         assert_eq!(config.partitions_count(), 1);

@@ -1,8 +1,8 @@
-# Apache Iggy Connectors - Source
+# Apache Messenger Connectors - Source
 
 ## Overview
 
-Source connectors are responsible for ingesting data from external sources into Apache Iggy. They provide a way to integrate Apache Iggy with various data sources, such as databases, message queues, or file systems.
+Source connectors are responsible for ingesting data from external sources into Apache Messenger. They provide a way to integrate Apache Messenger with various data sources, such as databases, message queues, or file systems.
 
 The source is represented by the single `Source` trait, which defines the basic interface for all source connectors. It provides methods for initializing the source, reading data from it, and closing the source.
 
@@ -43,7 +43,7 @@ Below is the example configuration for a source connector, using `random` as it'
 [sources.random]
 enabled = true # Toggle source on/off
 name = "Random source" # Name of the source
-path = "libiggy_connector_random_source" # Path to the source connector
+path = "libmessenger_connector_random_source" # Path to the source connector
 config_format = "toml"
 
 # Collection of the streams to which the produced messages are sent
@@ -159,7 +159,7 @@ Now, let's implement the `Source` trait for our `RandomSource` struct. We'll ass
 ```rust
 #[async_trait]
 impl Source for RandomSource {
-    async fn open(&mut self) -> Result<(), iggy_connector_sdk::Error> {
+    async fn open(&mut self) -> Result<(), messenger_connector_sdk::Error> {
         info!(
             "Opened random source connector with ID: {}, messages count: {}",
             self.id, self.messages_count
@@ -167,7 +167,7 @@ impl Source for RandomSource {
         Ok(())
     }
 
-    async fn poll(&self) -> Result<ProducedMessages, iggy_connector_sdk::Error> {
+    async fn poll(&self) -> Result<ProducedMessages, messenger_connector_sdk::Error> {
         sleep(Duration::from_millis(100)).await;
         let mut state = self.state.lock().await;
         let current_id = state.current_id;
@@ -218,22 +218,22 @@ impl Source for RandomSource {
 }
 ```
 
-As you can see, the `ProducedMessage` can be customized to fit your needs, as all the fields will be directly mapped to the existing Iggy message struct.
+As you can see, the `ProducedMessage` can be customized to fit your needs, as all the fields will be directly mapped to the existing Messenger message struct.
 
 It's also important to note, that the supported format(s) might vary depending on the connector implementation. For example, you might use `JSON` as the payload format, which can be then easily parsed and processed by downstream components such as data transforms, but at the same time, you could support the other formats and let the user decide which one to use.
 
-While the final schema of messages (that will be appended to the Iggy stream), can be controlled with the built-in configuration (the particular `StreamEncoder` will be used), keep in mind, that it might be sometimes difficult/impossible e.g. to transform one format to another e.g. JSON to SBE or so, and in such a case, the produced messages will be ignored.
+While the final schema of messages (that will be appended to the Messenger stream), can be controlled with the built-in configuration (the particular `StreamEncoder` will be used), keep in mind, that it might be sometimes difficult/impossible e.g. to transform one format to another e.g. JSON to SBE or so, and in such a case, the produced messages will be ignored.
 
 Eventually, compile the source code and update the runtime configuration file using the example config above (`config.toml` file by default, unless you prefer `yaml` or `json` format instead - just make sure that `path` points to the existing plugin).
 
-And before starting the runtime, do not forget to create the specified stream and topic e.g. via Iggy CLI.
+And before starting the runtime, do not forget to create the specified stream and topic e.g. via Messenger CLI.
 
 ```bash
-iggy --username iggy --password iggy stream create example_stream
+messenger --username messenger --password messenger stream create example_stream
 
-iggy --username iggy --password iggy topic create example_stream example_topic 1 none 1d
+messenger --username messenger --password messenger topic create example_stream example_topic 1 none 1d
 ```
 
 And that's all, enjoy using the source connector!
 
-On a side note, if you'd like to process the messages consumed from the Iggy stream instead, you can implement your own **[Sink connector](https://github.com/apache/iggy/tree/master/core/connectors/sinks)** too :)
+On a side note, if you'd like to process the messages consumed from the Messenger stream instead, you can implement your own **[Sink connector](https://github.com/apache/messenger/tree/master/core/connectors/sinks)** too :)

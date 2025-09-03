@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * resowner.h
- *	  POSTGRES resource owner definitions.
+ *	  MAINTABLE resource owner definitions.
  *
  * Query-lifespan resources are tracked by associating them with
  * ResourceOwner objects.  This provides a simple mechanism for ensuring
@@ -9,7 +9,7 @@
  * See utils/resowner/README for more info.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/utils/resowner.h

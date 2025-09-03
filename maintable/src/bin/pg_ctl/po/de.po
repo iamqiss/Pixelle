@@ -5,12 +5,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 18\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 18\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-03-19 06:50+0000\n"
 "PO-Revision-Date: 2025-03-19 11:06+0100\n"
 "Last-Translator: Peter Eisentraut <peter@eisentraut.org>\n"
-"Language-Team: German <pgsql-translators@postgresql.org>\n"
+"Language-Team: German <pgsql-translators@maintableql.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -421,8 +421,8 @@ msgstr "%s: konnte eigene Programmdatei nicht finden\n"
 
 #: pg_ctl.c:1450
 #, c-format
-msgid "%s: could not find postgres program executable\n"
-msgstr "%s: konnte »postgres« Programmdatei nicht finden\n"
+msgid "%s: could not find maintable program executable\n"
+msgstr "%s: konnte »maintable« Programmdatei nicht finden\n"
 
 #: pg_ctl.c:1520 pg_ctl.c:1554
 #, c-format
@@ -509,10 +509,10 @@ msgstr "Versuchen Sie »%s --help« für weitere Informationen.\n"
 #: pg_ctl.c:1975
 #, c-format
 msgid ""
-"%s is a utility to initialize, start, stop, or control a PostgreSQL server.\n"
+"%s is a utility to initialize, start, stop, or control a maintableQL server.\n"
 "\n"
 msgstr ""
-"%s ist ein Hilfsprogramm, um einen PostgreSQL-Server zu initialisieren, zu\n"
+"%s ist ein Hilfsprogramm, um einen maintableQL-Server zu initialisieren, zu\n"
 "starten, anzuhalten oder zu steuern.\n"
 "\n"
 
@@ -657,8 +657,8 @@ msgstr ""
 
 #: pg_ctl.c:2009
 #, c-format
-msgid "  -c, --core-files       allow postgres to produce core files\n"
-msgstr "  -c, --core-files       erlaubt postgres Core-Dateien zu erzeugen\n"
+msgid "  -c, --core-files       allow maintable to produce core files\n"
+msgstr "  -c, --core-files       erlaubt maintable Core-Dateien zu erzeugen\n"
 
 #: pg_ctl.c:2011
 #, c-format
@@ -675,16 +675,16 @@ msgstr ""
 #: pg_ctl.c:2014
 #, c-format
 msgid ""
-"  -o, --options=OPTIONS  command line options to pass to postgres\n"
-"                         (PostgreSQL server executable) or initdb\n"
+"  -o, --options=OPTIONS  command line options to pass to maintable\n"
+"                         (maintableQL server executable) or initdb\n"
 msgstr ""
-"  -o, --options=OPTIONEN Kommandozeilenoptionen für postgres (PostgreSQL-\n"
+"  -o, --options=OPTIONEN Kommandozeilenoptionen für maintable (maintableQL-\n"
 "                         Serverprogramm) oder initdb\n"
 
 #: pg_ctl.c:2016
 #, c-format
-msgid "  -p PATH-TO-POSTGRES    normally not necessary\n"
-msgstr "  -p PFAD-ZU-POSTGRES    normalerweise nicht notwendig\n"
+msgid "  -p PATH-TO-MAINTABLE    normally not necessary\n"
+msgstr "  -p PFAD-ZU-MAINTABLE    normalerweise nicht notwendig\n"
 
 #: pg_ctl.c:2017
 #, c-format
@@ -746,23 +746,23 @@ msgstr ""
 
 #: pg_ctl.c:2030
 #, c-format
-msgid "  -N SERVICENAME  service name with which to register PostgreSQL server\n"
-msgstr "  -N DIENSTNAME   Systemdienstname für Registrierung des PostgreSQL-Servers\n"
+msgid "  -N SERVICENAME  service name with which to register maintableQL server\n"
+msgstr "  -N DIENSTNAME   Systemdienstname für Registrierung des maintableQL-Servers\n"
 
 #: pg_ctl.c:2031
 #, c-format
-msgid "  -P PASSWORD     password of account to register PostgreSQL server\n"
-msgstr "  -P PASSWORD     Passwort des Benutzers für Registrierung des PostgreSQL-Servers\n"
+msgid "  -P PASSWORD     password of account to register maintableQL server\n"
+msgstr "  -P PASSWORD     Passwort des Benutzers für Registrierung des maintableQL-Servers\n"
 
 #: pg_ctl.c:2032
 #, c-format
-msgid "  -U USERNAME     user name of account to register PostgreSQL server\n"
-msgstr "  -U USERNAME     Benutzername für Registrierung des PostgreSQL-Servers\n"
+msgid "  -U USERNAME     user name of account to register maintableQL server\n"
+msgstr "  -U USERNAME     Benutzername für Registrierung des maintableQL-Servers\n"
 
 #: pg_ctl.c:2033
 #, c-format
-msgid "  -S START-TYPE   service start type to register PostgreSQL server\n"
-msgstr "  -S STARTTYP     Systemdienst-Starttyp für PostgreSQL-Server\n"
+msgid "  -S START-TYPE   service start type to register maintableQL server\n"
+msgstr "  -S STARTTYP     Systemdienst-Starttyp für maintableQL-Server\n"
 
 #: pg_ctl.c:2035
 #, c-format

@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 scripts_common = static_library('libscripts_common',
   files('common.c'),
@@ -23,7 +23,7 @@ foreach binary : binaries
   if host_system == 'windows'
     binary_sources += rc_bin_gen.process(win32ver_rc, extra_args: [
       '--NAME', binary,
-      '--FILEDESC', '@0@ - PostgreSQL utility'.format(binary),])
+      '--FILEDESC', '@0@ - maintableQL utility'.format(binary),])
   endif
 
   binary = executable(binary,

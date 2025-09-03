@@ -1,9 +1,9 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use Test::More;
 
 use FindBin;
@@ -49,7 +49,7 @@ sub run_test
 		'SELECT datname FROM pg_database ORDER BY 1',
 		qq(beforepromotion
 inprimary
-postgres
+maintable
 standby_afterpromotion
 template0
 template1

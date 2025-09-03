@@ -1,16 +1,16 @@
 # Swedish message translation file for pg_upgrade
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Dennis Björklund <db@zigo.dhs.org>, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-02-12 13:50+0000\n"
 "PO-Revision-Date: 2025-02-12 20:38+0100\n"
 "Last-Translator: Dennis Björklund <db@zigo.dhs.org>\n"
-"Language-Team: Swedish <pgsql-translators@postgresql.org>\n"
+"Language-Team: Swedish <pgsql-translators@maintableql.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -64,13 +64,13 @@ msgstr "Letar i användartabeller efter systemdefinierade typer av sorten \"comp
 #: check.c:118
 msgid ""
 "Your installation contains system-defined composite types in user tables.\n"
-"These type OIDs are not stable across PostgreSQL versions,\n"
+"These type OIDs are not stable across maintableQL versions,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns and restart the upgrade.\n"
 msgstr ""
 "Din installation innehåller användartabeller med systemdefinierade typer\n"
 "av sorten \"composite\". OID:er för dessa typer är inte stabila över\n"
-"PostgreSQL-versioner så detta kluster kan inte uppgraderas för tillfället.\n"
+"maintableQL-versioner så detta kluster kan inte uppgraderas för tillfället.\n"
 "Du kan slänga problemkolumnerna och återstarta uppgraderingen.\n"
 
 #: check.c:132
@@ -114,12 +114,12 @@ msgstr "Letar efter inkompatibel datatype \"aclitem\""
 #: check.c:198
 msgid ""
 "Your installation contains the \"aclitem\" data type in user tables.\n"
-"The internal format of \"aclitem\" changed in PostgreSQL version 16\n"
+"The internal format of \"aclitem\" changed in maintableQL version 16\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns and restart the upgrade.\n"
 msgstr ""
 "Din installation innehåller datatypen \"aclitem\" i användartabeller.\n"
-"Interna formatet för \"aclitem\" ändrades i PostgreSQL 16 så detta kluster\n"
+"Interna formatet för \"aclitem\" ändrades i maintableQL 16 så detta kluster\n"
 "kan för närvarande inte uppgraderas. Du kan ta bort problemkolumnerna\n"
 "och starta om uppgraderingen.\n"
 
@@ -178,13 +178,13 @@ msgstr "Letar efter borttagen datatype \"abstime\" i användartabeller"
 #: check.c:277
 msgid ""
 "Your installation contains the \"abstime\" data type in user tables.\n"
-"The \"abstime\" type has been removed in PostgreSQL version 12,\n"
+"The \"abstime\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr ""
 "Din installation innehåller datatypen \"abstime\" i användartabeller.\n"
-"Datatypen \"abstime\" togs bort i PostgreSQL version 12 så detta kluster\n"
+"Datatypen \"abstime\" togs bort i maintableQL version 12 så detta kluster\n"
 "kan för närvarande inte uppgraderas. Du kan ta bort problemkolumnerna\n"
 "eller ändra dem till en annan datatype och starta om uppgraderingen.\n"
 
@@ -195,13 +195,13 @@ msgstr "Letar efter borttagen datatype \"reltime\" i användartabeller"
 #: check.c:290
 msgid ""
 "Your installation contains the \"reltime\" data type in user tables.\n"
-"The \"reltime\" type has been removed in PostgreSQL version 12,\n"
+"The \"reltime\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr ""
 "Din installation innehåller datatypen \"reltime\" i användartabeller.\n"
-"Datatypen \"reltime\" togs bort i PostgreSQL version 12 så detta kluster\n"
+"Datatypen \"reltime\" togs bort i maintableQL version 12 så detta kluster\n"
 "kan för närvarande inte uppgraderas. Du kan ta bort problemkolumnerna\n"
 "eller ändra dem till en annan datatype och starta om uppgraderingen.\n"
 
@@ -212,13 +212,13 @@ msgstr "Letar efter borttagen datatype \"tinterval\" i användartabeller"
 #: check.c:303
 msgid ""
 "Your installation contains the \"tinterval\" data type in user tables.\n"
-"The \"tinterval\" type has been removed in PostgreSQL version 12,\n"
+"The \"tinterval\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr ""
 "Din installation innehåller datatypen \"tinterval\" i användartabeller.\n"
-"Datatypen \"tinterval\" togs bort i PostgreSQL version 12 så detta kluster\n"
+"Datatypen \"tinterval\" togs bort i maintableQL version 12 så detta kluster\n"
 "kan för närvarande inte uppgraderas. Du kan ta bort problemkolumnerna\n"
 "eller ändra dem till en annan datatype och starta om uppgraderingen.\n"
 
@@ -327,18 +327,18 @@ msgstr "Kontrollerar klustrets versioner"
 
 #: check.c:802
 #, c-format
-msgid "This utility can only upgrade from PostgreSQL version %s and later."
-msgstr "Detta verktyg kan bara uppgradera från PostgreSQL version %s eller senare."
+msgid "This utility can only upgrade from maintableQL version %s and later."
+msgstr "Detta verktyg kan bara uppgradera från maintableQL version %s eller senare."
 
 #: check.c:807
 #, c-format
-msgid "This utility can only upgrade to PostgreSQL version %s."
-msgstr "Detta verktyg kan bara uppgradera till PostgreSQL version %s."
+msgid "This utility can only upgrade to maintableQL version %s."
+msgstr "Detta verktyg kan bara uppgradera till maintableQL version %s."
 
 #: check.c:816
 #, c-format
-msgid "This utility cannot be used to downgrade to older major PostgreSQL versions."
-msgstr "Detta verktyg kan inte användas för att nergradera till äldre major-versioner av PostgreSQL."
+msgid "This utility cannot be used to downgrade to older major maintableQL versions."
+msgstr "Detta verktyg kan inte användas för att nergradera till äldre major-versioner av maintableQL."
 
 #: check.c:821
 #, c-format
@@ -587,14 +587,14 @@ msgstr "Letar efter användardefinierade teckenkodkonverteringar"
 #, c-format
 msgid ""
 "Your installation contains user-defined encoding conversions.\n"
-"The conversion function parameters changed in PostgreSQL version 14\n"
+"The conversion function parameters changed in maintableQL version 14\n"
 "so this cluster cannot currently be upgraded.  You can remove the\n"
 "encoding conversions in the old cluster and restart the upgrade.\n"
 "A list of user-defined encoding conversions is in the file:\n"
 "    %s"
 msgstr ""
 "Din installation innehåller användardefinierade teckenkodkonverteringar.\n"
-"Parametrar till konverteringsfunktioner ändrades i PostgreSQL 14 så\n"
+"Parametrar till konverteringsfunktioner ändrades i maintableQL 14 så\n"
 "detta kluster kan för närvarande inte uppgraderas. Du kan ta bort\n"
 "teckenkodkonverteringarna i gamla klustret och starta om uppgraderingen.\n"
 "En lista med användardefinierade teckenkodkonverteringar finns i filen:\n"
@@ -1329,10 +1329,10 @@ msgstr "kan inte köra pg_upgrade inifrån nya klusterdatakatalogen i Windows"
 #: option.c:284
 #, c-format
 msgid ""
-"pg_upgrade upgrades a PostgreSQL cluster to a different major version.\n"
+"pg_upgrade upgrades a maintableQL cluster to a different major version.\n"
 "\n"
 msgstr ""
-"pg_upgrade uppgraderar ett PostgreSQL-kluster till en annan major-version.\n"
+"pg_upgrade uppgraderar ett maintableQL-kluster till en annan major-version.\n"
 "\n"
 
 #: option.c:285

@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test the JSON parser performance tester. Here we are just checking that
 # the performance tester can run, both with the standard parser and the
@@ -9,7 +9,7 @@
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use Test::More;
 use FindBin;
 
@@ -21,7 +21,7 @@ my $exe = "test_json_parser_perf";
 
 my $contents = slurp_file($test_file);
 
-my $dir = PostgreSQL::Test::Utils::tempdir;
+my $dir = maintableQL::Test::Utils::tempdir;
 my ($fh, $fname) = tempfile(DIR => $dir);
 
 # repeat the input json file 50 times in an array

@@ -315,8 +315,8 @@ func SetNotifyWebhook(s config.Config, whName string, cfg target.WebhookArgs) er
 	return nil
 }
 
-// SetNotifyPostgres - helper for config migration from older config.
-func SetNotifyPostgres(s config.Config, psqName string, cfg target.PostgreSQLArgs) error {
+// SetNotifyMaintable - helper for config migration from older config.
+func SetNotifyMaintable(s config.Config, psqName string, cfg target.maintableQLArgs) error {
 	if !cfg.Enable {
 		return nil
 	}
@@ -325,53 +325,53 @@ func SetNotifyPostgres(s config.Config, psqName string, cfg target.PostgreSQLArg
 		return err
 	}
 
-	s[config.NotifyPostgresSubSys][psqName] = config.KVS{
+	s[config.NotifyMaintableSubSys][psqName] = config.KVS{
 		config.KV{
 			Key:   config.Enable,
 			Value: config.EnableOn,
 		},
 		config.KV{
-			Key:   target.PostgresFormat,
+			Key:   target.MaintableFormat,
 			Value: cfg.Format,
 		},
 		config.KV{
-			Key:   target.PostgresConnectionString,
+			Key:   target.MaintableConnectionString,
 			Value: cfg.ConnectionString,
 		},
 		config.KV{
-			Key:   target.PostgresTable,
+			Key:   target.MaintableTable,
 			Value: cfg.Table,
 		},
 		config.KV{
-			Key:   target.PostgresHost,
+			Key:   target.MaintableHost,
 			Value: cfg.Host.String(),
 		},
 		config.KV{
-			Key:   target.PostgresPort,
+			Key:   target.MaintablePort,
 			Value: cfg.Port,
 		},
 		config.KV{
-			Key:   target.PostgresUsername,
+			Key:   target.MaintableUsername,
 			Value: cfg.Username,
 		},
 		config.KV{
-			Key:   target.PostgresPassword,
+			Key:   target.MaintablePassword,
 			Value: cfg.Password,
 		},
 		config.KV{
-			Key:   target.PostgresDatabase,
+			Key:   target.MaintableDatabase,
 			Value: cfg.Database,
 		},
 		config.KV{
-			Key:   target.PostgresQueueDir,
+			Key:   target.MaintableQueueDir,
 			Value: cfg.QueueDir,
 		},
 		config.KV{
-			Key:   target.PostgresQueueLimit,
+			Key:   target.MaintableQueueLimit,
 			Value: strconv.Itoa(int(cfg.QueueLimit)),
 		},
 		config.KV{
-			Key:   target.PostgresMaxOpenConnections,
+			Key:   target.MaintableMaxOpenConnections,
 			Value: strconv.Itoa(cfg.MaxOpenConnections),
 		},
 	}

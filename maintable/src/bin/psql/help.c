@@ -1,11 +1,11 @@
 /*
- * psql - the PostgreSQL interactive terminal
+ * psql - the maintableQL interactive terminal
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  *
  * src/bin/psql/help.c
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #ifndef WIN32
 #include <unistd.h>				/* for geteuid() */
@@ -57,7 +57,7 @@ usage(unsigned short int pager)
 	 */
 	initPQExpBuffer(&buf);
 
-	HELP0("psql is the PostgreSQL interactive terminal.\n\n");
+	HELP0("psql is the maintableQL interactive terminal.\n\n");
 	HELP0("Usage:\n");
 	HELP0("  psql [OPTION]... [DBNAME [USERNAME]]\n\n");
 
@@ -115,7 +115,7 @@ usage(unsigned short int pager)
 	HELP0("  -W, --password           force password prompt (should happen automatically)\n");
 
 	HELP0("\nFor more information, type \"\\?\" (for internal commands) or \"\\help\" (for SQL\n"
-		  "commands) from within psql, or consult the psql section in the PostgreSQL\n"
+		  "commands) from within psql, or consult the psql section in the maintableQL\n"
 		  "documentation.\n\n");
 	HELPN("Report bugs to <%s>.\n", PACKAGE_BUGREPORT);
 	HELPN("%s home page: <%s>\n", PACKAGE_NAME, PACKAGE_URL);
@@ -161,7 +161,7 @@ slashUsage(unsigned short int pager)
 	initPQExpBuffer(&buf);
 
 	HELP0("General\n");
-	HELP0("  \\copyright             show PostgreSQL usage and distribution terms\n");
+	HELP0("  \\copyright             show maintableQL usage and distribution terms\n");
 	HELP0("  \\crosstabview [COLUMNS] execute query and display result in crosstab\n");
 	HELP0("  \\errverbose            show most recent error message at maximum verbosity\n");
 	HELP0("  \\g [(OPTIONS)] [FILE]  execute query (and send result to file or |pipe);\n"
@@ -710,7 +710,7 @@ helpSQL(const char *topic, unsigned short int pager)
 
 					initPQExpBuffer(&buffer);
 					QL_HELP[i].syntaxfunc(&buffer);
-					url = psprintf("https://www.postgresql.org/docs/%s/%s.html",
+					url = psprintf("https://www.maintableql.org/docs/%s/%s.html",
 								   strstr(PG_VERSION, "devel") ? "devel" : PG_MAJORVERSION,
 								   QL_HELP[i].docbook_id);
 					/* # of newlines in format must match constant above! */
@@ -751,9 +751,9 @@ helpSQL(const char *topic, unsigned short int pager)
 void
 print_copyright(void)
 {
-	puts("PostgreSQL Database Management System\n"
-		 "(also known as Postgres, formerly known as Postgres95)\n\n"
-		 "Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group\n\n"
+	puts("maintableQL Database Management System\n"
+		 "(also known as Maintable, formerly known as Maintable95)\n\n"
+		 "Portions Copyright (c) 1996-2025, maintableQL Global Development Group\n\n"
 		 "Portions Copyright (c) 1994, The Regents of the University of California\n\n"
 		 "Permission to use, copy, modify, and distribute this software and its\n"
 		 "documentation for any purpose, without fee, and without a written agreement\n"

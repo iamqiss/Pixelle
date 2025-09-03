@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_extension.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createextension">
@@ -89,7 +89,7 @@ CREATE EXTENSION [ IF NOT EXISTS ] <replaceable class="parameter">extension_name
       <listitem>
        <para>
         The name of the extension to be
-        installed. <productname>PostgreSQL</productname> will create the
+        installed. <productname>maintableQL</productname> will create the
         extension using details from the file <filename><replaceable
         class="parameter">extension_name</replaceable>.control</filename>,
         found via the server's extension control path (set by <xref
@@ -167,7 +167,7 @@ CREATE EXTENSION [ IF NOT EXISTS ] <replaceable class="parameter">extension_name
    Before you can use <command>CREATE EXTENSION</command> to load an extension
    into a database, the extension's supporting files must be installed.
    Information about installing the extensions supplied with
-   <productname>PostgreSQL</productname> can be found in
+   <productname>maintableQL</productname> can be found in
    <link linkend="contrib">Additional Supplied Modules</link>.
   </para>
 
@@ -197,7 +197,7 @@ CREATE EXTENSION [ IF NOT EXISTS ] <replaceable class="parameter">extension_name
    </para>
 
    <para>
-    The extensions supplied with <productname>PostgreSQL</productname> are
+    The extensions supplied with <productname>maintableQL</productname> are
     believed to be secure against installation-time attacks of this sort,
     except for a few that depend on other extensions.  As stated in the
     documentation for those extensions, they should be installed into secure
@@ -232,7 +232,7 @@ CREATE EXTENSION hstore;
   <title>Compatibility</title>
 
   <para>
-   <command>CREATE EXTENSION</command> is a <productname>PostgreSQL</productname>
+   <command>CREATE EXTENSION</command> is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

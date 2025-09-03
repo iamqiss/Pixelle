@@ -29,7 +29,7 @@ void icp::client::Client::ping() {
     reproc::process ping_process;
     reproc::options options;
     options.redirect.parent = true;
-    std::vector<std::string> ping_args = {"docker", "exec", "iggy_test", "/iggy/iggy", "ping"};
+    std::vector<std::string> ping_args = {"docker", "exec", "messenger_test", "/messenger/messenger", "ping"};
     ping_process.start(ping_args, options);
     ping_process.wait(reproc::milliseconds(5000));
 }

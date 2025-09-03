@@ -9,13 +9,13 @@
 #   --parser: the backend gram.y file to read (required, no default)
 #   --output: where to write preproc.y (required, no default)
 #
-# Copyright (c) 2007-2025, PostgreSQL Global Development Group
+# Copyright (c) 2007-2025, maintableQL Global Development Group
 #
 # Written by Mike Aubury <mike.aubury@aubit.com>
-#            Michael Meskes <meskes@postgresql.org>
+#            Michael Meskes <meskes@maintableql.org>
 #            Andy Colson <andy@squeakycode.net>
 #
-# Placed under the same license as PostgreSQL.
+# Placed under the same license as maintableQL.
 #
 
 use strict;

@@ -24,7 +24,7 @@
  * AMs support this.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/catalog/pg_opclass.h
@@ -60,7 +60,7 @@ CATALOG(pg_opclass,2616,OperatorClassRelationId)
 	Oid			opcnamespace BKI_DEFAULT(pg_catalog) BKI_LOOKUP(pg_namespace);
 
 	/* opclass owner */
-	Oid			opcowner BKI_DEFAULT(POSTGRES) BKI_LOOKUP(pg_authid);
+	Oid			opcowner BKI_DEFAULT(MAINTABLE) BKI_LOOKUP(pg_authid);
 
 	/* containing operator family */
 	Oid			opcfamily BKI_LOOKUP(pg_opfamily);

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::utils::{byte_size::IggyByteSize, duration::IggyDuration, timestamp::IggyTimestamp};
+use crate::utils::{byte_size::MessengerByteSize, duration::MessengerDuration, timestamp::MessengerTimestamp};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -30,21 +30,21 @@ pub struct Stats {
     /// the total CPU usage of the system.
     pub total_cpu_usage: f32,
     /// The memory usage of the process.
-    pub memory_usage: IggyByteSize,
+    pub memory_usage: MessengerByteSize,
     /// The total memory of the system.
-    pub total_memory: IggyByteSize,
+    pub total_memory: MessengerByteSize,
     /// The available memory of the system.
-    pub available_memory: IggyByteSize,
+    pub available_memory: MessengerByteSize,
     /// The run time of the process.
-    pub run_time: IggyDuration,
+    pub run_time: MessengerDuration,
     /// The start time of the process.
-    pub start_time: IggyTimestamp,
+    pub start_time: MessengerTimestamp,
     /// The total number of bytes read.
-    pub read_bytes: IggyByteSize,
+    pub read_bytes: MessengerByteSize,
     /// The total number of bytes written.
-    pub written_bytes: IggyByteSize,
+    pub written_bytes: MessengerByteSize,
     /// The total size of the messages in bytes.
-    pub messages_size_bytes: IggyByteSize,
+    pub messages_size_bytes: MessengerByteSize,
     /// The total number of streams.
     pub streams_count: u32,
     /// The total number of topics.
@@ -67,10 +67,10 @@ pub struct Stats {
     pub os_version: String,
     /// The version of the kernel.
     pub kernel_version: String,
-    /// The version of the Iggy server.
-    pub iggy_server_version: String,
-    /// The semantic version of the Iggy server in the numeric format e.g. 1.2.3 -> 100200300 (major * 1000000 + minor * 1000 + patch).
-    pub iggy_server_semver: Option<u32>,
+    /// The version of the Messenger server.
+    pub messenger_server_version: String,
+    /// The semantic version of the Messenger server in the numeric format e.g. 1.2.3 -> 100200300 (major * 1000000 + minor * 1000 + patch).
+    pub messenger_server_semver: Option<u32>,
     /// Cache metrics per partition
     #[serde(with = "cache_metrics_serializer")]
     pub cache_metrics: HashMap<CacheMetricsKey, CacheMetrics>,
@@ -178,8 +178,8 @@ impl Default for Stats {
             os_name: "unknown_os_name".to_string(),
             os_version: "unknown_os_version".to_string(),
             kernel_version: "unknown_kernel_version".to_string(),
-            iggy_server_version: "unknown_iggy_version".to_string(),
-            iggy_server_semver: None,
+            messenger_server_version: "unknown_messenger_version".to_string(),
+            messenger_server_semver: None,
             cache_metrics: HashMap::new(),
         }
     }

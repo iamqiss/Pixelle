@@ -44,7 +44,7 @@
  * if the old one gets invalidated.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -52,7 +52,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 
@@ -138,7 +138,7 @@ ResourceOwnerForgetPlanCacheRef(ResourceOwner owner, CachedPlan *plan)
 int			plan_cache_mode = PLAN_CACHE_MODE_AUTO;
 
 /*
- * InitPlanCache: initialize module during InitPostgres.
+ * InitPlanCache: initialize module during InitMaintable.
  *
  * All we need to do is hook into inval.c's callback lists.
  */
@@ -634,7 +634,7 @@ ReleaseGenericPlan(CachedPlanSource *plansource)
  * that requires a snapshot not to be set yet (such as SET or LOCK).  More
  * generally, statements that do not require parse analysis/rewrite/plan
  * activity never need to be revalidated, so we can treat them all like that.
- * For the convenience of postgres.c, treat empty statements that way too.
+ * For the convenience of maintable.c, treat empty statements that way too.
  */
 static bool
 StmtPlanRequiresRevalidation(CachedPlanSource *plansource)

@@ -19,7 +19,7 @@
 use crate::BytesSerializable;
 use crate::Identifier;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, GET_USER_CODE};
 use bytes::Bytes;
 use serde::{Deserialize, Serialize};
@@ -41,8 +41,8 @@ impl Command for GetUser {
     }
 }
 
-impl Validatable<IggyError> for GetUser {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for GetUser {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -52,9 +52,9 @@ impl BytesSerializable for GetUser {
         self.user_id.to_bytes()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<GetUser, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<GetUser, MessengerError> {
         if bytes.len() < 3 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let user_id = Identifier::from_bytes(bytes)?;

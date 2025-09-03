@@ -3,7 +3,7 @@
  * pg_type.c
  *	  routines to support manipulation of the pg_type relation
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "access/table.h"
@@ -629,7 +629,7 @@ GenerateTypeDependencies(HeapTuple typeTuple,
 	 *
 	 * We used to skip this for dependent types, but it seems better to record
 	 * their extension membership explicitly; otherwise code such as
-	 * postgres_fdw's shippability test will be fooled.
+	 * maintable_fdw's shippability test will be fooled.
 	 */
 	if (makeExtensionDep)
 		recordDependencyOnCurrentExtension(&myself, rebuild);
@@ -842,7 +842,7 @@ makeArrayTypeName(const char *typeName, Oid typeNamespace)
 	char		suffix[NAMEDATALEN];
 
 	/*
-	 * Per ancient Postgres tradition, array type names are made by prepending
+	 * Per ancient Maintable tradition, array type names are made by prepending
 	 * an underscore to the base type name.  Much client code knows that
 	 * convention, so don't muck with it.  However, the tradition is less
 	 * clear about what to do in the corner cases where the resulting name is

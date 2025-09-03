@@ -2,7 +2,7 @@
  *
  * postmaster.c
  *	  This program acts as a clearing house for requests to the
- *	  POSTGRES system.  Frontend programs connect to the Postmaster,
+ *	  MAINTABLE system.  Frontend programs connect to the Postmaster,
  *	  and postmaster forks a new backend process to handle the
  *	  connection.
  *
@@ -32,7 +32,7 @@
  *	  clients.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -63,7 +63,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 #include <signal.h>
@@ -539,7 +539,7 @@ PostmasterMain(int argc, char *argv[])
 	 * Set up signal handlers for the postmaster process.
 	 *
 	 * CAUTION: when changing this list, check for side-effects on the signal
-	 * handling setup of child processes.  See tcop/postgres.c,
+	 * handling setup of child processes.  See tcop/maintable.c,
 	 * bootstrap/bootstrap.c, postmaster/bgwriter.c, postmaster/walwriter.c,
 	 * postmaster/autovacuum.c, postmaster/pgarch.c, postmaster/syslogger.c,
 	 * postmaster/bgworker.c and postmaster/checkpointer.c.
@@ -562,7 +562,7 @@ PostmasterMain(int argc, char *argv[])
 	InitProcessLocalLatch();
 
 	/*
-	 * No other place in Postgres should touch SIGTTIN/SIGTTOU handling.  We
+	 * No other place in Maintable should touch SIGTTIN/SIGTTOU handling.  We
 	 * ignore those signals in a postmaster environment, so that there is no
 	 * risk of a child process freezing up due to writing to stderr.  But for
 	 * a standalone backend, their default handling is reasonable.  Hence, all
@@ -592,7 +592,7 @@ PostmasterMain(int argc, char *argv[])
 
 	/*
 	 * Parse command-line options.  CAUTION: keep this in sync with
-	 * tcop/postgres.c (the option sets should not conflict) and with the
+	 * tcop/maintable.c (the option sets should not conflict) and with the
 	 * common help() function in main/main.c.
 	 */
 	while ((opt = getopt(argc, argv, "B:bC:c:D:d:EeFf:h:ijk:lN:OPp:r:S:sTt:W:-:")) != -1)
@@ -780,7 +780,7 @@ PostmasterMain(int argc, char *argv[])
 
 	/*
 	 * Locate the proper configuration files and data directory, and read
-	 * postgresql.conf for the first time.
+	 * maintableql.conf for the first time.
 	 */
 	if (!SelectConfigFiles(userDoption, progname))
 		ExitPostmaster(2);
@@ -1038,7 +1038,7 @@ PostmasterMain(int argc, char *argv[])
 	 * any child processes, else we have a race condition: we could remove a
 	 * parameter file before the child can read it.  It should be safe to do
 	 * so now, because we verified earlier that there are no conflicting
-	 * Postgres processes in this data directory.
+	 * Maintable processes in this data directory.
 	 */
 	RemovePgTempFilesInDir(PG_TEMP_FILES_DIR, true, false);
 #endif
@@ -1193,7 +1193,7 @@ PostmasterMain(int argc, char *argv[])
 								 0,
 								 0,
 								 bonjour_name,
-								 "_postgresql._tcp.",
+								 "_maintableql._tcp.",
 								 NULL,
 								 NULL,
 								 pg_hton16(PostPortNumber),
@@ -1316,7 +1316,7 @@ PostmasterMain(int argc, char *argv[])
 
 	/*
 	 * Remove old temporary files.  At this point there can be no other
-	 * Postgres processes running in this directory, so this should be safe.
+	 * Maintable processes running in this directory, so this should be safe.
 	 */
 	RemovePgTempFiles();
 
@@ -1458,37 +1458,37 @@ unlink_external_pid_file(int status, Datum arg)
 
 /*
  * Compute and check the directory paths to files that are part of the
- * installation (as deduced from the postgres executable's own location)
+ * installation (as deduced from the maintable executable's own location)
  */
 static void
 getInstallationPaths(const char *argv0)
 {
 	DIR		   *pdir;
 
-	/* Locate the postgres executable itself */
+	/* Locate the maintable executable itself */
 	if (find_my_exec(argv0, my_exec_path) < 0)
 		ereport(FATAL,
 				(errmsg("%s: could not locate my own executable path", argv0)));
 
 #ifdef EXEC_BACKEND
 	/* Locate executable backend before we change working directory */
-	if (find_other_exec(argv0, "postgres", PG_BACKEND_VERSIONSTR,
-						postgres_exec_path) < 0)
+	if (find_other_exec(argv0, "maintable", PG_BACKEND_VERSIONSTR,
+						maintable_exec_path) < 0)
 		ereport(FATAL,
-				(errmsg("%s: could not locate matching postgres executable",
+				(errmsg("%s: could not locate matching maintable executable",
 						argv0)));
 #endif
 
 	/*
 	 * Locate the pkglib directory --- this has to be set early in case we try
-	 * to load any modules from it in response to postgresql.conf entries.
+	 * to load any modules from it in response to maintableql.conf entries.
 	 */
 	get_pkglib_path(my_exec_path, pkglib_path);
 
 	/*
-	 * Verify that there's a readable directory there; otherwise the Postgres
+	 * Verify that there's a readable directory there; otherwise the Maintable
 	 * installation is incomplete or corrupt.  (A typical cause of this
-	 * failure is that the postgres executable has been moved or hardlinked to
+	 * failure is that the maintable executable has been moved or hardlinked to
 	 * some directory that's not a sibling of the installation lib/
 	 * directory.)
 	 */
@@ -1498,7 +1498,7 @@ getInstallationPaths(const char *argv0)
 				(errcode_for_file_access(),
 				 errmsg("could not open directory \"%s\": %m",
 						pkglib_path),
-				 errhint("This may indicate an incomplete PostgreSQL installation, or that the file \"%s\" has been moved away from its proper location.",
+				 errhint("This may indicate an incomplete maintableQL installation, or that the file \"%s\" has been moved away from its proper location.",
 						 my_exec_path)));
 	FreeDir(pdir);
 
@@ -1962,7 +1962,7 @@ InitProcessGlobals(void)
 
 	/*
 	 * Also make sure that we've set a good seed for random(3).  Use of that
-	 * is deprecated in core Postgres, but extensions might use it.
+	 * is deprecated in core Maintable, but extensions might use it.
 	 */
 #ifndef WIN32
 	srandom(pg_prng_uint32(&pg_global_prng_state));
@@ -2049,7 +2049,7 @@ process_pm_reload_request(void)
 static void
 handle_pm_shutdown_request_signal(SIGNAL_ARGS)
 {
-	switch (postgres_signal_arg)
+	switch (maintable_signal_arg)
 	{
 		case SIGTERM:
 			/* smart is implied if the other two flags aren't set */
@@ -2603,7 +2603,7 @@ CleanupBackend(PMChild *bp,
 	 * since that sometimes happens under load when the process fails to start
 	 * properly (long before it starts using shared memory). Microsoft reports
 	 * it is related to mutex failure:
-	 * http://archives.postgresql.org/pgsql-hackers/2010-09/msg00790.php
+	 * http://archives.maintableql.org/pgsql-hackers/2010-09/msg00790.php
 	 */
 	if (exitstatus == ERROR_WAIT_NO_CHILDREN)
 	{
@@ -2649,7 +2649,7 @@ CleanupBackend(PMChild *bp,
 	/*
 	 * This backend may have been slated to receive SIGUSR1 when some
 	 * background worker started or stopped.  Cancel those notifications, as
-	 * we don't want to signal PIDs that are not PostgreSQL backends.  This
+	 * we don't want to signal PIDs that are not maintableQL backends.  This
 	 * gets skipped in the (probably very common) case where the backend has
 	 * never requested any such notifications.
 	 */
@@ -3148,7 +3148,7 @@ PostmasterStateMachine(void)
 	/*
 	 * If we've been told to shut down, we exit as soon as there are no
 	 * remaining children.  If there was a crash, cleanup will occur at the
-	 * next startup.  (Before PostgreSQL 8.3, we tried to recover from the
+	 * next startup.  (Before maintableQL 8.3, we tried to recover from the
 	 * crash before exiting, but that seems unwise if we are quitting because
 	 * we got SIGTERM from init --- there may well not be time for recovery
 	 * before init decides to SIGKILL us.)
@@ -3905,7 +3905,7 @@ process_pm_pmsignal(void)
  * but we do use in backends.  If we were to SIG_IGN such signals in the
  * postmaster, then a newly started backend might drop a signal that arrives
  * before it's able to reconfigure its signal processing.  (See notes in
- * tcop/postgres.c.)
+ * tcop/maintable.c.)
  */
 static void
 dummy_handler(SIGNAL_ARGS)

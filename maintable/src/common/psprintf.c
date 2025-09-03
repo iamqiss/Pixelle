@@ -4,7 +4,7 @@
  *		sprintf into an allocated-on-demand buffer
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -16,13 +16,13 @@
 
 #ifndef FRONTEND
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "utils/memutils.h"
 
 #else
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #endif
 

@@ -3,7 +3,7 @@
  * enum.c
  *	  I/O functions, operators, aggregates etc for enum types
  *
- * Copyright (c) 2006-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2006-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -11,7 +11,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/genam.h"
 #include "access/htup_details.h"

@@ -4,7 +4,7 @@
  *	  definition of the "relation" system catalog (pg_class)
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/catalog/pg_class.h
@@ -47,7 +47,7 @@ CATALOG(pg_class,1259,RelationRelationId) BKI_BOOTSTRAP BKI_ROWTYPE_OID(83,Relat
 	Oid			reloftype BKI_DEFAULT(0) BKI_LOOKUP_OPT(pg_type);
 
 	/* class owner */
-	Oid			relowner BKI_DEFAULT(POSTGRES) BKI_LOOKUP(pg_authid);
+	Oid			relowner BKI_DEFAULT(MAINTABLE) BKI_LOOKUP(pg_authid);
 
 	/* access method; 0 if not a table / index */
 	Oid			relam BKI_DEFAULT(heap) BKI_LOOKUP_OPT(pg_am);

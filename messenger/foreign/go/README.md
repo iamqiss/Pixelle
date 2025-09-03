@@ -1,6 +1,6 @@
-# Go SDK for Iggy
+# Go SDK for Messenger
 
-Official Go client SDK for [Apache Iggy](https://iggy.apache.org) message streaming.
+Official Go client SDK for [Apache Messenger](https://messenger.apache.org) message streaming.
 
 The client currently supports TCP protocols with blocking implementation.
 

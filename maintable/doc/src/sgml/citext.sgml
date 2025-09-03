@@ -35,7 +35,7 @@
 
   <para>
    The standard approach to doing case-insensitive matches
-   in <productname>PostgreSQL</productname> has been to use the <function>lower</function>
+   in <productname>maintableQL</productname> has been to use the <function>lower</function>
    function when comparing values, for example
 
 <programlisting>
@@ -217,7 +217,7 @@ SELECT * FROM users WHERE nick = 'Larry';
 
     <listitem>
      <para>
-      As of <productname>PostgreSQL</productname> 9.1, you can attach a
+      As of <productname>maintableQL</productname> 9.1, you can attach a
       <literal>COLLATE</literal> specification to <type>citext</type> columns or data
       values.  Currently, <type>citext</type> operators will honor a non-default
       <literal>COLLATE</literal> specification while comparing case-folded strings,

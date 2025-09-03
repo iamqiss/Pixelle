@@ -31,7 +31,7 @@ public class ThreadAheadReadable extends ThreadAhead implements CharReadable {
 
     private String sourceDescription;
     // the variable below is read and changed in both the ahead thread and the caller,
-    // but doesn't have to be volatile since it piggy-backs off of hasReadAhead.
+    // but doesn't have to be volatile since it pmessenger-backs off of hasReadAhead.
     private String newSourceDescription;
 
     private ThreadAheadReadable(CharReadable actual, int bufferSize) {

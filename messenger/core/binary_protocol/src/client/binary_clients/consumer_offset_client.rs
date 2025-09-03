@@ -17,7 +17,7 @@
  */
 
 use async_trait::async_trait;
-use iggy_common::{Consumer, ConsumerOffsetInfo, Identifier, IggyError};
+use messenger_common::{Consumer, ConsumerOffsetInfo, Identifier, MessengerError};
 
 /// This trait defines the methods to interact with the consumer offset module.
 #[async_trait]
@@ -32,7 +32,7 @@ pub trait ConsumerOffsetClient {
         topic_id: &Identifier,
         partition_id: Option<u32>,
         offset: u64,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
     /// Get the consumer offset for a specific consumer or consumer group for the given stream and topic by unique IDs or names.
     ///
     /// Authentication is required, and the permission to poll the messages.
@@ -42,7 +42,7 @@ pub trait ConsumerOffsetClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partition_id: Option<u32>,
-    ) -> Result<Option<ConsumerOffsetInfo>, IggyError>;
+    ) -> Result<Option<ConsumerOffsetInfo>, MessengerError>;
     /// Delete the consumer offset for a specific consumer or consumer group for the given stream and topic by unique IDs or names.
     ///
     /// Authentication is required, and the permission to poll the messages.
@@ -52,5 +52,5 @@ pub trait ConsumerOffsetClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partition_id: Option<u32>,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
 }

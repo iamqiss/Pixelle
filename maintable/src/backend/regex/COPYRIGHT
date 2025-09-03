@@ -31,7 +31,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 **********************************************************************
 
-PostgreSQL adopted the code out of Tcl 8.4.1.  Portions of regc_locale.c
+maintableQL adopted the code out of Tcl 8.4.1.  Portions of regc_locale.c
 and re_syntax.n were developed by Tcl developers other than Henry; these
 files bear the Tcl copyright and license notice:
 
@@ -80,5 +80,5 @@ terms specified in this license.
 
 **********************************************************************
 
-Subsequent modifications to the code by the PostgreSQL project follow
-the same license terms as the rest of PostgreSQL.
+Subsequent modifications to the code by the maintableQL project follow
+the same license terms as the rest of maintableQL.

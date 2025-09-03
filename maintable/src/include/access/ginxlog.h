@@ -1,8 +1,8 @@
 /*--------------------------------------------------------------------------
  * ginxlog.h
- *	  header file for postgres inverted index xlog implementation.
+ *	  header file for maintable inverted index xlog implementation.
  *
- *	Copyright (c) 2006-2025, PostgreSQL Global Development Group
+ *	Copyright (c) 2006-2025, maintableQL Global Development Group
  *
  *	src/include/access/ginxlog.h
  *--------------------------------------------------------------------------

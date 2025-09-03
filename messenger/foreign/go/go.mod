@@ -1,4 +1,4 @@
-module github.com/apache/iggy/foreign/go
+module github.com/apache/messenger/foreign/go
 
 go 1.23.0
 

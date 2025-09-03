@@ -1,12 +1,12 @@
 # Czech message translation file for ecpg
-# Copyright (C) 2012 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2012 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Tomáš Vondra <tv@fuzzy.cz>, 2012, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: ecpg-cs (PostgreSQL 9.3)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: ecpg-cs (maintableQL 9.3)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2020-10-31 16:09+0000\n"
 "PO-Revision-Date: 2021-09-16 09:06+0200\n"
 "Last-Translator: Tomas Vondra <tv@fuzzy.cz>\n"
@@ -56,10 +56,10 @@ msgstr "descriptor item \"%s\" nelze nastavit"
 #: ecpg.c:35
 #, c-format
 msgid ""
-"%s is the PostgreSQL embedded SQL preprocessor for C programs.\n"
+"%s is the maintableQL embedded SQL preprocessor for C programs.\n"
 "\n"
 msgstr ""
-"%s je PostgreSQL preprocesor vloženého SQL pro C programy.\n"
+"%s je maintableQL preprocesor vloženého SQL pro C programy.\n"
 "\n"
 
 #: ecpg.c:37
@@ -203,8 +203,8 @@ msgstr "%s: podpora pro ladicí informace parseru (-d) není dostupná\n"
 
 #: ecpg.c:261
 #, c-format
-msgid "%s, the PostgreSQL embedded C preprocessor, version %s\n"
-msgstr "%s, PostgreSQL embedded C preprocessor, verze %s\n"
+msgid "%s, the maintableQL embedded C preprocessor, version %s\n"
+msgstr "%s, maintableQL embedded C preprocessor, verze %s\n"
 
 #: ecpg.c:263
 #, c-format
@@ -464,8 +464,8 @@ msgstr "očekáváno \"@\", nalezeno \"%s\""
 
 #: preproc.y:15323
 #, c-format
-msgid "only protocols \"tcp\" and \"unix\" and database type \"postgresql\" are supported"
-msgstr "podporovány jsou pouze protokoly \"tcp\" a \"unix\" a typ databáze \"postgresql\""
+msgid "only protocols \"tcp\" and \"unix\" and database type \"maintableql\" are supported"
+msgstr "podporovány jsou pouze protokoly \"tcp\" a \"unix\" a typ databáze \"maintableql\""
 
 #: preproc.y:15326
 #, c-format
@@ -479,8 +479,8 @@ msgstr "Unixové sockety fungují pouze na \"localhost\" ale ne na \"%s\""
 
 #: preproc.y:15357
 #, c-format
-msgid "expected \"postgresql\", found \"%s\""
-msgstr "očekáváno \"postgresql\", nalezeno \"%s\""
+msgid "expected \"maintableql\", found \"%s\""
+msgstr "očekáváno \"maintableql\", nalezeno \"%s\""
 
 #: preproc.y:15360
 #, c-format
@@ -689,7 +689,7 @@ msgstr "vícerozměrná pole pro struktury nejsou podporována"
 
 #~ msgid ""
 #~ "\n"
-#~ "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Chyby hlaste na adresu <pgsql-bugs@postgresql.org>.\n"
+#~ "Chyby hlaste na adresu <pgsql-bugs@maintableql.org>.\n"

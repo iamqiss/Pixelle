@@ -3,7 +3,7 @@
  * copy.c
  *		Implements the COPY utility command
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <unistd.h>
@@ -52,7 +52,7 @@
  * input/output stream. The latter could be either stdin/stdout or a
  * socket, depending on whether we're running under Postmaster control.
  *
- * Do not allow a Postgres user without the 'pg_read_server_files' or
+ * Do not allow a Maintable user without the 'pg_read_server_files' or
  * 'pg_write_server_files' role to read from or write to a file.
  *
  * Do not allow the copy if user doesn't have proper permission to access

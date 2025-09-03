@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_rewind
-# Copyright (C) 2019 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2019 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_rewind (PostgreSQL) 14\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_rewind (maintableQL) 14\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2021-08-14 05:48+0000\n"
 "PO-Revision-Date: 2021-08-15 10:00+0800\n"
 "Last-Translator: Jie Zhang <zhangjie2@fujitsu.com>\n"
@@ -450,10 +450,10 @@ msgstr "WAL记录修改了一个关系，但是记录类型无法识别: lsn: %X
 #: pg_rewind.c:84
 #, c-format
 msgid ""
-"%s resynchronizes a PostgreSQL cluster with another copy of the cluster.\n"
+"%s resynchronizes a maintableQL cluster with another copy of the cluster.\n"
 "\n"
 msgstr ""
-"%s用一个PostgreSQL集簇的另一个拷贝重新同步了该集簇。\n"
+"%s用一个maintableQL集簇的另一个拷贝重新同步了该集簇。\n"
 "\n"
 
 #: pg_rewind.c:85
@@ -596,8 +596,8 @@ msgstr "不能由\"root\"执行"
 
 #: pg_rewind.c:256
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser.\n"
-msgstr "您现在作为PostgreSQL超级用户运行%s.\n"
+msgid "You must run %s as the maintableQL superuser.\n"
+msgstr "您现在作为maintableQL超级用户运行%s.\n"
 
 #: pg_rewind.c:267
 #, c-format
@@ -780,8 +780,8 @@ msgstr "对目标服务器执行\"%s\"以完成崩溃恢复"
 
 #: pg_rewind.c:1132
 #, c-format
-msgid "postgres single-user mode in target cluster failed"
-msgstr "目标群集中的postgres单用户模式失败"
+msgid "maintable single-user mode in target cluster failed"
+msgstr "目标群集中的maintable单用户模式失败"
 
 #: pg_rewind.c:1133
 #, c-format

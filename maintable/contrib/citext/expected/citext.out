@@ -203,7 +203,7 @@ SELECT citext_cmp('B'::citext, 'a'::citext) > 0 AS true;
 SELECT v as value, citext_hash(v)::bit(32) as standard,
        citext_hash_extended(v, 0)::bit(32) as extended0,
        citext_hash_extended(v, 1)::bit(32) as extended1
-FROM   (VALUES (NULL::citext), ('PostgreSQL'), ('eIpUEtqmY89'), ('AXKEJBTK'),
+FROM   (VALUES (NULL::citext), ('maintableQL'), ('eIpUEtqmY89'), ('AXKEJBTK'),
        ('muop28x03'), ('yi3nm0d73')) x(v)
 WHERE  citext_hash(v)::bit(32) != citext_hash_extended(v, 0)::bit(32)
        OR citext_hash(v)::bit(32) = citext_hash_extended(v, 1)::bit(32);

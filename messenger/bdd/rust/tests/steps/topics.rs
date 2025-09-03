@@ -18,7 +18,7 @@
 
 use crate::common::global_context::GlobalContext;
 use cucumber::{then, when};
-use iggy::prelude::{CompressionAlgorithm, Identifier, IggyExpiry, MaxTopicSize, TopicClient};
+use messenger::prelude::{CompressionAlgorithm, Identifier, MessengerExpiry, MaxTopicSize, TopicClient};
 
 #[when(
     regex = r"^I create a topic with ID (\d+) and name (.+) in stream (\d+) with (\d+) partitions$"
@@ -39,7 +39,7 @@ pub async fn when_create_topic(
             CompressionAlgorithm::default(),
             None,
             Some(topic_id),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await

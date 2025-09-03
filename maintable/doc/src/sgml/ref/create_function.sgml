@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_function.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createfunction">
@@ -635,7 +635,7 @@ END
   <title>Overloading</title>
 
    <para>
-    <productname>PostgreSQL</productname> allows function
+    <productname>maintableQL</productname> allows function
     <firstterm>overloading</firstterm>; that is, the same name can be
     used for several different functions so long as they have distinct
     input argument types.  Whether or not you use it, this capability entails
@@ -857,10 +857,10 @@ COMMIT;
 
   <para>
    A <command>CREATE FUNCTION</command> command is defined in the SQL
-   standard.  The <productname>PostgreSQL</productname> implementation can be
+   standard.  The <productname>maintableQL</productname> implementation can be
    used in a compatible way but has many extensions.  Conversely, the SQL
    standard specifies a number of optional features that are not implemented
-   in <productname>PostgreSQL</productname>.
+   in <productname>maintableQL</productname>.
   </para>
 
   <para>
@@ -869,7 +869,7 @@ COMMIT;
    <itemizedlist>
     <listitem>
      <para>
-      <literal>OR REPLACE</literal> is a PostgreSQL extension.
+      <literal>OR REPLACE</literal> is a maintableQL extension.
      </para>
     </listitem>
 
@@ -892,7 +892,7 @@ COMMIT;
 
     <listitem>
      <para>
-      The <literal>SETOF</literal> modifier is a PostgreSQL extension.
+      The <literal>SETOF</literal> modifier is a maintableQL extension.
      </para>
     </listitem>
 
@@ -922,7 +922,7 @@ COMMIT;
    Simple <literal>LANGUAGE SQL</literal> functions can be written in a way
    that is both standard-conforming and portable to other implementations.
    More complex functions using advanced features, optimization attributes, or
-   other languages will necessarily be specific to PostgreSQL in a significant
+   other languages will necessarily be specific to maintableQL in a significant
    way.
   </para>
  </refsect1>

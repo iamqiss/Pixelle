@@ -8,7 +8,7 @@
  * relations need be included.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/catalog/pg_attribute.h
@@ -44,7 +44,7 @@ CATALOG(pg_attribute,1249,AttributeRelationId) BKI_BOOTSTRAP BKI_ROWTYPE_OID(75,
 	 * atttypid is the OID of the instance in Catalog Class pg_type that
 	 * defines the data type of this attribute (e.g. int4).  Information in
 	 * that instance is redundant with the attlen, attbyval, and attalign
-	 * attributes of this instance, so they had better match or Postgres will
+	 * attributes of this instance, so they had better match or Maintable will
 	 * fail.  In an entry for a dropped column, this field is set to zero
 	 * since the pg_type entry may no longer exist; but we rely on attlen,
 	 * attbyval, and attalign to still tell us how large the values in the

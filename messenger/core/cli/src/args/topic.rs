@@ -18,7 +18,7 @@
 
 use crate::args::common::ListMode;
 use clap::{Args, Subcommand};
-use iggy::prelude::{CompressionAlgorithm, Identifier, IggyExpiry, MaxTopicSize};
+use messenger::prelude::{CompressionAlgorithm, Identifier, MessengerExpiry, MaxTopicSize};
 
 #[derive(Debug, Clone, Subcommand)]
 pub(crate) enum TopicAction {
@@ -28,10 +28,10 @@ pub(crate) enum TopicAction {
     /// If topic ID is not provided then the server will automatically assign it
     ///
     /// Examples
-    ///  iggy topic create 1 sensor1 2 gzip 15days
-    ///  iggy topic create prod sensor2 2 none
-    ///  iggy topic create test debugs 2 gzip 1day 1hour 1min 1sec
-    ///  iggy topic create -t 3 1 sensor3 2 none unlimited
+    ///  messenger topic create 1 sensor1 2 gzip 15days
+    ///  messenger topic create prod sensor2 2 none
+    ///  messenger topic create test debugs 2 gzip 1day 1hour 1min 1sec
+    ///  messenger topic create -t 3 1 sensor3 2 none unlimited
     #[clap(verbatim_doc_comment, visible_alias = "c")]
     Create(TopicCreateArgs),
     /// Delete topic with given ID in given stream ID
@@ -40,10 +40,10 @@ pub(crate) enum TopicAction {
     /// Topic ID can be specified as a topic name or ID
     ///
     /// Examples
-    ///  iggy topic delete 1 1
-    ///  iggy topic delete prod 2
-    ///  iggy topic delete test debugs
-    ///  iggy topic delete 2 debugs
+    ///  messenger topic delete 1 1
+    ///  messenger topic delete prod 2
+    ///  messenger topic delete test debugs
+    ///  messenger topic delete 2 debugs
     #[clap(verbatim_doc_comment, visible_alias = "d")]
     Delete(TopicDeleteArgs),
     /// Update topic name, compression algorithm and message expiry time for given topic ID in given stream ID
@@ -52,11 +52,11 @@ pub(crate) enum TopicAction {
     /// Topic ID can be specified as a topic name or ID
     ///
     /// Examples
-    ///  iggy update 1 1 sensor3 none
-    ///  iggy update prod sensor3 old-sensor none
-    ///  iggy update test debugs ready gzip 15days
-    ///  iggy update 1 1 new-name gzip
-    ///  iggy update 1 2 new-name none 1day 1hour 1min 1sec
+    ///  messenger update 1 1 sensor3 none
+    ///  messenger update prod sensor3 old-sensor none
+    ///  messenger update test debugs ready gzip 15days
+    ///  messenger update 1 1 new-name gzip
+    ///  messenger update 1 2 new-name none 1day 1hour 1min 1sec
     #[clap(verbatim_doc_comment, visible_alias = "u")]
     Update(TopicUpdateArgs),
     /// Get topic detail for given topic ID and stream ID
@@ -65,10 +65,10 @@ pub(crate) enum TopicAction {
     /// Topic ID can be specified as a topic name or ID
     ///
     /// Examples
-    ///  iggy topic get 1 1
-    ///  iggy topic get prod 2
-    ///  iggy topic get test debugs
-    ///  iggy topic get 2 debugs
+    ///  messenger topic get 1 1
+    ///  messenger topic get prod 2
+    ///  messenger topic get test debugs
+    ///  messenger topic get 2 debugs
     #[clap(verbatim_doc_comment, visible_alias = "g")]
     Get(TopicGetArgs),
     /// List all topics in given stream ID
@@ -76,8 +76,8 @@ pub(crate) enum TopicAction {
     /// Stream ID can be specified as a stream name or ID
     ///
     /// Examples
-    ///  iggy topic list 1
-    ///  iggy topic list prod
+    ///  messenger topic list 1
+    ///  messenger topic list prod
     #[clap(verbatim_doc_comment, visible_alias = "l")]
     List(TopicListArgs),
     /// Purge topic with given ID in given stream ID
@@ -87,10 +87,10 @@ pub(crate) enum TopicAction {
     /// Topic ID can be specified as a topic name or ID
     ///
     /// Examples
-    ///  iggy topic purge 1 1
-    ///  iggy topic purge prod 2
-    ///  iggy topic purge test debugs
-    ///  iggy topic purge 2 debugs
+    ///  messenger topic purge 1 1
+    ///  messenger topic purge prod 2
+    ///  messenger topic purge test debugs
+    ///  messenger topic purge 2 debugs
     #[clap(verbatim_doc_comment, visible_alias = "p")]
     Purge(TopicPurgeArgs),
 }
@@ -124,8 +124,8 @@ pub(crate) struct TopicCreateArgs {
     /// Message expiry time in human-readable format like "unlimited" or "15days 2min 2s"
     ///
     /// "server_default" or skipping parameter makes CLI to use server default (from current server config) expiry time
-    #[arg(default_value = "server_default", value_parser = clap::value_parser!(IggyExpiry), verbatim_doc_comment)]
-    pub(crate) message_expiry: Vec<IggyExpiry>,
+    #[arg(default_value = "server_default", value_parser = clap::value_parser!(MessengerExpiry), verbatim_doc_comment)]
+    pub(crate) message_expiry: Vec<MessengerExpiry>,
 }
 
 #[derive(Debug, Clone, Args)]
@@ -171,8 +171,8 @@ pub(crate) struct TopicUpdateArgs {
     /// New message expiry time in human-readable format like "unlimited" or "15days 2min 2s"
     ///
     /// "server_default" or skipping parameter makes CLI to use server default (from current server config) expiry time
-    #[arg(default_value = "server_default", value_parser = clap::value_parser!(IggyExpiry), verbatim_doc_comment)]
-    pub(crate) message_expiry: Vec<IggyExpiry>,
+    #[arg(default_value = "server_default", value_parser = clap::value_parser!(MessengerExpiry), verbatim_doc_comment)]
+    pub(crate) message_expiry: Vec<MessengerExpiry>,
 }
 
 #[derive(Debug, Clone, Args)]

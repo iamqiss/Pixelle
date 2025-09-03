@@ -17,13 +17,13 @@ For All Releases (major, minor, beta, RC)
 
 * Translation updates
 	1. Check out the messages repository (of the right branch) from
-	   <http://git.postgresql.org/git/pgtranslation/messages.git>.
+	   <http://git.maintableql.org/git/pgtranslation/messages.git>.
 	2. Check out the admin repository from
-	   <http://git.postgresql.org/git/pgtranslation/admin.git>.
-	3. From babel.postgresql.org, download the "qualified list"
+	   <http://git.maintableql.org/git/pgtranslation/admin.git>.
+	3. From babel.maintableql.org, download the "qualified list"
 	   for the respective branch.
-	4. Run ".../admin/cp-po -L qualified-list-xxx.txt -g .../messages .../postgresql".
-	   This creates a commit in the postgresql repository.
+	4. Run ".../admin/cp-po -L qualified-list-xxx.txt -g .../messages .../maintableql".
+	   This creates a commit in the maintableql repository.
 	5. Push everything.
 
 
@@ -44,7 +44,7 @@ in both master and the branch.
 		o  bug fixes for serious or common bugs
 		o  incompatibilities and significant user-visible changes
 		o  major source code changes
-	o update TODO list, http://wiki.postgresql.org/wiki/Todo
+	o update TODO list, http://wiki.maintableql.org/wiki/Todo
 		o  verify items marked as completed are completed
 		o  mark additional items as completed
 		o  remove completed items
@@ -204,7 +204,7 @@ would mean an increase in the minor version number so long as it does not
 require a major version increase.
 
 Given that we make at least some changes to our libraries in every major
-PostgreSQL version, we always bump all minor library version numbers in
+maintableQL version, we always bump all minor library version numbers in
 each development cycle as a matter of policy.  This is currently mechanized
 by referencing the MAJORVERSION make macro in the value of SO_MINOR_VERSION
 for each shared library.  As of v10, SO_MINOR_VERSION is simply equal to
@@ -221,7 +221,7 @@ Minimizing Changes
 ==================
 
 When modifying public functions arguments, steps should be taken to
-maintain binary compatibility across minor PostgreSQL releases (e.g. the
+maintain binary compatibility across minor maintableQL releases (e.g. the
 7.2 series, the 7.3 series, the 7.4/8.0 series). Consider the following
 function:
 

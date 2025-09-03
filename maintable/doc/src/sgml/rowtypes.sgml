@@ -14,7 +14,7 @@
  <para>
   A <firstterm>composite type</firstterm> represents the structure of a row or record;
   it is essentially just a list of field names and their data types.
-  <productname>PostgreSQL</productname> allows  composite types to be
+  <productname>maintableQL</productname> allows  composite types to be
   used in many of the same ways that simple types can be used.  For example, a
   column of a table can be declared to be of a composite type.
  </para>
@@ -262,7 +262,7 @@ INSERT INTO mytab (complex_col.r, complex_col.i) VALUES(1.1, 2.2);
   </para>
 
   <para>
-   In <productname>PostgreSQL</productname>, a reference to a table name (or alias)
+   In <productname>maintableQL</productname>, a reference to a table name (or alias)
    in a query is effectively a reference to the composite value of the
    table's current row.  For example, if we had a table
    <structname>inventory_item</structname> as shown
@@ -308,7 +308,7 @@ SELECT c.* FROM inventory_item c;
 <programlisting>
 SELECT c.name, c.supplier_id, c.price FROM inventory_item c;
 </programlisting>
-   <productname>PostgreSQL</productname> will apply this expansion behavior to
+   <productname>maintableQL</productname> will apply this expansion behavior to
    any composite-valued expression, although as shown <link
    linkend="rowtypes-accessing">above</link>, you need to write parentheses
    around the value that <literal>.*</literal> is applied to whenever it's not a
@@ -324,7 +324,7 @@ SELECT (myfunc(x)).a, (myfunc(x)).b, (myfunc(x)).c FROM some_table;
 
   <tip>
    <para>
-    <productname>PostgreSQL</productname> handles column expansion by
+    <productname>maintableQL</productname> handles column expansion by
     actually transforming the first form into the second.  So, in this
     example, <function>myfunc()</function> would get invoked three times per row
     with either syntax.  If it's an expensive function you may wish to
@@ -444,7 +444,7 @@ SELECT c.somefunc FROM inventory_item c;
     that composite type.  If there is ambiguity, the field-name
     interpretation will be chosen if field-name syntax is used, while the
     function will be chosen if function-call syntax is used.  However,
-    <productname>PostgreSQL</productname> versions before 11 always chose the
+    <productname>maintableQL</productname> versions before 11 always chose the
     field-name interpretation, unless the syntax of the call required it to
     be a function call.  One way to force the function interpretation in
     older versions is to schema-qualify the function name, that is, write

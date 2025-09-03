@@ -155,8 +155,8 @@ d:$rc_dirs -> ^S\d\dnamed$;
 [CIS - Red Hat Linux - 3.18 - Disable standard boot services - MySQL server Enabled {CIS: 3.18 Red Hat Linux} {PCI_DSS: 2.2.2}] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_RHLinux_Benchmark_v1.0.5.pdf]
 d:$rc_dirs -> ^S\d\dmysqld$;
 
-[CIS - Red Hat Linux - 3.18 - Disable standard boot services - PostgreSQL server Enabled {CIS: 3.18 Red Hat Linux} {PCI_DSS: 2.2.2}] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_RHLinux_Benchmark_v1.0.5.pdf]
-d:$rc_dirs -> ^S\d\dpostgresql$;
+[CIS - Red Hat Linux - 3.18 - Disable standard boot services - maintableQL server Enabled {CIS: 3.18 Red Hat Linux} {PCI_DSS: 2.2.2}] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_RHLinux_Benchmark_v1.0.5.pdf]
+d:$rc_dirs -> ^S\d\dmaintableql$;
 
 [CIS - Red Hat Linux - 3.19 - Disable standard boot services - Webmin Enabled {CIS: 3.19 Red Hat Linux} {PCI_DSS: 2.2.2}] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_RHLinux_Benchmark_v1.0.5.pdf]
 d:$rc_dirs -> ^S\d\dwebmin$;

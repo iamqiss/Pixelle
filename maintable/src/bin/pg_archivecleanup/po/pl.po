@@ -1,11 +1,11 @@
 # LANGUAGE message translation file for pg_archivecleanup
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # grzegorz <begina.felicysym@wp.eu>, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_archivecleanup (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pg_archivecleanup (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2017-03-14 17:45+0000\n"
 "PO-Revision-Date: 2017-03-14 19:43+0200\n"
 "Last-Translator: grzegorz <begina.felicysym@wp.eu>\n"
@@ -67,10 +67,10 @@ msgstr "Użyj \"%s --help\" aby uzyskać więcej informacji.\n"
 #: pg_archivecleanup.c:263
 #, c-format
 msgid ""
-"%s removes older WAL files from PostgreSQL archives.\n"
+"%s removes older WAL files from maintableQL archives.\n"
 "\n"
 msgstr ""
-"%s usuwa starsze pliki WAL z archiwów PostgreSQL.\n"
+"%s usuwa starsze pliki WAL z archiwów maintableQL.\n"
 "\n"
 
 #: pg_archivecleanup.c:264
@@ -152,10 +152,10 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@maintableql.org>.\n"
 msgstr ""
 "\n"
-"Błędy proszę przesyłać na adres <pgsql-bugs@postgresql.org>.\n"
+"Błędy proszę przesyłać na adres <pgsql-bugs@maintableql.org>.\n"
 
 #: pg_archivecleanup.c:342
 #, c-format

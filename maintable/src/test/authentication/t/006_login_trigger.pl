@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Tests of authentication via login trigger. Mostly for rejection via
 # exception, because this scenario cannot be covered with *.sql/*.out regress
@@ -7,8 +7,8 @@
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 if (!$use_unix_sockets)
 {
@@ -34,7 +34,7 @@ sub psql_command
 
 	# Execute command
 	my ($ret, $stdout, $stderr) =
-	  $node->psql('postgres', $sql, connstr => "$connstr");
+	  $node->psql('maintable', $sql, connstr => "$connstr");
 
 	# Check return code
 	is($ret, $expected_ret, "$test_name: exit code $expected_ret");
@@ -87,10 +87,10 @@ sub psql_command
 }
 
 # New node
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init(extra => [ '--locale=C', '--encoding=UTF8' ]);
 $node->append_conf(
-	'postgresql.conf', q{
+	'maintableql.conf', q{
 wal_level = 'logical'
 max_replication_slots = 4
 max_wal_senders = 4

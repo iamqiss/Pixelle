@@ -4,10 +4,10 @@
  * Utilities related to the handling of configuration files.
  *
  * This file contains some generic tools to work on configuration files
- * used by PostgreSQL, be they related to GUCs or authentication.
+ * used by maintableQL, be they related to GUCs or authentication.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -16,7 +16,7 @@
  *--------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <dirent.h>
 

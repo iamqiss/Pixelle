@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 use std::str::FromStr;
@@ -33,12 +33,12 @@ pub enum UserStatus {
 }
 
 impl FromStr for UserStatus {
-    type Err = IggyError;
+    type Err = MessengerError;
     fn from_str(input: &str) -> Result<Self, Self::Err> {
         match input {
             "active" => Ok(UserStatus::Active),
             "inactive" => Ok(UserStatus::Inactive),
-            _ => Err(IggyError::InvalidUserStatus),
+            _ => Err(MessengerError::InvalidUserStatus),
         }
     }
 }
@@ -62,11 +62,11 @@ impl UserStatus {
     }
 
     /// Returns the user status from the code.
-    pub fn from_code(code: u8) -> Result<Self, IggyError> {
+    pub fn from_code(code: u8) -> Result<Self, MessengerError> {
         match code {
             1 => Ok(UserStatus::Active),
             2 => Ok(UserStatus::Inactive),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

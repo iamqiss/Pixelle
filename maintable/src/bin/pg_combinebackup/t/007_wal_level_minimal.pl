@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 #
 # This test aims to validate that taking an incremental backup fails when
 # wal_level has been changed to minimal between the full backup and the
@@ -7,8 +7,8 @@
 use strict;
 use warnings FATAL => 'all';
 use File::Compare;
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Can be changed to test the other modes.
@@ -17,16 +17,16 @@ my $mode = $ENV{PG_TEST_PG_COMBINEBACKUP_MODE} || '--copy';
 note "testing using mode $mode";
 
 # Set up a new database instance.
-my $node1 = PostgreSQL::Test::Cluster->new('node1');
+my $node1 = maintableQL::Test::Cluster->new('node1');
 $node1->init(allows_streaming => 1);
-$node1->append_conf('postgresql.conf', <<EOM);
+$node1->append_conf('maintableql.conf', <<EOM);
 summarize_wal = on
 wal_keep_size = '1GB'
 EOM
 $node1->start;
 
 # Create a table and insert a test row into it.
-$node1->safe_psql('postgres', <<EOM);
+$node1->safe_psql('maintable', <<EOM);
 CREATE TABLE mytable (a int, b text);
 INSERT INTO mytable VALUES (1, 'finch');
 EOM
@@ -44,7 +44,7 @@ $node1->command_ok(
 
 # Switch to wal_level=minimal, which also requires max_wal_senders=0 and
 # summarize_wal=off
-$node1->safe_psql('postgres', <<EOM);
+$node1->safe_psql('maintable', <<EOM);
 ALTER SYSTEM SET wal_level = minimal;
 ALTER SYSTEM SET max_wal_senders = 0;
 ALTER SYSTEM SET summarize_wal = off;
@@ -52,12 +52,12 @@ EOM
 $node1->restart;
 
 # Insert a second row on the original node.
-$node1->safe_psql('postgres', <<EOM);
+$node1->safe_psql('maintable', <<EOM);
 INSERT INTO mytable VALUES (2, 'gerbil');
 EOM
 
 # Revert configuration changes
-$node1->safe_psql('postgres', <<EOM);
+$node1->safe_psql('maintable', <<EOM);
 ALTER SYSTEM RESET wal_level;
 ALTER SYSTEM RESET max_wal_senders;
 ALTER SYSTEM RESET summarize_wal;

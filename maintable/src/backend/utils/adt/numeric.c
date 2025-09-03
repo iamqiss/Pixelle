@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * numeric.c
- *	  An exact numeric data type for the Postgres database system
+ *	  An exact numeric data type for the Maintable database system
  *
  * Original coding 1998, Jan Wieck.  Heavily revised 2003, Tom Lane.
  *
@@ -11,7 +11,7 @@
  * Transactions on Mathematical Software, Vol. 24, No. 4, December 1998,
  * pages 359-367.
  *
- * Copyright (c) 1998-2025, PostgreSQL Global Development Group
+ * Copyright (c) 1998-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/utils/adt/numeric.c
@@ -19,7 +19,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <float.h>
@@ -1227,7 +1227,7 @@ numeric_support(PG_FUNCTION_ARGS)
 /*
  * numeric() -
  *
- *	This is a special function called by the Postgres database system
+ *	This is a special function called by the Maintable database system
  *	before a value is stored in a tuple's attribute. The precision and
  *	scale of the attribute have to be applied on the value.
  */
@@ -9754,7 +9754,7 @@ select_div_scale(const NumericVar *var1, const NumericVar *var2)
 
 	/*
 	 * The result scale of a division isn't specified in any SQL standard. For
-	 * PostgreSQL we select a result scale that will give at least
+	 * maintableQL we select a result scale that will give at least
 	 * NUMERIC_MIN_SIG_DIGITS significant digits, so that numeric gives a
 	 * result no less accurate than float8; but use a scale not less than
 	 * either input's display scale.

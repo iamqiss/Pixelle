@@ -16,32 +16,32 @@
  * under the License.
  */
 
-use iggy::prelude::*;
+use messenger::prelude::*;
 use std::str::FromStr;
 
-const IGGY_URL: &str = "iggy://iggy:iggy@localhost:8090";
+const MESSENGER_URL: &str = "messenger://messenger:messenger@localhost:8090";
 
 #[tokio::main]
-async fn main() -> Result<(), IggyError> {
-    println!("Build iggy client and producer");
+async fn main() -> Result<(), MessengerError> {
+    println!("Build messenger client and producer");
     // For customization, use the `new` or `from_stream_topic` constructor
-    let config = IggyProducerConfig::default();
-    let (client, producer) = IggyStreamProducer::with_client_from_url(IGGY_URL, &config).await?;
+    let config = MessengerProducerConfig::default();
+    let (client, producer) = MessengerStreamProducer::with_client_from_url(MESSENGER_URL, &config).await?;
 
     println!("Send 3 test messages...");
     producer
-        .send_one(IggyMessage::from_str("Hello World")?)
+        .send_one(MessengerMessage::from_str("Hello World")?)
         .await?;
     producer
-        .send_one(IggyMessage::from_str("Hola Iggy")?)
+        .send_one(MessengerMessage::from_str("Hola Messenger")?)
         .await?;
     producer
-        .send_one(IggyMessage::from_str("Hi Apache")?)
+        .send_one(MessengerMessage::from_str("Hi Apache")?)
         .await?;
 
     // Wait a bit for all messages to arrive.
     tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
-    println!("Stop the message stream and shutdown iggy client");
+    println!("Stop the message stream and shutdown messenger client");
     client.shutdown().await?;
     Ok(())
 }

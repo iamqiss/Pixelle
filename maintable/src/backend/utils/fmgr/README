@@ -279,7 +279,7 @@ struct and return a dummy result value.  Further details appear in
 Handling Soft Errors
 --------------------
 
-Postgres' standard mechanism for reporting errors (ereport() or elog())
+Maintable' standard mechanism for reporting errors (ereport() or elog())
 is used for all sorts of error conditions.  This means that throwing
 an exception via ereport(ERROR) requires an expensive transaction or
 subtransaction abort and cleanup, since the exception catcher dare not

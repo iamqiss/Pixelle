@@ -25,8 +25,8 @@ import (
 	"sync"
 	"time"
 
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	ierror "github.com/apache/iggy/foreign/go/errors"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	ierror "github.com/apache/messenger/foreign/go/errors"
 )
 
 type Option func(config *Options)
@@ -45,10 +45,10 @@ func GetDefaultOptions() Options {
 	}
 }
 
-type IggyTcpClient struct {
+type MessengerTcpClient struct {
 	conn               *net.TCPConn
 	mtx                sync.Mutex
-	MessageCompression iggcon.IggyMessageCompression
+	MessageCompression iggcon.MessengerMessageCompression
 }
 
 // WithServerAddress Sets the server address for the TCP client.
@@ -65,7 +65,7 @@ func WithContext(ctx context.Context) Option {
 	}
 }
 
-func NewIggyTcpClient(options ...Option) (*IggyTcpClient, error) {
+func NewMessengerTcpClient(options ...Option) (*MessengerTcpClient, error) {
 	opts := GetDefaultOptions()
 	for _, opt := range options {
 		if opt != nil {
@@ -85,7 +85,7 @@ func NewIggyTcpClient(options ...Option) (*IggyTcpClient, error) {
 		return nil, err
 	}
 
-	client := &IggyTcpClient{
+	client := &MessengerTcpClient{
 		conn: conn.(*net.TCPConn),
 	}
 
@@ -116,7 +116,7 @@ const (
 	MaxStringLength      = 255
 )
 
-func (tms *IggyTcpClient) read(expectedSize int) (int, []byte, error) {
+func (tms *MessengerTcpClient) read(expectedSize int) (int, []byte, error) {
 	var totalRead int
 	buffer := make([]byte, expectedSize)
 
@@ -132,7 +132,7 @@ func (tms *IggyTcpClient) read(expectedSize int) (int, []byte, error) {
 	return totalRead, buffer, nil
 }
 
-func (tms *IggyTcpClient) write(payload []byte) (int, error) {
+func (tms *MessengerTcpClient) write(payload []byte) (int, error) {
 	var totalWritten int
 	for totalWritten < len(payload) {
 		n, err := tms.conn.Write(payload[totalWritten:])
@@ -145,7 +145,7 @@ func (tms *IggyTcpClient) write(payload []byte) (int, error) {
 	return totalWritten, nil
 }
 
-func (tms *IggyTcpClient) sendAndFetchResponse(message []byte, command iggcon.CommandCode) ([]byte, error) {
+func (tms *MessengerTcpClient) sendAndFetchResponse(message []byte, command iggcon.CommandCode) ([]byte, error) {
 	tms.mtx.Lock()
 	defer tms.mtx.Unlock()
 
@@ -161,8 +161,8 @@ func (tms *IggyTcpClient) sendAndFetchResponse(message []byte, command iggcon.Co
 
 	length := int(binary.LittleEndian.Uint32(buffer[4:]))
 	if responseCode := getResponseCode(buffer); responseCode != 0 {
-		// TEMP: See https://github.com/apache/iggy/pull/604 for context.
-		// from: https://github.com/apache/iggy/blob/master/sdk/src/tcp/client.rs#L326
+		// TEMP: See https://github.com/apache/messenger/pull/604 for context.
+		// from: https://github.com/apache/messenger/blob/master/sdk/src/tcp/client.rs#L326
 		if responseCode == 2012 ||
 			responseCode == 2013 ||
 			responseCode == 1011 ||

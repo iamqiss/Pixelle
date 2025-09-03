@@ -4,7 +4,7 @@
  *		characters. Encoding must be UTF8, where we assume that the pg_wchar
  *		representation is a code point.
  *
- * Portions Copyright (c) 2017-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2017-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/common/unicode_category.c
@@ -12,9 +12,9 @@
  *-------------------------------------------------------------------------
  */
 #ifndef FRONTEND
-#include "postgres.h"
+#include "maintable.h"
 #else
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #endif
 
 #include "common/unicode_category.h"

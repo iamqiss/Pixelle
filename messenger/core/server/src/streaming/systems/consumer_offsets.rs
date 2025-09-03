@@ -20,7 +20,7 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::COMPONENT;
 use crate::streaming::systems::system::System;
 use error_set::ErrContext;
-use iggy_common::{Consumer, ConsumerOffsetInfo, Identifier, IggyError};
+use messenger_common::{Consumer, ConsumerOffsetInfo, Identifier, MessengerError};
 
 impl System {
     pub async fn store_consumer_offset(
@@ -31,7 +31,7 @@ impl System {
         topic_id: &Identifier,
         partition_id: Option<u32>,
         offset: u64,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.ensure_authenticated(session)?;
         let topic = self.find_topic(session, stream_id, topic_id)
             .with_error_context(|error| format!("{COMPONENT} (error: {error}) - topic with ID: {topic_id} was not found in stream with ID: {stream_id}"))?;
@@ -53,7 +53,7 @@ impl System {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partition_id: Option<u32>,
-    ) -> Result<Option<ConsumerOffsetInfo>, IggyError> {
+    ) -> Result<Option<ConsumerOffsetInfo>, MessengerError> {
         self.ensure_authenticated(session)?;
         let Some(topic) = self.try_find_topic(session, stream_id, topic_id)? else {
             return Ok(None);
@@ -82,7 +82,7 @@ impl System {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partition_id: Option<u32>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.ensure_authenticated(session)?;
         let topic = self.find_topic(session, stream_id, topic_id)
             .with_error_context(|error| format!("{COMPONENT} (error: {error}) - topic with ID: {topic_id} was not found in stream with ID: {stream_id}"))?;

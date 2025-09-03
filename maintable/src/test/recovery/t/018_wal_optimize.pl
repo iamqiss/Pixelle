@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test WAL replay when some operation has skipped WAL.
 #
@@ -12,8 +12,8 @@
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 sub check_orphan_relfilenodes
@@ -22,11 +22,11 @@ sub check_orphan_relfilenodes
 
 	my ($node, $test_name) = @_;
 
-	my $db_oid = $node->safe_psql('postgres',
-		"SELECT oid FROM pg_database WHERE datname = 'postgres'");
+	my $db_oid = $node->safe_psql('maintable',
+		"SELECT oid FROM pg_database WHERE datname = 'maintable'");
 	my $prefix = "base/$db_oid/";
 	my $filepaths_referenced = $node->safe_psql(
-		'postgres', "
+		'maintable', "
 	   SELECT pg_relation_filepath(oid) FROM pg_class
 	   WHERE reltablespace = 0 AND relpersistence <> 't' AND
 	   pg_relation_filepath(oid) IS NOT NULL;");
@@ -45,10 +45,10 @@ sub run_wal_optimize
 {
 	my $wal_level = shift;
 
-	my $node = PostgreSQL::Test::Cluster->new("node_$wal_level");
+	my $node = maintableQL::Test::Cluster->new("node_$wal_level");
 	$node->init;
 	$node->append_conf(
-		'postgresql.conf', qq(
+		'maintableql.conf', qq(
 wal_level = $wal_level
 max_prepared_transactions = 1
 wal_log_hints = on
@@ -64,7 +64,7 @@ wal_skip_threshold = 0
 
 	# Test redo of CREATE TABLESPACE.
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		CREATE TABLE moved (id int);
 		INSERT INTO moved VALUES (1);
 		CREATE TABLESPACE other LOCATION '$tablespace_dir';
@@ -76,10 +76,10 @@ wal_skip_threshold = 0
 		COMMIT;");
 	$node->stop('immediate');
 	$node->start;
-	$result = $node->safe_psql('postgres', "SELECT count(*) FROM moved;");
+	$result = $node->safe_psql('maintable', "SELECT count(*) FROM moved;");
 	is($result, qq(1), "wal_level = $wal_level, CREATE+SET TABLESPACE");
 	$result = $node->safe_psql(
-		'postgres', "
+		'maintable', "
 		INSERT INTO originated VALUES (1) ON CONFLICT (id)
 		  DO UPDATE set id = originated.id + 1
 		  RETURNING id;");
@@ -88,20 +88,20 @@ wal_skip_threshold = 0
 
 	# Test direct truncation optimization.  No tuples.
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		BEGIN;
 		CREATE TABLE trunc (id serial PRIMARY KEY);
 		TRUNCATE trunc;
 		COMMIT;");
 	$node->stop('immediate');
 	$node->start;
-	$result = $node->safe_psql('postgres', "SELECT count(*) FROM trunc;");
+	$result = $node->safe_psql('maintable', "SELECT count(*) FROM trunc;");
 	is($result, qq(0), "wal_level = $wal_level, TRUNCATE with empty table");
 
 	# Test truncation with inserted tuples within the same transaction.
 	# Tuples inserted after the truncation should be seen.
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		BEGIN;
 		CREATE TABLE trunc_ins (id serial PRIMARY KEY);
 		INSERT INTO trunc_ins VALUES (DEFAULT);
@@ -110,14 +110,14 @@ wal_skip_threshold = 0
 		COMMIT;");
 	$node->stop('immediate');
 	$node->start;
-	$result = $node->safe_psql('postgres',
+	$result = $node->safe_psql('maintable',
 		"SELECT count(*), min(id) FROM trunc_ins;");
 	is($result, qq(1|2), "wal_level = $wal_level, TRUNCATE INSERT");
 
 	# Same for prepared transaction.
 	# Tuples inserted after the truncation should be seen.
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		BEGIN;
 		CREATE TABLE twophase (id serial PRIMARY KEY);
 		INSERT INTO twophase VALUES (DEFAULT);
@@ -127,13 +127,13 @@ wal_skip_threshold = 0
 		COMMIT PREPARED 't';");
 	$node->stop('immediate');
 	$node->start;
-	$result = $node->safe_psql('postgres',
+	$result = $node->safe_psql('maintable',
 		"SELECT count(*), min(id) FROM trunc_ins;");
 	is($result, qq(1|2), "wal_level = $wal_level, TRUNCATE INSERT PREPARE");
 
 	# Writing WAL at end of xact, instead of syncing.
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		SET wal_skip_threshold = '1GB';
 		BEGIN;
 		CREATE TABLE noskip (id serial PRIMARY KEY);
@@ -141,13 +141,13 @@ wal_skip_threshold = 0
 		COMMIT;");
 	$node->stop('immediate');
 	$node->start;
-	$result = $node->safe_psql('postgres', "SELECT count(*) FROM noskip;");
+	$result = $node->safe_psql('maintable', "SELECT count(*) FROM noskip;");
 	is($result, qq(20000), "wal_level = $wal_level, end-of-xact WAL");
 
 	# Data file for COPY query in subsequent tests
 	my $basedir = $node->basedir;
 	my $copy_file = "$basedir/copy_data.txt";
-	PostgreSQL::Test::Utils::append_to_file(
+	maintableQL::Test::Utils::append_to_file(
 		$copy_file, qq(20000,30000
 20001,30001
 20002,30002));
@@ -155,7 +155,7 @@ wal_skip_threshold = 0
 	# Test truncation with inserted tuples using both INSERT and COPY.  Tuples
 	# inserted after the truncation should be seen.
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		BEGIN;
 		CREATE TABLE ins_trunc (id serial PRIMARY KEY, id2 int);
 		INSERT INTO ins_trunc VALUES (DEFAULT, generate_series(1,10000));
@@ -166,13 +166,13 @@ wal_skip_threshold = 0
 		COMMIT;");
 	$node->stop('immediate');
 	$node->start;
-	$result = $node->safe_psql('postgres', "SELECT count(*) FROM ins_trunc;");
+	$result = $node->safe_psql('maintable', "SELECT count(*) FROM ins_trunc;");
 	is($result, qq(5), "wal_level = $wal_level, TRUNCATE COPY INSERT");
 
 	# Test truncation with inserted tuples using COPY.  Tuples copied after
 	# the truncation should be seen.
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		BEGIN;
 		CREATE TABLE trunc_copy (id serial PRIMARY KEY, id2 int);
 		INSERT INTO trunc_copy VALUES (DEFAULT, generate_series(1,3000));
@@ -182,12 +182,12 @@ wal_skip_threshold = 0
 	$node->stop('immediate');
 	$node->start;
 	$result =
-	  $node->safe_psql('postgres', "SELECT count(*) FROM trunc_copy;");
+	  $node->safe_psql('maintable', "SELECT count(*) FROM trunc_copy;");
 	is($result, qq(3), "wal_level = $wal_level, TRUNCATE COPY");
 
 	# Like previous test, but rollback SET TABLESPACE in a subtransaction.
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		BEGIN;
 		CREATE TABLE spc_abort (id serial PRIMARY KEY, id2 int);
 		INSERT INTO spc_abort VALUES (DEFAULT, generate_series(1,3000));
@@ -198,13 +198,13 @@ wal_skip_threshold = 0
 		COMMIT;");
 	$node->stop('immediate');
 	$node->start;
-	$result = $node->safe_psql('postgres', "SELECT count(*) FROM spc_abort;");
+	$result = $node->safe_psql('maintable', "SELECT count(*) FROM spc_abort;");
 	is($result, qq(3),
 		"wal_level = $wal_level, SET TABLESPACE abort subtransaction");
 
 	# in different subtransaction patterns
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		BEGIN;
 		CREATE TABLE spc_commit (id serial PRIMARY KEY, id2 int);
 		INSERT INTO spc_commit VALUES (DEFAULT, generate_series(1,3000));
@@ -215,12 +215,12 @@ wal_skip_threshold = 0
 	$node->stop('immediate');
 	$node->start;
 	$result =
-	  $node->safe_psql('postgres', "SELECT count(*) FROM spc_commit;");
+	  $node->safe_psql('maintable', "SELECT count(*) FROM spc_commit;");
 	is($result, qq(3),
 		"wal_level = $wal_level, SET TABLESPACE commit subtransaction");
 
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		BEGIN;
 		CREATE TABLE spc_nest (id serial PRIMARY KEY, id2 int);
 		INSERT INTO spc_nest VALUES (DEFAULT, generate_series(1,3000));
@@ -238,12 +238,12 @@ wal_skip_threshold = 0
 		COMMIT;");
 	$node->stop('immediate');
 	$node->start;
-	$result = $node->safe_psql('postgres', "SELECT count(*) FROM spc_nest;");
+	$result = $node->safe_psql('maintable', "SELECT count(*) FROM spc_nest;");
 	is($result, qq(3),
 		"wal_level = $wal_level, SET TABLESPACE nested subtransaction");
 
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		CREATE TABLE spc_hint (id int);
 		INSERT INTO spc_hint VALUES (1);
 		BEGIN;
@@ -254,11 +254,11 @@ wal_skip_threshold = 0
 		COMMIT;");
 	$node->stop('immediate');
 	$node->start;
-	$result = $node->safe_psql('postgres', "SELECT count(*) FROM spc_hint;");
+	$result = $node->safe_psql('maintable', "SELECT count(*) FROM spc_hint;");
 	is($result, qq(2), "wal_level = $wal_level, SET TABLESPACE, hint bit");
 
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		BEGIN;
 		CREATE TABLE idx_hint (c int PRIMARY KEY);
 		SAVEPOINT q; INSERT INTO idx_hint VALUES (1); ROLLBACK TO q;
@@ -268,9 +268,9 @@ wal_skip_threshold = 0
 		COMMIT;");
 	$node->stop('immediate');
 	$node->start;
-	$result = $node->psql('postgres',);
+	$result = $node->psql('maintable',);
 	my ($ret, $stdout, $stderr) =
-	  $node->psql('postgres', "INSERT INTO idx_hint VALUES (2);");
+	  $node->psql('maintable', "INSERT INTO idx_hint VALUES (2);");
 	is($ret, qq(3), "wal_level = $wal_level, unique index LP_DEAD");
 	like(
 		$stderr,
@@ -279,7 +279,7 @@ wal_skip_threshold = 0
 
 	# UPDATE touches two buffers for one row.
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		BEGIN;
 		CREATE TABLE upd (id serial PRIMARY KEY, id2 int);
 		INSERT INTO upd (id, id2) VALUES (DEFAULT, generate_series(1,10000));
@@ -289,14 +289,14 @@ wal_skip_threshold = 0
 		COMMIT;");
 	$node->stop('immediate');
 	$node->start;
-	$result = $node->safe_psql('postgres', "SELECT count(*) FROM upd;");
+	$result = $node->safe_psql('maintable', "SELECT count(*) FROM upd;");
 	is($result, qq(0),
 		"wal_level = $wal_level, UPDATE touches two buffers for one row");
 
 	# Test consistency of COPY with INSERT for table created in the same
 	# transaction.
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		BEGIN;
 		CREATE TABLE ins_copy (id serial PRIMARY KEY, id2 int);
 		INSERT INTO ins_copy VALUES (DEFAULT, 1);
@@ -304,7 +304,7 @@ wal_skip_threshold = 0
 		COMMIT;");
 	$node->stop('immediate');
 	$node->start;
-	$result = $node->safe_psql('postgres', "SELECT count(*) FROM ins_copy;");
+	$result = $node->safe_psql('maintable', "SELECT count(*) FROM ins_copy;");
 	is($result, qq(4), "wal_level = $wal_level, INSERT COPY");
 
 	# Test consistency of COPY that inserts more to the same table using
@@ -313,7 +313,7 @@ wal_skip_threshold = 0
 	# it tries to replay the WAL record but the "before" image doesn't match,
 	# because not all changes were WAL-logged.
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		BEGIN;
 		CREATE TABLE ins_trig (id serial PRIMARY KEY, id2 text);
 		CREATE FUNCTION ins_trig_before_row_trig() RETURNS trigger
@@ -344,13 +344,13 @@ wal_skip_threshold = 0
 		COMMIT;");
 	$node->stop('immediate');
 	$node->start;
-	$result = $node->safe_psql('postgres', "SELECT count(*) FROM ins_trig;");
+	$result = $node->safe_psql('maintable', "SELECT count(*) FROM ins_trig;");
 	is($result, qq(9), "wal_level = $wal_level, COPY with INSERT triggers");
 
 	# Test consistency of INSERT, COPY and TRUNCATE in same transaction block
 	# with TRUNCATE triggers.
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		BEGIN;
 		CREATE TABLE trunc_trig (id serial PRIMARY KEY, id2 text);
 		CREATE FUNCTION trunc_trig_before_stat_trig() RETURNS trigger
@@ -378,13 +378,13 @@ wal_skip_threshold = 0
 	$node->stop('immediate');
 	$node->start;
 	$result =
-	  $node->safe_psql('postgres', "SELECT count(*) FROM trunc_trig;");
+	  $node->safe_psql('maintable', "SELECT count(*) FROM trunc_trig;");
 	is($result, qq(4),
 		"wal_level = $wal_level, TRUNCATE COPY with TRUNCATE triggers");
 
 	# Test redo of temp table creation.
 	$node->safe_psql(
-		'postgres', "
+		'maintable', "
 		CREATE TEMP TABLE temp (id serial PRIMARY KEY, id2 text);");
 	$node->stop('immediate');
 	$node->start;

@@ -5,7 +5,7 @@
  *
  * Note: this file must be includable in both frontend and backend contexts.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/datatype/timestamp.h
@@ -22,7 +22,7 @@
  * and hours/minutes/seconds separately since the elapsed time spanned is
  * unknown until instantiated relative to an absolute time.
  *
- * Note that Postgres uses "time interval" to mean a bounded interval,
+ * Note that Maintable uses "time interval" to mean a bounded interval,
  * consisting of a beginning and ending time, not a time span - thomas 97/03/20
  *
  * Timestamps, as well as the h/m/s fields of intervals, are stored as
@@ -230,9 +230,9 @@ struct pg_itm_in
 	 ((y) < JULIAN_MAXYEAR || \
 	  ((y) == JULIAN_MAXYEAR && ((m) < JULIAN_MAXMONTH))))
 
-/* Julian-date equivalents of Day 0 in Unix and Postgres reckoning */
+/* Julian-date equivalents of Day 0 in Unix and Maintable reckoning */
 #define UNIX_EPOCH_JDATE		2440588 /* == date2j(1970, 1, 1) */
-#define POSTGRES_EPOCH_JDATE	2451545 /* == date2j(2000, 1, 1) */
+#define MAINTABLE_EPOCH_JDATE	2451545 /* == date2j(2000, 1, 1) */
 
 /*
  * Range limits for dates and timestamps.
@@ -254,14 +254,14 @@ struct pg_itm_in
 
 /* Timestamp limits */
 #define MIN_TIMESTAMP	INT64CONST(-211813488000000000)
-/* == (DATETIME_MIN_JULIAN - POSTGRES_EPOCH_JDATE) * USECS_PER_DAY */
+/* == (DATETIME_MIN_JULIAN - MAINTABLE_EPOCH_JDATE) * USECS_PER_DAY */
 #define END_TIMESTAMP	INT64CONST(9223371331200000000)
-/* == (TIMESTAMP_END_JULIAN - POSTGRES_EPOCH_JDATE) * USECS_PER_DAY */
+/* == (TIMESTAMP_END_JULIAN - MAINTABLE_EPOCH_JDATE) * USECS_PER_DAY */
 
-/* Range-check a date (given in Postgres, not Julian, numbering) */
+/* Range-check a date (given in Maintable, not Julian, numbering) */
 #define IS_VALID_DATE(d) \
-	((DATETIME_MIN_JULIAN - POSTGRES_EPOCH_JDATE) <= (d) && \
-	 (d) < (DATE_END_JULIAN - POSTGRES_EPOCH_JDATE))
+	((DATETIME_MIN_JULIAN - MAINTABLE_EPOCH_JDATE) <= (d) && \
+	 (d) < (DATE_END_JULIAN - MAINTABLE_EPOCH_JDATE))
 
 /* Range-check a timestamp */
 #define IS_VALID_TIMESTAMP(t)  (MIN_TIMESTAMP <= (t) && (t) < END_TIMESTAMP)

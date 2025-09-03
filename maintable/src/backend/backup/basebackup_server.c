@@ -8,7 +8,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/xact.h"
 #include "backup/basebackup_sink.h"

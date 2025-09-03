@@ -1,18 +1,18 @@
 # Spanish message translation file for pg_test_timing
 #
-# Copyright (c) 2017-2019, PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (c) 2017-2019, maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Carlos Chapi <carloswaldo@babelruins.org>, 2017-2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_test_timing (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_test_timing (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-02-16 19:50+0000\n"
 "PO-Revision-Date: 2024-11-16 14:24+0100\n"
 "Last-Translator: Carlos Chapi <carloswaldo@babelruins.org>\n"
-"Language-Team: PgSQL-es-Ayuda <pgsql-es-ayuda@lists.postgresql.org>\n"
+"Language-Team: PgSQL-es-Ayuda <pgsql-es-ayuda@lists.maintableql.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

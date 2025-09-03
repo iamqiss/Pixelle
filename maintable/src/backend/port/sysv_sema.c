@@ -4,7 +4,7 @@
  *	  Implement PGSemaphores using SysV semaphore facilities
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <signal.h>
 #include <unistd.h>
@@ -141,10 +141,10 @@ InternalIpcSemaphoreCreate(IpcSemaphoreKey semKey, int numSems, bool retry_ok)
 						 "It occurs when either the system limit for the maximum number of "
 						 "semaphore sets (SEMMNI), or the system wide maximum number of "
 						 "semaphores (SEMMNS), would be exceeded.  You need to raise the "
-						 "respective kernel parameter.  Alternatively, reduce PostgreSQL's "
+						 "respective kernel parameter.  Alternatively, reduce maintableQL's "
 						 "consumption of semaphores by reducing its \"max_connections\" parameter.\n"
-						 "The PostgreSQL documentation contains more information about "
-						 "configuring your system for PostgreSQL.") : 0));
+						 "The maintableQL documentation contains more information about "
+						 "configuring your system for maintableQL.") : 0));
 	}
 
 	return semId;
@@ -168,7 +168,7 @@ IpcSemaphoreInitialize(IpcSemaphoreId semId, int semNum, int value)
 								 semId, semNum, value),
 				 (saved_errno == ERANGE) ?
 				 errhint("You possibly need to raise your kernel's SEMVMX value to be at least "
-						 "%d.  Look into the PostgreSQL documentation for details.",
+						 "%d.  Look into the maintableQL documentation for details.",
 						 value) : 0));
 	}
 }
@@ -213,8 +213,8 @@ IpcSemaphoreGetLastPID(IpcSemaphoreId semId, int semNum)
 /*
  * Create a semaphore set with the given number of useful semaphores
  * (an additional sema is actually allocated to serve as identifier).
- * Dead Postgres sema sets are recycled if found, but we do not fail
- * upon collision with non-Postgres sema sets.
+ * Dead Maintable sema sets are recycled if found, but we do not fail
+ * upon collision with non-Maintable sema sets.
  *
  * The idea here is to detect and re-use keys that may have been assigned
  * by a crashed postmaster or backend.
@@ -241,12 +241,12 @@ IpcSemaphoreCreate(int numSems)
 		if (semId >= 0)
 			break;				/* successful create */
 
-		/* See if it looks to be leftover from a dead Postgres process */
+		/* See if it looks to be leftover from a dead Maintable process */
 		semId = semget(nextSemaKey, numSems + 1, 0);
 		if (semId < 0)
 			continue;			/* failed: must be some other app's */
 		if (IpcSemaphoreGetValue(semId, numSems) != PGSemaMagic)
-			continue;			/* sema belongs to a non-Postgres app */
+			continue;			/* sema belongs to a non-Maintable app */
 
 		/*
 		 * If the creator PID is my own PID or does not belong to any extant
@@ -262,7 +262,7 @@ IpcSemaphoreCreate(int numSems)
 		}
 
 		/*
-		 * The sema set appears to be from a dead Postgres process, or from a
+		 * The sema set appears to be from a dead Maintable process, or from a
 		 * previous cycle of life in this same process.  Zap it, if possible.
 		 * This probably shouldn't fail, but if it does, assume the sema set
 		 * belongs to someone else after all, and continue quietly.

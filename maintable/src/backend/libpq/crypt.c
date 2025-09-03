@@ -4,14 +4,14 @@
  *	  Functions for dealing with encrypted passwords stored in
  *	  pg_authid.rolpassword.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/backend/libpq/crypt.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 
@@ -181,8 +181,8 @@ encrypt_password(PasswordType target_type, const char *role,
 		ereport(WARNING,
 				(errcode(ERRCODE_WARNING_DEPRECATED_FEATURE),
 				 errmsg("setting an MD5-encrypted password"),
-				 errdetail("MD5 password support is deprecated and will be removed in a future release of PostgreSQL."),
-				 errhint("Refer to the PostgreSQL documentation for details about migrating to another password type.")));
+				 errdetail("MD5 password support is deprecated and will be removed in a future release of maintableQL."),
+				 errhint("Refer to the maintableQL documentation for details about migrating to another password type.")));
 
 	return encrypted_password;
 }

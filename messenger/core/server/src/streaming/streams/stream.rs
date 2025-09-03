@@ -20,8 +20,8 @@ use crate::configs::system::SystemConfig;
 use crate::streaming::storage::SystemStorage;
 use crate::streaming::topics::topic::Topic;
 use ahash::AHashMap;
-use iggy_common::IggyByteSize;
-use iggy_common::IggyTimestamp;
+use messenger_common::MessengerByteSize;
+use messenger_common::MessengerTimestamp;
 use std::fmt::Display;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicU32, AtomicU64, Ordering};
@@ -32,7 +32,7 @@ pub struct Stream {
     pub name: String,
     pub path: String,
     pub topics_path: String,
-    pub created_at: IggyTimestamp,
+    pub created_at: MessengerTimestamp,
     pub current_topic_id: AtomicU32,
     pub size_bytes: Arc<AtomicU64>,
     pub messages_count: Arc<AtomicU64>,
@@ -75,12 +75,12 @@ impl Stream {
             topics: AHashMap::new(),
             topics_ids: AHashMap::new(),
             storage,
-            created_at: IggyTimestamp::now(),
+            created_at: MessengerTimestamp::now(),
         }
     }
 
-    pub fn get_size(&self) -> IggyByteSize {
-        IggyByteSize::from(self.size_bytes.load(Ordering::SeqCst))
+    pub fn get_size(&self) -> MessengerByteSize {
+        MessengerByteSize::from(self.size_bytes.load(Ordering::SeqCst))
     }
 }
 

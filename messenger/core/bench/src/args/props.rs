@@ -17,7 +17,7 @@
  */
 
 use super::{output::BenchmarkOutputCommand, transport::BenchmarkTransportCommand};
-use iggy::prelude::IggyByteSize;
+use messenger::prelude::MessengerByteSize;
 use integration::test_server::Transport;
 
 pub trait BenchmarkKindProps {
@@ -27,7 +27,7 @@ pub trait BenchmarkKindProps {
     fn consumers(&self) -> u32;
     fn producers(&self) -> u32;
     fn transport_command(&self) -> &BenchmarkTransportCommand;
-    fn max_topic_size(&self) -> Option<IggyByteSize>;
+    fn max_topic_size(&self) -> Option<MessengerByteSize>;
     fn validate(&self);
     fn inner(&self) -> &dyn BenchmarkKindProps
     where

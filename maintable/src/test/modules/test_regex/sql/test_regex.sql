@@ -686,14 +686,14 @@ select * from test_regex('a\tb', E'a\tb', 'P');
 -- expectMatch	13.16 P		"a\\u0008x"	"a\bx"	"a\bx"
 select * from test_regex('a\u0008x', E'a\bx', 'P');
 -- expectMatch	13.17 P		{a\u008x}	"a\bx"	"a\bx"
--- Tcl has relaxed their code to allow 1-4 hex digits, but Postgres hasn't
+-- Tcl has relaxed their code to allow 1-4 hex digits, but Maintable hasn't
 select * from test_regex('a\u008x', E'a\bx', 'P');
 -- expectMatch	13.18 P		"a\\u00088x"	"a\b8x"	"a\b8x"
 select * from test_regex('a\u00088x', E'a\b8x', 'P');
 -- expectMatch	13.19 P		"a\\U00000008x"	"a\bx"	"a\bx"
 select * from test_regex('a\U00000008x', E'a\bx', 'P');
 -- expectMatch	13.20 P		{a\U0000008x}	"a\bx"	"a\bx"
--- Tcl has relaxed their code to allow 1-8 hex digits, but Postgres hasn't
+-- Tcl has relaxed their code to allow 1-8 hex digits, but Maintable hasn't
 select * from test_regex('a\U0000008x', E'a\bx', 'P');
 -- expectMatch	13.21 P		"a\\vb"		"a\vb"	"a\vb"
 select * from test_regex('a\vb', E'a\013b', 'P');
@@ -1049,7 +1049,7 @@ select * from test_regex('((.)){0}(\2){0}', 'xyz', 'NPQR');
 -- doing 22 "multicharacter collating elements"
 -- # again ugh
 
--- MCCEs are not implemented in Postgres, so we skip all these tests
+-- MCCEs are not implemented in Maintable, so we skip all these tests
 -- expectMatch	22.1  &+L	{a[c]e}		ace	ace
 -- select * from test_regex('a[c]e', 'ace', '+L');
 -- select * from test_regex('a[c]e', 'ace', '+Lb');
@@ -1140,7 +1140,7 @@ select * from test_regex('...(?!.)', 'abcde', 'HP');
 -- expectNomatch	23.10 HP	...(?=.)	abc
 select * from test_regex('...(?=.)', 'abc', 'HP');
 
--- Postgres addition: lookbehind constraints
+-- Maintable addition: lookbehind constraints
 
 -- expectMatch	23.11 HPN		(?<=a)b*	ab	b
 select * from test_regex('(?<=a)b*', 'ab', 'HPN');
@@ -1761,7 +1761,7 @@ select * from test_regex('x|(?:\M)+', 'x', 'LNP');
 --     regexp [string repeat x*y*z* 480] x
 -- } 1
 -- The runtime cost of this seems out of proportion to the value,
--- so for Postgres purposes reduce the repeat to 200x
+-- so for Maintable purposes reduce the repeat to 200x
 select * from test_regex(repeat('x*y*z*', 200), 'x', 'N');
 
 -- test reg-33.30 {Bug 1080042} {

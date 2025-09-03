@@ -1,14 +1,14 @@
 /*-------------------------------------------------------------------------
  *
  * datum.h
- *	  POSTGRES Datum (abstract data type) manipulation routines.
+ *	  MAINTABLE Datum (abstract data type) manipulation routines.
  *
  * These routines are driven by the 'typbyval' and 'typlen' information,
  * which must previously have been obtained by the caller for the datatype
  * of the Datum.  (We do it this way because in most situations the caller
  * can look up the info just once and use it for many per-datum operations.)
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/utils/datum.h

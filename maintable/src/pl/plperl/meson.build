@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 if not perl_dep.found()
   subdir_done()
@@ -47,8 +47,8 @@ endif
 
 plperl = shared_module('plperl',
   plperl_sources,
-  c_pch: pch_postgres_h,
-  include_directories: [plperl_inc, postgres_inc],
+  c_pch: pch_maintable_h,
+  include_directories: [plperl_inc, maintable_inc],
   kwargs: pg_mod_args + {
     'dependencies': [perl_dep, pg_mod_args['dependencies']],
     'install_rpath': ':'.join(mod_install_rpaths + ['@0@/CORE'.format(archlibexp)]),

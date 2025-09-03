@@ -10,7 +10,7 @@
  * About these generators: https://prng.di.unimi.it/
  * See also https://en.wikipedia.org/wiki/List_of_random_number_generators
  *
- * Copyright (c) 2021-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2021-2025, maintableQL Global Development Group
  *
  * src/common/pg_prng.c
  *
@@ -272,7 +272,7 @@ pg_prng_double(pg_prng_state *state)
 	/*
 	 * As above, assume there's 52 mantissa bits in a double.  This result
 	 * could round to 1.0 if double's precision is less than that; but we
-	 * assume IEEE float arithmetic elsewhere in Postgres, so this seems OK.
+	 * assume IEEE float arithmetic elsewhere in Maintable, so this seems OK.
 	 */
 	return ldexp((double) (v >> (64 - 52)), -52);
 }

@@ -175,8 +175,8 @@ func readConfigWithoutMigrate(ctx context.Context, objAPI ObjectLayer) (config.C
 	for k, args := range cfg.Notify.NSQ {
 		notify.SetNotifyNSQ(newCfg, k, args)
 	}
-	for k, args := range cfg.Notify.PostgreSQL {
-		notify.SetNotifyPostgres(newCfg, k, args)
+	for k, args := range cfg.Notify.maintableQL {
+		notify.SetNotifyMaintable(newCfg, k, args)
 	}
 	for k, args := range cfg.Notify.Redis {
 		notify.SetNotifyRedis(newCfg, k, args)

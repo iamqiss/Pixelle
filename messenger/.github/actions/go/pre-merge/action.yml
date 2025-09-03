@@ -16,7 +16,7 @@
 # under the License.
 
 name: go-pre-merge
-description: Go pre-merge testing github iggy actions
+description: Go pre-merge testing github messenger actions
 
 inputs:
   task:

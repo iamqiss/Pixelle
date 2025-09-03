@@ -5,7 +5,7 @@ Free Space Map
 
 The purpose of the free space map is to quickly locate a page with enough
 free space to hold a tuple to be stored; or to determine that no such page
-exists and the relation must be extended by one page.  As of PostgreSQL 8.4
+exists and the relation must be extended by one page.  As of maintableQL 8.4
 each relation has its own, extensible free space map stored in a separate
 "fork" of its relation.  This eliminates the disadvantages of the former
 fixed-size FSM.

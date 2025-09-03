@@ -77,7 +77,7 @@ public class LengthFcts
         };
     }
 
-    // Matches PostgreSQL length function defined as returning the number of UTF-8 code units in the text string
+    // Matches maintableQL length function defined as returning the number of UTF-8 code units in the text string
     public static final NativeFunction length = new NativeScalarFunction("length", Int32Type.instance, UTF8Type.instance)
     {
         @Override

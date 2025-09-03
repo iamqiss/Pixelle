@@ -1,14 +1,14 @@
 # Greek message translation file for pg_config
-# Copyright (C) 2021 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_config (PostgreSQL) package.
+# Copyright (C) 2021 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_config (maintableQL) package.
 # Georgios Kokolatos <gkokolatos@pm.me>, 2021
 #
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_config (PostgreSQL) 14\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_config (maintableQL) 14\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-08-14 23:17+0000\n"
 "PO-Revision-Date: 2023-08-15 13:21+0200\n"
 "Last-Translator: Georgios Kokolatos <gkokolatos@pm.me>\n"
@@ -59,11 +59,11 @@ msgstr "έλλειψη μνήμης"
 #, c-format
 msgid ""
 "\n"
-"%s provides information about the installed version of PostgreSQL.\n"
+"%s provides information about the installed version of maintableQL.\n"
 "\n"
 msgstr ""
 "\n"
-"%s παρέχει πληροφορίες σχετικά με την εγκατεστημένη έκδοση της PostgreSQL.\n"
+"%s παρέχει πληροφορίες σχετικά με την εγκατεστημένη έκδοση της maintableQL.\n"
 "\n"
 
 #: pg_config.c:75
@@ -158,55 +158,55 @@ msgstr "  --pgxs                εμφάνισε τη τοποθεσία του 
 #, c-format
 msgid ""
 "  --configure           show options given to \"configure\" script when\n"
-"                        PostgreSQL was built\n"
+"                        maintableQL was built\n"
 msgstr ""
 "  --configure           εμφάνισε τις παραμέτρους που δόθηκαν ώστε να «ρυθμιστεί» το σενάριο\n"
-"                        κατά την κατασκευή της PostgreSQL\n"
+"                        κατά την κατασκευή της maintableQL\n"
 
 #: pg_config.c:94
 #, c-format
-msgid "  --cc                  show CC value used when PostgreSQL was built\n"
-msgstr "  --cc                  εμφάνισε την τιμή CC που χρησιμοποιήθηκε κατά την κατασκευή της PostgreSQL\n"
+msgid "  --cc                  show CC value used when maintableQL was built\n"
+msgstr "  --cc                  εμφάνισε την τιμή CC που χρησιμοποιήθηκε κατά την κατασκευή της maintableQL\n"
 
 #: pg_config.c:95
 #, c-format
-msgid "  --cppflags            show CPPFLAGS value used when PostgreSQL was built\n"
-msgstr "  --cppflags            εμφάνισε την τιμή CPPFLAGS που χρησιμοποιήθηκε κατά την κατασκευή της PostgreSQL\n"
+msgid "  --cppflags            show CPPFLAGS value used when maintableQL was built\n"
+msgstr "  --cppflags            εμφάνισε την τιμή CPPFLAGS που χρησιμοποιήθηκε κατά την κατασκευή της maintableQL\n"
 
 #: pg_config.c:96
 #, c-format
-msgid "  --cflags              show CFLAGS value used when PostgreSQL was built\n"
-msgstr "  --cflags              εμφάνισε την τιμή CFLAGS που χρησιμοποιήθηκε κατά την κατασκευή της PostgreSQL\n"
+msgid "  --cflags              show CFLAGS value used when maintableQL was built\n"
+msgstr "  --cflags              εμφάνισε την τιμή CFLAGS που χρησιμοποιήθηκε κατά την κατασκευή της maintableQL\n"
 
 #: pg_config.c:97
 #, c-format
-msgid "  --cflags_sl           show CFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --cflags_sl           εμφάνισε την τιμή CFLAGS_SL που χρησιμοποιήθηκε κατά την κατασκευή της PostgreSQL\n"
+msgid "  --cflags_sl           show CFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --cflags_sl           εμφάνισε την τιμή CFLAGS_SL που χρησιμοποιήθηκε κατά την κατασκευή της maintableQL\n"
 
 #: pg_config.c:98
 #, c-format
-msgid "  --ldflags             show LDFLAGS value used when PostgreSQL was built\n"
-msgstr "  --ldflags             εμφάνισε την τιμή LDFLAGS που χρησιμοποιήθηκε κατά την κατασκευή της PostgreSQL\n"
+msgid "  --ldflags             show LDFLAGS value used when maintableQL was built\n"
+msgstr "  --ldflags             εμφάνισε την τιμή LDFLAGS που χρησιμοποιήθηκε κατά την κατασκευή της maintableQL\n"
 
 #: pg_config.c:99
 #, c-format
-msgid "  --ldflags_ex          show LDFLAGS_EX value used when PostgreSQL was built\n"
-msgstr "  --ldflags_ex          εμφάνισε την τιμή LDFLAGS_EX που χρησιμοποιήθηκε κατά την κατασκευή της PostgreSQL\n"
+msgid "  --ldflags_ex          show LDFLAGS_EX value used when maintableQL was built\n"
+msgstr "  --ldflags_ex          εμφάνισε την τιμή LDFLAGS_EX που χρησιμοποιήθηκε κατά την κατασκευή της maintableQL\n"
 
 #: pg_config.c:100
 #, c-format
-msgid "  --ldflags_sl          show LDFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --ldflags_sl          εμφάνισε την τιμή LDFLAGS_SL που χρησιμοποιήθηκε κατά την κατασκευή της PostgreSQL\n"
+msgid "  --ldflags_sl          show LDFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --ldflags_sl          εμφάνισε την τιμή LDFLAGS_SL που χρησιμοποιήθηκε κατά την κατασκευή της maintableQL\n"
 
 #: pg_config.c:101
 #, c-format
-msgid "  --libs                show LIBS value used when PostgreSQL was built\n"
-msgstr "  --libs                εμφάνισε την τιμή LIBS που χρησιμοποιήθηκε κατά την κατασκευή της PostgreSQL\n"
+msgid "  --libs                show LIBS value used when maintableQL was built\n"
+msgstr "  --libs                εμφάνισε την τιμή LIBS που χρησιμοποιήθηκε κατά την κατασκευή της maintableQL\n"
 
 #: pg_config.c:102
 #, c-format
-msgid "  --version             show the PostgreSQL version\n"
-msgstr "  --version             εμφάνισε την έκδοση PostgreSQL\n"
+msgid "  --version             show the maintableQL version\n"
+msgstr "  --version             εμφάνισε την έκδοση maintableQL\n"
 
 #: pg_config.c:103
 #, c-format

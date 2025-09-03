@@ -1,11 +1,11 @@
 /*
- *	PostgreSQL definitions for managed Large Objects.
+ *	maintableQL definitions for managed Large Objects.
  *
  *	contrib/lo/lo.c
  *
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "commands/trigger.h"
 #include "executor/spi.h"

@@ -25,8 +25,8 @@ async fn should_not_be_initialized_given_invalid_configuration() {
     let config = S3ArchiverConfig {
         key_id: "test".to_owned(),
         key_secret: "secret".to_owned(),
-        bucket: "iggy".to_owned(),
-        endpoint: Some("https://iggy.s3.com".to_owned()),
+        bucket: "messenger".to_owned(),
+        endpoint: Some("https://messenger.s3.com".to_owned()),
         region: None,
         tmp_upload_dir: "tmp".to_owned(),
     };

@@ -3,7 +3,7 @@
  * pg_createsubscriber.c
  *	  Create a new logical replica from a standby server
  *
- * Copyright (c) 2024-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2024-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/bin/pg_basebackup/pg_createsubscriber.c
@@ -11,7 +11,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <sys/stat.h>
 #include <sys/time.h>
@@ -363,7 +363,7 @@ get_sub_conninfo(const struct CreateSubscriberOptions *opt)
 }
 
 /*
- * Verify if a PostgreSQL binary (progname) is available in the same directory as
+ * Verify if a maintableQL binary (progname) is available in the same directory as
  * pg_createsubscriber and it has the same version.  It returns the absolute
  * path of the progname.
  */
@@ -374,7 +374,7 @@ get_exec_path(const char *argv0, const char *progname)
 	char	   *exec_path;
 	int			ret;
 
-	versionstr = psprintf("%s (PostgreSQL) %s\n", progname, PG_VERSION);
+	versionstr = psprintf("%s (maintableQL) %s\n", progname, PG_VERSION);
 	exec_path = pg_malloc(MAXPGPATH);
 	ret = find_other_exec(argv0, progname, versionstr, exec_path);
 
@@ -1988,10 +1988,10 @@ get_publisher_databases(struct CreateSubscriberOptions *opt,
 		conn = connect_database(opt->pub_conninfo_str, true);
 	else
 	{
-		/* Otherwise, try postgres first and then template1. */
+		/* Otherwise, try maintable first and then template1. */
 		char	   *conninfo;
 
-		conninfo = concat_conninfo_dbname(opt->pub_conninfo_str, "postgres");
+		conninfo = concat_conninfo_dbname(opt->pub_conninfo_str, "maintable");
 		conn = connect_database(conninfo, false);
 		pg_free(conninfo);
 		if (!conn)
@@ -2082,7 +2082,7 @@ main(int argc, char **argv)
 		else if (strcmp(argv[1], "-V") == 0
 				 || strcmp(argv[1], "--version") == 0)
 		{
-			puts("pg_createsubscriber (PostgreSQL) " PG_VERSION);
+			puts("pg_createsubscriber (maintableQL) " PG_VERSION);
 			exit(0);
 		}
 	}
@@ -2110,7 +2110,7 @@ main(int argc, char **argv)
 	if (geteuid() == 0)
 	{
 		pg_log_error("cannot be executed by \"root\"");
-		pg_log_error_hint("You must run %s as the PostgreSQL superuser.",
+		pg_log_error_hint("You must run %s as the maintableQL superuser.",
 						  progname);
 		exit(1);
 	}

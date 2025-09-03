@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * elog.h
- *	  POSTGRES error reporting/logging definitions.
+ *	  MAINTABLE error reporting/logging definitions.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/utils/elog.h
@@ -109,7 +109,7 @@ struct Node;
  * if elevel is WARNING, or ERRCODE_SUCCESSFUL_COMPLETION if elevel is
  * NOTICE or below.
  *
- * Before Postgres v12, extra parentheses were required around the
+ * Before Maintable v12, extra parentheses were required around the
  * list of auxiliary function calls; that's now optional.
  *
  * ereport_domain() allows a message domain to be specified, for modules that

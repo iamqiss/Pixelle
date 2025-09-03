@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::cli::common::{IggyCmdTest, help::TestHelpCmd};
+use crate::cli::common::{MessengerCmdTest, help::TestHelpCmd};
 use serial_test::parallel;
 
 const FIGLET_INDENT: &str = " ";
@@ -25,10 +25,10 @@ const FIGLET_FILL: &str = "                         ";
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
     let no_arg: Vec<String> = vec![];
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             no_arg,
             format!(
@@ -39,19 +39,19 @@ pub async fn should_help_match() {
  |___|  \__, |  \__, |  \__, |    \____| |_____| |___|
         |___/   |___/   |___/{FIGLET_FILL}
 
-CLI for Iggy message streaming platform
+CLI for Messenger message streaming platform
 
-Usage: iggy [OPTIONS] [COMMAND]
+Usage: messenger [OPTIONS] [COMMAND]
 
 Commands:
   stream           stream operations [aliases: s]
   topic            topic operations [aliases: t]
   partition        partition operations [aliases: p]
   segment          segments operations [aliases: seg]
-  ping             ping iggy server
+  ping             ping messenger server
   me               get current client info
-  stats            get iggy server statistics
-  snapshot         collect iggy server troubleshooting data
+  stats            get messenger server statistics
+  snapshot         collect messenger server troubleshooting data
   pat              personal access token operations
   user             user operations [aliases: u]
   client           client operations [aliases: c]
@@ -59,15 +59,15 @@ Commands:
   consumer-offset  consumer offset operations [aliases: o]
   message          message operations [aliases: m]
   context          context operations [aliases: ctx]
-  login            login to Iggy server [aliases: li]
-  logout           logout from Iggy server [aliases: lo]
+  login            login to Messenger server [aliases: li]
+  logout           logout from Messenger server [aliases: lo]
   help             Print this message or the help of the given subcommand(s)
 
 
-Run 'iggy --help' for full help message.
-Run 'iggy COMMAND --help' for more information on a command.
+Run 'messenger --help' for full help message.
+Run 'messenger COMMAND --help' for more information on a command.
 
-For more help on what's Iggy and how to use it, head to https://iggy.apache.org
+For more help on what's Messenger and how to use it, head to https://messenger.apache.org
 "#,
             ),
         ))

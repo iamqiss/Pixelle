@@ -5,16 +5,16 @@ edition = "2021"
 
 [dependencies]
 # Multiple ORMs because choices are hard
-sqlx = { workspace = true, features = ["postgres", "mysql", "sqlite", "chrono", "uuid", "json"] }
-diesel = { workspace = true, features = ["postgres", "chrono", "uuid", "serde_json"] }
+sqlx = { workspace = true, features = ["maintable", "mysql", "sqlite", "chrono", "uuid", "json"] }
+diesel = { workspace = true, features = ["maintable", "chrono", "uuid", "serde_json"] }
 sea-orm = { workspace = true }
 
 # Connection pooling
-deadpool-postgres = "0.12"
+deadpool-maintable = "0.12"
 r2d2 = "0.8"
 
 # Migrations
-refinery = { version = "0.8", features = ["postgres", "mysql"] }
+refinery = { version = "0.8", features = ["maintable", "mysql"] }
 
 # NoSQL databases  
 redis = { workspace = true }

@@ -3,7 +3,7 @@
  * compress_zstd.c
  *	 Routines for archivers to write a Zstd compressed data stream.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #include <unistd.h>
 
 #include "compress_zstd.h"

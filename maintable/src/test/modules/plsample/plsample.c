@@ -3,7 +3,7 @@
  * plsample.c
  *	  Handler for the PL/Sample procedural language
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_proc.h"
 #include "catalog/pg_type.h"
@@ -134,7 +134,7 @@ plsample_func_handler(PG_FUNCTION_ARGS)
 					proname, source)));
 
 	/*
-	 * Allocate a context that will hold all the Postgres data for the
+	 * Allocate a context that will hold all the Maintable data for the
 	 * procedure.
 	 */
 	proc_cxt = AllocSetContextCreate(TopMemoryContext,

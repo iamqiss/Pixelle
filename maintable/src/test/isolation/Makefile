@@ -66,7 +66,7 @@ check: all
 
 # Non-default tests.  It only makes sense to run these if set up to use
 # prepared transactions, via TEMP_CONFIG for the check case, or via the
-# postgresql.conf for the installcheck case.
+# maintableql.conf for the installcheck case.
 installcheck-prepared-txns: all temp-install
 	$(pg_isolation_regress_installcheck) --schedule=$(srcdir)/isolation_schedule prepared-transactions prepared-transactions-cic
 

@@ -20,7 +20,7 @@ package binaryserialization
 import (
 	"testing"
 
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
 	"github.com/google/uuid"
 )
 
@@ -32,7 +32,7 @@ func TestSerialize_SendMessagesRequest(t *testing.T) {
 		StreamId:     streamId,
 		TopicId:      topicId,
 		Partitioning: iggcon.PartitionId(1),
-		Messages: []iggcon.IggyMessage{
+		Messages: []iggcon.MessengerMessage{
 			message1,
 		},
 	}
@@ -73,8 +73,8 @@ func createDefaultMessageHeaders() map[iggcon.HeaderKey]iggcon.HeaderValue {
 	}
 }
 
-func generateTestMessage(payload string) iggcon.IggyMessage {
-	msg, _ := iggcon.NewIggyMessage(
+func generateTestMessage(payload string) iggcon.MessengerMessage {
+	msg, _ := iggcon.NewMessengerMessage(
 		[]byte(payload),
 		iggcon.WithID(uuid.New()),
 		iggcon.WithUserHeaders(createDefaultMessageHeaders()))

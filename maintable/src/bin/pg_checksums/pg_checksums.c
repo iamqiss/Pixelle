@@ -4,7 +4,7 @@
  *	  Checks, enables or disables page level checksums for an offline
  *	  cluster
  *
- * Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/bin/pg_checksums/pg_checksums.c
@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <dirent.h>
 #include <limits.h>
@@ -66,7 +66,7 @@ static pg_time_t last_progress_report = 0;
 static void
 usage(void)
 {
-	printf(_("%s enables, disables, or verifies data checksums in a PostgreSQL database cluster.\n\n"), progname);
+	printf(_("%s enables, disables, or verifies data checksums in a maintableQL database cluster.\n\n"), progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]... [DATADIR]\n"), progname);
 	printf(_("\nOptions:\n"));
@@ -462,7 +462,7 @@ main(int argc, char *argv[])
 		}
 		if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			puts("pg_checksums (PostgreSQL) " PG_VERSION);
+			puts("pg_checksums (maintableQL) " PG_VERSION);
 			exit(0);
 		}
 	}

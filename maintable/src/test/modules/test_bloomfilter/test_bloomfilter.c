@@ -3,14 +3,14 @@
  * test_bloomfilter.c
  *		Test false positive rate of Bloom filter.
  *
- * Copyright (c) 2018-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2018-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/test/modules/test_bloomfilter/test_bloomfilter.c
  *
  * -------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "common/pg_prng.h"
 #include "fmgr.h"

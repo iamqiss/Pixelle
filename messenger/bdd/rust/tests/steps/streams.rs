@@ -18,7 +18,7 @@
 
 use crate::common::global_context::GlobalContext;
 use cucumber::{given, then, when};
-use iggy::prelude::StreamClient;
+use messenger::prelude::StreamClient;
 
 #[given("I have no streams in the system")]
 pub async fn given_no_streams(world: &mut GlobalContext) {

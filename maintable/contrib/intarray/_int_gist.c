@@ -1,7 +1,7 @@
 /*
  * contrib/intarray/_int_gist.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 #include <math.h>

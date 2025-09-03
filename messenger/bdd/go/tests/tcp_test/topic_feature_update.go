@@ -20,7 +20,7 @@ package tcp_test
 import (
 	"math"
 
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
 	"github.com/onsi/ginkgo/v2"
 )
 
@@ -62,7 +62,7 @@ var _ = ginkgo.Describe("UPDATE TOPIC:", func() {
 				topic2Identifier,
 				topic1Name,
 				iggcon.CompressionAlgorithmNone,
-				iggcon.IggyExpiryServerDefault,
+				iggcon.MessengerExpiryServerDefault,
 				math.MaxUint64,
 				&replicationFactor)
 

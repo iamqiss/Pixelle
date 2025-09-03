@@ -1,16 +1,16 @@
 /*-------------------------------------------------------------------------
  *
  * pg_logicalinspect.c
- *		  Functions to inspect contents of PostgreSQL logical snapshots
+ *		  Functions to inspect contents of maintableQL logical snapshots
  *
- * Copyright (c) 2024-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2024-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  contrib/pg_logicalinspect/pg_logicalinspect.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "funcapi.h"
 #include "replication/snapbuild_internal.h"

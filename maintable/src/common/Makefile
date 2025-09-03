@@ -3,7 +3,7 @@
 # Makefile
 #    Makefile for src/common
 #
-# These files are used by the Postgres backend, and also by frontend
+# These files are used by the Maintable backend, and also by frontend
 # programs.  These files provide common functionality that isn't directly
 # concerned with portability and thus doesn't belong in src/port.
 #

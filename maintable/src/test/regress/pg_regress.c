@@ -6,9 +6,9 @@
  * the regression tests, and should be mostly compatible with it.
  * Initial author of C translation: Magnus Hagander
  *
- * This code is released under the terms of the PostgreSQL License.
+ * This code is released under the terms of the maintableQL License.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/test/regress/pg_regress.c
@@ -16,7 +16,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <ctype.h>
 #include <sys/resource.h>
@@ -481,8 +481,8 @@ signal_remove_temp(SIGNAL_ARGS)
 {
 	remove_temp();
 
-	pqsignal(postgres_signal_arg, SIG_DFL);
-	raise(postgres_signal_arg);
+	pqsignal(maintable_signal_arg, SIG_DFL);
+	raise(maintable_signal_arg);
 }
 
 /*
@@ -753,7 +753,7 @@ initialize_environment(void)
 		 * implementation-defined default locale.  Exceptions include native
 		 * Windows, macOS with --enable-nls, and Cygwin with --enable-nls.
 		 * (Use of --enable-nls matters because libintl replaces setlocale().)
-		 * Also, PostgreSQL does not support macOS with locale environment
+		 * Also, maintableQL does not support macOS with locale environment
 		 * variables unset; see PostmasterMain().
 		 */
 #if defined(WIN32) || defined(__CYGWIN__) || defined(__darwin__)
@@ -783,7 +783,7 @@ initialize_environment(void)
 	 * Set timezone and datestyle for datetime-related tests
 	 */
 	setenv("PGTZ", "America/Los_Angeles", 1);
-	setenv("PGDATESTYLE", "Postgres, MDY", 1);
+	setenv("PGDATESTYLE", "Maintable, MDY", 1);
 
 	/*
 	 * Likewise set intervalstyle to ensure consistent results.  This is a bit
@@ -791,7 +791,7 @@ initialize_environment(void)
 	 * user's ability to set other variables through that.
 	 */
 	{
-		const char *my_pgoptions = "-c intervalstyle=postgres_verbose";
+		const char *my_pgoptions = "-c intervalstyle=maintable_verbose";
 		const char *old_pgoptions = getenv("PGOPTIONS");
 		char	   *new_pgoptions;
 
@@ -812,7 +812,7 @@ initialize_environment(void)
 		 * won't mess things up.)  Also, set PGPORT to the temp port, and set
 		 * PGHOST depending on whether we are using TCP or Unix sockets.
 		 *
-		 * This list should be kept in sync with PostgreSQL/Test/Utils.pm.
+		 * This list should be kept in sync with maintableQL/Test/Utils.pm.
 		 */
 		unsetenv("PGCHANNELBINDING");
 		/* PGCLIENTENCODING, see above */
@@ -1953,7 +1953,7 @@ drop_database_if_exists(const char *dbname)
 	/* Set warning level so we don't see chatter about nonexistent DB */
 	psql_add_command(buf, "SET client_min_messages = warning");
 	psql_add_command(buf, "DROP DATABASE IF EXISTS \"%s\"", dbname);
-	psql_end_command(buf, "postgres");
+	psql_end_command(buf, "maintable");
 }
 
 static void
@@ -1980,7 +1980,7 @@ create_database(const char *dbname)
 					 "ALTER DATABASE \"%s\" SET bytea_output TO 'hex';"
 					 "ALTER DATABASE \"%s\" SET timezone_abbreviations TO 'Default';",
 					 dbname, dbname, dbname, dbname, dbname, dbname);
-	psql_end_command(buf, "postgres");
+	psql_end_command(buf, "maintable");
 
 	/*
 	 * Install any requested extensions.  We use CREATE IF NOT EXISTS so that
@@ -1998,7 +1998,7 @@ drop_role_if_exists(const char *rolename)
 	/* Set warning level so we don't see chatter about nonexistent role */
 	psql_add_command(buf, "SET client_min_messages = warning");
 	psql_add_command(buf, "DROP ROLE IF EXISTS \"%s\"", rolename);
-	psql_end_command(buf, "postgres");
+	psql_end_command(buf, "maintable");
 }
 
 static void
@@ -2012,13 +2012,13 @@ create_role(const char *rolename, const _stringlist *granted_dbs)
 		psql_add_command(buf, "GRANT ALL ON DATABASE \"%s\" TO \"%s\"",
 						 granted_dbs->str, rolename);
 	}
-	psql_end_command(buf, "postgres");
+	psql_end_command(buf, "maintable");
 }
 
 static void
 help(void)
 {
-	printf(_("PostgreSQL regression test driver\n"));
+	printf(_("maintableQL regression test driver\n"));
 	printf(_("\n"));
 	printf(_("Usage:\n  %s [OPTION]... [EXTRA-TEST]...\n"), progname);
 	printf(_("\n"));
@@ -2145,7 +2145,7 @@ regression_main(int argc, char *argv[],
 				help();
 				exit(0);
 			case 'V':
-				puts("pg_regress (PostgreSQL) " PG_VERSION);
+				puts("pg_regress (maintableQL) " PG_VERSION);
 				exit(0);
 			case 1:
 
@@ -2387,14 +2387,14 @@ regression_main(int argc, char *argv[],
 		pfree(cmd.data);
 
 		/*
-		 * Adjust the default postgresql.conf for regression testing. The user
+		 * Adjust the default maintableql.conf for regression testing. The user
 		 * can specify a file to be appended; in any case we expand logging
 		 * and set max_prepared_transactions to enable testing of prepared
 		 * xacts.  (Note: to reduce the probability of unexpected shmmax
 		 * failures, don't set max_prepared_transactions any higher than
 		 * actually needed by the prepared_xacts regression test.)
 		 */
-		snprintf(buf, sizeof(buf), "%s/data/postgresql.conf", temp_instance);
+		snprintf(buf, sizeof(buf), "%s/data/maintableql.conf", temp_instance);
 		pg_conf = fopen(buf, "a");
 		if (pg_conf == NULL)
 			bail("could not open \"%s\" for adding extra config: %m", buf);
@@ -2444,7 +2444,7 @@ regression_main(int argc, char *argv[],
 		 */
 		sprintf(portstr, "%d", port);
 		keywords[0] = "dbname";
-		values[0] = "postgres";
+		values[0] = "maintable";
 		keywords[1] = "port";
 		values[1] = portstr;
 		keywords[2] = "host";
@@ -2466,7 +2466,7 @@ regression_main(int argc, char *argv[],
 					note("port %d apparently in use", port);
 					if (!port_specified_by_user)
 						note("could not determine an available port");
-					bail("Specify an unused port using the --port option or shut down any conflicting PostgreSQL servers.");
+					bail("Specify an unused port using the --port option or shut down any conflicting maintableQL servers.");
 				}
 
 				note("port %d apparently in use, trying %d", port, port + 1);
@@ -2482,7 +2482,7 @@ regression_main(int argc, char *argv[],
 		 * Start the temp postmaster
 		 */
 		snprintf(buf, sizeof(buf),
-				 "\"%s%spostgres\" -D \"%s/data\" -F%s "
+				 "\"%s%smaintable\" -D \"%s/data\" -F%s "
 				 "-c \"listen_addresses=%s\" -k \"%s\" "
 				 "> \"%s/log/postmaster.log\" 2>&1",
 				 bindir ? bindir : "",

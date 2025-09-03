@@ -3,11 +3,11 @@
  * execParallel.c
  *	  Support routines for parallel execution.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * This file contains routines that are intended to support setting up,
- * using, and tearing down a ParallelContext from within the PostgreSQL
+ * using, and tearing down a ParallelContext from within the maintableQL
  * executor.  The ParallelContext machinery will handle starting the
  * workers and ensuring that their state generally matches that of the
  * leader; see src/backend/access/transam/README.parallel for details.
@@ -21,7 +21,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "executor/execParallel.h"
 #include "executor/executor.h"
@@ -644,7 +644,7 @@ ExecInitParallelPlan(PlanState *planstate, EState *estate,
 	pstmt_data = ExecSerializePlan(planstate->plan, estate);
 
 	/* Create a parallel context. */
-	pcxt = CreateParallelContext("postgres", "ParallelQueryMain", nworkers);
+	pcxt = CreateParallelContext("maintable", "ParallelQueryMain", nworkers);
 	pei->pcxt = pcxt;
 
 	/*

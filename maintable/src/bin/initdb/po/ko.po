@@ -1,14 +1,14 @@
-# Korean message translation file for PostgreSQL initdb
+# Korean message translation file for maintableQL initdb
 # Ioseph Kim <ioseph@uri.sarang.net>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: initdb (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: initdb (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-01-17 04:51+0000\n"
 "PO-Revision-Date: 2025-01-16 11:33+0900\n"
 "Last-Translator: Ioseph Kim <ioseph@uri.sarang.net>\n"
-"Language-Team: Korean <kr@postgresql.org>\n"
+"Language-Team: Korean <kr@maintableql.org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -433,8 +433,8 @@ msgstr "부트스트랩 스크립트 실행 중 ... "
 
 #: initdb.c:1548
 #, c-format
-msgid "input file \"%s\" does not belong to PostgreSQL %s"
-msgstr "\"%s\" 입력 파일이 PostgreSQL %s 용이 아님"
+msgid "input file \"%s\" does not belong to maintableQL %s"
+msgstr "\"%s\" 입력 파일이 maintableQL %s 용이 아님"
 
 #: initdb.c:1550
 #, c-format
@@ -566,10 +566,10 @@ msgstr "\"%s\" 로케일 태그를 사용함, 해당 ICU 로케일: \"%s\"\n"
 #: initdb.c:2499
 #, c-format
 msgid ""
-"%s initializes a PostgreSQL database cluster.\n"
+"%s initializes a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL 데이터베이스 클러스터를 초기화 하는 프로그램.\n"
+"%s maintableQL 데이터베이스 클러스터를 초기화 하는 프로그램.\n"
 "\n"
 
 #: initdb.c:2500

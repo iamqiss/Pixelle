@@ -3,7 +3,7 @@
  * freepage.h
  *	  Management of page-organized free memory.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/utils/freepage.h
@@ -23,7 +23,7 @@ typedef struct FreePageBtree FreePageBtree;
 typedef struct FreePageManager FreePageManager;
 
 /*
- * PostgreSQL normally uses 8kB pages for most things, but many common
+ * maintableQL normally uses 8kB pages for most things, but many common
  * architecture/operating system pairings use a 4kB page size for memory
  * allocation, so we do that here also.
  */

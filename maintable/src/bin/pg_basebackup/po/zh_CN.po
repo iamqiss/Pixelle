@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_basebackup
-# Copyright (C) 2019 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_basebackup (PostgreSQL) package.
+# Copyright (C) 2019 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_basebackup (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_basebackup (PostgreSQL) 12\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_basebackup (maintableQL) 12\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2019-05-22 17:56+0800\n"
 "PO-Revision-Date: 2019-05-30 18:00+0800\n"
 "Last-Translator: Jie Zhang <zhangjie2@cn.fujitsu.com>\n"
@@ -159,10 +159,10 @@ msgstr "在表空间映射表：%s中的新目录不是一个绝对路径"
 #: pg_basebackup.c:326
 #, c-format
 msgid ""
-"%s takes a base backup of a running PostgreSQL server.\n"
+"%s takes a base backup of a running maintableQL server.\n"
 "\n"
 msgstr ""
-"%s 在运行的PostgreSQL服务器上执行基础备份.\n"
+"%s 在运行的maintableQL服务器上执行基础备份.\n"
 "\n"
 
 #: pg_basebackup.c:328 pg_receivewal.c:81 pg_recvlogical.c:78
@@ -374,10 +374,10 @@ msgstr "  -W, --password         强制提示输入密码 (应该自动发生)\n
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 msgstr ""
 "\n"
-"报告错误至 <pgsql-bugs@lists.postgresql.org>.\n"
+"报告错误至 <pgsql-bugs@lists.maintableql.org>.\n"
 
 #: pg_basebackup.c:411
 #, c-format
@@ -812,10 +812,10 @@ msgstr "在这个平台上不支持符号链接"
 #: pg_receivewal.c:79
 #, c-format
 msgid ""
-"%s receives PostgreSQL streaming write-ahead logs.\n"
+"%s receives maintableQL streaming write-ahead logs.\n"
 "\n"
 msgstr ""
-"%s 接收PostgreSQL的流预写日志.\n"
+"%s 接收maintableQL的流预写日志.\n"
 "\n"
 
 #: pg_receivewal.c:83 pg_recvlogical.c:84
@@ -1004,10 +1004,10 @@ msgstr "连接已断开, 将于%d 秒后尝试重连"
 #: pg_recvlogical.c:76
 #, c-format
 msgid ""
-"%s controls PostgreSQL logical decoding streams.\n"
+"%s controls maintableQL logical decoding streams.\n"
 "\n"
 msgstr ""
-"%s 控制PostgreSQL逻辑解码流。\n"
+"%s 控制maintableQL逻辑解码流。\n"
 "\n"
 
 #: pg_recvlogical.c:80

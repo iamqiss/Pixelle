@@ -16,7 +16,7 @@
  * under the License.
  */
 use clap::{Args, Subcommand};
-use iggy::prelude::Identifier;
+use messenger::prelude::Identifier;
 
 #[derive(Debug, Clone, Subcommand)]
 pub(crate) enum SegmentAction {
@@ -28,10 +28,10 @@ pub(crate) enum SegmentAction {
     /// Partition ID can be specified as a name or ID
     ///
     /// Examples
-    ///  iggy segment delete 1 1 1 10
-    ///  iggy segment delete prod 2 2 2
-    ///  iggy segment delete test sensor 2 2
-    ///  iggy segment delete 1 sensor 2 16
+    ///  messenger segment delete 1 1 1 10
+    ///  messenger segment delete prod 2 2 2
+    ///  messenger segment delete test sensor 2 2
+    ///  messenger segment delete 1 sensor 2 16
     #[clap(verbatim_doc_comment, visible_alias = "d")]
     Delete(SegmentDeleteArgs),
 }

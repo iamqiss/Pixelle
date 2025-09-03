@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_test_timing
-# Copyright (C) 2019 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_test_timing (PostgreSQL) package.
+# Copyright (C) 2019 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_test_timing (maintableQL) package.
 # FIRST AUTHOR <zhangjie2@fujitsu.com>, 2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_test_timing (PostgreSQL) 14\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_test_timing (maintableQL) 14\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2021-08-14 05:47+0000\n"
 "PO-Revision-Date: 2021-06-10 10:50+0800\n"
 "Last-Translator: Jie Zhang <zhangjie2@fujitsu.com>\n"

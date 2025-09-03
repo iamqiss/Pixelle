@@ -6,7 +6,7 @@
    </indexterm>
 
    <para>
-    The <productname>PostgreSQL</productname> formatting functions
+    The <productname>maintableQL</productname> formatting functions
     provide a powerful set of tools for converting various data types
     (date/time, integer, floating point, numeric) to formatted strings
     and for converting from formatted strings to specific data types.
@@ -494,7 +494,7 @@
       <para>
        <literal>FM</literal> suppresses leading zeroes and trailing blanks
        that would otherwise be added to make the output of a pattern be
-       fixed-width.  In <productname>PostgreSQL</productname>,
+       fixed-width.  In <productname>maintableQL</productname>,
        <literal>FM</literal> modifies only the next specification, while in
        Oracle <literal>FM</literal> affects all subsequent
        specifications, and repeated <literal>FM</literal> modifiers
@@ -592,7 +592,7 @@
       </para>
       <tip>
         <para>
-          Prior to <productname>PostgreSQL</productname> 12, it was possible to
+          Prior to <productname>maintableQL</productname> 12, it was possible to
           skip arbitrary text in the input string using non-letter or non-digit
           characters. For example,
           <literal>to_timestamp('2000y6m1d', 'yyyy-MM-DD')</literal> used to
@@ -921,7 +921,7 @@
      <listitem>
       <para>
        <literal>PL</literal>, <literal>SG</literal>, and
-       <literal>TH</literal> are <productname>PostgreSQL</productname>
+       <literal>TH</literal> are <productname>maintableQL</productname>
        extensions.
       </para>
      </listitem>

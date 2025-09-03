@@ -20,8 +20,8 @@ use crate::streaming::partitions::partition::Partition;
 use crate::streaming::topics::COMPONENT;
 use crate::streaming::topics::topic::Topic;
 use error_set::ErrContext;
-use iggy_common::locking::{IggySharedMut, IggySharedMutFn};
-use iggy_common::{IggyError, IggyTimestamp};
+use messenger_common::locking::{MessengerSharedMut, MessengerSharedMutFn};
+use messenger_common::{MessengerError, MessengerTimestamp};
 
 const MAX_PARTITIONS_COUNT: u32 = 100_000;
 
@@ -34,14 +34,14 @@ impl Topic {
         self.partitions.len() as u32
     }
 
-    pub async fn add_partitions(&mut self, count: u32) -> Result<Vec<u32>, IggyError> {
+    pub async fn add_partitions(&mut self, count: u32) -> Result<Vec<u32>, MessengerError> {
         if count == 0 {
             return Ok(vec![]);
         }
 
         let current_partitions_count = self.partitions.len() as u32;
         if current_partitions_count + count > MAX_PARTITIONS_COUNT {
-            return Err(IggyError::TooManyPartitions);
+            return Err(MessengerError::TooManyPartitions);
         }
 
         let mut partition_ids = Vec::with_capacity(count as usize);
@@ -59,18 +59,18 @@ impl Topic {
                 self.size_of_parent_stream.clone(),
                 self.size_bytes.clone(),
                 self.segments_count_of_parent_stream.clone(),
-                IggyTimestamp::now(),
+                MessengerTimestamp::now(),
             )
             .await;
             self.partitions
-                .insert(partition_id, IggySharedMut::new(partition));
+                .insert(partition_id, MessengerSharedMut::new(partition));
             partition_ids.push(partition_id)
         }
 
         Ok(partition_ids)
     }
 
-    pub async fn add_persisted_partitions(&mut self, count: u32) -> Result<Vec<u32>, IggyError> {
+    pub async fn add_persisted_partitions(&mut self, count: u32) -> Result<Vec<u32>, MessengerError> {
         let partition_ids = self
             .add_partitions(count)
             .await
@@ -93,7 +93,7 @@ impl Topic {
     pub async fn delete_persisted_partitions(
         &mut self,
         mut count: u32,
-    ) -> Result<Option<DeletedPartitions>, IggyError> {
+    ) -> Result<Option<DeletedPartitions>, MessengerError> {
         if count == 0 {
             return Ok(None);
         }

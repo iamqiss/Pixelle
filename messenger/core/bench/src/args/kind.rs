@@ -29,7 +29,7 @@ use crate::args::kinds::pinned::producer::PinnedProducerArgs;
 use crate::args::kinds::pinned::producer_and_consumer::PinnedProducerAndConsumerArgs;
 use bench_report::benchmark_kind::BenchmarkKind;
 use clap::Subcommand;
-use iggy::prelude::IggyByteSize;
+use messenger::prelude::MessengerByteSize;
 
 #[derive(Subcommand, Debug)]
 pub enum BenchmarkKindCommand {
@@ -145,7 +145,7 @@ impl BenchmarkKindProps for BenchmarkKindCommand {
         self.inner().number_of_consumer_groups()
     }
 
-    fn max_topic_size(&self) -> Option<IggyByteSize> {
+    fn max_topic_size(&self) -> Option<MessengerByteSize> {
         self.inner().max_topic_size()
     }
 

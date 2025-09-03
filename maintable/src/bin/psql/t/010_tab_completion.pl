@@ -1,11 +1,11 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 use Data::Dumper;
 
@@ -33,12 +33,12 @@ if ($@)
 }
 
 # start a new server
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init;
 $node->start;
 
 # set up a few database objects
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"CREATE TABLE tab1 (c1 int primary key constraint foo not null, c2 text);\n"
 	  . "CREATE TABLE mytab123 (f1 int, f2 text);\n"
 	  . "CREATE TABLE mytab246 (f1 int, f2 text);\n"
@@ -75,10 +75,10 @@ close $FH;
 # Arrange to capture, not discard, the interactive session's history output.
 # Put it in the test log directory, so that buildfarm runs capture the result
 # for possible debugging purposes.
-my $historyfile = "${PostgreSQL::Test::Utils::log_path}/010_psql_history.txt";
+my $historyfile = "${maintableQL::Test::Utils::log_path}/010_psql_history.txt";
 
 # fire up an interactive psql session
-my $h = $node->interactive_psql('postgres', history_file => $historyfile);
+my $h = $node->interactive_psql('maintable', history_file => $historyfile);
 
 # Simple test case: type something and see if psql responds as expected
 sub check_completion
@@ -89,7 +89,7 @@ sub check_completion
 	local $Test::Builder::Level = $Test::Builder::Level + 1;
 
 	# restart per-command timer
-	$h->{timeout}->start($PostgreSQL::Test::Utils::timeout_default);
+	$h->{timeout}->start($maintableQL::Test::Utils::timeout_default);
 
 	# send the data to be sent and wait for its result
 	my $out = $h->query_until($pattern, $send);
@@ -109,7 +109,7 @@ sub clear_query
 {
 	local $Test::Builder::Level = $Test::Builder::Level + 1;
 
-	check_completion("\\r\n", qr/Query buffer reset.*postgres=# /s,
+	check_completion("\\r\n", qr/Query buffer reset.*maintable=# /s,
 		"\\r works");
 	return;
 }
@@ -121,7 +121,7 @@ sub clear_line
 {
 	local $Test::Builder::Level = $Test::Builder::Level + 1;
 
-	check_completion("\025\n", qr/postgres=# /, "control-U works");
+	check_completion("\025\n", qr/maintable=# /, "control-U works");
 	return;
 }
 
@@ -316,7 +316,7 @@ foreach (
 
 	check_completion(
 		"\\set COMP_KEYWORD_CASE $case\n",
-		qr/postgres=#/,
+		qr/maintable=#/,
 		"set completion case to '$case'");
 	check_completion("alter table tab1 rename $in\t\t\t",
 		qr|$out|,
@@ -374,7 +374,7 @@ clear_query();
 # same, for qualified GUC names
 check_completion(
 	"DO \$\$begin end\$\$ LANGUAGE plpgsql;\n",
-	qr/postgres=# /,
+	qr/maintable=# /,
 	"load plpgsql extension");
 
 check_completion("set plpg\t", qr/plpg\a?sql\./,

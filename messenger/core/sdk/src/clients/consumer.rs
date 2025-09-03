@@ -21,13 +21,13 @@ use bytes::Bytes;
 use dashmap::DashMap;
 use futures::Stream;
 use futures_util::{FutureExt, StreamExt};
-use iggy_binary_protocol::{
+use messenger_binary_protocol::{
     Client, ConsumerGroupClient, ConsumerOffsetClient, MessageClient, StreamClient, TopicClient,
 };
-use iggy_common::locking::{IggySharedMut, IggySharedMutFn};
-use iggy_common::{
-    Consumer, ConsumerKind, DiagnosticEvent, EncryptorKind, IdKind, Identifier, IggyDuration,
-    IggyError, IggyMessage, IggyTimestamp, PolledMessages, PollingKind, PollingStrategy,
+use messenger_common::locking::{MessengerSharedMut, MessengerSharedMutFn};
+use messenger_common::{
+    Consumer, ConsumerKind, DiagnosticEvent, EncryptorKind, IdKind, Identifier, MessengerDuration,
+    MessengerError, MessengerMessage, MessengerTimestamp, PolledMessages, PollingKind, PollingStrategy,
 };
 use std::collections::VecDeque;
 use std::future::Future;
@@ -41,7 +41,7 @@ use tokio::time::sleep;
 use tracing::{error, info, trace, warn};
 
 const ORDERING: std::sync::atomic::Ordering = std::sync::atomic::Ordering::SeqCst;
-type PollMessagesFuture = Pin<Box<dyn Future<Output = Result<PolledMessages, IggyError>>>>;
+type PollMessagesFuture = Pin<Box<dyn Future<Output = Result<PolledMessages, MessengerError>>>>;
 
 /// The auto-commit configuration for storing the offset on the server.
 #[derive(Debug, PartialEq, Copy, Clone)]
@@ -49,18 +49,18 @@ pub enum AutoCommit {
     /// The auto-commit is disabled and the offset must be stored manually by the consumer.
     Disabled,
     /// The auto-commit is enabled and the offset is stored on the server after a certain interval.
-    Interval(IggyDuration),
+    Interval(MessengerDuration),
     /// The auto-commit is enabled and the offset is stored on the server after a certain interval or depending on the mode when consuming the messages.
-    IntervalOrWhen(IggyDuration, AutoCommitWhen),
+    IntervalOrWhen(MessengerDuration, AutoCommitWhen),
     /// The auto-commit is enabled and the offset is stored on the server after a certain interval or depending on the mode after consuming the messages.
     ///
-    /// **This will only work with the `IggyConsumerMessageExt` trait when using `consume_messages()`.**
-    IntervalOrAfter(IggyDuration, AutoCommitAfter),
+    /// **This will only work with the `MessengerConsumerMessageExt` trait when using `consume_messages()`.**
+    IntervalOrAfter(MessengerDuration, AutoCommitAfter),
     /// The auto-commit is enabled and the offset is stored on the server depending on the mode when consuming the messages.
     When(AutoCommitWhen),
     /// The auto-commit is enabled and the offset is stored on the server depending on the mode after consuming the messages.
     ///
-    /// **This will only work with the `IggyConsumerMessageExt` trait when using `consume_messages()`.**
+    /// **This will only work with the `MessengerConsumerMessageExt` trait when using `consume_messages()`.**
     After(AutoCommitAfter),
 }
 
@@ -79,7 +79,7 @@ pub enum AutoCommitWhen {
 
 /// The auto-commit mode for storing the offset on the server **after** receiving the messages.
 ///
-/// **This will only work with the `IggyConsumerMessageExt` trait when using `consume_messages()`.**
+/// **This will only work with the `MessengerConsumerMessageExt` trait when using `consume_messages()`.**
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub enum AutoCommitAfter {
     /// The offset is stored on the server after all the messages are consumed.
@@ -90,13 +90,13 @@ pub enum AutoCommitAfter {
     ConsumingEveryNthMessage(u32),
 }
 
-unsafe impl Send for IggyConsumer {}
-unsafe impl Sync for IggyConsumer {}
+unsafe impl Send for MessengerConsumer {}
+unsafe impl Sync for MessengerConsumer {}
 
-pub struct IggyConsumer {
+pub struct MessengerConsumer {
     initialized: bool,
     can_poll: Arc<AtomicBool>,
-    client: IggySharedMut<ClientWrapper>,
+    client: MessengerSharedMut<ClientWrapper>,
     consumer_name: String,
     consumer: Arc<Consumer>,
     is_consumer_group: bool,
@@ -115,7 +115,7 @@ pub struct IggyConsumer {
     last_consumed_offsets: Arc<DashMap<u32, AtomicU64>>,
     current_offsets: Arc<DashMap<u32, AtomicU64>>,
     poll_future: Option<PollMessagesFuture>,
-    buffered_messages: VecDeque<IggyMessage>,
+    buffered_messages: VecDeque<MessengerMessage>,
     encryptor: Option<Arc<EncryptorKind>>,
     store_offset_sender: flume::Sender<(u32, u64)>,
     store_offset_after_each_message: bool,
@@ -123,31 +123,31 @@ pub struct IggyConsumer {
     store_after_every_nth_message: u64,
     last_polled_at: Arc<AtomicU64>,
     current_partition_id: Arc<AtomicU32>,
-    reconnection_retry_interval: IggyDuration,
+    reconnection_retry_interval: MessengerDuration,
     init_retries: Option<u32>,
-    init_retry_interval: IggyDuration,
+    init_retry_interval: MessengerDuration,
     allow_replay: bool,
 }
 
-impl IggyConsumer {
+impl MessengerConsumer {
     #[allow(clippy::too_many_arguments)]
     pub(crate) fn new(
-        client: IggySharedMut<ClientWrapper>,
+        client: MessengerSharedMut<ClientWrapper>,
         consumer_name: String,
         consumer: Consumer,
         stream_id: Identifier,
         topic_id: Identifier,
         partition_id: Option<u32>,
-        polling_interval: Option<IggyDuration>,
+        polling_interval: Option<MessengerDuration>,
         polling_strategy: PollingStrategy,
         batch_length: u32,
         auto_commit: AutoCommit,
         auto_join_consumer_group: bool,
         create_consumer_group_if_not_exists: bool,
         encryptor: Option<Arc<EncryptorKind>>,
-        reconnection_retry_interval: IggyDuration,
+        reconnection_retry_interval: MessengerDuration,
         init_retries: Option<u32>,
-        init_retry_interval: IggyDuration,
+        init_retry_interval: MessengerDuration,
         allow_replay: bool,
     ) -> Self {
         let (store_offset_sender, _) = flume::unbounded();
@@ -235,7 +235,7 @@ impl IggyConsumer {
         &self,
         offset: u64,
         partition_id: Option<u32>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let partition_id = if let Some(partition_id) = partition_id {
             partition_id
         } else {
@@ -262,7 +262,7 @@ impl IggyConsumer {
     }
 
     /// Deletes the consumer offset on the server either for the current partition or the provided partition ID.
-    pub async fn delete_offset(&self, partition_id: Option<u32>) -> Result<(), IggyError> {
+    pub async fn delete_offset(&self, partition_id: Option<u32>) -> Result<(), MessengerError> {
         let client = self.client.read().await;
         client
             .delete_consumer_offset(
@@ -284,7 +284,7 @@ impl IggyConsumer {
     /// Initializes the consumer by subscribing to diagnostic events, initializing the consumer group if needed, storing the offsets in the background etc.
     ///
     /// Note: This method must be called before polling messages.
-    pub async fn init(&mut self) -> Result<(), IggyError> {
+    pub async fn init(&mut self) -> Result<(), MessengerError> {
         if self.initialized {
             return Ok(());
         }
@@ -347,14 +347,14 @@ impl IggyConsumer {
 
             if !stream_exists {
                 error!("Stream: {stream_id} was not found.");
-                return Err(IggyError::StreamNameNotFound(
+                return Err(MessengerError::StreamNameNotFound(
                     self.stream_id.get_string_value().unwrap_or_default(),
                 ));
             };
 
             if !topic_exists {
                 error!("Topic: {topic_id} was not found in stream: {stream_id}.");
-                return Err(IggyError::TopicNameNotFound(
+                return Err(MessengerError::TopicNameNotFound(
                     self.topic_id.get_string_value().unwrap_or_default(),
                     self.stream_id.get_string_value().unwrap_or_default(),
                 ));
@@ -408,7 +408,7 @@ impl IggyConsumer {
 
     #[allow(clippy::too_many_arguments)]
     async fn store_consumer_offset(
-        client: &IggySharedMut<ClientWrapper>,
+        client: &MessengerSharedMut<ClientWrapper>,
         consumer: &Consumer,
         stream_id: &Identifier,
         topic_id: &Identifier,
@@ -416,7 +416,7 @@ impl IggyConsumer {
         offset: u64,
         last_stored_offsets: &DashMap<u32, AtomicU64>,
         allow_replay: bool,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         trace!(
             "Storing offset: {offset} for consumer: {consumer}, partition ID: {partition_id}, topic: {topic_id}, stream: {stream_id}..."
         );
@@ -456,7 +456,7 @@ impl IggyConsumer {
         Ok(())
     }
 
-    fn store_offsets_in_background(&self, interval: IggyDuration) {
+    fn store_offsets_in_background(&self, interval: MessengerDuration) {
         let client = self.client.clone();
         let consumer = self.consumer.clone();
         let stream_id = self.stream_id.clone();
@@ -488,12 +488,12 @@ impl IggyConsumer {
     pub(crate) fn send_store_offset(&self, partition_id: u32, offset: u64) {
         if let Err(error) = self.store_offset_sender.send((partition_id, offset)) {
             error!(
-                "Failed to send offset to store: {error}, please verify if `init()` on IggyConsumer object has been called."
+                "Failed to send offset to store: {error}, please verify if `init()` on MessengerConsumer object has been called."
             );
         }
     }
 
-    async fn init_consumer_group(&self) -> Result<(), IggyError> {
+    async fn init_consumer_group(&self) -> Result<(), MessengerError> {
         if !self.is_consumer_group {
             return Ok(());
         }
@@ -619,7 +619,7 @@ impl IggyConsumer {
 
     fn create_poll_messages_future(
         &self,
-    ) -> impl Future<Output = Result<PolledMessages, IggyError>> + use<> {
+    ) -> impl Future<Output = Result<PolledMessages, MessengerError>> + use<> {
         let stream_id = self.stream_id.clone();
         let topic_id = self.topic_id.clone();
         let partition_id = self.partition_id;
@@ -648,7 +648,7 @@ impl IggyConsumer {
             }
 
             trace!("Sending poll messages request");
-            last_polled_at.store(IggyTimestamp::now().into(), ORDERING);
+            last_polled_at.store(MessengerTimestamp::now().into(), ORDERING);
             let polled_messages = client
                 .read()
                 .await
@@ -755,7 +755,7 @@ impl IggyConsumer {
             error!("Failed to poll messages: {error}");
             if matches!(
                 error,
-                IggyError::Disconnected | IggyError::Unauthenticated | IggyError::StaleClient
+                MessengerError::Disconnected | MessengerError::Unauthenticated | MessengerError::StaleClient
             ) {
                 trace!("Retrying to poll messages in {retry_interval}...");
                 sleep(retry_interval.get_duration()).await;
@@ -769,7 +769,7 @@ impl IggyConsumer {
             return;
         }
 
-        let now: u64 = IggyTimestamp::now().into();
+        let now: u64 = MessengerTimestamp::now().into();
         if now < last_sent_at {
             warn!(
                 "Returned monotonic time went backwards, now < last_sent_at: ({now} < {last_sent_at})"
@@ -792,14 +792,14 @@ impl IggyConsumer {
     }
 
     async fn initialize_consumer_group(
-        client: IggySharedMut<ClientWrapper>,
+        client: MessengerSharedMut<ClientWrapper>,
         create_consumer_group_if_not_exists: bool,
         stream_id: Arc<Identifier>,
         topic_id: Arc<Identifier>,
         consumer: Arc<Consumer>,
         consumer_name: &str,
         joined_consumer_group: Arc<AtomicBool>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         if joined_consumer_group.load(ORDERING) {
             return Ok(());
         }
@@ -821,7 +821,7 @@ impl IggyConsumer {
         {
             if !create_consumer_group_if_not_exists {
                 error!("Consumer group does not exist and auto-creation is disabled.");
-                return Err(IggyError::ConsumerGroupNameNotFound(
+                return Err(MessengerError::ConsumerGroupNameNotFound(
                     name.to_owned(),
                     topic_id.get_string_value().unwrap_or_default(),
                 ));
@@ -835,7 +835,7 @@ impl IggyConsumer {
                 .await
             {
                 Ok(_) => {}
-                Err(IggyError::ConsumerGroupNameAlreadyExists(_, _)) => {}
+                Err(MessengerError::ConsumerGroupNameAlreadyExists(_, _)) => {}
                 Err(error) => {
                     error!(
                         "Failed to create consumer group {consumer_group_id} for topic: {topic_id}, stream: {stream_id}: {error}"
@@ -868,13 +868,13 @@ impl IggyConsumer {
 }
 
 pub struct ReceivedMessage {
-    pub message: IggyMessage,
+    pub message: MessengerMessage,
     pub current_offset: u64,
     pub partition_id: u32,
 }
 
 impl ReceivedMessage {
-    pub fn new(message: IggyMessage, current_offset: u64, partition_id: u32) -> Self {
+    pub fn new(message: MessengerMessage, current_offset: u64, partition_id: u32) -> Self {
         Self {
             message,
             current_offset,
@@ -883,8 +883,8 @@ impl ReceivedMessage {
     }
 }
 
-impl Stream for IggyConsumer {
-    type Item = Result<ReceivedMessage, IggyError>;
+impl Stream for MessengerConsumer {
+    type Item = Result<ReceivedMessage, MessengerError>;
 
     fn poll_next(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
         let partition_id = self.current_partition_id.load(ORDERING);

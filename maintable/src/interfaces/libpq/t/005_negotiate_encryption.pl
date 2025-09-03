@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # OVERVIEW
 # --------
@@ -70,9 +70,9 @@
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Utils;
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Kerberos;
+use maintableQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Kerberos;
 use File::Basename;
 use File::Copy;
 use Test::More;
@@ -96,14 +96,14 @@ my $ssl_supported = $ENV{with_ssl} eq 'openssl';
 ### enable SSL and kerberos in the server yet, we will do that later.
 ###
 
-my $host = 'enc-test-localhost.postgresql.example.com';
+my $host = 'enc-test-localhost.maintableql.example.com';
 my $hostaddr = '127.0.0.1';
 my $servercidr = '127.0.0.1/32';
 
-my $node = PostgreSQL::Test::Cluster->new('node');
+my $node = maintableQL::Test::Cluster->new('node');
 $node->init;
 $node->append_conf(
-	'postgresql.conf', qq{
+	'maintableql.conf', qq{
 listen_addresses = '$hostaddr'
 
 # Capturing the EVENTS that occur during tests requires these settings
@@ -114,7 +114,7 @@ lc_messages = 'C'
 });
 my $pgdata = $node->data_dir;
 
-my $dbname = 'postgres';
+my $dbname = 'maintable';
 my $username = 'enctest';
 my $application = '001_negotiate_encryption.pl';
 
@@ -127,8 +127,8 @@ if ($gss_supported != 0 && $kerberos_enabled != 0)
 	note "setting up Kerberos";
 
 	my $realm = 'EXAMPLE.COM';
-	$krb = PostgreSQL::Test::Kerberos->new($host, $hostaddr, $realm);
-	$node->append_conf('postgresql.conf',
+	$krb = maintableQL::Test::Kerberos->new($host, $hostaddr, $realm);
+	$node->append_conf('maintableql.conf',
 		"krb_server_keyfile = '$krb->{keytab}'\n");
 }
 
@@ -144,7 +144,7 @@ if ($ssl_supported != 0)
 	  or die "failed to change permissions on server keys: $!";
 
 	# Start with SSL disabled.
-	$node->append_conf('postgresql.conf', "ssl = off\n");
+	$node->append_conf('maintableql.conf', "ssl = off\n");
 }
 
 $node->start;
@@ -154,24 +154,24 @@ $node->start;
 # would not be installed by default.
 my $injection_points_supported = $node->check_extension('injection_points');
 
-$node->safe_psql('postgres', 'CREATE USER localuser;');
-$node->safe_psql('postgres', 'CREATE USER testuser;');
-$node->safe_psql('postgres', 'CREATE USER ssluser;');
-$node->safe_psql('postgres', 'CREATE USER nossluser;');
-$node->safe_psql('postgres', 'CREATE USER gssuser;');
-$node->safe_psql('postgres', 'CREATE USER nogssuser;');
+$node->safe_psql('maintable', 'CREATE USER localuser;');
+$node->safe_psql('maintable', 'CREATE USER testuser;');
+$node->safe_psql('maintable', 'CREATE USER ssluser;');
+$node->safe_psql('maintable', 'CREATE USER nossluser;');
+$node->safe_psql('maintable', 'CREATE USER gssuser;');
+$node->safe_psql('maintable', 'CREATE USER nogssuser;');
 if ($injection_points_supported != 0)
 {
-	$node->safe_psql('postgres', 'CREATE EXTENSION injection_points;');
+	$node->safe_psql('maintable', 'CREATE EXTENSION injection_points;');
 }
 
-my $unixdir = $node->safe_psql('postgres', 'SHOW unix_socket_directories;');
+my $unixdir = $node->safe_psql('maintable', 'SHOW unix_socket_directories;');
 chomp($unixdir);
 
 # Helper function that returns the encryption method in use in the
 # connection.
 $node->safe_psql(
-	'postgres', q{
+	'maintable', q{
 CREATE FUNCTION current_enc() RETURNS text LANGUAGE plpgsql AS $$
 DECLARE
   ssl_in_use bool;
@@ -200,18 +200,18 @@ $$;
 open my $hba, '>', "$pgdata/pg_hba.conf" or die $!;
 print $hba qq{
 # TYPE        DATABASE        USER            ADDRESS                 METHOD             OPTIONS
-local         postgres        localuser                               trust
-host          postgres        testuser        $servercidr             trust
-hostnossl     postgres        nossluser       $servercidr             trust
-hostnogssenc  postgres        nogssuser       $servercidr             trust
+local         maintable        localuser                               trust
+host          maintable        testuser        $servercidr             trust
+hostnossl     maintable        nossluser       $servercidr             trust
+hostnogssenc  maintable        nogssuser       $servercidr             trust
 };
 
 print $hba qq{
-hostssl       postgres        ssluser         $servercidr             trust
+hostssl       maintable        ssluser         $servercidr             trust
 } if ($ssl_supported != 0);
 
 print $hba qq{
-hostgssenc    postgres        gssuser         $servercidr             trust
+hostgssenc    maintable        gssuser         $servercidr             trust
 } if ($gss_supported != 0 && $kerberos_enabled != 0);
 close $hba;
 $node->reload;
@@ -222,7 +222,7 @@ my @all_test_users =
   ('testuser', 'ssluser', 'nossluser', 'gssuser', 'nogssuser');
 my @all_gssencmodes = ('disable', 'prefer', 'require');
 my @all_sslmodes = ('disable', 'allow', 'prefer', 'require');
-my @all_sslnegotiations = ('postgres', 'direct');
+my @all_sslnegotiations = ('maintable', 'direct');
 
 ###
 ### Run tests with GSS and SSL disabled in the server
@@ -232,15 +232,15 @@ if ($ssl_supported)
 {
 	$test_table = q{
 # USER      GSSENCMODE   SSLMODE      SSLNEGOTIATION EVENTS                      -> OUTCOME
-testuser    disable      disable      postgres       connect, authok             -> plain
-.           .            allow        postgres       connect, authok             -> plain
-.           .            prefer       postgres       connect, sslreject, authok  -> plain
-.           .            require      postgres       connect, sslreject          -> fail
+testuser    disable      disable      maintable       connect, authok             -> plain
+.           .            allow        maintable       connect, authok             -> plain
+.           .            prefer       maintable       connect, sslreject, authok  -> plain
+.           .            require      maintable       connect, sslreject          -> fail
 .           .            .            direct         connect, directsslreject    -> fail
-.           prefer       disable      postgres       connect, authok             -> plain
-.           .            allow        postgres       connect, authok             -> plain
-.           .            prefer       postgres       connect, sslreject, authok  -> plain
-.           .            require      postgres       connect, sslreject          -> fail
+.           prefer       disable      maintable       connect, authok             -> plain
+.           .            allow        maintable       connect, authok             -> plain
+.           .            prefer       maintable       connect, sslreject, authok  -> plain
+.           .            require      maintable       connect, sslreject          -> fail
 .           .            .            direct         connect, directsslreject    -> fail
 
 # sslnegotiation=direct is not accepted unless sslmode=require or stronger
@@ -254,12 +254,12 @@ else
 	# Compiled without SSL support
 	$test_table = q{
 # USER      GSSENCMODE   SSLMODE      SSLNEGOTIATION EVENTS                      -> OUTCOME
-testuser    disable      disable      postgres       connect, authok             -> plain
-.           .            allow        postgres       connect, authok             -> plain
-.           .            prefer       postgres       connect, authok             -> plain
-.           prefer       disable      postgres       connect, authok             -> plain
-.           .            allow        postgres       connect, authok             -> plain
-.           .            prefer       postgres       connect, authok             -> plain
+testuser    disable      disable      maintable       connect, authok             -> plain
+.           .            allow        maintable       connect, authok             -> plain
+.           .            prefer       maintable       connect, authok             -> plain
+.           prefer       disable      maintable       connect, authok             -> plain
+.           .            allow        maintable       connect, authok             -> plain
+.           .            prefer       maintable       connect, authok             -> plain
 
 # Without SSL support, sslmode=require and sslnegotiation=direct are
 # not accepted at all
@@ -290,20 +290,20 @@ SKIP:
 
 	$test_table = q{
 # USER      GSSENCMODE   SSLMODE      SSLNEGOTIATION EVENTS                                          -> OUTCOME
-testuser    disable      disable      postgres       connect, authok                                 -> plain
-.           .            allow        postgres       connect, authok                                 -> plain
-.           .            prefer       postgres       connect, sslaccept, authok                      -> ssl
-.           .            require      postgres       connect, sslaccept, authok                      -> ssl
+testuser    disable      disable      maintable       connect, authok                                 -> plain
+.           .            allow        maintable       connect, authok                                 -> plain
+.           .            prefer       maintable       connect, sslaccept, authok                      -> ssl
+.           .            require      maintable       connect, sslaccept, authok                      -> ssl
 .           .            .            direct         connect, directsslaccept, authok                -> ssl
-ssluser     .            disable      postgres       connect, authfail                               -> fail
-.           .            allow        postgres       connect, authfail, reconnect, sslaccept, authok -> ssl
-.           .            prefer       postgres       connect, sslaccept, authok                      -> ssl
-.           .            require      postgres       connect, sslaccept, authok                      -> ssl
+ssluser     .            disable      maintable       connect, authfail                               -> fail
+.           .            allow        maintable       connect, authfail, reconnect, sslaccept, authok -> ssl
+.           .            prefer       maintable       connect, sslaccept, authok                      -> ssl
+.           .            require      maintable       connect, sslaccept, authok                      -> ssl
 .           .            .            direct         connect, directsslaccept, authok                -> ssl
-nossluser   .            disable      postgres       connect, authok                                 -> plain
-.           .            allow        postgres       connect, authok                                 -> plain
-.           .            prefer       postgres       connect, sslaccept, authfail, reconnect, authok -> plain
-.           .            require      postgres       connect, sslaccept, authfail                    -> fail
+nossluser   .            disable      maintable       connect, authok                                 -> plain
+.           .            allow        maintable       connect, authok                                 -> plain
+.           .            prefer       maintable       connect, sslaccept, authfail, reconnect, authok -> plain
+.           .            require      maintable       connect, sslaccept, authfail                    -> fail
 .           .            require      direct         connect, directsslaccept, authfail              -> fail
 
 # sslnegotiation=direct is not accepted unless sslmode=require or stronger
@@ -313,7 +313,7 @@ nossluser   .            disable      postgres       connect, authok            
 };
 
 	# Enable SSL in the server
-	$node->adjust_conf('postgresql.conf', 'ssl', 'on');
+	$node->adjust_conf('maintableql.conf', 'ssl', 'on');
 	$node->reload;
 
 	note("Running tests with SSL enabled in server");
@@ -324,7 +324,7 @@ nossluser   .            disable      postgres       connect, authok            
 	if ($injection_points_supported != 0)
 	{
 		$node->safe_psql(
-			'postgres',
+			'maintable',
 			"SELECT injection_points_attach('backend-initialize', 'error');",
 			connstr => "user=localuser host=$unixdir");
 		connect_test(
@@ -334,7 +334,7 @@ nossluser   .            disable      postgres       connect, authok            
 		$node->restart;
 
 		$node->safe_psql(
-			'postgres',
+			'maintable',
 			"SELECT injection_points_attach('backend-initialize-v2-error', 'error');",
 			connstr => "user=localuser host=$unixdir");
 		connect_test(
@@ -344,7 +344,7 @@ nossluser   .            disable      postgres       connect, authok            
 		$node->restart;
 
 		$node->safe_psql(
-			'postgres',
+			'maintable',
 			"SELECT injection_points_attach('backend-ssl-startup', 'error');",
 			connstr => "user=localuser host=$unixdir");
 		connect_test(
@@ -355,7 +355,7 @@ nossluser   .            disable      postgres       connect, authok            
 	}
 
 	# Disable SSL again
-	$node->adjust_conf('postgresql.conf', 'ssl', 'off');
+	$node->adjust_conf('maintableql.conf', 'ssl', 'off');
 	$node->reload;
 }
 
@@ -372,40 +372,40 @@ SKIP:
 
 	$test_table = q{
 # USER      GSSENCMODE   SSLMODE      SSLNEGOTIATION EVENTS                       -> OUTCOME
-testuser    disable      disable      postgres       connect, authok              -> plain
-.           .            allow        postgres       connect, authok              -> plain
-.           .            prefer       postgres       connect, sslreject, authok   -> plain
-.           .            require      postgres       connect, sslreject                -> fail
+testuser    disable      disable      maintable       connect, authok              -> plain
+.           .            allow        maintable       connect, authok              -> plain
+.           .            prefer       maintable       connect, sslreject, authok   -> plain
+.           .            require      maintable       connect, sslreject                -> fail
 .           .            .            direct         connect, directsslreject          -> fail
-.           prefer       *            postgres       connect, gssaccept, authok        -> gss
+.           prefer       *            maintable       connect, gssaccept, authok        -> gss
 .           prefer       require      direct         connect, gssaccept, authok        -> gss
-.           require      *            postgres       connect, gssaccept, authok        -> gss
+.           require      *            maintable       connect, gssaccept, authok        -> gss
 .           .            require      direct         connect, gssaccept, authok        -> gss
 
-gssuser     disable      disable      postgres       connect, authfail                  -> fail
-.           .            allow        postgres       connect, authfail, reconnect, sslreject -> fail
-.           .            prefer       postgres       connect, sslreject, authfail       -> fail
-.           .            require      postgres       connect, sslreject                 -> fail
+gssuser     disable      disable      maintable       connect, authfail                  -> fail
+.           .            allow        maintable       connect, authfail, reconnect, sslreject -> fail
+.           .            prefer       maintable       connect, sslreject, authfail       -> fail
+.           .            require      maintable       connect, sslreject                 -> fail
 .           .            .            direct         connect, directsslreject           -> fail
-.           prefer       *            postgres       connect, gssaccept, authok   -> gss
+.           prefer       *            maintable       connect, gssaccept, authok   -> gss
 .           prefer       require      direct         connect, gssaccept, authok   -> gss
-.           require      *            postgres       connect, gssaccept, authok   -> gss
+.           require      *            maintable       connect, gssaccept, authok   -> gss
 .           .            require      direct         connect, gssaccept, authok   -> gss
 
-nogssuser   disable      disable      postgres       connect, authok              -> plain
-.           .            allow        postgres       connect, authok              -> plain
-.           .            prefer       postgres       connect, sslreject, authok   -> plain
-.           .            require      postgres       connect, sslreject                 -> fail
+nogssuser   disable      disable      maintable       connect, authok              -> plain
+.           .            allow        maintable       connect, authok              -> plain
+.           .            prefer       maintable       connect, sslreject, authok   -> plain
+.           .            require      maintable       connect, sslreject                 -> fail
 .           .            .            direct         connect, directsslreject           -> fail
-.           prefer       disable      postgres       connect, gssaccept, authfail, reconnect, authok             -> plain
-.           .            allow        postgres       connect, gssaccept, authfail, reconnect, authok             -> plain
-.           .            prefer       postgres       connect, gssaccept, authfail, reconnect, sslreject, authok  -> plain
-.           .            require      postgres       connect, gssaccept, authfail, reconnect, sslreject          -> fail
+.           prefer       disable      maintable       connect, gssaccept, authfail, reconnect, authok             -> plain
+.           .            allow        maintable       connect, gssaccept, authfail, reconnect, authok             -> plain
+.           .            prefer       maintable       connect, gssaccept, authfail, reconnect, sslreject, authok  -> plain
+.           .            require      maintable       connect, gssaccept, authfail, reconnect, sslreject          -> fail
 .           .            .            direct         connect, gssaccept, authfail, reconnect, directsslreject          -> fail
-.           require      disable      postgres       connect, gssaccept, authfail -> fail
-.           .            allow        postgres       connect, gssaccept, authfail -> fail
-.           .            prefer       postgres       connect, gssaccept, authfail -> fail
-.           .            require      postgres       connect, gssaccept, authfail -> fail   # If both GSSAPI and sslmode are required, and GSS is not available -> fail
+.           require      disable      maintable       connect, gssaccept, authfail -> fail
+.           .            allow        maintable       connect, gssaccept, authfail -> fail
+.           .            prefer       maintable       connect, gssaccept, authfail -> fail
+.           .            require      maintable       connect, gssaccept, authfail -> fail   # If both GSSAPI and sslmode are required, and GSS is not available -> fail
 .           .            .            direct         connect, gssaccept, authfail -> fail   # If both GSSAPI and sslmode are required, and GSS is not available -> fail
 
 # sslnegotiation=direct is not accepted unless sslmode=require or stronger
@@ -428,7 +428,7 @@ nogssuser   disable      disable      postgres       connect, authok            
 	}
 	else
 	{
-		($sslmodes, $sslnegotiations) = (['disable'], ['postgres']);
+		($sslmodes, $sslnegotiations) = (['disable'], ['maintable']);
 	}
 
 	note("Running tests with GSS enabled in server");
@@ -439,7 +439,7 @@ nogssuser   disable      disable      postgres       connect, authok            
 	if ($injection_points_supported != 0)
 	{
 		$node->safe_psql(
-			'postgres',
+			'maintable',
 			"SELECT injection_points_attach('backend-initialize', 'error');",
 			connstr => "user=localuser host=$unixdir");
 		connect_test(
@@ -449,7 +449,7 @@ nogssuser   disable      disable      postgres       connect, authok            
 		$node->restart;
 
 		$node->safe_psql(
-			'postgres',
+			'maintable',
 			"SELECT injection_points_attach('backend-initialize-v2-error', 'error');",
 			connstr => "user=localuser host=$unixdir");
 		connect_test(
@@ -459,7 +459,7 @@ nogssuser   disable      disable      postgres       connect, authok            
 		$node->restart;
 
 		$node->safe_psql(
-			'postgres',
+			'maintable',
 			"SELECT injection_points_attach('backend-gssapi-startup', 'error');",
 			connstr => "user=localuser host=$unixdir");
 		connect_test(
@@ -486,83 +486,83 @@ SKIP:
 		'connect, gssaccept, authok -> gss');
 
 	# Enable SSL
-	$node->adjust_conf('postgresql.conf', 'ssl', 'on');
+	$node->adjust_conf('maintableql.conf', 'ssl', 'on');
 	$node->reload;
 
 	$test_table = q{
 # USER      GSSENCMODE   SSLMODE      SSLNEGOTIATION EVENTS                       -> OUTCOME
-testuser    disable      disable      postgres       connect, authok              -> plain
-.           .            allow        postgres       connect, authok              -> plain
-.           .            prefer       postgres       connect, sslaccept, authok   -> ssl
-.           .            require      postgres       connect, sslaccept, authok   -> ssl
+testuser    disable      disable      maintable       connect, authok              -> plain
+.           .            allow        maintable       connect, authok              -> plain
+.           .            prefer       maintable       connect, sslaccept, authok   -> ssl
+.           .            require      maintable       connect, sslaccept, authok   -> ssl
 .           .            .            direct         connect, directsslaccept, authok   -> ssl
-.           prefer       disable      postgres       connect, gssaccept, authok   -> gss
-.           .            allow        postgres       connect, gssaccept, authok   -> gss
-.           .            prefer       postgres       connect, gssaccept, authok   -> gss
-.           .            require      postgres       connect, gssaccept, authok   -> gss     # If both GSS and SSL is possible, GSS is chosen over SSL, even if sslmode=require
+.           prefer       disable      maintable       connect, gssaccept, authok   -> gss
+.           .            allow        maintable       connect, gssaccept, authok   -> gss
+.           .            prefer       maintable       connect, gssaccept, authok   -> gss
+.           .            require      maintable       connect, gssaccept, authok   -> gss     # If both GSS and SSL is possible, GSS is chosen over SSL, even if sslmode=require
 .           .            .            direct         connect, gssaccept, authok   -> gss
-.           require      disable      postgres       connect, gssaccept, authok   -> gss
-.           .            allow        postgres       connect, gssaccept, authok   -> gss
-.           .            prefer       postgres       connect, gssaccept, authok   -> gss
-.           .            require      postgres       connect, gssaccept, authok   -> gss     # If both GSS and SSL is possible, GSS is chosen over SSL, even if sslmode=require
+.           require      disable      maintable       connect, gssaccept, authok   -> gss
+.           .            allow        maintable       connect, gssaccept, authok   -> gss
+.           .            prefer       maintable       connect, gssaccept, authok   -> gss
+.           .            require      maintable       connect, gssaccept, authok   -> gss     # If both GSS and SSL is possible, GSS is chosen over SSL, even if sslmode=require
 .           .            .            direct         connect, gssaccept, authok   -> gss
 
-gssuser     disable      disable      postgres       connect, authfail            -> fail
-.           .            allow        postgres       connect, authfail, reconnect, sslaccept, authfail -> fail
-.           .            prefer       postgres       connect, sslaccept, authfail, reconnect, authfail -> fail
-.           .            require      postgres       connect, sslaccept, authfail       -> fail
+gssuser     disable      disable      maintable       connect, authfail            -> fail
+.           .            allow        maintable       connect, authfail, reconnect, sslaccept, authfail -> fail
+.           .            prefer       maintable       connect, sslaccept, authfail, reconnect, authfail -> fail
+.           .            require      maintable       connect, sslaccept, authfail       -> fail
 .           .            .            direct         connect, directsslaccept, authfail -> fail
-.           prefer       disable      postgres       connect, gssaccept, authok   -> gss
-.           .            allow        postgres       connect, gssaccept, authok   -> gss
-.           .            prefer       postgres       connect, gssaccept, authok   -> gss
-.           .            require      postgres       connect, gssaccept, authok   -> gss   # GSS is chosen over SSL, even though sslmode=require
+.           prefer       disable      maintable       connect, gssaccept, authok   -> gss
+.           .            allow        maintable       connect, gssaccept, authok   -> gss
+.           .            prefer       maintable       connect, gssaccept, authok   -> gss
+.           .            require      maintable       connect, gssaccept, authok   -> gss   # GSS is chosen over SSL, even though sslmode=require
 .           .            .            direct         connect, gssaccept, authok   -> gss
-.           require      disable      postgres       connect, gssaccept, authok   -> gss
-.           .            allow        postgres       connect, gssaccept, authok   -> gss
-.           .            prefer       postgres       connect, gssaccept, authok   -> gss
-.           .            require      postgres       connect, gssaccept, authok   -> gss     # If both GSS and SSL is possible, GSS is chosen over SSL, even if sslmode=require
+.           require      disable      maintable       connect, gssaccept, authok   -> gss
+.           .            allow        maintable       connect, gssaccept, authok   -> gss
+.           .            prefer       maintable       connect, gssaccept, authok   -> gss
+.           .            require      maintable       connect, gssaccept, authok   -> gss     # If both GSS and SSL is possible, GSS is chosen over SSL, even if sslmode=require
 .           .            .            direct         connect, gssaccept, authok   -> gss
 
-ssluser     disable      disable      postgres       connect, authfail            -> fail
-.           .            allow        postgres       connect, authfail, reconnect, sslaccept, authok       -> ssl
-.           .            prefer       postgres       connect, sslaccept, authok         -> ssl
-.           .            require      postgres       connect, sslaccept, authok         -> ssl
+ssluser     disable      disable      maintable       connect, authfail            -> fail
+.           .            allow        maintable       connect, authfail, reconnect, sslaccept, authok       -> ssl
+.           .            prefer       maintable       connect, sslaccept, authok         -> ssl
+.           .            require      maintable       connect, sslaccept, authok         -> ssl
 .           .            .            direct         connect, directsslaccept, authok   -> ssl
-.           prefer       disable      postgres       connect, gssaccept, authfail, reconnect, authfail -> fail
-.           .            allow        postgres       connect, gssaccept, authfail, reconnect, authfail, reconnect, sslaccept, authok       -> ssl
-.           .            prefer       postgres       connect, gssaccept, authfail, reconnect, sslaccept, authok       -> ssl
-.           .            require      postgres       connect, gssaccept, authfail, reconnect, sslaccept, authok       -> ssl
+.           prefer       disable      maintable       connect, gssaccept, authfail, reconnect, authfail -> fail
+.           .            allow        maintable       connect, gssaccept, authfail, reconnect, authfail, reconnect, sslaccept, authok       -> ssl
+.           .            prefer       maintable       connect, gssaccept, authfail, reconnect, sslaccept, authok       -> ssl
+.           .            require      maintable       connect, gssaccept, authfail, reconnect, sslaccept, authok       -> ssl
 .           .            .            direct         connect, gssaccept, authfail, reconnect, directsslaccept, authok -> ssl
-.           require      disable      postgres       connect, gssaccept, authfail -> fail
-.           .            allow        postgres       connect, gssaccept, authfail -> fail
-.           .            prefer       postgres       connect, gssaccept, authfail -> fail
-.           .            require      postgres       connect, gssaccept, authfail -> fail         # If both GSS and SSL are required, the sslmode=require is effectively ignored and GSS is required
+.           require      disable      maintable       connect, gssaccept, authfail -> fail
+.           .            allow        maintable       connect, gssaccept, authfail -> fail
+.           .            prefer       maintable       connect, gssaccept, authfail -> fail
+.           .            require      maintable       connect, gssaccept, authfail -> fail         # If both GSS and SSL are required, the sslmode=require is effectively ignored and GSS is required
 .           .            .            direct         connect, gssaccept, authfail -> fail
 
-nogssuser   disable      disable      postgres       connect, authok              -> plain
-.           .            allow        postgres       connect, authok              -> plain
-.           .            prefer       postgres       connect, sslaccept, authok   -> ssl
-.           .            require      postgres       connect, sslaccept, authok   -> ssl
+nogssuser   disable      disable      maintable       connect, authok              -> plain
+.           .            allow        maintable       connect, authok              -> plain
+.           .            prefer       maintable       connect, sslaccept, authok   -> ssl
+.           .            require      maintable       connect, sslaccept, authok   -> ssl
 .           .            .            direct         connect, directsslaccept, authok   -> ssl
-.           prefer       disable      postgres       connect, gssaccept, authfail, reconnect, authok              -> plain
-.           .            allow        postgres       connect, gssaccept, authfail, reconnect, authok              -> plain
-.           .            prefer       postgres       connect, gssaccept, authfail, reconnect, sslaccept, authok         -> ssl
-.           .            require      postgres       connect, gssaccept, authfail, reconnect, sslaccept, authok         -> ssl
+.           prefer       disable      maintable       connect, gssaccept, authfail, reconnect, authok              -> plain
+.           .            allow        maintable       connect, gssaccept, authfail, reconnect, authok              -> plain
+.           .            prefer       maintable       connect, gssaccept, authfail, reconnect, sslaccept, authok         -> ssl
+.           .            require      maintable       connect, gssaccept, authfail, reconnect, sslaccept, authok         -> ssl
 .           .            .            direct         connect, gssaccept, authfail, reconnect, directsslaccept, authok   -> ssl
-.           require      disable      postgres       connect, gssaccept, authfail -> fail
-.           .            allow        postgres       connect, gssaccept, authfail -> fail
-.           .            prefer       postgres       connect, gssaccept, authfail -> fail
-.           .            require      postgres       connect, gssaccept, authfail -> fail   # If both GSS and SSL are required, the sslmode=require is effectively ignored and GSS is required
+.           require      disable      maintable       connect, gssaccept, authfail -> fail
+.           .            allow        maintable       connect, gssaccept, authfail -> fail
+.           .            prefer       maintable       connect, gssaccept, authfail -> fail
+.           .            require      maintable       connect, gssaccept, authfail -> fail   # If both GSS and SSL are required, the sslmode=require is effectively ignored and GSS is required
 .           .            .            direct         connect, gssaccept, authfail -> fail
 
-nossluser   disable      disable      postgres       connect, authok              -> plain
-.           .            allow        postgres       connect, authok              -> plain
-.           .            prefer       postgres       connect, sslaccept, authfail, reconnect, authok       -> plain
-.           .            require      postgres       connect, sslaccept, authfail       -> fail
+nossluser   disable      disable      maintable       connect, authok              -> plain
+.           .            allow        maintable       connect, authok              -> plain
+.           .            prefer       maintable       connect, sslaccept, authfail, reconnect, authok       -> plain
+.           .            require      maintable       connect, sslaccept, authfail       -> fail
 .           .            .            direct         connect, directsslaccept, authfail -> fail
-.           prefer       *            postgres       connect, gssaccept, authok   -> gss
+.           prefer       *            maintable       connect, gssaccept, authok   -> gss
 .           .            require      direct         connect, gssaccept, authok   -> gss
-.           require      *            postgres       connect, gssaccept, authok   -> gss
+.           require      *            maintable       connect, gssaccept, authok   -> gss
 .           .            require      direct         connect, gssaccept, authok   -> gss
 
 # sslnegotiation=direct is not accepted unless sslmode=require or stronger
@@ -651,7 +651,7 @@ sub connect_test
 	my $test_name = " '$connstr' -> $expected_events_and_outcome";
 
 	my $connstr_full = "";
-	$connstr_full .= "dbname=postgres " unless $connstr =~ m/dbname=/;
+	$connstr_full .= "dbname=maintable " unless $connstr =~ m/dbname=/;
 	$connstr_full .= "host=$host hostaddr=$hostaddr "
 	  unless $connstr =~ m/host=/;
 	$connstr_full .= $connstr;
@@ -671,7 +671,7 @@ sub connect_test
 	# query to its stdin. This test gets a lot of connection failures
 	# on purpose.
 	my ($ret, $stdout, $stderr) = $node->psql(
-		'postgres',
+		'maintable',
 		'',
 		extra_params => [
 			'--no-password', '--command' => 'SELECT current_enc()',
@@ -683,7 +683,7 @@ sub connect_test
 
 	# Parse the EVENTS from the log file.
 	my $log_contents =
-	  PostgreSQL::Test::Utils::slurp_file($node->logfile, $log_location);
+	  maintableQL::Test::Utils::slurp_file($node->logfile, $log_location);
 	my @events = parse_log_events($log_contents);
 
 	# Check that the events and outcome match the expected events and

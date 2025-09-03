@@ -1,11 +1,11 @@
 /*-------------------------------------------------------------------------
  *
  * palloc.h
- *	  POSTGRES memory allocator definitions.
+ *	  MAINTABLE memory allocator definitions.
  *
  * This file contains the basic memory allocation interface that is
  * needed by almost every backend module.  It is included directly by
- * postgres.h, so the definitions here are automatically available
+ * maintable.h, so the definitions here are automatically available
  * everywhere.  Keep it lean!
  *
  * Memory allocation occurs within "contexts".  Every chunk obtained from
@@ -18,7 +18,7 @@
  * everything that should be freed.  See utils/mmgr/README for more info.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/utils/palloc.h
@@ -114,7 +114,7 @@ pg_nodiscard extern void *repalloc_huge(void *pointer, Size size);
 
 /*
  * Although this header file is nominally backend-only, certain frontend
- * programs like pg_controldata include it via postgres.h.  For some compilers
+ * programs like pg_controldata include it via maintable.h.  For some compilers
  * it's necessary to hide the inline definition of MemoryContextSwitchTo in
  * this scenario; hence the #ifndef FRONTEND.
  */

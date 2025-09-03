@@ -54,7 +54,7 @@
  * that can use the same properties as any built-in stats kinds.  Each custom
  * stats kind needs to assign a unique ID to ensure that it does not overlap
  * with other extensions.  In order to reserve a unique stats kind ID, refer
- * to https://wiki.postgresql.org/wiki/CustomCumulativeStats.
+ * to https://wiki.maintableql.org/wiki/CustomCumulativeStats.
  *
  * The behavior of different kinds of statistics is determined by the kind's
  * entry in pgstat_kind_builtin_infos for all the built-in statistics kinds
@@ -93,13 +93,13 @@
  * specific kinds of stats.
  *
  *
- * Copyright (c) 2001-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2001-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/utils/activity/pgstat.c
  * ----------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 
@@ -671,7 +671,7 @@ pgstat_initialize(void)
  */
 
 /*
- * Must be called by processes that performs DML: tcop/postgres.c, logical
+ * Must be called by processes that performs DML: tcop/maintable.c, logical
  * receiver processes, SPI worker, etc. to flush pending statistics updates to
  * shared memory.
  *
@@ -1456,7 +1456,7 @@ pgstat_get_kind_info(PgStat_Kind kind)
  * Register a new stats kind.
  *
  * PgStat_Kinds must be globally unique across all extensions. Refer
- * to https://wiki.postgresql.org/wiki/CustomCumulativeStats to reserve a
+ * to https://wiki.maintableql.org/wiki/CustomCumulativeStats to reserve a
  * unique ID for your extension, to avoid conflicts with other extension
  * developers. During development, use PGSTAT_KIND_EXPERIMENTAL to avoid
  * needlessly reserving a new ID.

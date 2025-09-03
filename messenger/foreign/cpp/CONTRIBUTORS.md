@@ -1,8 +1,8 @@
-# Contributing to iggy-cpp-client
+# Contributing to messenger-cpp-client
 
 ## Introduction
 
-This is a collection of tips for developers of `iggy-cpp-client`. The initial code is being
+This is a collection of tips for developers of `messenger-cpp-client`. The initial code is being
 built with the latest Visual Studio Code and its C++ dev container, under `.devcontainer`.
 If you are using CLion, XCode or other toolchains it may not have been tested, so please
 report issues and we will fix them. We are also currently using [vcpkg](https://vcpkg.io)

@@ -707,7 +707,7 @@ SELECT xmlagg(x) FROM (SELECT x FROM test ORDER BY y DESC) AS tab;
       <function>bool_or</function> correspond to the standard SQL aggregates
       <function>every</function> and <function>any</function> or
       <function>some</function>.
-      <productname>PostgreSQL</productname>
+      <productname>maintableQL</productname>
       supports <function>every</function>, but not <function>any</function>
       or <function>some</function>, because there is an ambiguity built into
       the standard syntax:
@@ -731,7 +731,7 @@ SELECT b1 = ANY((SELECT b2 FROM t2 ...)) FROM t1 ...;
 SELECT count(*) FROM sometable;
 </programlisting>
     will require effort proportional to the size of the table:
-    <productname>PostgreSQL</productname> will need to scan either the
+    <productname>maintableQL</productname> will need to scan either the
     entire table or the entirety of an index that includes all rows in
     the table.
    </para>

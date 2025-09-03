@@ -18,7 +18,7 @@
 
 use crate::test_server::{ClientFactory, Transport};
 use async_trait::async_trait;
-use iggy::prelude::{Client, ClientWrapper, TcpClient, TcpClientConfig};
+use messenger::prelude::{Client, ClientWrapper, TcpClient, TcpClientConfig};
 use std::sync::Arc;
 
 #[derive(Debug, Clone, Default)]
@@ -45,22 +45,22 @@ impl ClientFactory for TcpClientFactory {
         };
         let client = TcpClient::create(Arc::new(config)).unwrap_or_else(|e| {
             panic!(
-                "Failed to create TcpClient, iggy-server has address {}, error: {:?}",
+                "Failed to create TcpClient, messenger-server has address {}, error: {:?}",
                 self.server_addr, e
             )
         });
         Client::connect(&client).await.unwrap_or_else(|e| {
             if self.tls_enabled {
                 panic!(
-                    "Failed to connect to iggy-server at {} with TLS enabled, error: {:?}\n\
+                    "Failed to connect to messenger-server at {} with TLS enabled, error: {:?}\n\
                     Hint: Make sure the server is started with TLS enabled and self-signed certificate:\n\
-                    IGGY_TCP_TLS_ENABLED=true IGGY_TCP_TLS_SELF_SIGNED=true\n
-                    or start iggy-bench with relevant tcp tls arguments: --tls --tls-domain <domain> --tls-ca-file <ca_file>\n",
+                    MESSENGER_TCP_TLS_ENABLED=true MESSENGER_TCP_TLS_SELF_SIGNED=true\n
+                    or start messenger-bench with relevant tcp tls arguments: --tls --tls-domain <domain> --tls-ca-file <ca_file>\n",
                     self.server_addr, e
                 )
             } else {
                 panic!(
-                    "Failed to connect to iggy-server at {}, error: {:?}",
+                    "Failed to connect to messenger-server at {}, error: {:?}",
                     self.server_addr, e
                 )
             }

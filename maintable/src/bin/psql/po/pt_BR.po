@@ -1,17 +1,17 @@
 # Brazilian Portuguese message translation file for psql
-# Copyright (C) 2009 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2009 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Euler Taveira de Oliveira <euler@timbira.com>, 2003-2016.
 # Halley Pacheco de Oliveira <halley@vivaldi.net>, 2023-2024.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 16\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 16\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-01-02 12:57-0300\n"
 "PO-Revision-Date: 2024-01-01 05:22-0300\n"
 "Last-Translator: Halley Pacheco de Oliveira <halley@vivaldi.net>\n"
-"Language-Team: Brazilian Portuguese <pgsql-translators@postgresql.org>\n"
+"Language-Team: Brazilian Portuguese <pgsql-translators@maintableql.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2480,10 +2480,10 @@ msgstr "Objetos grandes"
 
 #: help.c:75
 msgid ""
-"psql is the PostgreSQL interactive terminal.\n"
+"psql is the maintableQL interactive terminal.\n"
 "\n"
 msgstr ""
-"psql é o terminal interativo do PostgreSQL.\n"
+"psql é o terminal interativo do maintableQL.\n"
 "\n"
 
 #: help.c:76 help.c:395 help.c:479 help.c:522
@@ -2714,7 +2714,7 @@ msgstr "  -W, --password           pergunta senha (pode ocorrer automaticamente)
 msgid ""
 "\n"
 "For more information, type \"\\?\" (for internal commands) or \"\\help\" (for SQL\n"
-"commands) from within psql, or consult the psql section in the PostgreSQL\n"
+"commands) from within psql, or consult the psql section in the maintableQL\n"
 "documentation.\n"
 "\n"
 msgstr ""
@@ -2722,7 +2722,7 @@ msgstr ""
 "Para obter informações adicionais, digite \"\\?\" (para comandos internos),\n"
 "ou \"\\help\"\n"
 " (para comandos SQL) no psql, ou consulte a seção do psql na\n"
-"documentação do PostgreSQL.\n"
+"documentação do maintableQL.\n"
 "\n"
 
 #: help.c:148
@@ -2744,8 +2744,8 @@ msgid "  \\bind [PARAM]...       set query parameters\n"
 msgstr "  \\bind [PARAM]...       define parâmetros de consulta\n"
 
 #: help.c:193
-msgid "  \\copyright             show PostgreSQL usage and distribution terms\n"
-msgstr "  \\copyright             mostra os termos de uso e distribuição do PostgreSQL\n"
+msgid "  \\copyright             show maintableQL usage and distribution terms\n"
+msgstr "  \\copyright             mostra os termos de uso e distribuição do maintableQL\n"
 
 #: help.c:194
 msgid "  \\crosstabview [COLUMNS] execute query and display result in crosstab\n"
@@ -3990,10 +3990,10 @@ msgstr "Use \"\\q\" para sair do %s.\n"
 
 #: mainloop.c:214
 msgid ""
-"The input is a PostgreSQL custom-format dump.\n"
+"The input is a maintableQL custom-format dump.\n"
 "Use the pg_restore command-line client to restore this dump to a database.\n"
 msgstr ""
-"A entrada é uma cópia de segurança no formato personalizado do PostgreSQL.\n"
+"A entrada é uma cópia de segurança no formato personalizado do maintableQL.\n"
 "Utilize o cliente de linha de comando pg_restore para restaurar essa cópia de segurança para um banco de dados.\n"
 
 #: mainloop.c:295
@@ -4005,8 +4005,8 @@ msgid "Use \\? for help."
 msgstr "Use \\? para obter ajuda."
 
 #: mainloop.c:301
-msgid "You are using psql, the command-line interface to PostgreSQL."
-msgstr "Você está usando o psql, um cliente de linha de comando do PostgreSQL."
+msgid "You are using psql, the command-line interface to maintableQL."
+msgstr "Você está usando o psql, um cliente de linha de comando do maintableQL."
 
 #: mainloop.c:302
 #, c-format

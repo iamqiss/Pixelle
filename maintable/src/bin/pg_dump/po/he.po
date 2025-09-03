@@ -1,12 +1,12 @@
 # Hebrew message translation file for pg_dump
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Michael Goldberg <mic.goldberg@gmail.com>, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_dump (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pg_dump (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2017-05-17 03:16+0000\n"
 "PO-Revision-Date: 2017-08-15 10:37-0400\n"
 "Language: he\n"
@@ -1864,8 +1864,8 @@ msgstr ""
 
 #: pg_dump.c:983 pg_dumpall.c:625 pg_restore.c:508
 #, c-format
-msgid "Report bugs to <pgsql-bugs@postgresql.org>.\n"
-msgstr "לדווח על באגים ל <pgsql-bugs@postgresql.org>\n"
+msgid "Report bugs to <pgsql-bugs@maintableql.org>.\n"
+msgstr "לדווח על באגים ל <pgsql-bugs@maintableql.org>\n"
 
 #: pg_dump.c:1000
 #, c-format
@@ -2384,10 +2384,10 @@ msgstr "תכנית %s: לא ניתן להתחבר אל מסד נתונים: \"%s
 #: pg_dumpall.c:427
 #, c-format
 msgid ""
-"%s: could not connect to databases \"postgres\" or \"template1\"\n"
+"%s: could not connect to databases \"maintable\" or \"template1\"\n"
 "Please specify an alternative database.\n"
 msgstr ""
-"תכנתי %s: לא היתה אפשרות להתחבר למסדי נתונים \"postgres\" או \"template1\"\n"
+"תכנתי %s: לא היתה אפשרות להתחבר למסדי נתונים \"maintable\" או \"template1\"\n"
 "נא ציין מסד נתונים חלופי.\n"
 
 #: pg_dumpall.c:444
@@ -2398,10 +2398,10 @@ msgstr "תכנית %s: לא היתה אפשרות לפתוח את קובץ הפ�
 #: pg_dumpall.c:574
 #, c-format
 msgid ""
-"%s extracts a PostgreSQL database cluster into an SQL script file.\n"
+"%s extracts a maintableQL database cluster into an SQL script file.\n"
 "\n"
 msgstr ""
-"תכנתי %s מחלץ אשכול מסד נתונים PostgreSQL לקובץ סקריפט של SQL\n"
+"תכנתי %s מחלץ אשכול מסד נתונים maintableQL לקובץ סקריפט של SQL\n"
 "\n"
 
 #: pg_dumpall.c:576
@@ -2610,10 +2610,10 @@ msgstr "אזהרה: התעלמות משגיאות בשחזור: %d\n"
 #: pg_restore.c:448
 #, c-format
 msgid ""
-"%s restores a PostgreSQL database from an archive created by pg_dump.\n"
+"%s restores a maintableQL database from an archive created by pg_dump.\n"
 "\n"
 msgstr ""
-"תכנית %s משחזרת את מסד הנתונים PostgreSQL מהארכיון שנוצרו על-ידי pg_dump.\n"
+"תכנית %s משחזרת את מסד הנתונים maintableQL מהארכיון שנוצרו על-ידי pg_dump.\n"
 "\n"
 
 #: pg_restore.c:450

@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * commit_ts.c
- *		PostgreSQL commit timestamp manager
+ *		maintableQL commit timestamp manager
  *
  * This module is a pg_xact-like system that stores the commit timestamp
  * for each transaction.
@@ -12,14 +12,14 @@
  * XLOG records for these events and will re-perform the status update on
  * redo; so we need make no additional XLOG entry here.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/backend/access/transam/commit_ts.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/commit_ts.h"
 #include "access/htup_details.h"
@@ -36,7 +36,7 @@
 
 /*
  * Defines for CommitTs page sizes.  A page is the same BLCKSZ as is used
- * everywhere else in Postgres.
+ * everywhere else in Maintable.
  *
  * Note: because TransactionIds are 32 bits and wrap around at 0xFFFFFFFF,
  * CommitTs page numbering also wraps around at

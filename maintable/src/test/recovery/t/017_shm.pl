@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 #
 # Tests of pg_shmem.h functions
@@ -8,9 +8,9 @@ use strict;
 use warnings FATAL => 'all';
 use File::stat qw(stat);
 use IPC::Run 'run';
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Cluster;
 use Test::More;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use Time::HiRes qw(usleep);
 
 # If we don't have shmem support, skip the whole thing
@@ -25,7 +25,7 @@ if ($@ || $windows_os)
 	plan skip_all => 'SysV shared memory not supported by this platform';
 }
 
-my $tempdir = PostgreSQL::Test::Utils::tempdir;
+my $tempdir = maintableQL::Test::Utils::tempdir;
 
 # Log "ipcs" diffs on a best-effort basis, swallowing any error.
 my $ipcs_before = "$tempdir/ipcs_before";
@@ -38,7 +38,7 @@ sub log_ipcs
 }
 
 # Node setup.
-my $gnat = PostgreSQL::Test::Cluster->new('gnat');
+my $gnat = maintableQL::Test::Cluster->new('gnat');
 $gnat->init;
 
 # Create a shmem segment that will conflict with gnat's first choice
@@ -112,7 +112,7 @@ $gnat->start;
 log_ipcs();
 
 my $regress_shlib = $ENV{REGRESS_SHLIB};
-$gnat->safe_psql('postgres', <<EOSQL);
+$gnat->safe_psql('maintable', <<EOSQL);
 CREATE FUNCTION wait_pid(int)
    RETURNS void
    AS '$regress_shlib'
@@ -123,28 +123,28 @@ my ($stdout, $stderr);
 my $slow_client = IPC::Run::start(
 	[
 		'psql', '--no-psqlrc', '--quiet', '--no-align', '--tuples-only',
-		'--dbname' => $gnat->connstr('postgres'),
+		'--dbname' => $gnat->connstr('maintable'),
 		'--command' => $slow_query
 	],
 	'<' => \undef,
 	'>' => \$stdout,
 	'2>' => \$stderr,
-	IPC::Run::timeout(5 * $PostgreSQL::Test::Utils::timeout_default));
+	IPC::Run::timeout(5 * $maintableQL::Test::Utils::timeout_default));
 ok( $gnat->poll_query_until(
-		'postgres',
+		'maintable',
 		"SELECT 1 FROM pg_stat_activity WHERE query = '$slow_query'", '1'),
 	'slow query started');
-my $slow_pid = $gnat->safe_psql('postgres',
+my $slow_pid = $gnat->safe_psql('maintable',
 	"SELECT pid FROM pg_stat_activity WHERE query = '$slow_query'");
 $gnat->kill9;
 unlink($gnat->data_dir . '/postmaster.pid');
 $gnat->rotate_logfile;    # on Windows, can't open old log for writing
 log_ipcs();
 # Reject ordinary startup.  Retry for the same reasons poll_start() does,
-# every 0.1s for at least $PostgreSQL::Test::Utils::timeout_default seconds.
+# every 0.1s for at least $maintableQL::Test::Utils::timeout_default seconds.
 my $pre_existing_msg = qr/pre-existing shared memory block/;
 {
-	my $max_attempts = 10 * $PostgreSQL::Test::Utils::timeout_default;
+	my $max_attempts = 10 * $maintableQL::Test::Utils::timeout_default;
 	my $attempts = 0;
 	while ($attempts < $max_attempts)
 	{
@@ -160,7 +160,7 @@ like(slurp_file($gnat->logfile),
 # Reject single-user startup.
 command_fails_like(
 	[
-		'postgres', '--single',
+		'maintable', '--single',
 		'-D' => $gnat->data_dir,
 		'template1'
 	],
@@ -169,7 +169,7 @@ command_fails_like(
 log_ipcs();
 
 # cleanup slow backend
-PostgreSQL::Test::Utils::system_log('pg_ctl', 'kill', 'QUIT', $slow_pid);
+maintableQL::Test::Utils::system_log('pg_ctl', 'kill', 'QUIT', $slow_pid);
 $slow_client->finish;    # client has detected backend termination
 log_ipcs();
 
@@ -191,7 +191,7 @@ sub poll_start
 {
 	my ($node) = @_;
 
-	my $max_attempts = 10 * $PostgreSQL::Test::Utils::timeout_default;
+	my $max_attempts = 10 * $maintableQL::Test::Utils::timeout_default;
 	my $attempts = 0;
 
 	while ($attempts < $max_attempts)

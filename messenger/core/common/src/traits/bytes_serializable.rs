@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::IggyError;
+use crate::MessengerError;
 use bytes::{Bytes, BytesMut};
 
 /// The trait represents the logic responsible for serializing and deserializing the struct to and from bytes.
@@ -25,7 +25,7 @@ pub trait BytesSerializable {
     fn to_bytes(&self) -> Bytes;
 
     /// Deserializes the struct from bytes.
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError>
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError>
     where
         Self: Sized;
 

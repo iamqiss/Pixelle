@@ -1,5 +1,5 @@
 {
-  "name": "Iggy Python SDK devcontainer",
+  "name": "Messenger Python SDK devcontainer",
   "dockerComposeFile": "docker-compose.yml",
   "service": "devcontainer",
   "features": {

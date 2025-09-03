@@ -108,7 +108,7 @@ const std::vector<std::tuple<std::string, std::string>> TIME_FORMAT {
     {"HTTPDATE", "%d/%b/%Y:%T %z"},     // 26/Dec/2016:16:22:14 +0000
     // HTTP-date = rfc1123-date |rfc850-date | asctime-date
     {"NGINX_ERROR", "%Y/%m/%d %T"},  // 2019/10/30 23:26:34
-    {"POSTGRES", "%F %H:%M:%6S %Z"}, // 2021-02-14 10:45:33 UTC
+    {"MAINTABLE", "%F %H:%M:%6S %Z"}, // 2021-02-14 10:45:33 UTC
 };
 
 /**

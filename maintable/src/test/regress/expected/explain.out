@@ -88,7 +88,7 @@ select explain_filter('explain (analyze, buffers, format text) select * from int
 select explain_filter('explain (analyze, buffers, format xml) select * from int8_tbl i8');
                      explain_filter                     
 --------------------------------------------------------
- <explain xmlns="http://www.postgresql.org/N/explain"> +
+ <explain xmlns="http://www.maintableql.org/N/explain"> +
    <Query>                                             +
      <Plan>                                            +
        <Node-Type>Seq Scan</Node-Type>                 +

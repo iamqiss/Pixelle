@@ -77,7 +77,7 @@ import static org.apache.cassandra.service.paxos.PaxosState.uncommittedTracker;
  *
  * No read expressions are supported by the index.
  *
- * This is implemented as a 2i so it can piggy back off the commit log and paxos table flushes, and avoid worrying
+ * This is implemented as a 2i so it can pmessenger back off the commit log and paxos table flushes, and avoid worrying
  * about implementing a parallel log/flush system for the tracker and potential bugs there. It also means we don't
  * have to worry about cases where the tracker can become out of sync with the paxos table due to failure/edge cases
  * outside of the PaxosTableState class itself.

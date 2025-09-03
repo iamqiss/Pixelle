@@ -17,7 +17,7 @@
  */
 
 use crate::streaming::users::permissioner::Permissioner;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 
 impl Permissioner {
     pub fn poll_messages(
@@ -25,7 +25,7 @@ impl Permissioner {
         user_id: u32,
         stream_id: u32,
         topic_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         if self
             .users_that_can_poll_messages_from_all_streams
             .contains(&user_id)
@@ -42,7 +42,7 @@ impl Permissioner {
 
         let stream_permissions = self.users_streams_permissions.get(&(user_id, stream_id));
         if stream_permissions.is_none() {
-            return Err(IggyError::Unauthorized);
+            return Err(MessengerError::Unauthorized);
         }
 
         let stream_permissions = stream_permissions.unwrap();
@@ -63,7 +63,7 @@ impl Permissioner {
         }
 
         if stream_permissions.topics.is_none() {
-            return Err(IggyError::Unauthorized);
+            return Err(MessengerError::Unauthorized);
         }
 
         let topic_permissions = stream_permissions.topics.as_ref().unwrap();
@@ -73,11 +73,11 @@ impl Permissioner {
                 | topic_permissions.manage_topic
             {
                 true => Ok(()),
-                false => Err(IggyError::Unauthorized),
+                false => Err(MessengerError::Unauthorized),
             };
         }
 
-        Err(IggyError::Unauthorized)
+        Err(MessengerError::Unauthorized)
     }
 
     pub fn append_messages(
@@ -85,7 +85,7 @@ impl Permissioner {
         user_id: u32,
         stream_id: u32,
         topic_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         if self
             .users_that_can_send_messages_to_all_streams
             .contains(&user_id)
@@ -102,7 +102,7 @@ impl Permissioner {
 
         let stream_permissions = self.users_streams_permissions.get(&(user_id, stream_id));
         if stream_permissions.is_none() {
-            return Err(IggyError::Unauthorized);
+            return Err(MessengerError::Unauthorized);
         }
 
         let stream_permissions = stream_permissions.unwrap();
@@ -119,17 +119,17 @@ impl Permissioner {
         }
 
         if stream_permissions.topics.is_none() {
-            return Err(IggyError::Unauthorized);
+            return Err(MessengerError::Unauthorized);
         }
 
         let topic_permissions = stream_permissions.topics.as_ref().unwrap();
         if let Some(topic_permissions) = topic_permissions.get(&topic_id) {
             return match topic_permissions.send_messages | topic_permissions.manage_topic {
                 true => Ok(()),
-                false => Err(IggyError::Unauthorized),
+                false => Err(MessengerError::Unauthorized),
             };
         }
 
-        Err(IggyError::Unauthorized)
+        Err(MessengerError::Unauthorized)
     }
 }

@@ -1,10 +1,10 @@
-# This file is distributed under the same license as the PostgreSQL package.
+# This file is distributed under the same license as the maintableQL package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 9.1\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: maintableQL 9.1\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2011-11-09 20:39+0000\n"
 "PO-Revision-Date: 2013-09-05 23:03-0400\n"
 "Last-Translator: Gheorge Rosca Codreanu <max@oceanline.co.uk>\n"

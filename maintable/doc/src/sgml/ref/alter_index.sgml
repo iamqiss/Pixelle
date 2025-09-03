@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_index.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-alterindex">
@@ -153,7 +153,7 @@ ALTER INDEX ALL IN TABLESPACE <replaceable class="parameter">name</replaceable> 
       to -1 to revert to using the system default statistics
       target (<xref linkend="guc-default-statistics-target"/>).
       For more information on the use of statistics by the
-      <productname>PostgreSQL</productname> query planner, refer to
+      <productname>maintableQL</productname> query planner, refer to
       <xref linkend="planner-stats"/>.
      </para>
     </listitem>
@@ -307,7 +307,7 @@ ALTER INDEX coord_idx ALTER COLUMN 3 SET STATISTICS 1000;
   <title>Compatibility</title>
 
   <para>
-   <command>ALTER INDEX</command> is a <productname>PostgreSQL</productname>
+   <command>ALTER INDEX</command> is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

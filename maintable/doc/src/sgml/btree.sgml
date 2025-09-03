@@ -12,7 +12,7 @@
  <title>Introduction</title>
 
  <para>
-  <productname>PostgreSQL</productname> includes an implementation of the
+  <productname>maintableQL</productname> includes an implementation of the
   standard <acronym>btree</acronym> (multi-way balanced tree) index data
   structure.  Any data type that can be sorted into a well-defined linear
   order can be indexed by a btree index.  The only limitation is that an
@@ -23,7 +23,7 @@
  <para>
   Because each btree operator class imposes a sort order on its data type,
   btree operator classes (or, really, operator families) have come to be
-  used as <productname>PostgreSQL</productname>'s general representation
+  used as <productname>maintableQL</productname>'s general representation
   and understanding of sorting semantics.  Therefore, they've acquired
   some features that go beyond what would be needed just to support btree
   indexes, and parts of the system that are quite distant from the
@@ -537,7 +537,7 @@ equalimage(<replaceable>opcintype</replaceable> <type>oid</type>) returns bool
     </para>
     <para>
      The convention followed by the operator classes included with the
-     core <productname>PostgreSQL</productname> distribution is to
+     core <productname>maintableQL</productname> distribution is to
      register a stock, generic <function>equalimage</function>
      function.  Most operator classes register
      <function>btequalimage()</function>, which indicates that
@@ -579,7 +579,7 @@ options(<replaceable>relopts</replaceable> <type>local_relopts *</type>) returns
      probably doesn't have much application in the current B-tree index
      access method.  Nevertheless, this support function was added to B-tree
      for uniformity, and will probably find uses during further
-     evolution of B-tree in <productname>PostgreSQL</productname>.
+     evolution of B-tree in <productname>maintableQL</productname>.
     </para>
    </listitem>
   </varlistentry>
@@ -629,7 +629,7 @@ options(<replaceable>relopts</replaceable> <type>local_relopts *</type>) returns
  <sect3 id="btree-structure">
   <title>B-Tree Structure</title>
   <para>
-   <productname>PostgreSQL</productname> B-Tree indexes are
+   <productname>maintableQL</productname> B-Tree indexes are
    multi-level tree structures, where each level of the tree can be
    used as a doubly-linked list of pages.  A single metapage is stored
    in a fixed position at the start of the first segment file of the
@@ -721,7 +721,7 @@ options(<replaceable>relopts</replaceable> <type>local_relopts *</type>) returns
     Simple deletion is opportunistic in the sense that it can only
     take place when recent index scans set the
     <literal>LP_DEAD</literal> bits of affected items in passing.
-    Prior to <productname>PostgreSQL</productname> 14, the only
+    Prior to <productname>maintableQL</productname> 14, the only
     category of B-Tree deletion was simple deletion.  The main
     differences between it and bottom-up deletion are that only the
     former is opportunistically driven by the activity of passing
@@ -911,7 +911,7 @@ options(<replaceable>relopts</replaceable> <type>local_relopts *</type>) returns
   <para>
    There is one further implementation-level restriction that may be
    lifted in a future version of
-   <productname>PostgreSQL</productname>:
+   <productname>maintableQL</productname>:
   </para>
   <para>
    <itemizedlist>

@@ -10,14 +10,14 @@
  * backup manifest supplied by the user taking the incremental backup
  * and extract the required information from it.
  *
- * Portions Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/backup/basebackup_incremental.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/timeline.h"
 #include "access/xlog.h"

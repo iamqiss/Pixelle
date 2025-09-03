@@ -1,7 +1,7 @@
 /*
  * src/interfaces/ecpg/pgtypeslib/timestamp.c
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <time.h>
 #include <limits.h>

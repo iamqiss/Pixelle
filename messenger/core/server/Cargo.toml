@@ -29,7 +29,7 @@ normal = ["tracing-appender"]
 ignored = ["rust-s3"]
 
 [[bin]]
-name = "iggy-server"
+name = "messenger-server"
 path = "src/main.rs"
 
 [features]
@@ -62,7 +62,7 @@ figment = { version = "0.10.19", features = ["toml", "env"] }
 flume = { workspace = true }
 futures = { workspace = true }
 human-repr = { workspace = true }
-iggy_common = { workspace = true }
+messenger_common = { workspace = true }
 jsonwebtoken = "9.3.1"
 lending-iterator = "0.1.7"
 mimalloc = { workspace = true, optional = true }

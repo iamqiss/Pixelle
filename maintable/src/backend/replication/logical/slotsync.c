@@ -3,7 +3,7 @@
  *	   Functionality for synchronizing slots to a standby server from the
  *         primary server.
  *
- * Copyright (c) 2024-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2024-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/replication/logical/slotsync.c
@@ -45,7 +45,7 @@
  *---------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <time.h>
 
@@ -1425,7 +1425,7 @@ ReplSlotSyncWorkerMain(const void *startup_data, size_t startup_data_len)
 
 	/*
 	 * Establishes SIGALRM handler and initialize timeout module. It is needed
-	 * by InitPostgres to register different timeouts.
+	 * by InitMaintable to register different timeouts.
 	 */
 	InitializeTimeouts();
 
@@ -1460,7 +1460,7 @@ ReplSlotSyncWorkerMain(const void *startup_data, size_t startup_data_len)
 	 * not interact with user tables, eliminating the risk of executing
 	 * arbitrary code within triggers.
 	 */
-	InitPostgres(dbname, InvalidOid, NULL, InvalidOid, 0, NULL);
+	InitMaintable(dbname, InvalidOid, NULL, InvalidOid, 0, NULL);
 
 	SetProcessingMode(NormalProcessing);
 

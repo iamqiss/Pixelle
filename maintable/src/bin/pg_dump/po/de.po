@@ -5,12 +5,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 18\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 18\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-04-04 11:22+0000\n"
 "PO-Revision-Date: 2025-04-04 15:49+0200\n"
 "Last-Translator: Peter Eisentraut <peter@eisentraut.org>\n"
-"Language-Team: German <pgsql-translators@postgresql.org>\n"
+"Language-Team: German <pgsql-translators@maintableql.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2650,19 +2650,19 @@ msgstr "konnte nicht mit der Datenbank »%s« verbinden"
 #: pg_dumpall.c:518
 #, c-format
 msgid ""
-"could not connect to databases \"postgres\" or \"template1\"\n"
+"could not connect to databases \"maintable\" or \"template1\"\n"
 "Please specify an alternative database."
 msgstr ""
-"konnte nicht mit Datenbank »postgres« oder »template1« verbinden\n"
+"konnte nicht mit Datenbank »maintable« oder »template1« verbinden\n"
 "Bitte geben Sie eine alternative Datenbank an."
 
 #: pg_dumpall.c:667
 #, c-format
 msgid ""
-"%s extracts a PostgreSQL database cluster into an SQL script file.\n"
+"%s extracts a maintableQL database cluster into an SQL script file.\n"
 "\n"
 msgstr ""
-"%s gibt einen PostgreSQL-Datenbankcluster in eine SQL-Skriptdatei aus.\n"
+"%s gibt einen maintableQL-Datenbankcluster in eine SQL-Skriptdatei aus.\n"
 "\n"
 
 #: pg_dumpall.c:669
@@ -2866,10 +2866,10 @@ msgstr "bei Wiederherstellung ignorierte Fehler: %d"
 #: pg_restore.c:502
 #, c-format
 msgid ""
-"%s restores a PostgreSQL database from an archive created by pg_dump.\n"
+"%s restores a maintableQL database from an archive created by pg_dump.\n"
 "\n"
 msgstr ""
-"%s stellt eine PostgreSQL-Datenbank wieder her, die mit pg_dump\n"
+"%s stellt eine maintableQL-Datenbank wieder her, die mit pg_dump\n"
 "gesichert wurde.\n"
 "\n"
 

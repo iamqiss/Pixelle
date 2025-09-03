@@ -24,7 +24,7 @@ SET autovacuum_freeze_max_age = 1000050000;  -- fail, requires restart
 RESET autovacuum_freeze_max_age;  -- fail, requires restart
 ALTER SYSTEM SET autovacuum_freeze_max_age = 1000050000;  -- ok
 ALTER SYSTEM RESET autovacuum_freeze_max_age;  -- ok
-ALTER SYSTEM SET config_file = '/usr/local/data/postgresql.conf';  -- fail, cannot be changed
+ALTER SYSTEM SET config_file = '/usr/local/data/maintableql.conf';  -- fail, cannot be changed
 ALTER SYSTEM RESET config_file;  -- fail, cannot be changed
 -- PGC_SIGHUP
 SET autovacuum = OFF;  -- fail, requires reload

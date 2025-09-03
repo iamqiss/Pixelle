@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/close.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-close">
@@ -81,7 +81,7 @@ CLOSE { <replaceable class="parameter">name</replaceable> | ALL }
   <title>Notes</title>
 
   <para>
-   <productname>PostgreSQL</productname> does not have an explicit
+   <productname>maintableQL</productname> does not have an explicit
    <command>OPEN</command> cursor statement; a cursor is considered
    open when it is declared.  Use the
    <link linkend="sql-declare"><command>DECLARE</command></link>
@@ -115,7 +115,7 @@ CLOSE liahona;
 
   <para>
    <command>CLOSE</command> is fully conforming with the SQL
-   standard. <command>CLOSE ALL</command> is a <productname>PostgreSQL</productname>
+   standard. <command>CLOSE ALL</command> is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

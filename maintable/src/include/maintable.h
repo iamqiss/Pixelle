@@ -1,16 +1,16 @@
 /*-------------------------------------------------------------------------
  *
- * postgres.h
- *	  Primary include file for PostgreSQL server .c files
+ * maintable.h
+ *	  Primary include file for maintableQL server .c files
  *
- * This should be the first file included by PostgreSQL backend modules.
- * Client-side code should include postgres_fe.h instead.
+ * This should be the first file included by maintableQL backend modules.
+ * Client-side code should include maintable_fe.h instead.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1995, Regents of the University of California
  *
- * src/include/postgres.h
+ * src/include/maintable.h
  *
  *-------------------------------------------------------------------------
  */
@@ -33,15 +33,15 @@
  *	in the backend environment, but are of no interest outside the backend.
  *
  *	Simple type definitions live in c.h, where they are shared with
- *	postgres_fe.h.  We do that since those type definitions are needed by
+ *	maintable_fe.h.  We do that since those type definitions are needed by
  *	frontend modules that want to deal with binary data transmission to or
  *	from the backend.  Type definitions in this file should be for
  *	representations that never escape the backend, such as Datum.
  *
  *----------------------------------------------------------------
  */
-#ifndef POSTGRES_H
-#define POSTGRES_H
+#ifndef MAINTABLE_H
+#define MAINTABLE_H
 
 /* IWYU pragma: begin_exports */
 
@@ -59,7 +59,7 @@
 /*
  * A Datum contains either a value of a pass-by-value type or a pointer to a
  * value of a pass-by-reference type.  Therefore, we must have
- * sizeof(Datum) >= sizeof(void *).  No current or foreseeable Postgres
+ * sizeof(Datum) >= sizeof(void *).  No current or foreseeable Maintable
  * platform has pointers wider than 8 bytes, and standardizing on Datum being
  * exactly 8 bytes has advantages in reducing cross-platform differences.
  *
@@ -338,7 +338,7 @@ PointerGetDatum(const void *X)
  * DatumGetCString
  *		Returns C string (null-terminated string) value of a datum.
  *
- * Note: C string is not a full-fledged Postgres type at present,
+ * Note: C string is not a full-fledged Maintable type at present,
  * but type input functions use this conversion for their inputs.
  */
 static inline char *
@@ -351,7 +351,7 @@ DatumGetCString(Datum X)
  * CStringGetDatum
  *		Returns datum representation for a C string (null-terminated string).
  *
- * Note: C string is not a full-fledged Postgres type at present,
+ * Note: C string is not a full-fledged Maintable type at present,
  * but type output functions use this conversion for their outputs.
  * Note: CString is pass-by-reference; caller must ensure the pointed-to
  * value has adequate lifetime.
@@ -536,4 +536,4 @@ Float8GetDatum(float8 X)
 #define NON_EXEC_STATIC static
 #endif
 
-#endif							/* POSTGRES_H */
+#endif							/* MAINTABLE_H */

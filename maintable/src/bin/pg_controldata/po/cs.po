@@ -1,12 +1,12 @@
 # Czech message translation file for pg_controldata
-# Copyright (C) 2012 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2012 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Tomas Vondra <tv@fuzzy.cz>, 2012, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_controldata-cs (PostgreSQL 9.3)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_controldata-cs (maintableQL 9.3)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2020-10-31 16:17+0000\n"
 "PO-Revision-Date: 2020-10-31 20:50+0100\n"
 "Last-Translator: Tomas Vondra <tv@fuzzy.cz>\n"
@@ -50,14 +50,14 @@ msgid ""
 "one\n"
 "used by this program.  In that case the results below would be incorrect, "
 "and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "možný nesoulad v pořadí bytů\n"
 "Pořadí bytů používané pro uložení pg_control souboru nemusí odpovídat "
 "tomu\n"
 "používanému tímto programem. V tom případě by výsledky uvedené níže byly "
 "chybné, a\n"
-"PostgreSQL instalace by byla nekompatibilní s tímto datovým adresářem."
+"maintableQL instalace by byla nekompatibilní s tímto datovým adresářem."
 
 #: ../../common/controldata_utils.c:203
 #, c-format
@@ -77,10 +77,10 @@ msgstr "nelze provést fsync souboru \"%s\": %m"
 #: pg_controldata.c:35
 #, c-format
 msgid ""
-"%s displays control information of a PostgreSQL database cluster.\n"
+"%s displays control information of a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s vypíše kontrolní informace o PostgreSQL databázi.\n"
+"%s vypíše kontrolní informace o maintableQL databázi.\n"
 "\n"
 
 #: pg_controldata.c:36
@@ -555,5 +555,5 @@ msgstr "Zkušební authentizační nonce:              %s\n"
 #~ msgid "Float4 argument passing:              %s\n"
 #~ msgstr "Způsob předávání float4 hodnot:            %s\n"
 
-#~ msgid "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
-#~ msgstr "Oznámení o chybách zasílejte na <pgsql-bugs@postgresql.org>.\n"
+#~ msgid "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
+#~ msgstr "Oznámení o chybách zasílejte na <pgsql-bugs@maintableql.org>.\n"

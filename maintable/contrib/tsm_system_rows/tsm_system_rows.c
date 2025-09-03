@@ -17,7 +17,7 @@
  * won't visit blocks added after the first scan, but that is fine since
  * such blocks shouldn't contain any visible tuples anyway.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -26,7 +26,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/tsmapi.h"
 #include "catalog/pg_type.h"

@@ -1,14 +1,14 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $tempdir = PostgreSQL::Test::Utils::tempdir;
+my $tempdir = maintableQL::Test::Utils::tempdir;
 
 ###############################################################
 # This structure is based off of the src/bin/pg_dump/t test
@@ -31,7 +31,7 @@ my $tempdir = PostgreSQL::Test::Utils::tempdir;
 # the full command and arguments to run.  Note that this is run
 # using $node->command_ok(), so the port does not need to be
 # specified and is pulled from $PGPORT, which is set by the
-# PostgreSQL::Test::Cluster system.
+# maintableQL::Test::Cluster system.
 #
 # restore_cmd is the pg_restore command to run, if any.  Note
 # that this should generally be used when the pg_dump goes to
@@ -49,7 +49,7 @@ my %pgdump_runs = (
 			'pg_dump', '--no-sync',
 			'--file' => "$tempdir/binary_upgrade.sql",
 			'--schema-only', '--sequence-data', '--binary-upgrade',
-			'--dbname' => 'postgres',
+			'--dbname' => 'maintable',
 		],
 	},
 	clean => {
@@ -57,7 +57,7 @@ my %pgdump_runs = (
 			'pg_dump', '--no-sync',
 			'--file' => "$tempdir/clean.sql",
 			'--clean',
-			'--dbname' => 'postgres',
+			'--dbname' => 'maintable',
 		],
 	},
 	clean_if_exists => {
@@ -67,7 +67,7 @@ my %pgdump_runs = (
 			'--clean',
 			'--if-exists',
 			'--encoding' => 'UTF8',    # no-op, just tests that it is accepted
-			'postgres',
+			'maintable',
 		],
 	},
 	createdb => {
@@ -76,7 +76,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/createdb.sql",
 			'--create',
 			'--no-reconnect',          # no-op, just for testing
-			'postgres',
+			'maintable',
 		],
 	},
 	data_only => {
@@ -85,14 +85,14 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/data_only.sql",
 			'--data-only',
 			'--verbose',               # no-op, just make sure it works
-			'postgres',
+			'maintable',
 		],
 	},
 	defaults => {
 		dump_cmd => [
 			'pg_dump',
 			'--file' => "$tempdir/defaults.sql",
-			'postgres',
+			'maintable',
 		],
 	},
 	defaults_custom_format => {
@@ -103,7 +103,7 @@ my %pgdump_runs = (
 			'--format' => 'custom',
 			'--compress' => 6,
 			'--file' => "$tempdir/defaults_custom_format.dump",
-			'postgres',
+			'maintable',
 		],
 		restore_cmd => [
 			'pg_restore',
@@ -117,7 +117,7 @@ my %pgdump_runs = (
 			'pg_dump', '--no-sync',
 			'--format' => 'directory',
 			'--file' => "$tempdir/defaults_dir_format",
-			'postgres',
+			'maintable',
 		],
 		restore_cmd => [
 			'pg_restore',
@@ -132,7 +132,7 @@ my %pgdump_runs = (
 			'--format' => 'directory',
 			'--jobs' => 2,
 			'--file' => "$tempdir/defaults_parallel",
-			'postgres',
+			'maintable',
 		],
 		restore_cmd => [
 			'pg_restore',
@@ -146,7 +146,7 @@ my %pgdump_runs = (
 			'pg_dump', '--no-sync',
 			'--format' => 'tar',
 			'--file' => "$tempdir/defaults_tar_format.tar",
-			'postgres',
+			'maintable',
 		],
 		restore_cmd => [
 			'pg_restore',
@@ -159,7 +159,7 @@ my %pgdump_runs = (
 			'pg_dump',
 			'--exclude-table' => 'regress_table_dumpable',
 			'--file' => "$tempdir/exclude_table.sql",
-			'postgres',
+			'maintable',
 		],
 	},
 	extension_schema => {
@@ -167,7 +167,7 @@ my %pgdump_runs = (
 			'pg_dump',
 			'--schema' => 'public',
 			'--file' => "$tempdir/extension_schema.sql",
-			'postgres',
+			'maintable',
 		],
 	},
 	pg_dumpall_globals => {
@@ -182,7 +182,7 @@ my %pgdump_runs = (
 			'pg_dump', '--no-sync',
 			'--file' => "$tempdir/no_privs.sql",
 			'--no-privileges',
-			'postgres',
+			'maintable',
 		],
 	},
 	no_owner => {
@@ -190,7 +190,7 @@ my %pgdump_runs = (
 			'pg_dump', '--no-sync',
 			'--file' => "$tempdir/no_owner.sql",
 			'--no-owner',
-			'postgres',
+			'maintable',
 		],
 	},
 
@@ -204,7 +204,7 @@ my %pgdump_runs = (
 			'--exclude-table' => 'regress_pg_dump_schema.external_tab',
 			'--exclude-table' => 'regress_pg_dump_schema.extdependtab',
 			'--username' => 'regress_dump_login_role',
-			'postgres',
+			'maintable',
 		],
 	},
 
@@ -212,7 +212,7 @@ my %pgdump_runs = (
 		dump_cmd => [
 			'pg_dump', '--no-sync',
 			'--file' => "$tempdir/schema_only.sql",
-			'--schema-only', 'postgres',
+			'--schema-only', 'maintable',
 		],
 	},
 	section_pre_data => {
@@ -220,7 +220,7 @@ my %pgdump_runs = (
 			'pg_dump', '--no-sync',
 			'--file' => "$tempdir/section_pre_data.sql",
 			'--section' => 'pre-data',
-			'postgres',
+			'maintable',
 		],
 	},
 	section_data => {
@@ -228,7 +228,7 @@ my %pgdump_runs = (
 			'pg_dump', '--no-sync',
 			'--file' => "$tempdir/section_data.sql",
 			'--section' => 'data',
-			'postgres',
+			'maintable',
 		],
 	},
 	section_post_data => {
@@ -236,7 +236,7 @@ my %pgdump_runs = (
 			'pg_dump', '--no-sync',
 			'--file' => "$tempdir/section_post_data.sql",
 			'--section' => 'post-data',
-			'postgres',
+			'maintable',
 		],
 	},
 	with_extension => {
@@ -244,7 +244,7 @@ my %pgdump_runs = (
 			'pg_dump', '--no-sync',
 			'--file' => "$tempdir/with_extension.sql",
 			'--extension' => 'test_pg_dump',
-			'postgres',
+			'maintable',
 		],
 	},
 	exclude_extension => {
@@ -252,7 +252,7 @@ my %pgdump_runs = (
 			'pg_dump', '--no-sync',
 			'--file' => "$tempdir/exclude_extension.sql",
 			'--exclude-extension' => 'test_pg_dump',
-			'postgres',
+			'maintable',
 		],
 	},
 	exclude_extension_filter => {
@@ -261,7 +261,7 @@ my %pgdump_runs = (
 			'--no-sync',
 			'--file' => "$tempdir/exclude_extension_filter.sql",
 			'--filter' => "$tempdir/exclude_extension_filter.txt",
-			'postgres',
+			'maintable',
 		],
 	},
 
@@ -271,7 +271,7 @@ my %pgdump_runs = (
 			'pg_dump', '--no-sync',
 			'--file' => "$tempdir/without_extension.sql",
 			'--extension' => 'plpgsql',
-			'postgres',
+			'maintable',
 		],
 	},
 
@@ -285,7 +285,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/without_extension_explicit_schema.sql",
 			'--extension' => 'plpgsql',
 			'--schema' => 'public',
-			'postgres',
+			'maintable',
 		],
 	},
 
@@ -299,7 +299,7 @@ my %pgdump_runs = (
 			'--file' => "$tempdir/without_extension_internal_schema.sql",
 			'--extension' => 'plpgsql',
 			'--schema' => 'regress_pg_dump_schema',
-			'postgres',
+			'maintable',
 		],
 	},);
 
@@ -868,7 +868,7 @@ my %tests = (
 #########################################
 # Create a PG instance to test actually dumping from
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init(auth_extra => [ '--create-role' => 'regress_dump_login_role' ]);
 $node->start;
 
@@ -909,7 +909,7 @@ foreach my $test (
 }
 
 # Send the combined set of commands to psql
-$node->safe_psql('postgres', $create_sql);
+$node->safe_psql('maintable', $create_sql);
 
 #########################################
 # Create filter file for exclude_extension_filter test

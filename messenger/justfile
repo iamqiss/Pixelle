@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-# Convenience commands for iggy
+# Convenience commands for messenger
 # See https://github.com/casey/just
 #
 # Usage: just <command>
@@ -49,7 +49,7 @@ nextests TEST: build
   cargo nextest run --nocapture -- {{TEST}}
 
 server:
-  cargo run --bin iggy-server
+  cargo run --bin messenger-server
 
 build-tokio-console:
   RUSTFLAGS="--cfg tokio_unstable" cargo build --release --features tokio-console
@@ -58,16 +58,16 @@ run-benches:
   ./scripts/run-benches.sh
 
 profile-cpu-server:
-  ./scripts/profile.sh iggy-server cpu
+  ./scripts/profile.sh messenger-server cpu
 
 profile-cpu-client:
-  ./scripts/profile.sh iggy-bench cpu
+  ./scripts/profile.sh messenger-bench cpu
 
 profile-io-server:
-  ./scripts/profile.sh iggy-server io
+  ./scripts/profile.sh messenger-server io
 
 profile-io-client:
-  ./scripts/profile.sh iggy-bench io
+  ./scripts/profile.sh messenger-bench io
 
 licenses-fix:
   docker run --rm -v $(pwd):/src -w /src ghcr.io/google/addlicense:latest -f ASF_LICENSE.txt .

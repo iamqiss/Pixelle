@@ -21,7 +21,7 @@ use crate::actors::consumer::client::interface::{BenchmarkConsumerConfig, Consum
 use crate::actors::{ApiLabel, BatchMetrics, BenchmarkInit};
 use crate::benchmarks::common::create_consumer;
 use crate::utils::{batch_total_size_bytes, batch_user_size_bytes};
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::{ClientFactory, login_root};
 use std::sync::Arc;
 use std::time::Duration;
@@ -30,7 +30,7 @@ use tokio::time::Instant;
 pub struct LowLevelConsumerClient {
     client_factory: Arc<dyn ClientFactory>,
     config: BenchmarkConsumerConfig,
-    client: Option<IggyClient>,
+    client: Option<MessengerClient>,
     consumer: Option<Consumer>,
     stream_id: Identifier,
     topic_id: Identifier,
@@ -58,7 +58,7 @@ impl LowLevelConsumerClient {
 }
 
 impl ConsumerClient for LowLevelConsumerClient {
-    async fn consume_batch(&mut self) -> Result<Option<BatchMetrics>, IggyError> {
+    async fn consume_batch(&mut self) -> Result<Option<BatchMetrics>, MessengerError> {
         let client = self.client.as_ref().expect("client not initialized");
         let consumer = self.consumer.as_ref().expect("consumer not initialized");
         let messages_to_receive = self.config.messages_per_batch.get();
@@ -79,7 +79,7 @@ impl ConsumerClient for LowLevelConsumerClient {
         let polled = match polled {
             Ok(p) => p,
             Err(e) => {
-                if matches!(e, IggyError::TopicIdNotFound(_, _)) {
+                if matches!(e, MessengerError::TopicIdNotFound(_, _)) {
                     return Ok(None);
                 }
                 return Err(e);
@@ -91,7 +91,7 @@ impl ConsumerClient for LowLevelConsumerClient {
         }
         let message_count = u32::try_from(polled.messages.len()).unwrap();
         let latency = if self.config.origin_timestamp_latency_calculation {
-            let now = IggyTimestamp::now().as_micros();
+            let now = MessengerTimestamp::now().as_micros();
             Duration::from_micros(now - polled.messages[0].header.origin_timestamp)
         } else {
             before_poll.elapsed()
@@ -112,12 +112,12 @@ impl ConsumerClient for LowLevelConsumerClient {
 }
 
 impl BenchmarkInit for LowLevelConsumerClient {
-    async fn setup(&mut self) -> Result<(), IggyError> {
+    async fn setup(&mut self) -> Result<(), MessengerError> {
         let topic_id = 1u32;
         let default_partition_id = 1u32;
 
         let client = self.client_factory.create_client().await;
-        let client = IggyClient::create(client, None, None);
+        let client = MessengerClient::create(client, None, None);
         login_root(&client).await;
 
         let stream_id = self.config.stream_id.try_into().unwrap();

@@ -1,15 +1,15 @@
 # Russian message translation file for ecpg
-# Copyright (C) 2012-2016 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2012-2016 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Alexander Lakhin <exclusion@gmail.com>, 2012-2017, 2018, 2019, 2020, 2021, 2022, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: ecpg (PostgreSQL current)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: ecpg (maintableQL current)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-02-08 07:44+0200\n"
 "PO-Revision-Date: 2024-09-04 07:22+0300\n"
 "Last-Translator: Alexander Lakhin <exclusion@gmail.com>\n"
-"Language-Team: Russian <pgsql-ru-general@postgresql.org>\n"
+"Language-Team: Russian <pgsql-ru-general@maintableql.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -60,10 +60,10 @@ msgstr "установить поле \"%s\" в дескрипторе нель�
 #: ecpg.c:36
 #, c-format
 msgid ""
-"%s is the PostgreSQL embedded SQL preprocessor for C programs.\n"
+"%s is the maintableQL embedded SQL preprocessor for C programs.\n"
 "\n"
 msgstr ""
-"%s - препроцессор SQL-вставок в программах на C для PostgreSQL.\n"
+"%s - препроцессор SQL-вставок в программах на C для maintableQL.\n"
 "\n"
 
 #: ecpg.c:38
@@ -208,8 +208,8 @@ msgstr "%s: не удалось открыть файл \"%s\": %m\n"
 
 #: ecpg.c:274
 #, c-format
-msgid "%s, the PostgreSQL embedded C preprocessor, version %s\n"
-msgstr "%s, препроцессор внедрённого в С языка СУБД PostgreSQL, версия %s\n"
+msgid "%s, the maintableQL embedded C preprocessor, version %s\n"
+msgstr "%s, препроцессор внедрённого в С языка СУБД maintableQL, версия %s\n"
 
 #: ecpg.c:276
 #, c-format
@@ -495,11 +495,11 @@ msgstr "ожидался знак \"@\", но на этом месте \"%s\""
 #: preproc.y:18250
 #, c-format
 msgid ""
-"only protocols \"tcp\" and \"unix\" and database type \"postgresql\" are "
+"only protocols \"tcp\" and \"unix\" and database type \"maintableql\" are "
 "supported"
 msgstr ""
 "поддерживаются только протоколы \"tcp\" и \"unix\", а тип базы данных - "
-"\"postgresql\""
+"\"maintableql\""
 
 #: preproc.y:18253
 #, c-format
@@ -513,8 +513,8 @@ msgstr "Unix-сокеты работают только с \"localhost\", но �
 
 #: preproc.y:18284
 #, c-format
-msgid "expected \"postgresql\", found \"%s\""
-msgstr "ожидался тип \"postgresql\", но на этом месте \"%s\""
+msgid "expected \"maintableql\", found \"%s\""
+msgstr "ожидался тип \"maintableql\", но на этом месте \"%s\""
 
 #: preproc.y:18287
 #, c-format
@@ -734,10 +734,10 @@ msgstr "многомерные массивы структур не поддер
 
 #~ msgid ""
 #~ "\n"
-#~ "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Об ошибках сообщайте по адресу <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Об ошибках сообщайте по адресу <pgsql-bugs@lists.maintableql.org>.\n"
 
 #~ msgid "declared name \"%s\" is already defined"
 #~ msgstr "объявленное имя \"%s\" уже определено"

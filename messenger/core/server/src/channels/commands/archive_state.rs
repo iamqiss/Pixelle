@@ -20,15 +20,15 @@ use crate::channels::server_command::BackgroundServerCommand;
 use crate::configs::server::StateMaintenanceConfig;
 use crate::streaming::systems::system::SharedSystem;
 use flume::Sender;
-use iggy_common::IggyDuration;
-use iggy_common::IggyTimestamp;
+use messenger_common::MessengerDuration;
+use messenger_common::MessengerTimestamp;
 use tokio::time;
 use tracing::{error, info, instrument, warn};
 
 pub struct StateArchiver {
     enabled: bool,
     overwrite: bool,
-    interval: IggyDuration,
+    interval: MessengerDuration,
     sender: Sender<ArchiveStateCommand>,
 }
 
@@ -86,7 +86,7 @@ impl BackgroundServerCommand<ArchiveStateCommand> for ArchiveStateExecutor {
         let base_directory = if command.overwrite {
             None
         } else {
-            Some(format!("{}_state", IggyTimestamp::now().as_micros()))
+            Some(format!("{}_state", MessengerTimestamp::now().as_micros()))
         };
         let state_messages_file_path = system.config.get_state_messages_file_path();
         let state_info_path = system.config.get_state_info_path();

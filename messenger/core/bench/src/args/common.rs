@@ -32,7 +32,7 @@ use bench_report::benchmark_kind::BenchmarkKind;
 use bench_report::numeric_parameter::BenchmarkNumericParameter;
 use clap::error::ErrorKind;
 use clap::{CommandFactory, Parser};
-use iggy::prelude::{IggyByteSize, IggyDuration};
+use messenger::prelude::{MessengerByteSize, MessengerDuration};
 use integration::test_server::Transport;
 use std::net::SocketAddr;
 use std::num::NonZeroU32;
@@ -42,7 +42,7 @@ use std::str::FromStr;
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 #[allow(clippy::struct_excessive_bools)]
-pub struct IggyBenchArgs {
+pub struct MessengerBenchArgs {
     /// Benchmark kind
     #[command(subcommand)]
     pub benchmark_kind: BenchmarkKindCommand,
@@ -63,7 +63,7 @@ pub struct IggyBenchArgs {
     /// Total size of all messages to process in bytes (aggregate, for all actors).
     /// This argument is mutually exclusive with `message_batches`.
     #[arg(long, short = 'T', group = "data_to_process")]
-    pub total_data: Option<IggyByteSize>,
+    pub total_data: Option<MessengerByteSize>,
 
     /// Start stream id
     #[arg(long, short = 'S', default_value_t = DEFAULT_START_STREAM_ID)]
@@ -72,30 +72,30 @@ pub struct IggyBenchArgs {
     /// Optional total rate limit (aggregate, for all actors)
     /// Accepts human-readable formats like "50KB", "10MB", or "1GB"
     #[arg(long, short = 'r', verbatim_doc_comment)]
-    pub rate_limit: Option<IggyByteSize>,
+    pub rate_limit: Option<MessengerByteSize>,
 
     /// Warmup time in human readable format, e.g. "1s", "2m", "3h"
-    #[arg(long, short = 'w', default_value_t = IggyDuration::from_str(DEFAULT_WARMUP_TIME).unwrap())]
-    pub warmup_time: IggyDuration,
+    #[arg(long, short = 'w', default_value_t = MessengerDuration::from_str(DEFAULT_WARMUP_TIME).unwrap())]
+    pub warmup_time: MessengerDuration,
 
     /// Server stdout visibility
     #[arg(long, short = 'v', default_value_t = DEFAULT_SERVER_STDOUT_VISIBILITY)]
     pub verbose: bool,
 
     /// Sampling time for metrics collection. It is also used as bucket size for time series calculations.
-    #[arg(long, short = 't', default_value_t = IggyDuration::from_str(DEFAULT_SAMPLING_TIME).unwrap(), value_parser = IggyDuration::from_str)]
-    pub sampling_time: IggyDuration,
+    #[arg(long, short = 't', default_value_t = MessengerDuration::from_str(DEFAULT_SAMPLING_TIME).unwrap(), value_parser = MessengerDuration::from_str)]
+    pub sampling_time: MessengerDuration,
 
     /// Window size for moving average calculations in time series data
     #[arg(long, short = 'W', default_value_t = DEFAULT_MOVING_AVERAGE_WINDOW)]
     pub moving_average_window: u32,
 
-    /// Shutdown iggy-server and remove server `local_data` directory after the benchmark is finished.
+    /// Shutdown messenger-server and remove server `local_data` directory after the benchmark is finished.
     /// Only applicable to local benchmarks.
     #[arg(long, default_value_t = DEFAULT_PERFORM_CLEANUP, verbatim_doc_comment)]
     pub cleanup: bool,
 
-    /// iggy-server executable path.
+    /// messenger-server executable path.
     /// Only applicable to local benchmarks.
     #[arg(long, short='e', default_value = None, value_parser = validate_server_executable_path)]
     pub server_executable_path: Option<String>,
@@ -118,7 +118,7 @@ fn validate_server_executable_path(v: &str) -> Result<String, String> {
     }
 }
 
-impl IggyBenchArgs {
+impl MessengerBenchArgs {
     pub fn transport_command(&self) -> &BenchmarkTransportCommand {
         self.benchmark_kind.transport_command()
     }
@@ -211,7 +211,7 @@ impl IggyBenchArgs {
         self.message_size
     }
 
-    pub const fn total_data(&self) -> Option<IggyByteSize> {
+    pub const fn total_data(&self) -> Option<MessengerByteSize> {
         self.total_data
     }
 
@@ -247,11 +247,11 @@ impl IggyBenchArgs {
         self.benchmark_kind.inner().number_of_consumer_groups()
     }
 
-    pub const fn warmup_time(&self) -> IggyDuration {
+    pub const fn warmup_time(&self) -> MessengerDuration {
         self.warmup_time
     }
 
-    pub const fn sampling_time(&self) -> IggyDuration {
+    pub const fn sampling_time(&self) -> MessengerDuration {
         self.sampling_time
     }
 
@@ -259,7 +259,7 @@ impl IggyBenchArgs {
         self.moving_average_window
     }
 
-    pub const fn rate_limit(&self) -> Option<IggyByteSize> {
+    pub const fn rate_limit(&self) -> Option<MessengerByteSize> {
         self.rate_limit
     }
 
@@ -340,7 +340,7 @@ impl IggyBenchArgs {
             })
     }
 
-    pub fn max_topic_size(&self) -> Option<IggyByteSize> {
+    pub fn max_topic_size(&self) -> Option<MessengerByteSize> {
         self.benchmark_kind.inner().max_topic_size()
     }
 

@@ -118,7 +118,7 @@
 
 # Python's allocator does some low-level tricks for efficiency. Those
 # can be disabled for better instrumentation; but few people testing
-# postgres will have such a build of python. So add broad
+# maintable will have such a build of python. So add broad
 # suppressions of the resulting errors.
 # See also https://svn.python.org/projects/python/trunk/Misc/README.valgrind
 {

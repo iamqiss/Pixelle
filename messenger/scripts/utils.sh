@@ -129,17 +129,17 @@ exit_if_process_is_not_running() {
 # Exit hook for profile.sh
 function on_exit_profile() {
     # Gracefully stop the server
-    send_signal "iggy-server" "KILL"
-    send_signal "iggy-bench" "KILL"
+    send_signal "messenger-server" "KILL"
+    send_signal "messenger-bench" "KILL"
     send_signal "flamegraph" "KILL"
     send_signal "perf" "KILL"
 }
 
 # Exit hook for run-benches.sh
 function on_exit_bench() {
-    send_signal "iggy-server" "KILL"
-    # Use exact match for iggy-bench to avoid killing iggy-bench-dashboard
-    pids=$(pgrep -x "iggy-bench") || true
+    send_signal "messenger-server" "KILL"
+    # Use exact match for messenger-bench to avoid killing messenger-bench-dashboard
+    pids=$(pgrep -x "messenger-bench") || true
     if [[ -n "${pids}" ]]; then
         local bench_pid
         for bench_pid in ${pids}; do

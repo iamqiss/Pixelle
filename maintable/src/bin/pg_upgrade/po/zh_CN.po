@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_upgrade
-# Copyright (C) 2019 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_upgrade (PostgreSQL) package.
+# Copyright (C) 2019 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_upgrade (maintableQL) package.
 # FIRST AUTHOR <zhangjie2@fujitsu.com>, 2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_upgrade (PostgreSQL) 14\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_upgrade (maintableQL) 14\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2021-08-14 05:46+0000\n"
 "PO-Revision-Date: 2021-08-15 18:40+0800\n"
 "Last-Translator: Jie Zhang <zhangjie2@fujitsu.com>\n"
@@ -93,18 +93,18 @@ msgstr "正在检查群集版本"
 
 #: check.c:299
 #, c-format
-msgid "This utility can only upgrade from PostgreSQL version 8.4 and later.\n"
-msgstr "此实用程序只能从PostgreSQL 8.4及更高版本升级.\n"
+msgid "This utility can only upgrade from maintableQL version 8.4 and later.\n"
+msgstr "此实用程序只能从maintableQL 8.4及更高版本升级.\n"
 
 #: check.c:303
 #, c-format
-msgid "This utility can only upgrade to PostgreSQL version %s.\n"
-msgstr "此实用程序只能升级到PostgreSQL版本%s.\n"
+msgid "This utility can only upgrade to maintableQL version %s.\n"
+msgstr "此实用程序只能升级到maintableQL版本%s.\n"
 
 #: check.c:312
 #, c-format
-msgid "This utility cannot be used to downgrade to older major PostgreSQL versions.\n"
-msgstr "此实用程序不能用于降级到旧的主PostgreSQL版本.\n"
+msgid "This utility cannot be used to downgrade to older major maintableQL versions.\n"
+msgstr "此实用程序不能用于降级到旧的主maintableQL版本.\n"
 
 #: check.c:317
 #, c-format
@@ -320,7 +320,7 @@ msgstr "在用户表中检查系统定义的复合类型"
 #: check.c:1096
 msgid ""
 "Your installation contains system-defined composite type(s) in user tables.\n"
-"These type OIDs are not stable across PostgreSQL versions,\n"
+"These type OIDs are not stable across maintableQL versions,\n"
 "so this cluster cannot currently be upgraded.  You can\n"
 "drop the problem columns and restart the upgrade.\n"
 "A list of the problem columns is in the file:\n"
@@ -328,7 +328,7 @@ msgid ""
 "\n"
 msgstr ""
 "您的安装包含用户表中的系统定义的复合类型。\n"
-"这些类型OID在PostgreSQL版本中不稳定。\n"
+"这些类型OID在maintableQL版本中不稳定。\n"
 "因此，当前无法升级此群集。\n"
 "你可以删除有问题的列并重新启动升级。\n"
 "以下的文件中有问题列的列表\n"
@@ -403,7 +403,7 @@ msgstr "正在检查用户定义的编码转换"
 #: check.c:1302
 msgid ""
 "Your installation contains user-defined encoding conversions.\n"
-"The conversion function parameters changed in PostgreSQL version 14\n"
+"The conversion function parameters changed in maintableQL version 14\n"
 "so this cluster cannot currently be upgraded.  You can remove the\n"
 "encoding conversions in the old cluster and restart the upgrade.\n"
 "A list of user-defined encoding conversions is in the file:\n"
@@ -411,7 +411,7 @@ msgid ""
 "\n"
 msgstr ""
 "您的安装包含用户定义的编码转换。\n"
-"转换函数参数在PostgreSQL版本14中已更改。\n"
+"转换函数参数在maintableQL版本14中已更改。\n"
 "因此当前无法升级此群集。\n"
 "您可以删除问题表并重新启动升级. \n"
 "文件中有问题列的列表:\n"
@@ -1112,10 +1112,10 @@ msgstr "无法从Windows上的新群集数据目录内运行pg_upgrade\n"
 #: option.c:288
 #, c-format
 msgid ""
-"pg_upgrade upgrades a PostgreSQL cluster to a different major version.\n"
+"pg_upgrade upgrades a maintableQL cluster to a different major version.\n"
 "\n"
 msgstr ""
-"pg_upgrade将PostgreSQL集群升级到其他主版本。\n"
+"pg_upgrade将maintableQL集群升级到其他主版本。\n"
 "\n"
 
 #: option.c:289

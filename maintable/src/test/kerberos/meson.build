@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 tests += {
   'name': 'kerberos',
@@ -11,7 +11,7 @@ tests += {
     ],
     'env': {
       'with_gssapi': gssapi.found() ? 'yes' : 'no',
-      'with_krb_srvnam': 'postgres',
+      'with_krb_srvnam': 'maintable',
     },
   },
 }

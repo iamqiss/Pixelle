@@ -3,7 +3,7 @@
  * uuid.c
  *	  Functions for the built-in type "uuid".
  *
- * Copyright (c) 2007-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2007-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/utils/adt/uuid.c
@@ -11,7 +11,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 #include <time.h>				/* for clock_gettime() */
@@ -680,7 +680,7 @@ uuidv7_interval(PG_FUNCTION_ARGS)
 	 */
 
 	ts = (TimestampTz) (ns / NS_PER_US) -
-		(POSTGRES_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY * USECS_PER_SEC;
+		(MAINTABLE_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY * USECS_PER_SEC;
 
 	/* Compute time shift */
 	ts = DatumGetTimestampTz(DirectFunctionCall2(timestamptz_pl_interval,
@@ -688,7 +688,7 @@ uuidv7_interval(PG_FUNCTION_ARGS)
 												 IntervalPGetDatum(shift)));
 
 	/* Convert a TimestampTz value back to an UNIX epoch timestamp */
-	us = ts + (POSTGRES_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY * USECS_PER_SEC;
+	us = ts + (MAINTABLE_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY * USECS_PER_SEC;
 
 	/* Generate an UUIDv7 */
 	uuid = generate_uuidv7(us / US_PER_MS, (us % US_PER_MS) * NS_PER_US + ns % NS_PER_US);
@@ -734,7 +734,7 @@ uuid_extract_timestamp(PG_FUNCTION_ARGS)
 
 		/* convert 100-ns intervals to us, then adjust */
 		ts = (TimestampTz) (tms / 10) -
-			((uint64) POSTGRES_EPOCH_JDATE - GREGORIAN_EPOCH_JDATE) * SECS_PER_DAY * USECS_PER_SEC;
+			((uint64) MAINTABLE_EPOCH_JDATE - GREGORIAN_EPOCH_JDATE) * SECS_PER_DAY * USECS_PER_SEC;
 		PG_RETURN_TIMESTAMPTZ(ts);
 	}
 
@@ -749,7 +749,7 @@ uuid_extract_timestamp(PG_FUNCTION_ARGS)
 
 		/* convert ms to us, then adjust */
 		ts = (TimestampTz) (tms * US_PER_MS) -
-			(POSTGRES_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY * USECS_PER_SEC;
+			(MAINTABLE_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY * USECS_PER_SEC;
 
 		PG_RETURN_TIMESTAMPTZ(ts);
 	}

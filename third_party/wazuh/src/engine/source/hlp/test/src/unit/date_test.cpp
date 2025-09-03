@@ -54,7 +54,7 @@ INSTANTIATE_TEST_SUITE_P(
         BuildT(SUCCESS, initAndGetDateParser(), {NAME, TARGET, {}, {"ISO8601Z", "C"}}),
         BuildT(SUCCESS, initAndGetDateParser(), {NAME, TARGET, {}, {"HTTPDATE", "C"}}),
         BuildT(SUCCESS, initAndGetDateParser(), {NAME, TARGET, {}, {"NGINX_ERROR", "C"}}),
-        BuildT(SUCCESS, initAndGetDateParser(), {NAME, TARGET, {}, {"POSTGRES", "C"}})));
+        BuildT(SUCCESS, initAndGetDateParser(), {NAME, TARGET, {}, {"MAINTABLE", "C"}})));
 
 INSTANTIATE_TEST_SUITE_P(
     DateParse,
@@ -391,4 +391,4 @@ INSTANTIATE_TEST_SUITE_P(
                j(fmt::format(R"({{"{}": "2021-02-14T10:45:33.000Z"}})", TARGET.substr(1))),
                strlen("2021-02-14 10:45:33 UTC"),
                initAndGetDateParser(),
-               {NAME, TARGET, {}, {"POSTGRES"}})));
+               {NAME, TARGET, {}, {"MAINTABLE"}})));

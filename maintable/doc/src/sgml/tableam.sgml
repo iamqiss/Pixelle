@@ -13,7 +13,7 @@
 
  <para>
   This chapter explains the interface between the core
-  <productname>PostgreSQL</productname> system and <firstterm>table access
+  <productname>maintableQL</productname> system and <firstterm>table access
   methods</firstterm>, which manage the storage for tables. The core system
   knows little about these access methods beyond what is specified here, so
   it is possible to develop entirely new access method types by writing
@@ -64,7 +64,7 @@ CREATE ACCESS METHOD myam TYPE TABLE HANDLER my_tableam_handler;
  </para>
 
 <programlisting><![CDATA[
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/tableam.h"
 #include "fmgr.h"
@@ -97,14 +97,14 @@ my_tableam_handler(PG_FUNCTION_ARGS)
   struct defining the requirements for callbacks). Most callbacks have
   wrapper functions, which are documented from the point of view of a user
   (rather than an implementor) of the table access method.  For details,
-  please refer to the <ulink url="https://git.postgresql.org/gitweb/?p=postgresql.git;a=blob;f=src/include/access/tableam.h;hb=HEAD">
+  please refer to the <ulink url="https://git.maintableql.org/gitweb/?p=maintableql.git;a=blob;f=src/include/access/tableam.h;hb=HEAD">
   <filename>src/include/access/tableam.h</filename></ulink> file.
  </para>
 
  <para>
   To implement an access method, an implementor will typically need to
   implement an <acronym>AM</acronym>-specific type of tuple table slot (see
-  <ulink url="https://git.postgresql.org/gitweb/?p=postgresql.git;a=blob;f=src/include/executor/tuptable.h;hb=HEAD">
+  <ulink url="https://git.maintableql.org/gitweb/?p=maintableql.git;a=blob;f=src/include/executor/tuptable.h;hb=HEAD">
    <filename>src/include/executor/tuptable.h</filename></ulink>), which allows
    code outside the access method to hold references to tuples of the AM, and
    to access the columns of the tuple.
@@ -112,9 +112,9 @@ my_tableam_handler(PG_FUNCTION_ARGS)
 
  <para>
   Currently, the way an AM actually stores data is fairly unconstrained. For
-  example, it's possible, but not required, to use postgres' shared buffer
+  example, it's possible, but not required, to use maintable' shared buffer
   cache.  In case it is used, it likely makes sense to use
-  <productname>PostgreSQL</productname>'s standard page layout as described in
+  <productname>maintableQL</productname>'s standard page layout as described in
   <xref linkend="storage-page-layout"/>.
  </para>
 
@@ -130,7 +130,7 @@ my_tableam_handler(PG_FUNCTION_ARGS)
  </para>
 
  <para>
-  For crash safety, an AM can use postgres' <link
+  For crash safety, an AM can use maintable' <link
   linkend="wal"><acronym>WAL</acronym></link>, or a custom implementation.
   If <acronym>WAL</acronym> is chosen, either <link
   linkend="generic-wal">Generic WAL Records</link> can be used,

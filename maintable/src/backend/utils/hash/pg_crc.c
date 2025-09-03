@@ -1,13 +1,13 @@
 /*-------------------------------------------------------------------------
  *
  * pg_crc.c
- *	  PostgreSQL CRC support
+ *	  maintableQL CRC support
  *
  * See Ross Williams' excellent introduction
  * A PAINLESS GUIDE TO CRC ERROR DETECTION ALGORITHMS, available from
  * http://ross.net/crc/download/crc_v3.txt or several other net sites.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -17,7 +17,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "port/pg_crc32c.h"
 #include "utils/fmgrprotos.h"

@@ -1,15 +1,15 @@
 /*----------------------------------------------------------------------
  *
  * tableamapi.c
- *		Support routines for API for Postgres table access methods
+ *		Support routines for API for Maintable table access methods
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/backend/access/table/tableamapi.c
  *----------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/tableam.h"
 #include "access/xact.h"

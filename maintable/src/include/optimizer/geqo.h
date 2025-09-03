@@ -3,7 +3,7 @@
  * geqo.h
  *	  prototypes for various files in optimizer/geqo
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/optimizer/geqo.h
@@ -47,7 +47,7 @@
 /*
  * Configuration options
  *
- * If you change these, update backend/utils/misc/postgresql.conf.sample
+ * If you change these, update backend/utils/misc/maintableql.conf.sample
  */
 extern PGDLLIMPORT int Geqo_effort; /* 1 .. 10, knob for adjustment of
 									 * defaults */

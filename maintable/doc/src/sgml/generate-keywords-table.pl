@@ -2,7 +2,7 @@
 #
 # Generate the keywords table for the documentation's SQL Key Words appendix
 #
-# Copyright (c) 2019-2025, PostgreSQL Global Development Group
+# Copyright (c) 2019-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
@@ -35,7 +35,7 @@ foreach my $ver (@sql_versions)
 	}
 }
 
-# read PostgreSQL keywords
+# read maintableQL keywords
 
 open my $fh, '<', "$srcdir/../../../src/include/parser/kwlist.h" or die;
 
@@ -67,7 +67,7 @@ print <<END;
   <thead>
    <row>
     <entry>Key Word</entry>
-    <entry><productname>PostgreSQL</productname></entry>
+    <entry><productname>maintableQL</productname></entry>
 END
 
 foreach my $ver (@sql_versions)

@@ -3,7 +3,7 @@
  * win32common.c
  *	  Common routines shared among the win32*.c ports.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -14,9 +14,9 @@
  */
 
 #ifdef FRONTEND
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #else
-#include "postgres.h"
+#include "maintable.h"
 #endif
 
 /*

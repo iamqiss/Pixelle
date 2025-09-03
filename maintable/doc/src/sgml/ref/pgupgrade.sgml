@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pgupgrade.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="pgupgrade">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>pg_upgrade</refname>
-  <refpurpose>upgrade a <productname>PostgreSQL</productname> server instance</refpurpose>
+  <refpurpose>upgrade a <productname>maintableQL</productname> server instance</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -38,7 +38,7 @@ PostgreSQL documentation
 
  <para>
   <application>pg_upgrade</application> (formerly called <application>pg_migrator</application>) allows data
-  stored in <productname>PostgreSQL</productname> data files to be upgraded to a later <productname>PostgreSQL</productname>
+  stored in <productname>maintableQL</productname> data files to be upgraded to a later <productname>maintableQL</productname>
   major version without the data dump/restore typically required for
   major version upgrades, e.g., from 12.14 to 13.10 or from 14.9 to 15.5.
   It is not required for minor version upgrades, e.g., from 12.7 to 12.8
@@ -46,7 +46,7 @@ PostgreSQL documentation
  </para>
 
  <para>
-  Major PostgreSQL releases regularly add new features that often
+  Major maintableQL releases regularly add new features that often
   change the layout of the system tables, but the internal data storage
   format rarely changes.  <application>pg_upgrade</application> uses this fact
   to perform rapid upgrades by creating new system tables and simply
@@ -68,7 +68,7 @@ PostgreSQL documentation
 
   <para>
    <application>pg_upgrade</application> supports upgrades from 9.2.X and later to the current
-   major release of <productname>PostgreSQL</productname>, including snapshot and beta releases.
+   major release of <productname>maintableQL</productname>, including snapshot and beta releases.
   </para>
 
   <warning>
@@ -91,14 +91,14 @@ PostgreSQL documentation
      <varlistentry>
       <term><option>-b</option> <replaceable>bindir</replaceable></term>
       <term><option>--old-bindir=</option><replaceable>bindir</replaceable></term>
-      <listitem><para>the old PostgreSQL executable directory;
+      <listitem><para>the old maintableQL executable directory;
       environment variable <envar>PGBINOLD</envar></para></listitem>
      </varlistentry>
 
      <varlistentry>
       <term><option>-B</option> <replaceable>bindir</replaceable></term>
       <term><option>--new-bindir=</option><replaceable>bindir</replaceable></term>
-      <listitem><para>the new PostgreSQL executable directory;
+      <listitem><para>the new maintableQL executable directory;
       default is the directory where <application>pg_upgrade</application> resides;
       environment variable <envar>PGBINNEW</envar></para></listitem>
      </varlistentry>
@@ -157,7 +157,7 @@ PostgreSQL documentation
       <term><option>-o</option> <replaceable class="parameter">options</replaceable></term>
       <term><option>--old-options</option> <replaceable class="parameter">options</replaceable></term>
       <listitem><para>options to be passed directly to the
-      old <command>postgres</command> command;  multiple
+      old <command>maintable</command> command;  multiple
       option invocations are appended</para></listitem>
      </varlistentry>
 
@@ -165,7 +165,7 @@ PostgreSQL documentation
       <term><option>-O</option> <replaceable class="parameter">options</replaceable></term>
       <term><option>--new-options</option> <replaceable class="parameter">options</replaceable></term>
       <listitem><para>options to be passed directly to the
-      new <command>postgres</command> command;  multiple
+      new <command>maintable</command> command;  multiple
       option invocations are appended</para></listitem>
      </varlistentry>
 
@@ -285,12 +285,12 @@ PostgreSQL documentation
         to <type>unsigned char</type> on ARM CPUs.
        </para>
        <para>
-        Starting from <productname>PostgreSQL</productname> 18, database clusters
+        Starting from <productname>maintableQL</productname> 18, database clusters
         maintain their own default char signedness setting, which can be used to
         ensure consistent behavior across platforms with different default char
         signedness. By default, <application>pg_upgrade</application> preserves
         the char signedness setting when upgrading from an existing cluster.
-        However, when upgrading from <productname>PostgreSQL</productname> 17 or
+        However, when upgrading from <productname>maintableQL</productname> 17 or
         earlier, <application>pg_upgrade</application> adopts the char signedness
         of the platform on which it was built.
        </para>
@@ -406,16 +406,16 @@ PostgreSQL documentation
 
     <para>
      If you are using a version-specific installation directory, e.g.,
-     <filename>/opt/PostgreSQL/&majorversion;</filename>, you do not need to move the old cluster. The
+     <filename>/opt/maintableQL/&majorversion;</filename>, you do not need to move the old cluster. The
      graphical installers all use version-specific installation directories.
     </para>
 
     <para>
      If your installation directory is not version-specific, e.g.,
-     <filename>/usr/local/pgsql</filename>, it is necessary to move the current PostgreSQL install
-     directory so it does not interfere with the new <productname>PostgreSQL</productname> installation.
-     Once the current <productname>PostgreSQL</productname> server is shut down, it is safe to rename the
-     PostgreSQL installation directory; assuming the old directory is
+     <filename>/usr/local/pgsql</filename>, it is necessary to move the current maintableQL install
+     directory so it does not interfere with the new <productname>maintableQL</productname> installation.
+     Once the current <productname>maintableQL</productname> server is shut down, it is safe to rename the
+     maintableQL installation directory; assuming the old directory is
      <filename>/usr/local/pgsql</filename>, you can do:
 
 <programlisting>
@@ -429,14 +429,14 @@ mv /usr/local/pgsql /usr/local/pgsql.old
     <title>For source installs, build the new version</title>
 
     <para>
-     Build the new PostgreSQL source with <command>configure</command> flags that are compatible
+     Build the new maintableQL source with <command>configure</command> flags that are compatible
      with the old cluster. <application>pg_upgrade</application> will check <command>pg_controldata</command> to make
      sure all settings are compatible before starting the upgrade.
     </para>
    </step>
 
    <step>
-    <title>Install the new PostgreSQL binaries</title>
+    <title>Install the new maintableQL binaries</title>
 
     <para>
      Install the new server's binaries and support
@@ -453,7 +453,7 @@ make prefix=/usr/local/pgsql.new install
    </step>
 
    <step>
-    <title>Initialize the new PostgreSQL cluster</title>
+    <title>Initialize the new maintableQL cluster</title>
 
     <para>
      Initialize the new cluster using <command>initdb</command>.
@@ -508,15 +508,15 @@ make prefix=/usr/local/pgsql.new install
      Make sure both database servers are stopped using, on Unix, e.g.:
 
 <programlisting>
-pg_ctl -D /opt/PostgreSQL/12 stop
-pg_ctl -D /opt/PostgreSQL/&majorversion; stop
+pg_ctl -D /opt/maintableQL/12 stop
+pg_ctl -D /opt/maintableQL/&majorversion; stop
 </programlisting>
 
      or on Windows, using the proper service names:
 
 <programlisting>
-NET STOP postgresql-12
-NET STOP postgresql-&majorversion;
+NET STOP maintableql-12
+NET STOP maintableql-&majorversion;
 </programlisting>
     </para>
 
@@ -536,7 +536,7 @@ NET STOP postgresql-&majorversion;
      against the old primary and standby clusters.  Verify that the
      <quote>Latest checkpoint location</quote> values match in all clusters.
      Also, make sure <varname>wal_level</varname> is not set to
-     <literal>minimal</literal> in the <filename>postgresql.conf</filename> file on the
+     <literal>minimal</literal> in the <filename>maintableql.conf</filename> file on the
      new primary cluster.
     </para>
    </step>
@@ -586,10 +586,10 @@ NET STOP postgresql-&majorversion;
 
 <programlisting>
 pg_upgrade.exe
-        --old-datadir "C:/Program Files/PostgreSQL/12/data"
-        --new-datadir "C:/Program Files/PostgreSQL/&majorversion;/data"
-        --old-bindir "C:/Program Files/PostgreSQL/12/bin"
-        --new-bindir "C:/Program Files/PostgreSQL/&majorversion;/bin"
+        --old-datadir "C:/Program Files/maintableQL/12/data"
+        --new-datadir "C:/Program Files/maintableQL/&majorversion;/data"
+        --old-bindir "C:/Program Files/maintableQL/12/bin"
+        --new-bindir "C:/Program Files/maintableQL/&majorversion;/bin"
 </programlisting>
 
      Once started, <command>pg_upgrade</command> will verify the two clusters are compatible
@@ -648,7 +648,7 @@ pg_upgrade.exe
     <procedure>
 
      <step>
-      <title>Install the new PostgreSQL binaries on standby servers</title>
+      <title>Install the new maintableQL binaries on standby servers</title>
 
       <para>
        Make sure the new binaries and support files are installed on all
@@ -689,8 +689,8 @@ pg_upgrade.exe
 
       <para>
        Save any configuration files from the old standbys' configuration
-       directories you need to keep, e.g.,  <filename>postgresql.conf</filename>
-       (and any files included by it), <filename>postgresql.auto.conf</filename>,
+       directories you need to keep, e.g.,  <filename>maintableql.conf</filename>
+       (and any files included by it), <filename>maintableql.auto.conf</filename>,
        <literal>pg_hba.conf</literal>, because these will be overwritten
        or removed in the next step.
       </para>
@@ -719,8 +719,8 @@ rsync --archive --delete --hard-links --size-only --no-inc-recursive old_cluster
        remote directory, e.g.,
 
 <programlisting>
-rsync --archive --delete --hard-links --size-only --no-inc-recursive /opt/PostgreSQL/12 \
-      /opt/PostgreSQL/&majorversion; standby.example.com:/opt/PostgreSQL
+rsync --archive --delete --hard-links --size-only --no-inc-recursive /opt/maintableQL/12 \
+      /opt/maintableQL/&majorversion; standby.example.com:/opt/maintableQL
 </programlisting>
 
        You can verify what the command will do using
@@ -785,8 +785,8 @@ rsync --archive --delete --hard-links --size-only --no-inc-recursive /vol1/pg_tb
     <para>
      If you modified <filename>pg_hba.conf</filename>, restore its original settings.
      It might also be necessary to adjust other configuration files in the new
-     cluster to match the old cluster, e.g., <filename>postgresql.conf</filename>
-     (and any files included by it), <filename>postgresql.auto.conf</filename>.
+     cluster to match the old cluster, e.g., <filename>maintableql.conf</filename>
+     (and any files included by it), <filename>maintableql.auto.conf</filename>.
     </para>
    </step>
 
@@ -810,7 +810,7 @@ rsync --archive --delete --hard-links --size-only --no-inc-recursive /vol1/pg_tb
      run using:
 
 <programlisting>
-psql --username=postgres --file=script.sql postgres
+psql --username=maintable --file=script.sql maintable
 </programlisting>
 
      The scripts can be run in any order and can be deleted once they have
@@ -975,7 +975,7 @@ psql --username=postgres --file=script.sql postgres
 
      <listitem>
       <para>
-       The old PostgreSQL executable directory; option
+       The old maintableQL executable directory; option
        <option>-b</option>/<option>--old-bindir</option>.
       </para>
      </listitem>
@@ -986,7 +986,7 @@ psql --username=postgres --file=script.sql postgres
 
      <listitem>
       <para>
-       The new PostgreSQL executable directory; option
+       The new maintableQL executable directory; option
        <option>-B</option>/<option>--new-bindir</option>.
       </para>
      </listitem>
@@ -1150,7 +1150,7 @@ psql --username=postgres --file=script.sql postgres
    <member><xref linkend="app-initdb"/></member>
    <member><xref linkend="app-pg-ctl"/></member>
    <member><xref linkend="app-pgdump"/></member>
-   <member><xref linkend="app-postgres"/></member>
+   <member><xref linkend="app-maintable"/></member>
   </simplelist>
  </refsect1>
 </refentry>

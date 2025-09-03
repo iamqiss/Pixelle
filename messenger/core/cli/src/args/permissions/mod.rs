@@ -19,7 +19,7 @@
 use self::{global::GlobalPermissionsArg, stream::StreamPermissionsArg};
 use ahash::AHashMap;
 use clap::ValueEnum;
-use iggy::prelude::{Permissions, StreamPermissions, UserStatus};
+use messenger::prelude::{Permissions, StreamPermissions, UserStatus};
 
 pub(crate) mod constants;
 pub(crate) mod global;

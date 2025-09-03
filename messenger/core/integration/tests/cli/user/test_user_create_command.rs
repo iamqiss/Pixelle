@@ -17,15 +17,15 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, USAGE_PREFIX,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, USAGE_PREFIX,
 };
 use crate::cli::user::common::PermissionsTestArgs;
 use ahash::AHashMap;
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
-use iggy::prelude::{GlobalPermissions, StreamPermissions, TopicPermissions};
-use iggy::prelude::{Permissions, UserStatus};
+use messenger::prelude::Client;
+use messenger::prelude::{GlobalPermissions, StreamPermissions, TopicPermissions};
+use messenger::prelude::{Permissions, UserStatus};
 use predicates::str::diff;
 use serial_test::parallel;
 
@@ -94,11 +94,11 @@ impl TestUserCreateCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestUserCreateCmd {
+impl MessengerCmdTestCase for TestUserCreateCmd {
     async fn prepare_server_state(&mut self, _client: &dyn Client) {}
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("user")
             .arg("create")
             .args(self.to_args())
@@ -130,10 +130,10 @@ impl IggyCmdTestCase for TestUserCreateCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestUserCreateCmd::new(
             String::from("username"),
             String::from("password"),
@@ -141,7 +141,7 @@ pub async fn should_be_successful() {
             PermissionsTestArgs::default(),
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserCreateCmd::new(
             String::from("active_user"),
             String::from("password"),
@@ -149,7 +149,7 @@ pub async fn should_be_successful() {
             PermissionsTestArgs::default(),
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserCreateCmd::new(
             String::from("inactive_user"),
             String::from("password"),
@@ -157,7 +157,7 @@ pub async fn should_be_successful() {
             PermissionsTestArgs::default(),
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserCreateCmd::new(
             String::from("reader"),
             String::from("password"),
@@ -183,7 +183,7 @@ pub async fn should_be_successful() {
             ),
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserCreateCmd::new(
             String::from("stream3"),
             String::from("password"),
@@ -198,7 +198,7 @@ pub async fn should_be_successful() {
             ),
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserCreateCmd::new(
             String::from("stream1"),
             String::from("password"),
@@ -227,7 +227,7 @@ pub async fn should_be_successful() {
             ),
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserCreateCmd::new(
             String::from("giant"),
             String::from("password"),
@@ -272,17 +272,17 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["user", "create", "--help"],
             format!(
                 r#"Create user with given username and password
 
 Examples
- iggy user create testuser pass#1%X!
- iggy user create guest guess --user-status inactive
+ messenger user create testuser pass#1%X!
+ messenger user create guest guess --user-status inactive
 
 {USAGE_PREFIX} user create [OPTIONS] <USERNAME> <PASSWORD>
 
@@ -290,7 +290,7 @@ Arguments:
   <USERNAME>
           Username
 {CLAP_INDENT}
-          Unique identifier for the user account on iggy server,
+          Unique identifier for the user account on messenger server,
           must be between 3 and 50 characters long.
 
   <PASSWORD>
@@ -310,8 +310,8 @@ Options:
 {CLAP_INDENT}
           All global permissions by default are set to false and this command line option
           allows to set each permission individually. Permissions are separated
-          by comma and each permission is identified by the same name as in the iggy
-          SDK in iggy::models::permissions::GlobalPermissions struct. For each permission
+          by comma and each permission is identified by the same name as in the messenger
+          SDK in messenger::models::permissions::GlobalPermissions struct. For each permission
           there's long variant (same as in SDK) and short variant.
 {CLAP_INDENT}
           Available permissions (long and short versions):  manage_servers / m_srv,
@@ -320,8 +320,8 @@ Options:
           read_topics / r_top, poll_messages / p_msg, send_messages / s_msg
 {CLAP_INDENT}
           Examples:
-           iggy user create guest guess --global-permissions p_msg,s_msg
-           iggy user create admin pass#1%X! -g m_srv,r_srv,m_usr,r_usr,m_str,r_str,m_top,r_top,p_msg,s_msg
+           messenger user create guest guess --global-permissions p_msg,s_msg
+           messenger user create admin pass#1%X! -g m_srv,r_srv,m_usr,r_usr,m_str,r_str,m_top,r_top,p_msg,s_msg
 
   -s, --stream-permissions <STREAM_PERMISSIONS>
           Set stream permissions for created user
@@ -331,7 +331,7 @@ Options:
           (only stream ID is provided) all are set fo false. Stream permission format consists
           of stream ID followed by colon (:) and list of permissions separated by comma (,).
           For each stream permission there's long variant (same as in SDK in
-          iggy::models::permissions::StreamPermissions) and short variant.
+          messenger::models::permissions::StreamPermissions) and short variant.
 {CLAP_INDENT}
           Available stream permissions: manage_stream / m_str, read_stream / r_str, manage_topics / m_top,
           read_topics / r_top, poll_messages / p_msg, send_messages / s_msg.
@@ -341,7 +341,7 @@ Options:
           permission individually, by default, if no permission is provided (only topic ID is provided)
           all are set fo false. Topic permission format consists of topic ID followed by colon (:)
           and list of permissions separated by comma (,). For each topic permission there's long
-          variant (same as in SDK in iggy::models::permissions::TopicPermissions) and short variant.
+          variant (same as in SDK in messenger::models::permissions::TopicPermissions) and short variant.
           Topic permissions are separated by hash (#) after stream permissions.
 {CLAP_INDENT}
           Available topic permissions: manage_topic / m_top, read_topic / r_top, poll_messages / p_msg,
@@ -350,10 +350,10 @@ Options:
           Permissions format: STREAM_ID\[:STREAM_PERMISSIONS\]\[#TOPIC_ID\[:TOPIC_PERMISSIONS\]\]
 {CLAP_INDENT}
           Examples:
-           iggy user create guest guest -s 1:manage_topics,read_topics
-           iggy user create admin p@Ss! --stream-permissions 2:m_str,r_str,m_top,r_top,p_msg,s_msg
-           iggy user create sender s3n43r -s 3#1:s_msg#2:s_msg
-           iggy user create user1 test12 -s 4:manage_stream,r_top#1:s_msg,p_msg#2:manage_topic
+           messenger user create guest guest -s 1:manage_topics,read_topics
+           messenger user create admin p@Ss! --stream-permissions 2:m_str,r_str,m_top,r_top,p_msg,s_msg
+           messenger user create sender s3n43r -s 3#1:s_msg#2:s_msg
+           messenger user create user1 test12 -s 4:manage_stream,r_top#1:s_msg,p_msg#2:manage_topic
 
   -h, --help
           Print help (see a summary with '-h')
@@ -366,9 +366,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["user", "create", "-h"],
             format!(

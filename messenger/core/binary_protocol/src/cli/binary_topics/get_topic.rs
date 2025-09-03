@@ -21,9 +21,9 @@ use crate::cli::cli_command::{CliCommand, PRINT_TARGET};
 use anyhow::Context;
 use async_trait::async_trait;
 use comfy_table::Table;
-use iggy_common::Identifier;
-use iggy_common::IggyExpiry;
-use iggy_common::get_topic::GetTopic;
+use messenger_common::Identifier;
+use messenger_common::MessengerExpiry;
+use messenger_common::get_topic::GetTopic;
 use tracing::{Level, event};
 
 pub struct GetTopicCmd {
@@ -84,9 +84,9 @@ impl CliCommand for GetTopicCmd {
         table.add_row(vec![
             "Message expiry",
             match topic.message_expiry {
-                IggyExpiry::NeverExpire => String::from("unlimited"),
-                IggyExpiry::ServerDefault => String::from("server_default"),
-                IggyExpiry::ExpireDuration(value) => format!("{value}"),
+                MessengerExpiry::NeverExpire => String::from("unlimited"),
+                MessengerExpiry::ServerDefault => String::from("server_default"),
+                MessengerExpiry::ExpireDuration(value) => format!("{value}"),
             }
             .as_str(),
         ]);

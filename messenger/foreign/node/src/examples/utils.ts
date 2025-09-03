@@ -19,12 +19,12 @@
 
 
 import { Client } from '../index.js';
-import { getIggyAddress } from '../tcp.sm.utils.js';
+import { getMessengerAddress } from '../tcp.sm.utils.js';
 
 
 export const getClient = () => {
-  const [host, port] = getIggyAddress();
-  const credentials = { username: 'iggy', password: 'iggy' };
+  const [host, port] = getMessengerAddress();
+  const credentials = { username: 'messenger', password: 'messenger' };
 
   const opt = {
     transport: 'TCP' as const,

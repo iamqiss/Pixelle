@@ -18,15 +18,15 @@
 package tcp_test
 
 import (
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	"github.com/apache/iggy/foreign/go/iggycli"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	"github.com/apache/messenger/foreign/go/messengercli"
 	"github.com/onsi/ginkgo/v2"
 	"github.com/onsi/gomega"
 )
 
 // OPERATIONS
 
-func successfullyCreateAccessToken(name string, client iggycli.Client) string {
+func successfullyCreateAccessToken(name string, client messengercli.Client) string {
 	result, err := client.CreatePersonalAccessToken(name, 0)
 	itShouldNotReturnError(err)
 
@@ -35,14 +35,14 @@ func successfullyCreateAccessToken(name string, client iggycli.Client) string {
 
 // ASSERTIONS
 
-func itShouldSuccessfullyCreateAccessToken(name string, client iggycli.Client) {
+func itShouldSuccessfullyCreateAccessToken(name string, client messengercli.Client) {
 	tokens, err := client.GetPersonalAccessTokens()
 
 	itShouldNotReturnError(err)
 	itShouldContainSpecificAccessToken(name, tokens)
 }
 
-func itShouldSuccessfullyDeleteAccessToken(name string, client iggycli.Client) {
+func itShouldSuccessfullyDeleteAccessToken(name string, client messengercli.Client) {
 	tokens, err := client.GetPersonalAccessTokens()
 
 	itShouldNotReturnError(err)

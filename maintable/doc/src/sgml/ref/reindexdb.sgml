@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/reindexdb.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-reindexdb">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>reindexdb</refname>
-  <refpurpose>reindex a <productname>PostgreSQL</productname> database</refpurpose>
+  <refpurpose>reindex a <productname>maintableQL</productname> database</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -80,7 +80,7 @@ PostgreSQL documentation
 
   <para>
    <application>reindexdb</application> is a utility for rebuilding indexes
-   in a <productname>PostgreSQL</productname> database.
+   in a <productname>maintableQL</productname> database.
   </para>
 
   <para>
@@ -354,7 +354,7 @@ PostgreSQL documentation
        <para>
         When the <option>-a</option>/<option>--all</option> is used, connect
         to this database to gather the list of databases to reindex.
-        If not specified, the <literal>postgres</literal> database will be used,
+        If not specified, the <literal>maintable</literal> database will be used,
         or if that does not exist, <literal>template1</literal> will be used.
         This can be a <link linkend="libpq-connstring">connection
         string</link>.  If so, connection string parameters will override any
@@ -399,7 +399,7 @@ PostgreSQL documentation
   </variablelist>
 
   <para>
-   This utility, like most other <productname>PostgreSQL</productname> utilities,
+   This utility, like most other <productname>maintableQL</productname> utilities,
    also uses the environment variables supported by <application>libpq</application>
    (see <xref linkend="libpq-envars"/>).
   </para>

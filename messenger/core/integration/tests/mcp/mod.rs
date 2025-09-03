@@ -16,14 +16,14 @@
  * under the License.
  */
 
-use iggy::prelude::{Client, DEFAULT_ROOT_PASSWORD, DEFAULT_ROOT_USERNAME, IggyClient};
-use iggy_binary_protocol::{
+use messenger::prelude::{Client, DEFAULT_ROOT_PASSWORD, DEFAULT_ROOT_USERNAME, MessengerClient};
+use messenger_binary_protocol::{
     ConsumerGroupClient, ConsumerOffsetClient, MessageClient, PersonalAccessTokenClient,
     StreamClient, TopicClient, UserClient,
 };
-use iggy_common::{
+use messenger_common::{
     ClientInfo, ClientInfoDetails, Consumer, ConsumerGroup, ConsumerGroupDetails,
-    ConsumerOffsetInfo, Identifier, IggyExpiry, IggyMessage, MaxTopicSize, Partitioning,
+    ConsumerOffsetInfo, Identifier, MessengerExpiry, MessengerMessage, MaxTopicSize, Partitioning,
     PersonalAccessTokenExpiry, PersonalAccessTokenInfo, PolledMessages, RawPersonalAccessToken,
     Snapshot, Stats, Stream, StreamDetails, Topic, TopicDetails, UserInfo, UserInfoDetails,
     UserStatus,
@@ -562,72 +562,72 @@ async fn invoke_request<T: DeserializeOwned>(
 }
 
 async fn setup() -> McpInfra {
-    let mut iggy_envs = HashMap::new();
-    iggy_envs.insert("IGGY_QUIC_ENABLED".to_owned(), "false".to_owned());
-    let mut test_server = TestServer::new(Some(iggy_envs), true, None, IpAddrKind::V4);
+    let mut messenger_envs = HashMap::new();
+    messenger_envs.insert("MESSENGER_QUIC_ENABLED".to_owned(), "false".to_owned());
+    let mut test_server = TestServer::new(Some(messenger_envs), true, None, IpAddrKind::V4);
     test_server.start();
-    let iggy_server_address = test_server
+    let messenger_server_address = test_server
         .get_raw_tcp_addr()
-        .expect("Failed to get Iggy TCP address");
-    seed_data(&iggy_server_address).await;
+        .expect("Failed to get Messenger TCP address");
+    seed_data(&messenger_server_address).await;
 
-    let mut test_mcp_server = TestMcpServer::with_iggy_address(&iggy_server_address);
+    let mut test_mcp_server = TestMcpServer::with_messenger_address(&messenger_server_address);
     test_mcp_server.start();
     test_mcp_server.ensure_started().await;
     let mcp_client = test_mcp_server.get_client().await;
 
     McpInfra {
-        _iggy_server: test_server,
+        _messenger_server: test_server,
         _mcp_server: test_mcp_server,
         mcp_client: TestMcpClient { mcp_client },
     }
 }
 
-async fn seed_data(iggy_server_address: &str) {
-    let iggy_port = iggy_server_address
+async fn seed_data(messenger_server_address: &str) {
+    let messenger_port = messenger_server_address
         .split(':')
         .next_back()
         .unwrap()
         .parse::<u16>()
         .unwrap();
 
-    let iggy_client = IggyClient::from_connection_string(&format!(
-        "iggy://{DEFAULT_ROOT_USERNAME}:{DEFAULT_ROOT_PASSWORD}@localhost:{iggy_port}"
+    let messenger_client = MessengerClient::from_connection_string(&format!(
+        "messenger://{DEFAULT_ROOT_USERNAME}:{DEFAULT_ROOT_PASSWORD}@localhost:{messenger_port}"
     ))
-    .expect("Failed to create Iggy client");
+    .expect("Failed to create Messenger client");
 
-    iggy_client
+    messenger_client
         .connect()
         .await
-        .expect("Failed to initialize Iggy client");
+        .expect("Failed to initialize Messenger client");
 
-    iggy_client
+    messenger_client
         .create_stream(STREAM_NAME, None)
         .await
         .expect("Failed to create stream");
 
-    iggy_client
+    messenger_client
         .create_topic(
             &STREAM_ID,
             TOPIC_NAME,
             1,
-            iggy_common::CompressionAlgorithm::None,
+            messenger_common::CompressionAlgorithm::None,
             None,
             None,
-            IggyExpiry::ServerDefault,
+            MessengerExpiry::ServerDefault,
             MaxTopicSize::ServerDefault,
         )
         .await
         .expect("Failed to create topic");
 
     let mut messages = vec![
-        IggyMessage::builder()
+        MessengerMessage::builder()
             .payload(MESSAGE_PAYLOAD.into())
             .build()
             .expect("Failed to build message"),
     ];
 
-    iggy_client
+    messenger_client
         .send_messages(
             &STREAM_ID,
             &TOPIC_ID,
@@ -640,22 +640,22 @@ async fn seed_data(iggy_server_address: &str) {
     let consumer =
         Consumer::new(Identifier::named(CONSUMER_NAME).expect("Failed to create consumer"));
 
-    iggy_client
+    messenger_client
         .store_consumer_offset(&consumer, &STREAM_ID, &TOPIC_ID, Some(1), 0)
         .await
         .expect("Failed to store consumer offset");
 
-    iggy_client
+    messenger_client
         .create_consumer_group(&STREAM_ID, &TOPIC_ID, CONSUMER_GROUP_NAME, None)
         .await
         .expect("Failed to create consumer group");
 
-    iggy_client
+    messenger_client
         .create_user(USER_NAME, USER_PASSWORD, UserStatus::Active, None)
         .await
         .expect("Failed to create user");
 
-    iggy_client
+    messenger_client
         .create_personal_access_token(
             PERSONAL_ACCESS_TOKEN_NAME,
             PersonalAccessTokenExpiry::NeverExpire,
@@ -666,7 +666,7 @@ async fn seed_data(iggy_server_address: &str) {
 
 #[derive(Debug)]
 struct McpInfra {
-    _iggy_server: TestServer,
+    _messenger_server: TestServer,
     _mcp_server: TestMcpServer,
     mcp_client: TestMcpClient,
 }

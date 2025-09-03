@@ -31,12 +31,12 @@
 /* headers if any */
 
 /*
- * It's against Postgres coding conventions to include postgres.h in a
+ * It's against Maintable coding conventions to include maintable.h in a
  * header file, but we allow the violation here because the regexp library
  * files specifically intend this file to supply application-dependent
  * headers, and are careful to include this file before anything else.
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <limits.h>

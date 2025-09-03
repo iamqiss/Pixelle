@@ -233,13 +233,13 @@ SELECT '9791234567896'::UPC; -- not a product
 ERROR:  cannot cast ISBN to UPC for number: "9791234567896"
 LINE 1: SELECT '9791234567896'::UPC;
                ^
-SELECT 'postgresql...'::EAN13;
-ERROR:  invalid input syntax for EAN13 number: "postgresql..."
-LINE 1: SELECT 'postgresql...'::EAN13;
+SELECT 'maintableql...'::EAN13;
+ERROR:  invalid input syntax for EAN13 number: "maintableql..."
+LINE 1: SELECT 'maintableql...'::EAN13;
                ^
-SELECT 'postgresql...'::ISBN;
-ERROR:  invalid input syntax for ISBN number: "postgresql..."
-LINE 1: SELECT 'postgresql...'::ISBN;
+SELECT 'maintableql...'::ISBN;
+ERROR:  invalid input syntax for ISBN number: "maintableql..."
+LINE 1: SELECT 'maintableql...'::ISBN;
                ^
 SELECT 9780123456786::EAN13;
 ERROR:  cannot cast type bigint to ean13
@@ -268,14 +268,14 @@ SELECT str as isn, typ as "type",
        errinfo.detail,
        errinfo.hint
 FROM (VALUES ('9780123456786', 'UPC'),
-             ('postgresql...','EAN13'),
+             ('maintableql...','EAN13'),
              ('9771234567003','ISSN'))
       AS a(str,typ),
      LATERAL pg_input_error_info(a.str, a.typ) as errinfo;
       isn      | type  | ok | sql_error_code |                        message                         | detail | hint 
 ---------------+-------+----+----------------+--------------------------------------------------------+--------+------
  9780123456786 | UPC   | f  | 22P02          | cannot cast ISBN to UPC for number: "9780123456786"    |        | 
- postgresql... | EAN13 | f  | 22P02          | invalid input syntax for EAN13 number: "postgresql..." |        | 
+ maintableql... | EAN13 | f  | 22P02          | invalid input syntax for EAN13 number: "maintableql..." |        | 
  9771234567003 | ISSN  | t  |                |                                                        |        | 
 (3 rows)
 

@@ -25,7 +25,7 @@ plugins {
     id("checkstyle")
 }
 
-group = "org.apache.iggy"
+group = "org.apache.messenger"
 version = "0.5.0-SNAPSHOT"
 
 repositories {
@@ -72,18 +72,18 @@ tasks.withType<Test> {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            groupId = "org.apache.iggy"
-            artifactId = "iggy"
+            groupId = "org.apache.messenger"
+            artifactId = "messenger"
             version = "0.5.0-SNAPSHOT"
 
             from(components["java"])
 
             pom {
-                name = "Apache Iggy Java Client SDK"
-                description = "Official Java client SDK for Apache Iggy.\n" +
-                        "Apache Iggy (Incubating) is an effort undergoing incubation at the Apache Software Foundation (ASF), " +
+                name = "Apache Messenger Java Client SDK"
+                description = "Official Java client SDK for Apache Messenger.\n" +
+                        "Apache Messenger (Incubating) is an effort undergoing incubation at the Apache Software Foundation (ASF), " +
                         "sponsored by the Apache Incubator PMC."
-                url = "https://github.com/apache/iggy"
+                url = "https://github.com/apache/messenger"
                 packaging = "jar"
                 licenses {
                     license {
@@ -93,13 +93,13 @@ publishing {
                 }
                 developers {
                     developer {
-                        name = "Apache Iggy"
-                        email = "dev@iggy.apache.org"
+                        name = "Apache Messenger"
+                        email = "dev@messenger.apache.org"
                     }
                     scm {
-                        url = "https://github.com/apache/iggy"
-                        connection = "scm:git:git://github.com/apache/iggy.git"
-                        developerConnection = "scm:git:git://github.com/apache/iggy.git"
+                        url = "https://github.com/apache/messenger"
+                        connection = "scm:git:git://github.com/apache/messenger.git"
+                        developerConnection = "scm:git:git://github.com/apache/messenger.git"
                     }
                 }
             }

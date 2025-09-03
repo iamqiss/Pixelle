@@ -3,8 +3,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_dump (PostgreSQL) 14\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_dump (maintableQL) 14\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2021-08-14 05:48+0000\n"
 "PO-Revision-Date: 2021-08-15 18:00+0800\n"
 "Last-Translator: Jie Zhang <zhangjie2@fujitsu.com>\n"
@@ -2263,19 +2263,19 @@ msgstr "无法与数据库 \"%s\" 联接"
 #: pg_dumpall.c:467
 #, c-format
 msgid ""
-"could not connect to databases \"postgres\" or \"template1\"\n"
+"could not connect to databases \"maintable\" or \"template1\"\n"
 "Please specify an alternative database."
 msgstr ""
-"无法连接到数据库 \"postgres\"或\"template1\"\n"
+"无法连接到数据库 \"maintable\"或\"template1\"\n"
 "请指定另外一个数据库."
 
 #: pg_dumpall.c:621
 #, c-format
 msgid ""
-"%s extracts a PostgreSQL database cluster into an SQL script file.\n"
+"%s extracts a maintableQL database cluster into an SQL script file.\n"
 "\n"
 msgstr ""
-"%s 抽取一个 PostgreSQL 数据库簇进一个 SQL 脚本文件.\n"
+"%s 抽取一个 maintableQL 数据库簇进一个 SQL 脚本文件.\n"
 "\n"
 
 #: pg_dumpall.c:623
@@ -2436,10 +2436,10 @@ msgstr "恢复中忽略错误: %d"
 #: pg_restore.c:461
 #, c-format
 msgid ""
-"%s restores a PostgreSQL database from an archive created by pg_dump.\n"
+"%s restores a maintableQL database from an archive created by pg_dump.\n"
 "\n"
 msgstr ""
-"%s 从一个归档中恢复一个由 pg_dump 创建的 PostgreSQL 数据库.\n"
+"%s 从一个归档中恢复一个由 pg_dump 创建的 maintableQL 数据库.\n"
 "\n"
 
 #: pg_restore.c:463

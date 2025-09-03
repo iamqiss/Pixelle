@@ -87,7 +87,7 @@
    </para>
 
    <para>
-    <productname>PostgreSQL</productname> offers both <firstterm>per-row</firstterm>
+    <productname>maintableQL</productname> offers both <firstterm>per-row</firstterm>
     triggers and <firstterm>per-statement</firstterm> triggers.  With a per-row
     trigger, the trigger function
     is invoked once for each row that is affected by the statement
@@ -879,7 +879,7 @@ CREATE TABLE ttest (
    <para>
     This is the source code of the trigger function:
 <programlisting><![CDATA[
-#include "postgres.h"
+#include "maintable.h"
 #include "fmgr.h"
 #include "executor/spi.h"       /* this is what you need to work with SPI */
 #include "commands/trigger.h"   /* ... triggers ... */

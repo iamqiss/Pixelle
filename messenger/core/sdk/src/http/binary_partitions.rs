@@ -18,11 +18,11 @@
 
 use crate::http::http_client::HttpClient;
 use crate::http::http_transport::HttpTransport;
-use crate::prelude::{Identifier, IggyError};
+use crate::prelude::{Identifier, MessengerError};
 use async_trait::async_trait;
-use iggy_binary_protocol::PartitionClient;
-use iggy_common::create_partitions::CreatePartitions;
-use iggy_common::delete_partitions::DeletePartitions;
+use messenger_binary_protocol::PartitionClient;
+use messenger_common::create_partitions::CreatePartitions;
+use messenger_common::delete_partitions::DeletePartitions;
 
 #[async_trait]
 impl PartitionClient for HttpClient {
@@ -31,7 +31,7 @@ impl PartitionClient for HttpClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitions_count: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.post(
             &get_path(&stream_id.as_cow_str(), &topic_id.as_cow_str()),
             &CreatePartitions {
@@ -49,7 +49,7 @@ impl PartitionClient for HttpClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitions_count: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.delete_with_query(
             &get_path(&stream_id.as_cow_str(), &topic_id.as_cow_str()),
             &DeletePartitions {

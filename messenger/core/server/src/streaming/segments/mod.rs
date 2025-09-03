@@ -24,13 +24,13 @@ mod segment;
 mod types;
 mod writing_messages;
 
-pub use indexes::IggyIndexesMut;
+pub use indexes::MessengerIndexesMut;
 pub use messages_accumulator::MessagesAccumulator;
 pub use segment::Segment;
-pub use types::IggyMessageHeaderViewMut;
-pub use types::IggyMessageViewMut;
-pub use types::IggyMessagesBatchMut;
-pub use types::IggyMessagesBatchSet;
+pub use types::MessengerMessageHeaderViewMut;
+pub use types::MessengerMessageViewMut;
+pub use types::MessengerMessagesBatchMut;
+pub use types::MessengerMessagesBatchSet;
 
 pub const LOG_EXTENSION: &str = "log";
 pub const INDEX_EXTENSION: &str = "index";

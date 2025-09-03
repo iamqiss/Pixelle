@@ -1,12 +1,12 @@
 # Czech message translation file for plperl
-# Copyright (C) 2012 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2012 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Tomáš Vondra <tv@fuzzy.cz>, 2012, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: plperl-cs (PostgreSQL 9.3)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: plperl-cs (maintableQL 9.3)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2019-09-27 08:08+0000\n"
 "PO-Revision-Date: 2019-09-27 20:57+0200\n"
 "Last-Translator: Tomas Vondra <tv@fuzzy.cz>\n"
@@ -47,8 +47,8 @@ msgstr "%s"
 
 #: plperl.c:671
 #, c-format
-msgid "while executing PostgreSQL::InServer::SPI::bootstrap"
-msgstr "během spouštění PostgreSQL::InServer::SPI::bootstrap"
+msgid "while executing maintableQL::InServer::SPI::bootstrap"
+msgstr "během spouštění maintableQL::InServer::SPI::bootstrap"
 
 #: plperl.c:855
 #, c-format

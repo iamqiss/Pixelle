@@ -1,6 +1,6 @@
 /* contrib/earthdistance/earthdistance.c */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 

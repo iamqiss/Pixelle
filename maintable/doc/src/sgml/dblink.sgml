@@ -1,7 +1,7 @@
 <!-- doc/src/sgml/dblink.sgml -->
 
 <sect1 id="dblink" xreflabel="dblink">
- <title>dblink &mdash; connect to other PostgreSQL databases</title>
+ <title>dblink &mdash; connect to other maintableQL databases</title>
 
  <indexterm zone="dblink">
   <primary>dblink</primary>
@@ -9,7 +9,7 @@
 
  <para>
   <filename>dblink</filename> is a module that supports connections to
-  other <productname>PostgreSQL</productname> databases from within a database
+  other <productname>maintableQL</productname> databases from within a database
   session.
  </para>
 
@@ -49,7 +49,7 @@
  </variablelist>
 
  <para>
-  See also <xref linkend="postgres-fdw"/>, which provides roughly the same
+  See also <xref linkend="maintable-fdw"/>, which provides roughly the same
   functionality using a more modern and standards-compliant infrastructure.
  </para>
 
@@ -80,7 +80,7 @@ dblink_connect(text connname, text connstr) returns text
 
    <para>
     <function>dblink_connect()</function> establishes a connection to a remote
-    <productname>PostgreSQL</productname> database.  The server and database to
+    <productname>maintableQL</productname> database.  The server and database to
     be contacted are identified through a standard <application>libpq</application>
     connection string.  Optionally, a name can be assigned to the
     connection.  Multiple named connections can be open at once, but
@@ -117,7 +117,7 @@ dblink_connect(text connname, text connstr) returns text
      <term><parameter>connstr</parameter></term>
      <listitem>
       <para><application>libpq</application>-style connection info string, for example
-       <literal>hostaddr=127.0.0.1 port=5432 dbname=mydb user=postgres
+       <literal>hostaddr=127.0.0.1 port=5432 dbname=mydb user=maintable
        password=mypasswd options=-csearch_path=</literal>.
        For details see <xref linkend="libpq-connstring"/>.
        Alternatively, the name of a foreign server.
@@ -157,10 +157,10 @@ dblink_connect(text connname, text connstr) returns text
     authentication to connect to the remote database.  With SCRAM pass-through
     authentication, <filename>dblink</filename> uses SCRAM-hashed secrets
     instead of plain-text user passwords to connect to the remote server. This
-    avoids storing plain-text user passwords in PostgreSQL system catalogs.
+    avoids storing plain-text user passwords in maintableQL system catalogs.
     See the documentation of the equivalent <link
-    linkend="postgres-fdw-option-use-scram-passthrough"><literal>use_scram_passthrough</literal></link>
-    option of postgres_fdw for further details and restrictions.
+    linkend="maintable-fdw-option-use-scram-passthrough"><literal>use_scram_passthrough</literal></link>
+    option of maintable_fdw for further details and restrictions.
    </para>
 
    <para>
@@ -182,13 +182,13 @@ dblink_connect(text connname, text connstr) returns text
    <title>Examples</title>
 
 <screen>
-SELECT dblink_connect('dbname=postgres options=-csearch_path=');
+SELECT dblink_connect('dbname=maintable options=-csearch_path=');
  dblink_connect
 ----------------
  OK
 (1 row)
 
-SELECT dblink_connect('myconn', 'dbname=postgres options=-csearch_path=');
+SELECT dblink_connect('myconn', 'dbname=maintable options=-csearch_path=');
  dblink_connect
 ----------------
  OK
@@ -278,7 +278,7 @@ dblink_connect_u(text connname, text connstr) returns text
     If the remote server selects an authentication method that does not
     involve a password, then impersonation and subsequent escalation of
     privileges can occur, because the session will appear to have
-    originated from the user as which the local <productname>PostgreSQL</productname>
+    originated from the user as which the local <productname>maintableQL</productname>
     server runs.  Also, even if the remote server does demand a password,
     it is possible for the password to be supplied from the server
     environment, such as a <filename>~/.pgpass</filename> file belonging to the
@@ -472,7 +472,7 @@ dblink(text sql [, bool fail_on_error]) returns setof record
     to return <type>record</type>, rather than specifying any particular
     set of columns.  This means that you must specify the expected
     set of columns in the calling query &mdash; otherwise
-    <productname>PostgreSQL</productname> would not know what to expect.
+    <productname>maintableQL</productname> would not know what to expect.
     Here is an example:
 
 <programlisting>
@@ -486,7 +486,7 @@ SELECT *
     The <quote>alias</quote> part of the <literal>FROM</literal> clause must
     specify the column names and types that the function will return.
     (Specifying column names in an alias is actually standard SQL
-    syntax, but specifying column types is a <productname>PostgreSQL</productname>
+    syntax, but specifying column types is a <productname>maintableQL</productname>
     extension.)  This allows the system to understand what
     <literal>*</literal> should expand to, and what <structname>proname</structname>
     in the <literal>WHERE</literal> clause refers to, in advance of trying
@@ -512,7 +512,7 @@ SELECT *
 <programlisting>
 CREATE VIEW myremote_pg_proc AS
   SELECT *
-    FROM dblink('dbname=postgres options=-csearch_path=',
+    FROM dblink('dbname=maintable options=-csearch_path=',
                 'select proname, prosrc from pg_proc')
     AS t1(proname name, prosrc text);
 
@@ -524,7 +524,7 @@ SELECT * FROM myremote_pg_proc WHERE proname LIKE 'bytea%';
    <title>Examples</title>
 
 <screen>
-SELECT * FROM dblink('dbname=postgres options=-csearch_path=',
+SELECT * FROM dblink('dbname=maintable options=-csearch_path=',
                      'select proname, prosrc from pg_proc')
   AS t1(proname name, prosrc text) WHERE proname LIKE 'bytea%';
   proname   |   prosrc
@@ -543,7 +543,7 @@ SELECT * FROM dblink('dbname=postgres options=-csearch_path=',
  byteaout   | byteaout
 (12 rows)
 
-SELECT dblink_connect('dbname=postgres options=-csearch_path=');
+SELECT dblink_connect('dbname=maintable options=-csearch_path=');
  dblink_connect
 ----------------
  OK
@@ -842,7 +842,7 @@ dblink_open(text connname, text cursorname, text sql [, bool fail_on_error]) ret
    <title>Examples</title>
 
 <screen>
-SELECT dblink_connect('dbname=postgres options=-csearch_path=');
+SELECT dblink_connect('dbname=maintable options=-csearch_path=');
  dblink_connect
 ----------------
  OK
@@ -963,7 +963,7 @@ dblink_fetch(text connname, text cursorname, int howmany [, bool fail_on_error])
    <title>Examples</title>
 
 <screen>
-SELECT dblink_connect('dbname=postgres options=-csearch_path=');
+SELECT dblink_connect('dbname=maintable options=-csearch_path=');
  dblink_connect
 ----------------
  OK
@@ -1100,7 +1100,7 @@ dblink_close(text connname, text cursorname [, bool fail_on_error]) returns text
    <title>Examples</title>
 
 <screen>
-SELECT dblink_connect('dbname=postgres options=-csearch_path=');
+SELECT dblink_connect('dbname=maintable options=-csearch_path=');
  dblink_connect
 ----------------
  OK
@@ -1906,7 +1906,7 @@ dblink_build_sql_insert(text relname,
    <title>Notes</title>
 
    <para>
-    As of <productname>PostgreSQL</productname> 9.0, the attribute numbers in
+    As of <productname>maintableQL</productname> 9.0, the attribute numbers in
     <parameter>primary_key_attnums</parameter> are interpreted as logical
     column numbers, corresponding to the column's position in
     <literal>SELECT * FROM relname</literal>.  Previous versions interpreted the
@@ -2024,7 +2024,7 @@ dblink_build_sql_delete(text relname,
    <title>Notes</title>
 
    <para>
-    As of <productname>PostgreSQL</productname> 9.0, the attribute numbers in
+    As of <productname>maintableQL</productname> 9.0, the attribute numbers in
     <parameter>primary_key_attnums</parameter> are interpreted as logical
     column numbers, corresponding to the column's position in
     <literal>SELECT * FROM relname</literal>.  Previous versions interpreted the
@@ -2161,7 +2161,7 @@ dblink_build_sql_update(text relname,
    <title>Notes</title>
 
    <para>
-    As of <productname>PostgreSQL</productname> 9.0, the attribute numbers in
+    As of <productname>maintableQL</productname> 9.0, the attribute numbers in
     <parameter>primary_key_attnums</parameter> are interpreted as logical
     column numbers, corresponding to the column's position in
     <literal>SELECT * FROM relname</literal>.  Previous versions interpreted the

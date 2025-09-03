@@ -4,11 +4,11 @@
  *
  * Routines to handle DML permission checks
  *
- * Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * -------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "access/sysattr.h"
@@ -154,7 +154,7 @@ check_relation_privileges(Oid relOid,
 	bool		result = true;
 
 	/*
-	 * Hardwired Policies: SE-PostgreSQL enforces - clients cannot modify
+	 * Hardwired Policies: SE-maintableQL enforces - clients cannot modify
 	 * system catalogs using DMLs - clients cannot reference/modify toast
 	 * relations using DMLs
 	 */

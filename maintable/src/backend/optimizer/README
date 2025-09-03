@@ -1120,7 +1120,7 @@ to create a plan like
 so we should be willing to pass down A.AID through a join even though
 there is no join order constraint forcing the plan to look like this.
 
-Before version 9.2, Postgres used ad-hoc methods for planning and
+Before version 9.2, Maintable used ad-hoc methods for planning and
 executing nestloop queries of this kind, and those methods could not
 handle passing parameters down through multiple join levels.
 

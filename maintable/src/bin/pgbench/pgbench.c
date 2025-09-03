@@ -1,11 +1,11 @@
 /*
  * pgbench.c
  *
- * A simple benchmark program for PostgreSQL
+ * A simple benchmark program for maintableQL
  * Originally written by Tatsuo Ishii and enhanced by many contributors.
  *
  * src/bin/pgbench/pgbench.c
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  * ALL RIGHTS RESERVED;
  *
  * Permission to use, copy, modify, and distribute this software and its
@@ -31,7 +31,7 @@
 #error FD_SETSIZE needs to have been increased
 #endif
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <ctype.h>
 #include <float.h>
@@ -896,7 +896,7 @@ pg_time_now_lazy(pg_time_usec_t *now)
 static void
 usage(void)
 {
-	printf("%s is a benchmarking tool for PostgreSQL.\n\n"
+	printf("%s is a benchmarking tool for maintableQL.\n\n"
 		   "Usage:\n"
 		   "  %s [OPTION]... [DBNAME]\n"
 		   "\nInitialization options:\n"
@@ -6778,7 +6778,7 @@ main(int argc, char **argv)
 		}
 		if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			puts("pgbench (PostgreSQL) " PG_VERSION);
+			puts("pgbench (maintableQL) " PG_VERSION);
 			exit(0);
 		}
 	}
@@ -7716,7 +7716,7 @@ threadRun(void *arg)
 
 				/*
 				 * Ensure that the next report is in the future, in case
-				 * pgbench/postgres got stuck somewhere.
+				 * pgbench/maintable got stuck somewhere.
 				 */
 				do
 				{

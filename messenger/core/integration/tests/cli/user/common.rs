@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use iggy::prelude::Permissions;
+use messenger::prelude::Permissions;
 
 #[derive(Debug, Clone, Default)]
 pub(crate) struct PermissionsTestArgs {

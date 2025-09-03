@@ -16,11 +16,11 @@
  * under the License.
  */
 
-use crate::cli::common::{IggyCmdCommand, IggyCmdTest, IggyCmdTestCase};
+use crate::cli::common::{MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase};
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
-use iggy::prelude::defaults::{DEFAULT_ROOT_PASSWORD, DEFAULT_ROOT_USERNAME};
+use messenger::prelude::Client;
+use messenger::prelude::defaults::{DEFAULT_ROOT_PASSWORD, DEFAULT_ROOT_USERNAME};
 use predicates::str::{contains, starts_with};
 use serial_test::parallel;
 
@@ -43,13 +43,13 @@ impl TestLoginOptions {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestLoginOptions {
+impl MessengerCmdTestCase for TestLoginOptions {
     async fn prepare_server_state(&mut self, _client: &dyn Client) {}
 
-    fn get_command(&self) -> IggyCmdCommand {
+    fn get_command(&self) -> MessengerCmdCommand {
         match self.use_credentials {
-            UseCredentials::CliOptions => IggyCmdCommand::new().with_cli_credentials().arg("me"),
-            UseCredentials::StdinInput => IggyCmdCommand::new()
+            UseCredentials::CliOptions => MessengerCmdCommand::new().with_cli_credentials().arg("me"),
+            UseCredentials::StdinInput => MessengerCmdCommand::new()
                 .opt("--username")
                 .opt(DEFAULT_ROOT_USERNAME)
                 .arg("me"),
@@ -76,13 +76,13 @@ impl IggyCmdTestCase for TestLoginOptions {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestLoginOptions::new(UseCredentials::CliOptions))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestLoginOptions::new(UseCredentials::StdinInput))
         .await;
 }

@@ -49,21 +49,21 @@ services:
     networks:
       - pixelle-network
 
-  postgres:
-    image: postgres:15-alpine
+  maintable:
+    image: maintable:15-alpine
     environment:
-      - POSTGRES_DB=pixelle
-      - POSTGRES_USER=pixelle
-      - POSTGRES_PASSWORD=pixelle123
+      - MAINTABLE_DB=pixelle
+      - MAINTABLE_USER=pixelle
+      - MAINTABLE_PASSWORD=pixelle123
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - maintable_data:/var/lib/maintableql/data
     networks:
       - pixelle-network
 
 volumes:
-  postgres_data:
+  maintable_data:
 
 networks:
   pixelle-network:

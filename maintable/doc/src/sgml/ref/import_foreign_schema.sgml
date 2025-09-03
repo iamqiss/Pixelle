@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/import_foreign_schema.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-importforeignschema">
@@ -150,7 +150,7 @@ IMPORT FOREIGN SCHEMA foreign_films LIMIT TO (actors, directors)
   <para>
    The <command>IMPORT FOREIGN SCHEMA</command> command conforms to the
    <acronym>SQL</acronym> standard, except that the <literal>OPTIONS</literal>
-   clause is a <productname>PostgreSQL</productname> extension.
+   clause is a <productname>maintableQL</productname> extension.
   </para>
 
  </refsect1>

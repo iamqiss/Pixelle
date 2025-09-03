@@ -2,13 +2,13 @@
  *
  * contrib/sepgsql/hooks.c
  *
- * Entrypoints of the hooks in PostgreSQL, and dispatches the callbacks.
+ * Entrypoints of the hooks in maintableQL, and dispatches the callbacks.
  *
- * Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * -------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/dependency.h"
 #include "catalog/objectaccess.h"
@@ -403,7 +403,7 @@ void
 _PG_init(void)
 {
 	/*
-	 * We allow to load the SE-PostgreSQL module on single-user-mode or
+	 * We allow to load the SE-maintableQL module on single-user-mode or
 	 * shared_preload_libraries settings only.
 	 */
 	if (IsUnderPostmaster)
@@ -413,7 +413,7 @@ _PG_init(void)
 
 	/*
 	 * Check availability of SELinux on the platform. If disabled, we cannot
-	 * activate any SE-PostgreSQL features, and we have to skip rest of
+	 * activate any SE-maintableQL features, and we have to skip rest of
 	 * initialization.
 	 */
 	if (is_selinux_enabled() < 1)
@@ -425,11 +425,11 @@ _PG_init(void)
 	/*
 	 * sepgsql.permissive = (on|off)
 	 *
-	 * This variable controls performing mode of SE-PostgreSQL on user's
+	 * This variable controls performing mode of SE-maintableQL on user's
 	 * session.
 	 */
 	DefineCustomBoolVariable("sepgsql.permissive",
-							 "Turn on/off permissive mode in SE-PostgreSQL",
+							 "Turn on/off permissive mode in SE-maintableQL",
 							 NULL,
 							 &sepgsql_permissive,
 							 false,

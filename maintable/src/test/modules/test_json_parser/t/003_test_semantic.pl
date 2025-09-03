@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test the incremental JSON parser with semantic routines, and compare the
 # output with the expected output.
@@ -7,7 +7,7 @@
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use Test::More;
 use FindBin;
 
@@ -30,7 +30,7 @@ foreach my $exe (@exes)
 
 	is($stderr, "", "no error output");
 
-	my $dir = PostgreSQL::Test::Utils::tempdir;
+	my $dir = maintableQL::Test::Utils::tempdir;
 	my ($fh, $fname) = tempfile(DIR => $dir);
 
 	print $fh $stdout, "\n";

@@ -5,7 +5,7 @@
  * SQL commands and SQL-accessible functions related to GUC variables.
  *
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  * Written by Peter Eisentraut <peter_e@gmx.net>.
  *
  * IDENTIFICATION
@@ -13,7 +13,7 @@
  *
  *--------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/stat.h>
 #include <unistd.h>

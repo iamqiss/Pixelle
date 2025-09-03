@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Set of tests for authentication and pg_hba.conf. The following password
 # methods are checked through this test:
@@ -12,8 +12,8 @@
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 if (!$use_unix_sockets)
 {
@@ -63,11 +63,11 @@ sub test_conn
 }
 
 # Initialize primary node
-my $node = PostgreSQL::Test::Cluster->new('primary');
+my $node = maintableQL::Test::Cluster->new('primary');
 $node->init;
-$node->append_conf('postgresql.conf', "log_connections = on\n");
+$node->append_conf('maintableql.conf', "log_connections = on\n");
 # Needed to allow connect_fails to inspect postmaster log:
-$node->append_conf('postgresql.conf', "log_min_messages = debug2");
+$node->append_conf('maintableql.conf', "log_min_messages = debug2");
 $node->start;
 
 # Test behavior of log_connections GUC
@@ -77,7 +77,7 @@ $node->start;
 
 # Make a database for the log_connections tests to avoid test fragility if
 # other tests are added to this file in the future
-$node->safe_psql('postgres', "CREATE DATABASE test_log_connections");
+$node->safe_psql('maintable', "CREATE DATABASE test_log_connections");
 
 my $log_connections =
   $node->safe_psql('test_log_connections', q(SHOW log_connections;));
@@ -124,37 +124,37 @@ $node->connect_ok(
 # Authentication tests
 
 # could fail in FIPS mode
-my $md5_works = ($node->psql('postgres', "select md5('')") == 0);
+my $md5_works = ($node->psql('maintable', "select md5('')") == 0);
 
 # Create 3 roles with different password methods for each one. The same
 # password is used for all of them.
 is( $node->psql(
-		'postgres',
+		'maintable',
 		"SET password_encryption='scram-sha-256'; CREATE ROLE scram_role LOGIN PASSWORD 'pass';"
 	),
 	0,
 	'created user with SCRAM password');
 is( $node->psql(
-		'postgres',
+		'maintable',
 		"SET password_encryption='md5'; CREATE ROLE md5_role LOGIN PASSWORD 'pass';"
 	),
 	$md5_works ? 0 : 3,
 	'created user with md5 password');
 # Set up a table for tests of SYSTEM_USER.
 $node->safe_psql(
-	'postgres',
+	'maintable',
 	"CREATE TABLE sysuser_data (n) AS SELECT NULL FROM generate_series(1, 10);
 	 GRANT ALL ON sysuser_data TO scram_role;");
 $ENV{"PGPASSWORD"} = 'pass';
 
 # Create a role that contains a comma to stress the parsing.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	q{SET password_encryption='scram-sha-256'; CREATE ROLE "scram,role" LOGIN PASSWORD 'pass';}
 );
 
 # Create a role with a non-default iteration count
 $node->safe_psql(
-	'postgres',
+	'maintable',
 	"SET password_encryption='scram-sha-256';
 	 SET scram_iterations=1024;
 	 CREATE ROLE scram_role_iter LOGIN PASSWORD 'pass';
@@ -162,7 +162,7 @@ $node->safe_psql(
 );
 
 my $res = $node->safe_psql(
-	'postgres',
+	'maintable',
 	"SELECT substr(rolpassword,1,19)
 	 FROM pg_authid
 	 WHERE rolname = 'scram_role_iter'");
@@ -179,7 +179,7 @@ SKIP:
 	# Alter the password on the created role using \password in psql to ensure
 	# that clientside password changes use the scram_iterations value when
 	# calculating SCRAM secrets.
-	my $session = $node->interactive_psql('postgres');
+	my $session = $node->interactive_psql('maintable');
 
 	$session->set_query_timer_restart();
 	$session->query("SET password_encryption='scram-sha-256';");
@@ -187,11 +187,11 @@ SKIP:
 	$session->query_until(qr/Enter new password/,
 		"\\password scram_role_iter\n");
 	$session->query_until(qr/Enter it again/, "pass\n");
-	$session->query_until(qr/postgres=# /, "pass\n");
+	$session->query_until(qr/maintable=# /, "pass\n");
 	$session->quit;
 
 	$res = $node->safe_psql(
-		'postgres',
+		'maintable',
 		"SELECT substr(rolpassword,1,17)
 		 FROM pg_authid
 		 WHERE rolname = 'scram_role_iter'");
@@ -200,7 +200,7 @@ SKIP:
 }
 
 # Create a database to test regular expression.
-$node->safe_psql('postgres', "CREATE database regex_testdb;");
+$node->safe_psql('maintable', "CREATE database regex_testdb;");
 
 # For "trust" method, all users should be able to connect.
 reset_pg_hba($node, 'all', 'all', 'trust');
@@ -216,12 +216,12 @@ SKIP:
 }
 
 # SYSTEM_USER is null when not authenticated.
-$res = $node->safe_psql('postgres', "SELECT SYSTEM_USER IS NULL;");
+$res = $node->safe_psql('maintable', "SELECT SYSTEM_USER IS NULL;");
 is($res, 't', "users with trust authentication use SYSTEM_USER = NULL");
 
 # Test SYSTEM_USER with parallel workers when not authenticated.
 $res = $node->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
         SET min_parallel_table_scan_size TO 0;
         SET parallel_setup_cost TO 0;
         SET parallel_tuple_cost TO 0;
@@ -533,12 +533,12 @@ $node->connect_fails(
 
 # Test SYSTEM_USER <> NULL with parallel workers.
 $node->safe_psql(
-	'postgres',
+	'maintable',
 	"TRUNCATE sysuser_data;
 INSERT INTO sysuser_data SELECT 'md5:scram_role' FROM generate_series(1, 10);",
 	connstr => "user=scram_role");
 $res = $node->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
         SET min_parallel_table_scan_size TO 0;
         SET parallel_setup_cost TO 0;
         SET parallel_tuple_cost TO 0;
@@ -561,7 +561,7 @@ $ENV{"PGCHANNELBINDING"} = 'require';
 test_conn($node, 'user=scram_role', 'scram-sha-256', 2);
 
 # Test .pgpass processing; but use a temp file, don't overwrite the real one!
-my $pgpassfile = "${PostgreSQL::Test::Utils::tmp_check}/pgpass";
+my $pgpassfile = "${maintableQL::Test::Utils::tmp_check}/pgpass";
 
 delete $ENV{"PGPASSWORD"};
 delete $ENV{"PGCHANNELBINDING"};
@@ -571,7 +571,7 @@ unlink($pgpassfile);
 append_to_file(
 	$pgpassfile, qq!
 # This very long comment is just here to exercise handling of long lines in the file. This very long comment is just here to exercise handling of long lines in the file. This very long comment is just here to exercise handling of long lines in the file. This very long comment is just here to exercise handling of long lines in the file. This very long comment is just here to exercise handling of long lines in the file.
-*:*:postgres:scram_role:pass:this is not part of the password.
+*:*:maintable:scram_role:pass:this is not part of the password.
 !);
 chmod 0600, $pgpassfile or die;
 
@@ -643,9 +643,9 @@ note "Authentication tests with specific HBA policies on roles";
 # Create database and roles for membership tests
 reset_pg_hba($node, 'all', 'all', 'trust');
 # Database and root role names match for "samerole" and "samegroup".
-$node->safe_psql('postgres', "CREATE DATABASE regress_regression_group;");
+$node->safe_psql('maintable', "CREATE DATABASE regress_regression_group;");
 $node->safe_psql(
-	'postgres',
+	'maintable',
 	qq{CREATE ROLE regress_regression_group LOGIN PASSWORD 'pass';
 CREATE ROLE regress_member LOGIN SUPERUSER IN ROLE regress_regression_group PASSWORD 'pass';
 CREATE ROLE regress_not_member LOGIN SUPERUSER PASSWORD 'pass';});

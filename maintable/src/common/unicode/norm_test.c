@@ -2,14 +2,14 @@
  * norm_test.c
  *		Program to test Unicode normalization functions.
  *
- * Portions Copyright (c) 2017-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2017-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/common/unicode/norm_test.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <stdio.h>
 #include <stdlib.h>

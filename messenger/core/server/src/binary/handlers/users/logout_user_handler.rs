@@ -23,23 +23,23 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::logout_user::LogoutUser;
+use messenger_common::MessengerError;
+use messenger_common::logout_user::LogoutUser;
 use tracing::{debug, instrument};
 
 impl ServerCommandHandler for LogoutUser {
     fn code(&self) -> u32 {
-        iggy_common::LOGOUT_USER_CODE
+        messenger_common::LOGOUT_USER_CODE
     }
 
-    #[instrument(skip_all, name = "trace_logout_user", fields(iggy_user_id = session.get_user_id(), iggy_client_id = session.client_id))]
+    #[instrument(skip_all, name = "trace_logout_user", fields(messenger_user_id = session.get_user_id(), messenger_client_id = session.client_id))]
     async fn handle(
         self,
         sender: &mut SenderKind,
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
         let system = system.read().await;
         system
@@ -55,13 +55,13 @@ impl ServerCommandHandler for LogoutUser {
 }
 
 impl BinaryServerCommand for LogoutUser {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::LogoutUser(logout_user) => Ok(logout_user),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

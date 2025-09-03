@@ -1,12 +1,12 @@
-# Georgian message translation file for postgres
-# Copyright (C) 2023 PostgreSQL Global Development Group
-# This file is distributed under the same license as the postgres (PostgreSQL) package.
+# Georgian message translation file for maintable
+# Copyright (C) 2023 maintableQL Global Development Group
+# This file is distributed under the same license as the maintable (maintableQL) package.
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022-2025.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: postgres (PostgreSQL) 18\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintable (maintableQL) 18\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-04-18 10:14+0000\n"
 "PO-Revision-Date: 2025-04-19 04:44+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -109,11 +109,11 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "ბაიტების მიმდევრობის შესაძლო შეუსაბამობა pg_control ფაილის შესანახად გამოყენებული \n"
 "ბაიტების მიმდევრობა შესაძლოა არ ემთხვეოდეს ამ პროგრამის მიერ გამოყენებულს. ამ შემთხვევაში  ქვემოთ \n"
-"მოცემული შედეგები არასწორი იქნება და PostgreSQL ეს აგება ამ მონაცემთა საქაღალდესთან შეუთავსებელი იქნება."
+"მოცემული შედეგები არასწორი იქნება და maintableQL ეს აგება ამ მონაცემთა საქაღალდესთან შეუთავსებელი იქნება."
 
 #: ../common/controldata_utils.c:225 ../common/controldata_utils.c:230 ../common/file_utils.c:69 ../common/file_utils.c:370 ../common/file_utils.c:428 ../common/file_utils.c:502 access/heap/rewriteheap.c:1229 access/transam/timeline.c:111 access/transam/timeline.c:251 access/transam/timeline.c:348 access/transam/twophase.c:1309 access/transam/xlog.c:3357 access/transam/xlog.c:3537 access/transam/xlog.c:3576 access/transam/xlog.c:3769 access/transam/xlog.c:4502
 #: access/transam/xlogrecovery.c:4285 access/transam/xlogrecovery.c:4386 access/transam/xlogutils.c:825 backup/basebackup.c:549 backup/basebackup.c:1600 backup/walsummary.c:220 libpq/hba.c:626 postmaster/syslogger.c:1512 replication/logical/origin.c:735 replication/logical/reorderbuffer.c:3889 replication/logical/reorderbuffer.c:4443 replication/logical/reorderbuffer.c:5216 replication/logical/snapbuild.c:1643 replication/logical/snapbuild.c:1755
@@ -884,7 +884,7 @@ msgstr "ინდექსის სვეტების რაოდენო�
 msgid "index row requires %zu bytes, maximum size is %zu"
 msgstr "ინდექსის მწკრივი მოითხოვს %zu ბაიტს, მაქსიმალური ზომა %zu"
 
-#: access/common/printtup.c:292 commands/explain_dr.c:94 tcop/fastpath.c:106 tcop/fastpath.c:453 tcop/postgres.c:1951
+#: access/common/printtup.c:292 commands/explain_dr.c:94 tcop/fastpath.c:106 tcop/fastpath.c:453 tcop/maintable.c:1951
 #, c-format
 msgid "unsupported format code: %d"
 msgstr "ფორმატის მხარდაუჭერელი კოდი: %d"
@@ -1049,8 +1049,8 @@ msgstr "ინდექსი (\"%s\") შეიცავს შიდა კო
 
 #: access/gist/gist.c:767 access/gist/gistvacuum.c:464
 #, c-format
-msgid "This is caused by an incomplete page split at crash recovery before upgrading to PostgreSQL 9.1."
-msgstr "გამოწვეულია ავარიის აღდგენისას გვერდის არასწორი დაყოფისგან, PostgreSQL 9.1-მდე განახლებამდე."
+msgid "This is caused by an incomplete page split at crash recovery before upgrading to maintableQL 9.1."
+msgstr "გამოწვეულია ავარიის აღდგენისას გვერდის არასწორი დაყოფისგან, maintableQL 9.1-მდე განახლებამდე."
 
 #: access/gist/gist.c:768 access/gist/gistutil.c:801 access/gist/gistutil.c:812 access/gist/gistvacuum.c:465 access/hash/hashutil.c:226 access/hash/hashutil.c:237 access/hash/hashutil.c:249 access/hash/hashutil.c:270 access/nbtree/nbtpage.c:813 access/nbtree/nbtpage.c:824
 #, c-format
@@ -2354,12 +2354,12 @@ msgstr[1] "არასწორი WAL სეგმენტის ზომა
 msgid "\"%s\" must be at least twice \"%s\""
 msgstr "\"%s\", სულ ცოტა, ორჯერ მეტი უნდა იყოს \"%s\"-ზე"
 
-#: access/transam/xlog.c:4868 catalog/namespace.c:4696 commands/tablespace.c:1210 commands/user.c:2542 commands/variable.c:72 replication/slot.c:2655 tcop/postgres.c:3631 utils/error/elog.c:2274
+#: access/transam/xlog.c:4868 catalog/namespace.c:4696 commands/tablespace.c:1210 commands/user.c:2542 commands/variable.c:72 replication/slot.c:2655 tcop/maintable.c:3631 utils/error/elog.c:2274
 #, c-format
 msgid "List syntax is invalid."
 msgstr "სია სინტაქსი არასწორია."
 
-#: access/transam/xlog.c:4914 commands/user.c:2558 commands/variable.c:173 tcop/postgres.c:3647 utils/error/elog.c:2300
+#: access/transam/xlog.c:4914 commands/user.c:2558 commands/variable.c:173 tcop/maintable.c:3647 utils/error/elog.c:2300
 #, c-format
 msgid "Unrecognized key word: \"%s\"."
 msgstr "უცნობი საკვანძო სიტყვა: \"%s\"."
@@ -2646,7 +2646,7 @@ msgstr "\"restore_command\"-მა ნულოვანი სტატუს�
 msgid "could not restore file \"%s\" from archive: %s"
 msgstr "ფაილის (\"%s\") არქივიდან (\"%s\") აღდგენა შეუძლებელია"
 
-#. translator: First %s represents a postgresql.conf parameter name like
+#. translator: First %s represents a maintableql.conf parameter name like
 #. "recovery_end_command", the 2nd is the value of that parameter, the
 #. third an already translated error message.
 #: access/transam/xlogarchive.c:346
@@ -3730,17 +3730,17 @@ msgstr "long-distance რეჟიმი ვერ ჩავრთე: %s"
 msgid "invalid timeline %<PRId64>"
 msgstr "არასწორი დროის ხაზი %<PRId64>"
 
-#: bootstrap/bootstrap.c:239 postmaster/postmaster.c:626 tcop/postgres.c:3863
+#: bootstrap/bootstrap.c:239 postmaster/postmaster.c:626 tcop/maintable.c:3863
 #, c-format
 msgid "--%s must be first argument"
 msgstr "--%s პირველი არგუმენტი უნდა იყოს"
 
-#: bootstrap/bootstrap.c:253 postmaster/postmaster.c:640 tcop/postgres.c:3877
+#: bootstrap/bootstrap.c:253 postmaster/postmaster.c:640 tcop/maintable.c:3877
 #, c-format
 msgid "--%s requires a value"
 msgstr "--%s მნიშვნელობა სჭირდება"
 
-#: bootstrap/bootstrap.c:258 postmaster/postmaster.c:645 tcop/postgres.c:3882
+#: bootstrap/bootstrap.c:258 postmaster/postmaster.c:645 tcop/maintable.c:3882
 #, c-format
 msgid "-c %s requires a value"
 msgstr "-c %s მნიშვნელობა სჭირდება"
@@ -6963,8 +6963,8 @@ msgstr "ნაგულისხმევი გადაყვანის ფ�
 
 #: commands/copyfrom.c:1882
 #, c-format
-msgid "COPY FROM instructs the PostgreSQL server process to read a file. You may want a client-side facility such as psql's \\copy."
-msgstr "ინსტრუქცია 'COPY TO' PostgreSQL-ის სერვერის პროცესს ფაილიდან წაკითხვას უბრძანებს. შეიძლება გნებავთ კლიენტის მხარე, როგორიცაა psql-ის \\copy."
+msgid "COPY FROM instructs the maintableQL server process to read a file. You may want a client-side facility such as psql's \\copy."
+msgstr "ინსტრუქცია 'COPY TO' maintableQL-ის სერვერის პროცესს ფაილიდან წაკითხვას უბრძანებს. შეიძლება გნებავთ კლიენტის მხარე, როგორიცაა psql-ის \\copy."
 
 #: commands/copyfrom.c:1895 commands/copyto.c:986
 #, c-format
@@ -7016,7 +7016,7 @@ msgstr "\"COPY\"-ის ფაილის არასწორი თავს
 msgid "could not read from COPY file: %m"
 msgstr "\"COPY\" ფაილიდან წაკითხვის შეცდომა: %m"
 
-#: commands/copyfromparse.c:278 commands/copyfromparse.c:303 replication/walsender.c:732 replication/walsender.c:758 tcop/postgres.c:369
+#: commands/copyfromparse.c:278 commands/copyfromparse.c:303 replication/walsender.c:732 replication/walsender.c:758 tcop/maintable.c:369
 #, c-format
 msgid "unexpected EOF on client connection with an open transaction"
 msgstr "მოულოდნელი EOF ღია ტრანზაქციის მქონე კლიენტის შეერთებაზე"
@@ -7258,8 +7258,8 @@ msgstr "ფაილის (\"%s\") ჩასაწერად გახსნ�
 
 #: commands/copyto.c:973
 #, c-format
-msgid "COPY TO instructs the PostgreSQL server process to write a file. You may want a client-side facility such as psql's \\copy."
-msgstr "ინსტრუქცია 'COPY TO' PostgreSQL-ის სერვერის პროცესს ფაილში ჩაწერას უბრძანებს. შეიძლება გნებავთ კლიენტის მხარე, როგორიცაა psql-ის \\copy."
+msgid "COPY TO instructs the maintableQL server process to write a file. You may want a client-side facility such as psql's \\copy."
+msgstr "ინსტრუქცია 'COPY TO' maintableQL-ის სერვერის პროცესს ფაილში ჩაწერას უბრძანებს. შეიძლება გნებავთ კლიენტის მხარე, როგორიცაა psql-ის \\copy."
 
 #: commands/createas.c:212 commands/createas.c:524
 #, c-format
@@ -7463,8 +7463,8 @@ msgstr "ნიმუში ბაზა შეიქმნა კოლაცი
 
 #: commands/dbcommands.c:1267
 #, c-format
-msgid "Rebuild all objects in the template database that use the default collation and run ALTER DATABASE %s REFRESH COLLATION VERSION, or build PostgreSQL with the right library version."
-msgstr "სანიმუშე ბაზაში ყველა ობიექტი, რომლებიც ნაგულისხმევ კოლაციას იყენებს, თავიან ააგეთ და გაუშვით ALTER DATABASE %s REFRESH COLLATION VERSION, ან PostgreSQL სწორი ბიბლიოთეკის ვერსიით ააგეთ."
+msgid "Rebuild all objects in the template database that use the default collation and run ALTER DATABASE %s REFRESH COLLATION VERSION, or build maintableQL with the right library version."
+msgstr "სანიმუშე ბაზაში ყველა ობიექტი, რომლებიც ნაგულისხმევ კოლაციას იყენებს, თავიან ააგეთ და გაუშვით ALTER DATABASE %s REFRESH COLLATION VERSION, ან maintableQL სწორი ბიბლიოთეკის ვერსიით ააგეთ."
 
 #: commands/dbcommands.c:1312 commands/dbcommands.c:2055
 #, c-format
@@ -7987,8 +7987,8 @@ msgstr "გაფართოება \"%s\" ხელმიუწვდომ�
 
 #: commands/extension.c:550
 #, c-format
-msgid "The extension must first be installed on the system where PostgreSQL is running."
-msgstr "ჯერ გაფართოება უნდა დააყენოთ სისტემაზე, სადაც PostgreSQL-ია გაშვებული."
+msgid "The extension must first be installed on the system where maintableQL is running."
+msgstr "ჯერ გაფართოება უნდა დააყენოთ სისტემაზე, სადაც maintableQL-ია გაშვებული."
 
 #: commands/extension.c:564
 #, c-format
@@ -13097,8 +13097,8 @@ msgstr "დროის სარტყელი \"%s\", როგორც ჩ�
 
 #: commands/variable.c:353 commands/variable.c:437
 #, c-format
-msgid "PostgreSQL does not support leap seconds."
-msgstr "PostgreSQL-ს დამატებითი წამების მხარდაჭერა არ გააჩნია."
+msgid "maintableQL does not support leap seconds."
+msgstr "maintableQL-ს დამატებითი წამების მხარდაჭერა არ გააჩნია."
 
 #: commands/variable.c:362
 #, c-format
@@ -15890,12 +15890,12 @@ msgstr "მიმდინარეობს MD5-ით დაშიფრულ
 
 #: libpq/crypt.c:184
 #, c-format
-msgid "MD5 password support is deprecated and will be removed in a future release of PostgreSQL."
+msgid "MD5 password support is deprecated and will be removed in a future release of maintableQL."
 msgstr ""
 
 #: libpq/crypt.c:185
 #, c-format
-msgid "Refer to the PostgreSQL documentation for details about migrating to another password type."
+msgid "Refer to the maintableQL documentation for details about migrating to another password type."
 msgstr ""
 
 #: libpq/crypt.c:216
@@ -15971,8 +15971,8 @@ msgstr "hostssl-ის ჩანაწერის დამთხვევა �
 
 #: libpq/hba.c:1387
 #, c-format
-msgid "Set \"ssl = on\" in postgresql.conf."
-msgstr "დააყენეთ \"ssl = on\" postgresql.conf-ში."
+msgid "Set \"ssl = on\" in maintableql.conf."
+msgstr "დააყენეთ \"ssl = on\" maintableql.conf-ში."
 
 #: libpq/hba.c:1395
 #, c-format
@@ -16385,7 +16385,7 @@ msgstr "კლიენტის მიერთება არ არსებ
 msgid "could not receive data from client: %m"
 msgstr "კლიენტიდან მონაცემების მიღების შეცდომა: %m"
 
-#: libpq/pqcomm.c:1151 tcop/postgres.c:4505
+#: libpq/pqcomm.c:1151 tcop/maintable.c:4505
 #, c-format
 msgid "terminating connection because protocol synchronization was lost"
 msgstr "მიერთება შეწყდება, რადგან პროტოკოლის სინქრონიზაცია დაიკარგა"
@@ -16453,10 +16453,10 @@ msgstr "%s: WSAStartup-ის შეცდომა: %d\n"
 #: main/main.c:386
 #, c-format
 msgid ""
-"%s is the PostgreSQL server.\n"
+"%s is the maintableQL server.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL სერვერია.\n"
+"%s maintableQL სერვერია.\n"
 "\n"
 
 #: main/main.c:387
@@ -16692,7 +16692,7 @@ msgstr "%s-ის საწყისი გვერდია: <%s>\n"
 #: main/main.c:448
 #, c-format
 msgid ""
-"\"root\" execution of the PostgreSQL server is not permitted.\n"
+"\"root\" execution of the maintableQL server is not permitted.\n"
 "The server must be started under an unprivileged user ID to prevent\n"
 "possible system security compromise.  See the documentation for\n"
 "more information on how to properly start the server.\n"
@@ -16706,7 +16706,7 @@ msgstr "%s: რეალური და მიმდინარე მომ�
 #: main/main.c:472
 #, c-format
 msgid ""
-"Execution of PostgreSQL by a user with administrative permissions is not\n"
+"Execution of maintableQL by a user with administrative permissions is not\n"
 "permitted.\n"
 "The server must be started under an unprivileged user ID to prevent\n"
 "possible system security compromises.  See the documentation for\n"
@@ -18834,7 +18834,7 @@ msgstr ""
 msgid "inconsistent types deduced for parameter $%d"
 msgstr ""
 
-#: parser/parse_param.c:310 tcop/postgres.c:734
+#: parser/parse_param.c:310 tcop/maintable.c:734
 #, c-format
 msgid "could not determine data type of parameter $%d"
 msgstr "პარამეტრისთვის $%d მონაცემის ტიპის განსაზღვრა შეუძლებელია"
@@ -19550,22 +19550,22 @@ msgstr "შეცდომის მქონე სისტემური ფ
 #: port/pg_shmem.c:229 port/sysv_shmem.c:229
 #, c-format
 msgid ""
-"This error usually means that PostgreSQL's request for a shared memory segment exceeded your kernel's SHMMAX parameter, or possibly that it is less than your kernel's SHMMIN parameter.\n"
-"The PostgreSQL documentation contains more information about shared memory configuration."
+"This error usually means that maintableQL's request for a shared memory segment exceeded your kernel's SHMMAX parameter, or possibly that it is less than your kernel's SHMMIN parameter.\n"
+"The maintableQL documentation contains more information about shared memory configuration."
 msgstr ""
 
 #: port/pg_shmem.c:236 port/sysv_shmem.c:236
 #, c-format
 msgid ""
-"This error usually means that PostgreSQL's request for a shared memory segment exceeded your kernel's SHMALL parameter.  You might need to reconfigure the kernel with larger SHMALL.\n"
-"The PostgreSQL documentation contains more information about shared memory configuration."
+"This error usually means that maintableQL's request for a shared memory segment exceeded your kernel's SHMALL parameter.  You might need to reconfigure the kernel with larger SHMALL.\n"
+"The maintableQL documentation contains more information about shared memory configuration."
 msgstr ""
 
 #: port/pg_shmem.c:242 port/sysv_shmem.c:242
 #, c-format
 msgid ""
 "This error does *not* mean that you have run out of disk space.  It occurs either if all available shared memory IDs have been taken, in which case you need to raise the SHMMNI parameter in your kernel, or because the system's overall limit for shared memory has been reached.\n"
-"The PostgreSQL documentation contains more information about shared memory configuration."
+"The maintableQL documentation contains more information about shared memory configuration."
 msgstr ""
 
 #: port/pg_shmem.c:584 port/sysv_shmem.c:584 port/win32_shmem.c:646
@@ -19580,8 +19580,8 @@ msgstr "ანონიმური გაზიარებული მეხ�
 
 #: port/pg_shmem.c:657 port/sysv_shmem.c:657
 #, c-format
-msgid "This error usually means that PostgreSQL's request for a shared memory segment exceeded available memory, swap space, or huge pages. To reduce the request size (currently %zu bytes), reduce PostgreSQL's shared memory usage, perhaps by reducing \"shared_buffers\" or \"max_connections\"."
-msgstr "ეს შეცდომა ჩვეულებრივ ნიშნავს, რომ PostgreSQL-ის მოთხოვნა გაზიარებული მეხსიერების სეგმენტის გამოსათხოვად ხელმისაწვდომ მეხსიერებაზე, სვოპის ადგილზე ან უზარმაზარ გვერდებზე დიდია. ამ მოთხოვნის ზომის შესამცირებლად შეამცირეთ (ამჟამად %zu ბაიტი) PostgreSQL-ის გაზიარებული მეხსიერების გამოყენება, ალბათ, \"shared_buffers\"-ის ან \"max_connections\"-ის შემცირებით."
+msgid "This error usually means that maintableQL's request for a shared memory segment exceeded available memory, swap space, or huge pages. To reduce the request size (currently %zu bytes), reduce maintableQL's shared memory usage, perhaps by reducing \"shared_buffers\" or \"max_connections\"."
+msgstr "ეს შეცდომა ჩვეულებრივ ნიშნავს, რომ maintableQL-ის მოთხოვნა გაზიარებული მეხსიერების სეგმენტის გამოსათხოვად ხელმისაწვდომ მეხსიერებაზე, სვოპის ადგილზე ან უზარმაზარ გვერდებზე დიდია. ამ მოთხოვნის ზომის შესამცირებლად შეამცირეთ (ამჟამად %zu ბაიტი) maintableQL-ის გაზიარებული მეხსიერების გამოყენება, ალბათ, \"shared_buffers\"-ის ან \"max_connections\"-ის შემცირებით."
 
 #: port/pg_shmem.c:725 port/sysv_shmem.c:725
 #, c-format
@@ -19616,13 +19616,13 @@ msgstr "ავარიული სისტემური ფუნქცი�
 #: port/sysv_sema.c:131
 #, c-format
 msgid ""
-"This error does *not* mean that you have run out of disk space.  It occurs when either the system limit for the maximum number of semaphore sets (SEMMNI), or the system wide maximum number of semaphores (SEMMNS), would be exceeded.  You need to raise the respective kernel parameter.  Alternatively, reduce PostgreSQL's consumption of semaphores by reducing its \"max_connections\" parameter.\n"
-"The PostgreSQL documentation contains more information about configuring your system for PostgreSQL."
+"This error does *not* mean that you have run out of disk space.  It occurs when either the system limit for the maximum number of semaphore sets (SEMMNI), or the system wide maximum number of semaphores (SEMMNS), would be exceeded.  You need to raise the respective kernel parameter.  Alternatively, reduce maintableQL's consumption of semaphores by reducing its \"max_connections\" parameter.\n"
+"The maintableQL documentation contains more information about configuring your system for maintableQL."
 msgstr ""
 
 #: port/sysv_sema.c:161
 #, c-format
-msgid "You possibly need to raise your kernel's SEMVMX value to be at least %d.  Look into the PostgreSQL documentation for details."
+msgid "You possibly need to raise your kernel's SEMVMX value to be at least %d.  Look into the maintableQL documentation for details."
 msgstr ""
 
 #: port/win32/crashdump.c:119
@@ -19704,7 +19704,7 @@ msgstr "მომხმარებლის უფლების ჩართ�
 
 #: port/win32_shmem.c:185
 #, c-format
-msgid "Assign user right \"%s\" to the Windows user account which runs PostgreSQL."
+msgid "Assign user right \"%s\" to the Windows user account which runs maintableQL."
 msgstr ""
 
 #: port/win32_shmem.c:244
@@ -19812,7 +19812,7 @@ msgstr "ფონური დამხმარე პროცესი \"%s\"
 msgid "background worker \"%s\": parallel workers may not be configured for restart"
 msgstr ""
 
-#: postmaster/bgworker.c:709 tcop/postgres.c:3345
+#: postmaster/bgworker.c:709 tcop/maintable.c:3345
 #, c-format
 msgid "terminating background worker \"%s\" due to administrator command"
 msgstr ""
@@ -20129,12 +20129,12 @@ msgstr "%s: ჩემი საკუთარი გამშვები ფ�
 
 #: postmaster/postmaster.c:1475
 #, c-format
-msgid "%s: could not locate matching postgres executable"
-msgstr "%s: გამშვები ფაილი postgres ვერ ვიპოვე"
+msgid "%s: could not locate matching maintable executable"
+msgstr "%s: გამშვები ფაილი maintable ვერ ვიპოვე"
 
 #: postmaster/postmaster.c:1498 utils/misc/tzparser.c:342
 #, c-format
-msgid "This may indicate an incomplete PostgreSQL installation, or that the file \"%s\" has been moved away from its proper location."
+msgid "This may indicate an incomplete maintableQL installation, or that the file \"%s\" has been moved away from its proper location."
 msgstr ""
 
 #: postmaster/postmaster.c:1525
@@ -22089,7 +22089,7 @@ msgstr "ფიზიკური რეპლიკაციისთვის W
 msgid "received replication command: %s"
 msgstr "მიღებულია რეპლიკაციის ბრძანება: %s"
 
-#: replication/walsender.c:2068 tcop/fastpath.c:208 tcop/postgres.c:1137 tcop/postgres.c:1495 tcop/postgres.c:1747 tcop/postgres.c:2253 tcop/postgres.c:2690 tcop/postgres.c:2767
+#: replication/walsender.c:2068 tcop/fastpath.c:208 tcop/maintable.c:1137 tcop/maintable.c:1495 tcop/maintable.c:1747 tcop/maintable.c:2253 tcop/maintable.c:2690 tcop/maintable.c:2767
 #, c-format
 msgid "current transaction is aborted, commands ignored until end of transaction block"
 msgstr ""
@@ -23361,8 +23361,8 @@ msgstr "მოთხოვნილი გაზიარებული მე�
 
 #: storage/ipc/signalfuncs.c:74
 #, c-format
-msgid "PID %d is not a PostgreSQL backend process"
-msgstr "პროცესი PID-ით %d PostgreSQL-ის უკანაბოლოს პროცესს არ წარმოადგენს"
+msgid "PID %d is not a maintableQL backend process"
+msgstr "პროცესი PID-ით %d maintableQL-ის უკანაბოლოს პროცესს არ წარმოადგენს"
 
 #: storage/ipc/signalfuncs.c:123 storage/lmgr/proc.c:1547 utils/adt/mcxtfuncs.c:314 utils/adt/mcxtfuncs.c:412
 #, c-format
@@ -23426,12 +23426,12 @@ msgstr ""
 msgid "recovery finished waiting after %ld.%03d ms: %s"
 msgstr ""
 
-#: storage/ipc/standby.c:921 tcop/postgres.c:3225
+#: storage/ipc/standby.c:921 tcop/maintable.c:3225
 #, c-format
 msgid "canceling statement due to conflict with recovery"
 msgstr "გამოსახულების გაუქმება აღდგენასთან კონფლიქტის გამო"
 
-#: storage/ipc/standby.c:922 tcop/postgres.c:2575
+#: storage/ipc/standby.c:922 tcop/maintable.c:2575
 #, c-format
 msgid "User transaction caused buffer deadlock with recovery."
 msgstr ""
@@ -23965,8 +23965,8 @@ msgstr ""
 
 #: tcop/backend_startup.c:830
 #, c-format
-msgid "no PostgreSQL user name specified in startup packet"
-msgstr "გაშვების პაკეტში PostgreSQL-ის მომხმარებლის სახელი მითითებული არაა"
+msgid "no maintableQL user name specified in startup packet"
+msgstr "გაშვების პაკეტში maintableQL-ის მომხმარებლის სახელი მითითებული არაა"
 
 #: tcop/backend_startup.c:884
 #, c-format
@@ -24003,7 +24003,7 @@ msgstr ""
 msgid "fastpath function call: \"%s\" (OID %u)"
 msgstr ""
 
-#: tcop/fastpath.c:312 tcop/postgres.c:1364 tcop/postgres.c:1600 tcop/postgres.c:2079 tcop/postgres.c:2351
+#: tcop/fastpath.c:312 tcop/maintable.c:1364 tcop/maintable.c:1600 tcop/maintable.c:2079 tcop/maintable.c:2351
 #, c-format
 msgid "duration: %s ms"
 msgstr "ხანგრძლივობა: %s მწმ"
@@ -24033,315 +24033,315 @@ msgstr ""
 msgid "incorrect binary data format in function argument %d"
 msgstr ""
 
-#: tcop/postgres.c:455 tcop/postgres.c:5023
+#: tcop/maintable.c:455 tcop/maintable.c:5023
 #, c-format
 msgid "invalid frontend message type %d"
 msgstr "არასწორი წინაბოლოს შეტყობინების ტიპი %d"
 
-#: tcop/postgres.c:1070
+#: tcop/maintable.c:1070
 #, c-format
 msgid "statement: %s"
 msgstr "ოპერატორი: %s"
 
-#: tcop/postgres.c:1369
+#: tcop/maintable.c:1369
 #, c-format
 msgid "duration: %s ms  statement: %s"
 msgstr "ხანგრძლივობა: %s მწმ  გამოსახულება: %s"
 
-#: tcop/postgres.c:1475
+#: tcop/maintable.c:1475
 #, c-format
 msgid "cannot insert multiple commands into a prepared statement"
 msgstr ""
 
-#: tcop/postgres.c:1605
+#: tcop/maintable.c:1605
 #, c-format
 msgid "duration: %s ms  parse %s: %s"
 msgstr "ხანგრძლივობა: %s მწმ  %s-ის დამუშავება: %s"
 
-#: tcop/postgres.c:1672 tcop/postgres.c:2671
+#: tcop/maintable.c:1672 tcop/maintable.c:2671
 #, c-format
 msgid "unnamed prepared statement does not exist"
 msgstr ""
 
-#: tcop/postgres.c:1724
+#: tcop/maintable.c:1724
 #, c-format
 msgid "bind message has %d parameter formats but %d parameters"
 msgstr ""
 
-#: tcop/postgres.c:1730
+#: tcop/maintable.c:1730
 #, c-format
 msgid "bind message supplies %d parameters, but prepared statement \"%s\" requires %d"
 msgstr ""
 
-#: tcop/postgres.c:1944
+#: tcop/maintable.c:1944
 #, c-format
 msgid "incorrect binary data format in bind parameter %d"
 msgstr ""
 
-#: tcop/postgres.c:2084
+#: tcop/maintable.c:2084
 #, c-format
 msgid "duration: %s ms  bind %s%s%s: %s"
 msgstr "ხანგრძლივობა: %s მწმ  მიბმა %s%s%s: %s"
 
-#: tcop/postgres.c:2139 tcop/postgres.c:2753
+#: tcop/maintable.c:2139 tcop/maintable.c:2753
 #, c-format
 msgid "portal \"%s\" does not exist"
 msgstr "პორტალი \"%s\" არ არსებობს"
 
-#: tcop/postgres.c:2232
+#: tcop/maintable.c:2232
 #, c-format
 msgid "%s %s%s%s: %s"
 msgstr "%s %s%s%s: %s"
 
-#: tcop/postgres.c:2234 tcop/postgres.c:2359
+#: tcop/maintable.c:2234 tcop/maintable.c:2359
 msgid "execute fetch from"
 msgstr ""
 
-#: tcop/postgres.c:2235 tcop/postgres.c:2360
+#: tcop/maintable.c:2235 tcop/maintable.c:2360
 msgid "execute"
 msgstr "გაშვება"
 
-#: tcop/postgres.c:2356
+#: tcop/maintable.c:2356
 #, c-format
 msgid "duration: %s ms  %s %s%s%s: %s"
 msgstr "ხანგრძლივობა: %s მწმs  %s %s%s%s: %s"
 
-#: tcop/postgres.c:2504
+#: tcop/maintable.c:2504
 #, c-format
 msgid "prepare: %s"
 msgstr "მომზადება: %s"
 
-#: tcop/postgres.c:2529
+#: tcop/maintable.c:2529
 #, c-format
 msgid "Parameters: %s"
 msgstr "პარამეტრები: %s"
 
-#: tcop/postgres.c:2544
+#: tcop/maintable.c:2544
 #, c-format
 msgid "Abort reason: recovery conflict"
 msgstr "გაუქმების მიზეზი: აღდგენის კონფლიქტი"
 
-#: tcop/postgres.c:2560
+#: tcop/maintable.c:2560
 #, c-format
 msgid "User was holding shared buffer pin for too long."
 msgstr ""
 
-#: tcop/postgres.c:2563
+#: tcop/maintable.c:2563
 #, c-format
 msgid "User was holding a relation lock for too long."
 msgstr ""
 
-#: tcop/postgres.c:2566
+#: tcop/maintable.c:2566
 #, c-format
 msgid "User was or might have been using tablespace that must be dropped."
 msgstr ""
 
-#: tcop/postgres.c:2569
+#: tcop/maintable.c:2569
 #, c-format
 msgid "User query might have needed to see row versions that must be removed."
 msgstr ""
 
-#: tcop/postgres.c:2572
+#: tcop/maintable.c:2572
 #, c-format
 msgid "User was using a logical replication slot that must be invalidated."
 msgstr ""
 
-#: tcop/postgres.c:2578
+#: tcop/maintable.c:2578
 #, c-format
 msgid "User was connected to a database that must be dropped."
 msgstr ""
 
-#: tcop/postgres.c:2617
+#: tcop/maintable.c:2617
 #, c-format
 msgid "portal \"%s\" parameter $%d = %s"
 msgstr "პორტალის \"%s\" პარამეტრი $%d = %s"
 
-#: tcop/postgres.c:2620
+#: tcop/maintable.c:2620
 #, c-format
 msgid "portal \"%s\" parameter $%d"
 msgstr "პორტალის \"%s\" პარამეტრი $%d"
 
-#: tcop/postgres.c:2626
+#: tcop/maintable.c:2626
 #, c-format
 msgid "unnamed portal parameter $%d = %s"
 msgstr "უსახელო პორტალის პარამეტრი $%d = %s"
 
-#: tcop/postgres.c:2629
+#: tcop/maintable.c:2629
 #, c-format
 msgid "unnamed portal parameter $%d"
 msgstr "უსახელო პორტალის პარამეტრი $%d"
 
-#: tcop/postgres.c:2984
+#: tcop/maintable.c:2984
 #, c-format
 msgid "terminating connection because of unexpected SIGQUIT signal"
 msgstr ""
 
-#: tcop/postgres.c:2990
+#: tcop/maintable.c:2990
 #, c-format
 msgid "terminating connection because of crash of another server process"
 msgstr ""
 
-#: tcop/postgres.c:2991
+#: tcop/maintable.c:2991
 #, c-format
 msgid "The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory."
 msgstr ""
 
-#: tcop/postgres.c:2995 tcop/postgres.c:3248
+#: tcop/maintable.c:2995 tcop/maintable.c:3248
 #, c-format
 msgid "In a moment you should be able to reconnect to the database and repeat your command."
 msgstr ""
 
-#: tcop/postgres.c:3002
+#: tcop/maintable.c:3002
 #, c-format
 msgid "terminating connection due to immediate shutdown command"
 msgstr "მიერთების შეწყვეტა დაუყოვნებლივი გამორთვის ბრძანების გამო"
 
-#: tcop/postgres.c:3080
+#: tcop/maintable.c:3080
 #, c-format
 msgid "floating-point exception"
 msgstr "წილადი რიცხვების ანგარიშის შეცდომა"
 
-#: tcop/postgres.c:3081
+#: tcop/maintable.c:3081
 #, c-format
 msgid "An invalid floating-point operation was signaled. This probably means an out-of-range result or an invalid operation, such as division by zero."
 msgstr ""
 
-#: tcop/postgres.c:3246
+#: tcop/maintable.c:3246
 #, c-format
 msgid "terminating connection due to conflict with recovery"
 msgstr "მიერთების შეწყვეტა აღდგენასთან კონფლიქტის გამო"
 
-#: tcop/postgres.c:3318
+#: tcop/maintable.c:3318
 #, c-format
 msgid "canceling authentication due to timeout"
 msgstr "ავთენტიკაცია გაუქმდა მოლოდინის ვადის ამოწურვის გამო"
 
-#: tcop/postgres.c:3322
+#: tcop/maintable.c:3322
 #, c-format
 msgid "terminating autovacuum process due to administrator command"
 msgstr "ავტომომტვერსასრუტების პროცესის შეწყვეტა ადმინისტრატორის ბრძანების გამო"
 
-#: tcop/postgres.c:3326
+#: tcop/maintable.c:3326
 #, c-format
 msgid "terminating logical replication worker due to administrator command"
 msgstr "ლოგიკური რეპლიკაციის დამხმარე პროცესის შეწყვეტა ადმინისტრატორის ბრძანების გამო"
 
-#: tcop/postgres.c:3341
+#: tcop/maintable.c:3341
 #, c-format
 msgid "terminating walreceiver process due to administrator command"
 msgstr "walreceiver პროგრამის შეწყვეტა ადმინისტრატორის ბრძანების გამო"
 
-#: tcop/postgres.c:3357
+#: tcop/maintable.c:3357
 #, c-format
 msgid "terminating connection due to administrator command"
 msgstr "მიერთების შეწყვეტა ადმინისტრატორის ბრძანების გამო"
 
-#: tcop/postgres.c:3388
+#: tcop/maintable.c:3388
 #, c-format
 msgid "connection to client lost"
 msgstr "კლიენტთან შეერთების შეცდომა"
 
-#: tcop/postgres.c:3440
+#: tcop/maintable.c:3440
 #, c-format
 msgid "canceling statement due to lock timeout"
 msgstr "გამოსახულება გაუქმდება ბლოკის მოლოდინის ვადის ამოწურვის გამო"
 
-#: tcop/postgres.c:3447
+#: tcop/maintable.c:3447
 #, c-format
 msgid "canceling statement due to statement timeout"
 msgstr ""
 
-#: tcop/postgres.c:3454
+#: tcop/maintable.c:3454
 #, c-format
 msgid "canceling autovacuum task"
 msgstr "ავტომომტვერსასრუტების ამოცანის გაუქმება"
 
-#: tcop/postgres.c:3467
+#: tcop/maintable.c:3467
 #, c-format
 msgid "canceling statement due to user request"
 msgstr ""
 
-#: tcop/postgres.c:3488
+#: tcop/maintable.c:3488
 #, c-format
 msgid "terminating connection due to idle-in-transaction timeout"
 msgstr ""
 
-#: tcop/postgres.c:3501
+#: tcop/maintable.c:3501
 #, c-format
 msgid "terminating connection due to transaction timeout"
 msgstr "მიერთების შეწყვეტა ტრანზაქციის მოლოდინის ვადის ამოწურვის გამო"
 
-#: tcop/postgres.c:3514
+#: tcop/maintable.c:3514
 #, c-format
 msgid "terminating connection due to idle-session timeout"
 msgstr ""
 
-#: tcop/postgres.c:3553
+#: tcop/maintable.c:3553
 #, c-format
 msgid "\"client_connection_check_interval\" must be set to 0 on this platform."
 msgstr "ამ პლატფორმაზე \"client_connection_check_interval\" 0 უნდა იყოს."
 
-#: tcop/postgres.c:3574
+#: tcop/maintable.c:3574
 #, c-format
 msgid "Cannot enable parameter when \"log_statement_stats\" is true."
 msgstr "პარამეტრის ჩართვა მაშინ, როცა \"log_statement_stats\" ჩართულია, შეუძლებელია."
 
-#: tcop/postgres.c:3589
+#: tcop/maintable.c:3589
 #, c-format
 msgid "Cannot enable \"log_statement_stats\" when \"log_parser_stats\", \"log_planner_stats\", or \"log_executor_stats\" is true."
 msgstr "ვერ ჩართავთ \"log_statement_stats\"-ს, როცა \"when log_parser_stats\", \"log_planner_stats\", ან \"log_executor_stats\" ჭეშმარიტია."
 
-#: tcop/postgres.c:4029
+#: tcop/maintable.c:4029
 #, c-format
 msgid "invalid command-line argument for server process: %s"
 msgstr ""
 
-#: tcop/postgres.c:4030 tcop/postgres.c:4036
+#: tcop/maintable.c:4030 tcop/maintable.c:4036
 #, c-format
 msgid "Try \"%s --help\" for more information."
 msgstr "მეტი ინფორმაციისთვის სცადეთ '%s --help'."
 
-#: tcop/postgres.c:4034
+#: tcop/maintable.c:4034
 #, c-format
 msgid "%s: invalid command-line argument: %s"
 msgstr "%s: არასწორი ბრძანების სტრიქონის არგუმენტი: %s"
 
-#: tcop/postgres.c:4087
+#: tcop/maintable.c:4087
 #, c-format
 msgid "%s: no database nor user name specified"
 msgstr "%s: არც ბაზა, არც მომხმარებელი მითითებული არაა"
 
-#: tcop/postgres.c:4280
+#: tcop/maintable.c:4280
 #, c-format
 msgid "could not generate random cancel key"
 msgstr "შემთხვევითი გაუქმების გასაღების გენერაცია შეუძლებელია"
 
-#: tcop/postgres.c:4682
+#: tcop/maintable.c:4682
 #, c-format
 msgid "connection ready: setup total=%.3f ms, fork=%.3f ms, authentication=%.3f ms"
 msgstr ""
 
-#: tcop/postgres.c:4913
+#: tcop/maintable.c:4913
 #, c-format
 msgid "invalid CLOSE message subtype %d"
 msgstr "არასწორი CLOSE შეტყობინების ქვეტიპი %d"
 
-#: tcop/postgres.c:4950
+#: tcop/maintable.c:4950
 #, c-format
 msgid "invalid DESCRIBE message subtype %d"
 msgstr "არასწორი DESCRIBE შეტყობინების ქვეტიპი %d"
 
-#: tcop/postgres.c:5044
+#: tcop/maintable.c:5044
 #, c-format
 msgid "fastpath function calls not supported in a replication connection"
 msgstr ""
 
-#: tcop/postgres.c:5048
+#: tcop/maintable.c:5048
 #, c-format
 msgid "extended query protocol not supported in a replication connection"
 msgstr ""
 
-#: tcop/postgres.c:5194
+#: tcop/maintable.c:5194
 #, c-format
 msgid "disconnection: session time: %d:%02d:%02d.%03d user=%s database=%s host=%s%s%s"
 msgstr ""
@@ -26511,13 +26511,13 @@ msgstr ""
 
 #: utils/adt/mcxtfuncs.c:305 utils/adt/mcxtfuncs.c:391
 #, c-format
-msgid "PID %d is not a PostgreSQL server process"
-msgstr "პროცესი PID-ით %d PostgreSQL-ის სერვერის პროცესს არ წარმოადგენს"
+msgid "PID %d is not a maintableQL server process"
+msgstr "პროცესი PID-ით %d maintableQL-ის სერვერის პროცესს არ წარმოადგენს"
 
 #: utils/adt/mcxtfuncs.c:480
 #, c-format
-msgid "PID %d is no longer a PostgreSQL server process"
-msgstr "პროცესი PID-ით %d PostgreSQL-ის სერვერის პროცესს აღარ წარმოადგენს"
+msgid "PID %d is no longer a maintableQL server process"
+msgstr "პროცესი PID-ით %d maintableQL-ის სერვერის პროცესს აღარ წარმოადგენს"
 
 #: utils/adt/misc.c:237
 #, c-format
@@ -26873,7 +26873,7 @@ msgstr ""
 
 #: utils/adt/pg_locale.c:1130
 #, c-format
-msgid "Rebuild all objects affected by this collation and run ALTER COLLATION %s REFRESH VERSION, or build PostgreSQL with the right library version."
+msgid "Rebuild all objects affected by this collation and run ALTER COLLATION %s REFRESH VERSION, or build maintableQL with the right library version."
 msgstr ""
 
 #: utils/adt/pg_locale.c:1483 utils/adt/pg_locale.c:1510 utils/adt/pg_locale_builtin.c:186
@@ -27920,7 +27920,7 @@ msgstr "\"XML\" შეცდომების დამმუშავებლ
 
 #: utils/adt/xml.c:1255
 #, c-format
-msgid "This probably indicates that the version of libxml2 being used is not compatible with the libxml2 header files that PostgreSQL was built with."
+msgid "This probably indicates that the version of libxml2 being used is not compatible with the libxml2 header files that maintableQL was built with."
 msgstr ""
 
 #: utils/adt/xml.c:2281
@@ -28511,8 +28511,8 @@ msgstr "ბლოკის ფაილი (\"%s\") უკვე არსებ
 
 #: utils/init/miscinit.c:1363
 #, c-format
-msgid "Is another postgres (PID %d) running in data directory \"%s\"?"
-msgstr "არის სხვა postgres (PID %d) გაშვებული მონაცემების საქაღალდეში \"%s\"?"
+msgid "Is another maintable (PID %d) running in data directory \"%s\"?"
+msgstr "არის სხვა maintable (PID %d) გაშვებული მონაცემების საქაღალდეში \"%s\"?"
 
 #: utils/init/miscinit.c:1365
 #, c-format
@@ -28521,8 +28521,8 @@ msgstr "არის სხვა postmaster (PID %d) გაშვებულ�
 
 #: utils/init/miscinit.c:1368
 #, c-format
-msgid "Is another postgres (PID %d) using socket file \"%s\"?"
-msgstr "იყენებს სხვა postgres (PID %d) სოკეტის ფაილს \"%s\"?"
+msgid "Is another maintable (PID %d) using socket file \"%s\"?"
+msgstr "იყენებს სხვა maintable (PID %d) სოკეტის ფაილს \"%s\"?"
 
 #: utils/init/miscinit.c:1370
 #, c-format
@@ -28581,8 +28581,8 @@ msgstr "როგორც ჩანს, initdb გჭირდებათ."
 
 #: utils/init/miscinit.c:1818
 #, c-format
-msgid "The data directory was initialized by PostgreSQL version %s, which is not compatible with this version %s."
-msgstr "მონაცემის საქაღალდე ინიციალიზებული იყო PostgreSQL-ის %s ვერსიით, რომელიც ამ ვერსიასთან, %s, თავსებადი არაა."
+msgid "The data directory was initialized by maintableQL version %s, which is not compatible with this version %s."
+msgstr "მონაცემის საქაღალდე ინიციალიზებული იყო maintableQL-ის %s ვერსიით, რომელიც ამ ვერსიასთან, %s, თავსებადი არაა."
 
 #: utils/init/postinit.c:269
 #, c-format
@@ -28689,7 +28689,7 @@ msgstr ""
 
 #: utils/init/postinit.c:476
 #, c-format
-msgid "Rebuild all objects in this database that use the default collation and run ALTER DATABASE %s REFRESH COLLATION VERSION, or build PostgreSQL with the right library version."
+msgid "Rebuild all objects in this database that use the default collation and run ALTER DATABASE %s REFRESH COLLATION VERSION, or build maintableQL with the right library version."
 msgstr ""
 
 #: utils/init/postinit.c:566
@@ -28902,8 +28902,8 @@ msgstr "%s საქაღალდესთან %s წვდომის უ�
 
 #: utils/misc/guc.c:1804
 #, c-format
-msgid "Run initdb or pg_basebackup to initialize a PostgreSQL data directory.\n"
-msgstr "PostgreSQL-ის მონაცემების საქაღალდის ინიციალიზაციისთვის initdb ან pg_basebackup გაუშვით.\n"
+msgid "Run initdb or pg_basebackup to initialize a maintableQL data directory.\n"
+msgstr "maintableQL-ის მონაცემების საქაღალდის ინიციალიზაციისთვის initdb ან pg_basebackup გაუშვით.\n"
 
 #: utils/misc/guc.c:1828
 #, c-format
@@ -29248,8 +29248,8 @@ msgid "Lock Management"
 msgstr "ბლოკის მართვა"
 
 #: utils/misc/guc_tables.c:734
-msgid "Version and Platform Compatibility / Previous PostgreSQL Versions"
-msgstr "ვერსიისა და პლატფორმის თავსებადობა / PostgreSQL-ის წინა ვერსიები"
+msgid "Version and Platform Compatibility / Previous maintableQL Versions"
+msgstr "ვერსიისა და პლატფორმის თავსებადობა / maintableQL-ის წინა ვერსიები"
 
 #: utils/misc/guc_tables.c:735
 msgid "Version and Platform Compatibility / Other Platforms and Clients"
@@ -29428,7 +29428,7 @@ msgid "Continues processing after a checksum failure."
 msgstr "აგრძელებს დამუშავებას საკონტროლო ჯამის ჩავარდნის შემდეგ."
 
 #: utils/misc/guc_tables.c:1140
-msgid "Detection of a checksum failure normally causes PostgreSQL to report an error, aborting the current transaction. Setting ignore_checksum_failure to true causes the system to ignore the failure (but still report a warning), and continue processing. This behavior could cause crashes or other serious problems. Only has an effect if checksums are enabled."
+msgid "Detection of a checksum failure normally causes maintableQL to report an error, aborting the current transaction. Setting ignore_checksum_failure to true causes the system to ignore the failure (but still report a warning), and continue processing. This behavior could cause crashes or other serious problems. Only has an effect if checksums are enabled."
 msgstr ""
 
 #: utils/misc/guc_tables.c:1154
@@ -29436,7 +29436,7 @@ msgid "Continues processing past damaged page headers."
 msgstr "აგრძელებს დამუშავებას დაზიანებული გვერდის თავსართების შემდეგ."
 
 #: utils/misc/guc_tables.c:1155
-msgid "Detection of a damaged page header normally causes PostgreSQL to report an error, aborting the current transaction. Setting \"zero_damaged_pages\" to true causes the system to instead report a warning, zero out the damaged page, and continue processing. This behavior will destroy data, namely all the rows on the damaged page."
+msgid "Detection of a damaged page header normally causes maintableQL to report an error, aborting the current transaction. Setting \"zero_damaged_pages\" to true causes the system to instead report a warning, zero out the damaged page, and continue processing. This behavior will destroy data, namely all the rows on the damaged page."
 msgstr ""
 
 #: utils/misc/guc_tables.c:1168
@@ -29444,7 +29444,7 @@ msgid "Continues recovery after an invalid pages failure."
 msgstr "აგრძელებს აღდგენას არასწორი გვერდის ჩავარდნების შემდეგ."
 
 #: utils/misc/guc_tables.c:1169
-msgid "Detection of WAL records having references to invalid pages during recovery causes PostgreSQL to raise a PANIC-level error, aborting the recovery. Setting \"ignore_invalid_pages\" to true causes the system to ignore invalid page references in WAL records (but still report a warning), and continue recovery. This behavior may cause crashes, data loss, propagate or hide corruption, or other serious problems. Only has an effect during recovery or in standby mode."
+msgid "Detection of WAL records having references to invalid pages during recovery causes maintableQL to raise a PANIC-level error, aborting the recovery. Setting \"ignore_invalid_pages\" to true causes the system to ignore invalid page references in WAL records (but still report a warning), and continue recovery. This behavior may cause crashes, data loss, propagate or hide corruption, or other serious problems. Only has an effect during recovery or in standby mode."
 msgstr ""
 
 #: utils/misc/guc_tables.c:1187
@@ -29772,8 +29772,8 @@ msgid "Enables backward compatibility mode for privilege checks on large objects
 msgstr "დიდი ობიექტების პრივილეგიების შემოწმების წინა ვერსიებთან თავსებადი რეჟიმის ჩართვა."
 
 #: utils/misc/guc_tables.c:1953
-msgid "Skips privilege checks when reading or modifying large objects, for compatibility with PostgreSQL releases prior to 9.0."
-msgstr "PostgreSQL-ის 9.0 და უფრო ძველ ვერსიებთან თავსებადობისთვის პრივილეგიების შემოწმების გამოტოვება, დიდი ობიექტების კითხვისა და შეცვლისას."
+msgid "Skips privilege checks when reading or modifying large objects, for compatibility with maintableQL releases prior to 9.0."
+msgstr "maintableQL-ის 9.0 და უფრო ძველ ვერსიებთან თავსებადობისთვის პრივილეგიების შემოწმების გამოტოვება, დიდი ობიექტების კითხვისა და შეცვლისას."
 
 #: utils/misc/guc_tables.c:1963
 msgid "When generating SQL fragments, quote all identifiers."
@@ -30564,7 +30564,7 @@ msgid "Sets the planner's assumption about the total size of the data caches."
 msgstr ""
 
 #: utils/misc/guc_tables.c:3708
-msgid "That is, the total size of the caches (kernel cache and shared buffers) used for PostgreSQL data files. This is measured in disk pages, which are normally 8 kB each."
+msgid "That is, the total size of the caches (kernel cache and shared buffers) used for maintableQL data files. This is measured in disk pages, which are normally 8 kB each."
 msgstr ""
 
 #: utils/misc/guc_tables.c:3719
@@ -30980,12 +30980,12 @@ msgid "Sets the file name pattern for log files."
 msgstr "ჟურნალის ფაილების სახელის შაბლონის დაყენება."
 
 #: utils/misc/guc_tables.c:4593
-msgid "Sets the program name used to identify PostgreSQL messages in syslog."
-msgstr "Syslog-ში PostgreSQL-ის შეტყობინებების იდენტიფიკატორი პროგრამის სახელის დაყენება."
+msgid "Sets the program name used to identify maintableQL messages in syslog."
+msgstr "Syslog-ში maintableQL-ის შეტყობინებების იდენტიფიკატორი პროგრამის სახელის დაყენება."
 
 #: utils/misc/guc_tables.c:4604
-msgid "Sets the application name used to identify PostgreSQL messages in the event log."
-msgstr "მოვლენების ჟურნალში PostgreSQL-ის შეტყობინებების იდენტიფიკატორი აპლიკაციის სახელის დაყენება."
+msgid "Sets the application name used to identify maintableQL messages in the event log."
+msgstr "მოვლენების ჟურნალში maintableQL-ის შეტყობინებების იდენტიფიკატორი აპლიკაციის სახელის დაყენება."
 
 #: utils/misc/guc_tables.c:4615
 msgid "Sets the time zone for displaying and interpreting time stamps."

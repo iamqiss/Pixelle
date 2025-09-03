@@ -19,11 +19,11 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-/// This file is a big workaround - struct `Stats` exists in `iggy` crate and this crate needs it.
-/// However, this crate is being compiled to wasm and `iggy` can't be compiled for this target.
+/// This file is a big workaround - struct `Stats` exists in `messenger` crate and this crate needs it.
+/// However, this crate is being compiled to wasm and `messenger` can't be compiled for this target.
 /// To workaround this, we need just maintain a copy of the `Stats` struct in this crate.
 ///
-/// Hopefully, one day we will have a separate crate for iggy models and this file can be removed.
+/// Hopefully, one day we will have a separate crate for messenger models and this file can be removed.
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct BenchmarkServerStats {
@@ -71,10 +71,10 @@ pub struct BenchmarkServerStats {
     pub os_version: String,
     /// The version of the kernel.
     pub kernel_version: String,
-    /// The version of the Iggy server.
-    pub iggy_server_version: String,
-    /// The semantic version of the Iggy server in the numeric format e.g. 1.2.3 -> 100200300 (major * 1000000 + minor * 1000 + patch).
-    pub iggy_server_semver: Option<u32>,
+    /// The version of the Messenger server.
+    pub messenger_server_version: String,
+    /// The semantic version of the Messenger server in the numeric format e.g. 1.2.3 -> 100200300 (major * 1000000 + minor * 1000 + patch).
+    pub messenger_server_semver: Option<u32>,
     /// Cache metrics per partition
     #[serde(with = "cache_metrics_serializer")]
     pub cache_metrics: HashMap<BenchmarkCacheMetricsKey, BenchmarkCacheMetrics>,
@@ -183,8 +183,8 @@ impl Default for BenchmarkServerStats {
             os_name: "unknown_os_name".to_string(),
             os_version: "unknown_os_version".to_string(),
             kernel_version: "unknown_kernel_version".to_string(),
-            iggy_server_version: "unknown_iggy_version".to_string(),
-            iggy_server_semver: None,
+            messenger_server_version: "unknown_messenger_version".to_string(),
+            messenger_server_semver: None,
             cache_metrics: HashMap::new(),
         }
     }

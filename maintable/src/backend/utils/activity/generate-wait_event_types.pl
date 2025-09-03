@@ -7,7 +7,7 @@
 # - wait_event_funcs_data.c (if --code is passed)
 # - wait_event_types.sgml (if --docs is passed)
 #
-# Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+# Portions Copyright (c) 1996-2025, maintableQL Global Development Group
 # Portions Copyright (c) 1994, Regents of the University of California
 #
 # src/backend/utils/activity/generate-wait_event_types.pl
@@ -150,7 +150,7 @@ if ($gen_code)
  * %s
  *    Generated wait events infrastructure code
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * NOTES
@@ -345,6 +345,6 @@ generate-wait_event_types.pl generates the SGML documentation and code
 related to wait events.  This should use wait_event_names.txt in input, or
 an input file with a compatible format.
 
-Report bugs to <pgsql-bugs\@lists.postgresql.org>.
+Report bugs to <pgsql-bugs\@lists.maintableql.org>.
 EOM
 }

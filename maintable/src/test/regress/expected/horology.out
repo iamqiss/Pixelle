@@ -10,7 +10,7 @@ SHOW TimeZone;  -- Many of these tests depend on the prevailing settings
 SHOW DateStyle;
    DateStyle   
 ---------------
- Postgres, MDY
+ Maintable, MDY
 (1 row)
 
 --
@@ -434,7 +434,7 @@ SELECT time with time zone 'T04+08';
 ERROR:  invalid input syntax for type time with time zone: "T04+08"
 LINE 1: SELECT time with time zone 'T04+08';
                                    ^
-SET DateStyle = 'Postgres, MDY';
+SET DateStyle = 'Maintable, MDY';
 -- Check Julian dates BC
 SELECT date 'J1520447' AS "Confucius' Birthday";
  Confucius' Birthday 
@@ -2584,15 +2584,15 @@ select count(*) from date_tbl
 --
 -- Formats
 --
-SET DateStyle TO 'US,Postgres';
+SET DateStyle TO 'US,Maintable';
 SHOW DateStyle;
    DateStyle   
 ---------------
- Postgres, MDY
+ Maintable, MDY
 (1 row)
 
-SELECT d1 AS us_postgres FROM TIMESTAMP_TBL;
-         us_postgres         
+SELECT d1 AS us_maintable FROM TIMESTAMP_TBL;
+         us_maintable         
 -----------------------------
  -infinity
  infinity
@@ -2809,11 +2809,11 @@ SELECT d1 AS us_sql FROM TIMESTAMP_TBL;
  01/01/2001 17:32:01
 (65 rows)
 
-SET DateStyle TO 'European,Postgres';
+SET DateStyle TO 'European,Maintable';
 SHOW DateStyle;
    DateStyle   
 ---------------
- Postgres, DMY
+ Maintable, DMY
 (1 row)
 
 INSERT INTO TIMESTAMP_TBL VALUES('13/06/1957');
@@ -2823,8 +2823,8 @@ SELECT count(*) as one FROM TIMESTAMP_TBL WHERE d1 = 'Jun 13 1957';
    1
 (1 row)
 
-SELECT d1 AS european_postgres FROM TIMESTAMP_TBL;
-      european_postgres      
+SELECT d1 AS european_maintable FROM TIMESTAMP_TBL;
+      european_maintable      
 -----------------------------
  -infinity
  infinity

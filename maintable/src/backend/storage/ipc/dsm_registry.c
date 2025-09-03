@@ -29,7 +29,7 @@
  * current backend.  This function guarantees that only one backend
  * initializes the table and that all other backends just attach it.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -38,7 +38,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "funcapi.h"
 #include "lib/dshash.h"

@@ -3,14 +3,14 @@
  * test_resowner_many.c
  *		Test ResourceOwner functionality with lots of resources
  *
- * Copyright (c) 2022-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2022-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/test/modules/test_resowner/test_resowner_many.c
  *
  * -------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "fmgr.h"
 #include "lib/ilist.h"

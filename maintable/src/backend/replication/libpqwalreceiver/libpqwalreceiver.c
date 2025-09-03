@@ -9,7 +9,7 @@
  * Apart from walreceiver, the libpq-specific routines are now being used by
  * logical replication workers and slot synchronization.
  *
- * Portions Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -17,7 +17,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 #include <sys/time.h>
@@ -190,7 +190,7 @@ libpqrcv_connect(const char *conninfo, bool replication, bool logical,
 			 * match what pg_dump does.
 			 */
 			keys[++i] = "options";
-			vals[i] = "-c datestyle=ISO -c intervalstyle=postgres -c extra_float_digits=3";
+			vals[i] = "-c datestyle=ISO -c intervalstyle=maintable -c extra_float_digits=3";
 		}
 		else
 		{

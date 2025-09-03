@@ -20,7 +20,7 @@
  * into non-blocking mode. That can lead to blocking even when only the async
  * libpq functions are used. This should be fixed.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/libpq/libpq-be-fe-helpers.h
@@ -172,7 +172,7 @@ libpqsrv_connect_internal(PGconn *conn, uint32 wait_event_info)
 	 */
 	PG_TRY();
 	{
-		PostgresPollingStatusType status;
+		MaintablePollingStatusType status;
 
 		/*
 		 * Poll connection until we have OK or FAILED status.
@@ -383,7 +383,7 @@ libpqsrv_cancel(PGconn *conn, TimestampTz endtime)
 
 		for (;;)
 		{
-			PostgresPollingStatusType pollres;
+			MaintablePollingStatusType pollres;
 			TimestampTz now;
 			long		cur_timeout;
 			int			waitEvents = WL_LATCH_SET | WL_TIMEOUT | WL_EXIT_ON_PM_DEATH;

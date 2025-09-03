@@ -4,7 +4,7 @@
  *		helper routine to ensure restricted token on Windows
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -18,7 +18,7 @@
 #error "This file is not expected to be compiled for backend code"
 #endif
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "common/logging.h"
 #include "common/restricted_token.h"

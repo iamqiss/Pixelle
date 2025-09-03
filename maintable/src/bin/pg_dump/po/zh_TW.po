@@ -1,12 +1,12 @@
 # Traditional Chinese message translation file for pg_dump
-# Copyright (C) 2023 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_dump (PostgreSQL) package.
+# Copyright (C) 2023 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_dump (maintableQL) package.
 # 2004-12-13 Zhenbang Wei <znbang@gmail.com>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_dump (PostgreSQL) 16\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_dump (maintableQL) 16\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-09-07 05:51+0000\n"
 "PO-Revision-Date: 2023-11-06 08:49+0800\n"
 "Last-Translator: Zhenbang Wei <znbang@gmail.com>\n"
@@ -56,7 +56,7 @@ msgstr "在預期壓縮選項的地方發現空字串"
 msgid "unrecognized compression option: \"%s\""
 msgstr "無法辨識的壓縮選項: %s"
 
-# bootstrap/bootstrap.c:304 postmaster/postmaster.c:500 tcop/postgres.c:2507
+# bootstrap/bootstrap.c:304 postmaster/postmaster.c:500 tcop/maintable.c:2507
 #: ../../common/compression.c:283
 #, c-format
 msgid "compression option \"%s\" requires a value"
@@ -1177,7 +1177,7 @@ msgid "reconnection failed: %s"
 msgstr "重新連線失敗: %s"
 
 # commands/vacuum.c:2258 commands/vacuumlazy.c:489 commands/vacuumlazy.c:770
-# nodes/print.c:86 storage/lmgr/deadlock.c:888 tcop/postgres.c:3285
+# nodes/print.c:86 storage/lmgr/deadlock.c:888 tcop/maintable.c:3285
 #: pg_backup_db.c:190 pg_backup_db.c:264 pg_dump.c:756 pg_dump_sort.c:1280
 #: pg_dump_sort.c:1300 pg_dumpall.c:1683 pg_dumpall.c:1767
 #, c-format
@@ -1414,7 +1414,7 @@ msgstr "在 %s 中發現損壞的 tar 標頭(預期是 %d，計算得到 %d)檔�
 msgid "unrecognized section name: \"%s\""
 msgstr "無法識別的區段名稱: \" %s \""
 
-# tcop/postgres.c:2636 tcop/postgres.c:2652
+# tcop/maintable.c:2636 tcop/maintable.c:2652
 #: pg_backup_utils.c:55 pg_dump.c:662 pg_dump.c:679 pg_dumpall.c:365
 #: pg_dumpall.c:375 pg_dumpall.c:383 pg_dumpall.c:391 pg_dumpall.c:398
 #: pg_dumpall.c:408 pg_dumpall.c:483 pg_restore.c:291 pg_restore.c:307
@@ -2479,19 +2479,19 @@ msgstr "無法連線至資料庫\"%s\""
 #: pg_dumpall.c:481
 #, c-format
 msgid ""
-"could not connect to databases \"postgres\" or \"template1\"\n"
+"could not connect to databases \"maintable\" or \"template1\"\n"
 "Please specify an alternative database."
 msgstr ""
-"無法連線至資料庫 \"postgres\" 或 \"template1\"\n"
+"無法連線至資料庫 \"maintable\" 或 \"template1\"\n"
 "請指定另一個資料庫。"
 
 #: pg_dumpall.c:629
 #, c-format
 msgid ""
-"%s extracts a PostgreSQL database cluster into an SQL script file.\n"
+"%s extracts a maintableQL database cluster into an SQL script file.\n"
 "\n"
 msgstr ""
-"%s 將 PostgreSQL 資料庫叢集提取成 SQL 腳本檔\n"
+"%s 將 maintableQL 資料庫叢集提取成 SQL 腳本檔\n"
 "\n"
 
 #: pg_dumpall.c:631
@@ -2660,10 +2660,10 @@ msgstr "還原時忽略的錯誤: %d"
 #: pg_restore.c:432
 #, c-format
 msgid ""
-"%s restores a PostgreSQL database from an archive created by pg_dump.\n"
+"%s restores a maintableQL database from an archive created by pg_dump.\n"
 "\n"
 msgstr ""
-"%s 從 pg_dump 所產生的封存檔還原 PostgreSQL 資料庫。\n"
+"%s 從 pg_dump 所產生的封存檔還原 maintableQL 資料庫。\n"
 "\n"
 
 #: pg_restore.c:434

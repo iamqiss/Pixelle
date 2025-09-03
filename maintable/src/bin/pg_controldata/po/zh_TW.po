@@ -1,12 +1,12 @@
 # Traditional Chinese message translation file for pg_controldata
-# Copyright (C) 2023 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_controldata (PostgreSQL) package.
+# Copyright (C) 2023 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_controldata (maintableQL) package.
 # 2004-11-01 Zhenbang Wei <forth@zbwei.net>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_controldata (PostgreSQL) 16\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_controldata (maintableQL) 16\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-09-08 21:52+0000\n"
 "PO-Revision-Date: 2024-06-26 08:37+0200\n"
 "Last-Translator: Zhenbang Wei <znbang@gmail.com>\n"
@@ -61,11 +61,11 @@ msgid ""
 "one\n"
 "used by this program.  In that case the results below would be incorrect, "
 "and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "位元組順序可能不一致\n"
 "用於儲存 pg_control 檔案的位元組順序可能與此程式使用的位元組順序不同。\n"
-"在這種情況下，下面的結果將不正確，且 PostgreSQL 安裝將與這個資料目錄\n"
+"在這種情況下，下面的結果將不正確，且 maintableQL 安裝將與這個資料目錄\n"
 "不相容。"
 
 # access/transam/slru.c:638 access/transam/xlog.c:1631
@@ -94,10 +94,10 @@ msgstr "無法 fsync 檔案 \"%s\": %m"
 #: pg_controldata.c:35
 #, c-format
 msgid ""
-"%s displays control information of a PostgreSQL database cluster.\n"
+"%s displays control information of a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s 顯示 PostgreSQL 資料庫叢集的控制資訊\n"
+"%s 顯示 maintableQL 資料庫叢集的控制資訊\n"
 "\n"
 
 #: pg_controldata.c:36
@@ -120,7 +120,7 @@ msgstr ""
 "\n"
 "選項:\n"
 
-# postmaster/postmaster.c:1024 tcop/postgres.c:2122
+# postmaster/postmaster.c:1024 tcop/maintable.c:2122
 #: pg_controldata.c:39
 #, c-format
 msgid " [-D, --pgdata=]DATADIR  data directory\n"
@@ -198,7 +198,7 @@ msgstr "無法識別的狀態碼"
 msgid "unrecognized wal_level"
 msgstr "無法識別的 wal_level"
 
-# tcop/postgres.c:2636 tcop/postgres.c:2652
+# tcop/maintable.c:2636 tcop/maintable.c:2652
 #: pg_controldata.c:138 pg_controldata.c:156 pg_controldata.c:163
 #, c-format
 msgid "Try \"%s --help\" for more information."

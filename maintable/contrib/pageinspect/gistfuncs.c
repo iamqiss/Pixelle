@@ -2,12 +2,12 @@
  * gistfuncs.c
  *		Functions to investigate the content of GiST indexes
  *
- * Copyright (c) 2014-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2014-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		contrib/pageinspect/gistfuncs.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/gist.h"
 #include "access/htup.h"

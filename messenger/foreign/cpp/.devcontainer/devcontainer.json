@@ -1,6 +1,6 @@
 {
-  "name": "Iggy C++ Client",
-  "image": "docker.io/iggyrs/iggy-cpp-build:latest",
+  "name": "Messenger C++ Client",
+  "image": "docker.io/messengerrs/messenger-cpp-build:latest",
   "customizations": {
     "vscode": {
       "extensions": [

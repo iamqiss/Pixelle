@@ -3,14 +3,14 @@
  * xlogstats.c
  *		Functions for WAL Statitstics
  *
- * Copyright (c) 2022-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2022-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/backend/access/transam/xlogstats.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/xlogreader.h"
 #include "access/xlogstats.h"

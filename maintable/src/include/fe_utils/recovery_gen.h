@@ -2,7 +2,7 @@
  *
  * Generator for recovery configuration
  *
- * Portions Copyright (c) 2011-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2011-2025, maintableQL Global Development Group
  *
  * src/include/fe_utils/recovery_gen.h
  *
@@ -15,7 +15,7 @@
 #include "pqexpbuffer.h"
 
 /*
- * recovery configuration is part of postgresql.conf in version 12 and up, and
+ * recovery configuration is part of maintableql.conf in version 12 and up, and
  * in recovery.conf before that.
  */
 #define MINIMUM_VERSION_FOR_RECOVERY_GUC 120000

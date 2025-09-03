@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test that connections to a hot standby are correctly canceled when a
 # recovery conflict is detected Also, test that statistics in
@@ -6,19 +6,19 @@
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 
 # Set up nodes
-my $node_primary = PostgreSQL::Test::Cluster->new('primary');
+my $node_primary = maintableQL::Test::Cluster->new('primary');
 $node_primary->init(allows_streaming => 1);
 
 my $tablespace1 = "test_recovery_conflict_tblspc";
 
 $node_primary->append_conf(
-	'postgresql.conf', qq[
+	'maintableql.conf', qq[
 allow_in_place_tablespaces = on
 log_temp_files = 0
 
@@ -39,11 +39,11 @@ $node_primary->start;
 
 my $backup_name = 'my_backup';
 
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	qq[CREATE TABLESPACE $tablespace1 LOCATION '']);
 
 $node_primary->backup($backup_name);
-my $node_standby = PostgreSQL::Test::Cluster->new('standby');
+my $node_standby = maintableQL::Test::Cluster->new('standby');
 $node_standby->init_from_backup($node_primary, $backup_name,
 	has_streaming => 1);
 
@@ -52,7 +52,7 @@ $node_standby->start;
 my $test_db = "test_db";
 
 # use a new database, to trigger database recovery conflict
-$node_primary->safe_psql('postgres', "CREATE DATABASE $test_db");
+$node_primary->safe_psql('maintable', "CREATE DATABASE $test_db");
 
 # test schema / data
 my $table1 = "test_recovery_conflict_table1";
@@ -217,9 +217,9 @@ $expected_conflicts++;
 # changing max_standby_streaming_delay it'd be timing dependent what we hit
 # first
 $node_standby->adjust_conf(
-	'postgresql.conf',
+	'maintableql.conf',
 	'max_standby_streaming_delay',
-	"${PostgreSQL::Test::Utils::timeout_default}s");
+	"${maintableQL::Test::Utils::timeout_default}s");
 $node_standby->restart();
 $psql_standby->reconnect_and_clear();
 
@@ -259,7 +259,7 @@ ok(1,
 
 # just to make sure we're waiting for lock already
 ok( $node_standby->poll_query_until(
-		'postgres', qq[
+		'maintable', qq[
 SELECT 'waiting' FROM pg_locks WHERE locktype = 'relation' AND NOT granted;
 ], 'waiting'),
 	"$sect: lock acquisition is waiting");
@@ -275,7 +275,7 @@ check_conflict_stat("deadlock");
 
 # clean up for next tests
 $node_primary->safe_psql($test_db, qq[ROLLBACK PREPARED 'lock';]);
-$node_standby->adjust_conf('postgresql.conf', 'max_standby_streaming_delay',
+$node_standby->adjust_conf('maintableql.conf', 'max_standby_streaming_delay',
 	'50ms');
 $node_standby->restart();
 $psql_standby->reconnect_and_clear();
@@ -293,7 +293,7 @@ is( $node_standby->safe_psql(
 ## RECOVERY CONFLICT 6: Database conflict
 $sect = "database conflict";
 
-$node_primary->safe_psql('postgres', qq[DROP DATABASE $test_db;]);
+$node_primary->safe_psql('maintable', qq[DROP DATABASE $test_db;]);
 
 $node_primary->wait_for_replay_catchup($node_standby);
 

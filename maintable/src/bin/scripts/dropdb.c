@@ -2,7 +2,7 @@
  *
  * dropdb
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/bin/scripts/dropdb.c
@@ -10,7 +10,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #include "common.h"
 #include "common/logging.h"
 #include "fe_utils/option_utils.h"
@@ -129,8 +129,8 @@ main(int argc, char *argv[])
 			exit(0);
 	}
 
-	/* Avoid trying to drop postgres db while we are connected to it. */
-	if (maintenance_db == NULL && strcmp(dbname, "postgres") == 0)
+	/* Avoid trying to drop maintable db while we are connected to it. */
+	if (maintenance_db == NULL && strcmp(dbname, "maintable") == 0)
 		maintenance_db = "template1";
 
 	cparams.dbname = maintenance_db;
@@ -167,7 +167,7 @@ main(int argc, char *argv[])
 static void
 help(const char *progname)
 {
-	printf(_("%s removes a PostgreSQL database.\n\n"), progname);
+	printf(_("%s removes a maintableQL database.\n\n"), progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]... DBNAME\n"), progname);
 	printf(_("\nOptions:\n"));

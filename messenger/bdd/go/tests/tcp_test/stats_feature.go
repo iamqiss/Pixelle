@@ -36,7 +36,7 @@ var _ = ginkgo.Describe("STAT FEATURE:", func() {
 	})
 
 	// When("user is not logged in", func() {
-	// 	Context("and tries get iggy statistics", func() {
+	// 	Context("and tries get messenger statistics", func() {
 	// 		client := createConnection()
 	// 		stats, err := client.GetStats()
 

@@ -18,7 +18,7 @@
   We also advise users who are already familiar with SQL to read this
   chapter carefully because it contains several rules and concepts that
   are implemented inconsistently among SQL databases or that are
-  specific to <productname>PostgreSQL</productname>.
+  specific to <productname>maintableQL</productname>.
  </para>
 
  <sect1 id="sql-syntax-lexical">
@@ -194,10 +194,10 @@ UPDATE "my_table" SET "a" = 5;
     unquoted names are always folded to lower case.  For example, the
     identifiers <literal>FOO</literal>, <literal>foo</literal>, and
     <literal>"foo"</literal> are considered the same by
-    <productname>PostgreSQL</productname>, but
+    <productname>maintableQL</productname>, but
     <literal>"Foo"</literal> and <literal>"FOO"</literal> are
     different from these three and each other.  (The folding of
-    unquoted names to lower case in <productname>PostgreSQL</productname> is
+    unquoted names to lower case in <productname>maintableQL</productname> is
     incompatible with the SQL standard, which says that unquoted names
     should be folded to upper case.  Thus, <literal>foo</literal>
     should be equivalent to <literal>"FOO"</literal> not
@@ -282,7 +282,7 @@ U&amp;"d!0061t!+000061" UESCAPE '!'
 
    <para>
     There are three kinds of <firstterm>implicitly-typed
-    constants</firstterm> in <productname>PostgreSQL</productname>:
+    constants</firstterm> in <productname>maintableQL</productname>:
     strings, bit strings, and numbers.
     Constants can also be specified with explicit types, which can
     enable more accurate representation and more efficient handling by
@@ -331,7 +331,7 @@ SELECT 'foobar';
 SELECT 'foo'      'bar';
 </programlisting>
      is not valid syntax.  (This slightly bizarre behavior is specified
-     by <acronym>SQL</acronym>; <productname>PostgreSQL</productname> is
+     by <acronym>SQL</acronym>; <productname>maintableQL</productname> is
      following the standard.)
     </para>
    </sect3>
@@ -347,7 +347,7 @@ SELECT 'foo'      'bar';
      </indexterm>
 
     <para>
-     <productname>PostgreSQL</productname> also accepts <quote>escape</quote>
+     <productname>maintableQL</productname> also accepts <quote>escape</quote>
      string constants, which are an extension to the SQL standard.
      An escape string constant is specified by writing the letter
      <literal>E</literal> (upper or lower case) just before the opening single
@@ -442,9 +442,9 @@ SELECT 'foo'      'bar';
     <para>
      If the configuration parameter
      <xref linkend="guc-standard-conforming-strings"/> is <literal>off</literal>,
-     then <productname>PostgreSQL</productname> recognizes backslash escapes
+     then <productname>maintableQL</productname> recognizes backslash escapes
      in both regular and escape string constants.  However, as of
-     <productname>PostgreSQL</productname> 9.1, the default is <literal>on</literal>, meaning
+     <productname>maintableQL</productname> 9.1, the default is <literal>on</literal>, meaning
      that backslash escapes are recognized only in escape string constants.
      This behavior is more standards-compliant, but might break applications
      which rely on the historical behavior, where backslash escapes
@@ -476,7 +476,7 @@ SELECT 'foo'      'bar';
     </indexterm>
 
     <para>
-     <productname>PostgreSQL</productname> also supports another type
+     <productname>maintableQL</productname> also supports another type
      of escape syntax for strings that allows specifying arbitrary
      Unicode characters by code point.  A Unicode escape string
      constant starts with <literal>U&amp;</literal> (upper or lower case
@@ -557,7 +557,7 @@ U&amp;'d!0061t!+000061' UESCAPE '!'
      convenient, it can be difficult to understand when the desired string
      contains many single quotes, since each of those must
      be doubled. To allow more readable queries in such situations,
-     <productname>PostgreSQL</productname> provides another way, called
+     <productname>maintableQL</productname> provides another way, called
      <quote>dollar quoting</quote>, to write string constants.
      A dollar-quoted string constant
      consists of a dollar sign (<literal>$</literal>), an optional
@@ -593,7 +593,7 @@ $function$
      Here, the sequence <literal>$q$[\t\r\n\v\\]$q$</literal> represents a
      dollar-quoted literal string <literal>[\t\r\n\v\\]</literal>, which will
      be recognized when the function body is executed by
-     <productname>PostgreSQL</productname>.  But since the sequence does not match
+     <productname>maintableQL</productname>.  But since the sequence does not match
      the outer dollar quoting delimiter <literal>$function$</literal>, it is
      just some more characters within the constant so far as the outer
      string is concerned.
@@ -764,7 +764,7 @@ $function$
 
 <programlisting>
 REAL '1.23'  -- string style
-1.23::REAL   -- PostgreSQL (historical) style
+1.23::REAL   -- maintableQL (historical) style
 </programlisting>
 
      These are actually just special cases of the general casting
@@ -828,9 +828,9 @@ CAST ( '<replaceable>string</replaceable>' AS <replaceable>type</replaceable> )
      The <literal>CAST()</literal> syntax conforms to SQL.  The
      <literal><replaceable>type</replaceable> '<replaceable>string</replaceable>'</literal>
      syntax is a generalization of the standard: SQL specifies this syntax only
-     for a few data types, but <productname>PostgreSQL</productname> allows it
+     for a few data types, but <productname>maintableQL</productname> allows it
      for all types.  The syntax with
-     <literal>::</literal> is historical <productname>PostgreSQL</productname>
+     <literal>::</literal> is historical <productname>maintableQL</productname>
      usage, as is the function-call syntax.
     </para>
    </sect3>
@@ -870,7 +870,7 @@ CAST ( '<replaceable>string</replaceable>' AS <replaceable>type</replaceable> )
 </literallayout>
        For example, <literal>@-</literal> is an allowed operator name,
        but <literal>*-</literal> is not.  This restriction allows
-       <productname>PostgreSQL</productname> to parse SQL-compliant
+       <productname>maintableQL</productname> to parse SQL-compliant
        queries without requiring spaces between tokens.
       </para>
      </listitem>
@@ -883,7 +883,7 @@ CAST ( '<replaceable>string</replaceable>' AS <replaceable>type</replaceable> )
     For example, if you have defined a prefix operator named <literal>@</literal>,
     you cannot write <literal>X*@Y</literal>; you must write
     <literal>X* @Y</literal> to ensure that
-    <productname>PostgreSQL</productname> reads it as two operator names
+    <productname>maintableQL</productname> reads it as two operator names
     not one.
    </para>
   </sect2>
@@ -1017,7 +1017,7 @@ CAST ( '<replaceable>string</replaceable>' AS <replaceable>type</replaceable> )
 
    <para>
     <xref linkend="sql-precedence-table"/> shows the precedence and
-    associativity of the operators in <productname>PostgreSQL</productname>.
+    associativity of the operators in <productname>maintableQL</productname>.
     Most operators have the same precedence and are left-associative.
     The precedence and associativity of the operators is hard-wired
     into the parser.
@@ -1050,7 +1050,7 @@ CAST ( '<replaceable>string</replaceable>' AS <replaceable>type</replaceable> )
       <row>
        <entry><token>::</token></entry>
        <entry>left</entry>
-       <entry><productname>PostgreSQL</productname>-style typecast</entry>
+       <entry><productname>maintableQL</productname>-style typecast</entry>
       </row>
 
       <row>
@@ -1165,7 +1165,7 @@ SELECT 3 OPERATOR(pg_catalog.+) 4;
 
    <note>
     <para>
-     <productname>PostgreSQL</productname> versions before 9.5 used slightly different
+     <productname>maintableQL</productname> versions before 9.5 used slightly different
      operator precedence rules.  In particular, <token>&lt;=</token>
      <token>&gt;=</token> and <token>&lt;&gt;</token> used to be treated as
      generic operators; <literal>IS</literal> tests used to have higher priority;
@@ -1563,7 +1563,7 @@ sqrt(2)
      field selection can be written in functional style.  That is, the
      notations <literal>col(table)</literal> and <literal>table.col</literal> are
      interchangeable.  This behavior is not SQL-standard but is provided
-     in <productname>PostgreSQL</productname> because it allows use of functions to
+     in <productname>maintableQL</productname> because it allows use of functions to
      emulate <quote>computed fields</quote>.  For more information see
      <xref linkend="rowtypes-usage"/>.
     </para>
@@ -1738,7 +1738,7 @@ SELECT array_agg(DISTINCT v ORDER BY v DESC) FROM vals;
     percentile fractions, which only make sense as a single value per
     aggregation calculation.  The direct argument list can be empty; in this
     case, write just <literal>()</literal> not <literal>(*)</literal>.
-    (<productname>PostgreSQL</productname> will actually accept either spelling, but
+    (<productname>maintableQL</productname> will actually accept either spelling, but
     only the first way conforms to the SQL standard.)
    </para>
 
@@ -2095,14 +2095,14 @@ EXCLUDE NO OTHERS
 
    <para>
     A type cast specifies a conversion from one data type to another.
-    <productname>PostgreSQL</productname> accepts two equivalent syntaxes
+    <productname>maintableQL</productname> accepts two equivalent syntaxes
     for type casts:
 <synopsis>
 CAST ( <replaceable>expression</replaceable> AS <replaceable>type</replaceable> )
 <replaceable>expression</replaceable>::<replaceable>type</replaceable>
 </synopsis>
     The <literal>CAST</literal> syntax conforms to SQL; the syntax with
-    <literal>::</literal> is historical <productname>PostgreSQL</productname>
+    <literal>::</literal> is historical <productname>maintableQL</productname>
     usage.
    </para>
 
@@ -2438,7 +2438,7 @@ SELECT ROW(t.f1, t.f2, 42) FROM t;
 
    <note>
     <para>
-     Before <productname>PostgreSQL</productname> 8.2, the
+     Before <productname>maintableQL</productname> 8.2, the
      <literal>.*</literal> syntax was not expanded in row constructors, so
      that writing <literal>ROW(t.*, 42)</literal> created a two-field row whose first
      field was another row value.  The new behavior is usually more useful.
@@ -2620,7 +2620,7 @@ SELECT CASE WHEN min(employees) > 0
    </indexterm>
 
    <para>
-    <productname>PostgreSQL</productname> allows functions that have named
+    <productname>maintableQL</productname> allows functions that have named
     parameters to be called using either <firstterm>positional</firstterm> or
     <firstterm>named</firstterm> notation.  Named notation is especially
     useful for functions that have a large number of parameters, since it
@@ -2643,7 +2643,7 @@ SELECT CASE WHEN min(employees) > 0
    </para>
 
    <para>
-    <productname>PostgreSQL</productname> also supports
+    <productname>maintableQL</productname> also supports
     <firstterm>mixed</firstterm> notation, which combines positional and
     named notation.  In this case, positional parameters are written first
     and named parameters appear after them.
@@ -2685,7 +2685,7 @@ LANGUAGE SQL IMMUTABLE STRICT;
 
     <para>
      Positional notation is the traditional mechanism for passing arguments
-     to functions in <productname>PostgreSQL</productname>.  An example is:
+     to functions in <productname>maintableQL</productname>.  An example is:
 <screen>
 SELECT concat_lower_or_upper('Hello', 'World', true);
  concat_lower_or_upper

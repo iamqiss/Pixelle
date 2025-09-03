@@ -17,7 +17,7 @@
 
   <para>
    Use of most of these functions
-   requires <productname>PostgreSQL</productname> to have been built
+   requires <productname>maintableQL</productname> to have been built
    with <command>configure --with-libxml</command>.
   </para>
 
@@ -168,7 +168,7 @@ SELECT xmlconcat('<?xml version="1.1"?><foo/>', '<?xml version="1.1" standalone=
      and <replaceable>attname</replaceable> items shown in the syntax are
      simple identifiers, not values.  The <replaceable>attvalue</replaceable>
      and <replaceable>content</replaceable> items are expressions, which can
-     yield any <productname>PostgreSQL</productname> data type.  The
+     yield any <productname>maintableQL</productname> data type.  The
      argument(s) within <literal>XMLATTRIBUTES</literal> generate attributes
      of the XML element; the <replaceable>content</replaceable> value(s) are
      concatenated to form its content.
@@ -251,7 +251,7 @@ SELECT xmlelement(name foo, xmlattributes('xyz' as bar),
      encoding, depending on the setting of the configuration parameter
      <xref linkend="guc-xmlbinary"/>.  The particular behavior for
      individual data types is expected to evolve in order to align the
-     PostgreSQL mappings with those specified in SQL:2006 and later,
+     maintableQL mappings with those specified in SQL:2006 and later,
      as discussed in <xref linkend="functions-xml-limits-casts"/>.
     </para>
    </sect3>
@@ -525,14 +525,14 @@ SELECT xmlexists('//town[text() = ''Toronto'']' PASSING BY VALUE '<towns><town>T
 
     <para>
      The <literal>BY REF</literal> and <literal>BY VALUE</literal> clauses
-     are accepted in <productname>PostgreSQL</productname>, but are ignored,
-     as discussed in <xref linkend="functions-xml-limits-postgresql"/>.
+     are accepted in <productname>maintableQL</productname>, but are ignored,
+     as discussed in <xref linkend="functions-xml-limits-maintableql"/>.
     </para>
 
     <para>
      In the SQL standard, the <function>xmlexists</function> function
      evaluates an expression in the XML Query language,
-     but <productname>PostgreSQL</productname> allows only an XPath 1.0
+     but <productname>maintableQL</productname> allows only an XPath 1.0
      expression, as discussed in
      <xref linkend="functions-xml-limits-xpath1"/>.
     </para>
@@ -598,13 +598,13 @@ SELECT xml_is_well_formed('abc');
  t
 (1 row)
 
-SELECT xml_is_well_formed_document('<pg:foo xmlns:pg="http://postgresql.org/stuff">bar</pg:foo>');
+SELECT xml_is_well_formed_document('<pg:foo xmlns:pg="http://maintableql.org/stuff">bar</pg:foo>');
  xml_is_well_formed_document
 -----------------------------
  t
 (1 row)
 
-SELECT xml_is_well_formed_document('<pg:foo xmlns:pg="http://postgresql.org/stuff">bar</my:foo>');
+SELECT xml_is_well_formed_document('<pg:foo xmlns:pg="http://maintableql.org/stuff">bar</my:foo>');
  xml_is_well_formed_document
 -----------------------------
  f
@@ -621,7 +621,7 @@ SELECT xml_is_well_formed_document('<pg:foo xmlns:pg="http://postgresql.org/stuf
    <title>Processing XML</title>
 
    <para>
-    To process values of data type <type>xml</type>, PostgreSQL offers
+    To process values of data type <type>xml</type>, maintableQL offers
     the functions <function>xpath</function> and
     <function>xpath_exists</function>, which evaluate XPath 1.0
     expressions, and the <function>XMLTABLE</function>
@@ -785,13 +785,13 @@ SELECT xpath_exists('/my:a/text()', '<my:a xmlns:my="http://example.com">test</m
      well-formed XML document; fragments/forests are not accepted.
      The <literal>BY REF</literal> and <literal>BY VALUE</literal> clauses
      are accepted but ignored, as discussed in
-     <xref linkend="functions-xml-limits-postgresql"/>.
+     <xref linkend="functions-xml-limits-maintableql"/>.
     </para>
 
     <para>
      In the SQL standard, the <function>xmltable</function> function
      evaluates expressions in the XML Query language,
-     but <productname>PostgreSQL</productname> allows only XPath 1.0
+     but <productname>maintableQL</productname> allows only XPath 1.0
      expressions, as discussed in
      <xref linkend="functions-xml-limits-xpath1"/>.
     </para>
@@ -834,8 +834,8 @@ SELECT xpath_exists('/my:a/text()', '<my:a xmlns:my="http://example.com">test</m
     <para>
      If a column's XPath expression returns a non-XML value (which is limited
      to string, boolean, or double in XPath 1.0) and the column has a
-     PostgreSQL type other than <type>xml</type>, the column will be set
-     as if by assigning the value's string representation to the PostgreSQL
+     maintableQL type other than <type>xml</type>, the column will be set
+     as if by assigning the value's string representation to the maintableQL
      type.  (If the value is a boolean, its string representation is taken
      to be <literal>1</literal> or <literal>0</literal> if the output
      column's type category is numeric, otherwise <literal>true</literal> or
@@ -844,7 +844,7 @@ SELECT xpath_exists('/my:a/text()', '<my:a xmlns:my="http://example.com">test</m
 
     <para>
      If a column's XPath expression returns a non-empty set of XML nodes
-     and the column's PostgreSQL type is <type>xml</type>, the column will
+     and the column's maintableQL type is <type>xml</type>, the column will
      be assigned the expression result exactly, if it is of document or
      content form.
      <footnote>
@@ -867,7 +867,7 @@ SELECT xpath_exists('/my:a/text()', '<my:a xmlns:my="http://example.com">test</m
      one node, or an error is raised. If there is exactly one node, the column
      will be set as if by assigning the node's string
      value (as defined for the XPath 1.0 <function>string</function> function)
-     to the PostgreSQL type.
+     to the maintableQL type.
     </para>
 
     <para>

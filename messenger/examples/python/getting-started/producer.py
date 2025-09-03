@@ -22,8 +22,8 @@ import urllib
 import urllib.parse
 from collections import namedtuple
 
-from apache_iggy import IggyClient, StreamDetails, TopicDetails
-from apache_iggy import SendMessage as Message
+from apache_messenger import MessengerClient, StreamDetails, TopicDetails
+from apache_messenger import SendMessage as Message
 from loguru import logger
 
 STREAM_NAME = "sample-stream"
@@ -54,7 +54,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--tcp-server-address",
-        help="Iggy TCP server address (host:port)",
+        help="Messenger TCP server address (host:port)",
         action=ValidateUrl,
         default="127.0.0.1:8090",
     )
@@ -63,17 +63,17 @@ def parse_args():
 
 async def main():
     args: ArgNamespace = parse_args()
-    client = IggyClient(args.tcp_server_address)
-    logger.info("Connecting to IggyClient")
+    client = MessengerClient(args.tcp_server_address)
+    logger.info("Connecting to MessengerClient")
     await client.connect()
     logger.info("Connected. Logging in user...")
-    await client.login_user("iggy", "iggy")
+    await client.login_user("messenger", "messenger")
     logger.info("Logged in.")
     await init_system(client)
     await produce_messages(client)
 
 
-async def init_system(client: IggyClient):
+async def init_system(client: MessengerClient):
     try:
         logger.info(f"Creating stream with name {STREAM_NAME}...")
         stream: StreamDetails = await client.get_stream(STREAM_NAME)
@@ -105,7 +105,7 @@ async def init_system(client: IggyClient):
         logger.exception(error)
 
 
-async def produce_messages(client: IggyClient):
+async def produce_messages(client: MessengerClient):
     interval = 0.5  # 500 milliseconds in seconds for asyncio.sleep
     logger.info(
         f"Messages will be sent to stream: {STREAM_NAME}, topic: {TOPIC_NAME}, partition: {PARTITION_ID} with interval {interval * 1000} ms."

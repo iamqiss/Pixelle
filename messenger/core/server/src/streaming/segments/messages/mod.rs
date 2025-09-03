@@ -20,9 +20,9 @@ mod messages_reader;
 mod messages_writer;
 mod persister_task;
 
-use super::IggyMessagesBatchSet;
+use super::MessengerMessagesBatchSet;
 use error_set::ErrContext;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use std::io::IoSlice;
 use tokio::{fs::File, io::AsyncWriteExt};
 
@@ -34,8 +34,8 @@ pub use persister_task::PersisterTask;
 async fn write_batch(
     file: &mut File,
     file_path: &str,
-    batches: IggyMessagesBatchSet,
-) -> Result<usize, IggyError> {
+    batches: MessengerMessagesBatchSet,
+) -> Result<usize, MessengerError> {
     let mut slices: Vec<IoSlice> = batches.iter().map(|b| IoSlice::new(b)).collect();
 
     let slices = &mut slices.as_mut_slice();
@@ -48,7 +48,7 @@ async fn write_batch(
             .with_error_context(|error| {
                 format!("Failed to write messages to file: {file_path}, error: {error}",)
             })
-            .map_err(|_| IggyError::CannotWriteToFile)?;
+            .map_err(|_| MessengerError::CannotWriteToFile)?;
 
         total_written += bytes_written;
 

@@ -18,8 +18,8 @@
 package tcp_test
 
 import (
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	ierror "github.com/apache/iggy/foreign/go/errors"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	ierror "github.com/apache/messenger/foreign/go/errors"
 	"github.com/onsi/ginkgo/v2"
 )
 
@@ -60,7 +60,7 @@ var _ = ginkgo.Describe("DELETE CONSUMER GROUP:", func() {
 				randomU32Identifier(),
 			)
 
-			itShouldReturnSpecificIggyError(err, ierror.ConsumerGroupIdNotFound)
+			itShouldReturnSpecificMessengerError(err, ierror.ConsumerGroupIdNotFound)
 		})
 
 		ginkgo.Context("and tries to delete consumer non-existing topic", func() {

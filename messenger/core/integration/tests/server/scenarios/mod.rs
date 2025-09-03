@@ -30,7 +30,7 @@ pub mod system_scenario;
 pub mod tcp_tls_scenario;
 pub mod user_scenario;
 
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::{ClientFactory, delete_user};
 
 const STREAM_ID: u32 = 1;
@@ -48,12 +48,12 @@ const CONSUMER_ID: u32 = 1;
 const CONSUMER_KIND: ConsumerKind = ConsumerKind::Consumer;
 const MESSAGES_COUNT: u32 = 1337;
 
-async fn create_client(client_factory: &dyn ClientFactory) -> IggyClient {
+async fn create_client(client_factory: &dyn ClientFactory) -> MessengerClient {
     let client = client_factory.create_client().await;
-    IggyClient::create(client, None, None)
+    MessengerClient::create(client, None, None)
 }
 
-async fn get_consumer_group(client: &IggyClient) -> ConsumerGroupDetails {
+async fn get_consumer_group(client: &MessengerClient) -> ConsumerGroupDetails {
     client
         .get_consumer_group(
             &Identifier::numeric(STREAM_ID).unwrap(),
@@ -65,7 +65,7 @@ async fn get_consumer_group(client: &IggyClient) -> ConsumerGroupDetails {
         .expect("Failed to get consumer group")
 }
 
-async fn join_consumer_group(client: &IggyClient) {
+async fn join_consumer_group(client: &MessengerClient) {
     client
         .join_consumer_group(
             &Identifier::numeric(STREAM_ID).unwrap(),
@@ -76,7 +76,7 @@ async fn join_consumer_group(client: &IggyClient) {
         .unwrap();
 }
 
-async fn leave_consumer_group(client: &IggyClient) {
+async fn leave_consumer_group(client: &MessengerClient) {
     client
         .leave_consumer_group(
             &Identifier::numeric(STREAM_ID).unwrap(),
@@ -87,7 +87,7 @@ async fn leave_consumer_group(client: &IggyClient) {
         .unwrap();
 }
 
-async fn cleanup(system_client: &IggyClient, delete_users: bool) {
+async fn cleanup(system_client: &MessengerClient, delete_users: bool) {
     if delete_users {
         delete_user(system_client, USERNAME_1).await;
         delete_user(system_client, USERNAME_2).await;

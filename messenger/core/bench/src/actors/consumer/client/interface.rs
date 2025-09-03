@@ -17,7 +17,7 @@
  */
 
 use bench_report::numeric_parameter::BenchmarkNumericParameter;
-use iggy::prelude::*;
+use messenger::prelude::*;
 
 use crate::actors::{ApiLabel, BatchMetrics, BenchmarkInit};
 
@@ -27,12 +27,12 @@ pub struct BenchmarkConsumerConfig {
     pub consumer_group_id: Option<u32>,
     pub stream_id: u32,
     pub messages_per_batch: BenchmarkNumericParameter,
-    pub warmup_time: IggyDuration,
+    pub warmup_time: MessengerDuration,
     pub polling_kind: PollingKind,
     pub origin_timestamp_latency_calculation: bool,
 }
 
 pub trait ConsumerClient: Send + Sync {
-    async fn consume_batch(&mut self) -> Result<Option<BatchMetrics>, IggyError>;
+    async fn consume_batch(&mut self) -> Result<Option<BatchMetrics>, MessengerError>;
 }
 pub trait BenchmarkConsumerClient: ConsumerClient + BenchmarkInit + ApiLabel + Send + Sync {}

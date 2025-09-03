@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_foreign_table.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createforeigntable">
@@ -150,7 +150,7 @@ WITH ( MODULUS <replaceable class="parameter">numeric_literal</replaceable>, REM
      <para>
       The data type of the column. This can include array
       specifiers. For more information on the data types supported by
-      <productname>PostgreSQL</productname>, refer to <xref
+      <productname>maintableQL</productname>, refer to <xref
       linkend="datatype"/>.
      </para>
     </listitem>
@@ -454,7 +454,7 @@ WITH ( MODULUS <replaceable class="parameter">numeric_literal</replaceable>, REM
    <para>
     Constraints on foreign tables (such as <literal>CHECK</literal>
     or <literal>NOT NULL</literal> clauses) are not enforced by the
-    core <productname>PostgreSQL</productname> system, and most foreign data wrappers
+    core <productname>maintableQL</productname> system, and most foreign data wrappers
     do not attempt to enforce them either; that is, the constraint is
     simply assumed to hold true.  There would be little point in such
     enforcement since it would only apply to rows inserted or updated via
@@ -473,7 +473,7 @@ WITH ( MODULUS <replaceable class="parameter">numeric_literal</replaceable>, REM
    </para>
 
    <para>
-    Although <productname>PostgreSQL</productname> does not attempt to enforce
+    Although <productname>maintableQL</productname> does not attempt to enforce
     constraints on foreign tables, it does assume that they are correct
     for purposes of query optimization.  If there are rows visible in the
     foreign table that do not satisfy a declared constraint, queries on
@@ -507,7 +507,7 @@ WITH ( MODULUS <replaceable class="parameter">numeric_literal</replaceable>, REM
    <para>
     Similar considerations apply to generated columns.  Stored generated
     columns are computed on insert or update on the local
-    <productname>PostgreSQL</productname> server and handed to the
+    <productname>maintableQL</productname> server and handed to the
     foreign-data wrapper for writing out to the foreign data store, but it is
     not enforced that a query of the foreign table returns values for stored
     generated columns that are consistent with the generation expression.
@@ -556,8 +556,8 @@ CREATE FOREIGN TABLE measurement_y2016m07
    <link linkend="sql-createtable"><command>CREATE TABLE</command></link>,
    <literal>NULL</literal> constraints and zero-column foreign tables are permitted.
    The ability to specify column default values is also
-   a <productname>PostgreSQL</productname> extension.  Table inheritance, in the form
-   defined by <productname>PostgreSQL</productname>, is nonstandard.
+   a <productname>maintableQL</productname> extension.  Table inheritance, in the form
+   defined by <productname>maintableQL</productname>, is nonstandard.
    The <literal>LIKE</literal> clause, as supported in this command, is
    nonstandard.
   </para>

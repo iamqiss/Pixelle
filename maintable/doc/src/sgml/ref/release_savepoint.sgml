@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/release_savepoint.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-release-savepoint">
@@ -132,7 +132,7 @@ ROLLBACK TO SAVEPOINT sp1;
   <para>
    This command conforms to the <acronym>SQL</acronym> standard.  The standard
    specifies that the key word <literal>SAVEPOINT</literal> is
-   mandatory, but <productname>PostgreSQL</productname> allows it to
+   mandatory, but <productname>maintableQL</productname> allows it to
    be omitted.
   </para>
  </refsect1>

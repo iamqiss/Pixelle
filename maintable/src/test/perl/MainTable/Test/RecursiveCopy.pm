@@ -1,22 +1,22 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 =pod
 
 =head1 NAME
 
-PostgreSQL::Test::RecursiveCopy - simple recursive copy implementation
+maintableQL::Test::RecursiveCopy - simple recursive copy implementation
 
 =head1 SYNOPSIS
 
-use PostgreSQL::Test::RecursiveCopy;
+use maintableQL::Test::RecursiveCopy;
 
-PostgreSQL::Test::RecursiveCopy::copypath($from, $to, filterfn => sub { return 1; });
-PostgreSQL::Test::RecursiveCopy::copypath($from, $to);
+maintableQL::Test::RecursiveCopy::copypath($from, $to, filterfn => sub { return 1; });
+maintableQL::Test::RecursiveCopy::copypath($from, $to);
 
 =cut
 
-package PostgreSQL::Test::RecursiveCopy;
+package maintableQL::Test::RecursiveCopy;
 
 use strict;
 use warnings FATAL => 'all';
@@ -54,7 +54,7 @@ attempted.
 
 =head1 EXAMPLES
 
- PostgreSQL::Test::RecursiveCopy::copypath('/some/path', '/empty/dir',
+ maintableQL::Test::RecursiveCopy::copypath('/some/path', '/empty/dir',
     filterfn => sub {
 		# omit log/ and contents
 		my $src = shift;

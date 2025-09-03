@@ -4,7 +4,7 @@
  *	  Support routines for scanning Values lists
  *	  ("VALUES (...), (...), ..." in rangetable).
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -20,7 +20,7 @@
  *		ExecInitValuesScan		creates and initializes a valuesscan node.
  *		ExecReScanValuesScan	rescans the values list
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "executor/executor.h"
 #include "executor/nodeValuesscan.h"

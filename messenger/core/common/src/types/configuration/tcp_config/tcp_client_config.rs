@@ -18,13 +18,13 @@
 use crate::types::configuration::auth_config::connection_string::ConnectionString;
 use crate::types::configuration::auth_config::connection_string_options::ConnectionStringOptions;
 use crate::types::configuration::tcp_config::tcp_connection_string_options::TcpConnectionStringOptions;
-use crate::{AutoLogin, IggyDuration, TcpClientReconnectionConfig};
+use crate::{AutoLogin, MessengerDuration, TcpClientReconnectionConfig};
 use std::str::FromStr;
 
 /// Configuration for the TCP client.
 #[derive(Debug, Clone)]
 pub struct TcpClientConfig {
-    /// The address of the Iggy server.
+    /// The address of the Messenger server.
     pub server_address: String,
     /// Whether to use TLS when connecting to the server.
     pub tls_enabled: bool,
@@ -39,7 +39,7 @@ pub struct TcpClientConfig {
     /// Whether to automatically reconnect when disconnected.
     pub reconnection: TcpClientReconnectionConfig,
     /// Interval of heartbeats sent by the client
-    pub heartbeat_interval: IggyDuration,
+    pub heartbeat_interval: MessengerDuration,
     /// Disable Nagle algorithm for the TCP socket.
     pub nodelay: bool,
 }
@@ -52,7 +52,7 @@ impl Default for TcpClientConfig {
             tls_domain: "localhost".to_string(),
             tls_ca_file: None,
             tls_validate_certificate: true,
-            heartbeat_interval: IggyDuration::from_str("5s").unwrap(),
+            heartbeat_interval: MessengerDuration::from_str("5s").unwrap(),
             auto_login: AutoLogin::Disabled,
             reconnection: TcpClientReconnectionConfig::default(),
             nodelay: false,

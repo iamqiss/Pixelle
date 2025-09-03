@@ -1,11 +1,11 @@
 
-# Copyright (c) 2024-2025, PostgreSQL Global Development Group
+# Copyright (c) 2024-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 
 use Test::More;
 
@@ -202,16 +202,16 @@ note "running sepgsql regression tests";
 
 my $node;
 
-$node = PostgreSQL::Test::Cluster->new('test');
+$node = maintableQL::Test::Cluster->new('test');
 $node->init;
-$node->append_conf('postgresql.conf', 'log_statement=none');
+$node->append_conf('maintableql.conf', 'log_statement=none');
 
 {
 	local %ENV = $node->_get_env();
 
 	my $result = run_log(
 		[
-			'postgres', '--single', '-F',
+			'maintable', '--single', '-F',
 			'-c' => 'exit_on_error=true',
 			'-D' => $node->data_dir,
 			'template0'
@@ -220,7 +220,7 @@ $node->append_conf('postgresql.conf', 'log_statement=none');
 	ok($result, 'sepgsql installation script');
 }
 
-$node->append_conf('postgresql.conf', 'shared_preload_libraries=sepgsql');
+$node->append_conf('maintableql.conf', 'shared_preload_libraries=sepgsql');
 $node->start;
 
 my @tests = qw(label dml ddl alter misc);

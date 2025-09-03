@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 if not ssl.found()
   subdir_done()
@@ -83,7 +83,7 @@ endif
 pgcrypto = shared_module('pgcrypto',
   pgcrypto_sources,
   link_with: pgcrypto_link_with,
-  c_pch: pch_postgres_h,
+  c_pch: pch_maintable_h,
   kwargs: contrib_mod_args + {
     'dependencies': [pgcrypto_deps, contrib_mod_args['dependencies']]
   },

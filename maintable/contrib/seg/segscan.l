@@ -2,7 +2,7 @@
 /*
  * A scanner for EMP-style numeric ranges
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "nodes/miscnodes.h"
 

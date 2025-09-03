@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_conversion.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-alterconversion">

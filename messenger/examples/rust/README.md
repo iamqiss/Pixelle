@@ -1,25 +1,25 @@
-# Iggy Examples
+# Messenger Examples
 
-This directory contains comprehensive sample applications that showcase various usage patterns of the Iggy client SDK, from basic operations to advanced multi-tenant scenarios. To learn more about building applications with Iggy, please refer to the [getting started](https://iggy.apache.org/docs/introduction/getting-started) guide.
+This directory contains comprehensive sample applications that showcase various usage patterns of the Messenger client SDK, from basic operations to advanced multi-tenant scenarios. To learn more about building applications with Messenger, please refer to the [getting started](https://messenger.apache.org/docs/introduction/getting-started) guide.
 
 ## Running Examples
 
-To run any example, first start the server with `cargo run --bin iggy-server` and then run the desired example using `cargo run --example EXAMPLE_NAME`.
+To run any example, first start the server with `cargo run --bin messenger-server` and then run the desired example using `cargo run --example EXAMPLE_NAME`.
 
 For server configuration options and help:
 
 ```bash
-cargo run --bin iggy-server -- --help
+cargo run --bin messenger-server -- --help
 ```
 
 You can also customize the server using environment variables:
 
 ```bash
 ## Example: Enable HTTP transport and set custom address
-IGGY_HTTP_ENABLED=true IGGY_TCP_ADDRESS=0.0.0.0:8090 cargo run --bin iggy-server
+MESSENGER_HTTP_ENABLED=true MESSENGER_TCP_ADDRESS=0.0.0.0:8090 cargo run --bin messenger-server
 ```
 
-You can run multiple producers and consumers simultaneously to observe how messages are distributed across clients. Most examples support configurable options via the [Args](https://github.com/apache/iggy/blob/master/examples/rust/src/shared/args.rs) struct, including transport protocol, stream/topic/partition settings, consumer ID, message size, and more.
+You can run multiple producers and consumers simultaneously to observe how messages are distributed across clients. Most examples support configurable options via the [Args](https://github.com/apache/messenger/blob/master/examples/rust/src/shared/args.rs) struct, including transport protocol, stream/topic/partition settings, consumer ID, message size, and more.
 
 ![sample](../../assets/sample.png)
 
@@ -27,14 +27,14 @@ You can run multiple producers and consumers simultaneously to observe how messa
 
 ### Getting Started
 
-Perfect introduction for newcomers to Iggy:
+Perfect introduction for newcomers to Messenger:
 
 ```bash
 cargo run --example getting-started-producer
 cargo run --example getting-started-consumer
 ```
 
-These examples use IggyClientBuilder with TCP transport and demonstrate automatic stream/topic creation with basic message handling.
+These examples use MessengerClientBuilder with TCP transport and demonstrate automatic stream/topic creation with basic message handling.
 
 ### Basic Usage
 
@@ -109,7 +109,7 @@ Produces high-throughput data (1000 messages per batch) with realistic user reco
 
 ### Basic Stream Management
 
-IggyStream abstraction for producer/consumer pairs:
+MessengerStream abstraction for producer/consumer pairs:
 
 ```bash
 cargo run --example stream-basic
@@ -132,7 +132,7 @@ These examples document all available configuration options including partitioni
 
 All examples can be executed directly from the repository. Follow these steps:
 
-1. **Start the Iggy server**: `cargo run --bin iggy-server`
+1. **Start the Messenger server**: `cargo run --bin messenger-server`
 2. **Run desired example**: `cargo run --example EXAMPLE_NAME`
 3. **Check source code**: Examples include detailed comments explaining concepts and usage patterns
 

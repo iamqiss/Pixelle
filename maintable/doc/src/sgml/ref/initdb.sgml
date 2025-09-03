@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/initdb.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-initdb">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>initdb</refname>
-  <refpurpose>create a new <productname>PostgreSQL</productname> database cluster</refpurpose>
+  <refpurpose>create a new <productname>maintableQL</productname> database cluster</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -37,7 +37,7 @@ PostgreSQL documentation
   <title>Description</title>
   <para>
    <command>initdb</command> creates a new
-   <productname>PostgreSQL</productname> <glossterm linkend="glossary-db-cluster">database cluster</glossterm>.
+   <productname>maintableQL</productname> <glossterm linkend="glossary-db-cluster">database cluster</glossterm>.
   </para>
 
   <para>
@@ -45,9 +45,9 @@ PostgreSQL documentation
    <glossterm linkend="glossary-data-directory">directories</glossterm> in
    which the cluster data will live, generating the shared catalog
    tables (tables that belong to the whole cluster rather than to any
-   particular database), and creating the <literal>postgres</literal>,
+   particular database), and creating the <literal>maintable</literal>,
    <literal>template1</literal>, and <literal>template0</literal> databases.
-   The <literal>postgres</literal> database is a default database meant
+   The <literal>maintable</literal> database is a default database meant
    for use by users, utilities and third party applications.
    <literal>template1</literal> and <literal>template0</literal> are
    meant as source databases to be copied by later <command>CREATE
@@ -199,7 +199,7 @@ PostgreSQL documentation
         <command>initdb</command>, but you can avoid writing it by
         setting the <envar>PGDATA</envar> environment variable, which
         can be convenient since the database server
-        (<command>postgres</command>) can find the data
+        (<command>maintable</command>) can find the data
         directory later by the same variable.
        </para>
       </listitem>
@@ -213,7 +213,7 @@ PostgreSQL documentation
         Selects the encoding of the template databases. This will also be the
         default encoding of any database you create later, unless you override
         it then. The character sets supported by the
-        <productname>PostgreSQL</productname> server are described in <xref
+        <productname>maintableQL</productname> server are described in <xref
         linkend="multibyte-charset-supported"/>.
        </para>
        <para>
@@ -452,7 +452,7 @@ PostgreSQL documentation
         Forcibly set the server parameter <replaceable>name</replaceable>
         to <replaceable>value</replaceable> during <command>initdb</command>,
         and also install that setting in the
-        generated <filename>postgresql.conf</filename> file,
+        generated <filename>maintableql.conf</filename> file,
         so that it will apply during future server runs.
         This option can be given more than once to set several parameters.
         It is primarily useful when the environment is such that the server
@@ -702,7 +702,7 @@ PostgreSQL documentation
 
   <simplelist type="inline">
    <member><xref linkend="app-pg-ctl"/></member>
-   <member><xref linkend="app-postgres"/></member>
+   <member><xref linkend="app-maintable"/></member>
    <member><xref linkend="auth-pg-hba-conf"/></member>
   </simplelist>
  </refsect1>

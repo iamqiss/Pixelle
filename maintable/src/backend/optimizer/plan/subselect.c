@@ -6,7 +6,7 @@
  * This module deals with SubLinks and CTEs, but not subquery RTEs (i.e.,
  * not sub-SELECT-in-FROM cases).
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -14,7 +14,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "catalog/pg_operator.h"
@@ -2147,7 +2147,7 @@ process_sublinks_mutator(Node *node, process_sublinks_context *context)
 	 * Anywhere within the top-level AND/OR clause structure, we can tell
 	 * make_subplan() that NULL and FALSE are interchangeable.  So isTopQual
 	 * propagates down in both cases.  (Note that this is unlike the meaning
-	 * of "top level qual" used in most other places in Postgres.)
+	 * of "top level qual" used in most other places in Maintable.)
 	 */
 	if (is_andclause(node))
 	{

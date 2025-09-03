@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Sets up a KDC and then runs a variety of tests to make sure that the
 # GSSAPI/Kerberos authentication and encryption are working properly,
@@ -8,7 +8,7 @@
 # see for each test and that SYSTEM_USER returns what we expect to see.
 #
 # Also test that GSSAPI delegation is working properly and that those
-# credentials can be used to make dblink / postgres_fdw connections.
+# credentials can be used to make dblink / maintable_fdw connections.
 #
 # Since this requires setting up a full KDC, it doesn't make much sense
 # to have multiple test scripts (since they'd have to also create their
@@ -19,9 +19,9 @@
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Utils;
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Kerberos;
+use maintableQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Kerberos;
 use Test::More;
 use Time::HiRes qw(usleep);
 
@@ -35,9 +35,9 @@ elsif (!$ENV{PG_TEST_EXTRA} || $ENV{PG_TEST_EXTRA} !~ /\bkerberos\b/)
 	  'Potentially unsafe test GSSAPI/Kerberos not enabled in PG_TEST_EXTRA';
 }
 
-my $pgpass = "${PostgreSQL::Test::Utils::tmp_check}/.pgpass";
+my $pgpass = "${maintableQL::Test::Utils::tmp_check}/.pgpass";
 
-my $dbname = 'postgres';
+my $dbname = 'maintable';
 my $username = 'test1';
 my $application = '001_auth.pl';
 
@@ -48,21 +48,21 @@ chmod 0600, $pgpass or die $!;
 
 note "setting up Kerberos";
 
-my $host = 'auth-test-localhost.postgresql.example.com';
+my $host = 'auth-test-localhost.maintableql.example.com';
 my $hostaddr = '127.0.0.1';
 my $realm = 'EXAMPLE.COM';
 
-my $krb = PostgreSQL::Test::Kerberos->new($host, $hostaddr, $realm);
+my $krb = maintableQL::Test::Kerberos->new($host, $hostaddr, $realm);
 
 my $test1_password = 'secret1';
 $krb->create_principal('test1', $test1_password);
 
-note "setting up PostgreSQL instance";
+note "setting up maintableQL instance";
 
-my $node = PostgreSQL::Test::Cluster->new('node');
+my $node = maintableQL::Test::Cluster->new('node');
 $node->init;
 $node->append_conf(
-	'postgresql.conf', qq{
+	'maintableql.conf', qq{
 listen_addresses = '$hostaddr'
 krb_server_keyfile = '$krb->{keytab}'
 log_connections = all
@@ -73,44 +73,44 @@ $node->start;
 
 my $port = $node->port();
 
-$node->safe_psql('postgres', 'CREATE USER test1;');
-$node->safe_psql('postgres',
+$node->safe_psql('maintable', 'CREATE USER test1;');
+$node->safe_psql('maintable',
 	"CREATE USER test2 WITH ENCRYPTED PASSWORD 'abc123';");
-$node->safe_psql('postgres', 'CREATE EXTENSION postgres_fdw;');
-$node->safe_psql('postgres', 'CREATE EXTENSION dblink;');
-$node->safe_psql('postgres',
-	"CREATE SERVER s1 FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host '$host', hostaddr '$hostaddr', port '$port', dbname 'postgres');"
+$node->safe_psql('maintable', 'CREATE EXTENSION maintable_fdw;');
+$node->safe_psql('maintable', 'CREATE EXTENSION dblink;');
+$node->safe_psql('maintable',
+	"CREATE SERVER s1 FOREIGN DATA WRAPPER maintable_fdw OPTIONS (host '$host', hostaddr '$hostaddr', port '$port', dbname 'maintable');"
 );
-$node->safe_psql('postgres',
-	"CREATE SERVER s2 FOREIGN DATA WRAPPER postgres_fdw OPTIONS (port '$port', dbname 'postgres', passfile '$pgpass');"
+$node->safe_psql('maintable',
+	"CREATE SERVER s2 FOREIGN DATA WRAPPER maintable_fdw OPTIONS (port '$port', dbname 'maintable', passfile '$pgpass');"
 );
 
-$node->safe_psql('postgres', 'GRANT USAGE ON FOREIGN SERVER s1 TO test1;');
+$node->safe_psql('maintable', 'GRANT USAGE ON FOREIGN SERVER s1 TO test1;');
 
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"CREATE USER MAPPING FOR test1 SERVER s1 OPTIONS (user 'test1');");
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"CREATE USER MAPPING FOR test1 SERVER s2 OPTIONS (user 'test2');");
 
-$node->safe_psql('postgres', "CREATE TABLE t1 (c1 int);");
-$node->safe_psql('postgres', "INSERT INTO t1 VALUES (1);");
-$node->safe_psql('postgres',
+$node->safe_psql('maintable', "CREATE TABLE t1 (c1 int);");
+$node->safe_psql('maintable', "INSERT INTO t1 VALUES (1);");
+$node->safe_psql('maintable',
 	"CREATE FOREIGN TABLE tf1 (c1 int) SERVER s1 OPTIONS (schema_name 'public', table_name 't1');"
 );
-$node->safe_psql('postgres', "GRANT SELECT ON t1 TO test1;");
-$node->safe_psql('postgres', "GRANT SELECT ON tf1 TO test1;");
+$node->safe_psql('maintable', "GRANT SELECT ON t1 TO test1;");
+$node->safe_psql('maintable', "GRANT SELECT ON tf1 TO test1;");
 
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"CREATE FOREIGN TABLE tf2 (c1 int) SERVER s2 OPTIONS (schema_name 'public', table_name 't1');"
 );
-$node->safe_psql('postgres', "GRANT SELECT ON tf2 TO test1;");
+$node->safe_psql('maintable', "GRANT SELECT ON tf2 TO test1;");
 
 # Set up a table for SYSTEM_USER parallel worker testing.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"CREATE TABLE ids (id) AS SELECT 'gss:test1\@$realm' FROM generate_series(1, 10);"
 );
 
-$node->safe_psql('postgres', 'GRANT SELECT ON ids TO public;');
+$node->safe_psql('maintable', 'GRANT SELECT ON ids TO public;');
 
 note "running tests";
 
@@ -124,7 +124,7 @@ sub test_access
 	  = @_;
 
 	# need to connect over TCP/IP for Kerberos
-	my $connstr = $node->connstr('postgres')
+	my $connstr = $node->connstr('maintable')
 	  . " user=$role host=$host hostaddr=$hostaddr $gssencmode";
 
 	my %params = (sql => $query,);
@@ -158,7 +158,7 @@ sub test_query
 	my ($node, $role, $query, $expected, $gssencmode, $test_name) = @_;
 
 	# need to connect over TCP/IP for Kerberos
-	my $connstr = $node->connstr('postgres')
+	my $connstr = $node->connstr('maintable')
 	  . " user=$role host=$host hostaddr=$hostaddr $gssencmode";
 
 	$node->connect_ok(
@@ -272,24 +272,24 @@ test_query(
 
 # require_auth=gss succeeds if required.
 $node->connect_ok(
-	$node->connstr('postgres')
+	$node->connstr('maintable')
 	  . " user=test1 host=$host hostaddr=$hostaddr gssencmode=disable require_auth=gss",
 	"GSS authentication requested, works with non-encrypted GSS");
 $node->connect_ok(
-	$node->connstr('postgres')
+	$node->connstr('maintable')
 	  . " user=test1 host=$host hostaddr=$hostaddr gssencmode=require require_auth=gss",
 	"GSS authentication requested, works with encrypted GSS auth");
 
 # require_auth=sspi fails if required.
 $node->connect_fails(
-	$node->connstr('postgres')
+	$node->connstr('maintable')
 	  . " user=test1 host=$host hostaddr=$hostaddr gssencmode=disable require_auth=sspi",
 	"SSPI authentication requested, fails with non-encrypted GSS",
 	expected_stderr =>
 	  qr/authentication method requirement "sspi" failed: server requested GSSAPI authentication/
 );
 $node->connect_fails(
-	$node->connstr('postgres')
+	$node->connstr('maintable')
 	  . " user=test1 host=$host hostaddr=$hostaddr gssencmode=require require_auth=sspi",
 	"SSPI authentication requested, fails with encrypted GSS",
 	expected_stderr =>
@@ -345,7 +345,7 @@ test_access(
 	"connection authorized: user=$username database=$dbname application_name=$application GSS (authenticated=yes, encrypted=yes, delegated_credentials=no, principal=test1\@$realm)"
 );
 
-$node->append_conf('postgresql.conf', qq{gss_accept_delegation=off});
+$node->append_conf('maintableql.conf', qq{gss_accept_delegation=off});
 $node->restart;
 
 test_access(
@@ -369,7 +369,7 @@ test_access(
 	"connection authorized: user=$username database=$dbname application_name=$application GSS (authenticated=yes, encrypted=yes, delegated_credentials=no, principal=test1\@$realm)"
 );
 
-$node->append_conf('postgresql.conf', qq{gss_accept_delegation=on});
+$node->append_conf('maintableql.conf', qq{gss_accept_delegation=on});
 $node->restart;
 
 test_access(
@@ -418,7 +418,7 @@ my $psql_stderr = '';
 my $psql_rc = '';
 
 $psql_rc = $node->psql(
-	'postgres',
+	'maintable',
 	"SELECT * FROM dblink('user=test1 dbname=$dbname host=$host hostaddr=$hostaddr port=$port','select 1') as t1(c1 int);",
 	connstr =>
 	  "user=test1 host=$host hostaddr=$hostaddr gssencmode=require gssdelegation=0",
@@ -435,7 +435,7 @@ $psql_out = '';
 $psql_stderr = '';
 
 $psql_rc = $node->psql(
-	'postgres',
+	'maintable',
 	"SELECT * FROM dblink('user=test2 dbname=$dbname port=$port passfile=$pgpass','select 1') as t1(c1 int);",
 	connstr =>
 	  "user=test1 host=$host hostaddr=$hostaddr gssencmode=require gssdelegation=0",
@@ -454,40 +454,40 @@ $psql_out = '';
 $psql_stderr = '';
 
 $psql_rc = $node->psql(
-	'postgres',
+	'maintable',
 	"TABLE tf1;",
 	connstr =>
 	  "user=test1 host=$host hostaddr=$hostaddr gssencmode=require gssdelegation=0",
 	stdout => \$psql_out,
 	stderr => \$psql_stderr);
-is($psql_rc, '3', 'postgres_fdw does not work without delegated credentials');
+is($psql_rc, '3', 'maintable_fdw does not work without delegated credentials');
 like(
 	$psql_stderr,
 	qr/password or GSSAPI delegated credentials required/,
-	'postgres_fdw does not work without delegated credentials');
+	'maintable_fdw does not work without delegated credentials');
 like($psql_out, qr/^$/,
-	'postgres_fdw does not work without delegated credentials');
+	'maintable_fdw does not work without delegated credentials');
 
 $psql_out = '';
 $psql_stderr = '';
 
 $psql_rc = $node->psql(
-	'postgres',
+	'maintable',
 	"TABLE tf2;",
 	connstr =>
 	  "user=test1 host=$host hostaddr=$hostaddr gssencmode=require gssdelegation=0",
 	stdout => \$psql_out,
 	stderr => \$psql_stderr);
 is($psql_rc, '3',
-	'postgres_fdw does not work without delegated credentials and with passfile'
+	'maintable_fdw does not work without delegated credentials and with passfile'
 );
 like(
 	$psql_stderr,
 	qr/password or GSSAPI delegated credentials required/,
-	'postgres_fdw does not work without delegated credentials and with passfile'
+	'maintable_fdw does not work without delegated credentials and with passfile'
 );
 like($psql_out, qr/^$/,
-	'postgres_fdw does not work without delegated credentials and with passfile'
+	'maintable_fdw does not work without delegated credentials and with passfile'
 );
 
 test_access($node, 'test1', 'SELECT true', 2, 'gssencmode=disable',
@@ -495,11 +495,11 @@ test_access($node, 'test1', 'SELECT true', 2, 'gssencmode=disable',
 
 # require_auth=gss succeeds if required.
 $node->connect_ok(
-	$node->connstr('postgres')
+	$node->connstr('maintable')
 	  . " user=test1 host=$host hostaddr=$hostaddr gssencmode=require require_auth=gss",
 	"GSS authentication requested, works with GSS encryption");
 $node->connect_ok(
-	$node->connstr('postgres')
+	$node->connstr('maintable')
 	  . " user=test1 host=$host hostaddr=$hostaddr gssencmode=require require_auth=gss,scram-sha-256",
 	"multiple authentication types requested, works with GSS encryption");
 
@@ -550,14 +550,14 @@ test_query(
 	"TABLE tf1;",
 	qr/^1$/s,
 	'gssencmode=prefer gssdelegation=1',
-	'postgres_fdw works not-encrypted (server not configured to accept encrypted GSSAPI connections)'
+	'maintable_fdw works not-encrypted (server not configured to accept encrypted GSSAPI connections)'
 );
 
 $psql_out = '';
 $psql_stderr = '';
 
 $psql_rc = $node->psql(
-	'postgres',
+	'maintable',
 	"SELECT * FROM dblink('user=test2 dbname=$dbname port=$port passfile=$pgpass','select 1') as t1(c1 int);",
 	connstr =>
 	  "user=test1 host=$host hostaddr=$hostaddr gssencmode=prefer gssdelegation=1",
@@ -576,22 +576,22 @@ $psql_out = '';
 $psql_stderr = '';
 
 $psql_rc = $node->psql(
-	'postgres',
+	'maintable',
 	"TABLE tf2;",
 	connstr =>
 	  "user=test1 host=$host hostaddr=$hostaddr gssencmode=prefer gssdelegation=1",
 	stdout => \$psql_out,
 	stderr => \$psql_stderr);
 is($psql_rc, '3',
-	'postgres_fdw does not work with delegated credentials and with passfile'
+	'maintable_fdw does not work with delegated credentials and with passfile'
 );
 like(
 	$psql_stderr,
 	qr/password or GSSAPI delegated credentials required/,
-	'postgres_fdw does not work with delegated credentials and with passfile'
+	'maintable_fdw does not work with delegated credentials and with passfile'
 );
 like($psql_out, qr/^$/,
-	'postgres_fdw does not work with delegated credentials and with passfile'
+	'maintable_fdw does not work with delegated credentials and with passfile'
 );
 
 truncate($node->data_dir . '/pg_ident.conf', 0);
@@ -626,7 +626,7 @@ test_query(
 test_query(
 	$node, 'test1', "TABLE tf1;", qr/^1$/s,
 	'gssencmode=require gssdelegation=1',
-	'postgres_fdw works encrypted');
+	'maintable_fdw works encrypted');
 
 # Reset pg_hba.conf, and cause a usermap failure with an authentication
 # that has passed.

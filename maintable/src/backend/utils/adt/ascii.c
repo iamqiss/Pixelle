@@ -1,15 +1,15 @@
 /*-----------------------------------------------------------------------
  * ascii.c
- *	 The PostgreSQL routine for string to ascii conversion.
+ *	 The maintableQL routine for string to ascii conversion.
  *
- *	 Portions Copyright (c) 1999-2025, PostgreSQL Global Development Group
+ *	 Portions Copyright (c) 1999-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/utils/adt/ascii.c
  *
  *-----------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "mb/pg_wchar.h"
 #include "utils/ascii.h"

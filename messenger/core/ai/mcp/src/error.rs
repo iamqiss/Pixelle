@@ -26,13 +26,13 @@ pub enum McpRuntimeError {
     MissingConfig,
     #[error("Failed to start HTTP server")]
     FailedToStartHttpServer,
-    #[error("Iggy client error")]
-    IggyClient(#[from] iggy::prelude::ClientError),
-    #[error("Iggy error")]
-    IggyError(#[from] iggy::prelude::IggyError),
-    #[error("Missing Iggy credentials")]
-    MissingIggyCredentials,
-    #[error("Failed to create Iggy consumer ID")]
+    #[error("Messenger client error")]
+    MessengerClient(#[from] messenger::prelude::ClientError),
+    #[error("Messenger error")]
+    MessengerError(#[from] messenger::prelude::MessengerError),
+    #[error("Missing Messenger credentials")]
+    MissingMessengerCredentials,
+    #[error("Failed to create Messenger consumer ID")]
     FailedToCreateConsumerId,
     #[error("Invalid API path")]
     InvalidApiPath,

@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * relcache.c
- *	  POSTGRES relation descriptor cache code
+ *	  MAINTABLE relation descriptor cache code
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -24,7 +24,7 @@
  *		The following code contains many undocumented hacks.  Please be
  *		careful....
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/file.h>
 #include <fcntl.h>
@@ -3216,7 +3216,7 @@ AssertPendingSyncs_RelationCache(void)
  * cache entries (since we can't safely do database accesses).  Therefore
  * we must reset refcnts before handling pending invalidations.
  *
- * As of PostgreSQL 8.1, relcache refcnts should get released by the
+ * As of maintableQL 8.1, relcache refcnts should get released by the
  * ResourceOwner mechanism.  This routine just does a debugging
  * cross-check that no pins remain.  However, we also need to do special
  * cleanup when the current transaction created any relations or made use
@@ -4201,7 +4201,7 @@ RelationCacheInitializePhase3(void)
 	 *
 	 * DatabaseNameIndexId isn't critical for relcache loading, but rather for
 	 * initial lookup of MyDatabaseId, without which we'll never find any
-	 * non-shared catalogs at all.  Autovacuum calls InitPostgres with a
+	 * non-shared catalogs at all.  Autovacuum calls InitMaintable with a
 	 * database OID, so it instead depends on DatabaseOidIndexId.  We also
 	 * need to nail up some indexes on pg_authid and pg_auth_members for use
 	 * during client authentication.  SharedSecLabelObjectIndexId isn't
@@ -6134,7 +6134,7 @@ errtableconstraint(Relation rel, const char *conname)
  *			  relation descriptors using sequential scans and write 'em to
  *			  the initialization file for use by subsequent backends.
  *
- *		As of Postgres 9.0, there is one local initialization file in each
+ *		As of Maintable 9.0, there is one local initialization file in each
  *		database, plus one shared initialization file for shared catalogs.
  *
  *		We could dispense with the initialization files and just build the

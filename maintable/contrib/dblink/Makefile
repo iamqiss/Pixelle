@@ -9,7 +9,7 @@ SHLIB_LINK_INTERNAL = $(libpq)
 
 EXTENSION = dblink
 DATA = dblink--1.2.sql dblink--1.1--1.2.sql dblink--1.0--1.1.sql
-PGFILEDESC = "dblink - connect to other PostgreSQL databases"
+PGFILEDESC = "dblink - connect to other maintableQL databases"
 
 REGRESS = dblink
 REGRESS_OPTS = --dlpath=$(top_builddir)/src/test/regress

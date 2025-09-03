@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2001-2025, PostgreSQL Global Development Group
+# Copyright (c) 2001-2025, maintableQL Global Development Group
 #
 # src/backend/utils/mb/Unicode/convutils.pm
 
@@ -61,7 +61,7 @@ sub read_source
 			l => $.
 		};
 
-		# Ignore pure ASCII mappings. PostgreSQL character conversion code
+		# Ignore pure ASCII mappings. maintableQL character conversion code
 		# never even passes these to the conversion code.
 		next if ($out->{code} < 0x80 || $out->{ucs} < 0x80);
 

@@ -11,7 +11,7 @@ import os
 import subprocess
 import sys
 
-parser = argparse.ArgumentParser(description='generate PostgreSQL rc file')
+parser = argparse.ArgumentParser(description='generate maintableQL rc file')
 
 parser.add_argument('--srcdir', type=os.path.abspath,
                     required=True)
@@ -50,9 +50,9 @@ if args.FILEDESC:
     filedesc = args.FILEDESC
 elif args.NAME:
     if args.VFT_TYPE == 'VFT_DLL':
-        filedesc = 'PostgreSQL {0} library'.format(args.NAME)
+        filedesc = 'maintableQL {0} library'.format(args.NAME)
     else:
-        filedesc = 'PostgreSQL {0} binary'.format(args.NAME)
+        filedesc = 'maintableQL {0} binary'.format(args.NAME)
 filedesc = '"{0}"'.format(filedesc)
 
 

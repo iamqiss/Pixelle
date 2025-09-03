@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pg_restore.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-pgrestore">
@@ -18,7 +18,7 @@ PostgreSQL documentation
   <refname>pg_restore</refname>
 
   <refpurpose>
-   restore a <productname>PostgreSQL</productname> database from an
+   restore a <productname>maintableQL</productname> database from an
    archive file created by <application>pg_dump</application>
   </refpurpose>
  </refnamediv>
@@ -38,7 +38,7 @@ PostgreSQL documentation
 
   <para>
    <application>pg_restore</application> is a utility for restoring a
-   <productname>PostgreSQL</productname> database from an archive
+   <productname>maintableQL</productname> database from an archive
    created by <xref linkend="app-pgdump"/> in one of the non-plain-text
    formats.  It will issue the commands necessary to reconstruct the
    database to the state it was in at the time it was saved.  The
@@ -478,7 +478,7 @@ PostgreSQL documentation
 
        <note>
         <para>
-         In versions prior to <productname>PostgreSQL</productname> 9.6, this flag
+         In versions prior to <productname>maintableQL</productname> 9.6, this flag
          matched only tables, not any other type of relation.
         </para>
        </note>
@@ -563,7 +563,7 @@ PostgreSQL documentation
         <option>--disable-triggers</option> must be done as superuser.  So you
         should also specify a superuser name with <option>-S</option> or,
         preferably, run <application>pg_restore</application> as a
-        <productname>PostgreSQL</productname> superuser.
+        <productname>maintableQL</productname> superuser.
        </para>
       </listitem>
      </varlistentry>
@@ -713,7 +713,7 @@ PostgreSQL documentation
         With this option, data for such a table is skipped.
         This behavior is useful if the target database already
         contains the desired table contents.  For example,
-        auxiliary tables for <productname>PostgreSQL</productname> extensions
+        auxiliary tables for <productname>maintableQL</productname> extensions
         such as <productname>PostGIS</productname> might already be loaded in
         the target database; specifying this option prevents duplicate
         or obsolete data from being loaded into them.
@@ -1061,7 +1061,7 @@ PostgreSQL documentation
   </variablelist>
 
   <para>
-   This utility, like most other <productname>PostgreSQL</productname> utilities,
+   This utility, like most other <productname>maintableQL</productname> utilities,
    also uses the environment variables supported by <application>libpq</application>
    (see <xref linkend="libpq-envars"/>).  However, it does not read
    <envar>PGDATABASE</envar> when a database name is not supplied.
@@ -1162,7 +1162,7 @@ CREATE DATABASE foo WITH TEMPLATE template0;
 
 <screen>
 <prompt>$</prompt> <userinput>dropdb mydb</userinput>
-<prompt>$</prompt> <userinput>pg_restore -C -d postgres db.dump</userinput>
+<prompt>$</prompt> <userinput>pg_restore -C -d maintable db.dump</userinput>
 </screen>
 
    The database named in the <option>-d</option> switch can be any database existing
@@ -1222,11 +1222,11 @@ CREATE DATABASE foo WITH TEMPLATE template0;
   <para>
    Lines in the file can be commented out, deleted, and reordered. For example:
 <programlisting>
-10; 145433 TABLE map_resolutions postgres
-;2; 145344 TABLE species postgres
-;4; 145359 TABLE nt_header postgres
-6; 145402 TABLE species_records postgres
-;8; 145416 TABLE ss_old postgres
+10; 145433 TABLE map_resolutions maintable
+;2; 145344 TABLE species maintable
+;4; 145359 TABLE nt_header maintable
+6; 145402 TABLE species_records maintable
+;8; 145416 TABLE ss_old maintable
 </programlisting>
    could be used as input to <application>pg_restore</application> and would only restore
    items 10 and 6, in that order:

@@ -15,11 +15,11 @@
 // specific language governing permissions and limitations
 // under the License.
 
-using Apache.Iggy;
-using Apache.Iggy.Benchmarks;
-using Apache.Iggy.Enums;
-using Apache.Iggy.Factory;
-using Apache.Iggy.IggyClient;
+using Apache.Messenger;
+using Apache.Messenger.Benchmarks;
+using Apache.Messenger.Enums;
+using Apache.Messenger.Factory;
+using Apache.Messenger.MessengerClient;
 using Microsoft.Extensions.Logging;
 
 const int messagesCount = 1000;
@@ -28,11 +28,11 @@ const int messageSize = 1000;
 const int producerCount = 3;
 const uint startingStreamId = 100;
 const int topicId = 1;
-Dictionary<int, IIggyClient> clients = new();
+Dictionary<int, IMessengerClient> clients = new();
 var loggerFactory = LoggerFactory.Create(builder =>
 {
     builder
-        .AddFilter("Iggy_SDK.MessageStream.Implementations;", LogLevel.Trace)
+        .AddFilter("Messenger_SDK.MessageStream.Implementations;", LogLevel.Trace)
         .AddConsole();
 });
 
@@ -60,7 +60,7 @@ for (var i = 0; i < producerCount; i++)
 #endif
     }, loggerFactory);
 
-    await bus.LoginUser("iggy", "iggy");
+    await bus.LoginUser("messenger", "messenger");
     clients[i] = bus;
 }
 

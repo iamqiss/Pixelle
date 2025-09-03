@@ -16,7 +16,7 @@
 # under the License.
 
 name: java-gradle-post-merge
-description: Java Gradle post-merge publishing github iggy actions
+description: Java Gradle post-merge publishing github messenger actions
 
 inputs:
   version:
@@ -86,11 +86,11 @@ runs:
 
           echo ""
           echo "Would publish artifacts:"
-          echo "  Group ID: org.apache.iggy"
-          echo "  Artifact ID: iggy"
+          echo "  Group ID: org.apache.messenger"
+          echo "  Artifact ID: messenger"
           echo "  Version: ${{ inputs.version }}"
           echo ""
-          echo "Maven coordinates: org.apache.iggy:iggy:${{ inputs.version }}"
+          echo "Maven coordinates: org.apache.messenger:messenger:${{ inputs.version }}"
 
           # Show what would be published
           echo ""
@@ -115,15 +115,15 @@ runs:
           if [ $PUBLISH_EXIT_CODE -eq 0 ]; then
             echo ""
             echo "✅ Successfully published to Maven Nexus"
-            echo "Maven coordinates: org.apache.iggy:iggy:${{ inputs.version }}"
+            echo "Maven coordinates: org.apache.messenger:messenger:${{ inputs.version }}"
             echo ""
             echo "Users can now add to their build.gradle:"
-            echo "  implementation 'org.apache.iggy:iggy:${{ inputs.version }}'"
+            echo "  implementation 'org.apache.messenger:messenger:${{ inputs.version }}'"
             echo ""
             echo "Or to their pom.xml:"
             echo "  <dependency>"
-            echo "    <groupId>org.apache.iggy</groupId>"
-            echo "    <artifactId>iggy</artifactId>"
+            echo "    <groupId>org.apache.messenger</groupId>"
+            echo "    <artifactId>messenger</artifactId>"
             echo "    <version>${{ inputs.version }}</version>"
             echo "  </dependency>"
           else

@@ -26,8 +26,8 @@
 @message_1_payload_base64 = aGVsbG8=
 @message_2_payload_base64 = d29ybGQ=
 @header_1_payload_base_64 = dmFsdWUgMQ==
-@root_username = iggy
-@root_password = iggy
+@root_username = messenger
+@root_password = messenger
 @user1_username = user1
 @user1_password = secret
 @access_token = secret

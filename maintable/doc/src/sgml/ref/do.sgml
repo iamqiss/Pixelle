@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/do.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-do">

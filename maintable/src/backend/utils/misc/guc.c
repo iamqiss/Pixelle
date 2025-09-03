@@ -14,7 +14,7 @@
  * See src/backend/utils/misc/README for more information.
  *
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  * Written by Peter Eisentraut <peter_e@gmx.net>.
  *
  * IDENTIFICATION
@@ -22,7 +22,7 @@
  *
  *--------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 #include <math.h>
@@ -52,7 +52,7 @@
 #include "utils/timestamp.h"
 
 
-#define CONFIG_FILENAME "postgresql.conf"
+#define CONFIG_FILENAME "maintableql.conf"
 #define HBA_FILENAME	"pg_hba.conf"
 #define IDENT_FILENAME	"pg_ident.conf"
 
@@ -327,7 +327,7 @@ ProcessConfigFileInternal(GucContext context, bool applySettings, int elevel)
 		/*
 		 * If DataDir is not set, the PG_AUTOCONF_FILENAME file cannot be
 		 * read.  In this case, we don't want to accept any settings but
-		 * data_directory from postgresql.conf, because they might be
+		 * data_directory from maintableql.conf, because they might be
 		 * overwritten with settings in the PG_AUTOCONF_FILENAME file which
 		 * will be read later. OTOH, since data_directory isn't allowed in the
 		 * PG_AUTOCONF_FILENAME file, it will never be overwritten later.
@@ -1507,7 +1507,7 @@ check_GUC_init(struct config_generic *gconf)
 
 	/*
 	 * GUC_NO_SHOW_ALL requires GUC_NOT_IN_SAMPLE, as a parameter not part of
-	 * SHOW ALL should not be hidden in postgresql.conf.sample.
+	 * SHOW ALL should not be hidden in maintableql.conf.sample.
 	 */
 	if ((gconf->flags & GUC_NO_SHOW_ALL) &&
 		!(gconf->flags & GUC_NOT_IN_SAMPLE))
@@ -1582,7 +1582,7 @@ InitializeGUCOptions(void)
  *
  * This is called from InitializeGUCOptions, and also from ProcessConfigFile
  * to deal with the possibility that a setting has been removed from
- * postgresql.conf and should now get a value from the environment.
+ * maintableql.conf and should now get a value from the environment.
  * (The latter is a kludge that should probably go away someday; if so,
  * fold this back into InitializeGUCOptions.)
  */
@@ -1772,7 +1772,7 @@ RemoveGUCFromLists(struct config_generic *gconf)
 
 /*
  * Select the configuration files and data directory to be used, and
- * do the initial read of postgresql.conf.
+ * do the initial read of maintableql.conf.
  *
  * This is called after processing command-line switches.
  *		userDoption is the -D switch value if any (NULL if unspecified).
@@ -1802,13 +1802,13 @@ SelectConfigFiles(const char *userDoption, const char *progname)
 					 progname,
 					 configdir);
 		if (errno == ENOENT)
-			write_stderr("Run initdb or pg_basebackup to initialize a PostgreSQL data directory.\n");
+			write_stderr("Run initdb or pg_basebackup to initialize a maintableQL data directory.\n");
 		goto fail;
 	}
 
 	/*
 	 * Find the configuration file: if config_file was specified on the
-	 * command line, use it, else use configdir/postgresql.conf.  In any case
+	 * command line, use it, else use configdir/maintableql.conf.  In any case
 	 * ensure the result is an absolute path, so that it will be interpreted
 	 * the same way by future backends.
 	 */
@@ -1986,12 +1986,12 @@ fail:
 /*
  * pg_timezone_abbrev_initialize --- set default value if not done already
  *
- * This is called after initial loading of postgresql.conf.  If no
+ * This is called after initial loading of maintableql.conf.  If no
  * timezone_abbreviations setting was found therein, select default.
  * If a non-default value is already installed, nothing will happen.
  *
  * This can also be called from ProcessConfigFile to establish the default
- * value after a postgresql.conf entry for it is removed.
+ * value after a maintableql.conf entry for it is removed.
  */
 static void
 pg_timezone_abbrev_initialize(void)
@@ -3490,7 +3490,7 @@ set_config_with_handle(const char *name, config_handle *handle,
 			{
 				/*
 				 * We are re-reading a PGC_POSTMASTER variable from
-				 * postgresql.conf.  We can't change the setting, so we should
+				 * maintableql.conf.  We can't change the setting, so we should
 				 * give a warning if the DBA tries to change it.  However,
 				 * because of variant formats, canonicalization by check
 				 * hooks, etc, we can't just compare the given string directly
@@ -6241,7 +6241,7 @@ RestoreGUCState(void *gucstate)
 	 * restoring the GUCs that the leader sent (because they had non-default
 	 * values over there) leads us to exactly the set of GUC values that the
 	 * leader has.  This is true even though the worker may have initially
-	 * absorbed postgresql.conf settings that the leader hasn't yet seen, or
+	 * absorbed maintableql.conf settings that the leader hasn't yet seen, or
 	 * ALTER USER/DATABASE SET settings that were established after the leader
 	 * started.
 	 *

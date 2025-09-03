@@ -27,7 +27,7 @@ describe("Login Command", () => {
   // @warn use ascii char to keep char.length === byteLength
 
   const l1 = {
-    username: 'iggyYolo',
+    username: 'messengerYolo',
     password: 'unitTestSeCret'
   };
 

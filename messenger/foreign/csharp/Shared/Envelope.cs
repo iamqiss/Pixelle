@@ -18,7 +18,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Apache.Iggy.Shared;
+namespace Apache.Messenger.Shared;
 
 public sealed class Envelope
 {

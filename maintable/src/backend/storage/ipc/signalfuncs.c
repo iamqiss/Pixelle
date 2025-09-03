@@ -3,7 +3,7 @@
  * signalfuncs.c
  *	  Functions for signaling backends
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <signal.h>
 
@@ -71,7 +71,7 @@ pg_signal_backend(int pid, int sig)
 		 * if one backend terminated on its own during the run.
 		 */
 		ereport(WARNING,
-				(errmsg("PID %d is not a PostgreSQL backend process", pid)));
+				(errmsg("PID %d is not a maintableQL backend process", pid)));
 
 		return SIGNAL_BACKEND_ERROR;
 	}

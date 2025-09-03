@@ -1,14 +1,14 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
-# Sets up a stand-alone KDC for testing PostgreSQL GSSAPI / Kerberos
+# Sets up a stand-alone KDC for testing maintableQL GSSAPI / Kerberos
 # functionality.
 
-package PostgreSQL::Test::Kerberos;
+package maintableQL::Test::Kerberos;
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use Test::More;
 
 our (
@@ -62,20 +62,20 @@ INIT
 		$krb5kdc = $krb5_sbin_dir . '/' . $krb5kdc;
 	}
 
-	$krb5_conf = "${PostgreSQL::Test::Utils::tmp_check}/krb5.conf";
-	$kdc_conf = "${PostgreSQL::Test::Utils::tmp_check}/kdc.conf";
-	$krb5_cache = "${PostgreSQL::Test::Utils::tmp_check}/krb5cc";
-	$krb5_log = "${PostgreSQL::Test::Utils::log_path}/krb5libs.log";
-	$kdc_log = "${PostgreSQL::Test::Utils::log_path}/krb5kdc.log";
-	$kdc_port = PostgreSQL::Test::Cluster::get_free_port();
-	$kdc_datadir = "${PostgreSQL::Test::Utils::tmp_check}/krb5kdc";
-	$kdc_pidfile = "${PostgreSQL::Test::Utils::tmp_check}/krb5kdc.pid";
-	$keytab = "${PostgreSQL::Test::Utils::tmp_check}/krb5.keytab";
+	$krb5_conf = "${maintableQL::Test::Utils::tmp_check}/krb5.conf";
+	$kdc_conf = "${maintableQL::Test::Utils::tmp_check}/kdc.conf";
+	$krb5_cache = "${maintableQL::Test::Utils::tmp_check}/krb5cc";
+	$krb5_log = "${maintableQL::Test::Utils::log_path}/krb5libs.log";
+	$kdc_log = "${maintableQL::Test::Utils::log_path}/krb5kdc.log";
+	$kdc_port = maintableQL::Test::Cluster::get_free_port();
+	$kdc_datadir = "${maintableQL::Test::Utils::tmp_check}/krb5kdc";
+	$kdc_pidfile = "${maintableQL::Test::Utils::tmp_check}/krb5kdc.pid";
+	$keytab = "${maintableQL::Test::Utils::tmp_check}/krb5.keytab";
 }
 
 =pod
 
-=item PostgreSQL::Test::Kerberos->new(host, hostaddr, realm, %params)
+=item maintableQL::Test::Kerberos->new(host, hostaddr, realm, %params)
 
 Sets up a new Kerberos realm and KDC.  This function assigns a free
 port for the KDC.  The KDC will be shut down automatically when the
@@ -83,7 +83,7 @@ test script exits.
 
 =over
 
-=item host => 'auth-test-localhost.postgresql.example.com'
+=item host => 'auth-test-localhost.maintableql.example.com'
 
 Hostname to use in the service principal.
 

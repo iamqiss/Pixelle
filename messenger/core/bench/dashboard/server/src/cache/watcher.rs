@@ -16,7 +16,7 @@
 // under the License.
 
 use super::BenchmarkCache;
-use crate::error::IggyBenchDashboardServerError;
+use crate::error::MessengerBenchDashboardServerError;
 use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -33,7 +33,7 @@ impl CacheWatcher {
     pub fn new(
         cache: Arc<BenchmarkCache>,
         results_dir: PathBuf,
-    ) -> Result<Self, IggyBenchDashboardServerError> {
+    ) -> Result<Self, MessengerBenchDashboardServerError> {
         let cache_clone = Arc::clone(&cache);
         let runtime_handle = Handle::current();
 
@@ -51,11 +51,11 @@ impl CacheWatcher {
             }
             Err(e) => error!("Watch error: {:?}", e),
         })
-        .map_err(|e| IggyBenchDashboardServerError::InvalidPath(e.to_string()))?;
+        .map_err(|e| MessengerBenchDashboardServerError::InvalidPath(e.to_string()))?;
 
         watcher
             .watch(&results_dir, RecursiveMode::Recursive)
-            .map_err(|e| IggyBenchDashboardServerError::InvalidPath(e.to_string()))?;
+            .map_err(|e| MessengerBenchDashboardServerError::InvalidPath(e.to_string()))?;
 
         Ok(Self { _watcher: watcher })
     }

@@ -3,14 +3,14 @@
  * pgtz.c
  *	  Timezone Library Integration Functions
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/timezone/pgtz.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <fcntl.h>
@@ -228,7 +228,7 @@ init_timezone_hashtable(void)
  * 2. Because we aren't accessing the filesystem, we can safely initialize
  * the "GMT" zone definition before my_exec_path is known.
  * 3. It's quick enough that we don't waste much time when the bootstrap
- * default timezone setting is later overridden from postgresql.conf.
+ * default timezone setting is later overridden from maintableql.conf.
  */
 pg_tz *
 pg_tzset(const char *tzname)

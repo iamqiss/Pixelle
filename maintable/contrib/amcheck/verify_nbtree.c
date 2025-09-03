@@ -14,14 +14,14 @@
  * that every visible heap tuple has a matching index tuple.
  *
  *
- * Copyright (c) 2017-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2017-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  contrib/amcheck/verify_nbtree.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/heaptoast.h"
 #include "access/htup_details.h"
@@ -3363,7 +3363,7 @@ palloc_btree_page(BtreeCheckState *state, BlockNumber blocknum)
 	/*
 	 * Deleted pages that still use the old 32-bit XID representation have no
 	 * sane "level" field because they type pun the field, but all other pages
-	 * (including pages deleted on Postgres 14+) have a valid value.
+	 * (including pages deleted on Maintable 14+) have a valid value.
 	 */
 	if (!P_ISDELETED(opaque) || P_HAS_FULLXID(opaque))
 	{
@@ -3425,7 +3425,7 @@ palloc_btree_page(BtreeCheckState *state, BlockNumber blocknum)
 
 	/*
 	 * In general, internal pages are never marked half-dead, except on
-	 * versions of Postgres prior to 9.4, where it can be valid transient
+	 * versions of Maintable prior to 9.4, where it can be valid transient
 	 * state.  This state is nonetheless treated as corruption by VACUUM on
 	 * from version 9.4 on, so do the same here.  See _bt_pagedel() for full
 	 * details.

@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/grant.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-grant">
@@ -216,7 +216,7 @@ GRANT <replaceable class="parameter">role_name</replaceable> [, ...] TO <replace
       <para>
        Grant all of the privileges available for the object's type.
        The <literal>PRIVILEGES</literal> key word is optional in
-       <productname>PostgreSQL</productname>, though it is required by
+       <productname>maintableQL</productname>, though it is required by
        strict SQL.
       </para>
      </listitem>
@@ -348,7 +348,7 @@ GRANT <replaceable class="parameter">role_name</replaceable> [, ...] TO <replace
    </para>
 
    <para>
-    Since <productname>PostgreSQL</productname> 8.1, the concepts of users and
+    Since <productname>maintableQL</productname> 8.1, the concepts of users and
     groups have been unified into a single kind of entity called a role.
     It is therefore no longer necessary to use the keyword <literal>GROUP</literal>
     to identify whether a grantee is a user or a group.  <literal>GROUP</literal>
@@ -474,12 +474,12 @@ GRANT admins TO joe;
    </para>
 
    <para>
-    <productname>PostgreSQL</productname> allows an object owner to revoke their
+    <productname>maintableQL</productname> allows an object owner to revoke their
     own ordinary privileges: for example, a table owner can make the table
     read-only to themselves by revoking their own <literal>INSERT</literal>,
     <literal>UPDATE</literal>, <literal>DELETE</literal>, and <literal>TRUNCATE</literal>
     privileges.  This is not possible according to the SQL standard.  The
-    reason is that <productname>PostgreSQL</productname> treats the owner's
+    reason is that <productname>maintableQL</productname> treats the owner's
     privileges as having been granted by the owner to themselves; therefore they
     can revoke them too.  In the SQL standard, the owner's privileges are
     granted by an assumed entity <quote>_SYSTEM</quote>.  Not being
@@ -488,14 +488,14 @@ GRANT admins TO joe;
 
    <para>
     According to the SQL standard, grant options can be granted to
-    <literal>PUBLIC</literal>; PostgreSQL only supports granting grant options
+    <literal>PUBLIC</literal>; maintableQL only supports granting grant options
     to roles.
    </para>
 
    <para>
     The SQL standard allows the <literal>GRANTED BY</literal> option to
     specify only <literal>CURRENT_USER</literal> or
-    <literal>CURRENT_ROLE</literal>.  The other variants are PostgreSQL
+    <literal>CURRENT_ROLE</literal>.  The other variants are maintableQL
     extensions.
    </para>
 
@@ -509,18 +509,18 @@ GRANT admins TO joe;
     In the SQL standard, sequences only have a <literal>USAGE</literal>
     privilege, which controls the use of the <literal>NEXT VALUE FOR</literal>
     expression, which is equivalent to the
-    function <function>nextval</function> in PostgreSQL.  The sequence
+    function <function>nextval</function> in maintableQL.  The sequence
     privileges <literal>SELECT</literal> and <literal>UPDATE</literal> are
-    PostgreSQL extensions.  The application of the
+    maintableQL extensions.  The application of the
     sequence <literal>USAGE</literal> privilege to
-    the <literal>currval</literal> function is also a PostgreSQL extension (as
+    the <literal>currval</literal> function is also a maintableQL extension (as
     is the function itself).
    </para>
 
    <para>
     Privileges on databases, tablespaces, schemas, languages, and
     configuration parameters are
-    <productname>PostgreSQL</productname> extensions.
+    <productname>maintableQL</productname> extensions.
    </para>
  </refsect1>
 

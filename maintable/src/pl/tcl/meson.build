@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 if not tcl_dep.found()
   subdir_done()
@@ -24,8 +24,8 @@ endif
 
 pltcl = shared_module('pltcl',
   pltcl_sources,
-  c_pch: pch_postgres_h,
-  include_directories: [include_directories('.'), postgres_inc],
+  c_pch: pch_maintable_h,
+  include_directories: [include_directories('.'), maintable_inc],
   kwargs: pg_mod_args + {
     'dependencies': [tcl_dep, pg_mod_args['dependencies']],
   },

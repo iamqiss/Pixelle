@@ -23,7 +23,7 @@ use crate::streaming::clients::client_manager::Transport;
 use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::anyhow;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use quinn::{Connection, Endpoint, RecvStream, SendStream};
 use tracing::{error, info, trace};
 
@@ -162,7 +162,7 @@ async fn handle_stream(
                 session
             );
             // Only return a connection-terminating error for client not found
-            if let IggyError::ClientNotFound(_) = e {
+            if let MessengerError::ClientNotFound(_) = e {
                 sender.send_error_response(e.clone()).await?;
                 trace!("QUIC error response was sent.");
                 error!("Session will be deleted.");

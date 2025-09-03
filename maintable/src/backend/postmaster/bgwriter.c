@@ -2,7 +2,7 @@
  *
  * bgwriter.c
  *
- * The background writer (bgwriter) is new as of Postgres 8.0.  It attempts
+ * The background writer (bgwriter) is new as of Maintable 8.0.  It attempts
  * to keep regular backends from having to write out dirty shared buffers
  * (which they would only do when needing to free a shared buffer to read in
  * another page).  In the best scenario all writes from shared buffers will
@@ -10,7 +10,7 @@
  * still empowered to issue writes if the bgwriter fails to maintain enough
  * clean shared buffers.
  *
- * As of Postgres 9.2 the bgwriter no longer handles checkpoints.
+ * As of Maintable 9.2 the bgwriter no longer handles checkpoints.
  *
  * Normal termination is by SIGTERM, which instructs the bgwriter to exit(0).
  * Emergency termination is by SIGQUIT; like any backend, the bgwriter will
@@ -21,7 +21,7 @@
  * should be killed by SIGQUIT and then a recovery cycle started.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -29,7 +29,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/xlog.h"
 #include "libpq/pqsignal.h"

@@ -1,17 +1,17 @@
 <!-- doc/src/sgml/limits.sgml -->
 
 <appendix id="limits">
- <title><productname>PostgreSQL</productname> Limits</title>
+ <title><productname>maintableQL</productname> Limits</title>
 
  <para>
   <xref linkend="limits-table"/> describes various hard limits of
-  <productname>PostgreSQL</productname>.  However, practical limits, such as
+  <productname>maintableQL</productname>.  However, practical limits, such as
   performance limitations or available disk space may apply before absolute
   hard limits are reached.
  </para>
 
  <table id="limits-table">
-  <title><productname>PostgreSQL</productname> Limitations</title>
+  <title><productname>maintableQL</productname> Limitations</title>
   <tgroup cols="3">
    <thead>
     <row>
@@ -83,25 +83,25 @@
     <row>
      <entry>columns per index</entry>
      <entry>32</entry>
-     <entry>can be increased by recompiling <productname>PostgreSQL</productname></entry>
+     <entry>can be increased by recompiling <productname>maintableQL</productname></entry>
     </row>
 
     <row>
      <entry>partition keys</entry>
      <entry>32</entry>
-     <entry>can be increased by recompiling <productname>PostgreSQL</productname></entry>
+     <entry>can be increased by recompiling <productname>maintableQL</productname></entry>
     </row>
 
     <row>
      <entry>identifier length</entry>
      <entry>63 bytes</entry>
-     <entry>can be increased by recompiling <productname>PostgreSQL</productname></entry>
+     <entry>can be increased by recompiling <productname>maintableQL</productname></entry>
     </row>
 
     <row>
      <entry>function arguments</entry>
      <entry>100</entry>
-     <entry>can be increased by recompiling <productname>PostgreSQL</productname></entry>
+     <entry>can be increased by recompiling <productname>maintableQL</productname></entry>
     </row>
 
     <row>

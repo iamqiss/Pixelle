@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * multixact.c
- *		PostgreSQL multi-transaction-log manager
+ *		maintableQL multi-transaction-log manager
  *
  * The pg_multixact manager is a pg_xact-like manager that stores an array of
  * MultiXactMember for each MultiXactId.  It is a fundamental part of the
@@ -59,14 +59,14 @@
  * counter does not fall within the wraparound horizon considering the global
  * minimum value.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/backend/access/transam/multixact.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/multixact.h"
 #include "access/slru.h"
@@ -90,7 +90,7 @@
 
 /*
  * Defines for MultiXactOffset page sizes.  A page is the same BLCKSZ as is
- * used everywhere else in Postgres.
+ * used everywhere else in Maintable.
  *
  * Note: because MultiXactOffsets are 32 bits and wrap around at 0xFFFFFFFF,
  * MultiXact page numbering also wraps around at
@@ -2232,7 +2232,7 @@ MultiXactGetCheckptMulti(bool is_shutdown,
 void
 CheckPointMultiXact(void)
 {
-	TRACE_POSTGRESQL_MULTIXACT_CHECKPOINT_START(true);
+	TRACE_MAINTABLEQL_MULTIXACT_CHECKPOINT_START(true);
 
 	/*
 	 * Write dirty MultiXact pages to disk.  This may result in sync requests
@@ -2242,7 +2242,7 @@ CheckPointMultiXact(void)
 	SimpleLruWriteAll(MultiXactOffsetCtl, true);
 	SimpleLruWriteAll(MultiXactMemberCtl, true);
 
-	TRACE_POSTGRESQL_MULTIXACT_CHECKPOINT_DONE(true);
+	TRACE_MAINTABLEQL_MULTIXACT_CHECKPOINT_DONE(true);
 }
 
 /*
@@ -2692,7 +2692,7 @@ SetOffsetVacuumLimit(bool is_startup)
 	{
 		/*
 		 * Figure out where the oldest existing multixact's offsets are
-		 * stored. Due to bugs in early release of PostgreSQL 9.3.X and 9.4.X,
+		 * stored. Due to bugs in early release of maintableQL 9.3.X and 9.4.X,
 		 * the supposedly-earliest multixact might not really exist.  We are
 		 * careful not to fail in that case.
 		 */

@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/deallocate.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-deallocate">

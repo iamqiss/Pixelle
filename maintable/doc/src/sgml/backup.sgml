@@ -6,7 +6,7 @@
  <indexterm zone="backup"><primary>backup</primary></indexterm>
 
  <para>
-  As with everything that contains valuable data, <productname>PostgreSQL</productname>
+  As with everything that contains valuable data, <productname>maintableQL</productname>
   databases should be backed up regularly. While the procedure is
   essentially simple, it is important to have a clear understanding of
   the underlying techniques and assumptions.
@@ -14,7 +14,7 @@
 
  <para>
   There are three fundamentally different approaches to backing up
-  <productname>PostgreSQL</productname> data:
+  <productname>maintableQL</productname> data:
   <itemizedlist>
    <listitem><para><acronym>SQL</acronym> dump</para></listitem>
    <listitem><para>File system level backup</para></listitem>
@@ -31,7 +31,7 @@
    The idea behind this dump method is to generate a file with SQL
    commands that, when fed back to the server, will recreate the
    database in the same state as it was at the time of the dump.
-   <productname>PostgreSQL</productname> provides the utility program
+   <productname>maintableQL</productname> provides the utility program
    <xref linkend="app-pgdump"/> for this purpose. The basic usage of this
    command is:
 <synopsis>
@@ -45,7 +45,7 @@ pg_dump <replaceable class="parameter">dbname</replaceable> &gt; <replaceable cl
   </para>
 
   <para>
-   <application>pg_dump</application> is a regular <productname>PostgreSQL</productname>
+   <application>pg_dump</application> is a regular <productname>maintableQL</productname>
    client application (albeit a particularly clever one). This means
    that you can perform this backup procedure from any remote host that has
    access to the database. But remember that <application>pg_dump</application>
@@ -72,7 +72,7 @@ pg_dump <replaceable class="parameter">dbname</replaceable> &gt; <replaceable cl
   </para>
 
   <para>
-   Like any other <productname>PostgreSQL</productname> client application,
+   Like any other <productname>maintableQL</productname> client application,
    <application>pg_dump</application> will by default connect with the database
    user name that is equal to the current operating system user name. To override
    this, either specify the <option>-U</option> option or set the
@@ -85,7 +85,7 @@ pg_dump <replaceable class="parameter">dbname</replaceable> &gt; <replaceable cl
   <para>
    An important advantage of <application>pg_dump</application> over the other backup
    methods described later is that <application>pg_dump</application>'s output can
-   generally be re-loaded into newer versions of <productname>PostgreSQL</productname>,
+   generally be re-loaded into newer versions of <productname>maintableQL</productname>,
    whereas file-level backups and continuous archiving are both extremely
    server-version-specific.  <application>pg_dump</application> is also the only method
    that will work when transferring a database to a different machine
@@ -189,7 +189,7 @@ pg_dump -h <replaceable>host1</replaceable> <replaceable>dbname</replaceable> | 
     see <xref linkend="vacuum-for-statistics"/>
     and <xref linkend="autovacuum"/> for more information.
     For more advice on how to load large amounts of data
-    into <productname>PostgreSQL</productname> efficiently, refer to <xref
+    into <productname>maintableQL</productname> efficiently, refer to <xref
     linkend="populate"/>.
    </para>
   </sect2>
@@ -211,10 +211,10 @@ pg_dumpall &gt; <replaceable>dumpfile</replaceable>
 </synopsis>
     The resulting dump can be restored with <application>psql</application>:
 <synopsis>
-psql -X -f <replaceable class="parameter">dumpfile</replaceable> postgres
+psql -X -f <replaceable class="parameter">dumpfile</replaceable> maintable
 </synopsis>
     (Actually, you can specify any existing database name to start from,
-    but if you are loading into an empty cluster then <literal>postgres</literal>
+    but if you are loading into an empty cluster then <literal>maintable</literal>
     should usually be used.)  It is always necessary to have
     database superuser access when restoring a <application>pg_dumpall</application>
     dump, as that is required to restore the role and tablespace information.
@@ -305,7 +305,7 @@ pg_dump <replaceable class="parameter">dbname</replaceable> | split -b 2G --filt
    <formalpara>
     <title>Use <application>pg_dump</application>'s custom dump format.</title>
     <para>
-     If <productname>PostgreSQL</productname> was built on a system with the
+     If <productname>maintableQL</productname> was built on a system with the
      <application>zlib</application> compression library installed, the custom dump
      format will compress data as it writes it to the output file. This will
      produce dump file sizes similar to using <command>gzip</command>, but it
@@ -359,7 +359,7 @@ pg_dump -j <replaceable class="parameter">num</replaceable> -F d -f <replaceable
 
   <para>
    An alternative backup strategy is to directly copy the files that
-   <productname>PostgreSQL</productname> uses to store the data in the database;
+   <productname>maintableQL</productname> uses to store the data in the database;
    <xref linkend="creating-cluster"/> explains where these files
    are located.  You can use whatever method you prefer
    for doing file system backups; for example:
@@ -486,7 +486,7 @@ tar -cf backup.tar /usr/local/pgsql/data
   </indexterm>
 
   <para>
-   At all times, <productname>PostgreSQL</productname> maintains a
+   At all times, <productname>maintableQL</productname> maintains a
    <firstterm>write ahead log</firstterm> (WAL) in the <filename>pg_wal/</filename>
    subdirectory of the cluster's data directory. The log records
    every change made to the database's data files.  This log exists
@@ -573,7 +573,7 @@ tar -cf backup.tar /usr/local/pgsql/data
    <title>Setting Up WAL Archiving</title>
 
    <para>
-    In an abstract sense, a running <productname>PostgreSQL</productname> system
+    In an abstract sense, a running <productname>maintableQL</productname> system
     produces an indefinitely long sequence of WAL records.  The system
     physically divides this sequence into WAL <firstterm>segment
     files</firstterm>, which are normally 16MB apiece (although the segment size
@@ -597,8 +597,8 @@ tar -cf backup.tar /usr/local/pgsql/data
     you have a way of identifying the original name of each file), or batch
     them together and burn them onto CDs, or something else entirely.  To
     provide the database administrator with flexibility,
-    <productname>PostgreSQL</productname> tries not to make any assumptions about how
-    the archiving will be done.  Instead, <productname>PostgreSQL</productname> lets
+    <productname>maintableQL</productname> tries not to make any assumptions about how
+    the archiving will be done.  Instead, <productname>maintableQL</productname> lets
     the administrator specify a shell command or an archive library to be executed to copy a
     completed segment file to wherever it needs to go.  This could be as simple
     as a shell command that uses <literal>cp</literal>, or it could invoke a
@@ -614,7 +614,7 @@ tar -cf backup.tar /usr/local/pgsql/data
     or specify the library to use in the <xref
     linkend="guc-archive-library"/> configuration parameter.  In practice
     these settings will always be placed in the
-    <filename>postgresql.conf</filename> file.
+    <filename>maintableql.conf</filename> file.
    </para>
 
    <para>
@@ -643,7 +643,7 @@ test ! -f /mnt/server/archivedir/00000001000000A900000065 &amp;&amp; cp pg_wal/0
 
    <para>
     The archive command will be executed under the ownership of the same
-    user that the <productname>PostgreSQL</productname> server is running as.  Since
+    user that the <productname>maintableQL</productname> server is running as.  Since
     the series of WAL files being archived contains effectively everything
     in your database, you will want to be sure that the archived data is
     protected from prying eyes; for example, archive into a directory that
@@ -653,9 +653,9 @@ test ! -f /mnt/server/archivedir/00000001000000A900000065 &amp;&amp; cp pg_wal/0
    <para>
     It is important that the archive command return zero exit status if and
     only if it succeeds.  Upon getting a zero result,
-    <productname>PostgreSQL</productname> will assume that the file has been
+    <productname>maintableQL</productname> will assume that the file has been
     successfully archived, and will remove or recycle it.  However, a nonzero
-    status tells <productname>PostgreSQL</productname> that the file was not archived;
+    status tells <productname>maintableQL</productname> that the file was not archived;
     it will try again periodically until it succeeds.
    </para>
 
@@ -689,7 +689,7 @@ test ! -f /mnt/server/archivedir/00000001000000A900000065 &amp;&amp; cp pg_wal/0
    </para>
 
    <para>
-    In rare cases, <productname>PostgreSQL</productname> may attempt to
+    In rare cases, <productname>maintableQL</productname> may attempt to
     re-archive a WAL file that was previously archived.  For example, if the
     system crashes before the server makes a durable record of archival
     success, the server will attempt to archive the file again after
@@ -724,7 +724,7 @@ test ! -f /mnt/server/archivedir/00000001000000A900000065 &amp;&amp; cp pg_wal/0
     resolved reasonably quickly. The <filename>pg_wal/</filename> directory will
     continue to fill with WAL segment files until the situation is resolved.
     (If the file system containing <filename>pg_wal/</filename> fills up,
-    <productname>PostgreSQL</productname> will do a PANIC shutdown.  No committed
+    <productname>maintableQL</productname> will do a PANIC shutdown.  No committed
     transactions will be lost, but the database will remain offline until
     you free some space.)
    </para>
@@ -751,9 +751,9 @@ test ! -f /mnt/server/archivedir/00000001000000A900000065 &amp;&amp; cp pg_wal/0
 
    <para>
     Note that although WAL archiving will allow you to restore any
-    modifications made to the data in your <productname>PostgreSQL</productname> database,
+    modifications made to the data in your <productname>maintableQL</productname> database,
     it will not restore changes made to configuration files (that is,
-    <filename>postgresql.conf</filename>, <filename>pg_hba.conf</filename> and
+    <filename>maintableql.conf</filename>, <filename>pg_hba.conf</filename> and
     <filename>pg_ident.conf</filename>), since those are edited manually rather
     than through SQL operations.
     You might wish to keep the configuration files in a location that will
@@ -915,7 +915,7 @@ test ! -f /mnt/server/archivedir/00000001000000A900000065 &amp;&amp; cp pg_wal/0
     <xref linkend="backup-pitr-recovery" />. The requirement to have earlier
     backups available at restore time and to use
     <literal>pg_combinebackup</literal> is an additional requirement on top of
-    everything else. Keep in mind that <application>PostgreSQL</application>
+    everything else. Keep in mind that <application>maintableQL</application>
     has no built-in mechanism to figure out which backups are still needed as
     a basis for restoring later incremental backups. You must keep track of
     the relationships between your full and incremental backups on your own,
@@ -1249,7 +1249,7 @@ SELECT * FROM pg_backup_stop(wait_for_archive => true);
    <listitem>
     <para>
      Set recovery configuration settings in
-     <filename>postgresql.conf</filename> (see <xref
+     <filename>maintableql.conf</filename> (see <xref
      linkend="runtime-config-wal-archive-recovery"/>) and create a file
      <filename>recovery.signal</filename> in the cluster
      data directory. You might
@@ -1283,7 +1283,7 @@ SELECT * FROM pg_backup_stop(wait_for_archive => true);
     The key part of all this is to set up a recovery configuration that
     describes how you want to recover and how far the recovery should
     run.  The one thing that you absolutely must specify is the <varname>restore_command</varname>,
-    which tells <productname>PostgreSQL</productname> how to retrieve archived
+    which tells <productname>maintableQL</productname> how to retrieve archived
     WAL file segments.  Like the <varname>archive_command</varname>, this is
     a shell command string.  It can contain <literal>%f</literal>, which is
     replaced by the name of the desired WAL file, and <literal>%p</literal>,
@@ -1406,7 +1406,7 @@ restore_command = 'cp /mnt/server/archivedir/%f %p'
    </para>
 
    <para>
-    To deal with this problem, <productname>PostgreSQL</productname> has a notion
+    To deal with this problem, <productname>maintableQL</productname> has a notion
     of <firstterm>timelines</firstterm>.  Whenever an archive recovery completes,
     a new timeline is created to identify the series of WAL records
     generated after that recovery.  The timeline
@@ -1432,7 +1432,7 @@ restore_command = 'cp /mnt/server/archivedir/%f %p'
    </para>
 
    <para>
-    Every time a new timeline is created, <productname>PostgreSQL</productname> creates
+    Every time a new timeline is created, <productname>maintableQL</productname> creates
     a <quote>timeline history</quote> file that shows which timeline it branched
     off from and when.  These history files are necessary to allow the system
     to pick the right WAL segment files when recovering from an archive that
@@ -1468,7 +1468,7 @@ restore_command = 'cp /mnt/server/archivedir/%f %p'
      <title>Standalone Hot Backups</title>
 
      <para>
-      It is possible to use <productname>PostgreSQL</productname>'s backup facilities to
+      It is possible to use <productname>maintableQL</productname>'s backup facilities to
       produce standalone hot backups. These are backups that cannot be used
       for point-in-time recovery, yet are typically much faster to backup and
       restore than <application>pg_dump</application> dumps.  (They are also much larger
@@ -1508,7 +1508,7 @@ restore_command = 'gunzip &lt; /mnt/server/archivedir/%f.gz &gt; %p'
      <para>
       Many people choose to use scripts to define their
       <varname>archive_command</varname>, so that their
-      <filename>postgresql.conf</filename> entry looks very simple:
+      <filename>maintableql.conf</filename> entry looks very simple:
 <programlisting>
 archive_command = 'local_backup_script.sh "%p" "%f"'
 </programlisting>

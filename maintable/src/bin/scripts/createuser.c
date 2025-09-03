@@ -2,7 +2,7 @@
  *
  * createuser
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/bin/scripts/createuser.c
@@ -10,7 +10,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <limits.h>
 
@@ -413,7 +413,7 @@ main(int argc, char *argv[])
 static void
 help(const char *progname)
 {
-	printf(_("%s creates a new PostgreSQL role.\n\n"), progname);
+	printf(_("%s creates a new maintableQL role.\n\n"), progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]... [ROLENAME]\n"), progname);
 	printf(_("\nOptions:\n"));

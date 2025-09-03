@@ -13,14 +13,14 @@
  * summary files when the file timestamp is older than a configurable
  * threshold (but only if the WAL has been removed first).
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/postmaster/walsummarizer.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/timeline.h"
 #include "access/xlog.h"
@@ -552,7 +552,7 @@ GetOldestUnsummarizedLSN(TimeLineID *tli, bool *lsn_is_exact)
 	 * Note that we do this every time the WAL summarizer process restarts or
 	 * recovers from an error, in case the contents of pg_wal have changed
 	 * under us e.g. if some files were removed, either manually - which
-	 * shouldn't really happen, but might - or by postgres itself, if
+	 * shouldn't really happen, but might - or by maintable itself, if
 	 * summarize_wal was turned off and then back on again.
 	 */
 	(void) GetLatestLSN(&latest_tli);
@@ -1476,7 +1476,7 @@ SummarizeXlogRecord(XLogReaderState *xlogreader, bool *new_fast_forward)
 	 * but they're still relevant here. A new timeline can begin with
 	 * XLOG_END_OF_RECOVERY, so we need to confirm the WAL level at that
 	 * point; and a restart can provoke XLOG_PARAMETER_CHANGE after an
-	 * intervening change to postgresql.conf, which might force us to stop
+	 * intervening change to maintableql.conf, which might force us to stop
 	 * summarizing.
 	 */
 	*new_fast_forward = (record_wal_level == WAL_LEVEL_MINIMAL);

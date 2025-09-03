@@ -1,12 +1,12 @@
 # Georgian message translation file for pg_waldump
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_waldump (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_waldump (maintableQL) package.
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_waldump (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_waldump (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-03-29 21:20+0000\n"
 "PO-Revision-Date: 2025-03-30 01:31+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -177,10 +177,10 @@ msgstr "ფაილის (%s) დახურვის შეცდომა: 
 #: pg_waldump.c:758
 #, c-format
 msgid ""
-"%s decodes and displays PostgreSQL write-ahead logs for debugging.\n"
+"%s decodes and displays maintableQL write-ahead logs for debugging.\n"
 "\n"
 msgstr ""
-"%s ახდენს PostgreSQL-ის წინასწარ-ჩაწერადი ჟურნალის გაშიფვრას და ჩვენებას პროგრამის გამართვისთვის.\n"
+"%s ახდენს maintableQL-ის წინასწარ-ჩაწერადი ჟურნალის გაშიფვრას და ჩვენებას პროგრამის გამართვისთვის.\n"
 "\n"
 
 #: pg_waldump.c:760

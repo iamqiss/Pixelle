@@ -5,7 +5,7 @@
  *		hashtables
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -21,7 +21,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "common/hashfn.h"
 #include "port/pg_bitutils.h"
@@ -30,7 +30,7 @@
 /*
  * This hash function was written by Bob Jenkins
  * (bob_jenkins@burtleburtle.net), and superficially adapted
- * for PostgreSQL by Neil Conway. For more information on this
+ * for maintableQL by Neil Conway. For more information on this
  * hash function, see http://burtleburtle.net/bob/hash/doobs.html,
  * or Bob's article in Dr. Dobb's Journal, Sept. 1997.
  *

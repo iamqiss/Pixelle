@@ -3,14 +3,14 @@
  * test_dsm_registry.c
  *	  Test the dynamic shared memory registry.
  *
- * Copyright (c) 2024-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2024-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/test/modules/test_dsm_registry/test_dsm_registry.c
  *
  * -------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "fmgr.h"
 #include "storage/dsm_registry.h"

@@ -1,6 +1,6 @@
 /* src/interfaces/ecpg/pgtypeslib/numeric.c */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <ctype.h>
 #include <float.h>
@@ -996,7 +996,7 @@ select_div_scale(numeric *var1, numeric *var2, int *rscale)
 
 	/*
 	 * The result scale of a division isn't specified in any SQL standard. For
-	 * PostgreSQL we select a display scale that will give at least
+	 * maintableQL we select a display scale that will give at least
 	 * NUMERIC_MIN_SIG_DIGITS significant digits, so that numeric gives a
 	 * result no less accurate than float8; but use a scale not less than
 	 * either input's display scale.

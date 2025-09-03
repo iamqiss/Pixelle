@@ -40,7 +40,7 @@ WORKDIR /workspace/foreign/python
 # Install Python dependencies including BDD requirements
 RUN pip3 install --no-cache-dir -r /workspace/bdd/python/requirements.txt
 
-# Build and install the Iggy Python SDK
+# Build and install the Messenger Python SDK
 RUN maturin build --out dist && \
     pip3 install dist/*.whl
 

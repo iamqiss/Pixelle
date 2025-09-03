@@ -1,21 +1,21 @@
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Tests statistics handling around restarts, including handling of crashes and
 # invalid stats files, as well as restoring stats after "normal" restarts.
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 use File::Copy;
 
-my $node = PostgreSQL::Test::Cluster->new('primary');
+my $node = maintableQL::Test::Cluster->new('primary');
 $node->init(allows_streaming => 1);
-$node->append_conf('postgresql.conf', "track_functions = 'all'");
+$node->append_conf('maintableql.conf', "track_functions = 'all'");
 $node->start;
 
-my $connect_db = 'postgres';
+my $connect_db = 'maintable';
 my $db_under_test = 'test';
 
 my $sect = "startup";
@@ -65,7 +65,7 @@ is(have_stats('relation', $dboid, $tableoid),
 $node->stop();
 
 # backup stats files
-my $statsfile = $PostgreSQL::Test::Utils::tmp_check . '/' . "discard_stats1";
+my $statsfile = $maintableQL::Test::Utils::tmp_check . '/' . "discard_stats1";
 ok(!-f "$statsfile", "backup statsfile cannot already exist");
 
 my $datadir = $node->data_dir();

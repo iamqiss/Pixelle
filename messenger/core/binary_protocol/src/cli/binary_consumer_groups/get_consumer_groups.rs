@@ -21,8 +21,8 @@ use crate::cli::cli_command::{CliCommand, PRINT_TARGET};
 use anyhow::Context;
 use async_trait::async_trait;
 use comfy_table::Table;
-use iggy_common::Identifier;
-use iggy_common::get_consumer_groups::GetConsumerGroups;
+use messenger_common::Identifier;
+use messenger_common::get_consumer_groups::GetConsumerGroups;
 use std::fmt::{self, Display, Formatter};
 use tracing::{Level, event};
 

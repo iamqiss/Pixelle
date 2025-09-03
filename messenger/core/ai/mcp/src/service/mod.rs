@@ -16,9 +16,9 @@
  * under the License.
  */
 
-use iggy::prelude::{
-    Consumer, ConsumerGroupClient, ConsumerOffsetClient, Identifier, IggyClient, IggyError,
-    IggyMessage, IggyTimestamp, MessageClient, PartitionClient, Partitioning,
+use messenger::prelude::{
+    Consumer, ConsumerGroupClient, ConsumerOffsetClient, Identifier, MessengerClient, MessengerError,
+    MessengerMessage, MessengerTimestamp, MessageClient, PartitionClient, Partitioning,
     PersonalAccessTokenClient, PollingKind, PollingStrategy, SegmentClient, StreamClient,
     SystemClient, SystemSnapshotType, TopicClient, UserClient, UserStatus,
 };
@@ -37,16 +37,16 @@ use crate::Permissions;
 mod requests;
 
 #[derive(Debug, Clone)]
-pub struct IggyService {
+pub struct MessengerService {
     tool_router: ToolRouter<Self>,
-    client: Arc<IggyClient>,
+    client: Arc<MessengerClient>,
     consumer: Arc<Consumer>,
     permissions: Permissions,
 }
 
 #[tool_router]
-impl IggyService {
-    pub fn new(client: Arc<IggyClient>, consumer: Arc<Consumer>, permissions: Permissions) -> Self {
+impl MessengerService {
+    pub fn new(client: Arc<MessengerClient>, consumer: Arc<Consumer>, permissions: Permissions) -> Self {
         Self {
             tool_router: Self::tool_router(),
             client,
@@ -324,8 +324,8 @@ impl IggyService {
                 "first" => PollingStrategy::first(),
                 "last" => PollingStrategy::last(),
                 "next" => PollingStrategy::next(),
-                "timestamp" => PollingStrategy::timestamp(IggyTimestamp::from(
-                    timestamp.unwrap_or(IggyTimestamp::now().as_micros()),
+                "timestamp" => PollingStrategy::timestamp(MessengerTimestamp::from(
+                    timestamp.unwrap_or(MessengerTimestamp::now().as_micros()),
                 )),
                 _ => PollingStrategy::offset(offset),
             }
@@ -391,13 +391,13 @@ impl IggyService {
             .into_iter()
             .flat_map(|message| {
                 if let Some(id) = message.id {
-                    return IggyMessage::builder()
+                    return MessengerMessage::builder()
                         .id(id)
                         .payload(message.payload.into())
                         .build();
                 }
 
-                IggyMessage::builder()
+                MessengerMessage::builder()
                     .payload(message.payload.into())
                     .build()
             })
@@ -738,10 +738,10 @@ impl IggyService {
 }
 
 #[tool_handler]
-impl ServerHandler for IggyService {
+impl ServerHandler for MessengerService {
     fn get_info(&self) -> ServerInfo {
         ServerInfo {
-            instructions: Some("Iggy service".into()),
+            instructions: Some("Messenger service".into()),
             capabilities: ServerCapabilities::builder().enable_tools().build(),
             ..Default::default()
         }
@@ -756,7 +756,7 @@ fn id(id: &str) -> Result<Identifier, ErrorData> {
     })
 }
 
-fn request(result: Result<impl Sized + Serialize, IggyError>) -> Result<CallToolResult, ErrorData> {
+fn request(result: Result<impl Sized + Serialize, MessengerError>) -> Result<CallToolResult, ErrorData> {
     let result = result.map_err(|e| {
         let message = format!("There was an error when invoking the method. {e}");
         error!(message);

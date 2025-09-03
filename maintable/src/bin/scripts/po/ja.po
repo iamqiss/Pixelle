@@ -1,18 +1,18 @@
 # pgscripts.po
 #   Japanese message translation file for scripts
 #
-# Copyright (C) 2011-2024 PostgreSQL Global Development Group
+# Copyright (C) 2011-2024 maintableQL Global Development Group
 #
-# This file is distributed under the same license as the PostgreSQL package.
+# This file is distributed under the same license as the maintableQL package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: scripts (PostgreSQL 18)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: scripts (maintableQL 18)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-03-31 09:54+0900\n"
 "PO-Revision-Date: 2025-03-31 16:30+0900\n"
 "Last-Translator: Kyotaro Horiguchi <horikyota.ntt@gmail.com>\n"
-"Language-Team: jpug-doc <jpug-doc@ml.postgresql.jp>\n"
+"Language-Team: jpug-doc <jpug-doc@ml.maintableql.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -430,10 +430,10 @@ msgstr "コメントの生成に失敗(データベースは生成されまし�
 #: createdb.c:299
 #, c-format
 msgid ""
-"%s creates a PostgreSQL database.\n"
+"%s creates a maintableQL database.\n"
 "\n"
 msgstr ""
-"%sはPostgreSQLデータベースを生成します。\n"
+"%sはmaintableQLデータベースを生成します。\n"
 "\n"
 
 #: createdb.c:301
@@ -604,10 +604,10 @@ msgstr "新しいロールの作成に失敗しました: %s"
 #: createuser.c:416
 #, c-format
 msgid ""
-"%s creates a new PostgreSQL role.\n"
+"%s creates a new maintableQL role.\n"
 "\n"
 msgstr ""
-"%sは新しいPostgreSQLロールを作成します。\n"
+"%sは新しいmaintableQLロールを作成します。\n"
 "\n"
 
 #: createuser.c:418 dropuser.c:172
@@ -770,10 +770,10 @@ msgstr "データベースの削除に失敗しました: %s"
 #: dropdb.c:170
 #, c-format
 msgid ""
-"%s removes a PostgreSQL database.\n"
+"%s removes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%sはPostgreSQLデータベースを削除します。\n"
+"%sはmaintableQLデータベースを削除します。\n"
 "\n"
 
 #: dropdb.c:172
@@ -818,10 +818,10 @@ msgstr "ロール\"%s\"の削除に失敗しました: %s"
 #: dropuser.c:170
 #, c-format
 msgid ""
-"%s removes a PostgreSQL role.\n"
+"%s removes a maintableQL role.\n"
 "\n"
 msgstr ""
-"%sはPostgreSQLのロールを削除します。\n"
+"%sはmaintableQLのロールを削除します。\n"
 "\n"
 
 #: dropuser.c:175
@@ -876,10 +876,10 @@ msgstr "unknown\n"
 #: pg_isready.c:225
 #, c-format
 msgid ""
-"%s issues a connection check to a PostgreSQL database.\n"
+"%s issues a connection check to a maintableQL database.\n"
 "\n"
 msgstr ""
-"%sはPostgreSQLデータベースに対して接続検査を発行します。\n"
+"%sはmaintableQLデータベースに対して接続検査を発行します。\n"
 "\n"
 
 #: pg_isready.c:227
@@ -943,8 +943,8 @@ msgstr "全データベースと特定のデータベースは同時に再イン
 #: vacuumdb.c:579 vacuumdb.c:586 vacuumdb.c:593 vacuumdb.c:600 vacuumdb.c:607
 #: vacuumdb.c:614 vacuumdb.c:621 vacuumdb.c:628 vacuumdb.c:635
 #, c-format
-msgid "cannot use the \"%s\" option on server versions older than PostgreSQL %s"
-msgstr "PostgreSQL %2$sよりも古いサーバーバージョンでは\"%1$s\"オプションは使えません"
+msgid "cannot use the \"%s\" option on server versions older than maintableQL %s"
+msgstr "maintableQL %2$sよりも古いサーバーバージョンでは\"%1$s\"オプションは使えません"
 
 #: reindexdb.c:597
 #, c-format
@@ -979,10 +979,10 @@ msgstr "%s: データベース\"%s\"を再インデックス化しています\n
 #: reindexdb.c:897
 #, c-format
 msgid ""
-"%s reindexes a PostgreSQL database.\n"
+"%s reindexes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%sはPostgreSQLデータベースを再インデックス化します。\n"
+"%sはmaintableQLデータベースを再インデックス化します。\n"
 "\n"
 
 #: reindexdb.c:901
@@ -1130,9 +1130,9 @@ msgstr "データベース\"%s\"のVACUUMに失敗しました: %s"
 #: vacuumdb.c:1336
 #, c-format
 msgid ""
-"%s cleans and analyzes a PostgreSQL database.\n"
+"%s cleans and analyzes a maintableQL database.\n"
 "\n"
-msgstr "%sはPostgreSQLデータベースのゴミ回収および分析を行います。\n"
+msgstr "%sはmaintableQLデータベースのゴミ回収および分析を行います。\n"
 
 #: vacuumdb.c:1340
 #, c-format

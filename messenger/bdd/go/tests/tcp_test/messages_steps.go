@@ -21,8 +21,8 @@ import (
 	"bytes"
 	"reflect"
 
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	"github.com/apache/iggy/foreign/go/iggycli"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	"github.com/apache/messenger/foreign/go/messengercli"
 	"github.com/google/uuid"
 	"github.com/onsi/ginkgo/v2"
 	"github.com/onsi/gomega"
@@ -35,14 +35,14 @@ func createDefaultMessageHeaders() map[iggcon.HeaderKey]iggcon.HeaderValue {
 	}
 }
 
-func createDefaultMessages() []iggcon.IggyMessage {
+func createDefaultMessages() []iggcon.MessengerMessage {
 	headers := createDefaultMessageHeaders()
-	msg1, _ := iggcon.NewIggyMessage([]byte(createRandomString(256)), iggcon.WithID(uuid.New()), iggcon.WithUserHeaders(headers))
-	msg2, _ := iggcon.NewIggyMessage([]byte(createRandomString(256)), iggcon.WithID(uuid.New()), iggcon.WithUserHeaders(headers))
-	return []iggcon.IggyMessage{msg1, msg2}
+	msg1, _ := iggcon.NewMessengerMessage([]byte(createRandomString(256)), iggcon.WithID(uuid.New()), iggcon.WithUserHeaders(headers))
+	msg2, _ := iggcon.NewMessengerMessage([]byte(createRandomString(256)), iggcon.WithID(uuid.New()), iggcon.WithUserHeaders(headers))
+	return []iggcon.MessengerMessage{msg1, msg2}
 }
 
-func itShouldSuccessfullyPublishMessages(streamId uint32, topicId uint32, messages []iggcon.IggyMessage, client iggycli.Client) {
+func itShouldSuccessfullyPublishMessages(streamId uint32, topicId uint32, messages []iggcon.MessengerMessage, client messengercli.Client) {
 	streamIdentifier, _ := iggcon.NewIdentifier(streamId)
 	topicIdentifier, _ := iggcon.NewIdentifier(topicId)
 	result, err := client.PollMessages(
@@ -74,7 +74,7 @@ func itShouldSuccessfullyPublishMessages(streamId uint32, topicId uint32, messag
 	})
 }
 
-func compareMessage(resultMessages []iggcon.IggyMessage, expectedMessage iggcon.IggyMessage) bool {
+func compareMessage(resultMessages []iggcon.MessengerMessage, expectedMessage iggcon.MessengerMessage) bool {
 	for _, msg := range resultMessages {
 		if msg.Header.Id == expectedMessage.Header.Id && bytes.Equal(msg.Payload, expectedMessage.Payload) {
 			if reflect.DeepEqual(msg.UserHeaders, expectedMessage.UserHeaders) {

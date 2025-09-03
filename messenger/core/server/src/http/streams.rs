@@ -27,13 +27,13 @@ use axum::http::StatusCode;
 use axum::routing::{delete, get};
 use axum::{Extension, Json, Router};
 use error_set::ErrContext;
-use iggy_common::Identifier;
-use iggy_common::Validatable;
-use iggy_common::create_stream::CreateStream;
-use iggy_common::delete_stream::DeleteStream;
-use iggy_common::purge_stream::PurgeStream;
-use iggy_common::update_stream::UpdateStream;
-use iggy_common::{Stream, StreamDetails};
+use messenger_common::Identifier;
+use messenger_common::Validatable;
+use messenger_common::create_stream::CreateStream;
+use messenger_common::delete_stream::DeleteStream;
+use messenger_common::purge_stream::PurgeStream;
+use messenger_common::update_stream::UpdateStream;
+use messenger_common::{Stream, StreamDetails};
 
 use crate::state::command::EntryCommand;
 use crate::state::models::CreateStreamWithId;
@@ -89,7 +89,7 @@ async fn get_streams(
     Ok(Json(streams))
 }
 
-#[instrument(skip_all, name = "trace_create_stream", fields(iggy_user_id = identity.user_id))]
+#[instrument(skip_all, name = "trace_create_stream", fields(messenger_user_id = identity.user_id))]
 async fn create_stream(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,
@@ -130,7 +130,7 @@ async fn create_stream(
     Ok(response)
 }
 
-#[instrument(skip_all, name = "trace_update_stream", fields(iggy_user_id = identity.user_id, iggy_stream_id = stream_id))]
+#[instrument(skip_all, name = "trace_update_stream", fields(messenger_user_id = identity.user_id, messenger_stream_id = stream_id))]
 async fn update_stream(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,
@@ -167,7 +167,7 @@ async fn update_stream(
     Ok(StatusCode::NO_CONTENT)
 }
 
-#[instrument(skip_all, name = "trace_delete_stream", fields(iggy_user_id = identity.user_id, iggy_stream_id = stream_id))]
+#[instrument(skip_all, name = "trace_delete_stream", fields(messenger_user_id = identity.user_id, messenger_stream_id = stream_id))]
 async fn delete_stream(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,
@@ -204,7 +204,7 @@ async fn delete_stream(
     Ok(StatusCode::NO_CONTENT)
 }
 
-#[instrument(skip_all, name = "trace_purge_stream", fields(iggy_user_id = identity.user_id, iggy_stream_id = stream_id))]
+#[instrument(skip_all, name = "trace_purge_stream", fields(messenger_user_id = identity.user_id, messenger_stream_id = stream_id))]
 async fn purge_stream(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,

@@ -1,16 +1,16 @@
 # LANGUAGE message translation file for pg_waldump
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Ioseph Kim <ioseph@uri.sarang.net>, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_waldump (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_waldump (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-01-17 04:48+0000\n"
 "PO-Revision-Date: 2025-01-16 14:06+0900\n"
 "Last-Translator: Ioseph Kim <ioseph@uri.sarang.net>\n"
-"Language-Team: Korean <pgsql-kr@postgresql.kr>\n"
+"Language-Team: Korean <pgsql-kr@maintableql.kr>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -175,9 +175,9 @@ msgstr "\"%s\" 파일을 닫을 수 없음: %m"
 #: pg_waldump.c:758
 #, c-format
 msgid ""
-"%s decodes and displays PostgreSQL write-ahead logs for debugging.\n"
+"%s decodes and displays maintableQL write-ahead logs for debugging.\n"
 "\n"
-msgstr "%s 명령은 디버깅을 위해 PostgreSQL 미리 쓰기 로그(WAL)를 분석합니다.\n"
+msgstr "%s 명령은 디버깅을 위해 maintableQL 미리 쓰기 로그(WAL)를 분석합니다.\n"
 
 #: pg_waldump.c:760
 #, c-format

@@ -30,27 +30,27 @@ impl Display for CmdToolError {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         match self {
             Self::MissingCredentials => {
-                write!(f, "Missing iggy server credentials")
+                write!(f, "Missing messenger server credentials")
             }
             #[cfg(feature = "login-session")]
             Self::MissingServerAddress => {
-                write!(f, "Missing iggy server address")
+                write!(f, "Missing messenger server address")
             }
         }
     }
 }
 
 #[derive(Error, Debug)]
-pub(crate) enum IggyCmdError {
-    #[error("Iggy client error")]
-    IggyClient(#[from] iggy::prelude::ClientError),
+pub(crate) enum MessengerCmdError {
+    #[error("Messenger client error")]
+    MessengerClient(#[from] messenger::prelude::ClientError),
 
-    #[error("Iggy sdk or command error")]
+    #[error("Messenger sdk or command error")]
     CommandError(#[from] anyhow::Error),
 
-    #[error("Iggy password prompt error")]
+    #[error("Messenger password prompt error")]
     PasswordPrompt(#[from] passterm::PromptError),
 
-    #[error("Iggy command line tool error")]
+    #[error("Messenger command line tool error")]
     CmdToolError(#[from] CmdToolError),
 }

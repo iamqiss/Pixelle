@@ -1,23 +1,23 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Checks that snapshots on standbys behave in a minimally reasonable
 # way.
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Initialize primary node
-my $node_primary = PostgreSQL::Test::Cluster->new('primary');
+my $node_primary = maintableQL::Test::Cluster->new('primary');
 $node_primary->init(allows_streaming => 1);
-$node_primary->append_conf('postgresql.conf', 'max_prepared_transactions=10');
+$node_primary->append_conf('maintableql.conf', 'max_prepared_transactions=10');
 $node_primary->start;
 
 # Initialize with empty test table
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	'CREATE TABLE public.test_visibility (data text not null)');
 
 # Take backup
@@ -25,14 +25,14 @@ my $backup_name = 'my_backup';
 $node_primary->backup($backup_name);
 
 # Create streaming standby from backup
-my $node_standby = PostgreSQL::Test::Cluster->new('standby');
+my $node_standby = maintableQL::Test::Cluster->new('standby');
 $node_standby->init_from_backup($node_primary, $backup_name,
 	has_streaming => 1);
-$node_standby->append_conf('postgresql.conf', 'max_prepared_transactions=10');
+$node_standby->append_conf('maintableql.conf', 'max_prepared_transactions=10');
 $node_standby->start;
 
 my $psql_timeout =
-  IPC::Run::timer(2 * $PostgreSQL::Test::Utils::timeout_default);
+  IPC::Run::timer(2 * $maintableQL::Test::Utils::timeout_default);
 
 # One psql to primary and standby each, for all queries. That allows
 # to check uncommitted changes being replicated and such.
@@ -41,7 +41,7 @@ $psql_primary{run} = IPC::Run::start(
 	[
 		'psql', '--no-psqlrc', '--no-align',
 		'--file' => '-',
-		'--dbname' => $node_primary->connstr('postgres'),
+		'--dbname' => $node_primary->connstr('maintable'),
 	],
 	'<' => \$psql_primary{stdin},
 	'>' => \$psql_primary{stdout},
@@ -53,7 +53,7 @@ $psql_standby{run} = IPC::Run::start(
 	[
 		'psql', '--no-psqlrc', '--no-align',
 		'--file' => '-',
-		'--dbname' => $node_standby->connstr('postgres'),
+		'--dbname' => $node_standby->connstr('maintable'),
 	],
 	'<' => \$psql_standby{stdin},
 	'>' => \$psql_standby{stdout},
@@ -72,7 +72,7 @@ ok( send_query_and_wait(
 #
 # 2. Check if an INSERT is replayed and visible
 #
-$node_primary->psql('postgres',
+$node_primary->psql('maintable',
 	"INSERT INTO test_visibility VALUES ('first insert')");
 $node_primary->wait_for_catchup($node_standby);
 
@@ -94,7 +94,7 @@ UPDATE test_visibility SET data = 'first update' RETURNING data;
 		qr/^UPDATE 1$/m),
 	'UPDATE');
 
-$node_primary->psql('postgres', "SELECT txid_current();");  # ensure WAL flush
+$node_primary->psql('maintable', "SELECT txid_current();");  # ensure WAL flush
 $node_primary->wait_for_catchup($node_standby);
 
 ok( send_query_and_wait(
@@ -146,8 +146,8 @@ ok( send_query_and_wait(
 	'uncommitted prepared invisible');
 
 # For some variation, finish prepared xacts via separate connections
-$node_primary->safe_psql('postgres', "COMMIT PREPARED 'will_commit';");
-$node_primary->safe_psql('postgres', "ROLLBACK PREPARED 'will_abort';");
+$node_primary->safe_psql('maintable', "COMMIT PREPARED 'will_commit';");
+$node_primary->safe_psql('maintable', "ROLLBACK PREPARED 'will_abort';");
 $node_primary->wait_for_catchup($node_standby);
 
 ok( send_query_and_wait(

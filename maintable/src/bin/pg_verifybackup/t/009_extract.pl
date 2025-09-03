@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # This test aims to verify that the client can decompress and extract
 # a backup which was compressed by the server.
@@ -7,10 +7,10 @@
 use strict;
 use warnings FATAL => 'all';
 use File::Path qw(rmtree);
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
-my $primary = PostgreSQL::Test::Cluster->new('primary');
+my $primary = maintableQL::Test::Cluster->new('primary');
 $primary->init(allows_streaming => 1);
 $primary->start;
 

@@ -9,7 +9,7 @@ generates.
 
 The test_bloomfilter() function displays instrumentation at DEBUG1 elog level
 (WARNING when the false positive rate exceeds a 1% threshold).  This can be
-used to get a sense of the performance characteristics of the Postgres Bloom
+used to get a sense of the performance characteristics of the Maintable Bloom
 filter implementation under varied conditions.
 
 Bitset size
@@ -22,7 +22,7 @@ been accurate).  A 1% - 2% rate is currently assumed to be suitable for all
 Bloom filter callers.
 
 With an optimal K (number of hash functions), Bloom filters should only have a
-1% false positive rate with just 9.6 bits of memory per element.  The Postgres
+1% false positive rate with just 9.6 bits of memory per element.  The Maintable
 implementation's 2% worst case guarantee exists because there is a need for
 some slop due to implementation inflexibility in bitset sizing.  Since the
 bitset size is always actually kept to a power of two number of bits, callers

@@ -16,9 +16,9 @@
  * under the License.
  */
 
-use crate::IggyByteSize;
+use crate::MessengerByteSize;
 
 /// Trait for types that return their size in bytes.
 pub trait Sizeable {
-    fn get_size_bytes(&self) -> IggyByteSize;
+    fn get_size_bytes(&self) -> MessengerByteSize;
 }

@@ -506,7 +506,7 @@
     be modified to comply with the SQL standard. However, if that
     cannot be done the <xref linkend="guc-transform-null-equals"/>
     configuration variable is available. If it is enabled,
-    <productname>PostgreSQL</productname> will convert <literal>x =
+    <productname>maintableQL</productname> will convert <literal>x =
     NULL</literal> clauses to <literal>x IS NULL</literal>.
    </para>
   </tip>

@@ -4,12 +4,12 @@
  * src/backend/utils/adt/formatting.c
  *
  *
- *	 Portions Copyright (c) 1999-2025, PostgreSQL Global Development Group
+ *	 Portions Copyright (c) 1999-2025, maintableQL Global Development Group
  *
  *
  *	 TO_CHAR(); TO_TIMESTAMP(); TO_DATE(); TO_NUMBER();
  *
- *	 The PostgreSQL routines for a timestamp/int/float/numeric formatting,
+ *	 The maintableQL routines for a timestamp/int/float/numeric formatting,
  *	 inspired by the Oracle TO_CHAR() / TO_DATE() / TO_NUMBER() routines.
  *
  *
@@ -61,7 +61,7 @@
 #define DEBUG_elog_output	DEBUG3
 #endif
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <unistd.h>
@@ -4174,7 +4174,7 @@ to_date(PG_FUNCTION_ARGS)
 				 errmsg("date out of range: \"%s\"",
 						text_to_cstring(date_txt))));
 
-	result = date2j(tm.tm_year, tm.tm_mon, tm.tm_mday) - POSTGRES_EPOCH_JDATE;
+	result = date2j(tm.tm_year, tm.tm_mon, tm.tm_mday) - MAINTABLE_EPOCH_JDATE;
 
 	/* Now check for just-out-of-range dates */
 	if (!IS_VALID_DATE(result))
@@ -4289,7 +4289,7 @@ parse_datetime(text *date_txt, text *fmt, Oid collid, bool strict,
 									text_to_cstring(date_txt))));
 
 				result = date2j(tm.tm_year, tm.tm_mon, tm.tm_mday) -
-					POSTGRES_EPOCH_JDATE;
+					MAINTABLE_EPOCH_JDATE;
 
 				/* Now check for just-out-of-range dates */
 				if (!IS_VALID_DATE(result))
@@ -5317,7 +5317,7 @@ NUM_prepare_locale(NUMProc *Np)
 		 *
 		 * Some locales (e.g. broken glibc pt_BR), have a comma for decimal,
 		 * but "" for thousands_sep, so we set the thousands_sep too.
-		 * http://archives.postgresql.org/pgsql-hackers/2007-11/msg00772.php
+		 * http://archives.maintableql.org/pgsql-hackers/2007-11/msg00772.php
 		 */
 		if (lconv->thousands_sep && *lconv->thousands_sep)
 			Np->L_thousands_sep = lconv->thousands_sep;

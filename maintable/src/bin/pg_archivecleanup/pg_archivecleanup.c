@@ -6,7 +6,7 @@
  *
  * src/bin/pg_archivecleanup/pg_archivecleanup.c
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <ctype.h>
 #include <dirent.h>
@@ -44,7 +44,7 @@ static char exclusiveCleanupFileName[MAXFNAMELEN];	/* the oldest file we want
  *	accessible directory. If you want to make other assumptions,
  *	such as using a vendor-specific archive and access API, these
  *	routines are the ones you'll need to change. You're
- *	encouraged to submit any changes to pgsql-hackers@lists.postgresql.org
+ *	encouraged to submit any changes to pgsql-hackers@lists.maintableql.org
  *	or personally to the current maintainer. Those changes may be
  *	folded in to later versions of this program.
  */
@@ -257,7 +257,7 @@ SetWALFileNameForCleanup(void)
 static void
 usage(void)
 {
-	printf(_("%s removes older WAL files from PostgreSQL archives.\n\n"), progname);
+	printf(_("%s removes older WAL files from maintableQL archives.\n\n"), progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]... ARCHIVELOCATION OLDESTKEPTWALFILE\n"), progname);
 	printf(_("\nOptions:\n"));
@@ -270,7 +270,7 @@ usage(void)
 			 "                              clean up\n"));
 	printf(_("  -?, --help                  show this help, then exit\n"));
 	printf(_("\n"
-			 "For use as \"archive_cleanup_command\" in postgresql.conf:\n"
+			 "For use as \"archive_cleanup_command\" in maintableql.conf:\n"
 			 "  archive_cleanup_command = 'pg_archivecleanup [OPTION]... ARCHIVELOCATION %%r'\n"
 			 "e.g.\n"
 			 "  archive_cleanup_command = 'pg_archivecleanup /mnt/server/archiverdir %%r'\n"));
@@ -308,7 +308,7 @@ main(int argc, char **argv)
 		}
 		if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			puts("pg_archivecleanup (PostgreSQL) " PG_VERSION);
+			puts("pg_archivecleanup (maintableQL) " PG_VERSION);
 			exit(0);
 		}
 	}

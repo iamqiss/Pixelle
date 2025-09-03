@@ -1,12 +1,12 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test CREATE INDEX CONCURRENTLY with concurrent modifications
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 
 use Test::More;
 
@@ -15,15 +15,15 @@ my $node;
 #
 # Test set-up
 #
-$node = PostgreSQL::Test::Cluster->new('CIC_test');
+$node = maintableQL::Test::Cluster->new('CIC_test');
 $node->init;
-$node->append_conf('postgresql.conf',
-	'lock_timeout = ' . (1000 * $PostgreSQL::Test::Utils::timeout_default));
+$node->append_conf('maintableql.conf',
+	'lock_timeout = ' . (1000 * $maintableQL::Test::Utils::timeout_default));
 $node->start;
-$node->safe_psql('postgres', q(CREATE EXTENSION amcheck));
-$node->safe_psql('postgres', q(CREATE TABLE tbl(i int, j jsonb)));
-$node->safe_psql('postgres', q(CREATE INDEX idx ON tbl(i)));
-$node->safe_psql('postgres', q(CREATE INDEX ginidx ON tbl USING gin(j)));
+$node->safe_psql('maintable', q(CREATE EXTENSION amcheck));
+$node->safe_psql('maintable', q(CREATE TABLE tbl(i int, j jsonb)));
+$node->safe_psql('maintable', q(CREATE INDEX idx ON tbl(i)));
+$node->safe_psql('maintable', q(CREATE INDEX ginidx ON tbl USING gin(j)));
 
 #
 # Stress CIC with pgbench.

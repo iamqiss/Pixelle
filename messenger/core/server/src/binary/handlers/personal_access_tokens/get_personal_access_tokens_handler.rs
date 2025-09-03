@@ -24,13 +24,13 @@ use crate::binary::sender::SenderKind;
 use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::get_personal_access_tokens::GetPersonalAccessTokens;
+use messenger_common::MessengerError;
+use messenger_common::get_personal_access_tokens::GetPersonalAccessTokens;
 use tracing::debug;
 
 impl ServerCommandHandler for GetPersonalAccessTokens {
     fn code(&self) -> u32 {
-        iggy_common::GET_PERSONAL_ACCESS_TOKENS_CODE
+        messenger_common::GET_PERSONAL_ACCESS_TOKENS_CODE
     }
 
     async fn handle(
@@ -39,7 +39,7 @@ impl ServerCommandHandler for GetPersonalAccessTokens {
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
         let system = system.read().await;
         let personal_access_tokens = system
@@ -55,7 +55,7 @@ impl ServerCommandHandler for GetPersonalAccessTokens {
 }
 
 impl BinaryServerCommand for GetPersonalAccessTokens {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
@@ -63,7 +63,7 @@ impl BinaryServerCommand for GetPersonalAccessTokens {
             ServerCommand::GetPersonalAccessTokens(get_personal_access_tokens) => {
                 Ok(get_personal_access_tokens)
             }
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

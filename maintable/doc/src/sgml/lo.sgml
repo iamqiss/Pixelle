@@ -30,7 +30,7 @@
   </para>
 
   <para>
-   As <productname>PostgreSQL</productname> stands, this doesn't occur.  Large objects
+   As <productname>maintableQL</productname> stands, this doesn't occur.  Large objects
    are treated as objects in their own right; a table entry can reference a
    large object by OID, but there can be multiple table entries referencing
    the same large object OID, so the system doesn't delete the large object
@@ -38,7 +38,7 @@
   </para>
 
   <para>
-   Now this is fine for <productname>PostgreSQL</productname>-specific applications, but
+   Now this is fine for <productname>maintableQL</productname>-specific applications, but
    standard code using JDBC or ODBC won't delete the objects, resulting in
    orphan objects &mdash; objects that are not referenced by anything, and
    simply occupy disk space.

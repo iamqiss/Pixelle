@@ -3,7 +3,7 @@
  * nodeForeignscan.c
  *	  Routines to support scans of foreign tables
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -20,7 +20,7 @@
  *		ExecReScanForeignScan	rescans the foreign relation.
  *		ExecEndForeignScan		releases any resources allocated.
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "executor/executor.h"
 #include "executor/nodeForeignscan.h"

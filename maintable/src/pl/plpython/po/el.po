@@ -1,14 +1,14 @@
 # Greek message translation file for plpython
-# Copyright (C) 2021 PostgreSQL Global Development Group
-# This file is distributed under the same license as the plpython (PostgreSQL) package.
+# Copyright (C) 2021 maintableQL Global Development Group
+# This file is distributed under the same license as the plpython (maintableQL) package.
 # Georgios Kokolatos <gkokolatos@pm.me>, 2021.
 #
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: plpython (PostgreSQL) 14\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: plpython (maintableQL) 14\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-08-15 13:38+0000\n"
 "PO-Revision-Date: 2023-08-15 16:14+0200\n"
 "Last-Translator: Georgios Kokolatos <gkokolatos@pm.me>\n"

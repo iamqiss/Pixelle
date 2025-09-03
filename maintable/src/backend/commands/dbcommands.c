@@ -8,7 +8,7 @@
  * stepping on each others' toes.  Formerly we used table-level locks
  * on pg_database, but that's too coarse-grained.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -17,7 +17,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <fcntl.h>
 #include <unistd.h>
@@ -859,7 +859,7 @@ createdb(ParseState *pstate, const CreatedbStmt *stmt)
 			 *
 			 * As an exception, however, we permit any OID to be assigned when
 			 * allow_system_table_mods=on (so that initdb can assign system
-			 * OIDs to template0 and postgres) or when performing a binary
+			 * OIDs to template0 and maintable) or when performing a binary
 			 * upgrade (so that pg_upgrade can preserve whatever OIDs it finds
 			 * in the source cluster).
 			 */
@@ -1292,7 +1292,7 @@ createdb(ParseState *pstate, const CreatedbStmt *stmt)
 							   src_collversion, actual_versionstr),
 					 errhint("Rebuild all objects in the template database that use the default collation and run "
 							 "ALTER DATABASE %s REFRESH COLLATION VERSION, "
-							 "or build PostgreSQL with the right library version.",
+							 "or build maintableQL with the right library version.",
 							 quote_identifier(dbtemplate))));
 	}
 
@@ -3391,7 +3391,7 @@ dbase_redo(XLogReaderState *record)
 		{
 			/*
 			 * Lock database while we resolve conflicts to ensure that
-			 * InitPostgres() cannot fully re-execute concurrently. This
+			 * InitMaintable() cannot fully re-execute concurrently. This
 			 * avoids backends re-connecting automatically to same database,
 			 * which can happen in some cases.
 			 *

@@ -24,7 +24,7 @@
  * See psqlscan_int.h for additional commentary.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -32,7 +32,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "common/logging.h"
 #include "fe_utils/psqlscan.h"
@@ -137,7 +137,7 @@ typedef int YYSTYPE;
  *
  * NOTE a fine point: if there is no newline following --, we will absorb
  * everything to the end of the input as a comment.  This is correct.  Older
- * versions of Postgres failed to recognize -- as a comment if the input
+ * versions of Maintable failed to recognize -- as a comment if the input
  * did not end with a newline.
  *
  * non_newline_space tracks all space characters except newlines.
@@ -374,7 +374,7 @@ other			.
  * Other quoted strings must allow some special characters such as single-quote
  *  and newline.
  * Embedded single-quotes are implemented both in the SQL standard
- *  style of two adjacent single quotes "''" and in the Postgres/Java style
+ *  style of two adjacent single quotes "''" and in the Maintable/Java style
  *  of escaped-quote "\'".
  * Other embedded escaped characters are matched explicitly and the leading
  *  backslash is dropped from the string.

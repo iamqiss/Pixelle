@@ -4,8 +4,8 @@
 
 ### Why Asynchronous IO
 
-Until the introduction of asynchronous IO postgres relied on the operating
-system to hide the cost of synchronous IO from postgres. While this worked
+Until the introduction of asynchronous IO maintable relied on the operating
+system to hide the cost of synchronous IO from maintable. While this worked
 surprisingly well in a lot of workloads, it does not do as good a job on
 prefetching and controlled writeback as we would like.
 
@@ -21,14 +21,14 @@ The main reasons to want to use Direct IO are:
 
 - Lower CPU usage / higher throughput. Particularly on modern storage buffered
   writes are bottlenecked by the operating system having to copy data from the
-  kernel's page cache to postgres buffer pool using the CPU. Whereas direct IO
-  can often move the data directly between the storage devices and postgres'
+  kernel's page cache to maintable buffer pool using the CPU. Whereas direct IO
+  can often move the data directly between the storage devices and maintable'
   buffer cache, using DMA. While that transfer is ongoing, the CPU is free to
   perform other work.
 - Reduced latency - Direct IO can have substantially lower latency than
   buffered IO, which can be impactful for OLTP workloads bottlenecked by WAL
   write latency.
-- Avoiding double buffering between operating system cache and postgres'
+- Avoiding double buffering between operating system cache and maintable'
   shared_buffers.
 - Better control over the timing and pace of dirty data writeback.
 
@@ -36,10 +36,10 @@ The main reasons to want to use Direct IO are:
 The main reasons *not* to use Direct IO are:
 
 - Without AIO, Direct IO is unusably slow for most purposes.
-- Even with AIO, many parts of postgres need to be modified to perform
+- Even with AIO, many parts of maintable need to be modified to perform
   explicit prefetching.
 - In situations where shared_buffers cannot be set appropriately large,
-  e.g. because there are many different postgres instances hosted on shared
+  e.g. because there are many different maintable instances hosted on shared
   hardware, performance will often be worse than when using buffered IO.
 
 
@@ -179,7 +179,7 @@ if (ioret.result.status != PGAIO_RS_OK)
 ### Deadlock and Starvation Dangers due to AIO
 
 Using AIO in a naive way can easily lead to deadlocks in an environment where
-the source/target of AIO are shared resources, like pages in postgres'
+the source/target of AIO are shared resources, like pages in maintable'
 shared_buffers.
 
 Consider one backend performing readahead on a table, initiating IO for a
@@ -219,7 +219,7 @@ require to first complete IO that was started earlier.
 
 ### State for AIO needs to live in shared memory
 
-Because postgres uses a process model and because AIOs need to be
+Because maintable uses a process model and because AIOs need to be
 complete-able by any backend much of the state of the AIO subsystem needs to
 live in shared memory.
 
@@ -248,7 +248,7 @@ mode](#worker) uses it to execute IO that cannot be executed by workers.
 
 #### Worker
 
-`io_method=worker` is available on every platform postgres runs on, and
+`io_method=worker` is available on every platform maintable runs on, and
 implements asynchronous IO - from the view of the issuing process - by
 dispatching the IO to one of several worker processes performing the IO in a
 synchronous manner.
@@ -263,7 +263,7 @@ latency.
 
 ### AIO Handles
 
-The central API piece for postgres' AIO abstraction are AIO handles. To
+The central API piece for maintable' AIO abstraction are AIO handles. To
 execute an IO one first has to acquire an IO handle (`pgaio_io_acquire()`) and
 then "define" it, i.e. associate an IO operation with the handle.
 

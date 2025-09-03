@@ -19,17 +19,17 @@
 use crate::utils::auth::fail_if_not_authenticated;
 use crate::utils::mapper;
 use crate::{BinaryClient, StreamClient};
-use iggy_common::create_stream::CreateStream;
-use iggy_common::delete_stream::DeleteStream;
-use iggy_common::get_stream::GetStream;
-use iggy_common::get_streams::GetStreams;
-use iggy_common::purge_stream::PurgeStream;
-use iggy_common::update_stream::UpdateStream;
-use iggy_common::{Identifier, IggyError, Stream, StreamDetails};
+use messenger_common::create_stream::CreateStream;
+use messenger_common::delete_stream::DeleteStream;
+use messenger_common::get_stream::GetStream;
+use messenger_common::get_streams::GetStreams;
+use messenger_common::purge_stream::PurgeStream;
+use messenger_common::update_stream::UpdateStream;
+use messenger_common::{Identifier, MessengerError, Stream, StreamDetails};
 
 #[async_trait::async_trait]
 impl<B: BinaryClient> StreamClient for B {
-    async fn get_stream(&self, stream_id: &Identifier) -> Result<Option<StreamDetails>, IggyError> {
+    async fn get_stream(&self, stream_id: &Identifier) -> Result<Option<StreamDetails>, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self
             .send_with_response(&GetStream {
@@ -43,7 +43,7 @@ impl<B: BinaryClient> StreamClient for B {
         mapper::map_stream(response).map(Some)
     }
 
-    async fn get_streams(&self) -> Result<Vec<Stream>, IggyError> {
+    async fn get_streams(&self) -> Result<Vec<Stream>, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self.send_with_response(&GetStreams {}).await?;
         mapper::map_streams(response)
@@ -53,7 +53,7 @@ impl<B: BinaryClient> StreamClient for B {
         &self,
         name: &str,
         stream_id: Option<u32>,
-    ) -> Result<StreamDetails, IggyError> {
+    ) -> Result<StreamDetails, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self
             .send_with_response(&CreateStream {
@@ -64,7 +64,7 @@ impl<B: BinaryClient> StreamClient for B {
         mapper::map_stream(response)
     }
 
-    async fn update_stream(&self, stream_id: &Identifier, name: &str) -> Result<(), IggyError> {
+    async fn update_stream(&self, stream_id: &Identifier, name: &str) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&UpdateStream {
             stream_id: stream_id.clone(),
@@ -74,7 +74,7 @@ impl<B: BinaryClient> StreamClient for B {
         Ok(())
     }
 
-    async fn delete_stream(&self, stream_id: &Identifier) -> Result<(), IggyError> {
+    async fn delete_stream(&self, stream_id: &Identifier) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&DeleteStream {
             stream_id: stream_id.clone(),
@@ -83,7 +83,7 @@ impl<B: BinaryClient> StreamClient for B {
         Ok(())
     }
 
-    async fn purge_stream(&self, stream_id: &Identifier) -> Result<(), IggyError> {
+    async fn purge_stream(&self, stream_id: &Identifier) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&PurgeStream {
             stream_id: stream_id.clone(),

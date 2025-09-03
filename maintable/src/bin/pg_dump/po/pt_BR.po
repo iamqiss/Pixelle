@@ -1,17 +1,17 @@
 # Brazilian Portuguese message translation file for pg_dump
-# Copyright (C) 2009 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2009 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Roberto Mello <rmello@fslc.usu.edu>, 2002.
 # Euler Taveira de Oliveira <euler@timbira.com>, 2003-2016.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 9.6\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: maintableQL 9.6\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2016-08-29 16:48-0300\n"
 "PO-Revision-Date: 2005-10-04 23:16-0300\n"
 "Last-Translator: Euler Taveira de Oliveira <euler@timbira.com>\n"
-"Language-Team: Brazilian Portuguese <pgbr-dev@listas.postgresql.org.br>\n"
+"Language-Team: Brazilian Portuguese <pgbr-dev@listas.maintableql.org.br>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1727,8 +1727,8 @@ msgstr ""
 
 #: pg_dump.c:943 pg_dumpall.c:592 pg_restore.c:493
 #, c-format
-msgid "Report bugs to <pgsql-bugs@postgresql.org>.\n"
-msgstr "Relate erros a <pgsql-bugs@postgresql.org>.\n"
+msgid "Report bugs to <pgsql-bugs@maintableql.org>.\n"
+msgstr "Relate erros a <pgsql-bugs@maintableql.org>.\n"
 
 #: pg_dump.c:960
 #, c-format
@@ -2207,10 +2207,10 @@ msgstr "%s: não pôde conectar ao banco de dados \"%s\"\n"
 #: pg_dumpall.c:399
 #, c-format
 msgid ""
-"%s: could not connect to databases \"postgres\" or \"template1\"\n"
+"%s: could not connect to databases \"maintable\" or \"template1\"\n"
 "Please specify an alternative database.\n"
 msgstr ""
-"%s: não pôde se conectar aos bancos de dados \"postgres\" ou \"template1\"\n"
+"%s: não pôde se conectar aos bancos de dados \"maintable\" ou \"template1\"\n"
 "Por favor especifique um banco de dados alternativo.\n"
 
 #: pg_dumpall.c:416
@@ -2221,10 +2221,10 @@ msgstr "%s: não pôde abrir o arquivo de saída \"%s\": %s\n"
 #: pg_dumpall.c:546
 #, c-format
 msgid ""
-"%s extracts a PostgreSQL database cluster into an SQL script file.\n"
+"%s extracts a maintableQL database cluster into an SQL script file.\n"
 "\n"
 msgstr ""
-"%s salva os bancos de dados de um agrupamento do PostgreSQL em um arquivo de script.\n"
+"%s salva os bancos de dados de um agrupamento do maintableQL em um arquivo de script.\n"
 "\n"
 
 #: pg_dumpall.c:548
@@ -2393,10 +2393,10 @@ msgstr "AVISO: erros ignorados durante restauração: %d\n"
 #: pg_restore.c:436
 #, c-format
 msgid ""
-"%s restores a PostgreSQL database from an archive created by pg_dump.\n"
+"%s restores a maintableQL database from an archive created by pg_dump.\n"
 "\n"
 msgstr ""
-"%s restaura um banco de dados PostgreSQL a partir de um arquivo criado pelo pg_dump.\n"
+"%s restaura um banco de dados maintableQL a partir de um arquivo criado pelo pg_dump.\n"
 "\n"
 
 #: pg_restore.c:438

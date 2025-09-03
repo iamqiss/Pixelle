@@ -1,8 +1,8 @@
-# Apache Iggy Connectors - Sink
+# Apache Messenger Connectors - Sink
 
 ## Overview
 
-Sink connectors are responsible for writing data from Iggy streams to external systems or destinations. They provide a way to integrate Apache Iggy with various data sources and destinations, enabling seamless data flow and processing.
+Sink connectors are responsible for writing data from Messenger streams to external systems or destinations. They provide a way to integrate Apache Messenger with various data sources and destinations, enabling seamless data flow and processing.
 
 The sink is represented by the single `Sink` trait, which defines the basic interface for all sink connectors. It provides methods for initializing the sink, writing data to external destination, and closing the sink.
 
@@ -48,7 +48,7 @@ Below is the example configuration for a sink connector, using `stdout` as it's 
 [sinks.stdout]
 enabled = true
 name = "Stdout sink"
-path = "target/release/libiggy_connector_stdout_sink"
+path = "target/release/libmessenger_connector_stdout_sink"
 config_format = "toml"
 
 # Collection of the streams from which messages are consumed
@@ -203,7 +203,7 @@ for message in messages {
 }
 ```
 
-While the schema of messages (that will be consumed from the Iggy stream), cannot be controlled by the sink connector itself, the built-in configuration allows to decide what's the expected format of the messages (the particular `StreamDecoder` will be used).
+While the schema of messages (that will be consumed from the Messenger stream), cannot be controlled by the sink connector itself, the built-in configuration allows to decide what's the expected format of the messages (the particular `StreamDecoder` will be used).
 
 Keep in mind, that it might be sometimes difficult/impossible e.g. to transform one format to another e.g. JSON to SBE or so, and in such a case, the consumed messages will be ignored.
 
@@ -211,4 +211,4 @@ Eventually, compile the source code and update the runtime configuration file us
 
 And that's all, enjoy using the sink connector!
 
-On a side note, if you'd like to produce the messages to the Iggy stream instead, you can implement your own **[Source connector](https://github.com/apache/iggy/tree/master/core/connectors/sources)** too :)
+On a side note, if you'd like to produce the messages to the Messenger stream instead, you can implement your own **[Source connector](https://github.com/apache/messenger/tree/master/core/connectors/sources)** too :)

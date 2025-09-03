@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * hash.h
- *	  header file for postgres hash access method implementation
+ *	  header file for maintable hash access method implementation
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/access/hash.h

@@ -5,7 +5,7 @@
 -- for handling "broken" ECs.  This is because an EC can only become broken
 -- if its underlying btree operator family doesn't include a complete set
 -- of cross-type equality operators.  There are not (and should not be)
--- any such families built into Postgres; so we have to hack things up
+-- any such families built into Maintable; so we have to hack things up
 -- to create one.  We do this by making two alias types that are really
 -- int8 (so we need no new C code) and adding only some operators for them
 -- into the standard integer_ops opfamily.
@@ -488,7 +488,7 @@ explain (costs off)  -- this should not require a sort
 --
 -- test handling of merge/hash clauses that do not have valid commutators
 --
--- There are not (and should not be) any such operators built into Postgres
+-- There are not (and should not be) any such operators built into Maintable
 -- that are mergejoinable or hashable but have no commutators; so we leverage
 -- the alias type 'int8alias1' created in this file to conduct the tests.
 -- That's why this test is included here rather than in join.sql.

@@ -23,7 +23,7 @@
 namespace icp {
 
 /**
- * @brief All supported commands in the Iggy protocol.
+ * @brief All supported commands in the Messenger protocol.
  *
  * Serialization-agnostic Command classes that you can send via an @ref icp::client::Client.
  */
@@ -35,7 +35,7 @@ public:
 };
 
 /**
- * @brief Commands related to managing Iggy streams.
+ * @brief Commands related to managing Messenger streams.
  */
 namespace stream {
 class GetStream : Command {
@@ -77,7 +77,7 @@ public:
 }  // namespace stream
 
 /**
- * @brief Commands related to managing Iggy topics.
+ * @brief Commands related to managing Messenger topics.
  */
 namespace topic {
 class GetTopic : Command {
@@ -134,7 +134,7 @@ public:
 }  // namespace topic
 
 /**
- * @brief Commands related to managing Iggy partitions.
+ * @brief Commands related to managing Messenger partitions.
  */
 namespace partition {
 class CreatePartitions : Command {

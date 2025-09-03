@@ -4,8 +4,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: initdb (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: initdb (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-05-24 03:30+0000\n"
 "PO-Revision-Date: 2024-05-25 16:46+0800\n"
 "Last-Translator: Dianjin Wang <wangdianjin@gmail.com>\n"
@@ -392,8 +392,8 @@ msgstr "正在运行启动脚本 ... "
 
 #: initdb.c:1493
 #, c-format
-msgid "input file \"%s\" does not belong to PostgreSQL %s"
-msgstr "输入文件 \"%s\" 不属于 PostgreSQL %s"
+msgid "input file \"%s\" does not belong to maintableQL %s"
+msgstr "输入文件 \"%s\" 不属于 maintableQL %s"
 
 #: initdb.c:1495
 #, c-format
@@ -521,10 +521,10 @@ msgstr "使用语言标签 \"%s\" 用于 ICU 区域设置 \"%s\".\n"
 #: initdb.c:2446
 #, c-format
 msgid ""
-"%s initializes a PostgreSQL database cluster.\n"
+"%s initializes a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s 初始化一个 PostgreSQL 数据库集簇.\n"
+"%s 初始化一个 maintableQL 数据库集簇.\n"
 "\n"
 
 #: initdb.c:2447

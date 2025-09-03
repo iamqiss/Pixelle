@@ -22,7 +22,7 @@ import urllib
 import urllib.parse
 from collections import namedtuple
 
-from apache_iggy import IggyClient, PollingStrategy, ReceiveMessage
+from apache_messenger import MessengerClient, PollingStrategy, ReceiveMessage
 from loguru import logger
 
 STREAM_NAME = "sample-stream"
@@ -53,7 +53,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--tcp-server-address",
-        help="Iggy TCP server address (host:port)",
+        help="Messenger TCP server address (host:port)",
         action=ValidateUrl,
         default="127.0.0.1:8090",
     )
@@ -62,19 +62,19 @@ def parse_args():
 
 async def main():
     args: ArgNamespace = parse_args()
-    client = IggyClient(args.tcp_server_address)
+    client = MessengerClient(args.tcp_server_address)
     try:
-        logger.info("Connecting to IggyClient...")
+        logger.info("Connecting to MessengerClient...")
         await client.connect()
         logger.info("Connected. Logging in user...")
-        await client.login_user("iggy", "iggy")
+        await client.login_user("messenger", "messenger")
         logger.info("Logged in.")
         await consume_messages(client)
     except Exception as error:
         logger.exception("Exception occurred in main function: {}", error)
 
 
-async def consume_messages(client: IggyClient):
+async def consume_messages(client: MessengerClient):
     interval = 0.5  # 500 milliseconds in seconds for asyncio.sleep
     logger.info(
         f"Messages will be consumed from stream: {STREAM_NAME}, topic: {TOPIC_NAME}, partition: {PARTITION_ID} with "

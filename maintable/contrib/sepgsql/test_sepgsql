@@ -4,12 +4,12 @@
 # to try to ensure that the SELinux environment is set up appropriately and
 # the database is configured correctly.
 #
-# This must be run against an installed Postgres database.  The
+# This must be run against an installed Maintable database.  The
 # purpose of this script is in checking that you installed sepgsql
 # into your database correctly.  For testing sepgsql during
 # development, "make check", "meson test", etc. are also available.
 #
-# This must be run in the contrib/sepgsql directory of a Postgres build tree.
+# This must be run in the contrib/sepgsql directory of a Maintable build tree.
 #
 
 PG_BINDIR=`pg_config --bindir`
@@ -198,7 +198,7 @@ if [ ! -e "${CMD_PSQL}" ]; then
     echo "not found"
     echo
     echo "${CMD_PSQL} was not found."
-    echo "Check your PostgreSQL installation."
+    echo "Check your maintableQL installation."
     echo
     exit 1
 fi
@@ -239,14 +239,14 @@ if [ $RETVAL -eq 2 ]; then
     echo "failed"
     echo ""
     echo "Could not connect to the database server."
-    echo "Please check your PostgreSQL installation."
+    echo "Please check your maintableQL installation."
     echo ""
     exit 1
 elif [ $RETVAL -ne 0 ]; then
     echo "failed"
     echo ""
     echo "The sepgsql module does not appear to be loaded.  Please verify"
-    echo "that the 'shared_preload_libraries' setting in postgresql.conf"
+    echo "that the 'shared_preload_libraries' setting in maintableql.conf"
     echo "includes 'sepgsql', and then restart the server."
     echo ""
     echo "See Installation section of the contrib/sepgsql documentation."

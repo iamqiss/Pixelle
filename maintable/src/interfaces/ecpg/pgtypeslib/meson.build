@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 ecpg_pgtypes_sources = files(
   'common.c',
@@ -25,7 +25,7 @@ ecpg_pgtypes_st = static_library('libpgtypes',
   ecpg_pgtypes_sources,
   include_directories: ecpg_pgtypes_inc,
   c_args: ecpg_pgtypes_c_args,
-  c_pch: pch_postgres_fe_h,
+  c_pch: pch_maintable_fe_h,
   dependencies: frontend_stlib_code,
   kwargs: default_lib_args,
 )
@@ -35,7 +35,7 @@ ecpg_pgtypes_so = shared_library('libpgtypes',
   ecpg_pgtypes_sources + ecpg_pgtypes_so_sources,
   include_directories: ecpg_pgtypes_inc,
   c_args: ecpg_pgtypes_c_args,
-  c_pch: pch_postgres_fe_h,
+  c_pch: pch_maintable_fe_h,
   dependencies: frontend_shlib_code,
   version: '3.' + pg_version_major.to_string(),
   soversion: host_system != 'windows' ? '3' : '',
@@ -48,7 +48,7 @@ ecpg_targets += ecpg_pgtypes_so
 
 pkgconfig.generate(
   name: 'libpgtypes',
-  description: 'PostgreSQL libpgtypes library',
+  description: 'maintableQL libpgtypes library',
   url: pg_url,
   libraries: ecpg_pgtypes_so,
   libraries_private: [frontend_stlib_code],

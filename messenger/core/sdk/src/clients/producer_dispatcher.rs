@@ -20,7 +20,7 @@ use crate::clients::producer_config::{BackgroundConfig, BackpressureMode};
 use crate::clients::producer_error_callback::ErrorCtx;
 use crate::clients::producer_sharding::{Shard, ShardMessage, ShardMessageWithPermits};
 use futures::FutureExt;
-use iggy_common::{Identifier, IggyError, IggyMessage, Partitioning, Sizeable};
+use messenger_common::{Identifier, MessengerError, MessengerMessage, Partitioning, Sizeable};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 use tokio::sync::{Semaphore, broadcast};
@@ -104,13 +104,13 @@ impl ProducerDispatcher {
 
     pub async fn dispatch(
         &self,
-        messages: Vec<IggyMessage>,
+        messages: Vec<MessengerMessage>,
         stream: Arc<Identifier>,
         topic: Arc<Identifier>,
         partitioning: Option<Arc<Partitioning>>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         if self.closed.load(Ordering::Relaxed) {
-            return Err(IggyError::ProducerClosed);
+            return Err(MessengerError::ProducerClosed);
         }
 
         let shard_message = ShardMessage {
@@ -122,7 +122,7 @@ impl ProducerDispatcher {
         let batch_bytes = shard_message.get_size_bytes();
 
         if batch_bytes > self.config.max_buffer_size {
-            return Err(IggyError::BackgroundSendBufferOverflow);
+            return Err(MessengerError::BackgroundSendBufferOverflow);
         }
 
         let permit_bytes = match self
@@ -133,14 +133,14 @@ impl ProducerDispatcher {
             Ok(perm) => perm,
             Err(_) => match self.config.failure_mode {
                 BackpressureMode::FailImmediately => {
-                    return Err(IggyError::BackgroundSendBufferOverflow);
+                    return Err(MessengerError::BackgroundSendBufferOverflow);
                 }
                 BackpressureMode::Block => self
                     .bytes_permit
                     .clone()
                     .acquire_many_owned(batch_bytes.as_bytes_u32())
                     .await
-                    .map_err(|_| IggyError::BackgroundSendError)?,
+                    .map_err(|_| MessengerError::BackgroundSendError)?,
                 BackpressureMode::BlockWithTimeout(timeout_dur) => {
                     match tokio::time::timeout(
                         timeout_dur.get_duration(),
@@ -151,8 +151,8 @@ impl ProducerDispatcher {
                     .await
                     {
                         Ok(Ok(perm)) => perm,
-                        Ok(Err(_)) => return Err(IggyError::BackgroundSendError),
-                        Err(_) => return Err(IggyError::BackgroundSendTimeout),
+                        Ok(Err(_)) => return Err(MessengerError::BackgroundSendError),
+                        Err(_) => return Err(MessengerError::BackgroundSendTimeout),
                     }
                 }
             },
@@ -163,13 +163,13 @@ impl ProducerDispatcher {
             Err(_) => match self.config.failure_mode {
                 BackpressureMode::FailImmediately => {
                     drop(permit_bytes);
-                    return Err(IggyError::BackgroundSendError);
+                    return Err(MessengerError::BackgroundSendError);
                 }
                 BackpressureMode::Block => match self.slots_permit.clone().acquire_owned().await {
                     Ok(perm) => perm,
                     Err(_) => {
                         drop(permit_bytes);
-                        return Err(IggyError::BackgroundSendError);
+                        return Err(MessengerError::BackgroundSendError);
                     }
                 },
                 BackpressureMode::BlockWithTimeout(timeout_dur) => {
@@ -182,11 +182,11 @@ impl ProducerDispatcher {
                         Ok(Ok(perm)) => perm,
                         Ok(Err(_)) => {
                             drop(permit_bytes);
-                            return Err(IggyError::BackgroundSendError);
+                            return Err(MessengerError::BackgroundSendError);
                         }
                         Err(_) => {
                             drop(permit_bytes);
-                            return Err(IggyError::BackgroundSendTimeout);
+                            return Err(MessengerError::BackgroundSendTimeout);
                         }
                     }
                 }
@@ -249,8 +249,8 @@ mod tests {
         Arc::new(Identifier::numeric(1).unwrap())
     }
 
-    fn dummy_message(size: usize) -> IggyMessage {
-        IggyMessage::builder()
+    fn dummy_message(size: usize) -> MessengerMessage {
+        MessengerMessage::builder()
             .payload(Bytes::from(vec![0u8; size]))
             .build()
             .unwrap()
@@ -299,7 +299,7 @@ mod tests {
 
         assert!(matches!(
             result,
-            Err(IggyError::BackgroundSendBufferOverflow)
+            Err(MessengerError::BackgroundSendBufferOverflow)
         ));
     }
 
@@ -329,7 +329,7 @@ mod tests {
             .dispatch(vec![msg], dummy_identifier(), dummy_identifier(), None)
             .await;
 
-        assert!(matches!(result, Err(IggyError::BackgroundSendTimeout)));
+        assert!(matches!(result, Err(MessengerError::BackgroundSendTimeout)));
     }
 
     #[tokio::test]
@@ -396,7 +396,7 @@ mod tests {
         fn pick_shard(
             &self,
             num_shards: usize,
-            _messages: &[IggyMessage],
+            _messages: &[MessengerMessage],
             _stream: &Identifier,
             _topic: &Identifier,
         ) -> usize {
@@ -424,8 +424,8 @@ mod tests {
             .times(1)
             .returning(|_, _, _, _| {
                 Box::pin(async {
-                    Err(IggyError::ProducerSendFailed {
-                        cause: Box::new(IggyError::Error),
+                    Err(MessengerError::ProducerSendFailed {
+                        cause: Box::new(MessengerError::Error),
                         failed: Arc::new(vec![dummy_message(10)]),
                         stream_name: "1".to_string(),
                         topic_name: "1".to_string(),

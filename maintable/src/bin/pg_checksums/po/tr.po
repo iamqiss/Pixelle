@@ -1,13 +1,13 @@
 # LANGUAGE message translation file for pg_checksums
-# Copyright (C) 2019 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_checksums (PostgreSQL) package.
+# Copyright (C) 2019 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_checksums (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
 # Abdullah GÜLNER <agulner@gmail.com>, 2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_checksums (PostgreSQL) 12\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_checksums (maintableQL) 12\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2019-06-17 07:45+0000\n"
 "PO-Revision-Date: 2019-06-17 14:27+0300\n"
 "Last-Translator: Abdullah GÜLNER\n"
@@ -36,10 +36,10 @@ msgstr "uyarı: "
 #: pg_checksums.c:75
 #, c-format
 msgid ""
-"%s enables, disables or verifies data checksums in a PostgreSQL database cluster.\n"
+"%s enables, disables or verifies data checksums in a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s bir PostgreSQL veritabanı kümesinde, veri sağlama toplamlarını etkinleştirir, devre dışı bırakır veya doğrulamasını yapar.\n"
+"%s bir maintableQL veritabanı kümesinde, veri sağlama toplamlarını etkinleştirir, devre dışı bırakır veya doğrulamasını yapar.\n"
 "\n"
 
 #: pg_checksums.c:76
@@ -126,8 +126,8 @@ msgstr ""
 
 #: pg_checksums.c:91
 #, c-format
-msgid "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
-msgstr "Hataları <pgsql-bugs@lists.postgresql.org> adresine bildirebilirsiniz.\n"
+msgid "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
+msgstr "Hataları <pgsql-bugs@lists.maintableql.org> adresine bildirebilirsiniz.\n"
 
 #: pg_checksums.c:149
 #, c-format

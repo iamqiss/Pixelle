@@ -17,12 +17,12 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, OutputFormat, TestHelpCmd,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, OutputFormat, TestHelpCmd,
     USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
+use messenger::prelude::Client;
 use predicates::str::{contains, starts_with};
 use serial_test::parallel;
 
@@ -47,14 +47,14 @@ impl TestStreamListCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestStreamListCmd {
+impl MessengerCmdTestCase for TestStreamListCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let stream = client.create_stream(&self.name, Some(self.stream_id)).await;
         assert!(stream.is_ok());
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("stream")
             .arg("list")
             .args(self.to_args())
@@ -77,24 +77,24 @@ impl IggyCmdTestCase for TestStreamListCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestStreamListCmd::new(
             1,
             String::from("prod"),
             OutputFormat::Default,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestStreamListCmd::new(
             2,
             String::from("testing"),
             OutputFormat::List,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestStreamListCmd::new(
             3,
             String::from("misc"),
@@ -106,18 +106,18 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["stream", "list", "--help"],
             format!(
                 r#"List all streams
 
 Examples:
- iggy stream list
- iggy stream list --list-mode table
- iggy stream list -l table
+ messenger stream list
+ messenger stream list --list-mode table
+ messenger stream list -l table
 
 {USAGE_PREFIX} stream list [OPTIONS]
 
@@ -139,9 +139,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["stream", "list", "-h"],
             format!(

@@ -17,7 +17,7 @@
  */
 
 use crate::streaming::users::permissioner::Permissioner;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 
 impl Permissioner {
     pub fn create_consumer_group(
@@ -25,7 +25,7 @@ impl Permissioner {
         user_id: u32,
         stream_id: u32,
         topic_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.get_topic(user_id, stream_id, topic_id)
     }
 
@@ -34,7 +34,7 @@ impl Permissioner {
         user_id: u32,
         stream_id: u32,
         topic_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.get_topic(user_id, stream_id, topic_id)
     }
 
@@ -43,7 +43,7 @@ impl Permissioner {
         user_id: u32,
         stream_id: u32,
         topic_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.get_topic(user_id, stream_id, topic_id)
     }
 
@@ -52,7 +52,7 @@ impl Permissioner {
         user_id: u32,
         stream_id: u32,
         topic_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.get_topic(user_id, stream_id, topic_id)
     }
 
@@ -61,7 +61,7 @@ impl Permissioner {
         user_id: u32,
         stream_id: u32,
         topic_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.get_topic(user_id, stream_id, topic_id)
     }
 
@@ -70,7 +70,7 @@ impl Permissioner {
         user_id: u32,
         stream_id: u32,
         topic_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.get_topic(user_id, stream_id, topic_id)
     }
 }

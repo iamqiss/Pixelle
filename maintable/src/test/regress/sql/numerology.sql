@@ -102,7 +102,7 @@ PREPARE p1 AS SELECT $0_1;
 
 --
 -- Test implicit type conversions
--- This fails for Postgres v6.1 (and earlier?)
+-- This fails for Maintable v6.1 (and earlier?)
 --  so let's try explicit conversions for now - tgl 97/05/07
 --
 

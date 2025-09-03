@@ -23,7 +23,7 @@
  * the result is validly encoded according to the destination encoding.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -32,7 +32,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/xact.h"
 #include "catalog/namespace.h"
@@ -183,7 +183,7 @@ PrepareClientEncoding(int encoding)
 		 * restore a previous setting using the cache.  This covers all
 		 * transaction-rollback cases.  The only case it might not work for is
 		 * trying to change client_encoding on the fly by editing
-		 * postgresql.conf and SIGHUP'ing.  Which would probably be a stupid
+		 * maintableql.conf and SIGHUP'ing.  Which would probably be a stupid
 		 * thing to do anyway.
 		 */
 		foreach(lc, ConvProcList)
@@ -276,7 +276,7 @@ SetClientEncoding(int encoding)
 
 /*
  * Initialize client encoding conversions.
- *		Called from InitPostgres() once during backend startup.
+ *		Called from InitMaintable() once during backend startup.
  */
 void
 InitializeClientEncoding(void)

@@ -22,7 +22,7 @@ use std::io::IoSlice;
 use crate::tcp::tcp_sender::TcpSender;
 use crate::tcp::tcp_tls_sender::TcpTlsSender;
 use crate::{quic::quic_sender::QuicSender, server_error::ServerError};
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use quinn::{RecvStream, SendStream};
 use tokio::net::TcpStream;
 use tokio_rustls::server::TlsStream;
@@ -48,21 +48,21 @@ macro_rules! forward_async_methods {
 }
 
 pub trait Sender {
-    fn read(&mut self, buffer: &mut [u8]) -> impl Future<Output = Result<usize, IggyError>> + Send;
-    fn send_empty_ok_response(&mut self) -> impl Future<Output = Result<(), IggyError>> + Send;
+    fn read(&mut self, buffer: &mut [u8]) -> impl Future<Output = Result<usize, MessengerError>> + Send;
+    fn send_empty_ok_response(&mut self) -> impl Future<Output = Result<(), MessengerError>> + Send;
     fn send_ok_response(
         &mut self,
         payload: &[u8],
-    ) -> impl Future<Output = Result<(), IggyError>> + Send;
+    ) -> impl Future<Output = Result<(), MessengerError>> + Send;
     fn send_ok_response_vectored(
         &mut self,
         length: &[u8],
         slices: Vec<IoSlice<'_>>,
-    ) -> impl Future<Output = Result<(), IggyError>> + Send;
+    ) -> impl Future<Output = Result<(), MessengerError>> + Send;
     fn send_error_response(
         &mut self,
-        error: IggyError,
-    ) -> impl Future<Output = Result<(), IggyError>> + Send;
+        error: MessengerError,
+    ) -> impl Future<Output = Result<(), MessengerError>> + Send;
     fn shutdown(&mut self) -> impl Future<Output = Result<(), ServerError>> + Send;
 }
 
@@ -90,11 +90,11 @@ impl SenderKind {
     }
 
     forward_async_methods! {
-        async fn read(&mut self, buffer: &mut [u8]) -> Result<usize, IggyError>;
-        async fn send_empty_ok_response(&mut self) -> Result<(), IggyError>;
-        async fn send_ok_response(&mut self, payload: &[u8]) -> Result<(), IggyError>;
-        async fn send_ok_response_vectored(&mut self, length: &[u8], slices: Vec<IoSlice<'_>>) -> Result<(), IggyError>;
-        async fn send_error_response(&mut self, error: IggyError) -> Result<(), IggyError>;
+        async fn read(&mut self, buffer: &mut [u8]) -> Result<usize, MessengerError>;
+        async fn send_empty_ok_response(&mut self) -> Result<(), MessengerError>;
+        async fn send_ok_response(&mut self, payload: &[u8]) -> Result<(), MessengerError>;
+        async fn send_ok_response_vectored(&mut self, length: &[u8], slices: Vec<IoSlice<'_>>) -> Result<(), MessengerError>;
+        async fn send_error_response(&mut self, error: MessengerError) -> Result<(), MessengerError>;
         async fn shutdown(&mut self) -> Result<(), ServerError>;
     }
 }

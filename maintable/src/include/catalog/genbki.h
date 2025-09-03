@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * genbki.h
- *	  Required include file for all POSTGRES catalog header files
+ *	  Required include file for all MAINTABLE catalog header files
  *
  * genbki.h defines CATALOG(), BKI_BOOTSTRAP and related macros
  * so that the catalog header files can be read by the C compiler.
@@ -9,7 +9,7 @@
  * bootstrap file from these header files.)
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/catalog/genbki.h

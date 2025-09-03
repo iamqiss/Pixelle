@@ -21,10 +21,10 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::COMPONENT;
 use crate::streaming::systems::system::System;
 use error_set::ErrContext;
-use iggy_common::Identifier;
-use iggy_common::IggyError;
-use iggy_common::locking::IggySharedMut;
-use iggy_common::locking::IggySharedMutFn;
+use messenger_common::Identifier;
+use messenger_common::MessengerError;
+use messenger_common::locking::MessengerSharedMut;
+use messenger_common::locking::MessengerSharedMutFn;
 use std::net::SocketAddr;
 use std::sync::Arc;
 use tracing::{error, info};
@@ -80,7 +80,7 @@ impl System {
         &self,
         session: &Session,
         client_id: u32,
-    ) -> Result<Option<IggySharedMut<Client>>, IggyError> {
+    ) -> Result<Option<MessengerSharedMut<Client>>, MessengerError> {
         self.ensure_authenticated(session)?;
         self.permissioner
             .get_client(session.get_user_id())
@@ -98,7 +98,7 @@ impl System {
     pub async fn get_clients(
         &self,
         session: &Session,
-    ) -> Result<Vec<IggySharedMut<Client>>, IggyError> {
+    ) -> Result<Vec<MessengerSharedMut<Client>>, MessengerError> {
         self.ensure_authenticated(session)?;
         self.permissioner
             .get_clients(session.get_user_id())

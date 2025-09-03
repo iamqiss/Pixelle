@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_index.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-dropindex">
@@ -127,7 +127,7 @@ DROP INDEX title_idx;
 
   <para>
    <command>DROP INDEX</command> is a
-   <productname>PostgreSQL</productname> language extension.  There
+   <productname>maintableQL</productname> language extension.  There
    are no provisions for indexes in the SQL standard.
   </para>
  </refsect1>

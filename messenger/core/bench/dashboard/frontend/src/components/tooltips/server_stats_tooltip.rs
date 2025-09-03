@@ -55,7 +55,7 @@ pub fn server_stats_tooltip(props: &ServerStatsTooltipProps) -> Html {
     html! {
         <div class="benchmark-info-tooltip server-stats-position">
             <div class="tooltip-section">
-                <h4>{"Iggy Server Information"}</h4>
+                <h4>{"Messenger Server Information"}</h4>
                 <div class="tooltip-content">
                     <p><strong>{"Host: "}</strong>{&stats.hostname}</p>
                     <p><strong>{"OS: "}</strong>{&stats.os_name}</p>

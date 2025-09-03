@@ -80,7 +80,7 @@ installcheck: all
 
 # Versions of the check tests that include the twophase commit test.
 # It only makes sense to run these if set up to use prepared transactions,
-# via TEMP_CONFIG for the check case, or via the postgresql.conf for the
+# via TEMP_CONFIG for the check case, or via the maintableql.conf for the
 # installcheck case.
 
 installcheck-prepared-txns: all

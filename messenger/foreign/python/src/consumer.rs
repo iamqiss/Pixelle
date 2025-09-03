@@ -19,12 +19,12 @@
 use std::sync::Arc;
 use std::time::Duration;
 
-use iggy::consumer_ext::{IggyConsumerMessageExt, MessageConsumer};
-use iggy::prelude::{
+use messenger::consumer_ext::{MessengerConsumerMessageExt, MessageConsumer};
+use messenger::prelude::{
     AutoCommit as RustAutoCommit, AutoCommitAfter as RustAutoCommitAfter,
     AutoCommitWhen as RustAutoCommitWhen, *,
 };
-use iggy::prelude::{IggyConsumer as RustIggyConsumer, IggyError, ReceivedMessage};
+use messenger::prelude::{MessengerConsumer as RustMessengerConsumer, MessengerError, ReceivedMessage};
 use pyo3::types::{PyDelta, PyDeltaAccess};
 
 use pyo3::prelude::*;
@@ -38,18 +38,18 @@ use tokio::task::JoinHandle;
 use crate::identifier::PyIdentifier;
 use crate::receive_message::ReceiveMessage;
 
-/// A Python class representing the Iggy consumer.
-/// It wraps the RustIggyConsumer and provides asynchronous functionality
+/// A Python class representing the Messenger consumer.
+/// It wraps the RustMessengerConsumer and provides asynchronous functionality
 /// through the contained runtime.
 #[gen_stub_pyclass]
 #[pyclass]
-pub struct IggyConsumer {
-    pub(crate) inner: Arc<Mutex<RustIggyConsumer>>,
+pub struct MessengerConsumer {
+    pub(crate) inner: Arc<Mutex<RustMessengerConsumer>>,
 }
 
 #[gen_stub_pymethods]
 #[pymethods]
-impl IggyConsumer {
+impl MessengerConsumer {
     /// Get the last consumed offset or `None` if no offset has been consumed yet.
     fn get_last_consumed_offset(&self, partition_id: u32) -> Option<u64> {
         self.inner
@@ -215,7 +215,7 @@ struct PyCallbackConsumer {
 }
 
 impl MessageConsumer for PyCallbackConsumer {
-    async fn consume(&self, received: ReceivedMessage) -> Result<(), IggyError> {
+    async fn consume(&self, received: ReceivedMessage) -> Result<(), MessengerError> {
         let callback = self.callback.clone();
         let task_locals = self.task_locals.clone().lock_owned().await;
         let task_locals = Python::with_gil(|py| task_locals.clone_ref(py));
@@ -229,10 +229,10 @@ impl MessageConsumer for PyCallbackConsumer {
                 })
             }))
             .await
-            .map_err(|_| IggyError::CannotReadMessage)?
-            .map_err(|_| IggyError::CannotReadMessage)?
+            .map_err(|_| MessengerError::CannotReadMessage)?
+            .map_err(|_| MessengerError::CannotReadMessage)?
             .await
-            .map_err(|_| IggyError::CannotReadMessage)?;
+            .map_err(|_| MessengerError::CannotReadMessage)?;
         Ok(())
     }
 }
@@ -261,15 +261,15 @@ impl From<&AutoCommit> for RustAutoCommit {
         match val {
             AutoCommit::Disabled() => RustAutoCommit::Disabled,
             AutoCommit::Interval(delta) => {
-                let duration = py_delta_to_iggy_duration(delta);
+                let duration = py_delta_to_messenger_duration(delta);
                 RustAutoCommit::Interval(duration)
             }
             AutoCommit::IntervalOrWhen(delta, when) => {
-                let duration = py_delta_to_iggy_duration(delta);
+                let duration = py_delta_to_messenger_duration(delta);
                 RustAutoCommit::IntervalOrWhen(duration, when.into())
             }
             AutoCommit::IntervalOrAfter(delta, after) => {
-                let duration = py_delta_to_iggy_duration(delta);
+                let duration = py_delta_to_messenger_duration(delta);
                 RustAutoCommit::IntervalOrAfter(duration, after.into())
             }
             AutoCommit::When(when) => RustAutoCommit::When(when.into()),
@@ -332,11 +332,11 @@ impl From<&AutoCommitAfter> for RustAutoCommitAfter {
     }
 }
 
-pub fn py_delta_to_iggy_duration(delta1: &Py<PyDelta>) -> IggyDuration {
+pub fn py_delta_to_messenger_duration(delta1: &Py<PyDelta>) -> MessengerDuration {
     Python::with_gil(|py| {
         let delta = delta1.bind(py);
         let seconds = (delta.get_days() * 60 * 60 * 24 + delta.get_seconds()) as u64;
         let nanos = (delta.get_microseconds() * 1_000) as u32;
-        IggyDuration::new(Duration::new(seconds, nanos))
+        MessengerDuration::new(Duration::new(seconds, nanos))
     })
 }

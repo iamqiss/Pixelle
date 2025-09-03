@@ -16,18 +16,18 @@
  * under the License.
  */
 
-use crate::prelude::{Identifier, IggyDuration, IggyError};
-use crate::stream_builder::{IggyConsumerConfig, IggyProducerConfig};
+use crate::prelude::{Identifier, MessengerDuration, MessengerError};
+use crate::stream_builder::{MessengerConsumerConfig, MessengerProducerConfig};
 use bon::Builder;
 
 #[derive(Builder, Default, Debug, Clone)]
-pub struct IggyStreamConfig {
-    consumer_config: IggyConsumerConfig,
-    producer_config: IggyProducerConfig,
+pub struct MessengerStreamConfig {
+    consumer_config: MessengerConsumerConfig,
+    producer_config: MessengerProducerConfig,
 }
 
-impl IggyStreamConfig {
-    /// Creates a new `IggyStreamConfig` with the given consumer and producer configurations.
+impl MessengerStreamConfig {
+    /// Creates a new `MessengerStreamConfig` with the given consumer and producer configurations.
     ///
     /// # Args
     ///
@@ -35,16 +35,16 @@ impl IggyStreamConfig {
     /// * `producer_config` - The producer configuration.
     ///
     /// Returns:
-    /// A new `IggyStreamConfig`.
+    /// A new `MessengerStreamConfig`.
     ///
-    pub fn new(consumer_config: IggyConsumerConfig, producer_config: IggyProducerConfig) -> Self {
+    pub fn new(consumer_config: MessengerConsumerConfig, producer_config: MessengerProducerConfig) -> Self {
         Self {
             consumer_config,
             producer_config,
         }
     }
 
-    /// Creates a new `IggyStreamConfig` from the given stream and topic names, along with the max
+    /// Creates a new `MessengerStreamConfig` from the given stream and topic names, along with the max
     /// batch size, the send interval and the polling interval.
     ///
     /// # Args
@@ -56,20 +56,20 @@ impl IggyStreamConfig {
     /// * `polling_interval` - The interval between polling for new messages.
     ///
     /// Returns:
-    /// A new `IggyStreamConfig`.
+    /// A new `MessengerStreamConfig`.
     ///
     pub fn from_stream_topic(
         stream: &str,
         topic: &str,
         batch_length: u32,
-        linger_time: IggyDuration,
-        polling_interval: IggyDuration,
-    ) -> Result<Self, IggyError> {
+        linger_time: MessengerDuration,
+        polling_interval: MessengerDuration,
+    ) -> Result<Self, MessengerError> {
         let consumer_config =
-            IggyConsumerConfig::from_stream_topic(stream, topic, batch_length, polling_interval)?;
+            MessengerConsumerConfig::from_stream_topic(stream, topic, batch_length, polling_interval)?;
 
         let producer_config =
-            IggyProducerConfig::from_stream_topic(stream, topic, batch_length, linger_time)?;
+            MessengerProducerConfig::from_stream_topic(stream, topic, batch_length, linger_time)?;
 
         Ok(Self {
             consumer_config,
@@ -78,12 +78,12 @@ impl IggyStreamConfig {
     }
 }
 
-impl IggyStreamConfig {
-    pub fn consumer_config(&self) -> &IggyConsumerConfig {
+impl MessengerStreamConfig {
+    pub fn consumer_config(&self) -> &MessengerConsumerConfig {
         &self.consumer_config
     }
 
-    pub fn producer_config(&self) -> &IggyProducerConfig {
+    pub fn producer_config(&self) -> &MessengerProducerConfig {
         &self.producer_config
     }
 
@@ -111,61 +111,61 @@ mod tests {
 
     #[test]
     fn should_be_equal() {
-        let consumer_config = IggyConsumerConfig::from_stream_topic(
+        let consumer_config = MessengerConsumerConfig::from_stream_topic(
             "test_stream",
             "test_topic",
             100,
-            IggyDuration::from_str("5ms").unwrap(),
+            MessengerDuration::from_str("5ms").unwrap(),
         )
         .unwrap();
 
-        let producer_config = IggyProducerConfig::from_stream_topic(
+        let producer_config = MessengerProducerConfig::from_stream_topic(
             "test_stream",
             "test_topic",
             100,
-            IggyDuration::from_str("5ms").unwrap(),
+            MessengerDuration::from_str("5ms").unwrap(),
         )
         .unwrap();
-        let config = IggyStreamConfig::new(consumer_config, producer_config);
+        let config = MessengerStreamConfig::new(consumer_config, producer_config);
         assert_eq!(config.stream_name(), "test_stream");
         assert_eq!(config.topic_name(), "test_topic");
         assert_eq!(config.consumer_config().batch_length(), 100);
         assert_eq!(config.producer_config().batch_length(), 100);
         assert_eq!(
             config.consumer_config().polling_interval(),
-            IggyDuration::from_str("5ms").unwrap()
+            MessengerDuration::from_str("5ms").unwrap()
         );
         assert_eq!(
             config.producer_config().linger_time(),
-            IggyDuration::from_str("5ms").unwrap()
+            MessengerDuration::from_str("5ms").unwrap()
         );
     }
 
     #[test]
     fn should_be_default() {
-        let config = IggyStreamConfig::default();
+        let config = MessengerStreamConfig::default();
         assert_eq!(config.stream_name(), "test_stream");
         assert_eq!(config.topic_name(), "test_topic");
         assert_eq!(config.consumer_config().batch_length(), 100);
         assert_eq!(config.producer_config().batch_length(), 100);
         assert_eq!(
             config.consumer_config().polling_interval(),
-            IggyDuration::from_str("5ms").unwrap()
+            MessengerDuration::from_str("5ms").unwrap()
         );
         assert_eq!(
             config.producer_config().linger_time(),
-            IggyDuration::from_str("5ms").unwrap()
+            MessengerDuration::from_str("5ms").unwrap()
         );
     }
 
     #[test]
     fn should_be_from_stream_topic() {
-        let res = IggyStreamConfig::from_stream_topic(
+        let res = MessengerStreamConfig::from_stream_topic(
             "test_stream",
             "test_topic",
             100,
-            IggyDuration::from_str("5ms").unwrap(),
-            IggyDuration::from_str("5ms").unwrap(),
+            MessengerDuration::from_str("5ms").unwrap(),
+            MessengerDuration::from_str("5ms").unwrap(),
         );
 
         assert!(res.is_ok());
@@ -177,11 +177,11 @@ mod tests {
         assert_eq!(config.producer_config().batch_length(), 100);
         assert_eq!(
             config.consumer_config().polling_interval(),
-            IggyDuration::from_str("5ms").unwrap()
+            MessengerDuration::from_str("5ms").unwrap()
         );
         assert_eq!(
             config.producer_config().linger_time(),
-            IggyDuration::from_str("5ms").unwrap()
+            MessengerDuration::from_str("5ms").unwrap()
         );
     }
 }

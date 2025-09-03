@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_rule.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-droprule">
@@ -106,7 +106,7 @@ DROP RULE newrule ON mytable;
 
   <para>
    <command>DROP RULE</command> is a
-   <productname>PostgreSQL</productname> language extension, as is the
+   <productname>maintableQL</productname> language extension, as is the
    entire query rewrite system.
   </para>
  </refsect1>

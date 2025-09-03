@@ -19,10 +19,10 @@
 use crate::streaming::common::test_setup::TestSetup;
 use crate::streaming::create_messages;
 use ahash::AHashMap;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use server::state::system::{PartitionState, TopicState};
 use server::streaming::polling_consumer::PollingConsumer;
-use server::streaming::segments::IggyMessagesBatchMut;
+use server::streaming::segments::MessengerMessagesBatchMut;
 use server::streaming::topics::topic::Topic;
 use std::default::Default;
 use std::sync::Arc;
@@ -48,7 +48,7 @@ async fn should_persist_topics_with_partitions_directories_and_info_file() {
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU32::new(0)),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             CompressionAlgorithm::default(),
             MaxTopicSize::ServerDefault,
             1,
@@ -86,7 +86,7 @@ async fn should_load_existing_topic_from_disk() {
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU32::new(0)),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             CompressionAlgorithm::default(),
             MaxTopicSize::ServerDefault,
             1,
@@ -101,7 +101,7 @@ async fn should_load_existing_topic_from_disk() {
         )
         .await;
 
-        let created_at = IggyTimestamp::now();
+        let created_at = MessengerTimestamp::now();
         let mut loaded_topic = Topic::empty(
             stream_id,
             topic_id,
@@ -125,7 +125,7 @@ async fn should_load_existing_topic_from_disk() {
             },
             consumer_groups: Default::default(),
             compression_algorithm: Default::default(),
-            message_expiry: IggyExpiry::NeverExpire,
+            message_expiry: MessengerExpiry::NeverExpire,
             max_topic_size: MaxTopicSize::ServerDefault,
             replication_factor: Some(1),
             created_at: Default::default(),
@@ -163,7 +163,7 @@ async fn should_delete_existing_topic_from_disk() {
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU32::new(0)),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             CompressionAlgorithm::default(),
             MaxTopicSize::ServerDefault,
             1,
@@ -203,7 +203,7 @@ async fn should_purge_existing_topic_on_disk() {
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU32::new(0)),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             CompressionAlgorithm::default(),
             MaxTopicSize::ServerDefault,
             1,
@@ -224,7 +224,7 @@ async fn should_purge_existing_topic_on_disk() {
             .iter()
             .map(|msg| msg.get_size_bytes().as_bytes_u32())
             .sum::<u32>();
-        let batch = IggyMessagesBatchMut::from_messages(&messages, batch_size);
+        let batch = MessengerMessagesBatchMut::from_messages(&messages, batch_size);
         topic
             .append_messages(&Partitioning::partition_id(1), batch, None)
             .await

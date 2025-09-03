@@ -22,9 +22,9 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ..:/workspace:cached
-    network_mode: service:iggy
+    network_mode: service:messenger
     command: sleep infinity
 
-  iggy:
-    image: apache/iggy:latest
+  messenger:
+    image: apache/messenger:latest
     restart: unless-stopped

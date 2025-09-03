@@ -18,14 +18,14 @@
 
 use crate::http::http_client::HttpClient;
 use crate::http::http_transport::HttpTransport;
-use crate::prelude::{IggyDuration, IggyError};
+use crate::prelude::{MessengerDuration, MessengerError};
 use async_trait::async_trait;
-use iggy_binary_protocol::SystemClient;
-use iggy_common::Snapshot;
-use iggy_common::Stats;
-use iggy_common::get_snapshot::GetSnapshot;
-use iggy_common::{ClientInfo, ClientInfoDetails};
-use iggy_common::{SnapshotCompression, SystemSnapshotType};
+use messenger_binary_protocol::SystemClient;
+use messenger_common::Snapshot;
+use messenger_common::Stats;
+use messenger_common::get_snapshot::GetSnapshot;
+use messenger_common::{ClientInfo, ClientInfoDetails};
+use messenger_common::{SnapshotCompression, SystemSnapshotType};
 
 const PING: &str = "/ping";
 const CLIENTS: &str = "/clients";
@@ -34,23 +34,23 @@ const SNAPSHOT: &str = "/snapshot";
 
 #[async_trait]
 impl SystemClient for HttpClient {
-    async fn get_stats(&self) -> Result<Stats, IggyError> {
+    async fn get_stats(&self) -> Result<Stats, MessengerError> {
         let response = self.get(STATS).await?;
         let stats = response
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(stats)
     }
 
-    async fn get_me(&self) -> Result<ClientInfoDetails, IggyError> {
-        Err(IggyError::FeatureUnavailable)
+    async fn get_me(&self) -> Result<ClientInfoDetails, MessengerError> {
+        Err(MessengerError::FeatureUnavailable)
     }
 
-    async fn get_client(&self, client_id: u32) -> Result<Option<ClientInfoDetails>, IggyError> {
+    async fn get_client(&self, client_id: u32) -> Result<Option<ClientInfoDetails>, MessengerError> {
         let response = self.get(&format!("{CLIENTS}/{client_id}")).await;
         if let Err(error) = response {
-            if matches!(error, IggyError::ResourceNotFound(_)) {
+            if matches!(error, MessengerError::ResourceNotFound(_)) {
                 return Ok(None);
             }
 
@@ -60,25 +60,25 @@ impl SystemClient for HttpClient {
         let client = response?
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(Some(client))
     }
 
-    async fn get_clients(&self) -> Result<Vec<ClientInfo>, IggyError> {
+    async fn get_clients(&self) -> Result<Vec<ClientInfo>, MessengerError> {
         let response = self.get(CLIENTS).await?;
         let clients = response
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(clients)
     }
 
-    async fn ping(&self) -> Result<(), IggyError> {
+    async fn ping(&self) -> Result<(), MessengerError> {
         self.get(PING).await?;
         Ok(())
     }
 
-    async fn heartbeat_interval(&self) -> IggyDuration {
+    async fn heartbeat_interval(&self) -> MessengerDuration {
         self.heartbeat_interval
     }
 
@@ -86,7 +86,7 @@ impl SystemClient for HttpClient {
         &self,
         compression: SnapshotCompression,
         snapshot_types: Vec<SystemSnapshotType>,
-    ) -> Result<Snapshot, IggyError> {
+    ) -> Result<Snapshot, MessengerError> {
         let response = self
             .post(
                 SNAPSHOT,
@@ -99,7 +99,7 @@ impl SystemClient for HttpClient {
         let file = response
             .bytes()
             .await
-            .map_err(|_| IggyError::InvalidBytesResponse)?;
+            .map_err(|_| MessengerError::InvalidBytesResponse)?;
         let snapshot = Snapshot::new(file.to_vec());
         Ok(snapshot)
     }

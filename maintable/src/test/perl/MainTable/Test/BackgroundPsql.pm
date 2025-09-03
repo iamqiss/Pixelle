@@ -1,37 +1,37 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 =pod
 
 =head1 NAME
 
-PostgreSQL::Test::BackgroundPsql - class for controlling background psql processes
+maintableQL::Test::BackgroundPsql - class for controlling background psql processes
 
 =head1 SYNOPSIS
 
-  use PostgreSQL::Test::Cluster;
+  use maintableQL::Test::Cluster;
 
-  my $node = PostgreSQL::Test::Cluster->new('mynode');
+  my $node = maintableQL::Test::Cluster->new('mynode');
 
   # Create a data directory with initdb
   $node->init();
 
-  # Start the PostgreSQL server
+  # Start the maintableQL server
   $node->start();
 
   # Create and start an interactive psql session
-  my $isession = $node->interactive_psql('postgres');
+  my $isession = $node->interactive_psql('maintable');
   # Apply timeout per query rather than per session
   $isession->set_query_timer_restart();
   # Run a query and get the output as seen by psql
   my $ret = $isession->query("SELECT 1");
   # Run a backslash command and wait until the prompt returns
-  $isession->query_until(qr/postgres #/, "\\d foo\n");
+  $isession->query_until(qr/maintable #/, "\\d foo\n");
   # Close the session and exit psql
   $isession->quit;
 
   # Create and start a background psql session
-  my $bsession = $node->background_psql('postgres');
+  my $bsession = $node->background_psql('maintable');
 
   # Run a query which is guaranteed to not return in case it fails
   $bsession->query_safe("SELECT 1");
@@ -45,13 +45,13 @@ PostgreSQL::Test::BackgroundPsql - class for controlling background psql process
 
 =head1 DESCRIPTION
 
-PostgreSQL::Test::BackgroundPsql contains functionality for controlling
-a background or interactive psql session operating on a PostgreSQL node
-initiated by PostgreSQL::Test::Cluster.
+maintableQL::Test::BackgroundPsql contains functionality for controlling
+a background or interactive psql session operating on a maintableQL node
+initiated by maintableQL::Test::Cluster.
 
 =cut
 
-package PostgreSQL::Test::BackgroundPsql;
+package maintableQL::Test::BackgroundPsql;
 
 use strict;
 use warnings FATAL => 'all';
@@ -59,7 +59,7 @@ use warnings FATAL => 'all';
 use Carp;
 use Config;
 use IPC::Run;
-use PostgreSQL::Test::Utils qw(pump_until);
+use maintableQL::Test::Utils qw(pump_until);
 use Test::More;
 
 =pod
@@ -68,9 +68,9 @@ use Test::More;
 
 =over
 
-=item PostgreSQL::Test::BackgroundPsql->new(interactive, @psql_params, timeout, wait)
+=item maintableQL::Test::BackgroundPsql->new(interactive, @psql_params, timeout, wait)
 
-Builds a new object of class C<PostgreSQL::Test::BackgroundPsql> for either
+Builds a new object of class C<maintableQL::Test::BackgroundPsql> for either
 an interactive or background session and starts it. If C<interactive> is
 true then a PTY will be attached. C<psql_params> should contain the full
 command to run psql with all desired parameters and a complete connection
@@ -94,16 +94,16 @@ sub new
 	};
 	my $run;
 
-	# This constructor should only be called from PostgreSQL::Test::Cluster
+	# This constructor should only be called from maintableQL::Test::Cluster
 	my ($package, $file, $line) = caller;
 	die
 	  "Forbidden caller of constructor: package: $package, file: $file:$line"
-	  unless $package->isa('PostgreSQL::Test::Cluster');
+	  unless $package->isa('maintableQL::Test::Cluster');
 
 	$psql->{timeout} = IPC::Run::timeout(
 		defined($timeout)
 		? $timeout
-		: $PostgreSQL::Test::Utils::timeout_default);
+		: $maintableQL::Test::Utils::timeout_default);
 
 	if ($interactive)
 	{

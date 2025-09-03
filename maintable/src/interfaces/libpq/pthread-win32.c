@@ -3,14 +3,14 @@
 * pthread-win32.c
 *	 partial pthread implementation for win32
 *
-* Copyright (c) 2004-2025, PostgreSQL Global Development Group
+* Copyright (c) 2004-2025, maintableQL Global Development Group
 * IDENTIFICATION
 *	src/interfaces/libpq/pthread-win32.c
 *
 *-------------------------------------------------------------------------
 */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "pthread-win32.h"
 

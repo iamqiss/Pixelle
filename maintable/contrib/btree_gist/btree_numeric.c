@@ -1,7 +1,7 @@
 /*
  * contrib/btree_gist/btree_numeric.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 #include <float.h>

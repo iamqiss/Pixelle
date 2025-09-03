@@ -4,7 +4,7 @@
  *	  routines for handling GIN entry tree pages.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/gin_private.h"
 #include "access/ginxlog.h"
@@ -121,7 +121,7 @@ GinFormTuple(GinState *ginstate,
 		itup = repalloc(itup, newsize);
 
 		/*
-		 * PostgreSQL 9.3 and earlier did not clear this new space, so we
+		 * maintableQL 9.3 and earlier did not clear this new space, so we
 		 * might find uninitialized padding when reading tuples from disk.
 		 */
 		memset((char *) itup + IndexTupleSize(itup),

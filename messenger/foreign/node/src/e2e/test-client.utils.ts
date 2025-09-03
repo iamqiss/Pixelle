@@ -18,10 +18,10 @@
  */
 
 import { Client } from '../client/client.js';
-import { getIggyAddress } from '../tcp.sm.utils.js';
+import { getMessengerAddress } from '../tcp.sm.utils.js';
 
-const credentials = { username: 'iggy', password: 'iggy' };
-const [host, port] = getIggyAddress();
+const credentials = { username: 'messenger', password: 'messenger' };
+const [host, port] = getMessengerAddress();
 
 export const getTestClient = () => new Client({
   transport: 'TCP',

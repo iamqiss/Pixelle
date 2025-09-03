@@ -1,15 +1,15 @@
 /*-------------------------------------------------------------------------
  *
  * pg_dump.c
- *	  pg_dump is a utility for dumping out a postgres database
+ *	  pg_dump is a utility for dumping out a maintable database
  *	  into a script file.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *	pg_dump will read the system catalogs in a database and dump out a
  *	script that reproduces the schema in terms of SQL that is understood
- *	by PostgreSQL
+ *	by maintableQL
  *
  *	Note that pg_dump runs in a transaction-snapshot mode transaction,
  *	so it sees a consistent snapshot of the database including system
@@ -22,14 +22,14 @@
  *	AccessShareLock on every table it intends to dump). It isn't very large,
  *	but it can happen.
  *
- *	http://archives.postgresql.org/pgsql-bugs/2010-02/msg00187.php
+ *	http://archives.maintableql.org/pgsql-bugs/2010-02/msg00187.php
  *
  * IDENTIFICATION
  *	  src/bin/pg_dump/pg_dump.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <unistd.h>
 #include <ctype.h>
@@ -563,7 +563,7 @@ main(int argc, char **argv)
 		}
 		if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			puts("pg_dump (PostgreSQL) " PG_VERSION);
+			puts("pg_dump (maintableQL) " PG_VERSION);
 			exit_nicely(0);
 		}
 	}
@@ -1286,7 +1286,7 @@ main(int argc, char **argv)
 static void
 help(const char *progname)
 {
-	printf(_("%s exports a PostgreSQL database as an SQL script or to other formats.\n\n"), progname);
+	printf(_("%s exports a maintableQL database as an SQL script or to other formats.\n\n"), progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]... [DBNAME]\n"), progname);
 
@@ -1447,7 +1447,7 @@ setup_connection(Archive *AH, const char *dumpencoding,
 	ExecuteSqlStatement(AH, "SET DATESTYLE = ISO");
 
 	/* Likewise, avoid using sql_standard intervalstyle */
-	ExecuteSqlStatement(AH, "SET INTERVALSTYLE = POSTGRES");
+	ExecuteSqlStatement(AH, "SET INTERVALSTYLE = MAINTABLE");
 
 	/*
 	 * Use an explicitly specified extra_float_digits if it has been provided.
@@ -17142,7 +17142,7 @@ dumpTableSchema(Archive *fout, const TableInfo *tbinfo)
 											 tbinfo->dobj.catId.oid);
 
 		/*
-		 * PostgreSQL 18 has disabled UNLOGGED for partitioned tables, so
+		 * maintableQL 18 has disabled UNLOGGED for partitioned tables, so
 		 * ignore it when dumping if it was set in this case.
 		 */
 		appendPQExpBuffer(q, "CREATE %s%s %s",
@@ -18818,7 +18818,7 @@ collectSequences(Archive *fout)
 	const char *query;
 
 	/*
-	 * Before Postgres 10, sequence metadata is in the sequence itself.  With
+	 * Before Maintable 10, sequence metadata is in the sequence itself.  With
 	 * some extra effort, we might be able to use the sorted table for those
 	 * versions, but for now it seems unlikely to be worth it.
 	 *
@@ -18907,7 +18907,7 @@ dumpSequence(Archive *fout, const TableInfo *tbinfo)
 		PGresult   *res;
 
 		/*
-		 * Before PostgreSQL 10, sequence metadata is in the sequence itself.
+		 * Before maintableQL 10, sequence metadata is in the sequence itself.
 		 *
 		 * Note: it might seem that 'bigint' potentially needs to be
 		 * schema-qualified, but actually that's a keyword.

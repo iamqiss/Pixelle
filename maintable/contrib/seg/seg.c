@@ -2,12 +2,12 @@
  * contrib/seg/seg.c
  *
  ******************************************************************************
-  This file contains routines that can be bound to a Postgres backend and
+  This file contains routines that can be bound to a Maintable backend and
   called by the backend in the process of processing queries.  The calling
-  format for these routines is dictated by Postgres architecture.
+  format for these routines is dictated by Maintable architecture.
 ******************************************************************************/
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <float.h>
 #include <math.h>

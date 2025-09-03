@@ -16,15 +16,15 @@
  * under the License.
  */
 
-use super::IggyMessagesBatchMut;
+use super::MessengerMessagesBatchMut;
 use crate::streaming::segments::segment::Segment;
 use crate::{
     configs::cache_indexes::CacheIndexesConfig,
     streaming::deduplication::message_deduplicator::MessageDeduplicator,
 };
 use error_set::ErrContext;
-use iggy_common::Confirmation;
-use iggy_common::IggyError;
+use messenger_common::Confirmation;
+use messenger_common::MessengerError;
 use std::sync::atomic::Ordering;
 use tracing::{info, trace};
 
@@ -32,11 +32,11 @@ impl Segment {
     pub async fn append_batch(
         &mut self,
         current_offset: u64,
-        messages: IggyMessagesBatchMut,
+        messages: MessengerMessagesBatchMut,
         deduplicator: Option<&MessageDeduplicator>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         if self.is_closed {
-            return Err(IggyError::SegmentClosed(
+            return Err(MessengerError::SegmentClosed(
                 self.start_offset,
                 self.partition_id,
             ));
@@ -69,7 +69,7 @@ impl Segment {
     pub async fn persist_messages(
         &mut self,
         confirmation: Option<Confirmation>,
-    ) -> Result<usize, IggyError> {
+    ) -> Result<usize, MessengerError> {
         if self.accumulator.is_empty() {
             return Ok(0);
         }
@@ -151,7 +151,7 @@ impl Segment {
             .fetch_add(messages_count, Ordering::SeqCst);
     }
 
-    async fn check_and_handle_segment_full(&mut self) -> Result<(), IggyError> {
+    async fn check_and_handle_segment_full(&mut self) -> Result<(), MessengerError> {
         if self.is_full().await {
             let max_segment_size_from_config = self.config.segment.size;
             let current_segment_size = self.get_messages_size();

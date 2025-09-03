@@ -20,7 +20,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0
 COPY ./foreign/csharp ./foreign/csharp
 COPY ./bdd/scenarios ./bdd/scenarios
 
-WORKDIR /foreign/csharp/Iggy_SDK.Tests.BDD
+WORKDIR /foreign/csharp/Messenger_SDK.Tests.BDD
 RUN dotnet build -c Release 
 
 CMD ["dotnet", "test"]

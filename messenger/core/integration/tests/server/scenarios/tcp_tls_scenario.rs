@@ -17,10 +17,10 @@
  */
 
 use bytes::Bytes;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::{assert_clean_system, login_root};
 
-pub async fn run(client: &IggyClient) {
+pub async fn run(client: &MessengerClient) {
     login_root(client).await;
 
     let stream_name = "test-tls-stream";
@@ -47,14 +47,14 @@ pub async fn run(client: &IggyClient) {
             CompressionAlgorithm::default(),
             None,
             Some(topic_id),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await
         .unwrap();
 
     let mut messages = vec![
-        IggyMessage::builder()
+        MessengerMessage::builder()
             .id(1)
             .payload(Bytes::from("Hello TLS!"))
             .build()

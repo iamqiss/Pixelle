@@ -3,10 +3,10 @@
  * pg_cast.h
  *	  definition of the "type casts" system catalog (pg_cast)
  *
- * As of Postgres 8.0, pg_cast describes not only type coercion functions
+ * As of Maintable 8.0, pg_cast describes not only type coercion functions
  * but also length coercion functions.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/catalog/pg_cast.h

@@ -17,15 +17,15 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, USAGE_PREFIX,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
-use iggy::prelude::Identifier;
-use iggy::prelude::IggyExpiry;
-use iggy::prelude::MaxTopicSize;
-use iggy_binary_protocol::cli::binary_system::stats::GetStatsOutput;
+use messenger::prelude::Client;
+use messenger::prelude::Identifier;
+use messenger::prelude::MessengerExpiry;
+use messenger::prelude::MaxTopicSize;
+use messenger_binary_protocol::cli::binary_system::stats::GetStatsOutput;
 use predicates::str::{contains, starts_with};
 use serial_test::parallel;
 
@@ -43,8 +43,8 @@ impl TestStatsCmd {
     fn new(test_output: TestStatsCmdOutput) -> Self {
         Self { test_output }
     }
-    fn get_cmd(&self) -> IggyCmdCommand {
-        let command = IggyCmdCommand::new().arg("stats").with_env_credentials();
+    fn get_cmd(&self) -> MessengerCmdCommand {
+        let command = MessengerCmdCommand::new().arg("stats").with_env_credentials();
 
         match self.test_output {
             TestStatsCmdOutput::Set(option) => {
@@ -61,7 +61,7 @@ impl TestStatsCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestStatsCmd {
+impl MessengerCmdTestCase for TestStatsCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let stream_id = Identifier::from_str_value("logs").unwrap();
         let stream = client.create_stream(&stream_id.as_string(), Some(1)).await;
@@ -75,14 +75,14 @@ impl IggyCmdTestCase for TestStatsCmd {
                 Default::default(),
                 None,
                 Some(1),
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 MaxTopicSize::ServerDefault,
             )
             .await;
         assert!(topic.is_ok());
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
+    fn get_command(&self) -> MessengerCmdCommand {
         self.get_cmd()
     }
 
@@ -150,28 +150,28 @@ impl IggyCmdTestCase for TestStatsCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestStatsCmd::new(TestStatsCmdOutput::Default))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestStatsCmd::new(TestStatsCmdOutput::Set(
             GetStatsOutput::Table,
         )))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestStatsCmd::new(TestStatsCmdOutput::Set(
             GetStatsOutput::List,
         )))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestStatsCmd::new(TestStatsCmdOutput::Set(
             GetStatsOutput::Json,
         )))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestStatsCmd::new(TestStatsCmdOutput::Set(
             GetStatsOutput::Toml,
         )))
@@ -181,15 +181,15 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["stats", "--help"],
             format!(
-                r#"get iggy server statistics
+                r#"get messenger server statistics
 
-Collect basic Iggy server statistics like number of streams, topics, partitions, etc.
+Collect basic Messenger server statistics like number of streams, topics, partitions, etc.
 Server OS name, version, etc. are also collected.
 
 {USAGE_PREFIX} stats [OPTIONS]
@@ -212,13 +212,13 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["stats", "-h"],
             format!(
-                r#"get iggy server statistics
+                r#"get messenger server statistics
 
 {USAGE_PREFIX} stats [OPTIONS]
 

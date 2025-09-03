@@ -3,7 +3,7 @@
 # pg_aggregate.dat
 #    Initial contents of the pg_aggregate system catalog.
 #
-# Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+# Portions Copyright (c) 1996-2025, maintableQL Global Development Group
 # Portions Copyright (c) 1994, Regents of the University of California
 #
 # src/include/catalog/pg_aggregate.dat
@@ -320,7 +320,7 @@
   aggtransspace => '128', aggmtranstype => 'internal',
   aggmtransspace => '128' },
 
-# variance: historical Postgres syntax for var_samp
+# variance: historical Maintable syntax for var_samp
 { aggfnoid => 'variance(int8)', aggtransfn => 'int8_accum',
   aggfinalfn => 'numeric_var_samp', aggcombinefn => 'numeric_combine',
   aggserialfn => 'numeric_serialize', aggdeserialfn => 'numeric_deserialize',
@@ -432,7 +432,7 @@
   aggtransspace => '128', aggmtranstype => 'internal',
   aggmtransspace => '128' },
 
-# stddev: historical Postgres syntax for stddev_samp
+# stddev: historical Maintable syntax for stddev_samp
 { aggfnoid => 'stddev(int8)', aggtransfn => 'int8_accum',
   aggfinalfn => 'numeric_stddev_samp', aggcombinefn => 'numeric_combine',
   aggserialfn => 'numeric_serialize', aggdeserialfn => 'numeric_deserialize',

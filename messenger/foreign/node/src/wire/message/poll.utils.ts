@@ -24,10 +24,10 @@ import { serializeGetOffset, type Consumer } from '../offset/offset.utils.js';
 import { deserializeHeaders, type HeadersMap } from './header.utils.js';
 import { Transform, type TransformCallback } from 'node:stream';
 import {
-  deserializeIggyMessageHeaders,
-  IGGY_MESSAGE_HEADER_SIZE,
-  IggyMessageHeader
-} from './iggy-header.utils.js';
+  deserializeMessengerMessageHeaders,
+  MESSENGER_MESSAGE_HEADER_SIZE,
+  MessengerMessageHeader
+} from './messenger-header.utils.js';
 
 export const PollingStrategyKind = {
   Offset: 1,
@@ -149,7 +149,7 @@ export const mapMessageState = (k: number): MessageStateId => {
 }
 
 export type Message = {
-  headers: IggyMessageHeader,
+  headers: MessengerMessageHeader,
   payload: Buffer,
   userHeaders: HeadersMap
 };
@@ -166,11 +166,11 @@ export const deserializeMessages = (b: Buffer) => {
   let pos = 0;
   const len = b.length;
   while (pos < len) {
-    if(pos + IGGY_MESSAGE_HEADER_SIZE > len)
+    if(pos + MESSENGER_MESSAGE_HEADER_SIZE > len)
       break;
-    const bHead = b.subarray(pos, pos + IGGY_MESSAGE_HEADER_SIZE);
-    const headers = deserializeIggyMessageHeaders(bHead);
-    pos += IGGY_MESSAGE_HEADER_SIZE;
+    const bHead = b.subarray(pos, pos + MESSENGER_MESSAGE_HEADER_SIZE);
+    const headers = deserializeMessengerMessageHeaders(bHead);
+    pos += MESSENGER_MESSAGE_HEADER_SIZE;
     const plEnd = pos + headers.payloadLength;
     if(plEnd > len)
       break;

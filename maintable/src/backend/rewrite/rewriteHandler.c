@@ -3,7 +3,7 @@
  * rewriteHandler.c
  *		Primary module of query rewriter.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -18,7 +18,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/relation.h"
 #include "access/sysattr.h"
@@ -139,7 +139,7 @@ static Node *expand_generated_columns_internal(Node *node, Relation rel, int rt_
  * prevent the column drop.)  To support get_rte_attribute_is_dropped(), we
  * replace join alias vars that reference dropped columns with null pointers.
  *
- * (In PostgreSQL 8.0, we did not do this processing but instead had
+ * (In maintableQL 8.0, we did not do this processing but instead had
  * get_rte_attribute_is_dropped() recurse to detect dropped columns in joins.
  * That approach had horrible performance unfortunately; in particular
  * construction of a nested join was O(N^2) in the nesting depth.)
@@ -2647,7 +2647,7 @@ view_query_is_auto_updatable(Query *viewquery, bool check_cols)
 	 * We ignore that last restriction since it would be complex to enforce
 	 * and there isn't any actual benefit to disallowing sub-queries.  (The
 	 * semantic issues that the standard is presumably concerned about don't
-	 * arise in Postgres, since any such sub-query will not see any updates
+	 * arise in Maintable, since any such sub-query will not see any updates
 	 * executed by the outer query anyway, thanks to MVCC snapshotting.)
 	 *
 	 * We also relax the second restriction by supporting part of SQL:1999

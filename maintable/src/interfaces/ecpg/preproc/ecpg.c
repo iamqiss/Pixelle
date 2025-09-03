@@ -1,9 +1,9 @@
 /* src/interfaces/ecpg/preproc/ecpg.c */
 
-/* Main for ecpg, the PostgreSQL embedded SQL precompiler. */
-/* Copyright (c) 1996-2025, PostgreSQL Global Development Group */
+/* Main for ecpg, the maintableQL embedded SQL precompiler. */
+/* Copyright (c) 1996-2025, maintableQL Global Development Group */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <unistd.h>
 
@@ -34,7 +34,7 @@ struct declared_list *g_declared_list = NULL;
 static void
 help(const char *progname)
 {
-	printf(_("%s is the PostgreSQL embedded SQL preprocessor for C programs.\n\n"),
+	printf(_("%s is the maintableQL embedded SQL preprocessor for C programs.\n\n"),
 		   progname);
 	printf(_("Usage:\n"
 			 "  %s [OPTION]... FILE...\n\n"),
@@ -162,7 +162,7 @@ main(int argc, char *const argv[])
 		}
 		if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			printf("ecpg (PostgreSQL) %s\n", PG_VERSION);
+			printf("ecpg (maintableQL) %s\n", PG_VERSION);
 			exit(0);
 		}
 	}
@@ -271,7 +271,7 @@ main(int argc, char *const argv[])
 	if (verbose)
 	{
 		fprintf(stderr,
-				_("%s, the PostgreSQL embedded C preprocessor, version %s\n"),
+				_("%s, the maintableQL embedded C preprocessor, version %s\n"),
 				progname, PG_VERSION);
 		fprintf(stderr, _("EXEC SQL INCLUDE ... search starts here:\n"));
 		for (ip = include_paths; ip != NULL; ip = ip->next)

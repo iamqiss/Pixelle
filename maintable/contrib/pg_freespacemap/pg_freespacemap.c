@@ -6,7 +6,7 @@
  *	  contrib/pg_freespacemap/pg_freespacemap.c
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/relation.h"
 #include "fmgr.h"

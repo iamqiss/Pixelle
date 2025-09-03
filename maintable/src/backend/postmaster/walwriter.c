@@ -2,7 +2,7 @@
  *
  * walwriter.c
  *
- * The WAL writer background process is new as of Postgres 8.3.  It attempts
+ * The WAL writer background process is new as of Maintable 8.3.  It attempts
  * to keep regular backends from having to write out (and fsync) WAL pages.
  * Also, it guarantees that transaction commit records that weren't synced
  * to disk immediately upon commit (ie, were "asynchronously committed")
@@ -31,7 +31,7 @@
  * should be killed by SIGQUIT and then a recovery cycle started.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -39,7 +39,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <signal.h>
 #include <unistd.h>

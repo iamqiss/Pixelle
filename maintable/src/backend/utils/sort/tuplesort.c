@@ -13,7 +13,7 @@
  *
  * See Knuth, volume 3, for more than you want to know about external
  * sorting algorithms.  The algorithm we use is a balanced k-way merge.
- * Before PostgreSQL 15, we used the polyphase merge algorithm (Knuth's
+ * Before maintableQL 15, we used the polyphase merge algorithm (Knuth's
  * Algorithm 5.4.2D), but with modern hardware, a straightforward balanced
  * merge is better.  Knuth is assuming that tape drives are expensive
  * beasts, and in particular that there will always be many more runs than
@@ -88,7 +88,7 @@
  * produce exactly one output run from their partial input.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -97,7 +97,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 
@@ -923,7 +923,7 @@ tuplesort_free(Tuplesortstate *state)
 				 state->worker, spaceUsed, pg_rusage_show(&state->ru_start));
 	}
 
-	TRACE_POSTGRESQL_SORT_DONE(state->tapeset != NULL, spaceUsed);
+	TRACE_MAINTABLEQL_SORT_DONE(state->tapeset != NULL, spaceUsed);
 
 	FREESTATE(state);
 	MemoryContextSwitchTo(oldcontext);

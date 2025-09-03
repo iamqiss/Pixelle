@@ -16,9 +16,9 @@
  * under the License.
  */
 
-use iggy::prelude::*;
-use iggy_examples::shared::args::Args;
-use iggy_examples::shared::system;
+use messenger::prelude::*;
+use messenger_examples::shared::args::Args;
+use messenger_examples::shared::system;
 use std::error::Error;
 use std::str::FromStr;
 use std::sync::Arc;
@@ -40,7 +40,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     );
     let client_provider_config = Arc::new(ClientProviderConfig::from_args(args.to_sdk_args())?);
     let client = client_provider::get_raw_client(client_provider_config, false).await?;
-    let client = IggyClient::new(client);
+    let client = MessengerClient::new(client);
     client.connect().await?;
     system::init_by_producer(&args, &client).await?;
     produce_messages(&args, &client).await
@@ -77,7 +77,7 @@ async fn produce_messages(args: &Args, client: &dyn Client) -> Result<(), Box<dy
         for _ in 0..args.messages_per_batch {
             current_id += 1;
             let payload = format!("message-{current_id}");
-            let message = IggyMessage::from_str(&payload)?;
+            let message = MessengerMessage::from_str(&payload)?;
             messages.push(message);
             sent_messages.push(payload);
         }

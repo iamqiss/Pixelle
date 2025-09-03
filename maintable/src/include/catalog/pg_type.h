@@ -4,7 +4,7 @@
  *	  definition of the "type" system catalog (pg_type)
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/catalog/pg_type.h
@@ -28,7 +28,7 @@
  *		typedef struct FormData_pg_type
  *
  *		Some of the values in a pg_type instance are copied into
- *		pg_attribute instances.  Some parts of Postgres use the pg_type copy,
+ *		pg_attribute instances.  Some parts of Maintable use the pg_type copy,
  *		while others use the pg_attribute copy, so they must match.
  *		See struct FormData_pg_attribute for details.
  * ----------------
@@ -44,7 +44,7 @@ CATALOG(pg_type,1247,TypeRelationId) BKI_BOOTSTRAP BKI_ROWTYPE_OID(71,TypeRelati
 	Oid			typnamespace BKI_DEFAULT(pg_catalog) BKI_LOOKUP(pg_namespace);
 
 	/* type owner */
-	Oid			typowner BKI_DEFAULT(POSTGRES) BKI_LOOKUP(pg_authid);
+	Oid			typowner BKI_DEFAULT(MAINTABLE) BKI_LOOKUP(pg_authid);
 
 	/*
 	 * For a fixed-size type, typlen is the number of bytes we use to
@@ -56,7 +56,7 @@ CATALOG(pg_type,1247,TypeRelationId) BKI_BOOTSTRAP BKI_ROWTYPE_OID(71,TypeRelati
 	int16		typlen BKI_ARRAY_DEFAULT(-1);
 
 	/*
-	 * typbyval determines whether internal Postgres routines pass a value of
+	 * typbyval determines whether internal Maintable routines pass a value of
 	 * this type by value or by reference.  typbyval had better be false if
 	 * the length is not 1, 2, or 4 (or 8 on 8-byte-Datum machines).
 	 * Variable-length types are always passed by reference. Note that
@@ -151,7 +151,7 @@ CATALOG(pg_type,1247,TypeRelationId) BKI_BOOTSTRAP BKI_ROWTYPE_OID(71,TypeRelati
 	/* ----------------
 	 * typalign is the alignment required when storing a value of this
 	 * type.  It applies to storage on disk as well as most
-	 * representations of the value inside Postgres.  When multiple values
+	 * representations of the value inside Maintable.  When multiple values
 	 * are stored consecutively, such as in the representation of a
 	 * complete row on disk, padding is inserted before a datum of this
 	 * type so that it begins on the specified boundary.  The alignment

@@ -3,7 +3,7 @@
  * nodeMaterial.c
  *	  Routines to handle materialization nodes.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -19,7 +19,7 @@
  *		ExecEndMaterial			- shutdown node and subnodes
  *
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "executor/executor.h"
 #include "executor/nodeMaterial.h"

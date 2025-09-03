@@ -26,21 +26,21 @@ use crate::state::command::EntryCommand;
 use crate::state::models::CreateUserWithId;
 use crate::streaming::session::Session;
 use crate::streaming::utils::crypto;
-use ::iggy_common::change_password::ChangePassword;
-use ::iggy_common::create_user::CreateUser;
-use ::iggy_common::delete_user::DeleteUser;
-use ::iggy_common::login_user::LoginUser;
-use ::iggy_common::update_permissions::UpdatePermissions;
-use ::iggy_common::update_user::UpdateUser;
+use ::messenger_common::change_password::ChangePassword;
+use ::messenger_common::create_user::CreateUser;
+use ::messenger_common::delete_user::DeleteUser;
+use ::messenger_common::login_user::LoginUser;
+use ::messenger_common::update_permissions::UpdatePermissions;
+use ::messenger_common::update_user::UpdateUser;
 use axum::extract::{Path, State};
 use axum::http::StatusCode;
 use axum::routing::{delete, get, post, put};
 use axum::{Extension, Json, Router};
 use error_set::ErrContext;
-use iggy_common::Identifier;
-use iggy_common::IdentityInfo;
-use iggy_common::Validatable;
-use iggy_common::{UserInfo, UserInfoDetails};
+use messenger_common::Identifier;
+use messenger_common::IdentityInfo;
+use messenger_common::Validatable;
+use messenger_common::{UserInfo, UserInfoDetails};
 use serde::Deserialize;
 use std::sync::Arc;
 use tracing::instrument;
@@ -99,7 +99,7 @@ async fn get_users(
     Ok(Json(users))
 }
 
-#[instrument(skip_all, name = "trace_create_user", fields(iggy_user_id = identity.user_id))]
+#[instrument(skip_all, name = "trace_create_user", fields(messenger_user_id = identity.user_id))]
 async fn create_user(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,
@@ -153,7 +153,7 @@ async fn create_user(
     Ok(response)
 }
 
-#[instrument(skip_all, name = "trace_update_user", fields(iggy_user_id = identity.user_id, iggy_updated_user_id = user_id))]
+#[instrument(skip_all, name = "trace_update_user", fields(messenger_user_id = identity.user_id, messenger_updated_user_id = user_id))]
 async fn update_user(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,
@@ -189,7 +189,7 @@ async fn update_user(
     Ok(StatusCode::NO_CONTENT)
 }
 
-#[instrument(skip_all, name = "trace_update_permissions", fields(iggy_user_id = identity.user_id, iggy_updated_user_id = user_id))]
+#[instrument(skip_all, name = "trace_update_permissions", fields(messenger_user_id = identity.user_id, messenger_updated_user_id = user_id))]
 async fn update_permissions(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,
@@ -226,7 +226,7 @@ async fn update_permissions(
     Ok(StatusCode::NO_CONTENT)
 }
 
-#[instrument(skip_all, name = "trace_change_password", fields(iggy_user_id = identity.user_id, iggy_updated_user_id = user_id))]
+#[instrument(skip_all, name = "trace_change_password", fields(messenger_user_id = identity.user_id, messenger_updated_user_id = user_id))]
 async fn change_password(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,
@@ -270,7 +270,7 @@ async fn change_password(
     Ok(StatusCode::NO_CONTENT)
 }
 
-#[instrument(skip_all, name = "trace_delete_user", fields(iggy_user_id = identity.user_id, iggy_deleted_user_id = user_id))]
+#[instrument(skip_all, name = "trace_delete_user", fields(messenger_user_id = identity.user_id, messenger_deleted_user_id = user_id))]
 async fn delete_user(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,
@@ -325,7 +325,7 @@ async fn login_user(
     Ok(Json(map_generated_access_token_to_identity_info(tokens)))
 }
 
-#[instrument(skip_all, name = "trace_logout_user", fields(iggy_user_id = identity.user_id))]
+#[instrument(skip_all, name = "trace_logout_user", fields(messenger_user_id = identity.user_id))]
 async fn logout_user(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,

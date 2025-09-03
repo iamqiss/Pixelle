@@ -24,10 +24,10 @@ use crate::tcp::tcp_tls_connection_stream::TcpTlsConnectionStream;
 use async_broadcast::{Receiver, Sender, broadcast};
 use async_trait::async_trait;
 use bytes::{BufMut, Bytes, BytesMut};
-use iggy_binary_protocol::{BinaryClient, BinaryTransport, PersonalAccessTokenClient, UserClient};
-use iggy_common::{
+use messenger_binary_protocol::{BinaryClient, BinaryTransport, PersonalAccessTokenClient, UserClient};
+use messenger_common::{
     AutoLogin, ClientState, Command, ConnectionString, ConnectionStringUtils, Credentials,
-    DiagnosticEvent, IggyDuration, IggyError, IggyErrorDiscriminants, IggyTimestamp,
+    DiagnosticEvent, MessengerDuration, MessengerError, MessengerErrorDiscriminants, MessengerTimestamp,
     TcpConnectionStringOptions, TransportProtocol,
 };
 use rustls::pki_types::{CertificateDer, ServerName, pem::PemObject};
@@ -42,9 +42,9 @@ use tracing::{error, info, trace, warn};
 
 const REQUEST_INITIAL_BYTES_LENGTH: usize = 4;
 const RESPONSE_INITIAL_BYTES_LENGTH: usize = 8;
-const NAME: &str = "Iggy";
+const NAME: &str = "Messenger";
 
-/// TCP client for interacting with the Iggy API.
+/// TCP client for interacting with the Messenger API.
 /// It requires a valid server address.
 #[derive(Debug)]
 pub struct TcpClient {
@@ -53,7 +53,7 @@ pub struct TcpClient {
     pub(crate) state: Mutex<ClientState>,
     client_address: Mutex<Option<SocketAddr>>,
     events: (Sender<DiagnosticEvent>, Receiver<DiagnosticEvent>),
-    connected_at: Mutex<Option<IggyTimestamp>>,
+    connected_at: Mutex<Option<MessengerTimestamp>>,
 }
 
 impl Default for TcpClient {
@@ -64,15 +64,15 @@ impl Default for TcpClient {
 
 #[async_trait]
 impl Client for TcpClient {
-    async fn connect(&self) -> Result<(), IggyError> {
+    async fn connect(&self) -> Result<(), MessengerError> {
         TcpClient::connect(self).await
     }
 
-    async fn disconnect(&self) -> Result<(), IggyError> {
+    async fn disconnect(&self) -> Result<(), MessengerError> {
         TcpClient::disconnect(self).await
     }
 
-    async fn shutdown(&self) -> Result<(), IggyError> {
+    async fn shutdown(&self) -> Result<(), MessengerError> {
         TcpClient::shutdown(self).await
     }
 
@@ -98,13 +98,13 @@ impl BinaryTransport for TcpClient {
         }
     }
 
-    async fn send_with_response<T: Command>(&self, command: &T) -> Result<Bytes, IggyError> {
+    async fn send_with_response<T: Command>(&self, command: &T) -> Result<Bytes, MessengerError> {
         command.validate()?;
         self.send_raw_with_response(command.code(), command.to_bytes())
             .await
     }
 
-    async fn send_raw_with_response(&self, code: u32, payload: Bytes) -> Result<Bytes, IggyError> {
+    async fn send_raw_with_response(&self, code: u32, payload: Bytes) -> Result<Bytes, MessengerError> {
         let result = self.send_raw(code, payload.clone()).await;
         if result.is_ok() {
             return result;
@@ -113,16 +113,16 @@ impl BinaryTransport for TcpClient {
         let error = result.unwrap_err();
         if !matches!(
             error,
-            IggyError::Disconnected
-                | IggyError::EmptyResponse
-                | IggyError::Unauthenticated
-                | IggyError::StaleClient
+            MessengerError::Disconnected
+                | MessengerError::EmptyResponse
+                | MessengerError::Unauthenticated
+                | MessengerError::StaleClient
         ) {
             return Err(error);
         }
 
         if !self.config.reconnection.enabled {
-            return Err(IggyError::Disconnected);
+            return Err(MessengerError::Disconnected);
         }
 
         self.disconnect().await?;
@@ -139,7 +139,7 @@ impl BinaryTransport for TcpClient {
         self.send_raw(code, payload).await
     }
 
-    fn get_heartbeat_interval(&self) -> IggyDuration {
+    fn get_heartbeat_interval(&self) -> MessengerDuration {
         self.config.heartbeat_interval
     }
 }
@@ -151,8 +151,8 @@ impl TcpClient {
     pub fn new(
         server_address: &str,
         auto_sign_in: AutoLogin,
-        heartbeat_interval: IggyDuration,
-    ) -> Result<Self, IggyError> {
+        heartbeat_interval: MessengerDuration,
+    ) -> Result<Self, MessengerError> {
         Self::create(Arc::new(TcpClientConfig {
             heartbeat_interval,
             server_address: server_address.to_string(),
@@ -166,8 +166,8 @@ impl TcpClient {
         server_address: &str,
         domain: &str,
         auto_sign_in: AutoLogin,
-        heartbeat_interval: IggyDuration,
-    ) -> Result<Self, IggyError> {
+        heartbeat_interval: MessengerDuration,
+    ) -> Result<Self, MessengerError> {
         Self::create(Arc::new(TcpClientConfig {
             heartbeat_interval,
             server_address: server_address.to_string(),
@@ -179,9 +179,9 @@ impl TcpClient {
     }
 
     /// Create a new TCP client from the provided connection string.
-    pub fn from_connection_string(connection_string: &str) -> Result<Self, IggyError> {
+    pub fn from_connection_string(connection_string: &str) -> Result<Self, MessengerError> {
         if ConnectionStringUtils::parse_protocol(connection_string)? != TransportProtocol::Tcp {
-            return Err(IggyError::InvalidConnectionString);
+            return Err(MessengerError::InvalidConnectionString);
         }
 
         Self::create(Arc::new(
@@ -190,7 +190,7 @@ impl TcpClient {
     }
 
     /// Create a new TCP client based on the provided configuration.
-    pub fn create(config: Arc<TcpClientConfig>) -> Result<Self, IggyError> {
+    pub fn create(config: Arc<TcpClientConfig>) -> Result<Self, MessengerError> {
         Ok(Self {
             config,
             client_address: Mutex::new(None),
@@ -205,32 +205,32 @@ impl TcpClient {
         status: u32,
         length: u32,
         stream: &mut ConnectionStreamKind,
-    ) -> Result<Bytes, IggyError> {
+    ) -> Result<Bytes, MessengerError> {
         if status != 0 {
-            // TEMP: See https://github.com/apache/iggy/pull/604 for context.
-            if status == IggyErrorDiscriminants::TopicIdAlreadyExists as u32
-                || status == IggyErrorDiscriminants::TopicNameAlreadyExists as u32
-                || status == IggyErrorDiscriminants::StreamIdAlreadyExists as u32
-                || status == IggyErrorDiscriminants::StreamNameAlreadyExists as u32
-                || status == IggyErrorDiscriminants::UserAlreadyExists as u32
-                || status == IggyErrorDiscriminants::PersonalAccessTokenAlreadyExists as u32
-                || status == IggyErrorDiscriminants::ConsumerGroupIdAlreadyExists as u32
-                || status == IggyErrorDiscriminants::ConsumerGroupNameAlreadyExists as u32
+            // TEMP: See https://github.com/apache/messenger/pull/604 for context.
+            if status == MessengerErrorDiscriminants::TopicIdAlreadyExists as u32
+                || status == MessengerErrorDiscriminants::TopicNameAlreadyExists as u32
+                || status == MessengerErrorDiscriminants::StreamIdAlreadyExists as u32
+                || status == MessengerErrorDiscriminants::StreamNameAlreadyExists as u32
+                || status == MessengerErrorDiscriminants::UserAlreadyExists as u32
+                || status == MessengerErrorDiscriminants::PersonalAccessTokenAlreadyExists as u32
+                || status == MessengerErrorDiscriminants::ConsumerGroupIdAlreadyExists as u32
+                || status == MessengerErrorDiscriminants::ConsumerGroupNameAlreadyExists as u32
             {
                 tracing::debug!(
                     "Received a server resource already exists response: {} ({})",
                     status,
-                    IggyError::from_code_as_string(status)
+                    MessengerError::from_code_as_string(status)
                 )
             } else {
                 error!(
                     "Received an invalid response with status: {} ({}).",
                     status,
-                    IggyError::from_code_as_string(status),
+                    MessengerError::from_code_as_string(status),
                 );
             }
 
-            return Err(IggyError::from_code(status));
+            return Err(MessengerError::from_code(status));
         }
 
         trace!("Status: OK. Response length: {}", length);
@@ -244,11 +244,11 @@ impl TcpClient {
         Ok(response_buffer.freeze())
     }
 
-    async fn connect(&self) -> Result<(), IggyError> {
+    async fn connect(&self) -> Result<(), MessengerError> {
         match self.get_state().await {
             ClientState::Shutdown => {
                 trace!("Cannot connect. Client is shutdown.");
-                return Err(IggyError::ClientShutdown);
+                return Err(MessengerError::ClientShutdown);
             }
             ClientState::Connected | ClientState::Authenticating | ClientState::Authenticated => {
                 let client_address = self.get_client_address_value().await;
@@ -264,15 +264,15 @@ impl TcpClient {
 
         self.set_state(ClientState::Connecting).await;
         if let Some(connected_at) = self.connected_at.lock().await.as_ref() {
-            let now = IggyTimestamp::now();
+            let now = MessengerTimestamp::now();
             let elapsed = now.as_micros() - connected_at.as_micros();
             let interval = self.config.reconnection.reestablish_after.as_micros();
             trace!(
                 "Elapsed time since last connection: {}",
-                IggyDuration::from(elapsed)
+                MessengerDuration::from(elapsed)
             );
             if elapsed < interval {
-                let remaining = IggyDuration::from(interval - elapsed);
+                let remaining = MessengerDuration::from(interval - elapsed);
                 info!("Trying to connect to the server in: {remaining}",);
                 sleep(remaining.get_duration()).await;
             }
@@ -297,7 +297,7 @@ impl TcpClient {
                 );
                 if !self.config.reconnection.enabled {
                     warn!("Automatic reconnection is disabled.");
-                    return Err(IggyError::CannotEstablishConnection);
+                    return Err(MessengerError::CannotEstablishConnection);
                 }
 
                 let unlimited_retries = self.config.reconnection.max_retries.is_none();
@@ -322,20 +322,20 @@ impl TcpClient {
 
                 self.set_state(ClientState::Disconnected).await;
                 self.publish_event(DiagnosticEvent::Disconnected).await;
-                return Err(IggyError::CannotEstablishConnection);
+                return Err(MessengerError::CannotEstablishConnection);
             }
 
             let stream = connection.map_err(|error| {
                 error!("Failed to establish TCP connection to the server: {error}",);
-                IggyError::CannotEstablishConnection
+                MessengerError::CannotEstablishConnection
             })?;
             client_address = stream.local_addr().map_err(|error| {
                 error!("Failed to get the local address of the client: {error}",);
-                IggyError::CannotEstablishConnection
+                MessengerError::CannotEstablishConnection
             })?;
             remote_address = stream.peer_addr().map_err(|error| {
                 error!("Failed to get the remote address of the server: {error}",);
-                IggyError::CannotEstablishConnection
+                MessengerError::CannotEstablishConnection
             })?;
             self.client_address.lock().await.replace(client_address);
 
@@ -357,20 +357,20 @@ impl TcpClient {
                     for cert in
                         CertificateDer::pem_file_iter(certificate_path).map_err(|error| {
                             error!("Failed to read the CA file: {certificate_path}. {error}",);
-                            IggyError::InvalidTlsCertificatePath
+                            MessengerError::InvalidTlsCertificatePath
                         })?
                     {
                         let certificate = cert.map_err(|error| {
                             error!(
                                 "Failed to read a certificate from the CA file: {certificate_path}. {error}",
                             );
-                            IggyError::InvalidTlsCertificate
+                            MessengerError::InvalidTlsCertificate
                         })?;
                         root_cert_store.add(certificate).map_err(|error| {
                             error!(
                                 "Failed to add a certificate to the root certificate store. {error}",
                             );
-                            IggyError::InvalidTlsCertificate
+                            MessengerError::InvalidTlsCertificate
                         })?;
                     }
                 } else {
@@ -391,11 +391,11 @@ impl TcpClient {
             let tls_domain = self.config.tls_domain.to_owned();
             let domain = ServerName::try_from(tls_domain).map_err(|error| {
                 error!("Failed to create a server name from the domain. {error}",);
-                IggyError::InvalidTlsDomain
+                MessengerError::InvalidTlsDomain
             })?;
             let stream = connector.connect(domain, stream).await.map_err(|error| {
                 error!("Failed to establish a TLS connection to the server: {error}",);
-                IggyError::CannotEstablishConnection
+                MessengerError::CannotEstablishConnection
             })?;
             connection_stream = ConnectionStreamKind::TcpTls(TcpTlsConnectionStream::new(
                 client_address,
@@ -404,7 +404,7 @@ impl TcpClient {
             break;
         }
 
-        let now = IggyTimestamp::now();
+        let now = MessengerTimestamp::now();
         info!(
             "{NAME} client: {client_address} has connected to server: {remote_address} at: {now}",
         );
@@ -440,7 +440,7 @@ impl TcpClient {
         }
     }
 
-    async fn disconnect(&self) -> Result<(), IggyError> {
+    async fn disconnect(&self) -> Result<(), MessengerError> {
         if self.get_state().await == ClientState::Disconnected {
             return Ok(());
         }
@@ -450,12 +450,12 @@ impl TcpClient {
         self.set_state(ClientState::Disconnected).await;
         self.stream.lock().await.take();
         self.publish_event(DiagnosticEvent::Disconnected).await;
-        let now = IggyTimestamp::now();
+        let now = MessengerTimestamp::now();
         info!("{NAME} client: {client_address} has disconnected from server at: {now}.");
         Ok(())
     }
 
-    async fn shutdown(&self) -> Result<(), IggyError> {
+    async fn shutdown(&self) -> Result<(), MessengerError> {
         if self.get_state().await == ClientState::Shutdown {
             return Ok(());
         }
@@ -472,19 +472,19 @@ impl TcpClient {
         Ok(())
     }
 
-    async fn send_raw(&self, code: u32, payload: Bytes) -> Result<Bytes, IggyError> {
+    async fn send_raw(&self, code: u32, payload: Bytes) -> Result<Bytes, MessengerError> {
         match self.get_state().await {
             ClientState::Shutdown => {
                 trace!("Cannot send data. Client is shutdown.");
-                return Err(IggyError::ClientShutdown);
+                return Err(MessengerError::ClientShutdown);
             }
             ClientState::Disconnected => {
                 trace!("Cannot send data. Client is not connected.");
-                return Err(IggyError::NotConnected);
+                return Err(MessengerError::NotConnected);
             }
             ClientState::Connecting => {
                 trace!("Cannot send data. Client is still connecting.");
-                return Err(IggyError::NotConnected);
+                return Err(MessengerError::NotConnected);
             }
             _ => {}
         }
@@ -508,34 +508,34 @@ impl TcpClient {
                         code = code,
                         error = error
                     );
-                    IggyError::Disconnected
+                    MessengerError::Disconnected
                 })?;
 
                 if read_bytes != RESPONSE_INITIAL_BYTES_LENGTH {
                     error!("Received an invalid or empty response.");
-                    return Err(IggyError::EmptyResponse);
+                    return Err(MessengerError::EmptyResponse);
                 }
 
                 let status = u32::from_le_bytes(
                     response_buffer[..4]
                         .try_into()
-                        .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                        .map_err(|_| MessengerError::InvalidNumberEncoding)?,
                 );
                 let length = u32::from_le_bytes(
                     response_buffer[4..]
                         .try_into()
-                        .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                        .map_err(|_| MessengerError::InvalidNumberEncoding)?,
                 );
                 return TcpClient::handle_response(status, length, stream).await;
             }
 
             error!("Cannot send data. Client is not connected.");
-            Err(IggyError::NotConnected)
+            Err(MessengerError::NotConnected)
         })
         .await
         .map_err(|e| {
             error!("Task execution failed during TCP request: {}", e);
-            IggyError::TcpError
+            MessengerError::TcpError
         })?
     }
 
@@ -565,7 +565,7 @@ mod tests {
 
     #[test]
     fn should_fail_without_username() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -580,7 +580,7 @@ mod tests {
 
     #[test]
     fn should_fail_without_password() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -595,7 +595,7 @@ mod tests {
 
     #[test]
     fn should_fail_without_server_address() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "";
         let port = "1234";
@@ -610,7 +610,7 @@ mod tests {
 
     #[test]
     fn should_fail_without_port() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "";
@@ -640,7 +640,7 @@ mod tests {
 
     #[test]
     fn should_fail_with_unmatch_protocol() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Quic;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -655,7 +655,7 @@ mod tests {
 
     #[test]
     fn should_succeed_with_default_prefix() {
-        let default_connection_string_prefix = "iggy://";
+        let default_connection_string_prefix = "messenger://";
         let server_address = "127.0.0.1";
         let port = "1234";
         let username = "user";
@@ -669,7 +669,7 @@ mod tests {
 
     #[test]
     fn should_fail_with_invalid_options() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "";
@@ -684,7 +684,7 @@ mod tests {
 
     #[test]
     fn should_succeed_without_options() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -714,24 +714,24 @@ mod tests {
         assert!(tcp_client_config.tls_ca_file.is_none());
         assert_eq!(
             tcp_client_config.heartbeat_interval,
-            IggyDuration::from_str("5s").unwrap()
+            MessengerDuration::from_str("5s").unwrap()
         );
 
         assert!(tcp_client_config.reconnection.enabled);
         assert!(tcp_client_config.reconnection.max_retries.is_none());
         assert_eq!(
             tcp_client_config.reconnection.interval,
-            IggyDuration::from_str("1s").unwrap()
+            MessengerDuration::from_str("1s").unwrap()
         );
         assert_eq!(
             tcp_client_config.reconnection.reestablish_after,
-            IggyDuration::from_str("5s").unwrap()
+            MessengerDuration::from_str("5s").unwrap()
         );
     }
 
     #[test]
     fn should_succeed_with_options() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -763,7 +763,7 @@ mod tests {
         assert!(tcp_client_config.tls_ca_file.is_none());
         assert_eq!(
             tcp_client_config.heartbeat_interval,
-            IggyDuration::from_str(heartbeat_interval).unwrap()
+            MessengerDuration::from_str(heartbeat_interval).unwrap()
         );
 
         assert!(tcp_client_config.reconnection.enabled);
@@ -773,21 +773,21 @@ mod tests {
         );
         assert_eq!(
             tcp_client_config.reconnection.interval,
-            IggyDuration::from_str("1s").unwrap()
+            MessengerDuration::from_str("1s").unwrap()
         );
         assert_eq!(
             tcp_client_config.reconnection.reestablish_after,
-            IggyDuration::from_str("5s").unwrap()
+            MessengerDuration::from_str("5s").unwrap()
         );
     }
 
     #[test]
     fn should_succeed_with_pat() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "1234";
-        let pat = "iggypat-1234567890abcdef";
+        let pat = "messengerpat-1234567890abcdef";
         let value = format!("{connection_string_prefix}{protocol}://{pat}@{server_address}:{port}");
         let tcp_client = TcpClient::from_connection_string(&value);
         assert!(tcp_client.is_ok());
@@ -807,18 +807,18 @@ mod tests {
         assert!(tcp_client_config.tls_ca_file.is_none());
         assert_eq!(
             tcp_client_config.heartbeat_interval,
-            IggyDuration::from_str("5s").unwrap()
+            MessengerDuration::from_str("5s").unwrap()
         );
 
         assert!(tcp_client_config.reconnection.enabled);
         assert!(tcp_client_config.reconnection.max_retries.is_none());
         assert_eq!(
             tcp_client_config.reconnection.interval,
-            IggyDuration::from_str("1s").unwrap()
+            MessengerDuration::from_str("1s").unwrap()
         );
         assert_eq!(
             tcp_client_config.reconnection.reestablish_after,
-            IggyDuration::from_str("5s").unwrap()
+            MessengerDuration::from_str("5s").unwrap()
         );
     }
 }

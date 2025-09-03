@@ -21,7 +21,7 @@ use crate::BytesSerializable;
 use crate::Identifier;
 use crate::Sizeable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, DELETE_PARTITIONS_CODE};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -60,10 +60,10 @@ impl Default for DeletePartitions {
     }
 }
 
-impl Validatable<IggyError> for DeletePartitions {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for DeletePartitions {
+    fn validate(&self) -> Result<(), MessengerError> {
         if !(1..=MAX_PARTITIONS_COUNT).contains(&self.partitions_count) {
-            return Err(IggyError::TooManyPartitions);
+            return Err(MessengerError::TooManyPartitions);
         }
 
         Ok(())
@@ -81,9 +81,9 @@ impl BytesSerializable for DeletePartitions {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> std::result::Result<DeletePartitions, IggyError> {
+    fn from_bytes(bytes: Bytes) -> std::result::Result<DeletePartitions, MessengerError> {
         if bytes.len() < 10 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let mut position = 0;
@@ -94,7 +94,7 @@ impl BytesSerializable for DeletePartitions {
         let partitions_count = u32::from_le_bytes(
             bytes[position..position + 4]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let command = DeletePartitions {
             stream_id,

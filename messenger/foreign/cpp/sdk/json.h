@@ -25,12 +25,12 @@ namespace icp {
 namespace serialization {
 
 /**
- * @brief All related types for the JSON format used in Iggy's HTTP REST transport.
+ * @brief All related types for the JSON format used in Messenger's HTTP REST transport.
  */
 namespace json {
 
 /**
- * @brief JSON serialization and deserialization for Iggy's wire protocol.
+ * @brief JSON serialization and deserialization for Messenger's wire protocol.
  */
 class JsonWireFormat : icp::serialization::WireFormat {
 public:

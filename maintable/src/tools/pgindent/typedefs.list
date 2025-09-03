@@ -2296,7 +2296,7 @@ PortalStatus
 PortalStrategy
 PostParseColumnRefHook
 PostRewriteHook
-PostgresPollingStatusType
+MaintablePollingStatusType
 PostingItem
 PreParseColumnRefHook
 PredClass

@@ -1,8 +1,8 @@
 /*-------------------------------------------------------------------------
  * launcher.c
- *	   PostgreSQL logical replication worker launcher process
+ *	   maintableQL logical replication worker launcher process
  *
- * Copyright (c) 2016-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2016-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/replication/logical/launcher.c
@@ -15,7 +15,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/heapam.h"
 #include "access/htup.h"
@@ -481,7 +481,7 @@ retry:
 	bgw.bgw_flags = BGWORKER_SHMEM_ACCESS |
 		BGWORKER_BACKEND_DATABASE_CONNECTION;
 	bgw.bgw_start_time = BgWorkerStart_RecoveryFinished;
-	snprintf(bgw.bgw_library_name, MAXPGPATH, "postgres");
+	snprintf(bgw.bgw_library_name, MAXPGPATH, "maintable");
 
 	switch (worker->type)
 	{
@@ -956,7 +956,7 @@ ApplyLauncherRegister(void)
 	bgw.bgw_flags = BGWORKER_SHMEM_ACCESS |
 		BGWORKER_BACKEND_DATABASE_CONNECTION;
 	bgw.bgw_start_time = BgWorkerStart_RecoveryFinished;
-	snprintf(bgw.bgw_library_name, MAXPGPATH, "postgres");
+	snprintf(bgw.bgw_library_name, MAXPGPATH, "maintable");
 	snprintf(bgw.bgw_function_name, BGW_MAXLEN, "ApplyLauncherMain");
 	snprintf(bgw.bgw_name, BGW_MAXLEN,
 			 "logical replication launcher");

@@ -2,14 +2,14 @@
  * case_test.c
  *		Program to test Unicode case mapping functions.
  *
- * Portions Copyright (c) 2017-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2017-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/common/unicode/case_test.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <locale.h>
 #include <stdio.h>
@@ -92,7 +92,7 @@ icu_test_simple(pg_wchar code)
 		fold != icufold)
 	{
 		printf("case_test: FAILURE for codepoint 0x%06x\n", code);
-		printf("case_test: Postgres lower/title/upper/fold:	0x%06x/0x%06x/0x%06x/0x%06x\n",
+		printf("case_test: Maintable lower/title/upper/fold:	0x%06x/0x%06x/0x%06x/0x%06x\n",
 			   lower, title, upper, fold);
 		printf("case_test: ICU lower/title/upper/fold:		0x%06x/0x%06x/0x%06x/0x%06x\n",
 			   iculower, icutitle, icuupper, icufold);
@@ -391,7 +391,7 @@ main(int argc, char **argv)
 	}
 #endif
 
-	printf("case_test: Postgres Unicode version:\t%s\n", PG_UNICODE_VERSION);
+	printf("case_test: Maintable Unicode version:\t%s\n", PG_UNICODE_VERSION);
 #ifdef USE_ICU
 	printf("case_test: ICU Unicode version:\t\t%s\n", U_UNICODE_VERSION);
 	test_icu();

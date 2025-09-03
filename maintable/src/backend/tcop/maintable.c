@@ -1,23 +1,23 @@
 /*-------------------------------------------------------------------------
  *
- * postgres.c
- *	  POSTGRES C Backend Interface
+ * maintable.c
+ *	  MAINTABLE C Backend Interface
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
  * IDENTIFICATION
- *	  src/backend/tcop/postgres.c
+ *	  src/backend/tcop/maintable.c
  *
  * NOTES
- *	  this is the "main" module of the postgres backend and
+ *	  this is the "main" module of the maintable backend and
  *	  hence the main module of the "traffic cop".
  *
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <fcntl.h>
 #include <limits.h>
@@ -604,7 +604,7 @@ pg_parse_query(const char *query_string)
 {
 	List	   *raw_parsetree_list;
 
-	TRACE_POSTGRESQL_QUERY_PARSE_START(query_string);
+	TRACE_MAINTABLEQL_QUERY_PARSE_START(query_string);
 
 	if (log_parser_stats)
 		ResetUsage();
@@ -647,7 +647,7 @@ pg_parse_query(const char *query_string)
 
 #endif							/* DEBUG_NODE_TESTS_ENABLED */
 
-	TRACE_POSTGRESQL_QUERY_PARSE_DONE(query_string);
+	TRACE_MAINTABLEQL_QUERY_PARSE_DONE(query_string);
 
 	return raw_parsetree_list;
 }
@@ -671,7 +671,7 @@ pg_analyze_and_rewrite_fixedparams(RawStmt *parsetree,
 	Query	   *query;
 	List	   *querytree_list;
 
-	TRACE_POSTGRESQL_QUERY_REWRITE_START(query_string);
+	TRACE_MAINTABLEQL_QUERY_REWRITE_START(query_string);
 
 	/*
 	 * (1) Perform parse analysis.
@@ -690,7 +690,7 @@ pg_analyze_and_rewrite_fixedparams(RawStmt *parsetree,
 	 */
 	querytree_list = pg_rewrite_query(query);
 
-	TRACE_POSTGRESQL_QUERY_REWRITE_DONE(query_string);
+	TRACE_MAINTABLEQL_QUERY_REWRITE_DONE(query_string);
 
 	return querytree_list;
 }
@@ -710,7 +710,7 @@ pg_analyze_and_rewrite_varparams(RawStmt *parsetree,
 	Query	   *query;
 	List	   *querytree_list;
 
-	TRACE_POSTGRESQL_QUERY_REWRITE_START(query_string);
+	TRACE_MAINTABLEQL_QUERY_REWRITE_START(query_string);
 
 	/*
 	 * (1) Perform parse analysis.
@@ -743,7 +743,7 @@ pg_analyze_and_rewrite_varparams(RawStmt *parsetree,
 	 */
 	querytree_list = pg_rewrite_query(query);
 
-	TRACE_POSTGRESQL_QUERY_REWRITE_DONE(query_string);
+	TRACE_MAINTABLEQL_QUERY_REWRITE_DONE(query_string);
 
 	return querytree_list;
 }
@@ -764,7 +764,7 @@ pg_analyze_and_rewrite_withcb(RawStmt *parsetree,
 	Query	   *query;
 	List	   *querytree_list;
 
-	TRACE_POSTGRESQL_QUERY_REWRITE_START(query_string);
+	TRACE_MAINTABLEQL_QUERY_REWRITE_START(query_string);
 
 	/*
 	 * (1) Perform parse analysis.
@@ -783,7 +783,7 @@ pg_analyze_and_rewrite_withcb(RawStmt *parsetree,
 	 */
 	querytree_list = pg_rewrite_query(query);
 
-	TRACE_POSTGRESQL_QUERY_REWRITE_DONE(query_string);
+	TRACE_MAINTABLEQL_QUERY_REWRITE_DONE(query_string);
 
 	return querytree_list;
 }
@@ -891,7 +891,7 @@ pg_plan_query(Query *querytree, const char *query_string, int cursorOptions,
 	/* Planner must have a snapshot in case it calls user-defined functions. */
 	Assert(ActiveSnapshotSet());
 
-	TRACE_POSTGRESQL_QUERY_PLAN_START();
+	TRACE_MAINTABLEQL_QUERY_PLAN_START();
 
 	if (log_planner_stats)
 		ResetUsage();
@@ -953,7 +953,7 @@ pg_plan_query(Query *querytree, const char *query_string, int cursorOptions,
 	if (Debug_print_plan)
 		elog_node_display(LOG, "plan", plan, Debug_pretty_print);
 
-	TRACE_POSTGRESQL_QUERY_PLAN_DONE();
+	TRACE_MAINTABLEQL_QUERY_PLAN_DONE();
 
 	return plan;
 }
@@ -1027,7 +1027,7 @@ exec_simple_query(const char *query_string)
 
 	pgstat_report_activity(STATE_RUNNING, query_string);
 
-	TRACE_POSTGRESQL_QUERY_START(query_string);
+	TRACE_MAINTABLEQL_QUERY_START(query_string);
 
 	/*
 	 * We use save_log_statement_stats so ShowUsage doesn't report incorrect
@@ -1376,7 +1376,7 @@ exec_simple_query(const char *query_string)
 	if (save_log_statement_stats)
 		ShowUsage("QUERY STATISTICS");
 
-	TRACE_POSTGRESQL_QUERY_DONE(query_string);
+	TRACE_MAINTABLEQL_QUERY_DONE(query_string);
 
 	debug_query_string = NULL;
 }
@@ -2916,7 +2916,7 @@ drop_unnamed_stmt(void)
 
 
 /* --------------------------------
- *		signal handler routines used in PostgresMain()
+ *		signal handler routines used in MaintableMain()
  * --------------------------------
  */
 
@@ -3516,7 +3516,7 @@ ProcessInterrupts(void)
 
 	/*
 	 * If there are pending stats updates and we currently are truly idle
-	 * (matching the conditions in PostgresMain(), report stats now.
+	 * (matching the conditions in MaintableMain(), report stats now.
 	 */
 	if (IdleStatsUpdateTimeoutPending &&
 		DoingCommandRead && !IsTransactionOrTransactionBlock())
@@ -3769,7 +3769,7 @@ get_stats_option_name(const char *arg)
 
 
 /* ----------------------------------------------------------------
- * process_postgres_switches
+ * process_maintable_switches
  *	   Parse command line arguments for backends
  *
  * This is called twice, once for the "secure" options coming from the
@@ -3788,7 +3788,7 @@ get_stats_option_name(const char *arg)
  * ----------------------------------------------------------------
  */
 void
-process_postgres_switches(int argc, char *argv[], GucContext ctx,
+process_maintable_switches(int argc, char *argv[], GucContext ctx,
 						  const char **dbname)
 {
 	bool		secure = (ctx == PGC_POSTMASTER);
@@ -4044,16 +4044,16 @@ process_postgres_switches(int argc, char *argv[], GucContext ctx,
 
 
 /*
- * PostgresSingleUserMain
+ * MaintableSingleUserMain
  *     Entry point for single user mode. argc/argv are the command line
  *     arguments to be used.
  *
- * Performs single user specific setup then calls PostgresMain() to actually
+ * Performs single user specific setup then calls MaintableMain() to actually
  * process queries. Single user mode specific setup should go here, rather
- * than PostgresMain() or InitPostgres() when reasonably possible.
+ * than MaintableMain() or InitMaintable() when reasonably possible.
  */
 void
-PostgresSingleUserMain(int argc, char *argv[],
+MaintableSingleUserMain(int argc, char *argv[],
 					   const char *username)
 {
 	const char *dbname = NULL;
@@ -4071,7 +4071,7 @@ PostgresSingleUserMain(int argc, char *argv[],
 	/*
 	 * Parse command-line options.
 	 */
-	process_postgres_switches(argc, argv, PGC_POSTMASTER, &dbname);
+	process_maintable_switches(argc, argv, PGC_POSTMASTER, &dbname);
 
 	/* Must have gotten a database name, or have a default (the username) */
 	if (dbname == NULL)
@@ -4163,26 +4163,26 @@ PostgresSingleUserMain(int argc, char *argv[],
 	InitProcess();
 
 	/*
-	 * Now that sufficient infrastructure has been initialized, PostgresMain()
+	 * Now that sufficient infrastructure has been initialized, MaintableMain()
 	 * can do the rest.
 	 */
-	PostgresMain(dbname, username);
+	MaintableMain(dbname, username);
 }
 
 
 /* ----------------------------------------------------------------
- * PostgresMain
- *	   postgres main loop -- all backends, interactive or otherwise loop here
+ * MaintableMain
+ *	   maintable main loop -- all backends, interactive or otherwise loop here
  *
  * dbname is the name of the database to connect to, username is the
- * PostgreSQL user name to be used for the session.
+ * maintableQL user name to be used for the session.
  *
- * NB: Single user mode specific setup should go to PostgresSingleUserMain()
+ * NB: Single user mode specific setup should go to MaintableSingleUserMain()
  * if reasonably possible.
  * ----------------------------------------------------------------
  */
 void
-PostgresMain(const char *dbname, const char *username)
+MaintableMain(const char *dbname, const char *username)
 {
 	sigjmp_buf	local_sigjmp_buf;
 
@@ -4260,7 +4260,7 @@ PostgresMain(const char *dbname, const char *username)
 
 	/*
 	 * Generate a random cancel key, if this is a backend serving a
-	 * connection. InitPostgres() will advertise it in shared memory.
+	 * connection. InitMaintable() will advertise it in shared memory.
 	 */
 	Assert(MyCancelKeyLength == 0);
 	if (whereToSendOutput == DestRemote)
@@ -4282,19 +4282,19 @@ PostgresMain(const char *dbname, const char *username)
 	 * General initialization.
 	 *
 	 * NOTE: if you are tempted to add code in this vicinity, consider putting
-	 * it inside InitPostgres() instead.  In particular, anything that
+	 * it inside InitMaintable() instead.  In particular, anything that
 	 * involves database access should be there, not here.
 	 *
 	 * Honor session_preload_libraries if not dealing with a WAL sender.
 	 */
-	InitPostgres(dbname, InvalidOid,	/* database to connect to */
+	InitMaintable(dbname, InvalidOid,	/* database to connect to */
 				 username, InvalidOid,	/* role to connect as */
 				 (!am_walsender) ? INIT_PG_LOAD_SESSION_LIBS : 0,
 				 NULL);			/* no out_dbname */
 
 	/*
 	 * If the PostmasterContext is still around, recycle the space; we don't
-	 * need it anymore after InitPostgres completes.
+	 * need it anymore after InitMaintable completes.
 	 */
 	if (PostmasterContext)
 	{
@@ -4341,7 +4341,7 @@ PostgresMain(const char *dbname, const char *username)
 
 	/* Welcome banner for standalone case */
 	if (whereToSendOutput == DestDebug)
-		printf("\nPostgreSQL stand-alone backend %s\n", PG_VERSION);
+		printf("\nmaintableQL stand-alone backend %s\n", PG_VERSION);
 
 	/*
 	 * Create the memory context we will use in the main loop.
@@ -4370,7 +4370,7 @@ PostgresMain(const char *dbname, const char *username)
 	EventTriggerOnLogin();
 
 	/*
-	 * POSTGRES main processing loop begins here
+	 * MAINTABLE main processing loop begins here
 	 *
 	 * If an exception is encountered, processing resumes here so we abort the
 	 * current transaction and start a new one.

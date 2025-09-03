@@ -1,12 +1,12 @@
 # Georgian message translation file for initdb
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the initdb (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the initdb (maintableQL) package.
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: initdb (PostgreSQL) 18\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: initdb (maintableQL) 18\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-03-27 22:52+0000\n"
 "PO-Revision-Date: 2025-03-28 03:57+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -429,8 +429,8 @@ msgstr "მოსამზადებელი სკრიპტის გა�
 
 #: initdb.c:1579
 #, c-format
-msgid "input file \"%s\" does not belong to PostgreSQL %s"
-msgstr "შეყვანილი ფაილი \"%s\" PostgreSQL %s -ს არ ეკუთვნის"
+msgid "input file \"%s\" does not belong to maintableQL %s"
+msgstr "შეყვანილი ფაილი \"%s\" maintableQL %s -ს არ ეკუთვნის"
 
 #: initdb.c:1581
 #, c-format
@@ -553,10 +553,10 @@ msgstr "ვიყენებ ენის ჭდეს \"%s\" ICU ლოკა�
 #: initdb.c:2532
 #, c-format
 msgid ""
-"%s initializes a PostgreSQL database cluster.\n"
+"%s initializes a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL ბაზის კლასერის ინიციალიზაციას ახდენს.\n"
+"%s maintableQL ბაზის კლასერის ინიციალიზაციას ახდენს.\n"
 "\n"
 
 #: initdb.c:2533

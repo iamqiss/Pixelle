@@ -16,12 +16,12 @@
  * under the License.
  */
 
-pub(super) mod build_iggy_client;
-pub(super) mod build_iggy_consumer;
-pub(super) mod build_iggy_producer;
+pub(super) mod build_messenger_client;
+pub(super) mod build_messenger_consumer;
+pub(super) mod build_messenger_producer;
 pub(super) mod build_stream_topic;
 
-pub(super) use build_iggy_client::build_iggy_client;
-pub(super) use build_iggy_consumer::build_iggy_consumer;
-pub(super) use build_iggy_producer::build_iggy_producer;
-pub(super) use build_stream_topic::build_iggy_stream_topic_if_not_exists;
+pub(super) use build_messenger_client::build_messenger_client;
+pub(super) use build_messenger_consumer::build_messenger_consumer;
+pub(super) use build_messenger_producer::build_messenger_producer;
+pub(super) use build_stream_topic::build_messenger_stream_topic_if_not_exists;

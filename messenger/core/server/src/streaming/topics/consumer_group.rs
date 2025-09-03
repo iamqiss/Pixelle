@@ -17,7 +17,7 @@
  */
 
 use ahash::AHashMap;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use tokio::sync::RwLock;
 use tracing::trace;
 
@@ -58,24 +58,24 @@ impl ConsumerGroup {
         self.assign_partitions().await;
     }
 
-    pub async fn calculate_partition_id(&self, member_id: u32) -> Result<Option<u32>, IggyError> {
+    pub async fn calculate_partition_id(&self, member_id: u32) -> Result<Option<u32>, MessengerError> {
         let member = self.members.get(&member_id);
         if let Some(member) = member {
             return Ok(member.write().await.calculate_partition_id());
         }
-        Err(IggyError::ConsumerGroupMemberNotFound(
+        Err(MessengerError::ConsumerGroupMemberNotFound(
             member_id,
             self.group_id,
             self.topic_id,
         ))
     }
 
-    pub async fn get_current_partition_id(&self, member_id: u32) -> Result<Option<u32>, IggyError> {
+    pub async fn get_current_partition_id(&self, member_id: u32) -> Result<Option<u32>, MessengerError> {
         let member = self.members.get(&member_id);
         if let Some(member) = member {
             return Ok(member.read().await.current_partition_id);
         }
-        Err(IggyError::ConsumerGroupMemberNotFound(
+        Err(MessengerError::ConsumerGroupMemberNotFound(
             member_id,
             self.group_id,
             self.topic_id,

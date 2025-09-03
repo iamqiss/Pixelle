@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_database.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createdatabase">
@@ -47,7 +47,7 @@ CREATE DATABASE <replaceable class="parameter">name</replaceable>
 
   <para>
    <command>CREATE DATABASE</command> creates a new
-   <productname>PostgreSQL</productname> database.
+   <productname>maintableQL</productname> database.
   </para>
 
   <para>
@@ -65,7 +65,7 @@ CREATE DATABASE <replaceable class="parameter">name</replaceable>
    database (one where no user-defined objects exist and where the system
    objects have not been altered)
    containing only the standard objects predefined by your
-   version of <productname>PostgreSQL</productname>.  This is useful
+   version of <productname>maintableQL</productname>.  This is useful
    if you wish to avoid copying
    any installation-local objects that might have been added to
    <literal>template1</literal>.
@@ -115,7 +115,7 @@ CREATE DATABASE <replaceable class="parameter">name</replaceable>
         or an integer encoding number, or <literal>DEFAULT</literal>
         to use the default encoding (namely, the encoding of the
         template database). The character sets supported by the
-        <productname>PostgreSQL</productname> server are described in
+        <productname>maintableQL</productname> server are described in
         <xref linkend="multibyte-charset-supported"/>. See below for
         additional restrictions.
        </para>
@@ -356,7 +356,7 @@ CREATE DATABASE <replaceable class="parameter">name</replaceable>
        <listitem>
         <para>
          The object identifier to be used for the new database. If this
-         parameter is not specified, <productname>PostgreSQL</productname>
+         parameter is not specified, <productname>maintableQL</productname>
          will choose a suitable OID automatically. This parameter is primarily
          intended for internal use by <application>pg_upgrade</application>,
          and only <application>pg_upgrade</application> can specify a value

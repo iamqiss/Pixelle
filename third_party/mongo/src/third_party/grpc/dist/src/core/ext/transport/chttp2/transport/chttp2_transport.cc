@@ -1747,7 +1747,7 @@ static void send_ping_locked(grpc_chttp2_transport* t,
 }
 
 // Specialized form of send_ping_locked for keepalive ping. If there is already
-// a ping in progress, the keepalive ping would piggyback onto that ping,
+// a ping in progress, the keepalive ping would pmessengerback onto that ping,
 // instead of waiting for that ping to complete and then starting a new ping.
 static void send_keepalive_ping_locked(
     grpc_core::RefCountedPtr<grpc_chttp2_transport> t) {

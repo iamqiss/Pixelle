@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # contrib/intarray/bench/create_test.pl
 

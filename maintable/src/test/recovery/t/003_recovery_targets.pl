@@ -1,11 +1,11 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test for recovery targets: name, timestamp, XID
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 use Time::HiRes qw(usleep);
 
@@ -23,13 +23,13 @@ sub test_recovery_standby
 	my $num_rows = shift;
 	my $until_lsn = shift;
 
-	my $node_standby = PostgreSQL::Test::Cluster->new($node_name);
+	my $node_standby = maintableQL::Test::Cluster->new($node_name);
 	$node_standby->init_from_backup($node_primary, 'my_backup',
 		has_restoring => 1);
 
 	foreach my $param_item (@$recovery_params)
 	{
-		$node_standby->append_conf('postgresql.conf', qq($param_item));
+		$node_standby->append_conf('maintableql.conf', qq($param_item));
 	}
 
 	$node_standby->start;
@@ -37,12 +37,12 @@ sub test_recovery_standby
 	# Wait until standby has replayed enough data
 	my $caughtup_query =
 	  "SELECT '$until_lsn'::pg_lsn <= pg_last_wal_replay_lsn()";
-	$node_standby->poll_query_until('postgres', $caughtup_query)
+	$node_standby->poll_query_until('maintable', $caughtup_query)
 	  or die "Timed out while waiting for standby to catch up";
 
 	# Create some content on primary and check its presence in standby
 	my $result =
-	  $node_standby->safe_psql('postgres', "SELECT count(*) FROM tab_int");
+	  $node_standby->safe_psql('maintable', "SELECT count(*) FROM tab_int");
 	is($result, qq($num_rows), "check standby content for $test_name");
 
 	# Stop standby node
@@ -52,7 +52,7 @@ sub test_recovery_standby
 }
 
 # Initialize primary node
-my $node_primary = PostgreSQL::Test::Cluster->new('primary');
+my $node_primary = maintableQL::Test::Cluster->new('primary');
 $node_primary->init(has_archiving => 1, allows_streaming => 1);
 
 # Bump the transaction ID epoch.  This is useful to stress the portability
@@ -64,49 +64,49 @@ $node_primary->start;
 
 # Create data before taking the backup, aimed at testing
 # recovery_target = 'immediate'
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"CREATE TABLE tab_int AS SELECT generate_series(1,1000) AS a");
 my $lsn1 =
-  $node_primary->safe_psql('postgres', "SELECT pg_current_wal_lsn();");
+  $node_primary->safe_psql('maintable', "SELECT pg_current_wal_lsn();");
 
 # Take backup from which all operations will be run
 $node_primary->backup('my_backup');
 
 # Insert some data with used as a replay reference, with a recovery
 # target TXID.
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"INSERT INTO tab_int VALUES (generate_series(1001,2000))");
-my $ret = $node_primary->safe_psql('postgres',
+my $ret = $node_primary->safe_psql('maintable',
 	"SELECT pg_current_wal_lsn(), pg_current_xact_id();");
 my ($lsn2, $recovery_txid) = split /\|/, $ret;
 
 # More data, with recovery target timestamp
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"INSERT INTO tab_int VALUES (generate_series(2001,3000))");
 my $lsn3 =
-  $node_primary->safe_psql('postgres', "SELECT pg_current_wal_lsn();");
-my $recovery_time = $node_primary->safe_psql('postgres', "SELECT now()");
+  $node_primary->safe_psql('maintable', "SELECT pg_current_wal_lsn();");
+my $recovery_time = $node_primary->safe_psql('maintable', "SELECT now()");
 
 # Even more data, this time with a recovery target name
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"INSERT INTO tab_int VALUES (generate_series(3001,4000))");
 my $recovery_name = "my_target";
 my $lsn4 =
-  $node_primary->safe_psql('postgres', "SELECT pg_current_wal_lsn();");
-$node_primary->safe_psql('postgres',
+  $node_primary->safe_psql('maintable', "SELECT pg_current_wal_lsn();");
+$node_primary->safe_psql('maintable',
 	"SELECT pg_create_restore_point('$recovery_name');");
 
 # And now for a recovery target LSN
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"INSERT INTO tab_int VALUES (generate_series(4001,5000))");
 my $lsn5 = my $recovery_lsn =
-  $node_primary->safe_psql('postgres', "SELECT pg_current_wal_lsn()");
+  $node_primary->safe_psql('maintable', "SELECT pg_current_wal_lsn()");
 
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"INSERT INTO tab_int VALUES (generate_series(5001,6000))");
 
 # Force archiving of WAL file
-$node_primary->safe_psql('postgres', "SELECT pg_switch_wal()");
+$node_primary->safe_psql('maintable', "SELECT pg_switch_wal()");
 
 # Test recovery targets
 my @recovery_params = ("recovery_target = 'immediate'");
@@ -138,11 +138,11 @@ test_recovery_standby('LSN', 'standby_5', $node_primary, \@recovery_params,
 test_recovery_standby('multiple overriding settings',
 	'standby_6', $node_primary, \@recovery_params, "3000", $lsn3);
 
-my $node_standby = PostgreSQL::Test::Cluster->new('standby_7');
+my $node_standby = maintableQL::Test::Cluster->new('standby_7');
 $node_standby->init_from_backup($node_primary, 'my_backup',
 	has_restoring => 1);
 $node_standby->append_conf(
-	'postgresql.conf', "recovery_target_name = '$recovery_name'
+	'maintableql.conf', "recovery_target_name = '$recovery_name'
 recovery_target_time = '$recovery_time'");
 
 my $res = run_log(
@@ -160,12 +160,12 @@ ok($logfile =~ qr/multiple recovery targets specified/,
 
 # Check behavior when recovery ends before target is reached
 
-$node_standby = PostgreSQL::Test::Cluster->new('standby_8');
+$node_standby = maintableQL::Test::Cluster->new('standby_8');
 $node_standby->init_from_backup(
 	$node_primary, 'my_backup',
 	has_restoring => 1,
 	standby => 0);
-$node_standby->append_conf('postgresql.conf',
+$node_standby->append_conf('maintableql.conf',
 	"recovery_target_name = 'does_not_exist'");
 
 run_log(
@@ -176,8 +176,8 @@ run_log(
 		'start',
 	]);
 
-# wait for postgres to terminate
-foreach my $i (0 .. 10 * $PostgreSQL::Test::Utils::timeout_default)
+# wait for maintable to terminate
+foreach my $i (0 .. 10 * $maintableQL::Test::Utils::timeout_default)
 {
 	last if !-f $node_standby->data_dir . '/postmaster.pid';
 	usleep(100_000);
@@ -188,10 +188,10 @@ ok( $logfile =~
 	'recovery end before target reached is a fatal error');
 
 # Invalid timeline target
-$node_standby = PostgreSQL::Test::Cluster->new('standby_9');
+$node_standby = maintableQL::Test::Cluster->new('standby_9');
 $node_standby->init_from_backup($node_primary, 'my_backup',
 	has_restoring => 1);
-$node_standby->append_conf('postgresql.conf',
+$node_standby->append_conf('maintableql.conf',
 	"recovery_target_timeline = 'bogus'");
 
 $res = run_log(
@@ -206,7 +206,7 @@ ok(!$res, 'invalid timeline target (bogus value)');
 my $log_start = $node_standby->wait_for_log("is not a valid number");
 
 # Timeline target out of min range
-$node_standby->append_conf('postgresql.conf',
+$node_standby->append_conf('maintableql.conf',
 	"recovery_target_timeline = '0'");
 
 $res = run_log(
@@ -222,7 +222,7 @@ $log_start =
   $node_standby->wait_for_log("must be between 1 and 4294967295", $log_start);
 
 # Timeline target out of max range
-$node_standby->append_conf('postgresql.conf',
+$node_standby->append_conf('maintableql.conf',
 	"recovery_target_timeline = '4294967296'");
 
 $res = run_log(

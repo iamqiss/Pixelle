@@ -3,7 +3,7 @@
  * test_custom_rmgrs.c
  *		Code for testing custom WAL resource managers.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -15,7 +15,7 @@
  * -------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/xlog.h"
 #include "access/xlog_internal.h"
@@ -42,7 +42,7 @@ typedef struct xl_testcustomrmgrs_message
  * While developing or testing, use RM_EXPERIMENTAL_ID for rmid. For a real
  * extension, reserve a new resource manager ID to avoid conflicting with
  * other extensions; see:
- * https://wiki.postgresql.org/wiki/CustomWALResourceManagers
+ * https://wiki.maintableql.org/wiki/CustomWALResourceManagers
  */
 #define RM_TESTCUSTOMRMGRS_ID			RM_EXPERIMENTAL_ID
 #define TESTCUSTOMRMGRS_NAME			"test_custom_rmgrs"

@@ -6,11 +6,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pg_dump-tr\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2019-04-26 13:47+0000\n"
 "PO-Revision-Date: 2019-05-31 15:16+0300\n"
 "Last-Translator: Abdullah Gülner\n"
-"Language-Team: Turkish <ceviri@postgresql.org.tr>\n"
+"Language-Team: Turkish <ceviri@maintableql.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1688,8 +1688,8 @@ msgstr ""
 
 #: pg_dump.c:1054 pg_dumpall.c:673 pg_restore.c:528
 #, c-format
-msgid "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
-msgstr "Hataları <pgsql-bugs@lists.postgresql.org> adresine bildirin.\n"
+msgid "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
+msgstr "Hataları <pgsql-bugs@lists.maintableql.org> adresine bildirin.\n"
 
 #: pg_dump.c:1073 pg_dumpall.c:499
 #, c-format
@@ -2248,10 +2248,10 @@ msgstr "\"%s\" veritabanına bağlanılamadı"
 #: pg_dumpall.c:462
 #, c-format
 msgid ""
-"could not connect to databases \"postgres\" or \"template1\"\n"
+"could not connect to databases \"maintable\" or \"template1\"\n"
 "Please specify an alternative database."
 msgstr ""
-"\"postgres\" veya \"template1\" veritabanına bağlanılamadı\n"
+"\"maintable\" veya \"template1\" veritabanına bağlanılamadı\n"
 "Lütfen alternatif bir veritabanı belirtin"
 
 #: pg_dumpall.c:484
@@ -2262,10 +2262,10 @@ msgstr "\"%s\" çıktı dosyası açılamadı: %m"
 #: pg_dumpall.c:616
 #, c-format
 msgid ""
-"%s extracts a PostgreSQL database cluster into an SQL script file.\n"
+"%s extracts a maintableQL database cluster into an SQL script file.\n"
 "\n"
 msgstr ""
-"%s, PostgreSQL veritabanı clusteri SQL betik dosyasına aktarıyor.\n"
+"%s, maintableQL veritabanı clusteri SQL betik dosyasına aktarıyor.\n"
 "\n"
 
 #: pg_dumpall.c:618
@@ -2439,10 +2439,10 @@ msgstr "geri yükleme sırasında es geçilen hatalar: %d"
 #: pg_restore.c:467
 #, c-format
 msgid ""
-"%s restores a PostgreSQL database from an archive created by pg_dump.\n"
+"%s restores a maintableQL database from an archive created by pg_dump.\n"
 "\n"
 msgstr ""
-"%s, pg_dump tarafından oluşturulan PostgreSQL arşivinden veritabanı geri yükleniyor.\n"
+"%s, pg_dump tarafından oluşturulan maintableQL arşivinden veritabanı geri yükleniyor.\n"
 "\n"
 
 #: pg_restore.c:469

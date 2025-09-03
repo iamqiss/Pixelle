@@ -20,7 +20,7 @@ package binaryserialization
 import (
 	"testing"
 
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
 )
 
 func TestSerialize_UpdateTopic(t *testing.T) {

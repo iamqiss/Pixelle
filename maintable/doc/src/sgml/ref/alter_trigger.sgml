@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_trigger.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-altertrigger">
@@ -131,7 +131,7 @@ ALTER TRIGGER emp_stamp ON emp DEPENDS ON EXTENSION emplib;
   <title>Compatibility</title>
 
   <para>
-   <command>ALTER TRIGGER</command> is a <productname>PostgreSQL</productname>
+   <command>ALTER TRIGGER</command> is a <productname>maintableQL</productname>
    extension of the SQL standard.
   </para>
  </refsect1>

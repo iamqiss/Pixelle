@@ -16,7 +16,7 @@
 * under the License.
 */
 
-use crate::{ConnectionStringOptions, IggyDuration, IggyError, TcpClientReconnectionConfig};
+use crate::{ConnectionStringOptions, MessengerDuration, MessengerError, TcpClientReconnectionConfig};
 use std::str::FromStr;
 
 #[derive(Debug)]
@@ -25,7 +25,7 @@ pub struct TcpConnectionStringOptions {
     tls_domain: String,
     tls_ca_file: Option<String>,
     reconnection: TcpClientReconnectionConfig,
-    heartbeat_interval: IggyDuration,
+    heartbeat_interval: MessengerDuration,
     nodelay: bool,
 }
 
@@ -56,11 +56,11 @@ impl ConnectionStringOptions for TcpConnectionStringOptions {
         self.reconnection.max_retries
     }
 
-    fn heartbeat_interval(&self) -> IggyDuration {
+    fn heartbeat_interval(&self) -> MessengerDuration {
         self.heartbeat_interval
     }
 
-    fn parse_options(options: &str) -> Result<TcpConnectionStringOptions, IggyError> {
+    fn parse_options(options: &str) -> Result<TcpConnectionStringOptions, MessengerError> {
         let options = options.split('&').collect::<Vec<&str>>();
         let mut tls_enabled = false;
         let mut tls_domain = "".to_string();
@@ -74,7 +74,7 @@ impl ConnectionStringOptions for TcpConnectionStringOptions {
         for option in options {
             let option_parts = option.split('=').collect::<Vec<&str>>();
             if option_parts.len() != 2 {
-                return Err(IggyError::InvalidConnectionString);
+                return Err(MessengerError::InvalidConnectionString);
             }
             match option_parts[0] {
                 "tls" => {
@@ -102,7 +102,7 @@ impl ConnectionStringOptions for TcpConnectionStringOptions {
                     nodelay = option_parts[1] == "true";
                 }
                 _ => {
-                    return Err(IggyError::InvalidConnectionString);
+                    return Err(MessengerError::InvalidConnectionString);
                 }
             }
         }
@@ -114,17 +114,17 @@ impl ConnectionStringOptions for TcpConnectionStringOptions {
                 _ => Some(
                     reconnection_retries
                         .parse()
-                        .map_err(|_| IggyError::InvalidNumberValue)?,
+                        .map_err(|_| MessengerError::InvalidNumberValue)?,
                 ),
             },
-            interval: IggyDuration::from_str(reconnection_interval.as_str())
-                .map_err(|_| IggyError::InvalidConnectionString)?,
-            reestablish_after: IggyDuration::from_str(reestablish_after.as_str())
-                .map_err(|_| IggyError::InvalidConnectionString)?,
+            interval: MessengerDuration::from_str(reconnection_interval.as_str())
+                .map_err(|_| MessengerError::InvalidConnectionString)?,
+            reestablish_after: MessengerDuration::from_str(reestablish_after.as_str())
+                .map_err(|_| MessengerError::InvalidConnectionString)?,
         };
 
-        let heartbeat_interval = IggyDuration::from_str(heartbeat_interval.as_str())
-            .map_err(|_| IggyError::InvalidConnectionString)?;
+        let heartbeat_interval = MessengerDuration::from_str(heartbeat_interval.as_str())
+            .map_err(|_| MessengerError::InvalidConnectionString)?;
 
         let connection_string_options = TcpConnectionStringOptions::new(
             tls_enabled,
@@ -145,7 +145,7 @@ impl TcpConnectionStringOptions {
         tls_domain: String,
         tls_ca_file: Option<String>,
         reconnection: TcpClientReconnectionConfig,
-        heartbeat_interval: IggyDuration,
+        heartbeat_interval: MessengerDuration,
         nodelay: bool,
     ) -> Self {
         Self {
@@ -166,7 +166,7 @@ impl Default for TcpConnectionStringOptions {
             tls_domain: "".to_string(),
             tls_ca_file: None,
             reconnection: Default::default(),
-            heartbeat_interval: IggyDuration::from_str("5s").unwrap(),
+            heartbeat_interval: MessengerDuration::from_str("5s").unwrap(),
             nodelay: false,
         }
     }

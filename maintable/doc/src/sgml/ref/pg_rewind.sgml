@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pg_rewind.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-pgrewind">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>pg_rewind</refname>
-  <refpurpose>synchronize a <productname>PostgreSQL</productname> data directory with another data directory that was forked from it</refpurpose>
+  <refpurpose>synchronize a <productname>maintableQL</productname> data directory with another data directory that was forked from it</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -41,7 +41,7 @@ PostgreSQL documentation
   <title>Description</title>
 
   <para>
-   <application>pg_rewind</application> is a tool for synchronizing a PostgreSQL cluster
+   <application>pg_rewind</application> is a tool for synchronizing a maintableQL cluster
    with another copy of the same cluster, after the clusters' timelines have
    diverged. A typical scenario is to bring an old primary server back online
    after failover as a standby that follows the new primary.
@@ -90,13 +90,13 @@ PostgreSQL documentation
    This can be done by creating a <filename>recovery.signal</filename> file
    in the target data directory and by configuring a suitable
    <xref linkend="guc-restore-command"/> in
-   <filename>postgresql.conf</filename>.
+   <filename>maintableql.conf</filename>.
   </para>
 
   <para>
    <application>pg_rewind</application> requires that the target server either has
    the <xref linkend="guc-wal-log-hints"/> option enabled
-   in <filename>postgresql.conf</filename> or data checksums enabled when
+   in <filename>maintableql.conf</filename> or data checksums enabled when
    the cluster was initialized with <application>initdb</application>.  Neither of these
    are currently on by default.  <xref linkend="guc-full-page-writes"/>
    must also be set to <literal>on</literal>, but is enabled by default.
@@ -169,7 +169,7 @@ PostgreSQL documentation
       <listitem>
        <para>
         Specifies a libpq connection string to connect to the source
-        <productname>PostgreSQL</productname> server to synchronize the target
+        <productname>maintableQL</productname> server to synchronize the target
         with. The connection must be a normal (non-replication) connection
         with a role having sufficient permissions to execute the functions
         used by <application>pg_rewind</application> on the source server
@@ -185,7 +185,7 @@ PostgreSQL documentation
       <listitem>
        <para>
         Create <filename>standby.signal</filename> and append connection
-        settings to <filename>postgresql.auto.conf</filename> in the output
+        settings to <filename>maintableql.auto.conf</filename> in the output
         directory.  The dbname will be recorded only if the dbname was
         specified explicitly in the connection string or <link linkend="libpq-envars">
         environment variable</link>. <literal>--source-server</literal> is
@@ -250,7 +250,7 @@ PostgreSQL documentation
        <para>
         Use the specified main server configuration file for the target
         cluster. This affects <application>pg_rewind</application> when
-        it uses internally the <application>postgres</application> command
+        it uses internally the <application>maintable</application> command
         for the rewind operation on this cluster (when retrieving
         <varname>restore_command</varname> with the option
         <option>-c/--restore-target-wal</option> and when forcing a
@@ -423,7 +423,7 @@ GRANT EXECUTE ON function pg_catalog.pg_read_binary_file(text, bigint, bigint, b
     </step>
     <step>
      <para>
-      When starting the target, <productname>PostgreSQL</productname> replays
+      When starting the target, <productname>maintableQL</productname> replays
       all the required WAL, resulting in a data directory in a consistent
       state.
      </para>

@@ -3,7 +3,7 @@
  * win32fseek.c
  *	  Replacements for fseeko() and ftello().
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/port/win32fseek.c
@@ -12,9 +12,9 @@
  */
 
 #ifdef FRONTEND
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #else
-#include "postgres.h"
+#include "maintable.h"
 #endif
 
 #ifdef _MSC_VER

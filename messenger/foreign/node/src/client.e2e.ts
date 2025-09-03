@@ -24,7 +24,7 @@ import { Client } from './client/client.js';
 
 try {
 
-  const credentials = { username: 'iggy', password: 'iggy' };
+  const credentials = { username: 'messenger', password: 'messenger' };
 
   // pooled client
   const c = new Client({

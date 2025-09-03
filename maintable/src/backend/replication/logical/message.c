@@ -3,7 +3,7 @@
  * message.c
  *	  Generic logical messages.
  *
- * Copyright (c) 2013-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2013-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/replication/logical/message.c
@@ -29,7 +29,7 @@
  * ---------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/xact.h"
 #include "access/xloginsert.h"

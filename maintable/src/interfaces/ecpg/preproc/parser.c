@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * parser.c
- *		Main entry point/driver for PostgreSQL grammar
+ *		Main entry point/driver for maintableQL grammar
  *
  * This should match src/backend/parser/parser.c, except that we do not
  * need to bother with re-entrant interfaces.
@@ -10,7 +10,7 @@
  * This file will need work if we ever want it to.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -19,7 +19,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "preproc_extern.h"
 #include "preproc.h"

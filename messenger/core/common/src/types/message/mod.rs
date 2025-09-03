@@ -16,7 +16,7 @@
  * under the License.
  */
 
-mod iggy_message;
+mod messenger_message;
 mod index;
 mod index_view;
 mod indexes;
@@ -36,20 +36,20 @@ pub const INDEX_SIZE: usize = 16;
 pub use crate::commands::messages::flush_unsaved_buffer::FlushUnsavedBuffer;
 pub use crate::commands::messages::poll_messages::PollMessages;
 pub use crate::commands::messages::send_messages::SendMessages;
-pub use iggy_message::{IggyMessage, MAX_PAYLOAD_SIZE, MAX_USER_HEADERS_SIZE};
-pub use index::IggyIndex;
-pub use index_view::IggyIndexView;
-pub use indexes::IggyIndexes;
+pub use messenger_message::{MessengerMessage, MAX_PAYLOAD_SIZE, MAX_USER_HEADERS_SIZE};
+pub use index::MessengerIndex;
+pub use index_view::MessengerIndexView;
+pub use indexes::MessengerIndexes;
 pub use message_header::{
-    IGGY_MESSAGE_CHECKSUM_OFFSET_RANGE, IGGY_MESSAGE_HEADER_RANGE, IGGY_MESSAGE_HEADER_SIZE,
-    IGGY_MESSAGE_HEADERS_LENGTH_OFFSET_RANGE, IGGY_MESSAGE_ID_OFFSET_RANGE,
-    IGGY_MESSAGE_OFFSET_OFFSET_RANGE, IGGY_MESSAGE_ORIGIN_TIMESTAMP_OFFSET_RANGE,
-    IGGY_MESSAGE_PAYLOAD_LENGTH_OFFSET_RANGE, IGGY_MESSAGE_TIMESTAMP_OFFSET_RANGE,
-    IggyMessageHeader,
+    MESSENGER_MESSAGE_CHECKSUM_OFFSET_RANGE, MESSENGER_MESSAGE_HEADER_RANGE, MESSENGER_MESSAGE_HEADER_SIZE,
+    MESSENGER_MESSAGE_HEADERS_LENGTH_OFFSET_RANGE, MESSENGER_MESSAGE_ID_OFFSET_RANGE,
+    MESSENGER_MESSAGE_OFFSET_OFFSET_RANGE, MESSENGER_MESSAGE_ORIGIN_TIMESTAMP_OFFSET_RANGE,
+    MESSENGER_MESSAGE_PAYLOAD_LENGTH_OFFSET_RANGE, MESSENGER_MESSAGE_TIMESTAMP_OFFSET_RANGE,
+    MessengerMessageHeader,
 };
-pub use message_header_view::IggyMessageHeaderView;
-pub use message_view::{IggyMessageView, IggyMessageViewIterator};
-pub use messages_batch::IggyMessagesBatch;
+pub use message_header_view::MessengerMessageHeaderView;
+pub use message_view::{MessengerMessageView, MessengerMessageViewIterator};
+pub use messages_batch::MessengerMessagesBatch;
 pub use partitioning::Partitioning;
 pub use partitioning_kind::PartitioningKind;
 pub use polled_messages::PolledMessages;

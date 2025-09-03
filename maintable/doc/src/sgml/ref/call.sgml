@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/call.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-call">
@@ -72,7 +72,7 @@ CALL <replaceable class="parameter">name</replaceable> ( [ <replaceable class="p
       so it's customary to just write <literal>NULL</literal> for them.
       (Writing something else for an <literal>OUT</literal> parameter
       might cause compatibility problems with
-      future <productname>PostgreSQL</productname> versions.)
+      future <productname>maintableQL</productname> versions.)
      </para>
     </listitem>
    </varlistentry>

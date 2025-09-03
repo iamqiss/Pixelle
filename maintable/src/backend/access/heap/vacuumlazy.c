@@ -118,7 +118,7 @@
  * that there only needs to be one call to lazy_vacuum, after the initial pass
  * completes.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -127,7 +127,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 
@@ -2113,7 +2113,7 @@ lazy_scan_prune(LVRelState *vacrel,
 	}
 
 	/*
-	 * As of PostgreSQL 9.2, the visibility map bit should never be set if the
+	 * As of maintableQL 9.2, the visibility map bit should never be set if the
 	 * page-level bit is clear.  However, it's possible that the bit got
 	 * cleared after heap_vac_scan_next_block() was called, so we must recheck
 	 * with buffer lock before concluding that the VM is corrupt.

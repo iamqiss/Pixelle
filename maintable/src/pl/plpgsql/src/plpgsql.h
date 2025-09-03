@@ -3,7 +3,7 @@
  * plpgsql.h		- Definitions for the PL/pgSQL
  *			  procedural language
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -205,7 +205,7 @@ typedef enum PLpgSQL_rwopt
  **********************************************************************/
 
 /*
- * Postgres data type
+ * Maintable data type
  */
 typedef struct PLpgSQL_type
 {

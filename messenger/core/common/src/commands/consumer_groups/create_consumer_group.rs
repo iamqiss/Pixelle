@@ -21,7 +21,7 @@ use crate::BytesSerializable;
 use crate::Identifier;
 use crate::Sizeable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{CREATE_CONSUMER_GROUP_CODE, Command};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -65,16 +65,16 @@ impl Default for CreateConsumerGroup {
     }
 }
 
-impl Validatable<IggyError> for CreateConsumerGroup {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for CreateConsumerGroup {
+    fn validate(&self) -> Result<(), MessengerError> {
         if let Some(group_id) = self.group_id
             && group_id == 0
         {
-            return Err(IggyError::InvalidConsumerGroupId);
+            return Err(MessengerError::InvalidConsumerGroupId);
         }
 
         if self.name.is_empty() || self.name.len() > MAX_NAME_LENGTH {
-            return Err(IggyError::InvalidConsumerGroupName);
+            return Err(MessengerError::InvalidConsumerGroupName);
         }
 
         Ok(())
@@ -97,9 +97,9 @@ impl BytesSerializable for CreateConsumerGroup {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<CreateConsumerGroup, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<CreateConsumerGroup, MessengerError> {
         if bytes.len() < 10 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let mut position = 0;
@@ -110,12 +110,12 @@ impl BytesSerializable for CreateConsumerGroup {
         let group_id = u32::from_le_bytes(
             bytes[position..position + 4]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let group_id = if group_id == 0 { None } else { Some(group_id) };
         let name_length = bytes[position + 4];
         let name = from_utf8(&bytes[position + 5..position + 5 + name_length as usize])
-            .map_err(|_| IggyError::InvalidUtf8)?
+            .map_err(|_| MessengerError::InvalidUtf8)?
             .to_string();
         let command = CreateConsumerGroup {
             stream_id,

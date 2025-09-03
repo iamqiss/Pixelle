@@ -6,7 +6,7 @@
   <para>
    Certain extensions, principally extensions that implement custom access
    methods, may need to perform write-ahead logging in order to ensure
-   crash-safety. <productname>PostgreSQL</productname> provides two ways
+   crash-safety. <productname>maintableQL</productname> provides two ways
    for extensions to achieve this goal.
   </para>
 

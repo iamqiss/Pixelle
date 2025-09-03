@@ -31,7 +31,7 @@ type Config struct {
 	MySQL         map[string]target.MySQLArgs         `json:"mysql"`
 	NATS          map[string]target.NATSArgs          `json:"nats"`
 	NSQ           map[string]target.NSQArgs           `json:"nsq"`
-	PostgreSQL    map[string]target.PostgreSQLArgs    `json:"postgresql"`
+	maintableQL    map[string]target.maintableQLArgs    `json:"maintableql"`
 	Redis         map[string]target.RedisArgs         `json:"redis"`
 	Webhook       map[string]target.WebhookArgs       `json:"webhook"`
 }
@@ -52,7 +52,7 @@ func NewConfig() Config {
 		MySQL:         make(map[string]target.MySQLArgs),
 		Kafka:         make(map[string]target.KafkaArgs),
 		Webhook:       make(map[string]target.WebhookArgs),
-		PostgreSQL:    make(map[string]target.PostgreSQLArgs),
+		maintableQL:    make(map[string]target.maintableQLArgs),
 		Elasticsearch: make(map[string]target.ElasticsearchArgs),
 	}
 	cfg.NSQ[defaultTarget] = target.NSQArgs{}
@@ -63,7 +63,7 @@ func NewConfig() Config {
 	cfg.MySQL[defaultTarget] = target.MySQLArgs{}
 	cfg.Kafka[defaultTarget] = target.KafkaArgs{}
 	cfg.Webhook[defaultTarget] = target.WebhookArgs{}
-	cfg.PostgreSQL[defaultTarget] = target.PostgreSQLArgs{}
+	cfg.maintableQL[defaultTarget] = target.maintableQLArgs{}
 	cfg.Elasticsearch[defaultTarget] = target.ElasticsearchArgs{}
 	return cfg
 }

@@ -42,7 +42,7 @@
   <title>Built-in Range and Multirange Types</title>
 
  <para>
-  PostgreSQL comes with the following built-in range types:
+  maintableQL comes with the following built-in range types:
   <itemizedlist>
     <listitem>
       <para>

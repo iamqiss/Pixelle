@@ -38,7 +38,7 @@ Bucket events can be published to the following targets:
 | :-------------------------------- | --------------------------- | ------------------------------- |
 | [`AMQP`](#AMQP)                   | [`Redis`](#Redis)           | [`MySQL`](#MySQL)               |
 | [`MQTT`](#MQTT)                   | [`NATS`](#NATS)             | [`Apache Kafka`](#apache-kafka) |
-| [`Elasticsearch`](#Elasticsearch) | [`PostgreSQL`](#PostgreSQL) | [`Webhooks`](#webhooks)         |
+| [`Elasticsearch`](#Elasticsearch) | [`maintableQL`](#maintableQL) | [`Webhooks`](#webhooks)         |
 | [`NSQ`](#NSQ)                     |                             |                                 |
 
 ## Prerequisites
@@ -55,7 +55,7 @@ notify_mqtt           publish bucket notifications to MQTT endpoints
 notify_nats           publish bucket notifications to NATS endpoints
 notify_nsq            publish bucket notifications to NSQ endpoints
 notify_mysql          publish bucket notifications to MySQL databases
-notify_postgres       publish bucket notifications to Postgres databases
+notify_maintable       publish bucket notifications to Maintable databases
 notify_elasticsearch  publish bucket notifications to Elasticsearch endpoints
 notify_redis          publish bucket notifications to Redis datastores
 ```
@@ -823,13 +823,13 @@ The example `nats.go` program prints event notification to console.
 Received a message: {"EventType":"s3:ObjectCreated:Put","Key":"images/myphoto.jpg","Records":[{"eventVersion":"2.0","eventSource":"minio:s3","awsRegion":"","eventTime":"2017-07-07T18:46:37Z","eventName":"s3:ObjectCreated:Put","userIdentity":{"principalId":"minio"},"requestParameters":{"sourceIPAddress":"192.168.1.80:55328"},"responseElements":{"x-amz-request-id":"14CF20BD1EFD5B93","x-minio-origin-endpoint":"http://127.0.0.1:9000"},"s3":{"s3SchemaVersion":"1.0","configurationId":"Config","bucket":{"name":"images","ownerIdentity":{"principalId":"minio"},"arn":"arn:aws:s3:::images"},"object":{"key":"myphoto.jpg","size":248682,"eTag":"f1671feacb8bbf7b0397c6e9364e8c92","contentType":"image/jpeg","userDefined":{"content-type":"image/jpeg"},"versionId":"1","sequencer":"14CF20BD1EFD5B93"}},"source":{"host":"192.168.1.80","port":"55328","userAgent":"MinIO (linux; amd64) minio-go/2.0.4 mc/DEVELOPMENT.GOGET"}}],"level":"info","msg":"","time":"2017-07-07T11:46:37-07:00"}
 ```
 
-## Publish MinIO events via PostgreSQL
+## Publish MinIO events via maintableQL
 
-> NOTE: Until release RELEASE.2020-04-10T03-34-42Z PostgreSQL notification used to support following options:
+> NOTE: Until release RELEASE.2020-04-10T03-34-42Z maintableQL notification used to support following options:
 >
 > ```
-> host                (hostname)           Postgres server hostname (used only if `connection_string` is empty)
-> port                (port)               Postgres server port, defaults to `5432` (used only if `connection_string` is empty)
+> host                (hostname)           Maintable server hostname (used only if `connection_string` is empty)
+> port                (port)               Maintable server port, defaults to `5432` (used only if `connection_string` is empty)
 > username            (string)             database username (used only if `connection_string` is empty)
 > password            (string)             database password (used only if `connection_string` is empty)
 > database            (string)             database name (used only if `connection_string` is empty)
@@ -840,14 +840,14 @@ Received a message: {"EventType":"s3:ObjectCreated:Put","Key":"images/myphoto.jp
 > following command to update the existing notification targets.
 >
 > ```
-> mc admin config set myminio/ notify_postgres[:name] connection_string="host=hostname port=2832 username=psqluser password=psqlpass database=bucketevents"
+> mc admin config set myminio/ notify_maintable[:name] connection_string="host=hostname port=2832 username=psqluser password=psqlpass database=bucketevents"
 > ```
 >
-> Please make sure this step is carried out, without this step PostgreSQL notification targets will not work,
+> Please make sure this step is carried out, without this step maintableQL notification targets will not work,
 > an error message will be shown on the console upon server upgrade/restart, make sure to follow the above
 > instructions appropriately. For further questions please join our <https://slack.min.io>
 
-Install [PostgreSQL](https://www.postgresql.org/) database server. For illustrative purposes, we have set the "postgres" user password as `password` and created a database called `minio_events` to store the events.
+Install [maintableQL](https://www.maintableql.org/) database server. For illustrative purposes, we have set the "maintable" user password as `password` and created a database called `minio_events` to store the events.
 
 This notification target supports two formats: _namespace_ and _access_.
 
@@ -857,20 +857,20 @@ When the _access_ format is used, MinIO appends events to a table. It creates ro
 
 The steps below show how to use this notification target in `namespace` format. The other format is very similar and is omitted for brevity.
 
-### Step 1: Ensure postgresql minimum requirements are met
+### Step 1: Ensure maintableql minimum requirements are met
 
-MinIO requires PostgreSQL version 9.5 or above. MinIO uses the [`INSERT ON CONFLICT`](https://www.postgresql.org/docs/9.5/static/sql-insert.html#SQL-ON-CONFLICT) (aka UPSERT) feature, introduced in version 9.5 and the [JSONB](https://www.postgresql.org/docs/9.4/static/datatype-json.html) data-type introduced in version 9.4.
+MinIO requires maintableQL version 9.5 or above. MinIO uses the [`INSERT ON CONFLICT`](https://www.maintableql.org/docs/9.5/static/sql-insert.html#SQL-ON-CONFLICT) (aka UPSERT) feature, introduced in version 9.5 and the [JSONB](https://www.maintableql.org/docs/9.4/static/datatype-json.html) data-type introduced in version 9.4.
 
-### Step 2: Add PostgreSQL endpoint to MinIO
+### Step 2: Add maintableQL endpoint to MinIO
 
-The PostgreSQL configuration is located in the `notify_postgresql` key. Create a configuration key-value pair here for your PostgreSQL instance. The key is a name for your PostgreSQL endpoint, and the value is a collection of key-value parameters described in the table below.
+The maintableQL configuration is located in the `notify_maintableql` key. Create a configuration key-value pair here for your maintableQL instance. The key is a name for your maintableQL endpoint, and the value is a collection of key-value parameters described in the table below.
 
 ```
 KEY:
-notify_postgres[:name]  publish bucket notifications to Postgres databases
+notify_maintable[:name]  publish bucket notifications to Maintable databases
 
 ARGS:
-connection_string*   (string)             Postgres server connection-string e.g. "host=localhost port=5432 dbname=minio_events user=postgres password=password sslmode=disable"
+connection_string*   (string)             Maintable server connection-string e.g. "host=localhost port=5432 dbname=minio_events user=maintable password=password sslmode=disable"
 table*               (string)             DB table name to store/update events, table is auto-created
 format*              (namespace*|access)  'namespace' reflects current bucket/object list and 'access' reflects a journal of object operations, defaults to 'namespace'
 queue_dir            (path)               staging dir for undelivered messages e.g. '/home/events'
@@ -883,43 +883,43 @@ or environment variables
 
 ```
 KEY:
-notify_postgres[:name]  publish bucket notifications to Postgres databases
+notify_maintable[:name]  publish bucket notifications to Maintable databases
 
 ARGS:
-MINIO_NOTIFY_POSTGRES_ENABLE*              (on|off)             enable notify_postgres target, default is 'off'
-MINIO_NOTIFY_POSTGRES_CONNECTION_STRING*   (string)             Postgres server connection-string e.g. "host=localhost port=5432 dbname=minio_events user=postgres password=password sslmode=disable"
-MINIO_NOTIFY_POSTGRES_TABLE*               (string)             DB table name to store/update events, table is auto-created
-MINIO_NOTIFY_POSTGRES_FORMAT*              (namespace*|access)  'namespace' reflects current bucket/object list and 'access' reflects a journal of object operations, defaults to 'namespace'
-MINIO_NOTIFY_POSTGRES_QUEUE_DIR            (path)               staging dir for undelivered messages e.g. '/home/events'
-MINIO_NOTIFY_POSTGRES_QUEUE_LIMIT          (number)             maximum limit for undelivered messages, defaults to '100000'
-MINIO_NOTIFY_POSTGRES_COMMENT              (sentence)           optionally add a comment to this setting
-MINIO_NOTIFY_POSTGRES_MAX_OPEN_CONNECTIONS (number)             maximum number of open connections to the database, defaults to '2'
+MINIO_NOTIFY_MAINTABLE_ENABLE*              (on|off)             enable notify_maintable target, default is 'off'
+MINIO_NOTIFY_MAINTABLE_CONNECTION_STRING*   (string)             Maintable server connection-string e.g. "host=localhost port=5432 dbname=minio_events user=maintable password=password sslmode=disable"
+MINIO_NOTIFY_MAINTABLE_TABLE*               (string)             DB table name to store/update events, table is auto-created
+MINIO_NOTIFY_MAINTABLE_FORMAT*              (namespace*|access)  'namespace' reflects current bucket/object list and 'access' reflects a journal of object operations, defaults to 'namespace'
+MINIO_NOTIFY_MAINTABLE_QUEUE_DIR            (path)               staging dir for undelivered messages e.g. '/home/events'
+MINIO_NOTIFY_MAINTABLE_QUEUE_LIMIT          (number)             maximum limit for undelivered messages, defaults to '100000'
+MINIO_NOTIFY_MAINTABLE_COMMENT              (sentence)           optionally add a comment to this setting
+MINIO_NOTIFY_MAINTABLE_MAX_OPEN_CONNECTIONS (number)             maximum number of open connections to the database, defaults to '2'
 ```
 
-> NOTE: If the `max_open_connections` key or the environment variable `MINIO_NOTIFY_POSTGRES_MAX_OPEN_CONNECTIONS` is set to `0`, There will be no limit set on the number of
+> NOTE: If the `max_open_connections` key or the environment variable `MINIO_NOTIFY_MAINTABLE_MAX_OPEN_CONNECTIONS` is set to `0`, There will be no limit set on the number of
 > open connections to the database. This setting is generally NOT recommended as the behavior may be inconsistent during recursive deletes in `namespace` format.
 
-MinIO supports persistent event store. The persistent store will backup events when the PostgreSQL connection goes offline and replays it when the broker comes back online. The event store can be configured by setting the directory path in `queue_dir` field and the maximum limit of events in the queue_dir in `queue_limit` field. For eg, the `queue_dir` can be `/home/events` and `queue_limit` can be `1000`. By default, the `queue_limit` is set to 100000.
+MinIO supports persistent event store. The persistent store will backup events when the maintableQL connection goes offline and replays it when the broker comes back online. The event store can be configured by setting the directory path in `queue_dir` field and the maximum limit of events in the queue_dir in `queue_limit` field. For eg, the `queue_dir` can be `/home/events` and `queue_limit` can be `1000`. By default, the `queue_limit` is set to 100000.
 
 Note that for illustration here, we have disabled SSL. In the interest of security, for production this is not recommended.
 To update the configuration, use `mc admin config get` command to get the current configuration.
 
 ```sh
-$ mc admin config get myminio notify_postgres
-notify_postgres:1 queue_dir="" connection_string="" queue_limit="0"  table="" format="namespace"
+$ mc admin config get myminio notify_maintable
+notify_maintable:1 queue_dir="" connection_string="" queue_limit="0"  table="" format="namespace"
 ```
 
-Use `mc admin config set` command to update the configuration for the deployment. Restart the MinIO server to put the changes into effect. The server will print a line like `SQS ARNs: arn:minio:sqs::1:postgresql` at start-up if there were no errors.
+Use `mc admin config set` command to update the configuration for the deployment. Restart the MinIO server to put the changes into effect. The server will print a line like `SQS ARNs: arn:minio:sqs::1:maintableql` at start-up if there were no errors.
 
 ```sh
-mc admin config set myminio notify_postgres:1 connection_string="host=localhost port=5432 dbname=minio_events user=postgres password=password sslmode=disable" table="bucketevents" format="namespace"
+mc admin config set myminio notify_maintable:1 connection_string="host=localhost port=5432 dbname=minio_events user=maintable password=password sslmode=disable" table="bucketevents" format="namespace"
 ```
 
-Note that, you can add as many PostgreSQL server endpoint configurations as needed by providing an identifier (like "1" in the example above) for the PostgreSQL instance and an object of per-server configuration parameters.
+Note that, you can add as many maintableQL server endpoint configurations as needed by providing an identifier (like "1" in the example above) for the maintableQL instance and an object of per-server configuration parameters.
 
-### Step 3: Enable PostgreSQL bucket notification using MinIO client
+### Step 3: Enable maintableQL bucket notification using MinIO client
 
-We will now enable bucket event notifications on a bucket named `images`. Whenever a JPEG image is created/overwritten, a new row is added or an existing row is updated in the PostgreSQL configured above. When an existing object is deleted, the corresponding row is deleted from the PostgreSQL table. Thus, the rows in the PostgreSQL table, reflect the `.jpg` objects in the `images` bucket.
+We will now enable bucket event notifications on a bucket named `images`. Whenever a JPEG image is created/overwritten, a new row is added or an existing row is updated in the maintableQL configured above. When an existing object is deleted, the corresponding row is deleted from the maintableQL table. Thus, the rows in the maintableQL table, reflect the `.jpg` objects in the `images` bucket.
 
 To configure this bucket notification, we need the ARN printed by MinIO in the previous step. Additional information about ARN is available [here](http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html).
 
@@ -929,14 +929,14 @@ With the `mc` tool, the configuration is very simple to add. Let us say that the
 # Create bucket named `images` in myminio
 mc mb myminio/images
 # Add notification configuration on the `images` bucket using the MySQL ARN. The --suffix argument filters events.
-mc event add myminio/images arn:minio:sqs::1:postgresql --suffix .jpg
+mc event add myminio/images arn:minio:sqs::1:maintableql --suffix .jpg
 # Print out the notification configuration on the `images` bucket.
 mc event list myminio/images
 mc event list myminio/images
-arn:minio:sqs::1:postgresql s3:ObjectCreated:*,s3:ObjectRemoved:* Filter: suffix=”.jpg”
+arn:minio:sqs::1:maintableql s3:ObjectCreated:*,s3:ObjectRemoved:* Filter: suffix=”.jpg”
 ```
 
-### Step 4: Test on PostgreSQL
+### Step 4: Test on maintableQL
 
 Open another terminal and upload a JPEG image into `images` bucket.
 
@@ -944,10 +944,10 @@ Open another terminal and upload a JPEG image into `images` bucket.
 mc cp myphoto.jpg myminio/images
 ```
 
-Open PostgreSQL terminal to list the rows in the `bucketevents` table.
+Open maintableQL terminal to list the rows in the `bucketevents` table.
 
 ```
-$ psql -h 127.0.0.1 -U postgres -d minio_events
+$ psql -h 127.0.0.1 -U maintable -d minio_events
 minio_events=# select * from bucketevents;
 
 key                 |                      value

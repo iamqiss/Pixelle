@@ -13,7 +13,7 @@
     wrapper, which consists of a set of functions that the core server
     calls.  The foreign data wrapper is responsible for fetching
     data from the remote data source and returning it to the
-    <productname>PostgreSQL</productname> executor.  If updating foreign
+    <productname>maintableQL</productname> executor.  If updating foreign
     tables is to be supported, the wrapper must handle that, too.
     This chapter outlines how to write a new foreign data wrapper.
    </para>
@@ -29,8 +29,8 @@
    <note>
     <para>
      The SQL standard specifies an interface for writing foreign data wrappers.
-     However, PostgreSQL does not implement that API, because the effort to
-     accommodate it into PostgreSQL would be large, and the standard API hasn't
+     However, maintableQL does not implement that API, because the effort to
+     accommodate it into maintableQL would be large, and the standard API hasn't
      gained wide adoption anyway.
     </para>
    </note>
@@ -53,7 +53,7 @@
      Most of the effort in writing an FDW is in implementing these callback
      functions.
      The handler function must be registered with
-     <productname>PostgreSQL</productname> as taking no arguments and
+     <productname>maintableQL</productname> as taking no arguments and
      returning the special pseudo-type <type>fdw_handler</type>.  The
      callback functions are plain C functions and are not visible or
      callable at the SQL level.  The callback functions are described in
@@ -263,7 +263,7 @@ IterateForeignScan(ForeignScanState *node);
     </para>
 
     <para>
-     Note that <productname>PostgreSQL</productname>'s executor doesn't care
+     Note that <productname>maintableQL</productname>'s executor doesn't care
      whether the rows returned violate any constraints that were defined on
      the foreign table &mdash; but the planner does care, and may optimize
      queries incorrectly if there are rows visible in the foreign table that
@@ -367,7 +367,7 @@ GetForeignJoinPaths(PlannerInfo *root,
 
     <note>
      <para>
-      Beginning with <productname>PostgreSQL</productname> 16,
+      Beginning with <productname>maintableQL</productname> 16,
       <structfield>fs_relids</structfield> includes the rangetable indexes
       of outer joins, if any were involved in this join.  The new field
       <structfield>fs_base_relids</structfield> includes only base
@@ -1833,7 +1833,7 @@ GetForeignServerByName(const char *name, bool missing_ok);
      <function>GetForeignPaths</function>, <function>GetForeignPlan</function>,
      <function>PlanForeignModify</function>, <function>GetForeignJoinPaths</function>,
      <function>GetForeignUpperPaths</function>, and <function>PlanDirectModify</function>
-     must fit into the workings of the <productname>PostgreSQL</productname> planner.
+     must fit into the workings of the <productname>maintableQL</productname> planner.
      Here are some notes about what they must do.
     </para>
 
@@ -2059,7 +2059,7 @@ GetForeignServerByName(const char *name, bool missing_ok);
      individual rows to prevent concurrent updates of those rows, it is
      usually worthwhile for the FDW to perform row-level locking with as
      close an approximation as practical to the semantics used in
-     ordinary <productname>PostgreSQL</productname> tables.  There are multiple
+     ordinary <productname>maintableQL</productname> tables.  There are multiple
      considerations involved in this.
     </para>
 
@@ -2075,25 +2075,25 @@ GetForeignServerByName(const char *name, bool missing_ok);
      concurrency or even unexpected deadlocks.  Also, late locking is only
      possible if the row to be locked can be uniquely re-identified later.
      Preferably the row identifier should identify a specific version of the
-     row, as <productname>PostgreSQL</productname> TIDs do.
+     row, as <productname>maintableQL</productname> TIDs do.
     </para>
 
     <para>
-     By default, <productname>PostgreSQL</productname> ignores locking considerations
+     By default, <productname>maintableQL</productname> ignores locking considerations
      when interfacing to FDWs, but an FDW can perform early locking without
      any explicit support from the core code.  The API functions described
      in <xref linkend="fdw-callbacks-row-locking"/>, which were added
-     in <productname>PostgreSQL</productname> 9.5, allow an FDW to use late locking if
+     in <productname>maintableQL</productname> 9.5, allow an FDW to use late locking if
      it wishes.
     </para>
 
     <para>
      An additional consideration is that in <literal>READ COMMITTED</literal>
-     isolation mode, <productname>PostgreSQL</productname> may need to re-check
+     isolation mode, <productname>maintableQL</productname> may need to re-check
      restriction and join conditions against an updated version of some
      target tuple.  Rechecking join conditions requires re-obtaining copies
      of the non-target rows that were previously joined to the target tuple.
-     When working with standard <productname>PostgreSQL</productname> tables, this is
+     When working with standard <productname>maintableQL</productname> tables, this is
      done by including the TIDs of the non-target tables in the column list
      projected through the join, and then re-fetching non-target rows when
      required.  This approach keeps the join data set compact, but it

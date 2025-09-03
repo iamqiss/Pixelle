@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_collation.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-altercollation">
@@ -113,7 +113,7 @@ ALTER COLLATION <replaceable>name</replaceable> SET SCHEMA <replaceable>new_sche
 <screen>
 WARNING:  collation "xx-x-icu" has version mismatch
 DETAIL:  The collation in the database was created using version 1.2.3.4, but the operating system provides version 2.3.4.5.
-HINT:  Rebuild all objects affected by this collation and run ALTER COLLATION pg_catalog."xx-x-icu" REFRESH VERSION, or build PostgreSQL with the right library version.
+HINT:  Rebuild all objects affected by this collation and run ALTER COLLATION pg_catalog."xx-x-icu" REFRESH VERSION, or build maintableQL with the right library version.
 </screen>
    A change in collation definitions can lead to corrupt indexes and other
    problems because the database system relies on stored objects having a

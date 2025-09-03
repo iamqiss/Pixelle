@@ -20,10 +20,10 @@ use crate::state::system::StreamState;
 use crate::streaming::streams::COMPONENT;
 use crate::streaming::streams::stream::Stream;
 use error_set::ErrContext;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 
 impl Stream {
-    pub async fn load(&mut self, state: StreamState) -> Result<(), IggyError> {
+    pub async fn load(&mut self, state: StreamState) -> Result<(), MessengerError> {
         let storage = self.storage.clone();
         let state_id = state.id;
         storage.stream
@@ -32,7 +32,7 @@ impl Stream {
             .with_error_context(|error| format!("{COMPONENT} (error: {error}) - failed to load stream with state, state ID: {state_id}, stream: {self}"))
     }
 
-    pub async fn persist(&self) -> Result<(), IggyError> {
+    pub async fn persist(&self) -> Result<(), MessengerError> {
         self.storage
             .stream
             .save(self)
@@ -42,7 +42,7 @@ impl Stream {
             })
     }
 
-    pub async fn delete(&self) -> Result<(), IggyError> {
+    pub async fn delete(&self) -> Result<(), MessengerError> {
         for topic in self.get_topics() {
             topic.delete().await.with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to delete topic in stream: {self}")
@@ -58,7 +58,7 @@ impl Stream {
             })
     }
 
-    pub async fn persist_messages(&self) -> Result<usize, IggyError> {
+    pub async fn persist_messages(&self) -> Result<usize, MessengerError> {
         let mut saved_messages_number = 0;
         for topic in self.get_topics() {
             saved_messages_number += topic.persist_messages().await.with_error_context(|error| {
@@ -71,7 +71,7 @@ impl Stream {
         Ok(saved_messages_number)
     }
 
-    pub async fn purge(&self) -> Result<(), IggyError> {
+    pub async fn purge(&self) -> Result<(), MessengerError> {
         for topic in self.get_topics() {
             topic.purge().await.with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to purge topic: {topic} in stream: {self}")

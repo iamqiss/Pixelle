@@ -4,7 +4,7 @@
  *	  prototypes for backend_startup.c.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/tcop/backend_startup.h
@@ -69,7 +69,7 @@ typedef struct BackendStartupData
  * ALL is a convenience alias equivalent to all of the above aspects.
  *
  * ON is backwards compatibility alias for the connection aspects that were
- * logged in Postgres versions < 18.
+ * logged in Maintable versions < 18.
  */
 typedef enum LogConnectionOption
 {

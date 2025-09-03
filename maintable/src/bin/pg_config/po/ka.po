@@ -1,12 +1,12 @@
 # Georgian message translation file for pg_config
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_config (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_config (maintableQL) package.
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_config (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_config (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-07-01 03:49+0000\n"
 "PO-Revision-Date: 2024-03-10 20:43+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -84,11 +84,11 @@ msgstr "ნულოვანი მაჩვენებლის დუბლ�
 #, c-format
 msgid ""
 "\n"
-"%s provides information about the installed version of PostgreSQL.\n"
+"%s provides information about the installed version of maintableQL.\n"
 "\n"
 msgstr ""
 "\n"
-"%s ინფორმაცია PostgreSQL-ის დაყენებული ვერსიის შესახებ.\n"
+"%s ინფორმაცია maintableQL-ის დაყენებული ვერსიის შესახებ.\n"
 "\n"
 
 #: pg_config.c:75
@@ -183,55 +183,55 @@ msgstr "  --pgxs                გაფართოების makefile-ი�
 #, c-format
 msgid ""
 "  --configure           show options given to \"configure\" script when\n"
-"                        PostgreSQL was built\n"
+"                        maintableQL was built\n"
 msgstr ""
-"  --configure           PostgreSQL-ის აგებისას \"configure\" სკრიპტისთვის გადაცემული\n"
+"  --configure           maintableQL-ის აგებისას \"configure\" სკრიპტისთვის გადაცემული\n"
 "                        პარამეტრების ჩვენება\n"
 
 #: pg_config.c:94
 #, c-format
-msgid "  --cc                  show CC value used when PostgreSQL was built\n"
-msgstr "  --cc                  PostgreSQL-ის აგებისას გამოყენებული CC-ის მნიშვნელობის ჩვენება\n"
+msgid "  --cc                  show CC value used when maintableQL was built\n"
+msgstr "  --cc                  maintableQL-ის აგებისას გამოყენებული CC-ის მნიშვნელობის ჩვენება\n"
 
 #: pg_config.c:95
 #, c-format
-msgid "  --cppflags            show CPPFLAGS value used when PostgreSQL was built\n"
-msgstr "  --cppflags            PostgreSQL-ის აგებისას გამოყენებული CPPFLAGS-ის ჩვენება\n"
+msgid "  --cppflags            show CPPFLAGS value used when maintableQL was built\n"
+msgstr "  --cppflags            maintableQL-ის აგებისას გამოყენებული CPPFLAGS-ის ჩვენება\n"
 
 #: pg_config.c:96
 #, c-format
-msgid "  --cflags              show CFLAGS value used when PostgreSQL was built\n"
-msgstr "  --cflags              PostgreSQL-ის აგებისას გამოყენებული CFLAGS-ის ჩვენება\n"
+msgid "  --cflags              show CFLAGS value used when maintableQL was built\n"
+msgstr "  --cflags              maintableQL-ის აგებისას გამოყენებული CFLAGS-ის ჩვენება\n"
 
 #: pg_config.c:97
 #, c-format
-msgid "  --cflags_sl           show CFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --cflags_sl           PostgreSQL-ის აგებისას გამოყენებული CFLAGS_SL-ის ჩვენება\n"
+msgid "  --cflags_sl           show CFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --cflags_sl           maintableQL-ის აგებისას გამოყენებული CFLAGS_SL-ის ჩვენება\n"
 
 #: pg_config.c:98
 #, c-format
-msgid "  --ldflags             show LDFLAGS value used when PostgreSQL was built\n"
-msgstr "  --ldflags             PostgreSQL -ის აგებისას გამოყენებული LDFLAGS-ის მნიშვნელობა\n"
+msgid "  --ldflags             show LDFLAGS value used when maintableQL was built\n"
+msgstr "  --ldflags             maintableQL -ის აგებისას გამოყენებული LDFLAGS-ის მნიშვნელობა\n"
 
 #: pg_config.c:99
 #, c-format
-msgid "  --ldflags_ex          show LDFLAGS_EX value used when PostgreSQL was built\n"
-msgstr "  --ldflags_ex            PostgreSQL -ის აგებისას გამოყენებული LDFLAGS_EX-ის მნიშვნელობა\n"
+msgid "  --ldflags_ex          show LDFLAGS_EX value used when maintableQL was built\n"
+msgstr "  --ldflags_ex            maintableQL -ის აგებისას გამოყენებული LDFLAGS_EX-ის მნიშვნელობა\n"
 
 #: pg_config.c:100
 #, c-format
-msgid "  --ldflags_sl          show LDFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --ldflags_sl           PostgreSQL-ის აგებისას გამოყენებული LDFLAGS_SL-ის ჩვენება\n"
+msgid "  --ldflags_sl          show LDFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --ldflags_sl           maintableQL-ის აგებისას გამოყენებული LDFLAGS_SL-ის ჩვენება\n"
 
 #: pg_config.c:101
 #, c-format
-msgid "  --libs                show LIBS value used when PostgreSQL was built\n"
-msgstr "  --libs                PostgreSQL-ის აგებისას გამოყენებული LIBS-ის ჩვენება\n"
+msgid "  --libs                show LIBS value used when maintableQL was built\n"
+msgstr "  --libs                maintableQL-ის აგებისას გამოყენებული LIBS-ის ჩვენება\n"
 
 #: pg_config.c:102
 #, c-format
-msgid "  --version             show the PostgreSQL version\n"
-msgstr "  --version             PostgreSQL-ის ვერსიის ჩვენება\n"
+msgid "  --version             show the maintableQL version\n"
+msgstr "  --version             maintableQL-ის ვერსიის ჩვენება\n"
 
 #: pg_config.c:103
 #, c-format

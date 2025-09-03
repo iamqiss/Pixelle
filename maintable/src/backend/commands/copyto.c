@@ -3,7 +3,7 @@
  * copyto.c
  *		COPY <table> TO file/program/client
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <unistd.h>
@@ -969,7 +969,7 @@ BeginCopyTo(ParseState *pstate,
 						 errmsg("could not open file \"%s\" for writing: %m",
 								cstate->filename),
 						 (save_errno == ENOENT || save_errno == EACCES) ?
-						 errhint("COPY TO instructs the PostgreSQL server process to write a file. "
+						 errhint("COPY TO instructs the maintableQL server process to write a file. "
 								 "You may want a client-side facility such as psql's \\copy.") : 0));
 			}
 

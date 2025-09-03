@@ -182,7 +182,7 @@ notify_mqtt           publish bucket notifications to MQTT endpoints
 notify_nats           publish bucket notifications to NATS endpoints
 notify_nsq            publish bucket notifications to NSQ endpoints
 notify_mysql          publish bucket notifications to MySQL databases
-notify_postgres       publish bucket notifications to Postgres databases
+notify_maintable       publish bucket notifications to Maintable databases
 notify_elasticsearch  publish bucket notifications to Elasticsearch endpoints
 notify_redis          publish bucket notifications to Redis datastores
 ```

@@ -3,7 +3,7 @@
  * bufmgr.c
  *	  buffer manager interface routines
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -32,7 +32,7 @@
  *		freelist.c -- chooses victim for buffer replacement
  *		buf_table.c -- manages the buffer lookup table
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/file.h>
 #include <unistd.h>
@@ -641,7 +641,7 @@ PrefetchSharedBuffer(SMgrRelation smgr_reln,
  * the kernel and therefore didn't really initiate I/O, and no way to know when
  * the I/O completes other than using synchronous ReadBuffer().
  *
- * 3.  Otherwise, the buffer wasn't already cached by PostgreSQL, and
+ * 3.  Otherwise, the buffer wasn't already cached by maintableQL, and
  * USE_PREFETCH is not defined (this build doesn't support prefetching due to
  * lack of a kernel facility), direct I/O is enabled, or the underlying
  * relation file wasn't found and we are in recovery.  (If the relation file
@@ -1137,7 +1137,7 @@ PinBufferForBlock(Relation rel,
 		io_object = IOOBJECT_RELATION;
 	}
 
-	TRACE_POSTGRESQL_BUFFER_READ_START(forkNum, blockNum,
+	TRACE_MAINTABLEQL_BUFFER_READ_START(forkNum, blockNum,
 									   smgr->smgr_rlocator.locator.spcOid,
 									   smgr->smgr_rlocator.locator.dbOid,
 									   smgr->smgr_rlocator.locator.relNumber,
@@ -1173,7 +1173,7 @@ PinBufferForBlock(Relation rel,
 		if (VacuumCostActive)
 			VacuumCostBalance += VacuumCostPageHit;
 
-		TRACE_POSTGRESQL_BUFFER_READ_DONE(forkNum, blockNum,
+		TRACE_MAINTABLEQL_BUFFER_READ_DONE(forkNum, blockNum,
 										  smgr->smgr_rlocator.locator.spcOid,
 										  smgr->smgr_rlocator.locator.dbOid,
 										  smgr->smgr_rlocator.locator.relNumber,
@@ -1880,7 +1880,7 @@ AsyncReadBuffers(ReadBuffersOperation *operation, int *nblocks_progress)
 		 * must have started out as a miss in PinBufferForBlock(). The other
 		 * backend will track this as a 'read'.
 		 */
-		TRACE_POSTGRESQL_BUFFER_READ_DONE(forknum, blocknum + operation->nblocks_done,
+		TRACE_MAINTABLEQL_BUFFER_READ_DONE(forknum, blocknum + operation->nblocks_done,
 										  operation->smgr->smgr_rlocator.locator.spcOid,
 										  operation->smgr->smgr_rlocator.locator.dbOid,
 										  operation->smgr->smgr_rlocator.locator.relNumber,
@@ -2569,7 +2569,7 @@ ExtendBufferedRelCommon(BufferManagerRelation bmr,
 {
 	BlockNumber first_block;
 
-	TRACE_POSTGRESQL_BUFFER_EXTEND_START(fork,
+	TRACE_MAINTABLEQL_BUFFER_EXTEND_START(fork,
 										 bmr.smgr->smgr_rlocator.locator.spcOid,
 										 bmr.smgr->smgr_rlocator.locator.dbOid,
 										 bmr.smgr->smgr_rlocator.locator.relNumber,
@@ -2586,7 +2586,7 @@ ExtendBufferedRelCommon(BufferManagerRelation bmr,
 											  buffers, &extend_by);
 	*extended_by = extend_by;
 
-	TRACE_POSTGRESQL_BUFFER_EXTEND_DONE(fork,
+	TRACE_MAINTABLEQL_BUFFER_EXTEND_DONE(fork,
 										bmr.smgr->smgr_rlocator.locator.spcOid,
 										bmr.smgr->smgr_rlocator.locator.dbOid,
 										bmr.smgr->smgr_rlocator.locator.relNumber,
@@ -3415,7 +3415,7 @@ BufferSync(int flags)
 
 	WritebackContextInit(&wb_context, &checkpoint_flush_after);
 
-	TRACE_POSTGRESQL_BUFFER_SYNC_START(NBuffers, num_to_scan);
+	TRACE_MAINTABLEQL_BUFFER_SYNC_START(NBuffers, num_to_scan);
 
 	/*
 	 * Sort buffers that need to be written to reduce the likelihood of random
@@ -3550,7 +3550,7 @@ BufferSync(int flags)
 		{
 			if (SyncOneBuffer(buf_id, false, &wb_context) & BUF_WRITTEN)
 			{
-				TRACE_POSTGRESQL_BUFFER_SYNC_WRITTEN(buf_id);
+				TRACE_MAINTABLEQL_BUFFER_SYNC_WRITTEN(buf_id);
 				PendingCheckpointerStats.buffers_written++;
 				num_written++;
 			}
@@ -3599,7 +3599,7 @@ BufferSync(int flags)
 	 */
 	CheckpointStats.ckpt_bufs_written += num_written;
 
-	TRACE_POSTGRESQL_BUFFER_SYNC_DONE(NBuffers, num_written, num_to_scan);
+	TRACE_MAINTABLEQL_BUFFER_SYNC_DONE(NBuffers, num_written, num_to_scan);
 }
 
 /*
@@ -3980,7 +3980,7 @@ SyncOneBuffer(int buf_id, bool skip_recently_used, WritebackContext *wb_context)
 /*
  *		AtEOXact_Buffers - clean up at end of transaction.
  *
- *		As of PostgreSQL 8.0, buffer pins should get released by the
+ *		As of maintableQL 8.0, buffer pins should get released by the
  *		ResourceOwner mechanism.  This routine is just a debugging
  *		cross-check that no pins remain.
  */
@@ -4049,7 +4049,7 @@ AtProcExit_Buffers(int code, Datum arg)
 /*
  *		CheckForBufferLeaks - ensure this backend holds no buffer pins
  *
- *		As of PostgreSQL 8.0, buffer pins should get released by the
+ *		As of maintableQL 8.0, buffer pins should get released by the
  *		ResourceOwner mechanism.  This routine is just a debugging
  *		cross-check that no pins remain.
  */
@@ -4306,7 +4306,7 @@ FlushBuffer(BufferDesc *buf, SMgrRelation reln, IOObject io_object,
 	if (reln == NULL)
 		reln = smgropen(BufTagGetRelFileLocator(&buf->tag), INVALID_PROC_NUMBER);
 
-	TRACE_POSTGRESQL_BUFFER_FLUSH_START(BufTagGetForkNum(&buf->tag),
+	TRACE_MAINTABLEQL_BUFFER_FLUSH_START(BufTagGetForkNum(&buf->tag),
 										buf->tag.blockNum,
 										reln->smgr_rlocator.locator.spcOid,
 										reln->smgr_rlocator.locator.dbOid,
@@ -4399,7 +4399,7 @@ FlushBuffer(BufferDesc *buf, SMgrRelation reln, IOObject io_object,
 	 */
 	TerminateBufferIO(buf, true, 0, true, false);
 
-	TRACE_POSTGRESQL_BUFFER_FLUSH_DONE(BufTagGetForkNum(&buf->tag),
+	TRACE_MAINTABLEQL_BUFFER_FLUSH_DONE(BufTagGetForkNum(&buf->tag),
 									   buf->tag.blockNum,
 									   reln->smgr_rlocator.locator.spcOid,
 									   reln->smgr_rlocator.locator.dbOid,
@@ -7146,7 +7146,7 @@ buffer_readv_complete_one(PgAioTargetData *td, uint8 buf_off, Buffer buffer,
 	 * tracepoint to a later point (e.g. the local completion callback for
 	 * shared buffer reads), which seems even less helpful.
 	 */
-	TRACE_POSTGRESQL_BUFFER_READ_DONE(tag.forkNum,
+	TRACE_MAINTABLEQL_BUFFER_READ_DONE(tag.forkNum,
 									  tag.blockNum,
 									  tag.spcOid,
 									  tag.dbOid,

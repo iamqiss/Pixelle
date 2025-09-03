@@ -16,11 +16,11 @@
  * under the License.
  */
 
-use crate::streaming::segments::{IggyIndexesMut, IggyMessagesBatchMut};
+use crate::streaming::segments::{MessengerIndexesMut, MessengerMessagesBatchMut};
 use crate::streaming::utils::PooledBuffer;
 use bytes::BytesMut;
 use error_set::ErrContext;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use std::{fs::File as StdFile, os::unix::prelude::FileExt};
 use std::{
     io::ErrorKind,
@@ -46,7 +46,7 @@ impl MessagesReader {
     pub async fn new(
         file_path: &str,
         messages_size_bytes: Arc<AtomicU64>,
-    ) -> Result<Self, IggyError> {
+    ) -> Result<Self, MessengerError> {
         let file = OpenOptions::new()
             .read(true)
             .open(file_path)
@@ -54,7 +54,7 @@ impl MessagesReader {
             .with_error_context(|error| {
                 format!("Failed to open messages file: {file_path}, error: {error}")
             })
-            .map_err(|_| IggyError::CannotReadFile)?;
+            .map_err(|_| MessengerError::CannotReadFile)?;
 
         // posix_fadvise() doesn't exist on MacOS
         #[cfg(not(target_os = "macos"))]
@@ -90,9 +90,9 @@ impl MessagesReader {
     /// memory pool usage.
     pub async fn load_all_message_ids_from_disk(
         &self,
-        indexes: IggyIndexesMut,
+        indexes: MessengerIndexesMut,
         messages_count: u32,
-    ) -> Result<Vec<u128>, IggyError> {
+    ) -> Result<Vec<u128>, MessengerError> {
         let file_size = self.file_size();
         if file_size == 0 {
             return Ok(vec![]);
@@ -108,11 +108,11 @@ impl MessagesReader {
                     "Error reading {messages_count} messages at position 0 in file {} of size {}: {error}",
                     self.file_path, file_size
                 );
-                return Err(IggyError::CannotReadMessage);
+                return Err(MessengerError::CannotReadMessage);
             }
         };
 
-        let messages = IggyMessagesBatchMut::from_indexes_and_messages(
+        let messages = MessengerMessagesBatchMut::from_indexes_and_messages(
             messages_count,
             indexes,
             messages_bytes,
@@ -129,11 +129,11 @@ impl MessagesReader {
     /// Loads and returns a batch of messages from the messages file.
     pub async fn load_messages_from_disk(
         &self,
-        indexes: IggyIndexesMut,
-    ) -> Result<IggyMessagesBatchMut, IggyError> {
+        indexes: MessengerIndexesMut,
+    ) -> Result<MessengerMessagesBatchMut, MessengerError> {
         let file_size = self.file_size();
         if file_size == 0 {
-            return Ok(IggyMessagesBatchMut::empty());
+            return Ok(MessengerMessagesBatchMut::empty());
         }
 
         let start_pos = indexes.base_position();
@@ -141,24 +141,24 @@ impl MessagesReader {
         let messages_count = indexes.count();
 
         if start_pos + count_bytes > file_size {
-            return Ok(IggyMessagesBatchMut::empty());
+            return Ok(MessengerMessagesBatchMut::empty());
         }
 
         let messages_bytes = match self.read_at(start_pos, count_bytes, true).await {
             Ok(buf) => buf,
             Err(error) if error.kind() == ErrorKind::UnexpectedEof => {
-                return Ok(IggyMessagesBatchMut::empty());
+                return Ok(MessengerMessagesBatchMut::empty());
             }
             Err(error) => {
                 error!(
                     "Error reading {messages_count} messages at position {start_pos} in file {} of size {}: {error}",
                     self.file_path, file_size
                 );
-                return Err(IggyError::CannotReadMessage);
+                return Err(MessengerError::CannotReadMessage);
             }
         };
 
-        Ok(IggyMessagesBatchMut::from_indexes_and_messages(
+        Ok(MessengerMessagesBatchMut::from_indexes_and_messages(
             messages_count,
             indexes,
             messages_bytes,

@@ -1,14 +1,14 @@
 /* src/tutorial/funcs.c */
 
 /******************************************************************************
-  These are user-defined functions that can be bound to a Postgres backend
-  and called by Postgres to execute SQL functions of the same name.
+  These are user-defined functions that can be bound to a Maintable backend
+  and called by Maintable to execute SQL functions of the same name.
 
   The calling format for these functions is defined by the CREATE FUNCTION
   SQL statement that binds them to the backend.
 *****************************************************************************/
 
-#include "postgres.h"			/* general Postgres declarations */
+#include "maintable.h"			/* general Maintable declarations */
 
 #include "executor/executor.h"	/* for GetAttributeByName() */
 #include "utils/fmgrprotos.h"	/* for text_starts_with() */

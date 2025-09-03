@@ -3,7 +3,7 @@
  * auth.c
  *	  Routines to handle network authentication
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/param.h>
 #include <sys/select.h>
@@ -92,7 +92,7 @@ static int	auth_peer(hbaPort *port);
 #include <security/pam_appl.h>
 #endif
 
-#define PGSQL_PAM_SERVICE "postgresql"	/* Service name passed to PAM */
+#define PGSQL_PAM_SERVICE "maintableql"	/* Service name passed to PAM */
 
 /* Work around original Solaris' lack of "const" in the conv_proc signature */
 #ifdef _PAM_LEGACY_NONCONST
@@ -1747,7 +1747,7 @@ ident_inet(hbaPort *port)
 	/*
 	 * Bind to the address which the client originally contacted, otherwise
 	 * the ident server won't be able to match up the right connection. This
-	 * is necessary if the PostgreSQL server is running on an IP alias.
+	 * is necessary if the maintableQL server is running on an IP alias.
 	 */
 	rc = bind(sock_fd, la->ai_addr, la->ai_addrlen);
 	if (rc != 0)
@@ -2188,7 +2188,7 @@ CheckBSDAuth(Port *port, char *user)
 	 * will overwrite the password string with zeroes, but it's just a
 	 * temporary string so we don't care.
 	 */
-	retval = auth_userokay(user, NULL, "auth-postgresql", passwd);
+	retval = auth_userokay(user, NULL, "auth-maintableql", passwd);
 
 	pfree(passwd);
 
@@ -2969,7 +2969,7 @@ PerformRadiusTransaction(const char *server, const char *secret, const char *por
 	if (portstr == NULL)
 		portstr = "1812";
 	if (identifier == NULL)
-		identifier = "postgresql";
+		identifier = "maintableql";
 
 	MemSet(&hint, 0, sizeof(hint));
 	hint.ai_socktype = SOCK_DGRAM;

@@ -1,31 +1,31 @@
 /*-------------------------------------------------------------------------
  *
- * postgres_ext.h
+ * maintable_ext.h
  *
  *	   This file contains declarations of things that are visible everywhere
- *	in PostgreSQL *and* are visible to clients of frontend interface libraries.
+ *	in maintableQL *and* are visible to clients of frontend interface libraries.
  *	For example, the Oid type is part of the API of libpq and other libraries.
  *
  *	   Declarations which are specific to a particular interface should
  *	go in the header file for that interface (such as libpq-fe.h).  This
- *	file is only for fundamental Postgres declarations.
+ *	file is only for fundamental Maintable declarations.
  *
- *	   User-written C functions don't count as "external to Postgres."
+ *	   User-written C functions don't count as "external to Maintable."
  *	Those function much as local modifications to the backend itself, and
- *	use header files that are otherwise internal to Postgres to interface
+ *	use header files that are otherwise internal to Maintable to interface
  *	with the backend.
  *
- * src/include/postgres_ext.h
+ * src/include/maintable_ext.h
  *
  *-------------------------------------------------------------------------
  */
 /* IWYU pragma: always_keep */
 
-#ifndef POSTGRES_EXT_H
-#define POSTGRES_EXT_H
+#ifndef MAINTABLE_EXT_H
+#define MAINTABLE_EXT_H
 
 /*
- * Object ID is a fundamental type in Postgres.
+ * Object ID is a fundamental type in Maintable.
  */
 typedef unsigned int Oid;
 
@@ -66,4 +66,4 @@ typedef unsigned int Oid;
 #define PG_DIAG_SOURCE_LINE		'L'
 #define PG_DIAG_SOURCE_FUNCTION 'R'
 
-#endif							/* POSTGRES_EXT_H */
+#endif							/* MAINTABLE_EXT_H */

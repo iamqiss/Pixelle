@@ -4,7 +4,7 @@
  * src/pl/plpython/plpy_planobject.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "plpy_cursorobject.h"
 #include "plpy_planobject.h"
@@ -17,7 +17,7 @@ static PyObject *PLy_plan_cursor(PyObject *self, PyObject *args);
 static PyObject *PLy_plan_execute(PyObject *self, PyObject *args);
 static PyObject *PLy_plan_status(PyObject *self, PyObject *args);
 
-static char PLy_plan_doc[] = "Store a PostgreSQL plan";
+static char PLy_plan_doc[] = "Store a maintableQL plan";
 
 static PyMethodDef PLy_plan_methods[] = {
 	{"cursor", PLy_plan_cursor, METH_VARARGS, NULL},

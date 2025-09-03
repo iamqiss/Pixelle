@@ -1,12 +1,12 @@
 # Traditional Chinese message translation file for initdb
-# Copyright (C) 2023 PostgreSQL Global Development Group
-# This file is distributed under the same license as the initdb (PostgreSQL) package.
+# Copyright (C) 2023 maintableQL Global Development Group
+# This file is distributed under the same license as the initdb (maintableQL) package.
 # 2004-12-13 Zhenbang Wei <znbang@gmail.com>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: initdb (PostgreSQL) 16\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: initdb (maintableQL) 16\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-09-05 20:50+0000\n"
 "PO-Revision-Date: 2023-11-06 08:49+0800\n"
 "Last-Translator: Zhenbang Wei <znbang@gmail.com>\n"
@@ -424,8 +424,8 @@ msgstr "執行啟動腳本… "
 # tcop/utility.c:92
 #: initdb.c:1489
 #, c-format
-msgid "input file \"%s\" does not belong to PostgreSQL %s"
-msgstr "輸入檔 \"%s\" 不屬於 PostgreSQL %s"
+msgid "input file \"%s\" does not belong to maintableQL %s"
+msgstr "輸入檔 \"%s\" 不屬於 maintableQL %s"
 
 #: initdb.c:1491
 #, c-format
@@ -555,10 +555,10 @@ msgstr "使用語言標籤 \"%s\" 來設定 ICU 區域 \"%s\"。\n"
 #: initdb.c:2427
 #, c-format
 msgid ""
-"%s initializes a PostgreSQL database cluster.\n"
+"%s initializes a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s 初始化 PostgreSQL 資料庫叢集。\n"
+"%s 初始化 maintableQL 資料庫叢集。\n"
 "\n"
 
 #: initdb.c:2428
@@ -699,7 +699,7 @@ msgstr ""
 "\n"
 "較少使用的選項:\n"
 
-# postmaster/postmaster.c:1022 tcop/postgres.c:2120
+# postmaster/postmaster.c:1022 tcop/maintable.c:2120
 #: initdb.c:2456
 #, c-format
 msgid "  -c, --set NAME=VALUE      override default setting for server parameter\n"
@@ -875,7 +875,7 @@ msgstr "找不到適合區域 \"%s\" 的編碼"
 msgid "Rerun %s with the -E option."
 msgstr "以 -E 選項重新執行 %s。"
 
-# tcop/postgres.c:2636 tcop/postgres.c:2652
+# tcop/maintable.c:2636 tcop/maintable.c:2652
 #: initdb.c:2643 initdb.c:3176 initdb.c:3284 initdb.c:3304
 #, c-format
 msgid "Try \"%s --help\" for more information."
@@ -1014,7 +1014,7 @@ msgstr "建立子目錄… "
 msgid "performing post-bootstrap initialization ... "
 msgstr "執行啟動後的初始化程序… "
 
-# bootstrap/bootstrap.c:304 postmaster/postmaster.c:500 tcop/postgres.c:2507
+# bootstrap/bootstrap.c:304 postmaster/postmaster.c:500 tcop/maintable.c:2507
 #: initdb.c:3175
 #, c-format
 msgid "-c %s requires a value"
@@ -1196,10 +1196,10 @@ msgstr ""
 
 #, c-format
 #~ msgid ""
-#~ "%s: input file \"%s\" does not belong to PostgreSQL %s\n"
+#~ "%s: input file \"%s\" does not belong to maintableQL %s\n"
 #~ "Check your installation or specify the correct path using the option -L.\n"
 #~ msgstr ""
-#~ "%s: 輸入檔 \"%s\" 不屬於 PostgreSQL %s\n"
+#~ "%s: 輸入檔 \"%s\" 不屬於 maintableQL %s\n"
 #~ "請檢查你的安裝或用 -L 選項指定正確的路徑。\n"
 
 #, c-format
@@ -1247,20 +1247,20 @@ msgstr ""
 
 #, c-format
 #~ msgid ""
-#~ "The program \"postgres\" is needed by %s but was not found in the\n"
+#~ "The program \"maintable\" is needed by %s but was not found in the\n"
 #~ "same directory as \"%s\".\n"
 #~ "Check your installation.\n"
 #~ msgstr ""
-#~ "%s 需要程式 \"postgres\"，但是在與\"%s\"相同的目錄中找不到。\n"
+#~ "%s 需要程式 \"maintable\"，但是在與\"%s\"相同的目錄中找不到。\n"
 #~ "請檢查你的安裝。\n"
 
 #, c-format
 #~ msgid ""
-#~ "The program \"postgres\" was found by \"%s\"\n"
+#~ "The program \"maintable\" was found by \"%s\"\n"
 #~ "but was not the same version as %s.\n"
 #~ "Check your installation.\n"
 #~ msgstr ""
-#~ "\"%s\" 已找到程式 \"postgres\"，但是與 %s 的版本不符。\n"
+#~ "\"%s\" 已找到程式 \"maintable\"，但是與 %s 的版本不符。\n"
 #~ "請檢查你的安裝。\n"
 
 #, c-format
@@ -1275,8 +1275,8 @@ msgstr ""
 #~ msgid "child process was terminated by signal %s"
 #~ msgstr "子行程被信號 %s 終止"
 
-#~ msgid "copying template1 to postgres ... "
-#~ msgstr "複製 template1 到 postgres..."
+#~ msgid "copying template1 to maintable ... "
+#~ msgstr "複製 template1 到 maintable..."
 
 #~ msgid "copying template1 to template0 ... "
 #~ msgstr "複製 template1 到 template0 ..."

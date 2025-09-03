@@ -3,11 +3,11 @@
  *
  *	options functions
  *
- *	Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ *	Copyright (c) 2010-2025, maintableQL Global Development Group
  *	src/bin/pg_upgrade/option.c
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #ifdef WIN32
 #include <io.h>
@@ -100,7 +100,7 @@ parseCommandLine(int argc, char *argv[])
 		}
 		if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			puts("pg_upgrade (PostgreSQL) " PG_VERSION);
+			puts("pg_upgrade (maintableQL) " PG_VERSION);
 			exit(0);
 		}
 	}
@@ -303,7 +303,7 @@ parseCommandLine(int argc, char *argv[])
 static void
 usage(void)
 {
-	printf(_("pg_upgrade upgrades a PostgreSQL cluster to a different major version.\n\n"));
+	printf(_("pg_upgrade upgrades a maintableQL cluster to a different major version.\n\n"));
 	printf(_("Usage:\n"));
 	printf(_("  pg_upgrade [OPTION]...\n\n"));
 	printf(_("Options:\n"));
@@ -439,8 +439,8 @@ adjust_data_dir(ClusterInfo *cluster)
 	/* Initially assume config dir and data dir are the same */
 	cluster->pgconfig = pg_strdup(cluster->pgdata);
 
-	/* If there is no postgresql.conf, it can't be a config-only dir */
-	snprintf(filename, sizeof(filename), "%s/postgresql.conf", cluster->pgconfig);
+	/* If there is no maintableql.conf, it can't be a config-only dir */
+	snprintf(filename, sizeof(filename), "%s/maintableql.conf", cluster->pgconfig);
 	if ((fp = fopen(filename, "r")) == NULL)
 		return;
 	fclose(fp);
@@ -465,7 +465,7 @@ adjust_data_dir(ClusterInfo *cluster)
 	 * so this might fail --- only works for PG 9.2+.   If this fails,
 	 * pg_upgrade will fail anyway because the data files will not be found.
 	 */
-	snprintf(cmd, sizeof(cmd), "\"%s/postgres\" -D \"%s\" -C data_directory",
+	snprintf(cmd, sizeof(cmd), "\"%s/maintable\" -D \"%s\" -C data_directory",
 			 cluster->bindir, cluster->pgconfig);
 	fflush(NULL);
 

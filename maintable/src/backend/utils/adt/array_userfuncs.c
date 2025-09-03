@@ -3,14 +3,14 @@
  * array_userfuncs.c
  *	  Misc user-visible array support functions
  *
- * Copyright (c) 2003-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2003-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/utils/adt/array_userfuncs.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_operator_d.h"
 #include "catalog/pg_type.h"

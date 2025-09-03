@@ -23,13 +23,13 @@ use crate::binary::sender::SenderKind;
 use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
-use iggy_common::IggyError;
-use iggy_common::get_consumer_offset::GetConsumerOffset;
+use messenger_common::MessengerError;
+use messenger_common::get_consumer_offset::GetConsumerOffset;
 use tracing::debug;
 
 impl ServerCommandHandler for GetConsumerOffset {
     fn code(&self) -> u32 {
-        iggy_common::GET_CONSUMER_OFFSET_CODE
+        messenger_common::GET_CONSUMER_OFFSET_CODE
     }
 
     async fn handle(
@@ -38,7 +38,7 @@ impl ServerCommandHandler for GetConsumerOffset {
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
         let system = system.read().await;
         let Ok(offset) = system
@@ -67,13 +67,13 @@ impl ServerCommandHandler for GetConsumerOffset {
 }
 
 impl BinaryServerCommand for GetConsumerOffset {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::GetConsumerOffset(get_consumer_offset) => Ok(get_consumer_offset),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

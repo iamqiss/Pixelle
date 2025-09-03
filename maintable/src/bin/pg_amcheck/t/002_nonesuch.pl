@@ -1,22 +1,22 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Test set-up
 my ($node, $port);
-$node = PostgreSQL::Test::Cluster->new('test');
+$node = maintableQL::Test::Cluster->new('test');
 $node->init(auth_extra => [ '--create-role' => 'no_such_user' ]);
 $node->start;
 $port = $node->port;
 
 # Load the amcheck extension, upon which pg_amcheck depends
-$node->safe_psql('postgres', q(CREATE EXTENSION amcheck));
+$node->safe_psql('maintable', q(CREATE EXTENSION amcheck));
 
 #########################################
 # Test non-existent databases
@@ -30,7 +30,7 @@ $node->command_checks_all(
 
 # Failing to resolve a database pattern is an error by default.
 $node->command_checks_all(
-	[ 'pg_amcheck', '--database' => 'qqq', '--database' => 'postgres' ],
+	[ 'pg_amcheck', '--database' => 'qqq', '--database' => 'maintable' ],
 	1,
 	[qr/^$/],
 	[qr/pg_amcheck: error: no connectable databases to check matching "qqq"/],
@@ -42,7 +42,7 @@ $node->command_checks_all(
 		'pg_amcheck',
 		'--no-strict-names',
 		'--database' => 'qqq',
-		'--database' => 'postgres'
+		'--database' => 'maintable'
 	],
 	0,
 	[qr/^$/],
@@ -54,7 +54,7 @@ $node->command_checks_all(
 # Check that a substring of an existent database name does not get interpreted
 # as a matching pattern.
 $node->command_checks_all(
-	[ 'pg_amcheck', '--database' => 'post', '--database' => 'postgres' ],
+	[ 'pg_amcheck', '--database' => 'post', '--database' => 'maintable' ],
 	1,
 	[qr/^$/],
 	[
@@ -68,13 +68,13 @@ $node->command_checks_all(
 $node->command_checks_all(
 	[
 		'pg_amcheck',
-		'--database' => 'postgresql',
-		'--database' => 'postgres'
+		'--database' => 'maintableql',
+		'--database' => 'maintable'
 	],
 	1,
 	[qr/^$/],
 	[
-		qr/pg_amcheck: error: no connectable databases to check matching "postgresql"/
+		qr/pg_amcheck: error: no connectable databases to check matching "maintableql"/
 	],
 	'checking an unresolvable database pattern (superstring of existent database)'
 );
@@ -84,7 +84,7 @@ $node->command_checks_all(
 
 # Failing to connect to the initial database due to bad username is an error.
 $node->command_checks_all(
-	[ 'pg_amcheck', '--username' => 'no_such_user', 'postgres' ],
+	[ 'pg_amcheck', '--username' => 'no_such_user', 'maintable' ],
 	1,
 	[qr/^$/],
 	[qr/role "no_such_user" does not exist/],
@@ -109,7 +109,7 @@ $node->command_checks_all(
 
 # Again, but this time with another database to check, so no error is raised.
 $node->command_checks_all(
-	[ 'pg_amcheck', '--database' => 'template1', '--database' => 'postgres' ],
+	[ 'pg_amcheck', '--database' => 'template1', '--database' => 'maintable' ],
 	0,
 	[qr/^$/],
 	[
@@ -134,7 +134,7 @@ $node->command_checks_all(
 
 # Check three-part unreasonable pattern that has zero-length names
 $node->command_checks_all(
-	[ 'pg_amcheck', '--database' => 'postgres', '--table' => '..' ],
+	[ 'pg_amcheck', '--database' => 'maintable', '--table' => '..' ],
 	1,
 	[qr/^$/],
 	[
@@ -144,7 +144,7 @@ $node->command_checks_all(
 
 # Again, but with non-trivial schema and relation parts
 $node->command_checks_all(
-	[ 'pg_amcheck', '--database' => 'postgres', '--table' => '.foo.bar' ],
+	[ 'pg_amcheck', '--database' => 'maintable', '--table' => '.foo.bar' ],
 	1,
 	[qr/^$/],
 	[
@@ -154,7 +154,7 @@ $node->command_checks_all(
 
 # Check two-part unreasonable pattern that has zero-length names
 $node->command_checks_all(
-	[ 'pg_amcheck', '--database' => 'postgres', '--table' => '.' ],
+	[ 'pg_amcheck', '--database' => 'maintable', '--table' => '.' ],
 	1,
 	[qr/^$/],
 	[qr/pg_amcheck: error: no heap tables to check matching "\."/],
@@ -162,31 +162,31 @@ $node->command_checks_all(
 
 # Check that a multipart database name is rejected
 $node->command_checks_all(
-	[ 'pg_amcheck', '--database' => 'localhost.postgres' ],
+	[ 'pg_amcheck', '--database' => 'localhost.maintable' ],
 	2,
 	[qr/^$/],
 	[
-		qr/pg_amcheck: error: improper qualified name \(too many dotted names\): localhost\.postgres/
+		qr/pg_amcheck: error: improper qualified name \(too many dotted names\): localhost\.maintable/
 	],
 	'multipart database patterns are rejected');
 
 # Check that a three-part schema name is rejected
 $node->command_checks_all(
-	[ 'pg_amcheck', '--schema' => 'localhost.postgres.pg_catalog' ],
+	[ 'pg_amcheck', '--schema' => 'localhost.maintable.pg_catalog' ],
 	2,
 	[qr/^$/],
 	[
-		qr/pg_amcheck: error: improper qualified name \(too many dotted names\): localhost\.postgres\.pg_catalog/
+		qr/pg_amcheck: error: improper qualified name \(too many dotted names\): localhost\.maintable\.pg_catalog/
 	],
 	'three part schema patterns are rejected');
 
 # Check that a four-part table name is rejected
 $node->command_checks_all(
-	[ 'pg_amcheck', '--table' => 'localhost.postgres.pg_catalog.pg_class' ],
+	[ 'pg_amcheck', '--table' => 'localhost.maintable.pg_catalog.pg_class' ],
 	2,
 	[qr/^$/],
 	[
-		qr/pg_amcheck: error: improper relation name \(too many dotted names\): localhost\.postgres\.pg_catalog\.pg_class/
+		qr/pg_amcheck: error: improper relation name \(too many dotted names\): localhost\.maintable\.pg_catalog\.pg_class/
 	],
 	'four part table patterns are rejected');
 
@@ -207,23 +207,23 @@ $node->command_checks_all(
 $node->command_checks_all(
 	[
 		'pg_amcheck', '--no-strict-names',
-		'--schema' => 'postgres.long.dotted.string'
+		'--schema' => 'maintable.long.dotted.string'
 	],
 	2,
 	[qr/^$/],
 	[
-		qr/pg_amcheck: error: improper qualified name \(too many dotted names\): postgres\.long\.dotted\.string/
+		qr/pg_amcheck: error: improper qualified name \(too many dotted names\): maintable\.long\.dotted\.string/
 	],
 	'ungrammatical schema names still draw errors under --no-strict-names');
 $node->command_checks_all(
 	[
 		'pg_amcheck', '--no-strict-names',
-		'--database' => 'postgres.long.dotted.string'
+		'--database' => 'maintable.long.dotted.string'
 	],
 	2,
 	[qr/^$/],
 	[
-		qr/pg_amcheck: error: improper qualified name \(too many dotted names\): postgres\.long\.dotted\.string/
+		qr/pg_amcheck: error: improper qualified name \(too many dotted names\): maintable\.long\.dotted\.string/
 	],
 	'ungrammatical database names still draw errors under --no-strict-names');
 
@@ -275,10 +275,10 @@ $node->command_checks_all(
 		'--database' => 'no*such*database',
 		'--relation' => 'none.none',
 		'--relation' => 'none.none.none',
-		'--relation' => 'postgres.none.none',
-		'--relation' => 'postgres.pg_catalog.none',
-		'--relation' => 'postgres.none.pg_class',
-		'--table' => 'postgres.pg_catalog.pg_class',    # This exists
+		'--relation' => 'maintable.none.none',
+		'--relation' => 'maintable.pg_catalog.none',
+		'--relation' => 'maintable.none.pg_class',
+		'--table' => 'maintable.pg_catalog.pg_class',    # This exists
 	],
 	0,
 	[qr/^$/],
@@ -294,9 +294,9 @@ $node->command_checks_all(
 		qr/pg_amcheck: warning: no connectable databases to check matching "no\*such\*database"/,
 		qr/pg_amcheck: warning: no relations to check matching "none\.none"/,
 		qr/pg_amcheck: warning: no connectable databases to check matching "none\.none\.none"/,
-		qr/pg_amcheck: warning: no relations to check matching "postgres\.none\.none"/,
-		qr/pg_amcheck: warning: no relations to check matching "postgres\.pg_catalog\.none"/,
-		qr/pg_amcheck: warning: no relations to check matching "postgres\.none\.pg_class"/,
+		qr/pg_amcheck: warning: no relations to check matching "maintable\.none\.none"/,
+		qr/pg_amcheck: warning: no relations to check matching "maintable\.pg_catalog\.none"/,
+		qr/pg_amcheck: warning: no relations to check matching "maintable\.none\.pg_class"/,
 		qr/pg_amcheck: warning: no connectable databases to check matching "no_such_database"/,
 		qr/pg_amcheck: warning: no connectable databases to check matching "no\*such\*database"/,
 		qr/pg_amcheck: warning: no connectable databases to check matching "none\.none\.none"/,
@@ -309,7 +309,7 @@ $node->command_checks_all(
 # Test that an invalid / partially dropped database won't be targeted
 
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 	CREATE DATABASE regression_invalid;
 	UPDATE pg_database SET datconnlimit = -2 WHERE datname = 'regression_invalid';
 ));
@@ -326,7 +326,7 @@ $node->command_checks_all(
 $node->command_checks_all(
 	[
 		'pg_amcheck',
-		'--database' => 'postgres',
+		'--database' => 'maintable',
 		'--table' => 'regression_invalid.public.foo',
 	],
 	1,
@@ -341,16 +341,16 @@ $node->command_checks_all(
 # Test checking otherwise existent objects but in databases where they do not exist
 
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 	CREATE TABLE public.foo (f integer);
 	CREATE INDEX foo_idx ON foo(f);
 ));
-$node->safe_psql('postgres', q(CREATE DATABASE another_db));
+$node->safe_psql('maintable', q(CREATE DATABASE another_db));
 
 $node->command_checks_all(
 	[
 		'pg_amcheck',
-		'--database' => 'postgres',
+		'--database' => 'maintable',
 		'--no-strict-names',
 		'--table' => 'template1.public.foo',
 		'--table' => 'another_db.public.foo',

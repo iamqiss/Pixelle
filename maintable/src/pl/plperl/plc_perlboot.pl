@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 #  src/pl/plperl/plc_perlboot.pl
 
@@ -8,13 +8,13 @@ use warnings FATAL => 'all';
 
 use vars qw(%_SHARED $_TD);
 
-PostgreSQL::InServer::Util::bootstrap();
+maintableQL::InServer::Util::bootstrap();
 
 # globals
 
 sub ::is_array_ref
 {
-	return ref($_[0]) =~ m/^(?:PostgreSQL::InServer::)?ARRAY$/;
+	return ref($_[0]) =~ m/^(?:maintableQL::InServer::)?ARRAY$/;
 }
 
 sub ::encode_array_literal
@@ -55,7 +55,7 @@ sub ::encode_array_constructor
 
 {
 #<<< protect next line from perltidy so perlcritic annotation works
-	package PostgreSQL::InServer;  ## no critic (RequireFilenameMatchesPackage)
+	package maintableQL::InServer;  ## no critic (RequireFilenameMatchesPackage)
 #>>>
 	use strict;
 	use warnings FATAL => 'all';
@@ -105,7 +105,7 @@ sub ::encode_array_constructor
 
 {
 
-	package PostgreSQL::InServer::ARRAY;
+	package maintableQL::InServer::ARRAY;
 	use strict;
 	use warnings FATAL => 'all';
 

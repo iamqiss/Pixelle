@@ -1,18 +1,18 @@
 # pg_upgrade.po
 #   Japanese message translation file for pg_upgrade
 #
-# Copyright (C) 2011-2024 PostgreSQL Global Development Group
+# Copyright (C) 2011-2024 maintableQL Global Development Group
 #
-# This file is distributed under the same license as the PostgreSQL package.
+# This file is distributed under the same license as the maintableQL package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_upgrade (PostgreSQL 18)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_upgrade (maintableQL 18)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-04-14 09:41+0900\n"
 "PO-Revision-Date: 2025-04-14 10:26+0900\n"
 "Last-Translator: Kyotaro Horiguchi <horikyota.ntt@gmail.com>\n"
-"Language-Team: Japan PostgreSQL Users Group <jpug-doc@ml.postgresql.jp>\n"
+"Language-Team: Japan maintableQL Users Group <jpug-doc@ml.maintableql.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,12 +67,12 @@ msgstr "ユーザーテーブル内のシステム定義複合型を確認して
 #: check.c:118
 msgid ""
 "Your installation contains system-defined composite types in user tables.\n"
-"These type OIDs are not stable across PostgreSQL versions,\n"
+"These type OIDs are not stable across maintableQL versions,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns and restart the upgrade.\n"
 msgstr ""
 "このクラスタでは、ユーザーテーブルにシステム定義の複合データ型が含まれています。\n"
-"これらの型のOIDはPostgreSQLのバージョン間にわたって不変ではないため、\n"
+"これらの型のOIDはmaintableQLのバージョン間にわたって不変ではないため、\n"
 "このクラスタは現時点ではアップグレードできません。問題の列を削除したのちに\n"
 "アップグレードを再実行することができます。\n"
 
@@ -116,12 +116,12 @@ msgstr "非互換の\"aclitem\"データ型を確認しています"
 #: check.c:198
 msgid ""
 "Your installation contains the \"aclitem\" data type in user tables.\n"
-"The internal format of \"aclitem\" changed in PostgreSQL version 16\n"
+"The internal format of \"aclitem\" changed in maintableQL version 16\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns and restart the upgrade.\n"
 msgstr ""
 "このクラスタでは、ユーザーテーブルに\"aclitem\"データ型が含まれています。\n"
-"この型の内部フォーマットはPostgreSQL バージョン16で変更されているため、\n"
+"この型の内部フォーマットはmaintableQL バージョン16で変更されているため、\n"
 "現時点ではこのクラスタをアップグレードすることはできません。\n"
 "問題の列を削除したのち、アップグレードを再実行できます。\n"
 
@@ -180,13 +180,13 @@ msgstr "ユーザーテーブル内の削除された\"abstime\"データ型を�
 #: check.c:277
 msgid ""
 "Your installation contains the \"abstime\" data type in user tables.\n"
-"The \"abstime\" type has been removed in PostgreSQL version 12,\n"
+"The \"abstime\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr ""
 "このクラスタでは、ユーザーテーブルにデータ型\"abstime\"が含まれています。\n"
-"この\"abstime\"型はPostgreSQLバージョン12では削除されています。\n"
+"この\"abstime\"型はmaintableQLバージョン12では削除されています。\n"
 "そのためこのクラスタは現時点ではアップグレードできません。\n"
 "問題の列を削除するか、他のデータ型に変更した後にアップグレードを\n"
 "再実行できます。\n"
@@ -198,13 +198,13 @@ msgstr "ユーザーテーブル中内の削除された\"reltime\"データ型�
 #: check.c:290
 msgid ""
 "Your installation contains the \"reltime\" data type in user tables.\n"
-"The \"reltime\" type has been removed in PostgreSQL version 12,\n"
+"The \"reltime\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr ""
 "このクラスタでは、ユーザーテーブルにデータ型\"reltime\"が含まれています。\n"
-"この\"reltime\"型はPostgreSQLバージョン12では削除されています、そのため\n"
+"この\"reltime\"型はmaintableQLバージョン12では削除されています、そのため\n"
 "このクラスタは現時点ではアップグレードできません。問題の列を削除するか、\n"
 "他のデータ型に変更した後にアップグレードを再実行できます。\n"
 
@@ -215,13 +215,13 @@ msgstr "ユーザーテーブル内の削除された\"tinterval\"データ型�
 #: check.c:303
 msgid ""
 "Your installation contains the \"tinterval\" data type in user tables.\n"
-"The \"tinterval\" type has been removed in PostgreSQL version 12,\n"
+"The \"tinterval\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr ""
 "このクラスタでは、ユーザーテーブルにデータ型\"tinterval\"が含まれています。\n"
-"この\"tinterval\"型はPostgreSQLバージョン12では削除されています、そのため\n"
+"この\"tinterval\"型はmaintableQLバージョン12では削除されています、そのため\n"
 "このクラスタは現時点ではアップグレードできません。問題の列を削除するか、\n"
 "他のデータ型に変更した後にアップグレードを再実行できます。\n"
 
@@ -272,8 +272,8 @@ msgstr ""
 
 #: check.c:745
 #, c-format
-msgid "Swap mode can only upgrade clusters from PostgreSQL version %s and later."
-msgstr "スワップモードはPostgreSQL %s以降のバージョンからのアップグレードのみ可能です。"
+msgid "Swap mode can only upgrade clusters from maintableQL version %s and later."
+msgstr "スワップモードはmaintableQL %s以降のバージョンからのアップグレードのみ可能です。"
 
 #: check.c:768
 #, c-format
@@ -335,18 +335,18 @@ msgstr "クラスタのバージョンを確認しています"
 
 #: check.c:852
 #, c-format
-msgid "This utility can only upgrade from PostgreSQL version %s and later."
-msgstr "このユーティリティではPostgreSQLバージョン%s以降のバージョンからのみアップグレードできます。"
+msgid "This utility can only upgrade from maintableQL version %s and later."
+msgstr "このユーティリティではmaintableQLバージョン%s以降のバージョンからのみアップグレードできます。"
 
 #: check.c:857
 #, c-format
-msgid "This utility can only upgrade to PostgreSQL version %s."
-msgstr "このユーティリティは、PostgreSQLバージョン%sにのみアップグレードできます。"
+msgid "This utility can only upgrade to maintableQL version %s."
+msgstr "このユーティリティは、maintableQLバージョン%sにのみアップグレードできます。"
 
 #: check.c:866
 #, c-format
-msgid "This utility cannot be used to downgrade to older major PostgreSQL versions."
-msgstr "このユーティリティは PostgreSQL の過去のメジャーバージョンにダウングレードする用途では使用できません。"
+msgid "This utility cannot be used to downgrade to older major maintableQL versions."
+msgstr "このユーティリティは maintableQL の過去のメジャーバージョンにダウングレードする用途では使用できません。"
 
 #: check.c:871
 #, c-format
@@ -360,8 +360,8 @@ msgstr "新クラスタのデータとバイナリのディレクトリは異な
 
 #: check.c:885
 #, c-format
-msgid "%s option cannot be used to upgrade from PostgreSQL %s and later."
-msgstr "PostgreSQL %s以降からのアップグレードでは %s オプションは使用できません。"
+msgid "%s option cannot be used to upgrade from maintableQL %s and later."
+msgstr "maintableQL %s以降からのアップグレードでは %s オプションは使用できません。"
 
 #: check.c:901
 #, c-format
@@ -599,14 +599,14 @@ msgstr "ユーザー定義のエンコーディング変換を確認していま
 #, c-format
 msgid ""
 "Your installation contains user-defined encoding conversions.\n"
-"The conversion function parameters changed in PostgreSQL version 14\n"
+"The conversion function parameters changed in maintableQL version 14\n"
 "so this cluster cannot currently be upgraded.  You can remove the\n"
 "encoding conversions in the old cluster and restart the upgrade.\n"
 "A list of user-defined encoding conversions is in the file:\n"
 "    %s"
 msgstr ""
 "このクラスタにはユーザー定義のエンコーディング変換が含まれています。\n"
-"変換関数のパラメータがPostgreSQLバージョン14で変更されているため、\n"
+"変換関数のパラメータがmaintableQLバージョン14で変更されているため、\n"
 "現時点ではこのクラスタをアップグレードすることはできません。\n"
 "旧クラスタ内のそれらのエンコーディング変換を削除したのち、アップグレードを\n"
 "再実行できます。\n"
@@ -1393,10 +1393,10 @@ msgstr "Windowsでは、新クラスタのデータディレクトリの中でpg
 #: option.c:306
 #, c-format
 msgid ""
-"pg_upgrade upgrades a PostgreSQL cluster to a different major version.\n"
+"pg_upgrade upgrades a maintableQL cluster to a different major version.\n"
 "\n"
 msgstr ""
-"pg_upgradeは、PostgreSQLのクラスタを別のメジャーバージョンにアップグレードします。\n"
+"pg_upgradeは、maintableQLのクラスタを別のメジャーバージョンにアップグレードします。\n"
 "\n"
 
 #: option.c:307

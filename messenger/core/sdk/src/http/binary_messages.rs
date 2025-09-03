@@ -19,12 +19,12 @@
 use crate::http::http_client::HttpClient;
 use crate::http::http_transport::HttpTransport;
 use crate::prelude::{
-    Consumer, FlushUnsavedBuffer, Identifier, IggyError, IggyMessage, Partitioning, PollMessages,
+    Consumer, FlushUnsavedBuffer, Identifier, MessengerError, MessengerMessage, Partitioning, PollMessages,
     PolledMessages, PollingStrategy, SendMessages,
 };
 use async_trait::async_trait;
-use iggy_binary_protocol::MessageClient;
-use iggy_common::IggyMessagesBatch;
+use messenger_binary_protocol::MessageClient;
+use messenger_common::MessengerMessagesBatch;
 
 #[async_trait]
 impl MessageClient for HttpClient {
@@ -37,7 +37,7 @@ impl MessageClient for HttpClient {
         strategy: &PollingStrategy,
         count: u32,
         auto_commit: bool,
-    ) -> Result<PolledMessages, IggyError> {
+    ) -> Result<PolledMessages, MessengerError> {
         let response = self
             .get_with_query(
                 &get_path(&stream_id.as_cow_str(), &topic_id.as_cow_str()),
@@ -55,7 +55,7 @@ impl MessageClient for HttpClient {
         let messages = response
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(messages)
     }
 
@@ -64,9 +64,9 @@ impl MessageClient for HttpClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitioning: &Partitioning,
-        messages: &mut [IggyMessage],
-    ) -> Result<(), IggyError> {
-        let batch = IggyMessagesBatch::from(&*messages);
+        messages: &mut [MessengerMessage],
+    ) -> Result<(), MessengerError> {
+        let batch = MessengerMessagesBatch::from(&*messages);
         self.post(
             &get_path(&stream_id.as_cow_str(), &topic_id.as_cow_str()),
             &SendMessages {
@@ -87,7 +87,7 @@ impl MessageClient for HttpClient {
         topic_id: &Identifier,
         partition_id: u32,
         fsync: bool,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let _ = self
             .get_with_query(
                 &get_path_flush_unsaved_buffer(

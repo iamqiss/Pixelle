@@ -177,14 +177,14 @@ create function tcl_error_handling_test(text) returns text
 language pltcl
 as $function$
     if {[catch $1 err]} {
-        # If not a Postgres error, just return the basic error message
-        if {[lindex $::errorCode 0] != "POSTGRES"} {
+        # If not a Maintable error, just return the basic error message
+        if {[lindex $::errorCode 0] != "MAINTABLE"} {
             return $err
         }
 
         # Get rid of keys that can't be expected to remain constant
         array set myArray $::errorCode
-        unset myArray(POSTGRES)
+        unset myArray(MAINTABLE)
         unset -nocomplain myArray(funcname)
         unset -nocomplain myArray(filename)
         unset -nocomplain myArray(lineno)

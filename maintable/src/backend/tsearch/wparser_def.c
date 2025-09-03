@@ -3,7 +3,7 @@
  * wparser_def.c
  *		Default text search parser
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 #include <wctype.h>
@@ -701,7 +701,7 @@ p_isspecial(TParser *prs)
 	 * Unicode Characters in the 'Mark, Spacing Combining' Category That
 	 * characters are not alpha although they are not breakers of word too.
 	 * Check that only in utf encoding, because other encodings aren't
-	 * supported by postgres or even exists.
+	 * supported by maintable or even exists.
 	 */
 	if (GetDatabaseEncoding() == PG_UTF8 && prs->usewide)
 	{

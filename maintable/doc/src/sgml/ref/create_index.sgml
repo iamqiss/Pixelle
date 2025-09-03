@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_index.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createindex">
@@ -58,7 +58,7 @@ CREATE [ UNIQUE ] INDEX [ CONCURRENTLY ] [ [ IF NOT EXISTS ] <replaceable class=
   </para>
 
   <para>
-   <productname>PostgreSQL</productname> provides the index methods
+   <productname>maintableQL</productname> provides the index methods
    B-tree, hash, GiST, SP-GiST, GIN, and BRIN.  Users can also define their own
    index methods, but that is fairly complicated.
   </para>
@@ -122,7 +122,7 @@ CREATE [ UNIQUE ] INDEX [ CONCURRENTLY ] [ [ IF NOT EXISTS ] <replaceable class=
       <term><literal>CONCURRENTLY</literal></term>
       <listitem>
        <para>
-        When this option is used, <productname>PostgreSQL</productname> will build the
+        When this option is used, <productname>maintableQL</productname> will build the
         index without taking any locks that prevent concurrent inserts,
         updates, or deletes on the table; whereas a standard index build
         locks out writes (but not reads) on the table until it's done.
@@ -206,7 +206,7 @@ CREATE [ UNIQUE ] INDEX [ CONCURRENTLY ] [ [ IF NOT EXISTS ] <replaceable class=
         table.  The name of the index must be distinct from the name of any
         other relation (table, sequence, index, view, materialized view, or
         foreign table) in that schema.
-        If the name is omitted, <productname>PostgreSQL</productname> chooses a
+        If the name is omitted, <productname>maintableQL</productname> chooses a
         suitable name based on the parent table's name and the indexed column
         name(s).
        </para>
@@ -605,7 +605,7 @@ CREATE [ UNIQUE ] INDEX [ CONCURRENTLY ] [ [ IF NOT EXISTS ] <replaceable class=
 
    <para>
     Creating an index can interfere with regular operation of a database.
-    Normally <productname>PostgreSQL</productname> locks the table to be indexed against
+    Normally <productname>maintableQL</productname> locks the table to be indexed against
     writes and performs the entire index build with a single scan of the
     table. Other transactions can still read the table, but if they try to
     insert, update, or delete rows in the table they will block until the
@@ -616,11 +616,11 @@ CREATE [ UNIQUE ] INDEX [ CONCURRENTLY ] [ [ IF NOT EXISTS ] <replaceable class=
    </para>
 
    <para>
-    <productname>PostgreSQL</productname> supports building indexes without locking
+    <productname>maintableQL</productname> supports building indexes without locking
     out writes.  This method is invoked by specifying the
     <literal>CONCURRENTLY</literal> option of <command>CREATE INDEX</command>.
     When this option is used,
-    <productname>PostgreSQL</productname> must perform two scans of the table, and in
+    <productname>maintableQL</productname> must perform two scans of the table, and in
     addition it must wait for all existing transactions that could potentially
     modify or use the index to terminate.  Thus
     this method requires more total work than a standard index build and takes
@@ -657,7 +657,7 @@ CREATE [ UNIQUE ] INDEX [ CONCURRENTLY ] [ [ IF NOT EXISTS ] <replaceable class=
     <command>\d</command> command will report such an index as <literal>INVALID</literal>:
 
 <programlisting>
-postgres=# \d tab
+maintable=# \d tab
        Table "public.tab"
  Column |  Type   | Collation | Nullable | Default
 --------+---------+-----------+----------+---------
@@ -726,7 +726,7 @@ Indexes:
    can be added to the index.  Indexes can have up to 32 columns,
    including <literal>INCLUDE</literal> columns.
    (This limit can be altered when building
-   <productname>PostgreSQL</productname>.)  Only B-tree currently
+   <productname>maintableQL</productname>.)  Only B-tree currently
    supports unique indexes.
   </para>
 
@@ -810,7 +810,7 @@ Indexes:
   </para>
 
   <para>
-   <productname>PostgreSQL</productname> can build indexes while
+   <productname>maintableQL</productname> can build indexes while
    leveraging multiple CPUs in order to process the table rows faster.
    This feature is known as <firstterm>parallel index
    build</firstterm>.  For index methods that support building indexes
@@ -879,7 +879,7 @@ Indexes:
   </para>
 
   <para>
-   Prior releases of <productname>PostgreSQL</productname> also had an
+   Prior releases of <productname>maintableQL</productname> also had an
    R-tree index method.  This method has been removed because
    it had no significant advantages over the GiST method.
    If <literal>USING rtree</literal> is specified, <command>CREATE INDEX</command>
@@ -993,7 +993,7 @@ CREATE INDEX CONCURRENTLY sales_quantity_index ON sales_table (quantity);
 
   <para>
    <command>CREATE INDEX</command> is a
-   <productname>PostgreSQL</productname> language extension.  There
+   <productname>maintableQL</productname> language extension.  There
    are no provisions for indexes in the SQL standard.
   </para>
  </refsect1>

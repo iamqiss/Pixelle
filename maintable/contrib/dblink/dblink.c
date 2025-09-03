@@ -9,7 +9,7 @@
  * Shridhar Daithankar <shridhar_daithankar@persistent.co.in>
  *
  * contrib/dblink/dblink.c
- * Copyright (c) 2001-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2001-2025, maintableQL Global Development Group
  * ALL RIGHTS RESERVED;
  *
  * Permission to use, copy, modify, and distribute this software and its
@@ -30,7 +30,7 @@
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  *
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 
@@ -2736,7 +2736,7 @@ dblink_connstr_has_pw(const char *connstr)
  * the connection in dblink_security_check later) or if SCRAM pass-through is
  * being used.  This prevents a password or GSSAPI credentials from being
  * picked up from .pgpass, a service file, the environment, etc.  We don't want
- * the postgres user's passwords or Kerberos credentials to be accessible to
+ * the maintable user's passwords or Kerberos credentials to be accessible to
  * non-superusers. In case of SCRAM pass-through insist that the connstr
  * has the required SCRAM pass-through options.
  */
@@ -2965,7 +2965,7 @@ escape_param_str(const char *str)
  * still check it).  We check that each attnum corresponds to a valid,
  * non-dropped attribute of the rel.  We do *not* prevent attnums from being
  * listed twice, though the actual use-case for such things is dubious.
- * Note that before Postgres 9.0, the user's attnums were interpreted as
+ * Note that before Maintable 9.0, the user's attnums were interpreted as
  * physical not logical column numbers; this was changed for future-proofing.
  *
  * The internal representation is a palloc'd int array of 0-based physical

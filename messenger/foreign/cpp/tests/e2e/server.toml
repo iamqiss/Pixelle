@@ -69,16 +69,16 @@ allow_private_network = false
 algorithm = "HS256"
 
 # The issuer of the JWT, typically a URL or an identifier of the issuing entity.
-issuer = "iggy.apache.org"
+issuer = "messenger.apache.org"
 
 # Intended audience for the JWT, usually the recipient or system intended to process the token.
-audience = "iggy.apache.org"
+audience = "messenger.apache.org"
 
 # Lists valid issuers for JWT validation to ensure tokens are from trusted sources.
-valid_issuers = ["iggy.apache.org"]
+valid_issuers = ["messenger.apache.org"]
 
 # Lists valid audiences for JWT validation to confirm tokens are for the intended recipient.
-valid_audiences = ["iggy.apache.org"]
+valid_audiences = ["messenger.apache.org"]
 
 # Expiry time for access tokens.
 access_token_expiry = "1 h"
@@ -93,10 +93,10 @@ clock_skew = "5 s"
 not_before = "0 s"
 
 # Secret key for encoding JWTs.
-encoding_secret = "top_secret$iggy.apache.org$_jwt_HS256_key#!"
+encoding_secret = "top_secret$messenger.apache.org$_jwt_HS256_key#!"
 
 # Secret key for decoding JWTs.
-decoding_secret = "top_secret$iggy.apache.org$_jwt_HS256_key#!"
+decoding_secret = "top_secret$messenger.apache.org$_jwt_HS256_key#!"
 
 # Indicates if the secret key is base64 encoded.
 # `true` means the secret is base64 encoded.
@@ -121,10 +121,10 @@ endpoint = "/metrics"
 enabled = false
 
 # Path to the TLS certificate file.
-cert_file = "core/certs/iggy_cert.pem"
+cert_file = "core/certs/messenger_cert.pem"
 
 # Path to the TLS key file.
-key_file = "core/certs/iggy_key.pem"
+key_file = "core/certs/messenger_key.pem"
 
 # TCP server configuration.
 [tcp]
@@ -145,10 +145,10 @@ address = "0.0.0.0:8090"
 enabled = false
 
 # Path to the TLS certificate for TCP.
-certificate = "certs/iggy.pfx"
+certificate = "certs/messenger.pfx"
 
 # Password for the TLS certificate, required for accessing the private key.
-password = "iggy123"
+password = "messenger123"
 
 # QUIC protocol configuration.
 [quic]
@@ -190,10 +190,10 @@ max_idle_timeout = "10 s"
 self_signed = true
 
 # Path to the QUIC TLS certificate file.
-cert_file = "core/certs/iggy_cert.pem"
+cert_file = "core/certs/messenger_cert.pem"
 
 # Path to the QUIC TLS key file.
-key_file = "core/certs/iggy_key.pem"
+key_file = "core/certs/messenger_key.pem"
 
 # Message cleaner configuration.
 [message_cleaner]
@@ -238,7 +238,7 @@ interval = "1 m"
 # System configuration.
 [system]
 # Base path for system data storage.
-path = ".iggy/local_data"
+path = ".messenger/local_data"
 
 # Backup configuration
 [system.backup]

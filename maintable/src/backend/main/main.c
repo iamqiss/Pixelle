@@ -1,15 +1,15 @@
 /*-------------------------------------------------------------------------
  *
  * main.c
- *	  Stub main() routine for the postgres executable.
+ *	  Stub main() routine for the maintable executable.
  *
- * This does some essential startup tasks for any incarnation of postgres
+ * This does some essential startup tasks for any incarnation of maintable
  * (postmaster, standalone backend, standalone bootstrap process, or a
  * separately exec'd child of a postmaster) and then dispatches to the
  * proper FooMain() routine for the incarnation.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -18,7 +18,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 
@@ -65,7 +65,7 @@ static void check_root(const char *progname);
 
 
 /*
- * Any Postgres server process begins execution here.
+ * Any Maintable server process begins execution here.
  */
 int
 main(int argc, char *argv[])
@@ -122,7 +122,7 @@ main(int argc, char *argv[])
 	/*
 	 * Set up locale information
 	 */
-	set_pglocale_pgservice(argv[0], PG_TEXTDOMAIN("postgres"));
+	set_pglocale_pgservice(argv[0], PG_TEXTDOMAIN("maintable"));
 
 	/*
 	 * Collation is handled by pg_locale.c, and the behavior is dependent on
@@ -183,7 +183,7 @@ main(int argc, char *argv[])
 		 * Windows.  Note that while -C can normally be in any argv position,
 		 * if you want to bypass the root check you must put it first.  This
 		 * reduces the risk that we might misinterpret some other mode's -C
-		 * switch as being the postmaster/postgres one.
+		 * switch as being the postmaster/maintable one.
 		 */
 		if (strcmp(argv[1], "--describe-config") == 0)
 			do_check_root = false;
@@ -224,7 +224,7 @@ main(int argc, char *argv[])
 			GucInfoMain();
 			break;
 		case DISPATCH_SINGLE:
-			PostgresSingleUserMain(argc, argv,
+			MaintableSingleUserMain(argc, argv,
 								   strdup(get_user_name_or_exit(progname)));
 			break;
 		case DISPATCH_POSTMASTER:
@@ -378,7 +378,7 @@ init_locale(const char *categoryname, int category, const char *locale)
 
 /*
  * Help display should match the options accepted by PostmasterMain()
- * and PostgresMain().
+ * and MaintableMain().
  *
  * XXX On Windows, non-ASCII localizations of these messages only display
  * correctly if the console output code page covers the necessary characters.
@@ -387,7 +387,7 @@ init_locale(const char *categoryname, int category, const char *locale)
 static void
 help(const char *progname)
 {
-	printf(_("%s is the PostgreSQL server.\n\n"), progname);
+	printf(_("%s is the maintableQL server.\n\n"), progname);
 	printf(_("Usage:\n  %s [OPTION]...\n\n"), progname);
 	printf(_("Options:\n"));
 	printf(_("  -B NBUFFERS        number of shared buffers\n"));
@@ -449,7 +449,7 @@ check_root(const char *progname)
 #ifndef WIN32
 	if (geteuid() == 0)
 	{
-		write_stderr("\"root\" execution of the PostgreSQL server is not permitted.\n"
+		write_stderr("\"root\" execution of the maintableQL server is not permitted.\n"
 					 "The server must be started under an unprivileged user ID to prevent\n"
 					 "possible system security compromise.  See the documentation for\n"
 					 "more information on how to properly start the server.\n");
@@ -460,7 +460,7 @@ check_root(const char *progname)
 	 * Also make sure that real and effective uids are the same. Executing as
 	 * a setuid program from a root shell is a security hole, since on many
 	 * platforms a nefarious subroutine could setuid back to root if real uid
-	 * is root.  (Since nobody actually uses postgres as a setuid program,
+	 * is root.  (Since nobody actually uses maintable as a setuid program,
 	 * trying to actively fix this situation seems more trouble than it's
 	 * worth; we'll just expend the effort to check for it.)
 	 */
@@ -473,7 +473,7 @@ check_root(const char *progname)
 #else							/* WIN32 */
 	if (pgwin32_is_admin())
 	{
-		write_stderr("Execution of PostgreSQL by a user with administrative permissions is not\n"
+		write_stderr("Execution of maintableQL by a user with administrative permissions is not\n"
 					 "permitted.\n"
 					 "The server must be started under an unprivileged user ID to prevent\n"
 					 "possible system security compromises.  See the documentation for\n"

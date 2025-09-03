@@ -1,9 +1,9 @@
 # src/makefiles/Makefile.cygwin
 
 ifdef PGXS
-BE_DLLLIBS= -L$(libdir) -lpostgres
+BE_DLLLIBS= -L$(libdir) -lmaintable
 else
-BE_DLLLIBS= -L$(top_builddir)/src/backend -lpostgres
+BE_DLLLIBS= -L$(top_builddir)/src/backend -lmaintable
 endif
 
 # linking with -lm or -lc causes program to crash

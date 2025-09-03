@@ -42,7 +42,7 @@ A DB breaking leads to a failure when starting Meilisearch: you need to use a du
 
 We know this kind of failure requiring an additional step is the definition of “breaking” on the user side, but it’s really complicated to consider increasing a MAJOR for this. Indeed, since we don’t want to release a major version every two months and we also want to keep innovating simultaneously, increasing the MINOR is the best solution.
 
-People would need to use dump sometimes between two MAJOR versions; for instance, this is something [PostgreSQL does](https://www.postgresql.org/support/versioning/) by asking their users to perform some manual actions between two MINOR releases.
+People would need to use dump sometimes between two MAJOR versions; for instance, this is something [maintableQL does](https://www.maintableql.org/support/versioning/) by asking their users to perform some manual actions between two MINOR releases.
 
 ### Search relevancy and algorithm improvements
 

@@ -1,15 +1,15 @@
 
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 
 =pod
 
 =head1 NAME
 
-PostgreSQL::Test::AdjustUpgrade - helper module for cross-version upgrade tests
+maintableQL::Test::AdjustUpgrade - helper module for cross-version upgrade tests
 
 =head1 SYNOPSIS
 
-  use PostgreSQL::Test::AdjustUpgrade;
+  use maintableQL::Test::AdjustUpgrade;
 
   # Build commands to adjust contents of old-version database before dumping
   $statements = adjust_database_contents($old_version, %dbnames);
@@ -22,18 +22,18 @@ PostgreSQL::Test::AdjustUpgrade - helper module for cross-version upgrade tests
 
 =head1 DESCRIPTION
 
-C<PostgreSQL::Test::AdjustUpgrade> encapsulates various hacks needed to
+C<maintableQL::Test::AdjustUpgrade> encapsulates various hacks needed to
 compare the results of cross-version upgrade tests.
 
 =cut
 
-package PostgreSQL::Test::AdjustUpgrade;
+package maintableQL::Test::AdjustUpgrade;
 
 use strict;
 use warnings FATAL => 'all';
 
 use Exporter 'import';
-use PostgreSQL::Version;
+use maintableQL::Version;
 
 our @EXPORT = qw(
   adjust_database_contents
@@ -50,7 +50,7 @@ our @EXPORT = qw(
 =item $statements = adjust_database_contents($old_version, %dbnames)
 
 Generate SQL commands to perform any changes to an old-version installation
-that are needed before we can pg_upgrade it into the current PostgreSQL
+that are needed before we can pg_upgrade it into the current maintableQL
 version.
 
 Typically this involves dropping or adjusting no-longer-supported objects.
@@ -60,7 +60,7 @@ Arguments:
 =over
 
 =item C<old_version>: Branch we are upgrading from, represented as a
-PostgreSQL::Version object.
+maintableQL::Version object.
 
 =item C<dbnames>: Hash of database names present in the old installation.
 
@@ -77,12 +77,12 @@ sub adjust_database_contents
 	my $result = {};
 
 	die "wrong type for \$old_version\n"
-	  unless $old_version->isa("PostgreSQL::Version");
+	  unless $old_version->isa("maintableQL::Version");
 
 	# The version tests can be sensitive if fixups have been applied in a
 	# recent version and pg_upgrade is run with a beta version, or such.
 	# Therefore, use a modified version object that only contains the major.
-	$old_version = PostgreSQL::Version->new($old_version->major);
+	$old_version = maintableQL::Version->new($old_version->major);
 
 	# remove dbs of modules known to cause pg_upgrade to fail
 	# anything not builtin and incompatible should clean up its own db
@@ -90,13 +90,13 @@ sub adjust_database_contents
 	{
 		if ($dbnames{"contrib_regression_$bad_module"})
 		{
-			_add_st($result, 'postgres',
+			_add_st($result, 'maintable',
 				"drop database contrib_regression_$bad_module");
 			delete($dbnames{"contrib_regression_$bad_module"});
 		}
 		if ($dbnames{"regression_$bad_module"})
 		{
-			_add_st($result, 'postgres',
+			_add_st($result, 'maintable',
 				"drop database regression_$bad_module");
 			delete($dbnames{"regression_$bad_module"});
 		}
@@ -198,11 +198,11 @@ sub adjust_database_contents
 		}
 
 		# this table had OIDs too, but we'll just drop it
-		if ($old_version >= 10 && $dbnames{'contrib_regression_postgres_fdw'})
+		if ($old_version >= 10 && $dbnames{'contrib_regression_maintable_fdw'})
 		{
 			_add_st(
 				$result,
-				'contrib_regression_postgres_fdw',
+				'contrib_regression_maintable_fdw',
 				'drop foreign table ft_pg_type');
 		}
 	}
@@ -305,7 +305,7 @@ Arguments:
 =over
 
 =item C<old_version>: Branch we are upgrading from, represented as a
-PostgreSQL::Version object.
+maintableQL::Version object.
 
 =item C<dump>: Contents of dump file
 
@@ -320,9 +320,9 @@ sub adjust_old_dumpfile
 	my ($old_version, $dump) = @_;
 
 	die "wrong type for \$old_version\n"
-	  unless $old_version->isa("PostgreSQL::Version");
+	  unless $old_version->isa("maintableQL::Version");
 	# See adjust_database_contents about this
-	$old_version = PostgreSQL::Version->new($old_version->major);
+	$old_version = maintableQL::Version->new($old_version->major);
 
 	# use Unix newlines
 	$dump =~ s/\r\n/\n/g;
@@ -655,7 +655,7 @@ Arguments:
 =over
 
 =item C<old_version>: Branch we are upgrading from, represented as a
-PostgreSQL::Version object.
+maintableQL::Version object.
 
 =item C<dump>: Contents of dump file
 
@@ -670,9 +670,9 @@ sub adjust_new_dumpfile
 	my ($old_version, $dump) = @_;
 
 	die "wrong type for \$old_version\n"
-	  unless $old_version->isa("PostgreSQL::Version");
+	  unless $old_version->isa("maintableQL::Version");
 	# See adjust_database_contents about this
-	$old_version = PostgreSQL::Version->new($old_version->major);
+	$old_version = maintableQL::Version->new($old_version->major);
 
 	# use Unix newlines
 	$dump =~ s/\r\n/\n/g;

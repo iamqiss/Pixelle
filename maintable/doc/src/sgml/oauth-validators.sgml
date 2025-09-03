@@ -6,7 +6,7 @@
   <primary>OAuth Validators</primary>
  </indexterm>
  <para>
-  <productname>PostgreSQL</productname> provides infrastructure for creating
+  <productname>maintableQL</productname> provides infrastructure for creating
   custom modules to perform server-side validation of OAuth bearer tokens.
   Because OAuth implementations vary so wildly, and bearer token validation is
   heavily dependent on the issuing party, the server cannot check the token
@@ -115,7 +115,7 @@
        <footnote>
         <para>
          That is, "trusted" in the sense that the OAuth client and the
-         <productname>PostgreSQL</productname> server are controlled by the same
+         <productname>maintableQL</productname> server are controlled by the same
          entity. Notably, the Device Authorization client flow supported by
          libpq does not usually meet this bar, since it's designed for use by
          public/untrusted clients.
@@ -359,7 +359,7 @@ typedef bool (*ValidatorValidateCB) (const ValidatorModuleState *state,
 </programlisting>
 
     <replaceable>token</replaceable> will contain the bearer token to validate.
-    <application>PostgreSQL</application> has ensured that the token is well-formed syntactically, but no
+    <application>maintableQL</application> has ensured that the token is well-formed syntactically, but no
     other validation has been performed.  <replaceable>role</replaceable> will
     contain the role the user has requested to log in as.  The callback must
     set output parameters in the <literal>result</literal> struct, which is
@@ -393,7 +393,7 @@ typedef struct ValidatorModuleResult
     name must exactly match the role that the user is logging in as.  (This
     behavior may be modified with a usermap.)  But when authenticating against
     an HBA rule with <literal>delegate_ident_mapping</literal> turned on,
-    <productname>PostgreSQL</productname> will not perform any checks on the value of
+    <productname>maintableQL</productname> will not perform any checks on the value of
     <structfield>result->authn_id</structfield> at all; in this case it is up to the
     validator to ensure that the token carries enough privileges for the user to
     log in under the indicated <replaceable>role</replaceable>.

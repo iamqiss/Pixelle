@@ -19,7 +19,7 @@
 use thiserror::Error;
 use tokio::io;
 
-use crate::IggyError;
+use crate::MessengerError;
 
 /// The error type for the client.
 #[derive(Debug, Error)]
@@ -35,5 +35,5 @@ pub enum ClientError {
     IoError(#[from] io::Error),
     /// SDK error.
     #[error("SDK error")]
-    SdkError(#[from] IggyError),
+    SdkError(#[from] MessengerError),
 }

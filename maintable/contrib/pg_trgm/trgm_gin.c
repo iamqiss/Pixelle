@@ -1,7 +1,7 @@
 /*
  * contrib/pg_trgm/trgm_gin.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/gin.h"
 #include "access/stratnum.h"

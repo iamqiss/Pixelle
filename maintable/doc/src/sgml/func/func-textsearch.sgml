@@ -17,7 +17,7 @@
    <xref linkend="textsearch-functions-debug-table"/>
    summarize the functions and operators that are provided
    for full text searching.  See <xref linkend="textsearch"/> for a detailed
-   explanation of <productname>PostgreSQL</productname>'s text search
+   explanation of <productname>maintableQL</productname>'s text search
    facility.
   </para>
 

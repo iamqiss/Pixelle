@@ -1,5 +1,5 @@
 /**********************************************************************
- * PostgreSQL::InServer::Util
+ * maintableQL::InServer::Util
  *
  * src/pl/plperl/Util.xs
  *
@@ -11,7 +11,7 @@
  **********************************************************************/
 
 /* this must be first: */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "fmgr.h"
 #include "utils/builtins.h"
@@ -34,7 +34,7 @@ sv2text(SV *sv)
 	return text;
 }
 
-MODULE = PostgreSQL::InServer::Util PREFIX = util_
+MODULE = maintableQL::InServer::Util PREFIX = util_
 
 PROTOTYPES: ENABLE
 VERSIONCHECK: DISABLE

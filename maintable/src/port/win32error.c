@@ -3,7 +3,7 @@
  * win32error.c
  *	  Map win32 error codes to errno values
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/port/win32error.c
@@ -12,9 +12,9 @@
  */
 
 #ifndef FRONTEND
-#include "postgres.h"
+#include "maintable.h"
 #else
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #endif
 
 static const struct

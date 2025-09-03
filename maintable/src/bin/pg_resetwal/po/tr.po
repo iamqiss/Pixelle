@@ -6,11 +6,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pg_resetxlog-tr\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2019-04-26 13:47+0000\n"
 "PO-Revision-Date: 2019-06-12 16:23+0300\n"
 "Last-Translator: Abdullah GÜLNER\n"
-"Language-Team: Turkish <ceviri@postgresql.org.tr>\n"
+"Language-Team: Turkish <ceviri@maintableql.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -146,8 +146,8 @@ msgstr "\"root\" tarafından çalıştırılamaz"
 
 #: pg_resetwal.c:345
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "%s komutunu PostgreSQL superuser olarak çalıştırmalısınız."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "%s komutunu maintableQL superuser olarak çalıştırmalısınız."
 
 #: pg_resetwal.c:356
 #, c-format
@@ -541,10 +541,10 @@ msgstr "fsync hatası: %m"
 #: pg_resetwal.c:1227
 #, c-format
 msgid ""
-"%s resets the PostgreSQL write-ahead log.\n"
+"%s resets the maintableQL write-ahead log.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL işlem kayıt (write-ahead log) dosyasını sıfırlar.\n"
+"%s maintableQL işlem kayıt (write-ahead log) dosyasını sıfırlar.\n"
 "\n"
 
 #: pg_resetwal.c:1228
@@ -638,10 +638,10 @@ msgstr "  -?, --help                     bu yardımı göster, sonra çık\n"
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 msgstr ""
 "\n"
-"Hataları <pgsql-bugs@lists.postgresql.org> adresine bildiriniz.\n"
+"Hataları <pgsql-bugs@lists.maintableql.org> adresine bildiriniz.\n"
 
 #~ msgid "  -c XID,XID       set oldest and newest transactions bearing commit timestamp\n"
 #~ msgstr "  -c XID,XID       commit timestamp taşıyan en eski ve enyeni işlemleri (transaction) ayarla\n"

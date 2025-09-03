@@ -1,16 +1,16 @@
 # LANGUAGE message translation file for pg_verify_checksums
-# Copyright (C) 2018 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_verify_checksums (PostgreSQL) package.
+# Copyright (C) 2018 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_verify_checksums (maintableQL) package.
 # Ioseph Kim <ioseph@uri.sarang.net>, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_checksums (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_checksums (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-01-17 04:54+0000\n"
 "PO-Revision-Date: 2025-01-16 15:23+0900\n"
 "Last-Translator: Ioseph Kim <ioseph@uri.sarang.net>\n"
-"Language-Team: PostgreSQL Korea <kr@postgresql.org>\n"
+"Language-Team: maintableQL Korea <kr@maintableql.org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,13 +67,13 @@ msgid ""
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, "
 "and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "바이트 순서 일치하지 않는 문제\n"
 "바이트 순서 정보는 pg_control 파일을 저장할 때 사용되는데,\n"
 "이 파일의 바이트 순서 정보와 이 프로그램에서 사용하는 순서 정보가 다릅니다.\n"
 "이럴 경우, 출력 결과가 바르지 않을 수 있고,\n"
-"설치된 PostgreSQL 프로그램과 데이터 디렉터리가 호환되지 않을 수 있습니다."
+"설치된 maintableQL 프로그램과 데이터 디렉터리가 호환되지 않을 수 있습니다."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:70
 #: ../../common/file_utils.c:347 ../../common/file_utils.c:406
@@ -155,11 +155,11 @@ msgstr "알 수 없는 동기화 방법: %s"
 #: pg_checksums.c:70
 #, c-format
 msgid ""
-"%s enables, disables, or verifies data checksums in a PostgreSQL database "
+"%s enables, disables, or verifies data checksums in a maintableQL database "
 "cluster.\n"
 "\n"
 msgstr ""
-"%s 명령은 PostgreSQL 데이터베이스 클러스터 내 자료 체크섬을 활성화 또는\n"
+"%s 명령은 maintableQL 데이터베이스 클러스터 내 자료 체크섬을 활성화 또는\n"
 "비활성화 또는 유효성 검사를 합니다.\n"
 "\n"
 

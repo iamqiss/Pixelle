@@ -23,13 +23,13 @@ use crate::http::jwt::storage::TokenStorage;
 use crate::streaming::persistence::persister::PersisterKind;
 use ahash::AHashMap;
 use error_set::ErrContext;
-use iggy_common::IggyDuration;
-use iggy_common::IggyError;
-use iggy_common::IggyExpiry;
-use iggy_common::IggyTimestamp;
-use iggy_common::UserId;
-use iggy_common::locking::IggySharedMut;
-use iggy_common::locking::IggySharedMutFn;
+use messenger_common::MessengerDuration;
+use messenger_common::MessengerError;
+use messenger_common::MessengerExpiry;
+use messenger_common::MessengerTimestamp;
+use messenger_common::UserId;
+use messenger_common::locking::MessengerSharedMut;
+use messenger_common::locking::MessengerSharedMutFn;
 use jsonwebtoken::{Algorithm, DecodingKey, EncodingKey, Header, TokenData, Validation, encode};
 use std::sync::Arc;
 use tracing::{debug, error, info};
@@ -37,8 +37,8 @@ use tracing::{debug, error, info};
 pub struct IssuerOptions {
     pub issuer: String,
     pub audience: String,
-    pub access_token_expiry: IggyExpiry,
-    pub not_before: IggyDuration,
+    pub access_token_expiry: MessengerExpiry,
+    pub not_before: MessengerDuration,
     pub key: EncodingKey,
     pub algorithm: Algorithm,
 }
@@ -46,7 +46,7 @@ pub struct IssuerOptions {
 pub struct ValidatorOptions {
     pub valid_audiences: Vec<String>,
     pub valid_issuers: Vec<String>,
-    pub clock_skew: IggyDuration,
+    pub clock_skew: MessengerDuration,
     pub key: DecodingKey,
 }
 
@@ -54,7 +54,7 @@ pub struct JwtManager {
     issuer: IssuerOptions,
     validator: ValidatorOptions,
     tokens_storage: TokenStorage,
-    revoked_tokens: IggySharedMut<AHashMap<String, u64>>,
+    revoked_tokens: MessengerSharedMut<AHashMap<String, u64>>,
     validations: AHashMap<Algorithm, Validation>,
 }
 
@@ -64,7 +64,7 @@ impl JwtManager {
         path: &str,
         issuer: IssuerOptions,
         validator: ValidatorOptions,
-    ) -> Result<Self, IggyError> {
+    ) -> Result<Self, MessengerError> {
         let validation = JwtManager::create_validation(
             issuer.algorithm,
             &validator.valid_issuers,
@@ -77,7 +77,7 @@ impl JwtManager {
             issuer,
             validator,
             tokens_storage: TokenStorage::new(persister, path),
-            revoked_tokens: IggySharedMut::new(AHashMap::new()),
+            revoked_tokens: MessengerSharedMut::new(AHashMap::new()),
         })
     }
 
@@ -85,7 +85,7 @@ impl JwtManager {
         persister: Arc<PersisterKind>,
         path: &str,
         config: &HttpJwtConfig,
-    ) -> Result<Self, IggyError> {
+    ) -> Result<Self, MessengerError> {
         let algorithm = config.get_algorithm()?;
         let issuer = IssuerOptions {
             issuer: config.issuer.clone(),
@@ -112,7 +112,7 @@ impl JwtManager {
         algorithm: Algorithm,
         issuers: &[String],
         audiences: &[String],
-        clock_skew: IggyDuration,
+        clock_skew: MessengerDuration,
     ) -> Validation {
         let mut validator = Validation::new(algorithm);
         validator.set_issuer(issuers);
@@ -121,7 +121,7 @@ impl JwtManager {
         validator
     }
 
-    pub async fn load_revoked_tokens(&self) -> Result<(), IggyError> {
+    pub async fn load_revoked_tokens(&self) -> Result<(), MessengerError> {
         let revoked_tokens = self.tokens_storage.load_all_revoked_access_tokens().await?;
         let mut tokens = self.revoked_tokens.write().await;
         for token in revoked_tokens {
@@ -130,7 +130,7 @@ impl JwtManager {
         Ok(())
     }
 
-    pub async fn delete_expired_revoked_tokens(&self, now: u64) -> Result<(), IggyError> {
+    pub async fn delete_expired_revoked_tokens(&self, now: u64) -> Result<(), MessengerError> {
         let mut tokens_to_delete = Vec::new();
         let revoked_tokens = self.revoked_tokens.read().await;
         for (id, expiry) in revoked_tokens.iter() {
@@ -168,15 +168,15 @@ impl JwtManager {
         Ok(())
     }
 
-    pub fn generate(&self, user_id: UserId) -> Result<GeneratedToken, IggyError> {
+    pub fn generate(&self, user_id: UserId) -> Result<GeneratedToken, MessengerError> {
         let header = Header::new(self.issuer.algorithm);
-        let now = IggyTimestamp::now().to_secs();
+        let now = MessengerTimestamp::now().to_secs();
         let iat = now;
         let exp = iat
             + (match self.issuer.access_token_expiry {
-                IggyExpiry::NeverExpire => 1_000_000_000,
-                IggyExpiry::ServerDefault => 0, // This is not a case, as the server default is not allowed here
-                IggyExpiry::ExpireDuration(duration) => duration.as_secs(),
+                MessengerExpiry::NeverExpire => 1_000_000_000,
+                MessengerExpiry::ServerDefault => 0, // This is not a case, as the server default is not allowed here
+                MessengerExpiry::ExpireDuration(duration) => duration.as_secs(),
             }) as u64;
         let nbf = iat + self.issuer.not_before.as_secs() as u64;
         let claims = JwtClaims {
@@ -192,7 +192,7 @@ impl JwtManager {
         let access_token = encode::<JwtClaims>(&header, &claims, &self.issuer.key);
         if let Err(err) = access_token {
             error!("Cannot generate JWT token. Error: {}", err);
-            return Err(IggyError::CannotGenerateJwt);
+            return Err(MessengerError::CannotGenerateJwt);
         }
 
         Ok(GeneratedToken {
@@ -203,13 +203,13 @@ impl JwtManager {
     }
 
     // The access token can be refreshed only once and if it is not expired
-    pub async fn refresh_token(&self, token: &str) -> Result<GeneratedToken, IggyError> {
+    pub async fn refresh_token(&self, token: &str) -> Result<GeneratedToken, MessengerError> {
         if token.is_empty() {
-            return Err(IggyError::InvalidAccessToken);
+            return Err(MessengerError::InvalidAccessToken);
         }
 
         let token_header =
-            jsonwebtoken::decode_header(token).map_err(|_| IggyError::InvalidAccessToken)?;
+            jsonwebtoken::decode_header(token).map_err(|_| MessengerError::InvalidAccessToken)?;
         let jwt_claims = self.decode(token, token_header.alg)?;
         let id = jwt_claims.claims.jti;
         let expiry = jwt_claims.claims.exp;
@@ -220,7 +220,7 @@ impl JwtManager {
             .insert(id.clone(), expiry)
             .is_some()
         {
-            return Err(IggyError::InvalidAccessToken);
+            return Err(MessengerError::InvalidAccessToken);
         }
 
         self.tokens_storage
@@ -239,10 +239,10 @@ impl JwtManager {
         &self,
         token: &str,
         algorithm: Algorithm,
-    ) -> Result<TokenData<JwtClaims>, IggyError> {
+    ) -> Result<TokenData<JwtClaims>, MessengerError> {
         let validation = self.validations.get(&algorithm);
         if validation.is_none() {
-            return Err(IggyError::InvalidJwtAlgorithm(
+            return Err(MessengerError::InvalidJwtAlgorithm(
                 Self::map_algorithm_to_string(algorithm),
             ));
         }
@@ -250,7 +250,7 @@ impl JwtManager {
         let validation = validation.unwrap();
         match jsonwebtoken::decode::<JwtClaims>(token, &self.validator.key, validation) {
             Ok(claims) => Ok(claims),
-            _ => Err(IggyError::Unauthenticated),
+            _ => Err(MessengerError::Unauthenticated),
         }
     }
 
@@ -267,7 +267,7 @@ impl JwtManager {
         .to_string()
     }
 
-    pub async fn revoke_token(&self, token_id: &str, expiry: u64) -> Result<(), IggyError> {
+    pub async fn revoke_token(&self, token_id: &str, expiry: u64) -> Result<(), MessengerError> {
         let mut revoked_tokens = self.revoked_tokens.write().await;
         revoked_tokens.insert(token_id.to_string(), expiry);
         self.tokens_storage

@@ -1,7 +1,7 @@
 # pg_bsd_indent: some simple tests
 
 # The test cases come from FreeBSD upstream, but this test scaffolding is ours.
-# Copyright (c) 2017-2025, PostgreSQL Global Development Group
+# Copyright (c) 2017-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
@@ -10,14 +10,14 @@ use Cwd qw(getcwd);
 use File::Copy "cp";
 use File::Spec;
 
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # We expect to be started in the source directory (even in a VPATH build);
 # we want to run pg_bsd_indent in the tmp_check directory to reduce clutter.
 # (Also, it's caller's responsibility that pg_bsd_indent be in the PATH.)
 my $src_dir = getcwd;
-chdir ${PostgreSQL::Test::Utils::tmp_check};
+chdir ${maintableQL::Test::Utils::tmp_check};
 
 # Basic tests: pg_bsd_indent knows --version but not much else.
 program_version_ok('pg_bsd_indent');

@@ -217,7 +217,7 @@ ORDER BY c.relpages DESC LIMIT 10;
     <literal>DEBUG1</literal> and <literal>DEBUG2</literal> severity
     levels.  These messages provide detailed information about the
     verification process that may be of interest to
-    <productname>PostgreSQL</productname> developers.  Advanced users
+    <productname>maintableQL</productname> developers.  Advanced users
     may also find this information helpful, since it provides
     additional context should verification actually detect an
     inconsistency.  Running:
@@ -451,7 +451,7 @@ SET client_min_messages = DEBUG1;
      <emphasis>indexed</emphasis> values might happen to have the same
      absolute ordering regardless of the behavioral inconsistency. See
      <xref linkend="locale"/> and <xref linkend="collation"/> for
-     further details about how <productname>PostgreSQL</productname> uses
+     further details about how <productname>maintableQL</productname> uses
      operating system locales and collations.
     </para>
    </listitem>
@@ -469,13 +469,13 @@ SET client_min_messages = DEBUG1;
    <listitem>
     <para>
      Corruption caused by hypothetical undiscovered bugs in the
-     underlying <productname>PostgreSQL</productname> access method
+     underlying <productname>maintableQL</productname> access method
      code, sort code, or transaction management code.
     </para>
     <para>
      Automatic verification of the structural integrity of indexes
      plays a role in the general testing of new or proposed
-     <productname>PostgreSQL</productname> features that could plausibly allow a
+     <productname>maintableQL</productname> features that could plausibly allow a
      logical inconsistency to be introduced.  Verification of table
      structure and associated visibility and transaction status
      information plays a similar role.  One obvious testing strategy
@@ -504,7 +504,7 @@ SET client_min_messages = DEBUG1;
      Corruption caused by faulty RAM, or the broader memory subsystem.
     </para>
     <para>
-     <productname>PostgreSQL</productname> does not protect against correctable
+     <productname>maintableQL</productname> does not protect against correctable
      memory errors and it is assumed you will operate using RAM that
      uses industry standard Error Correcting Codes (ECC) or better
      protection.  However, ECC memory is typically only immune to
@@ -542,7 +542,7 @@ SET client_min_messages = DEBUG1;
 
  <para>
   Multiple causes of logical corruption have been observed in production
-  systems, including bugs in the <productname>PostgreSQL</productname>
+  systems, including bugs in the <productname>maintableQL</productname>
   server software, faulty and ill-conceived backup and restore tools, and
   user error.
  </para>

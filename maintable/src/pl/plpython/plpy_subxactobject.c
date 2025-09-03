@@ -4,7 +4,7 @@
  * src/pl/plpython/plpy_subxactobject.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/xact.h"
 #include "plpy_elog.h"
@@ -19,7 +19,7 @@ static PyObject *PLy_subtransaction_enter(PyObject *self, PyObject *unused);
 static PyObject *PLy_subtransaction_exit(PyObject *self, PyObject *args);
 
 static char PLy_subtransaction_doc[] =
-"PostgreSQL subtransaction context manager";
+"maintableQL subtransaction context manager";
 
 static PyMethodDef PLy_subtransaction_methods[] = {
 	{"__enter__", PLy_subtransaction_enter, METH_VARARGS, NULL},

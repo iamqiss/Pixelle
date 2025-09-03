@@ -4,7 +4,7 @@ MODULE_big = pg_walinspect
 OBJS = \
 	$(WIN32RES) \
 	pg_walinspect.o
-PGFILEDESC = "pg_walinspect - functions to inspect contents of PostgreSQL Write-Ahead Log"
+PGFILEDESC = "pg_walinspect - functions to inspect contents of maintableQL Write-Ahead Log"
 
 EXTENSION = pg_walinspect
 DATA = pg_walinspect--1.0.sql pg_walinspect--1.0--1.1.sql

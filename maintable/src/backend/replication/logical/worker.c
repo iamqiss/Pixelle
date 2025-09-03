@@ -1,8 +1,8 @@
 /*-------------------------------------------------------------------------
  * worker.c
- *	   PostgreSQL logical replication worker (apply)
+ *	   maintableQL logical replication worker (apply)
  *
- * Copyright (c) 2016-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2016-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/replication/logical/worker.c
@@ -225,7 +225,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/stat.h>
 #include <unistd.h>
@@ -5542,7 +5542,7 @@ SetupApplyOrSyncWorker(int worker_slot)
 
 	/*
 	 * Register a callback to reset the origin state before aborting any
-	 * pending transaction during shutdown (see ShutdownPostgres()). This will
+	 * pending transaction during shutdown (see ShutdownMaintable()). This will
 	 * avoid origin advancement for an in-complete transaction which could
 	 * otherwise lead to its loss as such a transaction won't be sent by the
 	 * server again.

@@ -481,7 +481,7 @@ pad_output(int current, int target)
 	int tcur;
 
 	while ((tcur = tabsize * (1 + (curr - 1) / tabsize) + 1) <= target) {
-	    putc((!postgres_tab_rules ||
+	    putc((!maintable_tab_rules ||
 		  tcur != curr + 1 ||
 		  target >= tcur + tabsize) ? '\t' : ' ', output);
 	    curr = tcur;

@@ -6,14 +6,14 @@
  * archive_command GUC) to copy write-ahead log files.  It is used as the
  * default, but other modules may define their own custom archiving logic.
  *
- * Copyright (c) 2022-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2022-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/archive/shell_archive.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/wait.h>
 

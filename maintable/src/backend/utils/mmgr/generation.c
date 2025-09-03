@@ -6,7 +6,7 @@
  * Generation is a custom MemoryContext implementation designed for cases of
  * chunks with similar lifespan.
  *
- * Portions Copyright (c) 2017-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2017-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/utils/mmgr/generation.c
@@ -33,7 +33,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "lib/ilist.h"
 #include "port/pg_bitutils.h"

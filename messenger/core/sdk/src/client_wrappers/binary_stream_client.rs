@@ -18,23 +18,23 @@
 
 use crate::client_wrappers::client_wrapper::ClientWrapper;
 use async_trait::async_trait;
-use iggy_binary_protocol::StreamClient;
-use iggy_common::{Identifier, IggyError, Stream, StreamDetails};
+use messenger_binary_protocol::StreamClient;
+use messenger_common::{Identifier, MessengerError, Stream, StreamDetails};
 
 #[async_trait]
 impl StreamClient for ClientWrapper {
-    async fn get_stream(&self, stream_id: &Identifier) -> Result<Option<StreamDetails>, IggyError> {
+    async fn get_stream(&self, stream_id: &Identifier) -> Result<Option<StreamDetails>, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.get_stream(stream_id).await,
+            ClientWrapper::Messenger(client) => client.get_stream(stream_id).await,
             ClientWrapper::Http(client) => client.get_stream(stream_id).await,
             ClientWrapper::Tcp(client) => client.get_stream(stream_id).await,
             ClientWrapper::Quic(client) => client.get_stream(stream_id).await,
         }
     }
 
-    async fn get_streams(&self) -> Result<Vec<Stream>, IggyError> {
+    async fn get_streams(&self) -> Result<Vec<Stream>, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.get_streams().await,
+            ClientWrapper::Messenger(client) => client.get_streams().await,
             ClientWrapper::Http(client) => client.get_streams().await,
             ClientWrapper::Tcp(client) => client.get_streams().await,
             ClientWrapper::Quic(client) => client.get_streams().await,
@@ -45,36 +45,36 @@ impl StreamClient for ClientWrapper {
         &self,
         name: &str,
         stream_id: Option<u32>,
-    ) -> Result<StreamDetails, IggyError> {
+    ) -> Result<StreamDetails, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.create_stream(name, stream_id).await,
+            ClientWrapper::Messenger(client) => client.create_stream(name, stream_id).await,
             ClientWrapper::Http(client) => client.create_stream(name, stream_id).await,
             ClientWrapper::Tcp(client) => client.create_stream(name, stream_id).await,
             ClientWrapper::Quic(client) => client.create_stream(name, stream_id).await,
         }
     }
 
-    async fn update_stream(&self, stream_id: &Identifier, name: &str) -> Result<(), IggyError> {
+    async fn update_stream(&self, stream_id: &Identifier, name: &str) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.update_stream(stream_id, name).await,
+            ClientWrapper::Messenger(client) => client.update_stream(stream_id, name).await,
             ClientWrapper::Http(client) => client.update_stream(stream_id, name).await,
             ClientWrapper::Tcp(client) => client.update_stream(stream_id, name).await,
             ClientWrapper::Quic(client) => client.update_stream(stream_id, name).await,
         }
     }
 
-    async fn delete_stream(&self, stream_id: &Identifier) -> Result<(), IggyError> {
+    async fn delete_stream(&self, stream_id: &Identifier) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.delete_stream(stream_id).await,
+            ClientWrapper::Messenger(client) => client.delete_stream(stream_id).await,
             ClientWrapper::Http(client) => client.delete_stream(stream_id).await,
             ClientWrapper::Tcp(client) => client.delete_stream(stream_id).await,
             ClientWrapper::Quic(client) => client.delete_stream(stream_id).await,
         }
     }
 
-    async fn purge_stream(&self, stream_id: &Identifier) -> Result<(), IggyError> {
+    async fn purge_stream(&self, stream_id: &Identifier) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.purge_stream(stream_id).await,
+            ClientWrapper::Messenger(client) => client.purge_stream(stream_id).await,
             ClientWrapper::Http(client) => client.purge_stream(stream_id).await,
             ClientWrapper::Tcp(client) => client.purge_stream(stream_id).await,
             ClientWrapper::Quic(client) => client.purge_stream(stream_id).await,

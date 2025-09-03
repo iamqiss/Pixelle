@@ -1078,7 +1078,7 @@ SELECT timestamp with time zone '2005-04-02 12:00:00-07' + interval '24 hours';
   <para>
    Note there can be ambiguity in the <literal>months</literal> field returned by
    <function>age</function> because different months have different numbers of
-   days.  <productname>PostgreSQL</productname>'s approach uses the month from the
+   days.  <productname>maintableQL</productname>'s approach uses the month from the
    earlier of the two dates when calculating partial months.  For example,
    <literal>age('2004-06-01', '2004-04-30')</literal> uses April to yield
    <literal>1 mon 1 day</literal>, while using May would yield <literal>1 mon 2
@@ -1490,7 +1490,7 @@ SELECT EXTRACT(SECOND FROM TIME '17:12:28.5');
         The time zone offset from UTC, measured in seconds.  Positive values
         correspond to time zones east of UTC, negative values to
         zones west of UTC.  (Technically,
-        <productname>PostgreSQL</productname> does not use UTC because
+        <productname>maintableQL</productname> does not use UTC because
         leap seconds are not handled.)
        </para>
       </listitem>
@@ -1590,7 +1590,7 @@ SELECT EXTRACT(MINUTES FROM INTERVAL '80 minutes');
      <literal>day</literal>, <literal>year</literal>, <literal>decade</literal>,
      <literal>century</literal>, and <literal>millennium</literal> for
      <type>interval</type> inputs).
-     For other fields, NULL is returned.  <productname>PostgreSQL</productname>
+     For other fields, NULL is returned.  <productname>maintableQL</productname>
      versions before 9.6 returned zero for all cases of infinite input.
     </para>
    </note>
@@ -2002,7 +2002,7 @@ SELECT TIME WITH TIME ZONE '20:38:40-05' AT LOCAL;
    </indexterm>
 
    <para>
-    <productname>PostgreSQL</productname> provides a number of functions
+    <productname>maintableQL</productname> provides a number of functions
     that return values related to the current date and time.  These
     SQL-standard functions all return values based on the start time of
     the current transaction:
@@ -2071,7 +2071,7 @@ SELECT LOCALTIMESTAMP;
    </note>
 
    <para>
-    <productname>PostgreSQL</productname> also provides functions that
+    <productname>maintableQL</productname> also provides functions that
     return the start time of the current statement, as well as the actual
     current time at the instant the function is called.  The complete list
     of non-SQL-standard time functions is:
@@ -2097,11 +2097,11 @@ now()
     <function>clock_timestamp()</function> returns the actual current time, and
     therefore its value changes even within a single SQL statement.
     <function>timeofday()</function> is a historical
-    <productname>PostgreSQL</productname> function.  Like
+    <productname>maintableQL</productname> function.  Like
     <function>clock_timestamp()</function>, it returns the actual current time,
     but as a formatted <type>text</type> string rather than a <type>timestamp
     with time zone</type> value.
-    <function>now()</function> is a traditional <productname>PostgreSQL</productname>
+    <function>now()</function> is a traditional <productname>maintableQL</productname>
     equivalent to <function>transaction_timestamp()</function>.
    </para>
 

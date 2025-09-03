@@ -17,16 +17,16 @@
 
 using System.Diagnostics;
 using System.Text;
-using Apache.Iggy.Contracts;
-using Apache.Iggy.IggyClient;
-using Apache.Iggy.Kinds;
-using Apache.Iggy.Messages;
+using Apache.Messenger.Contracts;
+using Apache.Messenger.MessengerClient;
+using Apache.Messenger.Kinds;
+using Apache.Messenger.Messages;
 
-namespace Apache.Iggy.Benchmarks;
+namespace Apache.Messenger.Benchmarks;
 
 public static class SendMessage
 {
-    public static async Task Create(IIggyClient bus, int producerNumber, int producerCount,
+    public static async Task Create(IMessengerClient bus, int producerNumber, int producerCount,
         int messagesBatch, int messagesCount, int messageSize, Identifier streamId, Identifier topicId)
     {
         long totalMessages = messagesBatch * messagesCount;

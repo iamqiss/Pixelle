@@ -26,7 +26,7 @@ use encoders::{
     flatbuffer::FlatBufferStreamEncoder, json::JsonStreamEncoder, proto::ProtoStreamEncoder,
     raw::RawStreamEncoder, text::TextStreamEncoder,
 };
-use iggy::prelude::{HeaderKey, HeaderValue};
+use messenger::prelude::{HeaderKey, HeaderValue};
 use once_cell::sync::OnceCell;
 use prost::Message;
 use serde::{Deserialize, Serialize};

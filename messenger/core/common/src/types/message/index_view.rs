@@ -19,16 +19,16 @@
 use crate::INDEX_SIZE;
 use bytes::Buf;
 
-use super::IggyIndex;
+use super::MessengerIndex;
 
 /// View into a single index entry in a binary buffer.
 /// Provides zero-copy access to index data.
 #[derive(Debug, Clone, Copy)]
-pub struct IggyIndexView<'a> {
+pub struct MessengerIndexView<'a> {
     data: &'a [u8],
 }
 
-impl<'a> IggyIndexView<'a> {
+impl<'a> MessengerIndexView<'a> {
     /// Creates a new index view from a byte slice
     /// Slice must be exactly INDEX_SIZE (16 bytes) long
     pub fn new(data: &'a [u8]) -> Self {
@@ -57,9 +57,9 @@ impl<'a> IggyIndexView<'a> {
         buf.get_u64_le()
     }
 
-    /// Converts the view into an `IggyIndex`
-    pub fn to_index(&self) -> IggyIndex {
-        IggyIndex {
+    /// Converts the view into an `MessengerIndex`
+    pub fn to_index(&self) -> MessengerIndex {
+        MessengerIndex {
             offset: self.offset(),
             position: self.position(),
             timestamp: self.timestamp(),
@@ -67,7 +67,7 @@ impl<'a> IggyIndexView<'a> {
     }
 }
 
-impl std::fmt::Display for IggyIndexView<'_> {
+impl std::fmt::Display for MessengerIndexView<'_> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             f,

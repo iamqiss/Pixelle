@@ -1,8 +1,8 @@
 /*--------------------------------------------------------------------
  * bgworker.c
- *		POSTGRES pluggable background workers implementation
+ *		MAINTABLE pluggable background workers implementation
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/postmaster/bgworker.c
@@ -10,7 +10,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/parallel.h"
 #include "libpq/pqsignal.h"
@@ -831,7 +831,7 @@ BackgroundWorkerMain(const void *startup_data, size_t startup_data_len)
 											 worker->bgw_function_name);
 
 	/*
-	 * Note that in normal processes, we would call InitPostgres here.  For a
+	 * Note that in normal processes, we would call InitMaintable here.  For a
 	 * worker, however, we don't know what database to connect to, yet; so we
 	 * need to wait until the user code does it via
 	 * BackgroundWorkerInitializeConnection().
@@ -868,7 +868,7 @@ BackgroundWorkerInitializeConnection(const char *dbname, const char *username, u
 				(errcode(ERRCODE_PROGRAM_LIMIT_EXCEEDED),
 				 errmsg("database connection requirement not indicated during registration")));
 
-	InitPostgres(dbname, InvalidOid,	/* database to connect to */
+	InitMaintable(dbname, InvalidOid,	/* database to connect to */
 				 username, InvalidOid,	/* role to connect as */
 				 init_flags,
 				 NULL);			/* no out_dbname */
@@ -902,7 +902,7 @@ BackgroundWorkerInitializeConnectionByOid(Oid dboid, Oid useroid, uint32 flags)
 				(errcode(ERRCODE_PROGRAM_LIMIT_EXCEEDED),
 				 errmsg("database connection requirement not indicated during registration")));
 
-	InitPostgres(NULL, dboid,	/* database to connect to */
+	InitMaintable(NULL, dboid,	/* database to connect to */
 				 NULL, useroid, /* role to connect as */
 				 init_flags,
 				 NULL);			/* no out_dbname */
@@ -1319,7 +1319,7 @@ TerminateBackgroundWorker(BackgroundWorkerHandle *handle)
 /*
  * Look up (and possibly load) a bgworker entry point function.
  *
- * For functions contained in the core code, we use library name "postgres"
+ * For functions contained in the core code, we use library name "maintable"
  * and consult the InternalBGWorkers array.  External functions are
  * looked up, and loaded if necessary, using load_external_function().
  *
@@ -1338,10 +1338,10 @@ static bgworker_main_type
 LookupBackgroundWorkerFunction(const char *libraryname, const char *funcname)
 {
 	/*
-	 * If the function is to be loaded from postgres itself, search the
+	 * If the function is to be loaded from maintable itself, search the
 	 * InternalBGWorkers array.
 	 */
-	if (strcmp(libraryname, "postgres") == 0)
+	if (strcmp(libraryname, "maintable") == 0)
 	{
 		int			i;
 

@@ -1,18 +1,18 @@
 /*--------------------------------------------------------------------
  * ps_status.c
  *
- * Routines to support changing the ps display of PostgreSQL backends
+ * Routines to support changing the ps display of maintableQL backends
  * to contain some useful information. Mechanism differs wildly across
  * platforms.
  *
  * src/backend/utils/misc/ps_status.c
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  * various details abducted from various places
  *--------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 #if defined(__darwin__)
@@ -323,7 +323,7 @@ init_ps_display(const char *fixed_part)
 	 */
 #define PROGRAM_NAME_PREFIX ""
 #else
-#define PROGRAM_NAME_PREFIX "postgres: "
+#define PROGRAM_NAME_PREFIX "maintable: "
 #endif
 
 	if (*cluster_name == '\0')

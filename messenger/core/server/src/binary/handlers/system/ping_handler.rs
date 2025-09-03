@@ -21,15 +21,15 @@ use crate::binary::sender::SenderKind;
 use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
-use iggy_common::IggyError;
-use iggy_common::IggyTimestamp;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::ping::Ping;
+use messenger_common::MessengerError;
+use messenger_common::MessengerTimestamp;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::ping::Ping;
 use tracing::debug;
 
 impl ServerCommandHandler for Ping {
     fn code(&self) -> u32 {
-        iggy_common::PING_CODE
+        messenger_common::PING_CODE
     }
 
     async fn handle(
@@ -38,13 +38,13 @@ impl ServerCommandHandler for Ping {
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
         let system = system.read().await;
         let client_manager = system.client_manager.read().await;
         if let Some(client) = client_manager.try_get_client(session.client_id) {
             let mut client = client.write().await;
-            let now = IggyTimestamp::now();
+            let now = MessengerTimestamp::now();
             client.last_heartbeat = now;
             debug!("Updated last heartbeat to: {now} for session: {session}");
         }
@@ -59,7 +59,7 @@ impl BinaryServerCommand for Ping {
         _sender: &mut SenderKind,
         _length: u32,
         _code: u32,
-    ) -> Result<Self, IggyError>
+    ) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {

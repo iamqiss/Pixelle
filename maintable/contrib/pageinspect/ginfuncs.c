@@ -2,12 +2,12 @@
  * ginfuncs.c
  *		Functions to investigate the content of GIN indexes
  *
- * Copyright (c) 2014-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2014-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		contrib/pageinspect/ginfuncs.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/gin_private.h"
 #include "access/htup_details.h"

@@ -4,7 +4,7 @@
  *	  Management of free memory pages.
  *
  * The intention of this code is to provide infrastructure for memory
- * allocators written specifically for PostgreSQL.  At least in the case
+ * allocators written specifically for maintableQL.  At least in the case
  * of dynamic shared memory, we can't simply use malloc() or even
  * relatively thin wrappers like palloc() which sit on top of it, because
  * no allocator built into the operating system will deal with relative
@@ -42,7 +42,7 @@
  * where memory fragmentation is very severe, only a tiny fraction of
  * the pages under management are consumed by this btree.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -51,7 +51,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 #include "lib/stringinfo.h"
 #include "miscadmin.h"
 

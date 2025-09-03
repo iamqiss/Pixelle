@@ -1,12 +1,12 @@
 # PG_CONFIG Translated Messages into the Polish Language
 # Copyright (c) 2005 toczek, xxxtoczekxxx@wp.pl
-# Distributed under the same licensing terms as PostgreSQL itself.
+# Distributed under the same licensing terms as maintableQL itself.
 # Begina Felicysym <begina.felicysym@wp.eu>, 2011, 2012, 2013.
 # grzegorz <begina.felicysym@wp.eu>, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_config (PostgreSQL 9.1)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pg_config (maintableQL 9.1)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2016-07-03 03:13+0000\n"
 "PO-Revision-Date: 2016-07-03 17:31+0200\n"
 "Last-Translator: grzegorz <begina.felicysym@wp.eu>\n"
@@ -67,11 +67,11 @@ msgstr "pclose nie powiodło się: %s"
 #, c-format
 msgid ""
 "\n"
-"%s provides information about the installed version of PostgreSQL.\n"
+"%s provides information about the installed version of maintableQL.\n"
 "\n"
 msgstr ""
 "\n"
-"%s dostarcza informacji na temat zainstalowanej wersji PostgreSQL.\n"
+"%s dostarcza informacji na temat zainstalowanej wersji maintableQL.\n"
 "\n"
 
 #: pg_config.c:75
@@ -168,55 +168,55 @@ msgstr "  --pgxs                pokaż lokalizację makefile rozszerzeń\n"
 #, c-format
 msgid ""
 "  --configure           show options given to \"configure\" script when\n"
-"                        PostgreSQL was built\n"
+"                        maintableQL was built\n"
 msgstr ""
 "  --configure           pokaż opcje użyte przy skrypcie \"configure\" \n"
-"                        podczas budowania PostgreSQL\n"
+"                        podczas budowania maintableQL\n"
 
 #: pg_config.c:94
 #, c-format
-msgid "  --cc                  show CC value used when PostgreSQL was built\n"
-msgstr "  --cc                  pokaż wartość CC użytą podczas budowania PostgreSQL\n"
+msgid "  --cc                  show CC value used when maintableQL was built\n"
+msgstr "  --cc                  pokaż wartość CC użytą podczas budowania maintableQL\n"
 
 #: pg_config.c:95
 #, c-format
-msgid "  --cppflags            show CPPFLAGS value used when PostgreSQL was built\n"
-msgstr "  --cppflags            pokaż wartość CPPFLAGS użytą podczas budowania PostgreSQL\n"
+msgid "  --cppflags            show CPPFLAGS value used when maintableQL was built\n"
+msgstr "  --cppflags            pokaż wartość CPPFLAGS użytą podczas budowania maintableQL\n"
 
 #: pg_config.c:96
 #, c-format
-msgid "  --cflags              show CFLAGS value used when PostgreSQL was built\n"
-msgstr "  --cflags              pokaż wartość CFLAGS użytą podczas budowania PostgreSQL\n"
+msgid "  --cflags              show CFLAGS value used when maintableQL was built\n"
+msgstr "  --cflags              pokaż wartość CFLAGS użytą podczas budowania maintableQL\n"
 
 #: pg_config.c:97
 #, c-format
-msgid "  --cflags_sl           show CFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --cflags_sl           pokaż wartość CFLAGS_SL użytą podczas budowania PostgreSQL\n"
+msgid "  --cflags_sl           show CFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --cflags_sl           pokaż wartość CFLAGS_SL użytą podczas budowania maintableQL\n"
 
 #: pg_config.c:98
 #, c-format
-msgid "  --ldflags             show LDFLAGS value used when PostgreSQL was built\n"
-msgstr "  --ldflags             pokaż wartość LDFLAGS użytą podczas budowania PostgreSQL\n"
+msgid "  --ldflags             show LDFLAGS value used when maintableQL was built\n"
+msgstr "  --ldflags             pokaż wartość LDFLAGS użytą podczas budowania maintableQL\n"
 
 #: pg_config.c:99
 #, c-format
-msgid "  --ldflags_ex          show LDFLAGS_EX value used when PostgreSQL was built\n"
-msgstr "  --ldflags_ex          pokaż wartość LDFLAGS_EX użytą podczas budowania PostgreSQL\n"
+msgid "  --ldflags_ex          show LDFLAGS_EX value used when maintableQL was built\n"
+msgstr "  --ldflags_ex          pokaż wartość LDFLAGS_EX użytą podczas budowania maintableQL\n"
 
 #: pg_config.c:100
 #, c-format
-msgid "  --ldflags_sl          show LDFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --ldflags_sl          pokaż wartość LDFLAGS_SL użytą podczas budowania PostgreSQL\n"
+msgid "  --ldflags_sl          show LDFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --ldflags_sl          pokaż wartość LDFLAGS_SL użytą podczas budowania maintableQL\n"
 
 #: pg_config.c:101
 #, c-format
-msgid "  --libs                show LIBS value used when PostgreSQL was built\n"
-msgstr "  --libs                pokaż wartość LIBS użytą podczas budowania PostgreSQL\n"
+msgid "  --libs                show LIBS value used when maintableQL was built\n"
+msgstr "  --libs                pokaż wartość LIBS użytą podczas budowania maintableQL\n"
 
 #: pg_config.c:102
 #, c-format
-msgid "  --version             show the PostgreSQL version\n"
-msgstr "  --version             pokaż wersję PostgreSQL\n"
+msgid "  --version             show the maintableQL version\n"
+msgstr "  --version             pokaż wersję maintableQL\n"
 
 #: pg_config.c:103
 #, c-format
@@ -236,8 +236,8 @@ msgstr ""
 
 #: pg_config.c:105
 #, c-format
-msgid "Report bugs to <pgsql-bugs@postgresql.org>.\n"
-msgstr "Błędy proszę przesyłać na adres <pgsql-bugs@postgresql.org>.\n"
+msgid "Report bugs to <pgsql-bugs@maintableql.org>.\n"
+msgstr "Błędy proszę przesyłać na adres <pgsql-bugs@maintableql.org>.\n"
 
 #: pg_config.c:111
 #, c-format

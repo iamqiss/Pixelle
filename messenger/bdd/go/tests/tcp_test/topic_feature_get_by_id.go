@@ -18,8 +18,8 @@
 package tcp_test
 
 import (
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	ierror "github.com/apache/iggy/foreign/go/errors"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	ierror "github.com/apache/messenger/foreign/go/errors"
 	"github.com/onsi/ginkgo/v2"
 )
 
@@ -44,7 +44,7 @@ var _ = ginkgo.Describe("GET TOPIC BY ID:", func() {
 
 			_, err := client.GetTopic(randomU32Identifier(), randomU32Identifier())
 
-			itShouldReturnSpecificIggyError(err, ierror.TopicIdNotFound)
+			itShouldReturnSpecificMessengerError(err, ierror.TopicIdNotFound)
 		})
 
 		ginkgo.Context("and tries to get non-existing topic", func() {
@@ -55,7 +55,7 @@ var _ = ginkgo.Describe("GET TOPIC BY ID:", func() {
 
 			_, err := client.GetTopic(streamIdentifier, randomU32Identifier())
 
-			itShouldReturnSpecificIggyError(err, ierror.TopicIdNotFound)
+			itShouldReturnSpecificMessengerError(err, ierror.TopicIdNotFound)
 		})
 	})
 

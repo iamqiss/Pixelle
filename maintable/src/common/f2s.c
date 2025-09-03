@@ -2,7 +2,7 @@
  *
  * Ryu floating-point output for single precision.
  *
- * Portions Copyright (c) 2018-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2018-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/common/f2s.c
@@ -33,9 +33,9 @@
  */
 
 #ifndef FRONTEND
-#include "postgres.h"
+#include "maintable.h"
 #else
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #endif
 
 #include "common/shortest_dec.h"

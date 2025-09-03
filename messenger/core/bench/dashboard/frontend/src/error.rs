@@ -18,7 +18,7 @@
 use thiserror::Error;
 
 #[derive(Error, Debug, Clone)]
-pub enum IggyBenchDashboardError {
+pub enum MessengerBenchDashboardError {
     #[error("Network error: {0}")]
     Network(String),
     #[error("Server error: {0}")]
@@ -29,4 +29,4 @@ pub enum IggyBenchDashboardError {
     HealthCheck(String),
 }
 
-pub type Result<T> = std::result::Result<T, IggyBenchDashboardError>;
+pub type Result<T> = std::result::Result<T, MessengerBenchDashboardError>;

@@ -17,12 +17,12 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, TestStreamId,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, TestStreamId,
     TestTopicId, USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::{Client, IggyExpiry, MaxTopicSize};
+use messenger::prelude::{Client, MessengerExpiry, MaxTopicSize};
 use predicates::str::diff;
 use serial_test::parallel;
 
@@ -84,7 +84,7 @@ impl TestConsumerGroupCreateCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestConsumerGroupCreateCmd {
+impl MessengerCmdTestCase for TestConsumerGroupCreateCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let stream = client
             .create_stream(&self.stream_name, self.stream_id.into())
@@ -99,15 +99,15 @@ impl IggyCmdTestCase for TestConsumerGroupCreateCmd {
                 Default::default(),
                 None,
                 Some(self.topic_id),
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 MaxTopicSize::ServerDefault,
             )
             .await;
         assert!(topic.is_ok());
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("consumer-group")
             .arg("create")
             .args(self.to_args())
@@ -180,10 +180,10 @@ impl IggyCmdTestCase for TestConsumerGroupCreateCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestConsumerGroupCreateCmd::new(
             1,
             String::from("main"),
@@ -195,7 +195,7 @@ pub async fn should_be_successful() {
             TestTopicId::Numeric,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestConsumerGroupCreateCmd::new(
             2,
             String::from("stream"),
@@ -207,7 +207,7 @@ pub async fn should_be_successful() {
             TestTopicId::Numeric,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestConsumerGroupCreateCmd::new(
             4,
             String::from("development"),
@@ -219,7 +219,7 @@ pub async fn should_be_successful() {
             TestTopicId::Named,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestConsumerGroupCreateCmd::new(
             2,
             String::from("production"),
@@ -236,9 +236,9 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["consumer-group", "create", "--help"],
             format!(
@@ -249,10 +249,10 @@ Topic ID can be specified as a topic name or ID
 If group ID is not provided then the server will automatically assign it
 
 Examples:
- iggy consumer-group create 1 1 prod
- iggy consumer-group create stream 2 test
- iggy consumer-group create 2 topic receiver
- iggy consumer-group create -g 4 stream topic group
+ messenger consumer-group create 1 1 prod
+ messenger consumer-group create stream 2 test
+ messenger consumer-group create 2 topic receiver
+ messenger consumer-group create -g 4 stream topic group
 
 {USAGE_PREFIX} consumer-group create [OPTIONS] <STREAM_ID> <TOPIC_ID> <NAME>
 
@@ -285,9 +285,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["consumer-group", "create", "-h"],
             format!(

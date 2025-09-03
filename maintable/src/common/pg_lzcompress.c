@@ -1,7 +1,7 @@
 /* ----------
  * pg_lzcompress.c -
  *
- *		This is an implementation of LZ compression for PostgreSQL.
+ *		This is an implementation of LZ compression for maintableQL.
  *		It uses a simple history table and generates 2-3 byte tags
  *		capable of backward copy information for 3-273 bytes with
  *		a max offset of 4095.
@@ -168,19 +168,19 @@
  *		Acknowledgments:
  *
  *			Many thanks to Adisak Pochanayon, who's article about SLZ
- *			inspired me to write the PostgreSQL compression this way.
+ *			inspired me to write the maintableQL compression this way.
  *
  *			Jan Wieck
  *
- * Copyright (c) 1999-2025, PostgreSQL Global Development Group
+ * Copyright (c) 1999-2025, maintableQL Global Development Group
  *
  * src/common/pg_lzcompress.c
  * ----------
  */
 #ifndef FRONTEND
-#include "postgres.h"
+#include "maintable.h"
 #else
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #endif
 
 #include <limits.h>

@@ -12,7 +12,7 @@
  </indexterm>
 
  <para>
-  <productname>PostgreSQL</productname>'s implementation of the <literal>TABLESAMPLE</literal>
+  <productname>maintableQL</productname>'s implementation of the <literal>TABLESAMPLE</literal>
   clause supports custom table sampling methods, in addition to
   the <literal>BERNOULLI</literal> and <literal>SYSTEM</literal> methods that are required
   by the SQL standard.  The sampling method determines which rows of the

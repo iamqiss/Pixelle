@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_trigger.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createtrigger">
@@ -694,7 +694,7 @@ CREATE TRIGGER paired_items_update
 
   <para>
    The <command>CREATE TRIGGER</command> statement in
-   <productname>PostgreSQL</productname> implements a subset of the
+   <productname>maintableQL</productname> implements a subset of the
    <acronym>SQL</acronym> standard. The following functionalities are currently
    missing:
 
@@ -718,13 +718,13 @@ CREATE TRIGGER paired_items_update
       column-specific <literal>UPDATE</literal> triggers, but then the set of rows
       that should be visible in the transition tables depends on the
       trigger's column list.  This is not currently implemented by
-      <productname>PostgreSQL</productname>.
+      <productname>maintableQL</productname>.
      </para>
     </listitem>
 
     <listitem>
      <para>
-      <productname>PostgreSQL</productname> only allows the execution
+      <productname>maintableQL</productname> only allows the execution
       of a user-defined function for the triggered action.  The standard
       allows the execution of a number of other SQL commands, such as
       <command>CREATE TABLE</command>, as the triggered action.  This
@@ -738,14 +738,14 @@ CREATE TRIGGER paired_items_update
 
   <para>
    SQL specifies that multiple triggers should be fired in
-   time-of-creation order.  <productname>PostgreSQL</productname> uses
+   time-of-creation order.  <productname>maintableQL</productname> uses
    name order, which was judged to be more convenient.
   </para>
 
   <para>
    SQL specifies that <literal>BEFORE DELETE</literal> triggers on cascaded
    deletes fire <emphasis>after</emphasis> the cascaded <literal>DELETE</literal> completes.
-   The <productname>PostgreSQL</productname> behavior is for <literal>BEFORE
+   The <productname>maintableQL</productname> behavior is for <literal>BEFORE
    DELETE</literal> to always fire before the delete action, even a cascading
    one.  This is considered more consistent.  There is also nonstandard
    behavior if <literal>BEFORE</literal> triggers modify rows or prevent
@@ -756,19 +756,19 @@ CREATE TRIGGER paired_items_update
 
   <para>
    The ability to specify multiple actions for a single trigger using
-   <literal>OR</literal> is a <productname>PostgreSQL</productname> extension of
+   <literal>OR</literal> is a <productname>maintableQL</productname> extension of
    the SQL standard.
   </para>
 
   <para>
    The ability to fire triggers for <command>TRUNCATE</command> is a
-   <productname>PostgreSQL</productname> extension of the SQL standard, as is the
+   <productname>maintableQL</productname> extension of the SQL standard, as is the
    ability to define statement-level triggers on views.
   </para>
 
   <para>
    <command>CREATE CONSTRAINT TRIGGER</command> is a
-   <productname>PostgreSQL</productname> extension of the <acronym>SQL</acronym>
+   <productname>maintableQL</productname> extension of the <acronym>SQL</acronym>
    standard.
    So is the <literal>OR REPLACE</literal> option.
   </para>

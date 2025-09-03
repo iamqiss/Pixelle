@@ -17,14 +17,14 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, TestUserId,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, TestUserId,
     USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
-use iggy::prelude::UserId;
-use iggy::prelude::UserStatus;
+use messenger::prelude::Client;
+use messenger::prelude::UserId;
+use messenger::prelude::UserStatus;
 use predicates::str::diff;
 use serial_test::parallel;
 
@@ -59,7 +59,7 @@ impl TestUserNameCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestUserNameCmd {
+impl MessengerCmdTestCase for TestUserNameCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let create_user = client
             .create_user(&self.username, "secret", UserStatus::Active, None)
@@ -73,8 +73,8 @@ impl IggyCmdTestCase for TestUserNameCmd {
         self.user_id = Some(user.id);
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("user")
             .arg("name")
             .args(self.to_args())
@@ -107,24 +107,24 @@ impl IggyCmdTestCase for TestUserNameCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestUserNameCmd::new(
             String::from("tester"),
             String::from("testing"),
             TestUserId::Numeric,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserNameCmd::new(
             String::from("user1"),
             String::from("producer"),
             TestUserId::Named,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserNameCmd::new(
             String::from("same_name"),
             String::from("same_name"),
@@ -136,9 +136,9 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["user", "name", "--help"],
             format!(
@@ -147,8 +147,8 @@ pub async fn should_help_match() {
 The user ID can be specified as either a username or an ID
 
 Examples:
- iggy user name 2 new_user_name
- iggy user name testuser test_user
+ messenger user name 2 new_user_name
+ messenger user name testuser test_user
 
 {USAGE_PREFIX} user name <USER_ID> <USERNAME>
 
@@ -161,7 +161,7 @@ Arguments:
   <USERNAME>
           New username
 {CLAP_INDENT}
-          New and unique identifier for the user account on iggy server,
+          New and unique identifier for the user account on messenger server,
           must be between 3 and 50 characters long.
 
 Options:
@@ -176,9 +176,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["user", "name", "-h"],
             format!(

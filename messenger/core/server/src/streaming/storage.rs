@@ -27,8 +27,8 @@ use crate::streaming::systems::info::SystemInfo;
 use crate::streaming::systems::storage::FileSystemInfoStorage;
 use crate::streaming::topics::storage::FileTopicStorage;
 use crate::streaming::topics::topic::Topic;
-use iggy_common::ConsumerKind;
-use iggy_common::IggyError;
+use messenger_common::ConsumerKind;
+use messenger_common::MessengerError;
 #[cfg(test)]
 use mockall::automock;
 use std::fmt::Debug;
@@ -85,8 +85,8 @@ pub enum PartitionStorageKind {
 
 #[cfg_attr(test, automock)]
 pub trait SystemInfoStorage: Send {
-    fn load(&self) -> impl Future<Output = Result<SystemInfo, IggyError>> + Send;
-    fn save(&self, system_info: &SystemInfo) -> impl Future<Output = Result<(), IggyError>> + Send;
+    fn load(&self) -> impl Future<Output = Result<SystemInfo, MessengerError>> + Send;
+    fn save(&self, system_info: &SystemInfo) -> impl Future<Output = Result<(), MessengerError>> + Send;
 }
 
 #[cfg_attr(test, automock)]
@@ -95,9 +95,9 @@ pub trait StreamStorage: Send {
         &self,
         stream: &mut Stream,
         state: StreamState,
-    ) -> impl Future<Output = Result<(), IggyError>> + Send;
-    fn save(&self, stream: &Stream) -> impl Future<Output = Result<(), IggyError>> + Send;
-    fn delete(&self, stream: &Stream) -> impl Future<Output = Result<(), IggyError>> + Send;
+    ) -> impl Future<Output = Result<(), MessengerError>> + Send;
+    fn save(&self, stream: &Stream) -> impl Future<Output = Result<(), MessengerError>> + Send;
+    fn delete(&self, stream: &Stream) -> impl Future<Output = Result<(), MessengerError>> + Send;
 }
 
 #[cfg_attr(test, automock)]
@@ -106,9 +106,9 @@ pub trait TopicStorage: Send {
         &self,
         topic: &mut Topic,
         state: TopicState,
-    ) -> impl Future<Output = Result<(), IggyError>> + Send;
-    fn save(&self, topic: &Topic) -> impl Future<Output = Result<(), IggyError>> + Send;
-    fn delete(&self, topic: &Topic) -> impl Future<Output = Result<(), IggyError>> + Send;
+    ) -> impl Future<Output = Result<(), MessengerError>> + Send;
+    fn save(&self, topic: &Topic) -> impl Future<Output = Result<(), MessengerError>> + Send;
+    fn delete(&self, topic: &Topic) -> impl Future<Output = Result<(), MessengerError>> + Send;
 }
 
 #[cfg_attr(test, automock)]
@@ -117,28 +117,28 @@ pub trait PartitionStorage: Send {
         &self,
         partition: &mut Partition,
         state: PartitionState,
-    ) -> impl Future<Output = Result<(), IggyError>> + Send;
+    ) -> impl Future<Output = Result<(), MessengerError>> + Send;
     fn save(&self, partition: &mut Partition)
-    -> impl Future<Output = Result<(), IggyError>> + Send;
-    fn delete(&self, partition: &Partition) -> impl Future<Output = Result<(), IggyError>> + Send;
+    -> impl Future<Output = Result<(), MessengerError>> + Send;
+    fn delete(&self, partition: &Partition) -> impl Future<Output = Result<(), MessengerError>> + Send;
     fn save_consumer_offset(
         &self,
         offset: u64,
         path: &str,
-    ) -> impl Future<Output = Result<(), IggyError>> + Send;
+    ) -> impl Future<Output = Result<(), MessengerError>> + Send;
     fn load_consumer_offsets(
         &self,
         kind: ConsumerKind,
         path: &str,
-    ) -> impl Future<Output = Result<Vec<ConsumerOffset>, IggyError>> + Send;
+    ) -> impl Future<Output = Result<Vec<ConsumerOffset>, MessengerError>> + Send;
     fn delete_consumer_offsets(
         &self,
         path: &str,
-    ) -> impl Future<Output = Result<(), IggyError>> + Send;
+    ) -> impl Future<Output = Result<(), MessengerError>> + Send;
     fn delete_consumer_offset(
         &self,
         path: &str,
-    ) -> impl Future<Output = Result<(), IggyError>> + Send;
+    ) -> impl Future<Output = Result<(), MessengerError>> + Send;
 }
 
 #[derive(Debug)]
@@ -169,40 +169,40 @@ impl SystemStorage {
 
 impl SystemInfoStorageKind {
     forward_async_methods! {
-        async fn load(&self) -> Result<SystemInfo, IggyError>;
-        async fn save(&self, system_info: &SystemInfo) -> Result<(), IggyError>;
+        async fn load(&self) -> Result<SystemInfo, MessengerError>;
+        async fn save(&self, system_info: &SystemInfo) -> Result<(), MessengerError>;
     }
 }
 
 impl StreamStorageKind {
     forward_async_methods! {
-        async fn load(&self, stream: &mut Stream, state: StreamState) -> Result<(), IggyError>;
-        async fn save(&self, stream: &Stream) -> Result<(), IggyError>;
-        async fn delete(&self, stream: &Stream) -> Result<(), IggyError>;
+        async fn load(&self, stream: &mut Stream, state: StreamState) -> Result<(), MessengerError>;
+        async fn save(&self, stream: &Stream) -> Result<(), MessengerError>;
+        async fn delete(&self, stream: &Stream) -> Result<(), MessengerError>;
     }
 }
 
 impl TopicStorageKind {
     forward_async_methods! {
-        async fn load(&self, topic: &mut Topic, state: TopicState) -> Result<(), IggyError>;
-        async fn save(&self, topic: &Topic) -> Result<(), IggyError>;
-        async fn delete(&self, topic: &Topic) -> Result<(), IggyError>;
+        async fn load(&self, topic: &mut Topic, state: TopicState) -> Result<(), MessengerError>;
+        async fn save(&self, topic: &Topic) -> Result<(), MessengerError>;
+        async fn delete(&self, topic: &Topic) -> Result<(), MessengerError>;
     }
 }
 
 impl PartitionStorageKind {
     forward_async_methods! {
         async fn load(&self, partition: &mut Partition, state: PartitionState)
-            -> Result<(), IggyError>;
-        async fn save(&self, partition: &mut Partition) -> Result<(), IggyError>;
-        async fn delete(&self, partition: &Partition) -> Result<(), IggyError>;
-        async fn save_consumer_offset(&self, offset: u64, path: &str) -> Result<(), IggyError>;
+            -> Result<(), MessengerError>;
+        async fn save(&self, partition: &mut Partition) -> Result<(), MessengerError>;
+        async fn delete(&self, partition: &Partition) -> Result<(), MessengerError>;
+        async fn save_consumer_offset(&self, offset: u64, path: &str) -> Result<(), MessengerError>;
         async fn load_consumer_offsets(
             &self,
             kind: ConsumerKind,
             path: &str
-        ) -> Result<Vec<ConsumerOffset>, IggyError>;
-        async fn delete_consumer_offsets(&self, path: &str) -> Result<(), IggyError>;
-        async fn delete_consumer_offset(&self, path: &str) -> Result<(), IggyError>;
+        ) -> Result<Vec<ConsumerOffset>, MessengerError>;
+        async fn delete_consumer_offsets(&self, path: &str) -> Result<(), MessengerError>;
+        async fn delete_consumer_offset(&self, path: &str) -> Result<(), MessengerError>;
     }
 }

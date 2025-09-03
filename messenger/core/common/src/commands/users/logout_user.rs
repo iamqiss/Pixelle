@@ -18,7 +18,7 @@
 
 use crate::BytesSerializable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, LOGOUT_USER_CODE};
 use bytes::Bytes;
 use serde::{Deserialize, Serialize};
@@ -35,8 +35,8 @@ impl Command for LogoutUser {
     }
 }
 
-impl Validatable<IggyError> for LogoutUser {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for LogoutUser {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -46,9 +46,9 @@ impl BytesSerializable for LogoutUser {
         Bytes::new()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<LogoutUser, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<LogoutUser, MessengerError> {
         if !bytes.is_empty() {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let command = LogoutUser {};

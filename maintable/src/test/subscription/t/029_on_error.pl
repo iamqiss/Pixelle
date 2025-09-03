@@ -1,11 +1,11 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Tests for disable_on_error and SKIP transaction features.
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 my $offset = 0;
@@ -22,7 +22,7 @@ sub test_skip_lsn
 	  = @_;
 
 	# Wait until a conflict occurs on the subscriber.
-	$node_subscriber->poll_query_until('postgres',
+	$node_subscriber->poll_query_until('maintable',
 		"SELECT subenabled = FALSE FROM pg_subscription WHERE subname = 'sub'"
 	);
 
@@ -35,14 +35,14 @@ sub test_skip_lsn
 	my $lsn = $1;
 
 	# Set skip lsn.
-	$node_subscriber->safe_psql('postgres',
+	$node_subscriber->safe_psql('maintable',
 		"ALTER SUBSCRIPTION sub SKIP (lsn = '$lsn')");
 
 	# Re-enable the subscription.
-	$node_subscriber->safe_psql('postgres', "ALTER SUBSCRIPTION sub ENABLE");
+	$node_subscriber->safe_psql('maintable', "ALTER SUBSCRIPTION sub ENABLE");
 
 	# Wait for the failed transaction to be skipped
-	$node_subscriber->poll_query_until('postgres',
+	$node_subscriber->poll_query_until('maintable',
 		"SELECT subskiplsn = '0/0' FROM pg_subscription WHERE subname = 'sub'"
 	);
 
@@ -53,23 +53,23 @@ sub test_skip_lsn
 		$offset);
 
 	# Insert non-conflict data
-	$node_publisher->safe_psql('postgres',
+	$node_publisher->safe_psql('maintable',
 		"INSERT INTO tbl VALUES $nonconflict_data");
 
 	$node_publisher->wait_for_catchup('sub');
 
 	# Check replicated data
 	my $res =
-	  $node_subscriber->safe_psql('postgres', "SELECT count(*) FROM tbl");
+	  $node_subscriber->safe_psql('maintable', "SELECT count(*) FROM tbl");
 	is($res, $expected, $msg);
 }
 
 # Create publisher node. Set a low value of logical_decoding_work_mem to test
 # streaming cases.
-my $node_publisher = PostgreSQL::Test::Cluster->new('publisher');
+my $node_publisher = maintableQL::Test::Cluster->new('publisher');
 $node_publisher->init(allows_streaming => 'logical');
 $node_publisher->append_conf(
-	'postgresql.conf',
+	'maintableql.conf',
 	qq[
 logical_decoding_work_mem = 64kB
 max_prepared_transactions = 10
@@ -77,10 +77,10 @@ max_prepared_transactions = 10
 $node_publisher->start;
 
 # Create subscriber node
-my $node_subscriber = PostgreSQL::Test::Cluster->new('subscriber');
+my $node_subscriber = maintableQL::Test::Cluster->new('subscriber');
 $node_subscriber->init;
 $node_subscriber->append_conf(
-	'postgresql.conf',
+	'maintableql.conf',
 	qq[
 max_prepared_transactions = 10
 track_commit_timestamp = on
@@ -91,14 +91,14 @@ $node_subscriber->start;
 # create the same tables but with a primary key. Also, insert some data that
 # will conflict with the data replicated from publisher later.
 $node_publisher->safe_psql(
-	'postgres',
+	'maintable',
 	qq[
 CREATE TABLE tbl (i INT, t BYTEA);
 ALTER TABLE tbl REPLICA IDENTITY FULL;
 INSERT INTO tbl VALUES (1, NULL);
 ]);
 $node_subscriber->safe_psql(
-	'postgres',
+	'maintable',
 	qq[
 CREATE TABLE tbl (i INT PRIMARY KEY, t BYTEA);
 INSERT INTO tbl VALUES (1, NULL);
@@ -107,37 +107,37 @@ INSERT INTO tbl VALUES (1, NULL);
 # Create a pub/sub to set up logical replication. This tests that the
 # uniqueness violation will cause the subscription to fail during initial
 # synchronization and make it disabled.
-my $publisher_connstr = $node_publisher->connstr . ' dbname=postgres';
-$node_publisher->safe_psql('postgres',
+my $publisher_connstr = $node_publisher->connstr . ' dbname=maintable';
+$node_publisher->safe_psql('maintable',
 	"CREATE PUBLICATION pub FOR TABLE tbl");
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	"CREATE SUBSCRIPTION sub CONNECTION '$publisher_connstr' PUBLICATION pub WITH (disable_on_error = true, streaming = on, two_phase = on)"
 );
 
 # Initial synchronization failure causes the subscription to be disabled.
-$node_subscriber->poll_query_until('postgres',
+$node_subscriber->poll_query_until('maintable',
 	"SELECT subenabled = false FROM pg_catalog.pg_subscription WHERE subname = 'sub'"
 ) or die "Timed out while waiting for subscriber to be disabled";
 
 # Truncate the table on the subscriber which caused the subscription to be
 # disabled.
-$node_subscriber->safe_psql('postgres', "TRUNCATE tbl");
+$node_subscriber->safe_psql('maintable', "TRUNCATE tbl");
 
 # Re-enable the subscription "sub".
-$node_subscriber->safe_psql('postgres', "ALTER SUBSCRIPTION sub ENABLE");
+$node_subscriber->safe_psql('maintable', "ALTER SUBSCRIPTION sub ENABLE");
 
 # Wait for the data to replicate.
 $node_subscriber->wait_for_subscription_sync($node_publisher, 'sub');
 
 # Confirm that we have finished the table sync.
 my $result =
-  $node_subscriber->safe_psql('postgres', "SELECT COUNT(*) FROM tbl");
+  $node_subscriber->safe_psql('maintable', "SELECT COUNT(*) FROM tbl");
 is($result, qq(1), "subscription sub replicated data");
 
 # Insert data to tbl, raising an error on the subscriber due to violation
 # of the unique constraint on tbl. Then skip the transaction.
 $node_publisher->safe_psql(
-	'postgres',
+	'maintable',
 	qq[
 BEGIN;
 INSERT INTO tbl VALUES (1, NULL);
@@ -150,7 +150,7 @@ test_skip_lsn($node_publisher, $node_subscriber,
 # transaction, raising an error on the subscriber due to violation of the
 # unique constraint on tbl. Then skip the transaction.
 $node_publisher->safe_psql(
-	'postgres',
+	'maintable',
 	qq[
 BEGIN;
 UPDATE tbl SET i = 2;
@@ -164,7 +164,7 @@ test_skip_lsn($node_publisher, $node_subscriber,
 # limit, also raising an error on the subscriber during applying spooled
 # changes for the same reason. Then skip the transaction.
 $node_publisher->safe_psql(
-	'postgres',
+	'maintable',
 	qq[
 BEGIN;
 INSERT INTO tbl SELECT i, sha256(i::text::bytea) FROM generate_series(1, 10000) s(i);
@@ -174,7 +174,7 @@ test_skip_lsn($node_publisher, $node_subscriber,
 	"(4, sha256(4::text::bytea))",
 	"4", "test skipping stream-commit");
 
-$result = $node_subscriber->safe_psql('postgres',
+$result = $node_subscriber->safe_psql('maintable',
 	"SELECT COUNT(*) FROM pg_prepared_xacts");
 is($result, "0",
 	"check all prepared transactions are resolved on the subscriber");

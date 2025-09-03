@@ -19,8 +19,8 @@
 use crate::client_wrappers::client_wrapper::ClientWrapper;
 use async_dropper::AsyncDrop;
 use async_trait::async_trait;
-use iggy_binary_protocol::{ConsumerGroupClient, UserClient};
-use iggy_common::{ConsumerGroup, ConsumerGroupDetails, Identifier, IggyError};
+use messenger_binary_protocol::{ConsumerGroupClient, UserClient};
+use messenger_common::{ConsumerGroup, ConsumerGroupDetails, Identifier, MessengerError};
 
 #[async_trait]
 impl ConsumerGroupClient for ClientWrapper {
@@ -29,9 +29,9 @@ impl ConsumerGroupClient for ClientWrapper {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<Option<ConsumerGroupDetails>, IggyError> {
+    ) -> Result<Option<ConsumerGroupDetails>, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .get_consumer_group(stream_id, topic_id, group_id)
                     .await
@@ -58,9 +58,9 @@ impl ConsumerGroupClient for ClientWrapper {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<Vec<ConsumerGroup>, IggyError> {
+    ) -> Result<Vec<ConsumerGroup>, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.get_consumer_groups(stream_id, topic_id).await,
+            ClientWrapper::Messenger(client) => client.get_consumer_groups(stream_id, topic_id).await,
             ClientWrapper::Http(client) => client.get_consumer_groups(stream_id, topic_id).await,
             ClientWrapper::Tcp(client) => client.get_consumer_groups(stream_id, topic_id).await,
             ClientWrapper::Quic(client) => client.get_consumer_groups(stream_id, topic_id).await,
@@ -73,9 +73,9 @@ impl ConsumerGroupClient for ClientWrapper {
         topic_id: &Identifier,
         name: &str,
         group_id: Option<u32>,
-    ) -> Result<ConsumerGroupDetails, IggyError> {
+    ) -> Result<ConsumerGroupDetails, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .create_consumer_group(stream_id, topic_id, name, group_id)
                     .await
@@ -103,9 +103,9 @@ impl ConsumerGroupClient for ClientWrapper {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .delete_consumer_group(stream_id, topic_id, group_id)
                     .await
@@ -133,9 +133,9 @@ impl ConsumerGroupClient for ClientWrapper {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .join_consumer_group(stream_id, topic_id, group_id)
                     .await
@@ -163,9 +163,9 @@ impl ConsumerGroupClient for ClientWrapper {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .leave_consumer_group(stream_id, topic_id, group_id)
                     .await
@@ -193,7 +193,7 @@ impl ConsumerGroupClient for ClientWrapper {
 impl AsyncDrop for ClientWrapper {
     async fn async_drop(&mut self) {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 let _ = client.logout_user().await;
             }
             ClientWrapper::Http(client) => {

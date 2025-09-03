@@ -27,10 +27,10 @@ use axum::http::StatusCode;
 use axum::routing::post;
 use axum::{Extension, Json, Router};
 use error_set::ErrContext;
-use iggy_common::Identifier;
-use iggy_common::Validatable;
-use iggy_common::create_partitions::CreatePartitions;
-use iggy_common::delete_partitions::DeletePartitions;
+use messenger_common::Identifier;
+use messenger_common::Validatable;
+use messenger_common::create_partitions::CreatePartitions;
+use messenger_common::delete_partitions::DeletePartitions;
 use std::sync::Arc;
 use tracing::instrument;
 
@@ -43,7 +43,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .with_state(state)
 }
 
-#[instrument(skip_all, name = "trace_create_partitions", fields(iggy_user_id = identity.user_id, iggy_stream_id = stream_id, iggy_topic_id = topic_id))]
+#[instrument(skip_all, name = "trace_create_partitions", fields(messenger_user_id = identity.user_id, messenger_stream_id = stream_id, messenger_topic_id = topic_id))]
 async fn create_partitions(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,
@@ -82,7 +82,7 @@ async fn create_partitions(
     Ok(StatusCode::CREATED)
 }
 
-#[instrument(skip_all, name = "trace_delete_partitions", fields(iggy_user_id = identity.user_id, iggy_stream_id = stream_id, iggy_topic_id = topic_id))]
+#[instrument(skip_all, name = "trace_delete_partitions", fields(messenger_user_id = identity.user_id, messenger_stream_id = stream_id, messenger_topic_id = topic_id))]
 async fn delete_partitions(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,

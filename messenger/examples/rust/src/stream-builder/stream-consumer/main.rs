@@ -16,19 +16,19 @@
  * under the License.
  */
 
-use iggy::prelude::*;
-use iggy_examples::shared::stream::PrintEventConsumer;
+use messenger::prelude::*;
+use messenger_examples::shared::stream::PrintEventConsumer;
 use tokio::sync::oneshot;
 
-const IGGY_URL: &str = "iggy://iggy:iggy@localhost:8090";
+const MESSENGER_URL: &str = "messenger://messenger:messenger@localhost:8090";
 
 #[tokio::main]
-async fn main() -> Result<(), IggyError> {
-    println!("Build iggy client & consumer");
+async fn main() -> Result<(), MessengerError> {
+    println!("Build messenger client & consumer");
     //For customization, use the `new` or `from_stream_topic` constructor
-    let config = IggyConsumerConfig::default();
+    let config = MessengerConsumerConfig::default();
     let (client, mut consumer) =
-        IggyStreamConsumer::with_client_from_url(IGGY_URL, &config).await?;
+        MessengerStreamConsumer::with_client_from_url(MESSENGER_URL, &config).await?;
 
     println!("Start message stream");
     let (tx, rx) = oneshot::channel();
@@ -45,7 +45,7 @@ async fn main() -> Result<(), IggyError> {
 
     // Wait a bit for all messages to arrive.
     tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
-    println!("Stop the message stream and shutdown iggy client");
+    println!("Stop the message stream and shutdown messenger client");
     tx.send(()).expect("Failed to send shutdown signal");
     client.shutdown().await?;
     Ok(())

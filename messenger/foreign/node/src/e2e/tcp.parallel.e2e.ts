@@ -27,7 +27,7 @@ describe('e2e -> parallel', async () => {
   const c = getTestClient();
   
   const baseGetMe = await c.client.getMe();
-  const credentials = { username: 'iggy', password: 'iggy' };
+  const credentials = { username: 'messenger', password: 'messenger' };
 
 
   it('e2e -> parallel::mix calls', async () => {

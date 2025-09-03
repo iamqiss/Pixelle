@@ -1,14 +1,14 @@
 # Greek message translation file for pg_ctl
-# Copyright (C) 2021 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_ctl (PostgreSQL) package.
+# Copyright (C) 2021 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_ctl (maintableQL) package.
 # Georgios Kokolatos <gkokolatos@pm.me>, 2021
 #
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_ctl (PostgreSQL) 15\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_ctl (maintableQL) 15\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-08-14 23:18+0000\n"
 "PO-Revision-Date: 2023-08-15 13:37+0200\n"
 "Last-Translator: Georgios Kokolatos <gkokolatos@pm.me>\n"
@@ -402,8 +402,8 @@ msgstr "%s: δεν ήταν δυνατή η εύρεση του ιδίου εκ�
 
 #: pg_ctl.c:1441
 #, c-format
-msgid "%s: could not find postgres program executable\n"
-msgstr "%s:  δεν ήταν δυνατή η εύρεση του εκτελέσιμου προγράμματος postgres\n"
+msgid "%s: could not find maintable program executable\n"
+msgstr "%s:  δεν ήταν δυνατή η εύρεση του εκτελέσιμου προγράμματος maintable\n"
 
 #: pg_ctl.c:1511 pg_ctl.c:1545
 #, c-format
@@ -490,10 +490,10 @@ msgstr "Δοκιμάστε «%s --help» για περισσότερες πλη�
 #: pg_ctl.c:1966
 #, c-format
 msgid ""
-"%s is a utility to initialize, start, stop, or control a PostgreSQL server.\n"
+"%s is a utility to initialize, start, stop, or control a maintableQL server.\n"
 "\n"
 msgstr ""
-"%s είναι ένα βοηθητικό πρόγραμμα για την αρχικοποίηση, την εκκίνηση, τη διακοπή ή τον έλεγχο ενός διακομιστή PostgreSQL.\n"
+"%s είναι ένα βοηθητικό πρόγραμμα για την αρχικοποίηση, την εκκίνηση, τη διακοπή ή τον έλεγχο ενός διακομιστή maintableQL.\n"
 "\n"
 
 #: pg_ctl.c:1967
@@ -636,8 +636,8 @@ msgstr ""
 
 #: pg_ctl.c:2000
 #, c-format
-msgid "  -c, --core-files       allow postgres to produce core files\n"
-msgstr "  -c, --core-files       επίτρεψε στην postgres να παράγει αρχεία αποτύπωσης μνήμης\n"
+msgid "  -c, --core-files       allow maintable to produce core files\n"
+msgstr "  -c, --core-files       επίτρεψε στην maintable να παράγει αρχεία αποτύπωσης μνήμης\n"
 
 #: pg_ctl.c:2002
 #, c-format
@@ -652,16 +652,16 @@ msgstr "  -l, --log=FILENAME     ενέγραψε (ή προσάρτησε) το
 #: pg_ctl.c:2005
 #, c-format
 msgid ""
-"  -o, --options=OPTIONS  command line options to pass to postgres\n"
-"                         (PostgreSQL server executable) or initdb\n"
+"  -o, --options=OPTIONS  command line options to pass to maintable\n"
+"                         (maintableQL server executable) or initdb\n"
 msgstr ""
-"  -o, --options=OPTIONS  επιλογές γραμμής εντολών που θα διαβιστούν στη postgres\n"
-"                         (εκτελέσιμο αρχείο διακομιστή PostgreSQL) ή initdb\n"
+"  -o, --options=OPTIONS  επιλογές γραμμής εντολών που θα διαβιστούν στη maintable\n"
+"                         (εκτελέσιμο αρχείο διακομιστή maintableQL) ή initdb\n"
 
 #: pg_ctl.c:2007
 #, c-format
-msgid "  -p PATH-TO-POSTGRES    normally not necessary\n"
-msgstr "  -p PATH-TO-POSTGRES    κανονικά δεν είναι απαραίτητο\n"
+msgid "  -p PATH-TO-MAINTABLE    normally not necessary\n"
+msgstr "  -p PATH-TO-MAINTABLE    κανονικά δεν είναι απαραίτητο\n"
 
 #: pg_ctl.c:2008
 #, c-format
@@ -721,23 +721,23 @@ msgstr ""
 
 #: pg_ctl.c:2021
 #, c-format
-msgid "  -N SERVICENAME  service name with which to register PostgreSQL server\n"
-msgstr "  -N SERVICENAME  όνομα υπηρεσίας με το οποίο θα καταχωρηθεί ο διακομιστής PostgreSQL\n"
+msgid "  -N SERVICENAME  service name with which to register maintableQL server\n"
+msgstr "  -N SERVICENAME  όνομα υπηρεσίας με το οποίο θα καταχωρηθεί ο διακομιστής maintableQL\n"
 
 #: pg_ctl.c:2022
 #, c-format
-msgid "  -P PASSWORD     password of account to register PostgreSQL server\n"
-msgstr "  -P PASSWORD     κωδικός πρόσβασης του λογαριασμού για την καταγραφή του διακομιστή PostgreSQL\n"
+msgid "  -P PASSWORD     password of account to register maintableQL server\n"
+msgstr "  -P PASSWORD     κωδικός πρόσβασης του λογαριασμού για την καταγραφή του διακομιστή maintableQL\n"
 
 #: pg_ctl.c:2023
 #, c-format
-msgid "  -U USERNAME     user name of account to register PostgreSQL server\n"
-msgstr "  -U USERNAME     όνομα χρήστη του λογαριασμού για την καταγραφή του διακομιστή PostgreSQL\n"
+msgid "  -U USERNAME     user name of account to register maintableQL server\n"
+msgstr "  -U USERNAME     όνομα χρήστη του λογαριασμού για την καταγραφή του διακομιστή maintableQL\n"
 
 #: pg_ctl.c:2024
 #, c-format
-msgid "  -S START-TYPE   service start type to register PostgreSQL server\n"
-msgstr "  -S START-TYPE   τύπος έναρξης υπηρεσίας για την καταχώρηση διακομιστή PostgreSQL\n"
+msgid "  -S START-TYPE   service start type to register maintableQL server\n"
+msgstr "  -S START-TYPE   τύπος έναρξης υπηρεσίας για την καταχώρηση διακομιστή maintableQL\n"
 
 #: pg_ctl.c:2026
 #, c-format

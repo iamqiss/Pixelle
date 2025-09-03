@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::{IggyByteSize, IggyTimestamp, Topic};
+use crate::{MessengerByteSize, MessengerTimestamp, Topic};
 use serde::{Deserialize, Serialize};
 
 /// `Stream` represents the highest level of logical separation of data.
@@ -32,11 +32,11 @@ pub struct Stream {
     /// The unique identifier (numeric) of the stream.
     pub id: u32,
     /// The timestamp when the stream was created.
-    pub created_at: IggyTimestamp,
+    pub created_at: MessengerTimestamp,
     /// The unique name of the stream.
     pub name: String,
     /// The total size of the stream in bytes.
-    pub size: IggyByteSize,
+    pub size: MessengerByteSize,
     /// The total number of messages in the stream.
     pub messages_count: u64,
     /// The total number of topics in the stream.
@@ -57,11 +57,11 @@ pub struct StreamDetails {
     /// The unique identifier (numeric) of the stream.
     pub id: u32,
     /// The timestamp when the stream was created.
-    pub created_at: IggyTimestamp,
+    pub created_at: MessengerTimestamp,
     /// The unique name of the stream.
     pub name: String,
     /// The total size of the stream in bytes.
-    pub size: IggyByteSize,
+    pub size: MessengerByteSize,
     /// The total number of messages in the stream.
     pub messages_count: u64,
     /// The total number of topics in the stream.

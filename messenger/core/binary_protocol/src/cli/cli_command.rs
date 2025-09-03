@@ -20,7 +20,7 @@ use crate::Client;
 use anyhow::{Error, Result};
 use async_trait::async_trait;
 
-pub static PRINT_TARGET: &str = "iggy::cli::output";
+pub static PRINT_TARGET: &str = "messenger::cli::output";
 
 #[async_trait]
 pub trait CliCommand {

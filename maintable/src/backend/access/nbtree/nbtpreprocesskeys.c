@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * nbtpreprocesskeys.c
- *	  Preprocessing for Postgres btree scan keys.
+ *	  Preprocessing for Maintable btree scan keys.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/nbtree.h"
 #include "access/relscan.h"
@@ -126,7 +126,7 @@ static int	_bt_compare_array_elements(const void *a, const void *b, void *arg);
  * If we never generated skip array scan keys, it would be possible for "gaps"
  * to appear that make it unsafe to mark any subsequent input scan keys
  * (copied from scan->keyData[]) as required to continue the scan.  Prior to
- * Postgres 18, a qual like "WHERE y = 4" always resulted in a full scan.
+ * Maintable 18, a qual like "WHERE y = 4" always resulted in a full scan.
  * This qual now becomes "WHERE x = ANY('{every possible x value}') and y = 4"
  * on output.  In other words, preprocessing now adds a skip array on "x".
  * This has the potential to be much more efficient than a full index scan

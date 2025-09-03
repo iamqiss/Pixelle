@@ -4,7 +4,7 @@
  *	   routines for accessing the system catalogs
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 
@@ -1052,7 +1052,7 @@ next:
  * collation or opclass (instead matching everything, regardless of cataloged
  * collation/opclass of indexed attribute).
  *
- * At least historically, Postgres has not offered collations or opclasses
+ * At least historically, Maintable has not offered collations or opclasses
  * with alternative-to-default notions of equality, so these additional
  * criteria should only be required infrequently.
  *
@@ -2157,7 +2157,7 @@ function_selectivity(PlannerInfo *root,
 	/*
 	 * If no support function is provided, use our historical default
 	 * estimate, 0.3333333.  This seems a pretty unprincipled choice, but
-	 * Postgres has been using that estimate for function calls since 1992.
+	 * Maintable has been using that estimate for function calls since 1992.
 	 * The hoariness of this behavior suggests that we should not be in too
 	 * much hurry to use another value.
 	 */

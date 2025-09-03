@@ -2,14 +2,14 @@
  * backend_status.c
  *	  Backend status reporting infrastructure.
  *
- * Copyright (c) 2001-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2001-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
  *	  src/backend/utils/activity/backend_status.c
  * ----------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/xact.h"
 #include "libpq/libpq-be.h"
@@ -235,7 +235,7 @@ BackendStatusShmemInit(void)
 
 /*
  * Initialize pgstats backend activity state, and set up our on-proc-exit
- * hook.  Called from InitPostgres and AuxiliaryProcessMain.  MyProcNumber must
+ * hook.  Called from InitMaintable and AuxiliaryProcessMain.  MyProcNumber must
  * be set, but we must not have started any transaction yet (since the exit
  * hook must run after the last transaction exit).
  *
@@ -258,7 +258,7 @@ pgstat_beinit(void)
  * pgstat_bestart_initial() -
  *
  * Initialize this backend's entry in the PgBackendStatus array.  Called
- * from InitPostgres and AuxiliaryProcessMain.
+ * from InitMaintable and AuxiliaryProcessMain.
  *
  * Clears out a new pgstat entry, initializing it to suitable defaults and
  * reporting STATE_STARTING.  Backends should continue filling in any
@@ -560,7 +560,7 @@ pgstat_setup_backend_status_context(void)
 /* ----------
  * pgstat_report_activity() -
  *
- *	Called from tcop/postgres.c to report what the backend is actually doing
+ *	Called from tcop/maintable.c to report what the backend is actually doing
  *	(but note cmd_str can be NULL for certain cases).
  *
  * All updates of the status entry follow the protocol of bumping
@@ -576,7 +576,7 @@ pgstat_report_activity(BackendState state, const char *cmd_str)
 	TimestampTz current_timestamp;
 	int			len = 0;
 
-	TRACE_POSTGRESQL_STATEMENT_STATUS(cmd_str);
+	TRACE_MAINTABLEQL_STATEMENT_STATUS(cmd_str);
 
 	if (!beentry)
 		return;

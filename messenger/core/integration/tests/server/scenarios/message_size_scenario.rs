@@ -17,7 +17,7 @@
  */
 
 use bytes::Bytes;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::{ClientFactory, assert_clean_system, login_root};
 use std::collections::HashMap;
 use std::str::FromStr;
@@ -38,7 +38,7 @@ enum MessageToSend {
 
 pub async fn run(client_factory: &dyn ClientFactory) {
     let client = client_factory.create_client().await;
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
 
     login_root(&client).await;
     init_system(&client).await;
@@ -47,7 +47,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
     send_message_and_check_result(
         &client,
         MessageToSend::NoMessage,
-        Err(IggyError::InvalidMessagesCount),
+        Err(MessengerError::InvalidMessagesCount),
     )
     .await;
     send_message_and_check_result(&client, MessageToSend::OfSize(1), Ok(())).await;
@@ -74,13 +74,13 @@ pub async fn run(client_factory: &dyn ClientFactory) {
     send_message_and_check_result(
         &client,
         MessageToSend::OfSizeWithHeaders(100_001, 10_000_000),
-        Err(IggyError::TooBigUserHeaders),
+        Err(MessengerError::TooBigUserHeaders),
     )
     .await;
     send_message_and_check_result(
         &client,
         MessageToSend::OfSizeWithHeaders(100_000, 10_000_001),
-        Err(IggyError::TooBigMessagePayload),
+        Err(MessengerError::TooBigMessagePayload),
     )
     .await;
 
@@ -89,7 +89,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
     assert_clean_system(&client).await;
 }
 
-async fn assert_message_count(client: &IggyClient, expected_count: u32) {
+async fn assert_message_count(client: &MessengerClient, expected_count: u32) {
     // 4. Poll messages and validate the count
     let polled_messages = client
         .poll_messages(
@@ -107,7 +107,7 @@ async fn assert_message_count(client: &IggyClient, expected_count: u32) {
     assert_eq!(polled_messages.messages.len() as u32, expected_count);
 }
 
-async fn init_system(client: &IggyClient) {
+async fn init_system(client: &MessengerClient) {
     // 1. Create the stream
     client
         .create_stream(STREAM_NAME, Some(STREAM_ID))
@@ -123,14 +123,14 @@ async fn init_system(client: &IggyClient) {
             Default::default(),
             None,
             None,
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await
         .unwrap();
 }
 
-async fn cleanup_system(client: &IggyClient) {
+async fn cleanup_system(client: &MessengerClient) {
     client
         .delete_stream(&STREAM_ID.try_into().unwrap())
         .await
@@ -138,9 +138,9 @@ async fn cleanup_system(client: &IggyClient) {
 }
 
 async fn send_message_and_check_result(
-    client: &IggyClient,
+    client: &MessengerClient,
     message_params: MessageToSend,
-    expected_result: Result<(), IggyError>,
+    expected_result: Result<(), MessengerError>,
 ) {
     let message_result = match message_params {
         MessageToSend::NoMessage => {
@@ -243,7 +243,7 @@ fn create_message_header_of_size(target_size: usize) -> HashMap<HeaderKey, Heade
 fn create_message(
     header_size: Option<usize>,
     payload_size: usize,
-) -> Result<IggyMessage, IggyError> {
+) -> Result<MessengerMessage, MessengerError> {
     let headers = match header_size {
         Some(header_size) => {
             if header_size > 0 {
@@ -258,13 +258,13 @@ fn create_message(
     let payload = create_string_of_size(payload_size);
 
     if let Some(headers) = headers {
-        IggyMessage::builder()
+        MessengerMessage::builder()
             .id(1u128)
             .payload(Bytes::from(payload))
             .user_headers(headers)
             .build()
     } else {
-        IggyMessage::builder()
+        MessengerMessage::builder()
             .id(1u128)
             .payload(Bytes::from(payload))
             .build()

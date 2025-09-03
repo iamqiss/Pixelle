@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_tsdictionary.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-droptsdictionary">

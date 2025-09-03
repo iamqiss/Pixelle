@@ -20,9 +20,9 @@ use crate::streaming::topics::COMPONENT;
 use crate::streaming::topics::consumer_group::ConsumerGroup;
 use crate::streaming::topics::topic::Topic;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{IdKind, Identifier};
+use messenger_common::MessengerError;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{IdKind, Identifier};
 use std::sync::atomic::Ordering;
 use tokio::sync::RwLock;
 use tracing::info;
@@ -51,7 +51,7 @@ impl Topic {
     pub fn get_consumer_group(
         &self,
         identifier: &Identifier,
-    ) -> Result<&RwLock<ConsumerGroup>, IggyError> {
+    ) -> Result<&RwLock<ConsumerGroup>, MessengerError> {
         match identifier.kind {
             IdKind::Numeric => self.get_consumer_group_by_id(identifier.get_u32_value().unwrap()),
             IdKind::String => self.get_consumer_group_by_name(&identifier.get_cow_str_value()?),
@@ -61,7 +61,7 @@ impl Topic {
     pub fn try_get_consumer_group(
         &self,
         identifier: &Identifier,
-    ) -> Result<Option<&RwLock<ConsumerGroup>>, IggyError> {
+    ) -> Result<Option<&RwLock<ConsumerGroup>>, MessengerError> {
         match identifier.kind {
             IdKind::Numeric => Ok(self.consumer_groups.get(&identifier.get_u32_value()?)),
             IdKind::String => {
@@ -79,10 +79,10 @@ impl Topic {
     pub fn get_consumer_group_by_name(
         &self,
         name: &str,
-    ) -> Result<&RwLock<ConsumerGroup>, IggyError> {
+    ) -> Result<&RwLock<ConsumerGroup>, MessengerError> {
         let group_id = self.consumer_groups_ids.get(name);
         if group_id.is_none() {
-            return Err(IggyError::ConsumerGroupNameNotFound(
+            return Err(MessengerError::ConsumerGroupNameNotFound(
                 name.to_string(),
                 self.name.to_owned(),
             ));
@@ -91,10 +91,10 @@ impl Topic {
         self.get_consumer_group_by_id(*group_id.unwrap())
     }
 
-    pub fn get_consumer_group_by_id(&self, id: u32) -> Result<&RwLock<ConsumerGroup>, IggyError> {
+    pub fn get_consumer_group_by_id(&self, id: u32) -> Result<&RwLock<ConsumerGroup>, MessengerError> {
         let consumer_group = self.consumer_groups.get(&id);
         if consumer_group.is_none() {
-            return Err(IggyError::ConsumerGroupIdNotFound(id, self.topic_id));
+            return Err(MessengerError::ConsumerGroupIdNotFound(id, self.topic_id));
         }
 
         Ok(consumer_group.unwrap())
@@ -104,9 +104,9 @@ impl Topic {
         &mut self,
         group_id: Option<u32>,
         name: &str,
-    ) -> Result<&RwLock<ConsumerGroup>, IggyError> {
+    ) -> Result<&RwLock<ConsumerGroup>, MessengerError> {
         if self.consumer_groups_ids.contains_key(name) {
-            return Err(IggyError::ConsumerGroupNameAlreadyExists(
+            return Err(MessengerError::ConsumerGroupNameAlreadyExists(
                 name.to_owned(),
                 self.topic_id,
             ));
@@ -122,7 +122,7 @@ impl Topic {
             loop {
                 if self.consumer_groups.contains_key(&id) {
                     if id == u32::MAX {
-                        return Err(IggyError::ConsumerGroupIdAlreadyExists(id, self.topic_id));
+                        return Err(MessengerError::ConsumerGroupIdAlreadyExists(id, self.topic_id));
                     }
                     id = self
                         .current_consumer_group_id
@@ -134,7 +134,7 @@ impl Topic {
         }
 
         if self.consumer_groups.contains_key(&id) {
-            return Err(IggyError::ConsumerGroupIdAlreadyExists(id, self.topic_id));
+            return Err(MessengerError::ConsumerGroupIdAlreadyExists(id, self.topic_id));
         }
 
         let consumer_group =
@@ -151,7 +151,7 @@ impl Topic {
     pub async fn delete_consumer_group(
         &mut self,
         id: &Identifier,
-    ) -> Result<RwLock<ConsumerGroup>, IggyError> {
+    ) -> Result<RwLock<ConsumerGroup>, MessengerError> {
         let group_id;
         {
             let consumer_group = self.get_consumer_group(id).with_error_context(|error| {
@@ -163,7 +163,7 @@ impl Topic {
 
         let consumer_group = self.consumer_groups.remove(&group_id);
         if consumer_group.is_none() {
-            return Err(IggyError::ConsumerGroupIdNotFound(group_id, self.topic_id));
+            return Err(MessengerError::ConsumerGroupIdNotFound(group_id, self.topic_id));
         }
         let consumer_group = consumer_group.unwrap();
         {
@@ -199,7 +199,7 @@ impl Topic {
         &self,
         group_id: &Identifier,
         member_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let consumer_group = self.get_consumer_group(group_id).with_error_context(|error| {
             format!("{COMPONENT} (error: {error}) - failed to get consumer group with id: {group_id}")
         })?;
@@ -216,7 +216,7 @@ impl Topic {
         &self,
         group_id: &Identifier,
         member_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let consumer_group = self.get_consumer_group(group_id).with_error_context(|error| {
             format!("{COMPONENT} (error: {error}) - failed to get consumer group with id: {group_id}")
         })?;
@@ -237,7 +237,7 @@ mod tests {
     use crate::streaming::persistence::persister::{FileWithSyncPersister, PersisterKind};
     use crate::streaming::storage::SystemStorage;
     use crate::streaming::utils::MemoryPool;
-    use iggy_common::{CompressionAlgorithm, IggyExpiry, MaxTopicSize};
+    use messenger_common::{CompressionAlgorithm, MessengerExpiry, MaxTopicSize};
     use std::sync::Arc;
     use std::sync::atomic::{AtomicU32, AtomicU64};
 
@@ -281,7 +281,7 @@ mod tests {
         let result = topic.create_consumer_group(Some(group_id), "test2").await;
         assert!(result.is_err());
         let err = result.unwrap_err();
-        assert!(matches!(err, IggyError::ConsumerGroupIdAlreadyExists(_, _)));
+        assert!(matches!(err, MessengerError::ConsumerGroupIdAlreadyExists(_, _)));
         assert_eq!(topic.consumer_groups.len(), 1);
     }
 
@@ -299,7 +299,7 @@ mod tests {
         let err = result.unwrap_err();
         assert!(matches!(
             err,
-            IggyError::ConsumerGroupNameAlreadyExists(_, _)
+            MessengerError::ConsumerGroupNameAlreadyExists(_, _)
         ));
         assert_eq!(topic.consumer_groups.len(), 1);
     }
@@ -415,7 +415,7 @@ mod tests {
             size_of_parent_stream,
             messages_count_of_parent_stream,
             segments_count_of_parent_stream,
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             compression_algorithm,
             MaxTopicSize::ServerDefault,
             1,

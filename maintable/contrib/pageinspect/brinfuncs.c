@@ -2,12 +2,12 @@
  * brinfuncs.c
  *		Functions to investigate BRIN indexes
  *
- * Copyright (c) 2014-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2014-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		contrib/pageinspect/brinfuncs.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/brin_internal.h"
 #include "access/brin_page.h"

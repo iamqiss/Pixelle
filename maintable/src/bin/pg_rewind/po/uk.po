@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: postgresql\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableql\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-08-31 06:23+0000\n"
 "PO-Revision-Date: 2024-09-23 19:38\n"
 "Last-Translator: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
-"X-Crowdin-Project: postgresql\n"
+"X-Crowdin-Project: maintableql\n"
 "X-Crowdin-Project-ID: 324573\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: /REL_17_STABLE/pg_rewind.pot\n"
@@ -68,9 +68,9 @@ msgstr "неправильний порядок байтів"
 msgid "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr "можлива помилка у послідовності байтів.\n"
-"Порядок байтів, що використовують для зберігання файлу pg_control, може не відповідати тому, який використовується цією програмою. У такому випадку результати нижче будуть неправильним, і інсталяція PostgreSQL буде несумісною з цим каталогом даних."
+"Порядок байтів, що використовують для зберігання файлу pg_control, може не відповідати тому, який використовується цією програмою. У такому випадку результати нижче будуть неправильним, і інсталяція maintableQL буде несумісною з цим каталогом даних."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:70
 #: ../../common/file_utils.c:347 ../../common/file_utils.c:406
@@ -528,8 +528,8 @@ msgstr "WAL модифікує відношення, але тип запису 
 
 #: pg_rewind.c:94
 #, c-format
-msgid "%s resynchronizes a PostgreSQL cluster with another copy of the cluster.\n\n"
-msgstr "%s синхронізує кластер PostgreSQL з іншою копією кластеру.\n\n"
+msgid "%s resynchronizes a maintableQL cluster with another copy of the cluster.\n\n"
+msgstr "%s синхронізує кластер maintableQL з іншою копією кластеру.\n\n"
 
 #: pg_rewind.c:95
 #, c-format
@@ -670,8 +670,8 @@ msgstr "\"root\" не може це виконувати"
 
 #: pg_rewind.c:283
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "Запускати %s треба від суперкористувача PostgreSQL."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "Запускати %s треба від суперкористувача maintableQL."
 
 #: pg_rewind.c:293
 #, c-format
@@ -849,8 +849,8 @@ msgstr "виконання \"%s\" для цільового серверу, що
 
 #: pg_rewind.c:1188
 #, c-format
-msgid "postgres single-user mode in target cluster failed"
-msgstr "не вдалося ввімкнути однокористувацький режим postgres в цільовому кластері"
+msgid "maintable single-user mode in target cluster failed"
+msgstr "не вдалося ввімкнути однокористувацький режим maintable в цільовому кластері"
 
 #: pg_rewind.c:1189
 #, c-format

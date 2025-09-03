@@ -5,7 +5,7 @@
 #
 # Module to set up an LDAP server for testing pg_hba.conf ldap authentication
 #
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 #
 ############################################################################
 
@@ -48,7 +48,7 @@ package LdapServer;
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use Test::More;
 
 use File::Copy;
@@ -187,17 +187,17 @@ sub new
 	my $testname = basename((caller)[1], '.pl');
 	my $self = {};
 
-	my $test_temp = PostgreSQL::Test::Utils::tempdir("ldap-$testname");
+	my $test_temp = maintableQL::Test::Utils::tempdir("ldap-$testname");
 
 	my $ldap_datadir = "$test_temp/openldap-data";
 	my $slapd_certs = "$test_temp/slapd-certs";
 	my $slapd_pidfile = "$test_temp/slapd.pid";
 	my $slapd_conf = "$test_temp/slapd.conf";
 	my $slapd_logfile =
-	  "${PostgreSQL::Test::Utils::log_path}/slapd-$testname.log";
+	  "${maintableQL::Test::Utils::log_path}/slapd-$testname.log";
 	my $ldap_server = 'localhost';
-	my $ldap_port = PostgreSQL::Test::Cluster::get_free_port();
-	my $ldaps_port = PostgreSQL::Test::Cluster::get_free_port();
+	my $ldap_port = maintableQL::Test::Cluster::get_free_port();
+	my $ldaps_port = maintableQL::Test::Cluster::get_free_port();
 	my $ldap_url = "ldap://$ldap_server:$ldap_port";
 	my $ldaps_url = "ldaps://$ldap_server:$ldaps_port";
 	my $ldap_basedn = 'dc=example,dc=net';

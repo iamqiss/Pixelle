@@ -1,11 +1,11 @@
-module github.com/apache/iggy/bdd/go
+module github.com/apache/messenger/bdd/go
 
 go 1.23.0
 
-replace github.com/apache/iggy/foreign/go => ../../foreign/go
+replace github.com/apache/messenger/foreign/go => ../../foreign/go
 
 require (
-	github.com/apache/iggy/foreign/go v0.0.0-00010101000000-000000000000
+	github.com/apache/messenger/foreign/go v0.0.0-00010101000000-000000000000
 	github.com/cucumber/godog v0.15.1
 	github.com/google/uuid v1.6.0
 	github.com/onsi/ginkgo/v2 v2.23.4

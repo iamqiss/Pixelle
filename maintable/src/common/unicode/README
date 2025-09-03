@@ -4,7 +4,7 @@ determine various properties of Unicode data.
 
 The generated header files are copied to src/include/common/, and
 included in the source tree, so these tools are not normally required
-to build PostgreSQL.
+to build maintableQL.
 
 Update Unicode Version
 ----------------------

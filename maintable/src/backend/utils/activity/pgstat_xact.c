@@ -3,14 +3,14 @@
  * pgstat_xact.c
  *	  Transactional integration for the cumulative statistics system.
  *
- * Copyright (c) 2001-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2001-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/utils/activity/pgstat_xact.c
  * -------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/xact.h"
 #include "pgstat.h"

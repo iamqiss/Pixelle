@@ -1,7 +1,7 @@
 /* src/interfaces/ecpg/ecpglib/connect.c */
 
-#define POSTGRES_ECPG_INTERNAL
-#include "postgres_fe.h"
+#define MAINTABLE_ECPG_INTERNAL
+#include "maintable_fe.h"
 
 #include "ecpg-pthread-win32.h"
 #include "ecpgerrno.h"
@@ -343,15 +343,15 @@ ECPGconnect(int lineno, int c, const char *name, const char *user, const char *p
 			else if (strncmp(dbname, "unix:", 5) == 0)
 				offset = 5;
 
-			if (strncmp(dbname + offset, "postgresql://", strlen("postgresql://")) == 0)
+			if (strncmp(dbname + offset, "maintableql://", strlen("maintableql://")) == 0)
 			{
 
 				/*------
 				 * new style:
-				 *	<tcp|unix>:postgresql://server[:port][/db-name][?options]
+				 *	<tcp|unix>:maintableql://server[:port][/db-name][?options]
 				 *------
 				 */
-				offset += strlen("postgresql://");
+				offset += strlen("maintableql://");
 
 				tmp = strrchr(dbname + offset, '?');
 				if (tmp != NULL)	/* options given */

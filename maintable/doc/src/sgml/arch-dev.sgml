@@ -1,7 +1,7 @@
 <!-- doc/src/sgml/arch-dev.sgml -->
 
  <chapter id="overview">
-  <title>Overview of PostgreSQL Internals</title>
+  <title>Overview of maintableQL Internals</title>
 
   <note>
    <title>Author</title>
@@ -15,7 +15,7 @@
 
   <para>
    This chapter gives an overview of the internal structure of the
-   backend of <productname>PostgreSQL</productname>.  After having
+   backend of <productname>maintableQL</productname>.  After having
    read the following sections you should have an idea of how a query
    is processed.  This chapter is intended to help the reader
    understand the general sequence of operations that occur within the
@@ -34,7 +34,7 @@
    <procedure>
     <step>
      <para>
-      A connection from an application program to the <productname>PostgreSQL</productname>
+      A connection from an application program to the <productname>maintableQL</productname>
       server has to be established. The application program transmits a
       query to the server and waits to receive the results sent back by the
       server.
@@ -105,7 +105,7 @@
 
    <para>
     In the following sections we will cover each of the above listed items
-    in more detail to give a better understanding of <productname>PostgreSQL</productname>'s internal
+    in more detail to give a better understanding of <productname>maintableQL</productname>'s internal
     control and data structures.
    </para>
   </sect1>
@@ -114,7 +114,7 @@
    <title>How Connections Are Established</title>
 
    <para>
-    <productname>PostgreSQL</productname> implements a
+    <productname>maintableQL</productname> implements a
     <quote>process per user</quote> client/server model.
     In this model, every
     <glossterm linkend="glossary-client">client process</glossterm>
@@ -137,7 +137,7 @@
 
    <para>
     The client process can be any program that understands the
-    <productname>PostgreSQL</productname> protocol described in
+    <productname>maintableQL</productname> protocol described in
     <xref linkend="protocol"/>.  Many clients are based on the
     C-language library <application>libpq</application>, but several independent
     implementations of the protocol exist, such as the Java
@@ -222,7 +222,7 @@
       <para>
        The mentioned transformations and compilations are normally done
        automatically using the <firstterm>makefiles</firstterm>
-       shipped with the <productname>PostgreSQL</productname>
+       shipped with the <productname>maintableQL</productname>
        source distribution.
       </para>
      </note>
@@ -284,13 +284,13 @@
   </sect1>
 
   <sect1 id="rule-system">
-   <title>The <productname>PostgreSQL</productname> Rule System</title>
+   <title>The <productname>maintableQL</productname> Rule System</title>
 
    <para>
-    <productname>PostgreSQL</productname> supports a powerful
+    <productname>maintableQL</productname> supports a powerful
     <firstterm>rule system</firstterm> for the specification
     of <firstterm>views</firstterm> and ambiguous <firstterm>view updates</firstterm>.
-    Originally the <productname>PostgreSQL</productname>
+    Originally the <productname>maintableQL</productname>
     rule system consisted of two implementations:
 
     <itemizedlist>
@@ -300,8 +300,8 @@
        implemented deep in the <firstterm>executor</firstterm>. The rule system was
        called whenever an individual row had been accessed. This
        implementation was removed in 1995 when the last official release
-       of the <productname>Berkeley Postgres</productname> project was
-       transformed into <productname>Postgres95</productname>.
+       of the <productname>Berkeley Maintable</productname> project was
+       transformed into <productname>Maintable95</productname>.
       </para>
      </listitem>
 
@@ -348,7 +348,7 @@
      In particular, this occurs when executing queries
      involving large numbers of join operations. In order to determine
      a reasonable (not necessarily optimal) query plan in a reasonable amount
-     of time, <productname>PostgreSQL</productname> uses a <firstterm>Genetic
+     of time, <productname>maintableQL</productname> uses a <firstterm>Genetic
      Query Optimizer</firstterm> (see <xref linkend="geqo"/>) when the number of joins
      exceeds a threshold (see <xref linkend="guc-geqo-threshold"/>).
     </para>

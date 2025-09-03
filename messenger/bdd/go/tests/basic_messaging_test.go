@@ -21,9 +21,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	"github.com/apache/iggy/foreign/go/iggycli"
-	"github.com/apache/iggy/foreign/go/tcp"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	"github.com/apache/messenger/foreign/go/messengercli"
+	"github.com/apache/messenger/foreign/go/tcp"
 	"github.com/cucumber/godog"
 	"github.com/google/uuid"
 	"os"
@@ -34,8 +34,8 @@ type basicMessagingCtxKey struct{}
 
 type basicMessagingCtx struct {
 	serverAddr          *string
-	client              iggycli.Client
-	lastSentMessage     *iggcon.IggyMessage
+	client              messengercli.Client
+	lastSentMessage     *iggcon.MessengerMessage
 	lastPollMessages    *iggcon.PolledMessage
 	lastStreamID        *uint32
 	lastStreamName      *string
@@ -50,7 +50,7 @@ func getBasicMessagingCtx(ctx context.Context) *basicMessagingCtx {
 
 func givenRunningServer(ctx context.Context) error {
 	c := getBasicMessagingCtx(ctx)
-	addr := os.Getenv("IGGY_TCP_ADDRESS")
+	addr := os.Getenv("MESSENGER_TCP_ADDRESS")
 	if addr == "" {
 		addr = "127.0.0.1:8090"
 	}
@@ -61,8 +61,8 @@ func givenAuthenticationAsRoot(ctx context.Context) error {
 	c := getBasicMessagingCtx(ctx)
 	serverAddr := *c.serverAddr
 
-	client, err := iggycli.NewIggyClient(
-		iggycli.WithTcp(
+	client, err := messengercli.NewMessengerClient(
+		messengercli.WithTcp(
 			tcp.WithServerAddress(serverAddr),
 		),
 	)
@@ -74,7 +74,7 @@ func givenAuthenticationAsRoot(ctx context.Context) error {
 		return fmt.Errorf("error pinging client: %w", err)
 	}
 
-	if _, err = client.LoginUser("iggy", "iggy"); err != nil {
+	if _, err = client.LoginUser("messenger", "messenger"); err != nil {
 		return fmt.Errorf("error logging in: %v", err)
 	}
 
@@ -105,12 +105,12 @@ func whenSendMessages(
 	return nil
 }
 
-func createTestMessages(count uint32) ([]iggcon.IggyMessage, error) {
-	messages := make([]iggcon.IggyMessage, 0, count)
+func createTestMessages(count uint32) ([]iggcon.MessengerMessage, error) {
+	messages := make([]iggcon.MessengerMessage, 0, count)
 	for i := 0; uint32(i) < count; i++ {
 		id := uuid.New()
 		payload := []byte(fmt.Sprintf("test message %d", i))
-		message, err := iggcon.NewIggyMessage(payload, iggcon.WithID(id))
+		message, err := iggcon.NewMessengerMessage(payload, iggcon.WithID(id))
 		if err != nil {
 			return nil, fmt.Errorf("failed to create message: %w", err)
 		}
@@ -269,7 +269,7 @@ func whenCreateTopic(
 		topicName,
 		partitionsCount,
 		iggcon.CompressionAlgorithmNone,
-		iggcon.IggyExpiryNeverExpire,
+		iggcon.MessengerExpiryNeverExpire,
 		0,
 		nil,
 		&uint32TopicID,
@@ -319,7 +319,7 @@ func initScenarios(sc *godog.ScenarioContext) {
 	sc.Before(func(ctx context.Context, sc *godog.Scenario) (context.Context, error) {
 		return context.WithValue(context.Background(), basicMessagingCtxKey{}, &basicMessagingCtx{}), nil
 	})
-	sc.Step(`I have a running Iggy server`, givenRunningServer)
+	sc.Step(`I have a running Messenger server`, givenRunningServer)
 	sc.Step(`I am authenticated as the root user`, givenAuthenticationAsRoot)
 	sc.Step(`^I send (\d+) messages to stream (\d+), topic (\d+), partition (\d+)$`, whenSendMessages)
 	sc.Step(`^I poll messages from stream (\d+), topic (\d+), partition (\d+) starting from offset (\d+)$`, whenPollMessages)

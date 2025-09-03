@@ -1,14 +1,14 @@
 # Greek message translation file for initdb
-# Copyright (C) 2021 PostgreSQL Global Development Group
-# This file is distributed under the same license as the initdb (PostgreSQL) package.
+# Copyright (C) 2021 maintableQL Global Development Group
+# This file is distributed under the same license as the initdb (maintableQL) package.
 # Georgios Kokolatos <gkokolatos@pm.me>, 2021
 #
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: initdb (PostgreSQL) 15\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: initdb (maintableQL) 15\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-08-14 23:19+0000\n"
 "PO-Revision-Date: 2023-08-15 11:59+0200\n"
 "Last-Translator: Georgios Kokolatos <gkokolatos@pm.me>\n"
@@ -360,8 +360,8 @@ msgstr "εκτέλεση σεναρίου bootstrap ... "
 
 #: initdb.c:1489
 #, c-format
-msgid "input file \"%s\" does not belong to PostgreSQL %s"
-msgstr "το αρχείο εισόδου «%s» δεν ανήκει στην PostgreSQL %s"
+msgid "input file \"%s\" does not belong to maintableQL %s"
+msgstr "το αρχείο εισόδου «%s» δεν ανήκει στην maintableQL %s"
 
 #: initdb.c:1491
 #, c-format
@@ -484,10 +484,10 @@ msgstr "Χρήση ετικέτας γλώσσας «%s» για την εντο
 #: initdb.c:2427
 #, c-format
 msgid ""
-"%s initializes a PostgreSQL database cluster.\n"
+"%s initializes a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s αρχικοποιεί μία συστάδα PostgreSQL βάσης δεδομένων.\n"
+"%s αρχικοποιεί μία συστάδα maintableQL βάσης δεδομένων.\n"
 "\n"
 
 #: initdb.c:2428

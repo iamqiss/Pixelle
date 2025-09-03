@@ -18,7 +18,7 @@
 
 use crate::state::command::EntryCommand;
 use crate::state::entry::StateEntry;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 #[cfg(test)]
 use mockall::automock;
 use std::fmt::Debug;
@@ -41,17 +41,17 @@ pub enum StateKind {
 
 #[cfg_attr(test, automock)]
 pub trait State: Send {
-    fn init(&self) -> impl Future<Output = Result<Vec<StateEntry>, IggyError>> + Send;
-    fn load_entries(&self) -> impl Future<Output = Result<Vec<StateEntry>, IggyError>> + Send;
+    fn init(&self) -> impl Future<Output = Result<Vec<StateEntry>, MessengerError>> + Send;
+    fn load_entries(&self) -> impl Future<Output = Result<Vec<StateEntry>, MessengerError>> + Send;
     fn apply(
         &self,
         user_id: u32,
         command: &EntryCommand,
-    ) -> impl Future<Output = Result<(), IggyError>> + Send;
+    ) -> impl Future<Output = Result<(), MessengerError>> + Send;
 }
 
 impl StateKind {
-    pub async fn init(&self) -> Result<Vec<StateEntry>, IggyError> {
+    pub async fn init(&self) -> Result<Vec<StateEntry>, MessengerError> {
         match self {
             Self::File(s) => s.init().await,
             #[cfg(test)]
@@ -59,7 +59,7 @@ impl StateKind {
         }
     }
 
-    pub async fn load_entries(&self) -> Result<Vec<StateEntry>, IggyError> {
+    pub async fn load_entries(&self) -> Result<Vec<StateEntry>, MessengerError> {
         match self {
             Self::File(s) => s.load_entries().await,
             #[cfg(test)]
@@ -67,7 +67,7 @@ impl StateKind {
         }
     }
 
-    pub async fn apply(&self, user_id: u32, command: &EntryCommand) -> Result<(), IggyError> {
+    pub async fn apply(&self, user_id: u32, command: &EntryCommand) -> Result<(), MessengerError> {
         match self {
             Self::File(s) => s.apply(user_id, command).await,
             #[cfg(test)]

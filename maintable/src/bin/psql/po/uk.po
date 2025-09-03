@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: postgresql\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableql\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-09-23 10:48+0000\n"
 "PO-Revision-Date: 2024-09-23 19:38\n"
 "Last-Translator: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
-"X-Crowdin-Project: postgresql\n"
+"X-Crowdin-Project: maintableql\n"
 "X-Crowdin-Project-ID: 324573\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: /REL_17_STABLE/psql.pot\n"
@@ -2502,8 +2502,8 @@ msgid "Large objects"
 msgstr "Великі об'єкти"
 
 #: help.c:63
-msgid "psql is the PostgreSQL interactive terminal.\n\n"
-msgstr "psql - це інтерактивний термінал PostgreSQL.\n\n"
+msgid "psql is the maintableQL interactive terminal.\n\n"
+msgstr "psql - це інтерактивний термінал maintableQL.\n\n"
 
 #: help.c:64 help.c:372 help.c:456 help.c:499
 msgid "Usage:\n"
@@ -2703,10 +2703,10 @@ msgstr "  -W, --password           запитувати пароль завжд�
 #: help.c:120
 msgid "\n"
 "For more information, type \"\\?\" (for internal commands) or \"\\help\" (for SQL\n"
-"commands) from within psql, or consult the psql section in the PostgreSQL\n"
+"commands) from within psql, or consult the psql section in the maintableQL\n"
 "documentation.\n\n"
 msgstr "\n"
-"Щоб дізнатися більше, введіть \"\\?\" (для внутрішніх команд) або \"\\help\"(для команд SQL) в psql, або звіртеся з розділом psql документації PostgreSQL. \n\n"
+"Щоб дізнатися більше, введіть \"\\?\" (для внутрішніх команд) або \"\\help\"(для команд SQL) в psql, або звіртеся з розділом psql документації maintableQL. \n\n"
 
 #: help.c:123
 #, c-format
@@ -2727,8 +2727,8 @@ msgid "  \\bind [PARAM]...       set query parameters\n"
 msgstr "  \\bind [PARAM]...       встановити параметри запиту\n"
 
 #: help.c:168
-msgid "  \\copyright             show PostgreSQL usage and distribution terms\n"
-msgstr "  \\copyright             умови використання і розповсюдження PostgreSQL\n"
+msgid "  \\copyright             show maintableQL usage and distribution terms\n"
+msgstr "  \\copyright             умови використання і розповсюдження maintableQL\n"
 
 #: help.c:169
 msgid "  \\crosstabview [COLUMNS] execute query and display result in crosstab\n"
@@ -3779,9 +3779,9 @@ msgid "Use \"\\q\" to leave %s.\n"
 msgstr "Введіть \"\\q\", щоб вийти з %s.\n"
 
 #: mainloop.c:214
-msgid "The input is a PostgreSQL custom-format dump.\n"
+msgid "The input is a maintableQL custom-format dump.\n"
 "Use the pg_restore command-line client to restore this dump to a database.\n"
-msgstr "Ввід являє собою спеціальний формат дампу PostgreSQL.\n"
+msgstr "Ввід являє собою спеціальний формат дампу maintableQL.\n"
 "Щоб відновити базу даних з цього дампу, скористайтеся командою pg_restore.\n"
 
 #: mainloop.c:295
@@ -3793,8 +3793,8 @@ msgid "Use \\? for help."
 msgstr "Введіть \\? для отримання довідки."
 
 #: mainloop.c:301
-msgid "You are using psql, the command-line interface to PostgreSQL."
-msgstr "Ви використовуєте psql — інтерфейс командного рядка до PostgreSQL."
+msgid "You are using psql, the command-line interface to maintableQL."
+msgstr "Ви використовуєте psql — інтерфейс командного рядка до maintableQL."
 
 #: mainloop.c:302
 #, c-format

@@ -22,11 +22,11 @@ use crate::{
 };
 use dlopen2::wrapper::Container;
 use futures::StreamExt;
-use iggy::prelude::{
-    AutoCommit, AutoCommitWhen, IggyClient, IggyConsumer, IggyDuration, IggyMessage,
+use messenger::prelude::{
+    AutoCommit, AutoCommitWhen, MessengerClient, MessengerConsumer, MessengerDuration, MessengerMessage,
     PollingStrategy,
 };
-use iggy_connector_sdk::{
+use messenger_connector_sdk::{
     DecodedMessage, MessagesMetadata, RawMessage, RawMessages, ReceivedMessage, StreamDecoder,
     TopicMetadata, sink::ConsumeCallback, transforms::Transform,
 };
@@ -40,7 +40,7 @@ use tracing::{error, info, warn};
 
 pub async fn init(
     sink_configs: HashMap<String, SinkConfig>,
-    iggy_client: &IggyClient,
+    messenger_client: &MessengerClient,
 ) -> Result<HashMap<String, SinkConnector>, RuntimeError> {
     let mut sink_connectors: HashMap<String, SinkConnector> = HashMap::new();
     for (key, config) in sink_configs {
@@ -119,16 +119,16 @@ pub async fn init(
 
         for stream in config.streams.iter() {
             let poll_interval =
-                IggyDuration::from_str(stream.poll_interval.as_deref().unwrap_or("5ms"))
+                MessengerDuration::from_str(stream.poll_interval.as_deref().unwrap_or("5ms"))
                     .expect("Invalid poll interval");
-            let default_consumer_group = format!("iggy-connect-sink-{key}");
+            let default_consumer_group = format!("messenger-connect-sink-{key}");
             let consumer_group = stream
                 .consumer_group
                 .as_deref()
                 .unwrap_or(&default_consumer_group);
             let batch_length = stream.batch_length.unwrap_or(1000);
             for topic in stream.topics.iter() {
-                let mut consumer = iggy_client
+                let mut consumer = messenger_client
                     .consumer_group(consumer_group, &stream.stream, topic)?
                     .auto_commit(AutoCommit::When(AutoCommitWhen::PollingMessages))
                     .create_consumer_group_if_not_exists()
@@ -190,7 +190,7 @@ async fn consume_messages(
     batch_size: u32,
     consume: ConsumeCallback,
     transforms: Vec<Arc<dyn Transform>>,
-    mut consumer: IggyConsumer,
+    mut consumer: MessengerConsumer,
 ) -> Result<(), RuntimeError> {
     info!("Started consuming messages for sink connector with ID: {plugin_id}");
     let batch_size = batch_size as usize;
@@ -262,7 +262,7 @@ async fn process_messages(
     plugin_id: u32,
     messages_metadata: MessagesMetadata,
     topic_metadata: &TopicMetadata,
-    messages: Vec<IggyMessage>,
+    messages: Vec<MessengerMessage>,
     consume: &ConsumeCallback,
     transforms: &Vec<Arc<dyn Transform>>,
     decoder: &Arc<dyn StreamDecoder>,

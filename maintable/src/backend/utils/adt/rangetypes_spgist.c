@@ -25,7 +25,7 @@
  * This implementation only uses the comparison function of the range element
  * datatype, therefore it works for any range type.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -34,7 +34,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/spgist.h"
 #include "access/stratnum.h"

@@ -20,8 +20,8 @@ use crate::common::global_context::GlobalContext;
 use crate::helpers::test_data::create_test_messages;
 use bytes::Bytes;
 use cucumber::{then, when};
-use iggy::prelude::{
-    Consumer, ConsumerKind, Identifier, IggyMessage, MessageClient, Partitioning, PollingStrategy,
+use messenger::prelude::{
+    Consumer, ConsumerKind, Identifier, MessengerMessage, MessageClient, Partitioning, PollingStrategy,
 };
 
 #[when(regex = r"^I send (\d+) messages to stream (\d+), topic (\d+), partition (\d+)$")]
@@ -36,7 +36,7 @@ pub async fn when_send_messages(
     let mut messages = create_test_messages(message_count);
 
     if let Some(last_message) = messages.last() {
-        let sent_msg = IggyMessage::builder()
+        let sent_msg = MessengerMessage::builder()
             .id(last_message.header.id)
             .payload(last_message.payload.clone())
             .build()

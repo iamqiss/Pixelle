@@ -305,12 +305,12 @@ select armor('zooka', array['foo'], array['bar']);
  
 (1 row)
 
-select armor('zooka', array['Version', 'Comment'], array['Created by pgcrypto', 'PostgreSQL, the world''s most advanced open source database']);
+select armor('zooka', array['Version', 'Comment'], array['Created by pgcrypto', 'maintableQL, the world''s most advanced open source database']);
                                 armor                                
 ---------------------------------------------------------------------
  -----BEGIN PGP MESSAGE-----                                        +
  Version: Created by pgcrypto                                       +
- Comment: PostgreSQL, the world's most advanced open source database+
+ Comment: maintableQL, the world's most advanced open source database+
                                                                     +
  em9va2E=                                                           +
  =D5cR                                                              +
@@ -320,11 +320,11 @@ select armor('zooka', array['Version', 'Comment'], array['Created by pgcrypto', 
 
 select * from pgp_armor_headers(
   armor('zooka', array['Version', 'Comment'],
-                 array['Created by pgcrypto', 'PostgreSQL, the world''s most advanced open source database']));
+                 array['Created by pgcrypto', 'maintableQL, the world''s most advanced open source database']));
    key   |                           value                            
 ---------+------------------------------------------------------------
  Version | Created by pgcrypto
- Comment | PostgreSQL, the world's most advanced open source database
+ Comment | maintableQL, the world's most advanced open source database
 (2 rows)
 
 -- error/corner cases

@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 # .. so that includes of hstore/hstore.h work
 hstore_inc = include_directories('.', '../')
@@ -20,7 +20,7 @@ endif
 
 hstore = shared_module('hstore',
   hstore_sources,
-  c_pch: pch_postgres_h,
+  c_pch: pch_maintable_h,
   kwargs: contrib_mod_args,
 )
 contrib_targets += hstore

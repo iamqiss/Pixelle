@@ -12,7 +12,7 @@
  * may not be compiled always.        -- marko
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "px-crypt.h"
 

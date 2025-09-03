@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_publication.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createpublication">
@@ -455,7 +455,7 @@ CREATE PUBLICATION users_filtered FOR TABLE users (user_id, firstname);
   <title>Compatibility</title>
 
   <para>
-   <command>CREATE PUBLICATION</command> is a <productname>PostgreSQL</productname>
+   <command>CREATE PUBLICATION</command> is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

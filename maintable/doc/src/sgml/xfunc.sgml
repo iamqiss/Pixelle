@@ -9,7 +9,7 @@
   </indexterm>
 
   <para>
-   <productname>PostgreSQL</productname> provides four kinds of
+   <productname>maintableQL</productname> provides four kinds of
    functions:
 
    <itemizedlist>
@@ -68,7 +68,7 @@
    understand the examples better.  Some examples from this chapter
    can be found in <filename>funcs.sql</filename> and
    <filename>funcs.c</filename> in the <filename>src/tutorial</filename>
-   directory in the <productname>PostgreSQL</productname> source
+   directory in the <productname>maintableQL</productname> source
    distribution.
   </para>
   </sect1>
@@ -231,7 +231,7 @@ CALL clean_emp();
      <type>void</type> and a procedure is mostly stylistic.  However,
      procedures offer additional functionality such as transaction control
      that is not available in functions.  Also, procedures are SQL standard
-     whereas returning <type>void</type> is a PostgreSQL extension.
+     whereas returning <type>void</type> is a maintableQL extension.
     </para>
 
    <para>
@@ -301,7 +301,7 @@ INSERT INTO $1 VALUES (42);
     <note>
      <para>
       The ability to use names to reference SQL function arguments was added
-      in <productname>PostgreSQL</productname> 9.2.  Functions to be used in
+      in <productname>maintableQL</productname> 9.2.  Functions to be used in
       older servers must use the <literal>$<replaceable>n</replaceable></literal> notation.
      </para>
     </note>
@@ -434,7 +434,7 @@ $$ LANGUAGE SQL;
      If the final <literal>SELECT</literal> or <literal>RETURNING</literal>
      clause in an <acronym>SQL</acronym> function does not return exactly
      the function's declared result
-     type, <productname>PostgreSQL</productname> will automatically cast
+     type, <productname>maintableQL</productname> will automatically cast
      the value to the required type, if that is possible with an implicit
      or assignment cast.  Otherwise, you must write an explicit cast.
      For example, suppose we wanted the
@@ -733,7 +733,7 @@ LANGUAGE SQL;
     <para>
      Notice that output parameters are not included in the calling argument
      list when invoking such a function from SQL.  This is because
-     <productname>PostgreSQL</productname> considers only the input
+     <productname>maintableQL</productname> considers only the input
      parameters to define the function's calling signature.  That means
      also that only the input parameters matter when referencing the function
      for purposes such as dropping it.  We could drop the above function
@@ -1152,7 +1152,7 @@ SELECT name, listchildren(name) FROM nodes;
     </para>
 
     <para>
-     <productname>PostgreSQL</productname>'s behavior for a set-returning function in a
+     <productname>maintableQL</productname>'s behavior for a set-returning function in a
      query's select list is almost exactly the same as if the set-returning
      function had been written in a <literal>LATERAL FROM</literal>-clause item
      instead.  For example,
@@ -1235,7 +1235,7 @@ SELECT x, CASE WHEN x &gt; 0 THEN generate_series(1, 5) ELSE 0 END FROM tab;
 
     <note>
      <para>
-      Before <productname>PostgreSQL</productname> 10, putting more than one
+      Before <productname>maintableQL</productname> 10, putting more than one
       set-returning function in the same select list did not behave very
       sensibly unless they always produced equal numbers of rows.  Otherwise,
       what you got was a number of output rows equal to the least common
@@ -1247,7 +1247,7 @@ SELECT x, CASE WHEN x &gt; 0 THEN generate_series(1, 5) ELSE 0 END FROM tab;
       functions inside <literal>CASE</literal> etc.) was previously allowed,
       complicating things even more.
       Use of the <literal>LATERAL</literal> syntax is recommended when writing
-      queries that need to work in older <productname>PostgreSQL</productname> versions,
+      queries that need to work in older <productname>maintableQL</productname> versions,
       because that will give consistent results across different versions.
       If you have a query that is relying on conditional execution of a
       set-returning function, you may be able to fix it by moving the
@@ -1270,7 +1270,7 @@ END$$ LANGUAGE plpgsql;
 SELECT x, case_generate_series(y &gt; 0, 1, z, 5) FROM tab;
 </programlisting>
       This formulation will work the same in all versions
-      of <productname>PostgreSQL</productname>.
+      of <productname>maintableQL</productname>.
      </para>
     </note>
    </sect2>
@@ -1714,7 +1714,7 @@ CREATE FUNCTION test(int, int) RETURNS int
     a function containing only <command>SELECT</command> commands can safely be
     marked <literal>STABLE</literal>, even if it selects from tables that might be
     undergoing modifications by concurrent queries.
-    <productname>PostgreSQL</productname> will execute all commands of a
+    <productname>maintableQL</productname> will execute all commands of a
     <literal>STABLE</literal> function using the snapshot established for the
     calling query, and so it will see a fixed view of the database throughout
     that query.
@@ -1725,7 +1725,7 @@ CREATE FUNCTION test(int, int) RETURNS int
     within <literal>IMMUTABLE</literal> functions.  It is generally unwise to select
     from database tables within an <literal>IMMUTABLE</literal> function at all,
     since the immutability will be broken if the table contents ever change.
-    However, <productname>PostgreSQL</productname> does not enforce that you
+    However, <productname>maintableQL</productname> does not enforce that you
     do not do that.
    </para>
 
@@ -1739,7 +1739,7 @@ CREATE FUNCTION test(int, int) RETURNS int
 
    <note>
     <para>
-     <productname>PostgreSQL</productname> requires that <literal>STABLE</literal>
+     <productname>maintableQL</productname> requires that <literal>STABLE</literal>
      and <literal>IMMUTABLE</literal> functions contain no SQL commands other
      than <command>SELECT</command> to prevent data modification.
      (This is not a completely bulletproof test, since such functions could
@@ -1755,12 +1755,12 @@ CREATE FUNCTION test(int, int) RETURNS int
    <title>Procedural Language Functions</title>
 
    <para>
-    <productname>PostgreSQL</productname> allows user-defined functions
+    <productname>maintableQL</productname> allows user-defined functions
     to be written in other languages besides SQL and C.  These other
     languages are generically called <firstterm>procedural
     languages</firstterm> (<acronym>PL</acronym>s).
     Procedural languages aren't built into the
-    <productname>PostgreSQL</productname> server; they are offered
+    <productname>maintableQL</productname> server; they are offered
     by loadable modules.
     See <xref linkend="xplang"/> and following chapters for more
     information.
@@ -1774,7 +1774,7 @@ CREATE FUNCTION test(int, int) RETURNS int
 
    <para>
     Internal functions are functions written in C that have been statically
-    linked into the <productname>PostgreSQL</productname> server.
+    linked into the <productname>maintableQL</productname> server.
     The <quote>body</quote> of the function definition
     specifies the C-language name of the function, which need not be the
     same as the name being declared for SQL use.
@@ -1872,7 +1872,7 @@ CREATE FUNCTION square_root(double precision) RETURNS double precision
      <listitem>
       <para>
        If the name starts with the string <literal>$libdir</literal>,
-       that part is replaced by the <productname>PostgreSQL</productname> package
+       that part is replaced by the <productname>maintableQL</productname> package
         library directory
        name, which is determined at build time.<indexterm><primary>$libdir</primary></indexterm>
       </para>
@@ -1912,10 +1912,10 @@ CREATE FUNCTION square_root(double precision) RETURNS double precision
    </para>
 
    <para>
-    The user ID the <productname>PostgreSQL</productname> server runs
+    The user ID the <productname>maintableQL</productname> server runs
     as must be able to traverse the path to the file you intend to
     load.  Making the file or a higher-level directory not readable
-    and/or not executable by the <systemitem>postgres</systemitem>
+    and/or not executable by the <systemitem>maintable</systemitem>
     user is a common mistake.
    </para>
 
@@ -1928,7 +1928,7 @@ CREATE FUNCTION square_root(double precision) RETURNS double precision
 
    <note>
     <para>
-     <productname>PostgreSQL</productname> will not compile a C function
+     <productname>maintableQL</productname> will not compile a C function
      automatically.  The object file must be compiled before it is referenced
      in a <command>CREATE
      FUNCTION</command> command.  See <xref linkend="dfunc"/> for additional
@@ -1945,11 +1945,11 @@ CREATE FUNCTION square_root(double precision) RETURNS double precision
 
    <para>
     To ensure that a dynamically loaded object file is not loaded into an
-    incompatible server, <productname>PostgreSQL</productname> checks that the
+    incompatible server, <productname>maintableQL</productname> checks that the
     file contains a <quote>magic block</quote> with the appropriate contents.
     This allows the server to detect obvious incompatibilities, such as code
     compiled for a different major version of
-    <productname>PostgreSQL</productname>. To include a magic block,
+    <productname>maintableQL</productname>. To include a magic block,
     write this in one (and only one) of the module source files, after having
     included the header <filename>fmgr.h</filename>:
 
@@ -1978,7 +1978,7 @@ PG_MODULE_MAGIC_EXT(
     Subsequently the name and version can be examined via
     the <function>pg_get_loaded_modules()</function> function.
     The meaning of the version string is not restricted
-    by <productname>PostgreSQL</productname>, but use of semantic versioning
+    by <productname>maintableQL</productname>, but use of semantic versioning
     rules is recommended.
    </para>
 
@@ -2017,13 +2017,13 @@ PG_MODULE_MAGIC_EXT(
 
     <para>
      To know how to write C-language functions, you need to know how
-     <productname>PostgreSQL</productname> internally represents base
+     <productname>maintableQL</productname> internally represents base
      data types and how they can be passed to and from functions.
-     Internally, <productname>PostgreSQL</productname> regards a base
+     Internally, <productname>maintableQL</productname> regards a base
      type as a <quote>blob of memory</quote>.  The user-defined
      functions that you define over a type in turn define the way that
-     <productname>PostgreSQL</productname> can operate on it.  That
-     is, <productname>PostgreSQL</productname> will only store and
+     <productname>maintableQL</productname> can operate on it.  That
+     is, <productname>maintableQL</productname> will only store and
      retrieve the data from disk and use your user-defined functions
      to input, process, and output the data.
     </para>
@@ -2064,7 +2064,7 @@ PG_MODULE_MAGIC_EXT(
 typedef int int4;
 </programlisting>
 
-     (The actual PostgreSQL C code calls this type <type>int32</type>, because
+     (The actual maintableQL C code calls this type <type>int32</type>, because
      it is a convention in C that <type>int<replaceable>XX</replaceable></type>
      means <replaceable>XX</replaceable> <emphasis>bits</emphasis>.  Note
      therefore also that the C type <type>int8</type> is 1 byte in size.  The
@@ -2075,7 +2075,7 @@ typedef int int4;
     <para>
      On  the  other hand, fixed-length types of any size can
      be passed by-reference.  For example, here is a  sample
-     implementation of a <productname>PostgreSQL</productname> type:
+     implementation of a <productname>maintableQL</productname> type:
 
 <programlisting>
 /* 16-byte structure, passed by reference */
@@ -2086,7 +2086,7 @@ typedef struct
 </programlisting>
 
      Only  pointers  to  such types can be used when passing
-     them in and out of <productname>PostgreSQL</productname> functions.
+     them in and out of <productname>maintableQL</productname> functions.
      To return a value of such a type, allocate the right amount of
      memory with <literal>palloc</literal>, fill in the allocated memory,
      and return a pointer to it.  (Also, if you just want to return the
@@ -2149,7 +2149,7 @@ typedef struct {
      structure, we might use a code fragment like this:
 
 <programlisting><![CDATA[
-#include "postgres.h"
+#include "maintable.h"
 ...
 char buffer[40]; /* our source data */
 ...
@@ -2170,13 +2170,13 @@ memcpy(destination->data, buffer, 40);
     <para>
      <xref linkend="xfunc-c-type-table"/> shows the C types
      corresponding to many of the built-in SQL data types
-     of <productname>PostgreSQL</productname>.
+     of <productname>maintableQL</productname>.
      The <quote>Defined In</quote> column gives the header file that
      needs to be included to get the type definition.  (The actual
      definition might be in a different file that is included by the
      listed file.  It is recommended that users stick to the defined
      interface.)  Note that you should always include
-     <filename>postgres.h</filename> first in any source file of server
+     <filename>maintable.h</filename> first in any source file of server
      code, because it declares a number of things that you will need
      anyway, and because including other headers first can cause
      portability issues.
@@ -2205,7 +2205,7 @@ memcpy(destination->data, buffer, 40);
         <row>
          <entry><type>boolean</type></entry>
          <entry><type>bool</type></entry>
-         <entry><filename>postgres.h</filename> (maybe compiler built-in)</entry>
+         <entry><filename>maintable.h</filename> (maybe compiler built-in)</entry>
         </row>
         <row>
          <entry><type>box</type></entry>
@@ -2215,7 +2215,7 @@ memcpy(destination->data, buffer, 40);
         <row>
          <entry><type>bytea</type></entry>
          <entry><type>bytea*</type></entry>
-         <entry><filename>postgres.h</filename></entry>
+         <entry><filename>maintable.h</filename></entry>
         </row>
         <row>
          <entry><type>"char"</type></entry>
@@ -2225,12 +2225,12 @@ memcpy(destination->data, buffer, 40);
         <row>
          <entry><type>character</type></entry>
          <entry><type>BpChar*</type></entry>
-         <entry><filename>postgres.h</filename></entry>
+         <entry><filename>maintable.h</filename></entry>
         </row>
         <row>
          <entry><type>cid</type></entry>
          <entry><type>CommandId</type></entry>
-         <entry><filename>postgres.h</filename></entry>
+         <entry><filename>maintable.h</filename></entry>
         </row>
         <row>
          <entry><type>date</type></entry>
@@ -2240,27 +2240,27 @@ memcpy(destination->data, buffer, 40);
         <row>
          <entry><type>float4</type> (<type>real</type>)</entry>
          <entry><type>float4</type></entry>
-        <entry><filename>postgres.h</filename></entry>
+        <entry><filename>maintable.h</filename></entry>
         </row>
         <row>
          <entry><type>float8</type> (<type>double precision</type>)</entry>
          <entry><type>float8</type></entry>
-         <entry><filename>postgres.h</filename></entry>
+         <entry><filename>maintable.h</filename></entry>
         </row>
         <row>
          <entry><type>int2</type> (<type>smallint</type>)</entry>
          <entry><type>int16</type></entry>
-         <entry><filename>postgres.h</filename></entry>
+         <entry><filename>maintable.h</filename></entry>
         </row>
         <row>
          <entry><type>int4</type> (<type>integer</type>)</entry>
          <entry><type>int32</type></entry>
-         <entry><filename>postgres.h</filename></entry>
+         <entry><filename>maintable.h</filename></entry>
         </row>
         <row>
          <entry><type>int8</type> (<type>bigint</type>)</entry>
          <entry><type>int64</type></entry>
-         <entry><filename>postgres.h</filename></entry>
+         <entry><filename>maintable.h</filename></entry>
         </row>
         <row>
          <entry><type>interval</type></entry>
@@ -2275,7 +2275,7 @@ memcpy(destination->data, buffer, 40);
         <row>
          <entry><type>name</type></entry>
          <entry><type>Name</type></entry>
-         <entry><filename>postgres.h</filename></entry>
+         <entry><filename>maintable.h</filename></entry>
         </row>
         <row>
          <entry><type>numeric</type></entry>
@@ -2285,12 +2285,12 @@ memcpy(destination->data, buffer, 40);
         <row>
          <entry><type>oid</type></entry>
          <entry><type>Oid</type></entry>
-         <entry><filename>postgres.h</filename></entry>
+         <entry><filename>maintable.h</filename></entry>
         </row>
         <row>
          <entry><type>oidvector</type></entry>
          <entry><type>oidvector*</type></entry>
-         <entry><filename>postgres.h</filename></entry>
+         <entry><filename>maintable.h</filename></entry>
         </row>
         <row>
          <entry><type>path</type></entry>
@@ -2305,12 +2305,12 @@ memcpy(destination->data, buffer, 40);
         <row>
          <entry><type>regproc</type></entry>
          <entry><type>RegProcedure</type></entry>
-         <entry><filename>postgres.h</filename></entry>
+         <entry><filename>maintable.h</filename></entry>
         </row>
         <row>
          <entry><type>text</type></entry>
          <entry><type>text*</type></entry>
-         <entry><filename>postgres.h</filename></entry>
+         <entry><filename>maintable.h</filename></entry>
         </row>
         <row>
          <entry><type>tid</type></entry>
@@ -2340,12 +2340,12 @@ memcpy(destination->data, buffer, 40);
         <row>
          <entry><type>varchar</type></entry>
          <entry><type>VarChar*</type></entry>
-         <entry><filename>postgres.h</filename></entry>
+         <entry><filename>maintable.h</filename></entry>
         </row>
         <row>
          <entry><type>xid</type></entry>
          <entry><type>TransactionId</type></entry>
-         <entry><filename>postgres.h</filename></entry>
+         <entry><filename>maintable.h</filename></entry>
         </row>
        </tbody>
       </tgroup>
@@ -2374,7 +2374,7 @@ PG_FUNCTION_INFO_V1(funcname);
      must appear in the same source file.  (Conventionally, it's
      written just before the function itself.)  This macro call is not
      needed for <literal>internal</literal>-language functions, since
-     <productname>PostgreSQL</productname> assumes that all internal functions
+     <productname>maintableQL</productname> assumes that all internal functions
      use the version-1 convention.  It is, however, required for
      dynamically-loaded functions.
     </para>
@@ -2450,7 +2450,7 @@ PG_FUNCTION_INFO_V1(funcname);
     </para>
 
 <programlisting><![CDATA[
-#include "postgres.h"
+#include "maintable.h"
 #include <string.h>
 #include "fmgr.h"
 #include "utils/geo_decls.h"
@@ -2568,7 +2568,7 @@ t_starts_with(PG_FUNCTION_ARGS)
     <para>
      Supposing that the above code has been prepared in file
      <filename>funcs.c</filename> and compiled into a shared object,
-     we could define the functions to <productname>PostgreSQL</productname>
+     we could define the functions to <productname>maintableQL</productname>
      with commands like this:
     </para>
 
@@ -2602,7 +2602,7 @@ CREATE FUNCTION t_starts_with(text, text) RETURNS boolean
     <para>
      Here, <replaceable>DIRECTORY</replaceable> stands for the
      directory of the shared library file (for instance the
-     <productname>PostgreSQL</productname> tutorial directory, which
+     <productname>maintableQL</productname> tutorial directory, which
      contains the code for the examples used in this section).
      (Better style would be to use just <literal>'funcs'</literal> in the
      <literal>AS</literal> clause, after having added
@@ -2686,10 +2686,10 @@ CREATE FUNCTION t_starts_with(text, text) RETURNS boolean
 
     <para>
      Before we turn to the more advanced topics, we should discuss
-     some coding rules for <productname>PostgreSQL</productname>
+     some coding rules for <productname>maintableQL</productname>
      C-language functions.  While it might be possible to load functions
      written in languages other than C into
-     <productname>PostgreSQL</productname>, this is usually difficult
+     <productname>maintableQL</productname>, this is usually difficult
      (when it is possible at all) because other languages, such as
      C++, FORTRAN, or Pascal often do not follow the same calling
      convention as C.  That is, other languages do not pass argument
@@ -2706,7 +2706,7 @@ CREATE FUNCTION t_starts_with(text, text) RETURNS boolean
        <para>
         Use <literal>pg_config
         --includedir-server</literal><indexterm><primary>pg_config</primary><secondary>with user-defined C functions</secondary></indexterm>
-        to find out where the <productname>PostgreSQL</productname> server header
+        to find out where the <productname>maintableQL</productname> server header
         files are installed on your system (or the system that your
         users will be running on).
        </para>
@@ -2715,7 +2715,7 @@ CREATE FUNCTION t_starts_with(text, text) RETURNS boolean
       <listitem>
        <para>
         Compiling and linking your code so that it can be dynamically
-        loaded into <productname>PostgreSQL</productname> always
+        loaded into <productname>maintableQL</productname> always
         requires special flags.  See <xref linkend="dfunc"/> for a
         detailed explanation of how to do it for your particular
         operating system.
@@ -2732,7 +2732,7 @@ CREATE FUNCTION t_starts_with(text, text) RETURNS boolean
       <listitem>
        <para>
         When allocating memory, use the
-        <productname>PostgreSQL</productname> functions
+        <productname>maintableQL</productname> functions
         <function>palloc</function><indexterm><primary>palloc</primary></indexterm> and <function>pfree</function><indexterm><primary>pfree</primary></indexterm>
         instead of the corresponding C library functions
         <function>malloc</function> and <function>free</function>.
@@ -2759,15 +2759,15 @@ CREATE FUNCTION t_starts_with(text, text) RETURNS boolean
 
       <listitem>
        <para>
-        Most of the internal <productname>PostgreSQL</productname>
-        types are declared in <filename>postgres.h</filename>, while
+        Most of the internal <productname>maintableQL</productname>
+        types are declared in <filename>maintable.h</filename>, while
         the function manager interfaces
         (<symbol>PG_FUNCTION_ARGS</symbol>, etc.)  are in
         <filename>fmgr.h</filename>, so you will need to include at
         least these two files.  For portability reasons it's best to
-        include <filename>postgres.h</filename> <emphasis>first</emphasis>,
+        include <filename>maintable.h</filename> <emphasis>first</emphasis>,
         before any other system or user header files.  Including
-        <filename>postgres.h</filename> will also include
+        <filename>maintable.h</filename> will also include
         <filename>elog.h</filename> and <filename>palloc.h</filename>
         for you.
        </para>
@@ -2777,7 +2777,7 @@ CREATE FUNCTION t_starts_with(text, text) RETURNS boolean
        <para>
         Symbol names defined within object files must not conflict
         with each other or with symbols defined in the
-        <productname>PostgreSQL</productname> server executable.  You
+        <productname>maintableQL</productname> server executable.  You
         will have to rename your functions or variables if you get
         error messages to this effect.
        </para>
@@ -2794,14 +2794,14 @@ CREATE FUNCTION t_starts_with(text, text) RETURNS boolean
     <para>
      This section contains guidance to authors of extensions and other server
      plugins about API and ABI stability in the
-     <productname>PostgreSQL</productname> server.
+     <productname>maintableQL</productname> server.
     </para>
 
     <sect3 id="xfunc-guidance-general">
      <title>General</title>
 
      <para>
-      The <productname>PostgreSQL</productname> server contains several
+      The <productname>maintableQL</productname> server contains several
       well-demarcated APIs for server plugins, such as the function manager
       (<acronym>fmgr</acronym>, described in this chapter),
       <acronym>SPI</acronym> (<xref linkend="spi"/>), and various hooks
@@ -2834,7 +2834,7 @@ CREATE FUNCTION t_starts_with(text, text) RETURNS boolean
       <title>Major Versions</title>
       <para>
        There is <emphasis>no</emphasis> promise of API compatibility between
-       <productname>PostgreSQL</productname> major versions. Extension code
+       <productname>maintableQL</productname> major versions. Extension code
        therefore might require source code changes to work with multiple major
        versions. These can usually be managed with preprocessor conditions
        such as <literal>#if PG_VERSION_NUM &gt;= 160000</literal>.
@@ -2846,7 +2846,7 @@ CREATE FUNCTION t_starts_with(text, text) RETURNS boolean
      <sect4 id="xfunc-guidance-api-mninor-versions">
       <title>Minor Versions</title>
       <para>
-       <productname>PostgreSQL</productname> makes an effort to avoid server
+       <productname>maintableQL</productname> makes an effort to avoid server
        API breaks in minor releases. In general, extension code that compiles
        and works with a minor release should also compile and work with any
        other minor release of the same major version, past or future.
@@ -2882,7 +2882,7 @@ CREATE FUNCTION t_starts_with(text, text) RETURNS boolean
      <sect4 id="xfunc-guidance-abi-mninor-versions">
       <title>Minor Versions</title>
       <para>
-       <productname>PostgreSQL</productname> makes an effort to avoid server
+       <productname>maintableQL</productname> makes an effort to avoid server
        ABI breaks in minor releases. In general, an extension compiled against
        any minor release should work with any other minor release of the same
        major version, past or future.
@@ -2890,7 +2890,7 @@ CREATE FUNCTION t_starts_with(text, text) RETURNS boolean
 
       <para>
        When a change <emphasis>is</emphasis> required,
-       <productname>PostgreSQL</productname> will choose the least invasive
+       <productname>maintableQL</productname> will choose the least invasive
        change possible, for example by squeezing a new field into padding
        space or appending it to the end of a struct. These sorts of changes
        should not impact extensions unless they use very unusual code
@@ -2933,7 +2933,7 @@ CREATE FUNCTION t_starts_with(text, text) RETURNS boolean
      addition, composite types that are part of an inheritance
      hierarchy can have different fields than other members of the
      same inheritance hierarchy.  Therefore,
-     <productname>PostgreSQL</productname> provides a function
+     <productname>maintableQL</productname> provides a function
      interface for accessing fields of composite types from C.
     </para>
 
@@ -2950,7 +2950,7 @@ SELECT name, c_overpaid(emp, 1500) AS overpaid
      <function>c_overpaid</function> as:
 
 <programlisting><![CDATA[
-#include "postgres.h"
+#include "maintable.h"
 #include "executor/executor.h"  /* for GetAttributeByName() */
 
 PG_MODULE_MAGIC;
@@ -2978,7 +2978,7 @@ c_overpaid(PG_FUNCTION_ARGS)
 
     <para>
      <function>GetAttributeByName</function> is the
-     <productname>PostgreSQL</productname> system function that
+     <productname>maintableQL</productname> system function that
      returns attributes out of the specified row.  It has
      three arguments: the argument of type <type>HeapTupleHeader</type> passed
      into
@@ -3198,7 +3198,7 @@ HeapTupleGetDatum(HeapTuple tuple)
      ValuePerCall mode.  Additional details about Materialize mode can be
      found in <filename>src/backend/utils/fmgr/README</filename>.  Also,
      the <filename>contrib</filename> modules in
-     the <productname>PostgreSQL</productname> source distribution contain
+     the <productname>maintableQL</productname> source distribution contain
      many examples of SRFs using both ValuePerCall and Materialize mode.
     </para>
 
@@ -3679,7 +3679,7 @@ LWLockRelease(AddinShmemInitLock);
       An example of a <literal>shmem_request_hook</literal> and
       <literal>shmem_startup_hook</literal> can be found in
       <filename>contrib/pg_stat_statements/pg_stat_statements.c</filename> in
-      the <productname>PostgreSQL</productname> source tree.
+      the <productname>maintableQL</productname> source tree.
      </para>
     </sect3>
 
@@ -3718,7 +3718,7 @@ void *GetNamedDSMSegment(const char *name, size_t size,
       A complete usage example of <function>GetNamedDSMSegment</function> can
       be found in
       <filename>src/test/modules/test_dsm_registry/test_dsm_registry.c</filename>
-      in the <productname>PostgreSQL</productname> source tree.
+      in the <productname>maintableQL</productname> source tree.
      </para>
     </sect3>
    </sect2>
@@ -3789,7 +3789,7 @@ void LWLockRegisterTranche(int tranche_id, const char *tranche_name)
       <function>LWLockInitialize</function>, and
       <function>LWLockRegisterTranche</function> can be found in
       <filename>contrib/pg_prewarm/autoprewarm.c</filename> in the
-      <productname>PostgreSQL</productname> source tree.
+      <productname>maintableQL</productname> source tree.
      </para>
     </sect3>
    </sect2>
@@ -3805,7 +3805,7 @@ uint32 WaitEventExtensionNew(const char *wait_event_name)
 </programlisting>
      The wait event is associated to a user-facing custom string.
      An example can be found in <filename>src/test/modules/worker_spi</filename>
-     in the PostgreSQL source tree.
+     in the maintableQL source tree.
     </para>
     <para>
      Custom wait events can be viewed in
@@ -3941,7 +3941,7 @@ extern bool InjectionPointDetach(const char *name);
 
     <para>
      An example can be found in
-     <filename>src/test/modules/injection_points</filename> in the PostgreSQL
+     <filename>src/test/modules/injection_points</filename> in the maintableQL
      source tree.
     </para>
 
@@ -3987,7 +3987,7 @@ extern PgStat_Kind pgstat_register_kind(PgStat_Kind kind,
      <literal>PGSTAT_KIND_EXPERIMENTAL</literal> for
      <parameter>kind</parameter>. When you are ready to release the extension
      to users, reserve a kind ID at the
-     <ulink url="https://wiki.postgresql.org/wiki/CustomCumulativeStats">
+     <ulink url="https://wiki.maintableql.org/wiki/CustomCumulativeStats">
      Custom Cumulative Statistics</ulink> page.
     </para>
 
@@ -4006,7 +4006,7 @@ extern PgStat_Kind pgstat_register_kind(PgStat_Kind kind,
     <para>
      Place the extension module implementing the custom cumulative statistics
      type in <xref linkend="guc-shared-preload-libraries"/> so that it will
-     be loaded early during <productname>PostgreSQL</productname> startup.
+     be loaded early during <productname>maintableQL</productname> startup.
     </para>
 
     <para>
@@ -4023,7 +4023,7 @@ extern PgStat_Kind pgstat_register_kind(PgStat_Kind kind,
     </indexterm>
 
     <para>
-     Although the <productname>PostgreSQL</productname> backend is written in
+     Although the <productname>maintableQL</productname> backend is written in
      C, it is possible to write extensions in C++ if these guidelines are
      followed:
 
@@ -4136,7 +4136,7 @@ supportfn(internal) returns internal
    <para>
     The details of the API for planner support functions can be found in
     file <filename>src/include/nodes/supportnodes.h</filename> in the
-    <productname>PostgreSQL</productname> source code.  Here we provide
+    <productname>maintableQL</productname> source code.  Here we provide
     just an overview of what planner support functions can do.
     The set of possible requests to a support function is extensible,
     so more things might be possible in future versions.
@@ -4158,8 +4158,8 @@ supportfn(internal) returns internal
     <literal>n</literal>.
     (But note that this is just an example; this particular
     optimization is not actually performed by
-    standard <productname>PostgreSQL</productname>.)
-    We make no guarantee that <productname>PostgreSQL</productname> will
+    standard <productname>maintableQL</productname>.)
+    We make no guarantee that <productname>maintableQL</productname> will
     never call the target function in cases that the support function could
     simplify.  Ensure rigorous equivalence between the simplified
     expression and an actual execution of the target function.

@@ -5,14 +5,14 @@
  *
  * Author: Magnus Hagander <magnus@hagander.net>
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  src/bin/pg_basebackup/pg_receivewal.c
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <dirent.h>
 #include <limits.h>
@@ -74,7 +74,7 @@ disconnect_atexit(void)
 static void
 usage(void)
 {
-	printf(_("%s receives PostgreSQL streaming write-ahead logs.\n\n"),
+	printf(_("%s receives maintableQL streaming write-ahead logs.\n\n"),
 		   progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]...\n"), progname);
@@ -539,7 +539,7 @@ StreamLog(void)
 	{
 		/*
 		 * Try to get the starting point from the slot if any.  This is
-		 * supported in PostgreSQL 15 and newer.
+		 * supported in maintableQL 15 and newer.
 		 */
 		if (replication_slot != NULL &&
 			PQserverVersion(conn) >= 150000)
@@ -672,7 +672,7 @@ main(int argc, char **argv)
 		else if (strcmp(argv[1], "-V") == 0 ||
 				 strcmp(argv[1], "--version") == 0)
 		{
-			puts("pg_receivewal (PostgreSQL) " PG_VERSION);
+			puts("pg_receivewal (maintableQL) " PG_VERSION);
 			exit(0);
 		}
 	}

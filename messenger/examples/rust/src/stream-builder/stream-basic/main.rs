@@ -17,21 +17,21 @@
  */
 
 use crate::shared::stream::PrintEventConsumer;
-use iggy::consumer_ext::IggyConsumerMessageExt;
-use iggy::prelude::*;
-use iggy_examples::shared;
+use messenger::consumer_ext::MessengerConsumerMessageExt;
+use messenger::prelude::*;
+use messenger_examples::shared;
 use std::str::FromStr;
 use tokio::sync::oneshot;
 
 #[tokio::main]
-async fn main() -> Result<(), IggyError> {
-    println!("Build iggy client and connect it.");
+async fn main() -> Result<(), MessengerError> {
+    println!("Build messenger client and connect it.");
     let client = shared::client::build_client("test_stream", "test_topic", true).await?;
 
-    println!("Build iggy producer & consumer");
+    println!("Build messenger producer & consumer");
     // For customization, use the `new` or `from_stream_topic` constructor
-    let stream_config = IggyStreamConfig::default();
-    let (producer, mut consumer) = IggyStream::build(&client, &stream_config).await?;
+    let stream_config = MessengerStreamConfig::default();
+    let (producer, mut consumer) = MessengerStream::build(&client, &stream_config).await?;
 
     println!("Start message stream");
     let (sender, receiver) = oneshot::channel();
@@ -48,19 +48,19 @@ async fn main() -> Result<(), IggyError> {
 
     println!("Send 3 test messages...");
     producer
-        .send_one(IggyMessage::from_str("Hello World")?)
+        .send_one(MessengerMessage::from_str("Hello World")?)
         .await?;
     producer
-        .send_one(IggyMessage::from_str("Hola Iggy")?)
+        .send_one(MessengerMessage::from_str("Hola Messenger")?)
         .await?;
     producer
-        .send_one(IggyMessage::from_str("Hi Apache")?)
+        .send_one(MessengerMessage::from_str("Hi Apache")?)
         .await?;
 
     // Wait a bit for all messages to arrive.
     tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
 
-    println!("Stop the message stream and shutdown iggy client");
+    println!("Stop the message stream and shutdown messenger client");
     sender.send(()).expect("Failed to send shutdown signal");
     client.delete_stream(stream_config.stream_id()).await?;
     client.shutdown().await?;

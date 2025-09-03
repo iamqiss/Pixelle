@@ -143,8 +143,8 @@ f:/etc/init.d/bind;
 [CIS - Debian Linux - 4.16 - Disable standard boot services - MySQL server Enabled {CIS: 4.16 Debian Linux} {PCI_DSS: 2.2.2}] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_Debian_Benchmark_v1.0.pdf]
 f:/etc/init.d/mysql;
 
-[CIS - Debian Linux - 4.16 - Disable standard boot services - PostgreSQL server Enabled {CIS: 4.16 Debian Linux} {PCI_DSS: 2.2.2}] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_Debian_Benchmark_v1.0.pdf]
-f:/etc/init.d/postgresql;
+[CIS - Debian Linux - 4.16 - Disable standard boot services - maintableQL server Enabled {CIS: 4.16 Debian Linux} {PCI_DSS: 2.2.2}] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_Debian_Benchmark_v1.0.pdf]
+f:/etc/init.d/maintableql;
 
 [CIS - Debian Linux - 4.17 - Disable standard boot services - Webmin Enabled {CIS: 4.17 Debian Linux} {PCI_DSS: 2.2.2}] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_Debian_Benchmark_v1.0.pdf]
 f:/etc/init.d/webmin;

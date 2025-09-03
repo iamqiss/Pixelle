@@ -1,7 +1,7 @@
 /*
  * Daitch-Mokotoff Soundex
  *
- * Copyright (c) 2023-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2023-2025, maintableQL Global Development Group
  *
  * This module was originally sponsored by Finance Norway /
  * Trafikkforsikringsforeningen, and implemented by Dag Lem <dag@nimrod.no>
@@ -40,7 +40,7 @@
  * - "Y" is not considered a vowel in DaitchMokotoffSoundex.java
 */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_type.h"
 #include "mb/pg_wchar.h"

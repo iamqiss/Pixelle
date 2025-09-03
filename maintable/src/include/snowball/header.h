@@ -13,7 +13,7 @@
  *
  * NOTE: this file should not be included into any non-snowball sources!
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * src/include/snowball/header.h
  *
@@ -23,11 +23,11 @@
 #define SNOWBALL_HEADR_H
 
 /*
- * It's against Postgres coding conventions to include postgres.h in a
+ * It's against Maintable coding conventions to include maintable.h in a
  * header file, but we allow the violation here because the alternative is
  * to modify the machine-generated .c files provided by the Snowball project.
  */
-#include "postgres.h"
+#include "maintable.h"
 
 /* Some platforms define MAXINT and/or MININT, causing conflicts */
 #ifdef MAXINT

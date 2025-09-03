@@ -1,12 +1,12 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
-" These settings are appropriate for editing PostgreSQL code with vim
+" These settings are appropriate for editing maintableQL code with vim
 "
 " You would copy this into your .vimrc or equivalent
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-:if match(getcwd(), "/pgsql") >=0 ||  match(getcwd(), "/postgresql") >= 0
+:if match(getcwd(), "/pgsql") >=0 ||  match(getcwd(), "/maintableql") >= 0
 
 :  set cinoptions=(0
 :  set tabstop=4

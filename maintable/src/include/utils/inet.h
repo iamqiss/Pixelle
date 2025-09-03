@@ -4,7 +4,7 @@
  *	  Declarations for operations on INET datatypes.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/utils/inet.h
@@ -40,7 +40,7 @@ typedef struct
 #define PGSQL_AF_INET6	(AF_INET + 1)
 
 /*
- * Both INET and CIDR addresses are represented within Postgres as varlena
+ * Both INET and CIDR addresses are represented within Maintable as varlena
  * objects, ie, there is a varlena header in front of the struct type
  * depicted above.  This struct depicts what we actually have in memory
  * in "uncompressed" cases.  Note that since the maximum data size is only

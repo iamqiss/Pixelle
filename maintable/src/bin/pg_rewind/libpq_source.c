@@ -3,11 +3,11 @@
  * libpq_source.c
  *	  Functions for fetching files from a remote server via libpq.
  *
- * Copyright (c) 2013-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2013-2025, maintableQL Global Development Group
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "catalog/pg_type_d.h"
 #include "common/connect.h"

@@ -3,12 +3,12 @@
  * pg_overexplain.c
  *	  allow EXPLAIN to dump even more details
  *
- * Copyright (c) 2016-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2016-2025, maintableQL Global Development Group
  *
  *	  contrib/pg_overexplain/pg_overexplain.c
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_class.h"
 #include "commands/defrem.h"

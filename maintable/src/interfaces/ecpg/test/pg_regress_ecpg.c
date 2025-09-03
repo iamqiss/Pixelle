@@ -6,9 +6,9 @@
  * the regression tests, and should be mostly compatible with it.
  * Initial author of C translation: Magnus Hagander
  *
- * This code is released under the terms of the PostgreSQL License.
+ * This code is released under the terms of the maintableQL License.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/interfaces/ecpg/test/pg_regress_ecpg.c
@@ -16,7 +16,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "common/string.h"
 #include "lib/stringinfo.h"

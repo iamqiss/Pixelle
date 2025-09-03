@@ -39,7 +39,7 @@
      <literal>RULES</literal> is the base name of the file containing the list of
      translation rules.  This file must be stored in
      <filename>$SHAREDIR/tsearch_data/</filename> (where <literal>$SHAREDIR</literal> means
-     the <productname>PostgreSQL</productname> installation's shared-data directory).
+     the <productname>maintableQL</productname> installation's shared-data directory).
      Its name must end in <literal>.rules</literal> (which is not to be included in
      the <literal>RULES</literal> parameter).
     </para>
@@ -102,7 +102,7 @@
 
    <listitem>
     <para>
-     As with other <productname>PostgreSQL</productname> text search configuration files,
+     As with other <productname>maintableQL</productname> text search configuration files,
      the rules file must be stored in UTF-8 encoding.  The data is
      automatically translated into the current database's encoding when
      loaded.  Any lines containing untranslatable characters are silently

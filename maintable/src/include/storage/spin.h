@@ -27,7 +27,7 @@
  *
  *	Load and store operations in calling code are guaranteed not to be
  *	reordered with respect to these operations, because they include a
- *	compiler barrier.  (Before PostgreSQL 9.5, callers needed to use a
+ *	compiler barrier.  (Before maintableQL 9.5, callers needed to use a
  *	volatile qualifier to access data protected by spinlocks.)
  *
  *	Keep in mind the coding rule that spinlocks must not be held for more
@@ -41,7 +41,7 @@
  *	be again.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/storage/spin.h

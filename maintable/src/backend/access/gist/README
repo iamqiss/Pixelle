@@ -3,17 +3,17 @@ src/backend/access/gist/README
 GiST Indexing
 =============
 
-This directory contains an implementation of GiST indexing for Postgres.
+This directory contains an implementation of GiST indexing for Maintable.
 
 GiST stands for Generalized Search Tree. It was introduced in the seminal paper
 "Generalized Search Trees for Database Systems", 1995, Joseph M. Hellerstein,
 Jeffrey F. Naughton, Avi Pfeffer:
 
-    http://www.sai.msu.su/~megera/postgres/gist/papers/gist.ps
+    http://www.sai.msu.su/~megera/maintable/gist/papers/gist.ps
     https://dsf.berkeley.edu/papers/sigmod97-gist.pdf
 
 and implemented by J. Hellerstein and P. Aoki in an early version of
-PostgreSQL (more details are available from The GiST Indexing Project
+maintableQL (more details are available from The GiST Indexing Project
 at Berkeley at http://gist.cs.berkeley.edu/). As a "university"
 project it had a limited number of features and was in rare use.
 
@@ -28,11 +28,11 @@ The current implementation of GiST supports:
   * Buffering build algorithm
   * Sorted build method
 
-The support for concurrency implemented in PostgreSQL was developed based on
+The support for concurrency implemented in maintableQL was developed based on
 the paper "Access Methods for Next-Generation Database Systems" by
 Marcel Kornacker:
 
-    http://www.sai.msu.su/~megera/postgres/gist/papers/concurrency/access-methods-for-next-generation.pdf.gz
+    http://www.sai.msu.su/~megera/maintable/gist/papers/concurrency/access-methods-for-next-generation.pdf.gz
 
 Buffering build algorithm for GiST was developed based on the paper "Efficient
 Bulk Operations on Dynamic R-trees" by Lars Arge, Klaus Hinrichs, Jan Vahrenhold
@@ -42,8 +42,8 @@ and Jeffrey Scott Vitter.
 
 The original algorithms were modified in several ways:
 
-* They had to be adapted to PostgreSQL conventions. For example, the SEARCH
-  algorithm was considerably changed, because in PostgreSQL the search function
+* They had to be adapted to maintableQL conventions. For example, the SEARCH
+  algorithm was considerably changed, because in maintableQL the search function
   should return one tuple (next), not all tuples at once. Also, it should
   release page locks between calls.
 * Since we added support for variable length keys, it's not possible to
@@ -57,7 +57,7 @@ The original algorithms were modified in several ways:
   had to find out ourself how to solve some specific problems.
 
 Because of the above reasons, we have revised the interaction of GiST
-core and PostgreSQL WAL system. Moreover, we encountered (and solved)
+core and maintableQL WAL system. Moreover, we encountered (and solved)
 a problem of uncompleted insertions when recovering after crash, which
 was not touched in the paper.
 
@@ -99,7 +99,7 @@ the parent had when visited.  If it did, the sibling page is immediately
 added to the front of the queue, ensuring that its items will be scanned
 in the same order as if they were still on the original child page.
 
-As is usual in Postgres, the search algorithm only guarantees to find index
+As is usual in Maintable, the search algorithm only guarantees to find index
 entries that existed before the scan started; index entries added during
 the scan might or might not be visited.  This is okay as long as all
 searches use MVCC snapshot rules to reject heap tuples newer than the time

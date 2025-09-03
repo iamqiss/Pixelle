@@ -30,10 +30,10 @@ members = [
     "core/common",
     "core/connectors/runtime",
     "core/connectors/sdk",
-    "core/connectors/sinks/postgres_sink",
+    "core/connectors/sinks/maintable_sink",
     "core/connectors/sinks/quickwit_sink",
     "core/connectors/sinks/stdout_sink",
-    "core/connectors/sources/postgres_source",
+    "core/connectors/sources/maintable_source",
     "core/connectors/sources/random_source",
     "core/integration",
     "core/sdk",
@@ -101,10 +101,10 @@ futures = "0.3.31"
 futures-util = "0.3.31"
 human-repr = "1.1.0"
 humantime = "2.2.0"
-iggy = { path = "core/sdk", version = "0.7.0" }
-iggy_binary_protocol = { path = "core/binary_protocol", version = "0.7.0" }
-iggy_common = { path = "core/common", version = "0.7.0" }
-iggy_connector_sdk = { path = "core/connectors/sdk", version = "0.1.0" }
+messenger = { path = "core/sdk", version = "0.7.0" }
+messenger_binary_protocol = { path = "core/binary_protocol", version = "0.7.0" }
+messenger_common = { path = "core/common", version = "0.7.0" }
+messenger_connector_sdk = { path = "core/connectors/sdk", version = "0.1.0" }
 integration = { path = "core/integration" }
 keyring = { version = "3.6.3", features = ["sync-secret-service", "vendored"] }
 lazy_static = "1.5.0"

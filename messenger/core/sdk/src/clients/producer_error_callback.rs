@@ -15,7 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-use iggy_common::{Identifier, IggyError, IggyMessage, Partitioning};
+use messenger_common::{Identifier, MessengerError, MessengerMessage, Partitioning};
 use std::fmt::Debug;
 use std::pin::Pin;
 use std::sync::Arc;
@@ -23,13 +23,13 @@ use tracing::error;
 
 #[derive(Debug)]
 pub struct ErrorCtx {
-    pub cause: Box<IggyError>,
+    pub cause: Box<MessengerError>,
     pub stream: Arc<Identifier>,
     pub stream_name: String,
     pub topic: Arc<Identifier>,
     pub topic_name: String,
     pub partitioning: Option<Arc<Partitioning>>,
-    pub messages: Arc<Vec<IggyMessage>>,
+    pub messages: Arc<Vec<MessengerMessage>>,
 }
 
 /// A trait for handling background sending errors.

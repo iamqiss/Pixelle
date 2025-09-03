@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * xlog.c
- *		PostgreSQL write-ahead log manager
+ *		maintableQL write-ahead log manager
  *
  * The Write-Ahead Log (WAL) functionality is split into several source
  * files, in addition to this one:
@@ -28,7 +28,7 @@
  * the current system state, and for starting/stopping backups.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/backend/access/transam/xlog.c
@@ -36,7 +36,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <math.h>
@@ -980,7 +980,7 @@ XLogInsertRecord(XLogRecData *rdata,
 	 */
 	if (class == WALINSERT_SPECIAL_SWITCH)
 	{
-		TRACE_POSTGRESQL_WAL_SWITCH();
+		TRACE_MAINTABLEQL_WAL_SWITCH();
 		XLogFlush(EndPos);
 
 		/*
@@ -2055,13 +2055,13 @@ AdvanceXLInsertBuffer(XLogRecPtr upto, TimeLineID tli, bool opportunistic)
 				else
 				{
 					/* Have to write it ourselves */
-					TRACE_POSTGRESQL_WAL_BUFFER_WRITE_DIRTY_START();
+					TRACE_MAINTABLEQL_WAL_BUFFER_WRITE_DIRTY_START();
 					WriteRqst.Write = OldPageRqstPtr;
 					WriteRqst.Flush = 0;
 					XLogWrite(WriteRqst, tli, false);
 					LWLockRelease(WALWriteLock);
 					pgWalUsage.wal_buffers_full++;
-					TRACE_POSTGRESQL_WAL_BUFFER_WRITE_DIRTY_DONE();
+					TRACE_MAINTABLEQL_WAL_BUFFER_WRITE_DIRTY_DONE();
 
 					/*
 					 * Required for the flush of pending stats WAL data, per
@@ -2812,7 +2812,7 @@ XLogFlush(XLogRecPtr record)
 
 	/*
 	 * Since fsync is usually a horribly expensive operation, we try to
-	 * piggyback as much data as we can on each fsync: if we see any more data
+	 * pmessengerback as much data as we can on each fsync: if we see any more data
 	 * entered into the xlog buffer, we'll write and fsync that too, so that
 	 * the final value of LogwrtResult.Flush is as large as possible. This
 	 * gives us some chance of avoiding another fsync immediately after.
@@ -4632,7 +4632,7 @@ GetFakeLSNForUnloggedRel(void)
  * The preferred setting for wal_buffers is about 3% of shared_buffers, with
  * a maximum of one XLOG segment (there is little reason to think that more
  * is helpful, at least so long as we force an fsync when switching log files)
- * and a minimum of 8 blocks (which was the default value prior to PostgreSQL
+ * and a minimum of 8 blocks (which was the default value prior to maintableQL
  * 9.1, when auto-tuning was added).
  *
  * This should not be called until NBuffers has received its final value.
@@ -4673,7 +4673,7 @@ check_wal_buffers(int *newval, void **extra, GucSource source)
 	}
 
 	/*
-	 * We clamp manually-set values to at least 4 blocks.  Prior to PostgreSQL
+	 * We clamp manually-set values to at least 4 blocks.  Prior to maintableQL
 	 * 9.1, a minimum of 4 was enforced by guc.c, but since that is no longer
 	 * the case, we just silently treat such values as a request for the
 	 * minimum.  (We could throw an error instead, but that doesn't seem very
@@ -7116,7 +7116,7 @@ CreateCheckPoint(int flags)
 	/* Update the process title */
 	update_checkpoint_display(flags, false, false);
 
-	TRACE_POSTGRESQL_CHECKPOINT_START(flags);
+	TRACE_MAINTABLEQL_CHECKPOINT_START(flags);
 
 	/*
 	 * Get the other info we need for the checkpoint record.
@@ -7385,7 +7385,7 @@ CreateCheckPoint(int flags)
 	/* Reset the process title */
 	update_checkpoint_display(flags, false, true);
 
-	TRACE_POSTGRESQL_CHECKPOINT_DONE(CheckpointStats.ckpt_bufs_written,
+	TRACE_MAINTABLEQL_CHECKPOINT_DONE(CheckpointStats.ckpt_bufs_written,
 									 NBuffers,
 									 CheckpointStats.ckpt_segs_added,
 									 CheckpointStats.ckpt_segs_removed,
@@ -7547,7 +7547,7 @@ CheckPointGuts(XLogRecPtr checkPointRedo, int flags)
 	CheckPointReplicationOrigin();
 
 	/* Write out all dirty data in SLRUs and the main buffer pool */
-	TRACE_POSTGRESQL_BUFFER_CHECKPOINT_START(flags);
+	TRACE_MAINTABLEQL_BUFFER_CHECKPOINT_START(flags);
 	CheckpointStats.ckpt_write_t = GetCurrentTimestamp();
 	CheckPointCLOG();
 	CheckPointCommitTs();
@@ -7557,11 +7557,11 @@ CheckPointGuts(XLogRecPtr checkPointRedo, int flags)
 	CheckPointBuffers(flags);
 
 	/* Perform all queued up fsyncs */
-	TRACE_POSTGRESQL_BUFFER_CHECKPOINT_SYNC_START();
+	TRACE_MAINTABLEQL_BUFFER_CHECKPOINT_SYNC_START();
 	CheckpointStats.ckpt_sync_t = GetCurrentTimestamp();
 	ProcessSyncRequests();
 	CheckpointStats.ckpt_sync_end_t = GetCurrentTimestamp();
-	TRACE_POSTGRESQL_BUFFER_CHECKPOINT_DONE();
+	TRACE_MAINTABLEQL_BUFFER_CHECKPOINT_DONE();
 
 	/* We deliberately delay 2PC checkpointing as long as possible */
 	CheckPointTwoPhase(checkPointRedo);

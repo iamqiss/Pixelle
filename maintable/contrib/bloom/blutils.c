@@ -3,7 +3,7 @@
  * blutils.c
  *		Bloom index utilities.
  *
- * Portions Copyright (c) 2016-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2016-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1990-1993, Regents of the University of California
  *
  * IDENTIFICATION
@@ -11,7 +11,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/amapi.h"
 #include "access/generic_xlog.h"
@@ -217,8 +217,8 @@ initBloomState(BloomState *state, Relation index)
  * two reasons:
  *
  * 1) In this case random numbers are used for on-disk storage.  Usage of
- *	  PostgreSQL number generator would obstruct it from all possible changes.
- * 2) Changing seed of PostgreSQL random generator would be undesirable side
+ *	  maintableQL number generator would obstruct it from all possible changes.
+ * 2) Changing seed of maintableQL random generator would be undesirable side
  *	  effect.
  */
 static int32 next;

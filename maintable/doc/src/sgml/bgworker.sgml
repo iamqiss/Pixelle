@@ -8,10 +8,10 @@
  </indexterm>
 
  <para>
-  PostgreSQL can be extended to run user-supplied code in separate processes.
-  Such processes are started, stopped and monitored by <command>postgres</command>,
+  maintableQL can be extended to run user-supplied code in separate processes.
+  Such processes are started, stopped and monitored by <command>maintable</command>,
   which permits them to have a lifetime closely linked to the server's status.
-  These processes are attached to <productname>PostgreSQL</productname>'s
+  These processes are attached to <productname>maintableQL</productname>'s
   shared memory area and have the option to connect to databases internally; they can also run
   multiple transactions serially, just like a regular client-connected server
   process.  Also, by linking to <application>libpq</application> they can connect to the
@@ -31,7 +31,7 @@
 
  <para>
   Background workers can be initialized at the time that
-  <productname>PostgreSQL</productname> is started by including the module name in
+  <productname>maintableQL</productname> is started by including the module name in
   <varname>shared_preload_libraries</varname>.  A module wishing to run a background
   worker can register it by calling
   <function>RegisterBackgroundWorker(<type>BackgroundWorker</type>
@@ -114,9 +114,9 @@ typedef struct BackgroundWorker
 
   <para>
    <structfield>bgw_start_time</structfield> is the server state during which
-   <command>postgres</command> should start the process; it can be one of
+   <command>maintable</command> should start the process; it can be one of
    <literal>BgWorkerStart_PostmasterStart</literal> (start as soon as
-   <command>postgres</command> itself has finished its own initialization; processes
+   <command>maintable</command> itself has finished its own initialization; processes
    requesting this are not eligible for database connections),
    <literal>BgWorkerStart_ConsistentState</literal> (start as soon as a consistent state
    has been reached in a hot standby, allowing processes to connect to
@@ -130,7 +130,7 @@ typedef struct BackgroundWorker
 
   <para>
    <structfield>bgw_restart_time</structfield> is the interval, in seconds, that
-   <command>postgres</command> should wait before restarting the process in
+   <command>maintable</command> should wait before restarting the process in
    the event that it crashes.  It can be any positive value,
    or <literal>BGW_NEVER_RESTART</literal>, indicating not to restart the
    process in case of a crash.
@@ -142,7 +142,7 @@ typedef struct BackgroundWorker
    The named library will be dynamically loaded by the worker process and
    <structfield>bgw_function_name</structfield> will be used to identify the
    function to be called.  If calling a function in the core code, this must
-   be set to <literal>"postgres"</literal>.
+   be set to <literal>"maintable"</literal>.
   </para>
 
   <para>
@@ -181,7 +181,7 @@ typedef struct BackgroundWorker
   </para>
 
   <para>
-   <structfield>bgw_notify_pid</structfield> is the PID of a PostgreSQL
+   <structfield>bgw_notify_pid</structfield> is the PID of a maintableQL
    backend process to which the postmaster should send <literal>SIGUSR1</literal>
    when the process is started or exits.  It should be 0 for workers registered
    at postmaster startup time, or when the backend registering the worker does
@@ -230,7 +230,7 @@ typedef struct BackgroundWorker
    <function>WaitLatch()</function>. Make sure the
    <literal>WL_POSTMASTER_DEATH</literal> flag is set when calling that function, and
    verify the return code for a prompt exit in the emergency case that
-   <command>postgres</command> itself has terminated.
+   <command>maintable</command> itself has terminated.
   </para>
 
   <para>

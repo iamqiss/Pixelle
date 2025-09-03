@@ -2,13 +2,13 @@
  * pg_db_role_setting.c
  *		Routines to support manipulation of the pg_db_role_setting relation
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
  *		src/backend/catalog/pg_db_role_setting.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/genam.h"
 #include "access/heapam.h"

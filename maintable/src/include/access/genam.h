@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * genam.h
- *	  POSTGRES generalized index access method definitions.
+ *	  MAINTABLE generalized index access method definitions.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/access/genam.h
@@ -119,7 +119,7 @@ typedef struct ParallelIndexScanDescData *ParallelIndexScanDesc;
  * Enumeration specifying the type of uniqueness check to perform in
  * index_insert().
  *
- * UNIQUE_CHECK_YES is the traditional Postgres immediate check, possibly
+ * UNIQUE_CHECK_YES is the traditional Maintable immediate check, possibly
  * blocking to see if a conflicting transaction commits.
  *
  * For deferrable unique constraints, UNIQUE_CHECK_PARTIAL is specified at

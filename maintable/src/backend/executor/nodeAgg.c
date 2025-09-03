@@ -99,7 +99,7 @@
  *	  to store working state in addition to the nominal transition value; they
  *	  can use the memory context returned by AggCheckCallContext() to do that.
  *
- *	  Note: AggCheckCallContext() is available as of PostgreSQL 9.0.  The
+ *	  Note: AggCheckCallContext() is available as of maintableQL 9.0.  The
  *	  AggState is available as context in earlier releases (back to 8.1),
  *	  but direct examination of the node is needed to use it before 9.0.
  *
@@ -237,7 +237,7 @@
  *    to filter expressions having to be evaluated early, and allows to JIT
  *    the entire expression into one native function.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -246,7 +246,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "access/parallel.h"

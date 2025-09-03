@@ -31,12 +31,12 @@ use axum::http::StatusCode;
 use axum::routing::{delete, get, post};
 use axum::{Extension, Json, Router};
 use error_set::ErrContext;
-use iggy_common::IdentityInfo;
-use iggy_common::Validatable;
-use iggy_common::create_personal_access_token::CreatePersonalAccessToken;
-use iggy_common::delete_personal_access_token::DeletePersonalAccessToken;
-use iggy_common::login_with_personal_access_token::LoginWithPersonalAccessToken;
-use iggy_common::{PersonalAccessTokenInfo, RawPersonalAccessToken};
+use messenger_common::IdentityInfo;
+use messenger_common::Validatable;
+use messenger_common::create_personal_access_token::CreatePersonalAccessToken;
+use messenger_common::delete_personal_access_token::DeletePersonalAccessToken;
+use messenger_common::login_with_personal_access_token::LoginWithPersonalAccessToken;
+use messenger_common::{PersonalAccessTokenInfo, RawPersonalAccessToken};
 use std::sync::Arc;
 use tracing::instrument;
 
@@ -75,7 +75,7 @@ async fn get_personal_access_tokens(
     Ok(Json(personal_access_tokens))
 }
 
-#[instrument(skip_all, name = "trace_create_personal_access_token", fields(iggy_user_id = identity.user_id))]
+#[instrument(skip_all, name = "trace_create_personal_access_token", fields(messenger_user_id = identity.user_id))]
 async fn create_personal_access_token(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,
@@ -117,7 +117,7 @@ async fn create_personal_access_token(
     Ok(Json(RawPersonalAccessToken { token }))
 }
 
-#[instrument(skip_all, name = "trace_delete_personal_access_token", fields(iggy_user_id = identity.user_id))]
+#[instrument(skip_all, name = "trace_delete_personal_access_token", fields(messenger_user_id = identity.user_id))]
 async fn delete_personal_access_token(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,

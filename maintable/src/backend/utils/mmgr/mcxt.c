@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * mcxt.c
- *	  POSTGRES memory context management code.
+ *	  MAINTABLE memory context management code.
  *
  * This module handles context management operations that are independent
  * of the particular kind of context being operated on.  It calls
@@ -26,7 +26,7 @@
  * vchunks too during memory context reset operations.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -36,7 +36,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "mb/pg_wchar.h"
 #include "miscadmin.h"
@@ -1223,7 +1223,7 @@ MemoryContextSizeFailure(MemoryContext context, Size size, int flags)
  *		Allocate space within the specified context.
  *
  * This could be turned into a macro, but we'd have to import
- * nodes/memnodes.h into postgres.h which seems a bad idea.
+ * nodes/memnodes.h into maintable.h which seems a bad idea.
  */
 void *
 MemoryContextAlloc(MemoryContext context, Size size)

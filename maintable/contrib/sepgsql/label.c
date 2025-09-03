@@ -4,11 +4,11 @@
  *
  * Routines to support SELinux labels (security context)
  *
- * Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * -------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <selinux/label.h>
 
@@ -405,7 +405,7 @@ sepgsql_init_client_label(void)
 	/*
 	 * Set up dummy client label.
 	 *
-	 * XXX - note that PostgreSQL launches background worker process like
+	 * XXX - note that maintableQL launches background worker process like
 	 * autovacuum without authentication steps. So, we initialize sepgsql_mode
 	 * with SEPGSQL_MODE_INTERNAL, and client_label with the security context
 	 * of server process. Later, it also launches background of user session.

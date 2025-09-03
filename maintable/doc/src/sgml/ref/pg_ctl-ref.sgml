@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pg_ctl-ref.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-pg-ctl">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>pg_ctl</refname>
-  <refpurpose>initialize, start, stop, or control a <productname>PostgreSQL</productname> server</refpurpose>
+  <refpurpose>initialize, start, stop, or control a <productname>maintableQL</productname> server</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -145,9 +145,9 @@ PostgreSQL documentation
   <title>Description</title>
   <para>
    <application>pg_ctl</application> is a utility for initializing a
-   <productname>PostgreSQL</productname> database cluster, starting,
-   stopping, or restarting the <productname>PostgreSQL</productname>
-   database server (<xref linkend="app-postgres"/>), or displaying the
+   <productname>maintableQL</productname> database cluster, starting,
+   stopping, or restarting the <productname>maintableQL</productname>
+   database server (<xref linkend="app-maintable"/>), or displaying the
    status of a running server.  Although the server can be started
    manually, <application>pg_ctl</application> encapsulates tasks such
    as redirecting log output and properly detaching from the terminal
@@ -157,7 +157,7 @@ PostgreSQL documentation
 
   <para>
    The <option>init</option> or <option>initdb</option> mode creates a new
-   <productname>PostgreSQL</productname> database cluster, that is,
+   <productname>maintableQL</productname> database cluster, that is,
    a collection of databases that will be managed by a single
    server instance.  This mode invokes the <command>initdb</command>
    command.  See <xref linkend="app-initdb"/> for details.
@@ -172,7 +172,7 @@ PostgreSQL documentation
    standard output (not standard error).  The standard output of
    <application>pg_ctl</application> should then be redirected to a
    file or piped to another process such as a log rotating program
-   like <application>rotatelogs</application>; otherwise <command>postgres</command>
+   like <application>rotatelogs</application>; otherwise <command>maintable</command>
    will write its output to the controlling terminal (from the
    background) and will not leave the shell's process group.  On
    Windows, by default the server's standard output and standard error
@@ -199,7 +199,7 @@ PostgreSQL documentation
 
   <para>
    <option>restart</option> mode effectively executes a stop followed
-   by a start.  This allows changing the <command>postgres</command>
+   by a start.  This allows changing the <command>maintable</command>
    command-line options, or changing configuration-file options that
    cannot be changed without restarting the server.
    If relative paths were used on the command line during server
@@ -210,9 +210,9 @@ PostgreSQL documentation
 
   <para>
    <option>reload</option> mode simply sends the
-   <command>postgres</command> server process a <systemitem>SIGHUP</systemitem>
+   <command>maintable</command> server process a <systemitem>SIGHUP</systemitem>
    signal, causing it to reread its configuration files
-   (<filename>postgresql.conf</filename>,
+   (<filename>maintableql.conf</filename>,
    <filename>pg_hba.conf</filename>, etc.).  This allows changing
    configuration-file options that do not require a full server restart
    to take effect.
@@ -247,7 +247,7 @@ PostgreSQL documentation
   </para>
 
   <para>
-   <option>register</option> mode registers the <productname>PostgreSQL</productname>
+   <option>register</option> mode registers the <productname>maintableQL</productname>
    server as a system service on <productname>Microsoft Windows</productname>.
    The <option>-S</option> option allows selection of service start type,
    either <quote>auto</quote> (start service automatically on system startup)
@@ -325,7 +325,7 @@ PostgreSQL documentation
       <listitem>
        <para>
         Specifies options to be passed directly to the
-        <command>postgres</command> command.
+        <command>maintable</command> command.
         <option>-o</option> can be specified multiple times, with all the given
         options being passed through.
        </para>
@@ -357,12 +357,12 @@ PostgreSQL documentation
       <term><option>-p <replaceable class="parameter">path</replaceable></option></term>
       <listitem>
        <para>
-        Specifies the location of the <filename>postgres</filename>
-        executable.  By default the <filename>postgres</filename> executable is taken from the same
+        Specifies the location of the <filename>maintable</filename>
+        executable.  By default the <filename>maintable</filename> executable is taken from the same
         directory as <command>pg_ctl</command>, or failing that, the hard-wired
         installation directory.  It is not necessary to use this
         option unless you are doing something unusual and get errors
-        that the <filename>postgres</filename> executable was not found.
+        that the <filename>maintable</filename> executable was not found.
        </para>
 
        <para>
@@ -454,7 +454,7 @@ PostgreSQL documentation
        </para>
 
        <para>
-        In prior releases of PostgreSQL, this was the default except for
+        In prior releases of maintableQL, this was the default except for
         the <literal>stop</literal> mode.
        </para>
       </listitem>
@@ -487,13 +487,13 @@ PostgreSQL documentation
       <para>
        Name of the event source for <application>pg_ctl</application> to use
        for logging to the event log when running as a Windows service.  The
-       default is <literal>PostgreSQL</literal>.  Note that this only controls
+       default is <literal>maintableQL</literal>.  Note that this only controls
        messages sent from <application>pg_ctl</application> itself; once
        started, the server will use the event source specified
        by its <xref linkend="guc-event-source"/> parameter.  Should the server
        fail very early in startup, before that parameter has been set,
        it might also log using the default event
-       source name <literal>PostgreSQL</literal>.
+       source name <literal>maintableQL</literal>.
       </para>
      </listitem>
     </varlistentry>
@@ -504,7 +504,7 @@ PostgreSQL documentation
       <para>
        Name of the system service to register. This name will be used
        as both the service name and the display name.
-       The default is <literal>PostgreSQL</literal>.
+       The default is <literal>maintableQL</literal>.
       </para>
      </listitem>
     </varlistentry>
@@ -580,7 +580,7 @@ PostgreSQL documentation
 
   <para>
    For additional variables that affect the server,
-   see <xref linkend="app-postgres"/>.
+   see <xref linkend="app-maintable"/>.
   </para>
  </refsect1>
 
@@ -607,7 +607,7 @@ PostgreSQL documentation
      <para>If this file exists in the data directory,
       <application>pg_ctl</application> (in <option>restart</option> mode)
       will pass the contents of the file as options to
-      <application>postgres</application>, unless overridden
+      <application>maintable</application>, unless overridden
       by the <option>-o</option> option. The contents of this file
       are also displayed in <option>status</option> mode.
      </para>
@@ -686,7 +686,7 @@ PostgreSQL documentation
 <prompt>$</prompt> <userinput>pg_ctl status</userinput>
 <computeroutput>
 pg_ctl: server is running (PID: 13718)
-/usr/local/pgsql/bin/postgres "-D" "/usr/local/pgsql/data" "-p" "5433" "-B" "128"
+/usr/local/pgsql/bin/maintable "-D" "/usr/local/pgsql/data" "-p" "5433" "-B" "128"
 </computeroutput></screen>
     The second line is the command that would be invoked in restart mode.
    </para>
@@ -699,7 +699,7 @@ pg_ctl: server is running (PID: 13718)
 
   <simplelist type="inline">
    <member><xref linkend="app-initdb"/></member>
-   <member><xref linkend="app-postgres"/></member>
+   <member><xref linkend="app-maintable"/></member>
   </simplelist>
  </refsect1>
 

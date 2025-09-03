@@ -2,19 +2,19 @@
  *
  * xlogfuncs.c
  *
- * PostgreSQL write-ahead log manager user interface functions
+ * maintableQL write-ahead log manager user interface functions
  *
  * This file contains WAL control and information functions.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/backend/access/transam/xlogfuncs.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 

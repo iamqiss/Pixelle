@@ -1,5 +1,5 @@
 /*
- * This test is intended to pass on all platforms supported by Postgres.
+ * This test is intended to pass on all platforms supported by Maintable.
  * We can therefore only assume that the default, C, and POSIX collations
  * are available --- and since the regression tests are often run in a
  * C-locale database, these may well all have the same behavior.  But

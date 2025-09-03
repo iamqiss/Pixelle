@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_walsummary
-# Copyright (C) 2024 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_walsummary (PostgreSQL) package.
+# Copyright (C) 2024 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_walsummary (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_walsummary (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_walsummary (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-06-24 21:54+0000\n"
 "PO-Revision-Date: 2024-06-25 05:47+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"

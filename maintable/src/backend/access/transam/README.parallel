@@ -1,7 +1,7 @@
 Overview
 ========
 
-PostgreSQL provides some simple facilities to make writing parallel algorithms
+maintableQL provides some simple facilities to make writing parallel algorithms
 easier.  Using a data structure called a ParallelContext, you can arrange to
 launch background worker processes, initialize their state to match that of
 the backend which initiated parallelism, communicate with them via dynamic

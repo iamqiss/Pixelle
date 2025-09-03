@@ -16,7 +16,7 @@
  * the parallel context is re-initialized so that the same DSM can be used for
  * multiple passes of index bulk-deletion and index cleanup.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -24,7 +24,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/amapi.h"
 #include "access/table.h"
@@ -287,7 +287,7 @@ parallel_vacuum_init(Relation rel, Relation *indrels, int nindexes,
 	pvs->heaprel = rel;
 
 	EnterParallelMode();
-	pcxt = CreateParallelContext("postgres", "parallel_vacuum_main",
+	pcxt = CreateParallelContext("maintable", "parallel_vacuum_main",
 								 parallel_workers);
 	Assert(pcxt->nworkers > 0);
 	pvs->pcxt = pcxt;

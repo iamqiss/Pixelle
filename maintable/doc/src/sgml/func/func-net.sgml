@@ -544,7 +544,7 @@
        <para>
         Sets the last 3 bytes of the address to zero.  The remaining prefix
         can be associated with a particular manufacturer (using data not
-        included in <productname>PostgreSQL</productname>).
+        included in <productname>maintableQL</productname>).
        </para>
        <para>
         <literal>trunc(macaddr '12:34:56:78:90:ab')</literal>
@@ -560,7 +560,7 @@
        <para>
         Sets the last 5 bytes of the address to zero.  The remaining prefix
         can be associated with a particular manufacturer (using data not
-        included in <productname>PostgreSQL</productname>).
+        included in <productname>maintableQL</productname>).
        </para>
        <para>
         <literal>trunc(macaddr8 '12:34:56:78:90:ab:cd:ef')</literal>

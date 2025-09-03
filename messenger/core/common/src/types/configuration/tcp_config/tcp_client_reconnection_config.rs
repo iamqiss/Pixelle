@@ -15,15 +15,15 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-use crate::IggyDuration;
+use crate::MessengerDuration;
 use std::str::FromStr;
 
 #[derive(Debug, Clone)]
 pub struct TcpClientReconnectionConfig {
     pub enabled: bool,
     pub max_retries: Option<u32>,
-    pub interval: IggyDuration,
-    pub reestablish_after: IggyDuration,
+    pub interval: MessengerDuration,
+    pub reestablish_after: MessengerDuration,
 }
 
 impl Default for TcpClientReconnectionConfig {
@@ -31,8 +31,8 @@ impl Default for TcpClientReconnectionConfig {
         TcpClientReconnectionConfig {
             enabled: true,
             max_retries: None,
-            interval: IggyDuration::from_str("1s").unwrap(),
-            reestablish_after: IggyDuration::from_str("5s").unwrap(),
+            interval: MessengerDuration::from_str("1s").unwrap(),
+            reestablish_after: MessengerDuration::from_str("5s").unwrap(),
         }
     }
 }

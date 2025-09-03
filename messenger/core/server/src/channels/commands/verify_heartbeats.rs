@@ -20,9 +20,9 @@ use crate::channels::server_command::BackgroundServerCommand;
 use crate::configs::server::HeartbeatConfig;
 use crate::streaming::systems::system::SharedSystem;
 use flume::Sender;
-use iggy_common::IggyDuration;
-use iggy_common::IggyTimestamp;
-use iggy_common::locking::IggySharedMutFn;
+use messenger_common::MessengerDuration;
+use messenger_common::MessengerTimestamp;
+use messenger_common::locking::MessengerSharedMutFn;
 use tokio::time;
 use tracing::{debug, error, info, instrument, warn};
 
@@ -30,13 +30,13 @@ const MAX_THRESHOLD: f64 = 1.2;
 
 pub struct VerifyHeartbeats {
     enabled: bool,
-    interval: IggyDuration,
+    interval: MessengerDuration,
     sender: Sender<VerifyHeartbeatsCommand>,
 }
 
 #[derive(Debug, Default, Clone)]
 pub struct VerifyHeartbeatsCommand {
-    interval: IggyDuration,
+    interval: MessengerDuration,
 }
 
 #[derive(Debug, Default, Clone)]
@@ -58,7 +58,7 @@ impl VerifyHeartbeats {
         }
 
         let interval = self.interval;
-        let max_interval = IggyDuration::from((MAX_THRESHOLD * interval.as_micros() as f64) as u64);
+        let max_interval = MessengerDuration::from((MAX_THRESHOLD * interval.as_micros() as f64) as u64);
         let sender = self.sender.clone();
         info!(
             "Heartbeats will be verified every: {interval}. Max allowed interval: {max_interval}."
@@ -90,8 +90,8 @@ impl BackgroundServerCommand<VerifyHeartbeatsCommand> for VerifyHeartbeatsExecut
             clients = client_manager.get_clients();
         }
 
-        let now = IggyTimestamp::now();
-        let heartbeat_to = IggyTimestamp::from(now.as_micros() - command.interval.as_micros());
+        let now = MessengerTimestamp::now();
+        let heartbeat_to = MessengerTimestamp::from(now.as_micros() - command.interval.as_micros());
         debug!("Verifying heartbeats at: {now}, max allowed timestamp: {heartbeat_to}");
         let mut stale_clients = Vec::new();
         for client in clients {

@@ -319,8 +319,8 @@ class OAuthHandler(http.server.BaseHTTPRequestHandler):
             uri = "https://example.org/"
 
         resp = {
-            "device_code": "postgres",
-            "user_code": "postgresuser",
+            "device_code": "maintable",
+            "user_code": "maintableuser",
             self._uri_spelling: uri,
             "expires_in": 5,
             **self._response_padding,

@@ -353,31 +353,31 @@ var (
 		},
 	}
 
-	HelpPostgres = config.HelpKVS{
+	HelpMaintable = config.HelpKVS{
 		config.HelpKV{
-			Key:         target.PostgresConnectionString,
-			Description: `Postgres server connection-string e.g. "host=localhost port=5432 dbname=minio_events user=postgres password=password sslmode=disable"`,
+			Key:         target.MaintableConnectionString,
+			Description: `Maintable server connection-string e.g. "host=localhost port=5432 dbname=minio_events user=maintable password=password sslmode=disable"`,
 			Type:        "string",
 			Sensitive:   true,
 		},
 		config.HelpKV{
-			Key:         target.PostgresTable,
+			Key:         target.MaintableTable,
 			Description: "DB table name to store/update events, table is auto-created",
 			Type:        "string",
 		},
 		config.HelpKV{
-			Key:         target.PostgresFormat,
+			Key:         target.MaintableFormat,
 			Description: formatComment,
 			Type:        "namespace*|access",
 		},
 		config.HelpKV{
-			Key:         target.PostgresQueueDir,
+			Key:         target.MaintableQueueDir,
 			Description: queueDirComment,
 			Optional:    true,
 			Type:        "path",
 		},
 		config.HelpKV{
-			Key:         target.PostgresQueueLimit,
+			Key:         target.MaintableQueueLimit,
 			Description: queueLimitComment,
 			Optional:    true,
 			Type:        "number",
@@ -389,7 +389,7 @@ var (
 			Type:        "sentence",
 		},
 		config.HelpKV{
-			Key:         target.PostgresMaxOpenConnections,
+			Key:         target.MaintableMaxOpenConnections,
 			Description: "To set the maximum number of open connections to the database. The value is set to `2` by default.",
 			Optional:    true,
 			Type:        "number",

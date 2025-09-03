@@ -4,7 +4,7 @@
  *	  definition of the "tablespace" system catalog (pg_tablespace)
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/catalog/pg_tablespace.h
@@ -32,7 +32,7 @@ CATALOG(pg_tablespace,1213,TableSpaceRelationId) BKI_SHARED_RELATION
 	NameData	spcname;		/* tablespace name */
 
 	/* owner of tablespace */
-	Oid			spcowner BKI_DEFAULT(POSTGRES) BKI_LOOKUP(pg_authid);
+	Oid			spcowner BKI_DEFAULT(MAINTABLE) BKI_LOOKUP(pg_authid);
 
 #ifdef CATALOG_VARLEN			/* variable-length fields start here */
 	aclitem		spcacl[1];		/* access permissions */

@@ -3,14 +3,14 @@
  * dict_snowball.c
  *		Snowball dictionary
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/snowball/dict_snowball.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_collation_d.h"
 #include "commands/defrem.h"

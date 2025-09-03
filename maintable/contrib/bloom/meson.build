@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 bloom_sources = files(
   'blcost.c',
@@ -17,7 +17,7 @@ endif
 
 bloom = shared_module('bloom',
   bloom_sources,
-  c_pch: pch_postgres_h,
+  c_pch: pch_maintable_h,
   kwargs: contrib_mod_args,
 )
 contrib_targets += bloom

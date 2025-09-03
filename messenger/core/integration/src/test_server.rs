@@ -32,13 +32,13 @@ use derive_more::Display;
 use futures::executor::block_on;
 use uuid::Uuid;
 
-use iggy::prelude::UserStatus::Active;
-use iggy::prelude::*;
+use messenger::prelude::UserStatus::Active;
+use messenger::prelude::*;
 use server::configs::config_provider::{ConfigProvider, FileConfigProvider};
 
-pub const SYSTEM_PATH_ENV_VAR: &str = "IGGY_SYSTEM_PATH";
-pub const TEST_VERBOSITY_ENV_VAR: &str = "IGGY_TEST_VERBOSE";
-pub const IPV6_ENV_VAR: &str = "IGGY_TCP_IPV6";
+pub const SYSTEM_PATH_ENV_VAR: &str = "MESSENGER_SYSTEM_PATH";
+pub const TEST_VERBOSITY_ENV_VAR: &str = "MESSENGER_TEST_VERBOSE";
+pub const IPV6_ENV_VAR: &str = "MESSENGER_TCP_IPV6";
 const USER_PASSWORD: &str = "secret";
 const SLEEP_INTERVAL_MS: u64 = 20;
 const LOCAL_DATA_PREFIX: &str = "local_data_";
@@ -112,7 +112,7 @@ impl TestServer {
             envs.insert(IPV6_ENV_VAR.to_string(), "true".to_string());
         }
 
-        // If IGGY_SYSTEM_PATH is not set, use a random path starting with "local_data_"
+        // If MESSENGER_SYSTEM_PATH is not set, use a random path starting with "local_data_"
         let local_data_path = if let Some(system_path) = envs.get(SYSTEM_PATH_ENV_VAR) {
             system_path.to_string()
         } else {
@@ -137,15 +137,15 @@ impl TestServer {
     ) -> Self {
         let mut server_addrs = Vec::new();
 
-        if let Some(tcp_addr) = envs.get("IGGY_TCP_ADDRESS") {
+        if let Some(tcp_addr) = envs.get("MESSENGER_TCP_ADDRESS") {
             server_addrs.push(ServerProtocolAddr::RawTcp(tcp_addr.parse().unwrap()));
         }
 
-        if let Some(http_addr) = envs.get("IGGY_HTTP_ADDRESS") {
+        if let Some(http_addr) = envs.get("MESSENGER_HTTP_ADDRESS") {
             server_addrs.push(ServerProtocolAddr::HttpTcp(http_addr.parse().unwrap()));
         }
 
-        if let Some(quic_addr) = envs.get("IGGY_QUIC_ADDRESS") {
+        if let Some(quic_addr) = envs.get("MESSENGER_QUIC_ADDRESS") {
             server_addrs.push(ServerProtocolAddr::QuicUdp(quic_addr.parse().unwrap()));
         }
 
@@ -184,13 +184,13 @@ impl TestServer {
         let mut command = if let Some(server_executable_path) = &self.server_executable_path {
             Command::new(server_executable_path)
         } else {
-            Command::cargo_bin("iggy-server").unwrap()
+            Command::cargo_bin("messenger-server").unwrap()
         };
         command.env(SYSTEM_PATH_ENV_VAR, files_path);
         command.envs(self.envs.clone());
 
         // By default, server all logs are redirected to files,
-        // and dumped to stderr when test fails. With IGGY_TEST_VERBOSE=1
+        // and dumped to stderr when test fails. With MESSENGER_TEST_VERBOSE=1
         // logs are dumped to stdout during test execution.
         if std::env::var(TEST_VERBOSITY_ENV_VAR).is_ok()
             || self.envs.contains_key(TEST_VERBOSITY_ENV_VAR)
@@ -289,13 +289,13 @@ impl TestServer {
         for server_protocol_addr in &self.server_addrs {
             let key = match server_protocol_addr {
                 ServerProtocolAddr::RawTcp(addr) => {
-                    ("IGGY_TCP_ADDRESS".to_string(), addr.to_string())
+                    ("MESSENGER_TCP_ADDRESS".to_string(), addr.to_string())
                 }
                 ServerProtocolAddr::HttpTcp(addr) => {
-                    ("IGGY_HTTP_ADDRESS".to_string(), addr.to_string())
+                    ("MESSENGER_HTTP_ADDRESS".to_string(), addr.to_string())
                 }
                 ServerProtocolAddr::QuicUdp(addr) => {
-                    ("IGGY_QUIC_ADDRESS".to_string(), addr.to_string())
+                    ("MESSENGER_QUIC_ADDRESS".to_string(), addr.to_string())
                 }
             };
 
@@ -432,14 +432,14 @@ impl Drop for TestServer {
         if panicking() {
             if let Some(stdout_file_path) = &self.stdout_file_path {
                 eprintln!(
-                    "Iggy server stdout:\n{}",
+                    "Messenger server stdout:\n{}",
                     Self::read_file_to_string(stdout_file_path.to_str().unwrap())
                 );
             }
 
             if let Some(stderr_file_path) = &self.stderr_file_path {
                 eprintln!(
-                    "Iggy server stderr:\n{}",
+                    "Messenger server stderr:\n{}",
                     Self::read_file_to_string(stderr_file_path.to_str().unwrap())
                 );
             }
@@ -459,7 +459,7 @@ impl Default for TestServer {
     }
 }
 
-pub async fn create_user(client: &IggyClient, username: &str) {
+pub async fn create_user(client: &MessengerClient, username: &str) {
     client
         .create_user(
             username,
@@ -485,25 +485,25 @@ pub async fn create_user(client: &IggyClient, username: &str) {
         .unwrap();
 }
 
-pub async fn delete_user(client: &IggyClient, username: &str) {
+pub async fn delete_user(client: &MessengerClient, username: &str) {
     client
         .delete_user(&Identifier::named(username).unwrap())
         .await
         .unwrap();
 }
 
-pub async fn login_root(client: &IggyClient) -> IdentityInfo {
+pub async fn login_root(client: &MessengerClient) -> IdentityInfo {
     client
         .login_user(DEFAULT_ROOT_USERNAME, DEFAULT_ROOT_PASSWORD)
         .await
         .unwrap()
 }
 
-pub async fn login_user(client: &IggyClient, username: &str) -> IdentityInfo {
+pub async fn login_user(client: &MessengerClient, username: &str) -> IdentityInfo {
     client.login_user(username, USER_PASSWORD).await.unwrap()
 }
 
-pub async fn assert_clean_system(system_client: &IggyClient) {
+pub async fn assert_clean_system(system_client: &MessengerClient) {
     let streams = system_client.get_streams().await.unwrap();
     assert!(streams.is_empty());
 

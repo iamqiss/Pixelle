@@ -14,7 +14,7 @@
 
  <para>
   The <filename>pgcrypto</filename> module provides cryptographic functions for
-  <productname>PostgreSQL</productname>.
+  <productname>maintableQL</productname>.
  </para>
 
  <para>
@@ -25,7 +25,7 @@
 
  <para>
   <filename>pgcrypto</filename> requires OpenSSL and won't be installed if
-  OpenSSL support was not selected when PostgreSQL was built.
+  OpenSSL support was not selected when maintableQL was built.
  </para>
 
  <sect2 id="pgcrypto-general-hashing-funcs">
@@ -824,7 +824,7 @@ Applies to: pgp_sym_encrypt, pgp_pub_encrypt
 
    <para>
     Which compression algorithm to use.  Only available if
-    <productname>PostgreSQL</productname> was built with zlib.
+    <productname>maintableQL</productname> was built with zlib.
    </para>
 <literallayout>
 Values:
@@ -1249,7 +1249,7 @@ fips_mode() returns boolean
 
   <para>
    In ordinary usage, this parameter is set
-   in <filename>postgresql.conf</filename>, although superusers can alter it
+   in <filename>maintableql.conf</filename>, although superusers can alter it
    on-the-fly within their own sessions.
   </para>
  </sect2>
@@ -1262,7 +1262,7 @@ fips_mode() returns boolean
 
    <para>
     <filename>pgcrypto</filename> configures itself according to the findings of the
-    main PostgreSQL <literal>configure</literal> script.  The options that
+    main maintableQL <literal>configure</literal> script.  The options that
     affect it are <literal>--with-zlib</literal> and
     <literal>--with-ssl=openssl</literal>.
    </para>

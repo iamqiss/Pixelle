@@ -1,7 +1,7 @@
 /*
  * contrib/intarray/_intbig_gist.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 

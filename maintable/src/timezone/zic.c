@@ -8,7 +8,7 @@
  *	  src/timezone/zic.c
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -48,7 +48,7 @@ static ptrdiff_t const PTRDIFF_MAX = MAXVAL(ptrdiff_t, TYPE_BIT(ptrdiff_t));
 #endif
 
 /*
- * The type for line numbers.  In Postgres, use %d to format them; upstream
+ * The type for line numbers.  In Maintable, use %d to format them; upstream
  * uses PRIdMAX but we prefer not to rely on that, not least because it
  * results in platform-dependent strings to be translated.
  */

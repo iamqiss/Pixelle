@@ -23,10 +23,10 @@ use std::path::PathBuf;
 use std::{collections::HashMap, env::var, path};
 use tokio::join;
 
-use iggy_common::ArgsOptional;
+use messenger_common::ArgsOptional;
 
-static ENV_IGGY_HOME: &str = "IGGY_HOME";
-static DEFAULT_IGGY_HOME_VALUE: &str = ".iggy";
+static ENV_MESSENGER_HOME: &str = "MESSENGER_HOME";
+static DEFAULT_MESSENGER_HOME_VALUE: &str = ".messenger";
 static ACTIVE_CONTEXT_FILE_NAME: &str = ".active_context";
 static CONTEXTS_FILE_NAME: &str = "contexts.toml";
 pub(crate) static DEFAULT_CONTEXT_NAME: &str = "default";
@@ -48,7 +48,7 @@ pub struct ContextConfig {
     pub token_name: Option<String>,
 
     #[serde(flatten)]
-    pub iggy: ArgsOptional,
+    pub messenger: ArgsOptional,
 }
 
 struct ContextState {
@@ -158,16 +158,16 @@ impl ContextManager {
 }
 
 pub struct ContextReaderWriter {
-    iggy_home: Option<PathBuf>,
+    messenger_home: Option<PathBuf>,
 }
 
 impl ContextReaderWriter {
     pub fn from_env() -> Self {
-        Self::new(iggy_home())
+        Self::new(messenger_home())
     }
 
-    pub fn new(iggy_home: Option<PathBuf>) -> Self {
-        Self { iggy_home }
+    pub fn new(messenger_home: Option<PathBuf>) -> Self {
+        Self { messenger_home }
     }
 
     pub async fn read_contexts(&self) -> Result<Option<ContextsConfigMap>> {
@@ -259,25 +259,25 @@ impl ContextReaderWriter {
     }
 
     fn active_context_path(&self) -> Option<PathBuf> {
-        self.iggy_home
+        self.messenger_home
             .clone()
             .map(|pb| pb.join(ACTIVE_CONTEXT_FILE_NAME))
     }
 
     fn contexts_path(&self) -> Option<PathBuf> {
-        self.iggy_home.clone().map(|pb| pb.join(CONTEXTS_FILE_NAME))
+        self.messenger_home.clone().map(|pb| pb.join(CONTEXTS_FILE_NAME))
     }
 }
 
 impl Default for ContextReaderWriter {
     fn default() -> Self {
-        ContextReaderWriter::new(iggy_home())
+        ContextReaderWriter::new(messenger_home())
     }
 }
 
-pub fn iggy_home() -> Option<PathBuf> {
-    match var(ENV_IGGY_HOME) {
+pub fn messenger_home() -> Option<PathBuf> {
+    match var(ENV_MESSENGER_HOME) {
         Ok(home) => Some(PathBuf::from(home)),
-        Err(_) => home_dir().map(|dir| dir.join(path::Path::new(DEFAULT_IGGY_HOME_VALUE))),
+        Err(_) => home_dir().map(|dir| dir.join(path::Path::new(DEFAULT_MESSENGER_HOME_VALUE))),
     }
 }

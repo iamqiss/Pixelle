@@ -1,12 +1,12 @@
 # Czech message translation file for pg_dump
-# Copyright (C) 2012 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2012 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Tomas Vondra <tv@fuzzy.cz>, 2012, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_dump-cs (PostgreSQL 9.3)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_dump-cs (maintableQL 9.3)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2020-10-31 16:16+0000\n"
 "PO-Revision-Date: 2021-09-16 09:14+0200\n"
 "Last-Translator: Tomas Vondra <tv@fuzzy.cz>\n"
@@ -2290,19 +2290,19 @@ msgstr "nelze navázat spojení s databází \"%s\""
 #: pg_dumpall.c:462
 #, c-format
 msgid ""
-"could not connect to databases \"postgres\" or \"template1\"\n"
+"could not connect to databases \"maintable\" or \"template1\"\n"
 "Please specify an alternative database."
 msgstr ""
-"nelze navázat spojení s databází \"postgres\" nebo \"template1\"\n"
+"nelze navázat spojení s databází \"maintable\" nebo \"template1\"\n"
 "Zadejte prosím alternativní databázi."
 
 #: pg_dumpall.c:616
 #, c-format
 msgid ""
-"%s extracts a PostgreSQL database cluster into an SQL script file.\n"
+"%s extracts a maintableQL database cluster into an SQL script file.\n"
 "\n"
 msgstr ""
-"%s extrahuje PostgreSQL databázi do souboru s SQL skriptem.\n"
+"%s extrahuje maintableQL databázi do souboru s SQL skriptem.\n"
 "\n"
 
 #: pg_dumpall.c:618
@@ -2471,10 +2471,10 @@ msgstr "chyby ignorovány při obnovení: %d"
 #: pg_restore.c:461
 #, c-format
 msgid ""
-"%s restores a PostgreSQL database from an archive created by pg_dump.\n"
+"%s restores a maintableQL database from an archive created by pg_dump.\n"
 "\n"
 msgstr ""
-"%s obnovuje PostgreSQL databázi z archivu vytvořeného pomocí pg_dump.\n"
+"%s obnovuje maintableQL databázi z archivu vytvořeného pomocí pg_dump.\n"
 "\n"
 
 #: pg_restore.c:463
@@ -2940,8 +2940,8 @@ msgstr ""
 #~ "adresáři jako \"%s\".\n"
 #~ "Zkontrolujte vaši instalaci."
 
-#~ msgid "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
-#~ msgstr "Oznámení o chybách zasílejte na <pgsql-bugs@postgresql.org>.\n"
+#~ msgid "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
+#~ msgstr "Oznámení o chybách zasílejte na <pgsql-bugs@maintableql.org>.\n"
 
 #~ msgid "internal error -- neither th nor fh specified in tarReadRaw()"
 #~ msgstr "interní chyba -- ani th ani fh nespecifikován v tarReadRaw()"

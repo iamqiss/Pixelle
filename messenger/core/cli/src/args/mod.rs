@@ -23,8 +23,8 @@ use clap::{Parser, Subcommand};
 use clap_complete::{Generator, Shell, generate};
 use figlet_rs::FIGfont;
 
-use iggy::prelude::{Args as IggyArgs, ArgsOptional as IggyArgsOptional};
-use iggy_binary_protocol::cli::binary_context::common::ContextConfig;
+use messenger::prelude::{Args as MessengerArgs, ArgsOptional as MessengerArgsOptional};
+use messenger_binary_protocol::cli::binary_context::common::ContextConfig;
 use segment::SegmentAction;
 use system::SnapshotArgs;
 
@@ -66,9 +66,9 @@ static CARGO_PKG_HOMEPAGE: &str = env!("CARGO_PKG_HOMEPAGE");
 
 #[derive(Debug, Parser)]
 #[command(author, version, about, long_about = None)]
-pub(crate) struct IggyConsoleArgs {
+pub(crate) struct MessengerConsoleArgs {
     #[clap(flatten, verbatim_doc_comment)]
-    pub(crate) iggy: IggyArgsOptional,
+    pub(crate) messenger: MessengerArgsOptional,
 
     #[clap(flatten, verbatim_doc_comment)]
     pub(crate) cli: CliOptions,
@@ -88,11 +88,11 @@ pub(crate) struct CliOptions {
     #[clap(short, long)]
     pub(crate) debug: Option<PathBuf>,
 
-    /// Iggy server username
+    /// Messenger server username
     #[clap(short, long, group = "credentials")]
     pub(crate) username: Option<String>,
 
-    /// Iggy server password
+    /// Messenger server password
     ///
     /// An optional parameter to specify the password for authentication.
     /// If not provided, user will be prompted interactively to enter the
@@ -100,12 +100,12 @@ pub(crate) struct CliOptions {
     #[clap(short, long, verbatim_doc_comment)]
     pub(crate) password: Option<String>,
 
-    /// Iggy server personal access token
+    /// Messenger server personal access token
     #[clap(short, long, group = "credentials")]
     pub(crate) token: Option<String>,
 
     #[cfg(feature = "login-session")]
-    /// Iggy server personal access token name
+    /// Messenger server personal access token name
     ///
     /// When personal access token is created using command line tool and stored
     /// inside platform-specific secure storage its name can be used as a value
@@ -113,18 +113,18 @@ pub(crate) struct CliOptions {
     #[clap(short = 'n', long, group = "credentials", verbatim_doc_comment)]
     pub(crate) token_name: Option<String>,
 
-    /// Shell completion generator for iggy command
+    /// Shell completion generator for messenger command
     ///
     /// Option prints shell completion code on standard output for selected shell.
     /// Redirect standard output to file and follow and use selected shell means
-    /// to enable completion for iggy command.
+    /// to enable completion for messenger command.
     /// Option cannot be combined with other options.
     ///
     /// Example:
-    ///  source <(iggy --generate bash)
+    ///  source <(messenger --generate bash)
     /// or
-    ///  iggy --generate bash > iggy_completion.bash
-    ///  source iggy_completion.bash
+    ///  messenger --generate bash > messenger_completion.bash
+    ///  source messenger_completion.bash
     #[clap(verbatim_doc_comment)]
     #[clap(long = "generate", value_enum)]
     pub(crate) generator: Option<Shell>,
@@ -144,24 +144,24 @@ pub(crate) enum Command {
     /// segments operations
     #[command(subcommand, visible_alias = "seg")]
     Segment(SegmentAction),
-    /// ping iggy server
+    /// ping messenger server
     ///
-    /// Check if iggy server is up and running and what's the response ping response time
+    /// Check if messenger server is up and running and what's the response ping response time
     #[clap(verbatim_doc_comment)]
     Ping(PingArgs),
     /// get current client info
     ///
-    /// Command connects to Iggy server and collects client info like client ID, user ID
+    /// Command connects to Messenger server and collects client info like client ID, user ID
     /// server address and protocol type.
     #[clap(verbatim_doc_comment)]
     Me,
-    /// get iggy server statistics
+    /// get messenger server statistics
     ///
-    /// Collect basic Iggy server statistics like number of streams, topics, partitions, etc.
+    /// Collect basic Messenger server statistics like number of streams, topics, partitions, etc.
     /// Server OS name, version, etc. are also collected.
     #[clap(verbatim_doc_comment)]
     Stats(StatsArgs),
-    /// collect iggy server troubleshooting data
+    /// collect messenger server troubleshooting data
     #[clap(verbatim_doc_comment)]
     Snapshot(SnapshotArgs),
     /// personal access token operations
@@ -186,28 +186,28 @@ pub(crate) enum Command {
     #[command(subcommand, visible_alias = "ctx")]
     Context(ContextAction),
     #[cfg(feature = "login-session")]
-    /// login to Iggy server
+    /// login to Messenger server
     ///
-    /// Command logs in to Iggy server using provided credentials and stores session token
+    /// Command logs in to Messenger server using provided credentials and stores session token
     /// in platform-specific secure storage. Session token is used for authentication in
     /// subsequent commands until logout command is executed.
     #[clap(verbatim_doc_comment, visible_alias = "li")]
     Login(LoginArgs),
     #[cfg(feature = "login-session")]
-    /// logout from Iggy server
+    /// logout from Messenger server
     ///
-    /// Command logs out from Iggy server and removes session token from platform-specific
+    /// Command logs out from Messenger server and removes session token from platform-specific
     /// secure storage. After logout command is executed, user needs to log in again to
     /// execute any command that requires authentication.
     #[clap(verbatim_doc_comment, visible_alias = "lo")]
     Logout,
 }
 
-impl IggyConsoleArgs {
+impl MessengerConsoleArgs {
     pub(crate) fn generate_completion<G: Generator>(&self, generator: G) {
         generate(
             generator,
-            &mut IggyConsoleArgs::augment_args_for_update(
+            &mut MessengerConsoleArgs::augment_args_for_update(
                 ClapCommand::new(CARGO_BIN_NAME).bin_name(CARGO_BIN_NAME),
             ),
             CARGO_BIN_NAME,
@@ -216,7 +216,7 @@ impl IggyConsoleArgs {
     }
 
     pub(crate) fn print_overview() {
-        let mut cli = IggyConsoleArgs::augment_args_for_update(
+        let mut cli = MessengerConsoleArgs::augment_args_for_update(
             ClapCommand::new(CARGO_BIN_NAME).bin_name(CARGO_BIN_NAME),
         );
 
@@ -227,24 +227,24 @@ impl IggyConsoleArgs {
         );
 
         let standard_font = FIGfont::standard().unwrap();
-        let figure = standard_font.convert("Iggy CLI").unwrap();
+        let figure = standard_font.convert("Messenger CLI").unwrap();
 
         println!("{figure}");
         println!("{help}");
         println!("Run '{CARGO_BIN_NAME} --help' for full help message.");
         println!("Run '{CARGO_BIN_NAME} COMMAND --help' for more information on a command.");
         println!();
-        println!("For more help on what's Iggy and how to use it, head to {CARGO_PKG_HOMEPAGE}");
+        println!("For more help on what's Messenger and how to use it, head to {CARGO_PKG_HOMEPAGE}");
     }
 }
 
-pub struct IggyMergedConsoleArgs {
-    pub iggy: IggyArgs,
+pub struct MessengerMergedConsoleArgs {
+    pub messenger: MessengerArgs,
     pub cli: CliOptions,
 }
 
-impl IggyMergedConsoleArgs {
-    pub fn from_context(context: ContextConfig, args: IggyConsoleArgs) -> Self {
+impl MessengerMergedConsoleArgs {
+    pub fn from_context(context: ContextConfig, args: MessengerConsoleArgs) -> Self {
         let merged_cli_options = CliOptions {
             quiet: args.cli.quiet,
             debug: args.cli.debug,
@@ -257,7 +257,7 @@ impl IggyMergedConsoleArgs {
         };
 
         Self {
-            iggy: IggyArgs::from(vec![context.iggy, args.iggy]),
+            messenger: MessengerArgs::from(vec![context.messenger, args.messenger]),
             cli: merged_cli_options,
         }
     }

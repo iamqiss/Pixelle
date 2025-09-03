@@ -16,13 +16,13 @@
  * under the License.
  */
 
-use super::message_header::{IGGY_MESSAGE_HEADER_SIZE, IggyMessageHeader};
+use super::message_header::{MESSENGER_MESSAGE_HEADER_SIZE, MessengerMessageHeader};
 use super::user_headers::get_user_headers_size;
 use crate::BytesSerializable;
 use crate::Sizeable;
-use crate::error::IggyError;
-use crate::utils::byte_size::IggyByteSize;
-use crate::utils::timestamp::IggyTimestamp;
+use crate::error::MessengerError;
+use crate::utils::byte_size::MessengerByteSize;
+use crate::utils::timestamp::MessengerTimestamp;
 use crate::{HeaderKey, HeaderValue};
 use bon::bon;
 use bytes::{BufMut, Bytes, BytesMut};
@@ -34,9 +34,9 @@ use tracing::warn;
 
 /// Maximum allowed size in bytes for a message payload.
 ///
-/// This constant defines the upper limit for the size of an `IggyMessage` payload.
+/// This constant defines the upper limit for the size of an `MessengerMessage` payload.
 /// Attempting to create a message with a payload larger than this value will result
-/// in an `IggyError::InvalidMessagePayloadLength` error.
+/// in an `MessengerError::InvalidMessagePayloadLength` error.
 ///
 /// # Constraints
 ///
@@ -48,8 +48,8 @@ pub const MAX_PAYLOAD_SIZE: u32 = 10 * 1000 * 1000;
 /// Maximum allowed size in bytes for user-defined headers.
 ///
 /// This constant defines the upper limit for the combined size of all user headers
-/// in an `IggyMessage`. Attempting to create a message with user headers larger
-/// than this value will result in an `IggyError::TooBigUserHeaders` error.
+/// in an `MessengerMessage`. Attempting to create a message with user headers larger
+/// than this value will result in an `MessengerError::TooBigUserHeaders` error.
 ///
 /// # Constraints
 ///
@@ -59,9 +59,9 @@ pub const MAX_PAYLOAD_SIZE: u32 = 10 * 1000 * 1000;
 ///
 pub const MAX_USER_HEADERS_SIZE: u32 = 100 * 1000;
 
-/// A message stored in the Iggy messaging system.
+/// A message stored in the Messenger messaging system.
 ///
-/// `IggyMessage` represents a single message that can be sent to or received from
+/// `MessengerMessage` represents a single message that can be sent to or received from
 /// a stream. Each message consists of:
 /// * A header with message metadata
 /// * A payload (the actual content)
@@ -70,25 +70,25 @@ pub const MAX_USER_HEADERS_SIZE: u32 = 100 * 1000;
 /// # Examples
 ///
 /// ```
-/// use iggy_common::*;
+/// use messenger_common::*;
 /// use std::str::FromStr;
 /// use std::collections::HashMap;
 /// use bytes::Bytes;
 ///
 /// // Create a simple text message
-/// let message = IggyMessage::builder()
+/// let message = MessengerMessage::builder()
 ///     .payload("Hello world!".into())
 ///     .build()
 ///     .unwrap();
 ///
 /// // Create a simple message with raw binary payload
-/// let message = IggyMessage::builder()
+/// let message = MessengerMessage::builder()
 ///     .payload(Bytes::from(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9]))
 ///     .build()
 ///     .unwrap();
 ///
 /// // Create a message with custom ID
-/// let message = IggyMessage::builder()
+/// let message = MessengerMessage::builder()
 ///     .id(42)
 ///     .payload("Custom message".into())
 ///     .build()
@@ -99,16 +99,16 @@ pub const MAX_USER_HEADERS_SIZE: u32 = 100 * 1000;
 /// let value = HeaderValue::from_str("text/plain").unwrap();
 /// let user_headers = HashMap::from([(key, value)]);
 ///
-/// let message = IggyMessage::builder()
+/// let message = MessengerMessage::builder()
 ///     .payload("Message with metadata".into())
 ///     .user_headers(user_headers)
 ///     .build()
 ///     .unwrap();
 /// ```
 #[derive(Debug, PartialEq, Default)]
-pub struct IggyMessage {
+pub struct MessengerMessage {
     /// Message metadata
-    pub header: IggyMessageHeader,
+    pub header: MessengerMessageHeader,
 
     /// Message content
     pub payload: Bytes,
@@ -118,7 +118,7 @@ pub struct IggyMessage {
 }
 
 #[bon]
-impl IggyMessage {
+impl MessengerMessage {
     /// Creates a new message with customizable parameters.
     ///
     /// # Arguments
@@ -134,19 +134,19 @@ impl IggyMessage {
     /// # Examples
     ///
     /// ```
-    /// use iggy_common::*;
+    /// use messenger_common::*;
     /// use bytes::Bytes;
     /// use std::collections::HashMap;
     /// use std::str::FromStr;
     ///
     /// // Simple message with just payload
-    /// let msg = IggyMessage::builder()
+    /// let msg = MessengerMessage::builder()
     ///     .payload("Hello world".into())
     ///     .build()
     ///     .unwrap();
     ///
     /// // Message with custom ID
-    /// let msg = IggyMessage::builder()
+    /// let msg = MessengerMessage::builder()
     ///     .id(42)
     ///     .payload("Hello".into())
     ///     .build()
@@ -156,7 +156,7 @@ impl IggyMessage {
     /// let key = HeaderKey::from_str("content-type").unwrap();
     /// let value = HeaderValue::from_str("text/plain").unwrap();
     /// let user_headers = HashMap::from([(key, value)]);
-    /// let msg = IggyMessage::builder()
+    /// let msg = MessengerMessage::builder()
     ///     .payload("Hello".into())
     ///     .user_headers(user_headers)
     ///     .build()
@@ -167,27 +167,27 @@ impl IggyMessage {
         id: Option<u128>,
         payload: Bytes,
         user_headers: Option<HashMap<HeaderKey, HeaderValue>>,
-    ) -> Result<Self, IggyError> {
+    ) -> Result<Self, MessengerError> {
         if payload.is_empty() {
-            return Err(IggyError::InvalidMessagePayloadLength);
+            return Err(MessengerError::InvalidMessagePayloadLength);
         }
 
         if payload.len() > MAX_PAYLOAD_SIZE as usize {
-            return Err(IggyError::TooBigMessagePayload);
+            return Err(MessengerError::TooBigMessagePayload);
         }
 
         let user_headers_length = get_user_headers_size(&user_headers).unwrap_or(0);
 
         if user_headers_length > MAX_USER_HEADERS_SIZE {
-            return Err(IggyError::TooBigUserHeaders);
+            return Err(MessengerError::TooBigUserHeaders);
         }
 
-        let header = IggyMessageHeader {
+        let header = MessengerMessageHeader {
             checksum: 0,
             id: id.unwrap_or(0),
             offset: 0,
             timestamp: 0,
-            origin_timestamp: IggyTimestamp::now().as_micros(),
+            origin_timestamp: MessengerTimestamp::now().as_micros(),
             user_headers_length,
             payload_length: payload.len() as u32,
         };
@@ -202,7 +202,7 @@ impl IggyMessage {
     }
 }
 
-impl IggyMessage {
+impl MessengerMessage {
     /// Gets the user headers as a typed HashMap.
     ///
     /// This method parses the binary header data into a typed HashMap for easy access.
@@ -211,12 +211,12 @@ impl IggyMessage {
     ///
     /// * `Ok(Some(HashMap))` - Successfully parsed headers
     /// * `Ok(None)` - No headers present
-    /// * `Err(IggyError)` - Error parsing headers
+    /// * `Err(MessengerError)` - Error parsing headers
     ///
     /// # Examples
     ///
     /// ```
-    /// use iggy_common::*;
+    /// use messenger_common::*;
     /// use std::str::FromStr;
     /// use std::collections::HashMap;
     ///
@@ -224,7 +224,7 @@ impl IggyMessage {
     /// let value = HeaderValue::from_str("text/plain").unwrap();
     /// let user_headers_map = HashMap::from([(key.clone(), value)]);
     ///
-    /// let message = IggyMessage::builder()
+    /// let message = MessengerMessage::builder()
     ///     .payload("Hello".into())
     ///     .user_headers(user_headers_map)
     ///     .build()
@@ -233,7 +233,7 @@ impl IggyMessage {
     /// let headers = message.user_headers_map().unwrap().unwrap();
     /// assert!(headers.contains_key(&key));
     /// ```
-    pub fn user_headers_map(&self) -> Result<Option<HashMap<HeaderKey, HeaderValue>>, IggyError> {
+    pub fn user_headers_map(&self) -> Result<Option<HashMap<HeaderKey, HeaderValue>>, MessengerError> {
         if let Some(user_headers) = &self.user_headers {
             match HashMap::<HeaderKey, HeaderValue>::from_bytes(user_headers.clone()) {
                 Ok(h) => Ok(Some(h)),
@@ -241,7 +241,7 @@ impl IggyMessage {
                     warn!(
                         "Failed to deserialize user headers: {e} for message at offset {}, sent at: {} ({}), user_headers_length: {}, skipping field...",
                         self.header.offset,
-                        IggyTimestamp::from(self.header.origin_timestamp).to_rfc3339_string(),
+                        MessengerTimestamp::from(self.header.origin_timestamp).to_rfc3339_string(),
                         self.header.origin_timestamp,
                         self.header.user_headers_length
                     );
@@ -265,12 +265,12 @@ impl IggyMessage {
     ///
     /// * `Ok(Some(HeaderValue))` - User header found with its value
     /// * `Ok(None)` - User header not found or user headers couldn't be parsed
-    /// * `Err(IggyError)` - Error accessing user headers
+    /// * `Err(MessengerError)` - Error accessing user headers
     ///
     /// # Examples
     ///
     /// ```
-    /// use iggy_common::*;
+    /// use messenger_common::*;
     /// use std::str::FromStr;
     /// use std::collections::HashMap;
     ///
@@ -278,7 +278,7 @@ impl IggyMessage {
     /// let value = HeaderValue::from_str("text/plain").unwrap();
     /// let user_headers_map = HashMap::from([(key.clone(), value.clone())]);
     ///
-    /// let message = IggyMessage::builder()
+    /// let message = MessengerMessage::builder()
     ///     .payload("Hello".into())
     ///     .user_headers(user_headers_map)
     ///     .build()
@@ -287,7 +287,7 @@ impl IggyMessage {
     /// let header_value = message.get_user_header(&key).unwrap().unwrap();
     /// assert_eq!(header_value, value);
     /// ```
-    pub fn get_user_header(&self, key: &HeaderKey) -> Result<Option<HeaderValue>, IggyError> {
+    pub fn get_user_header(&self, key: &HeaderKey) -> Result<Option<HeaderValue>, MessengerError> {
         Ok(self
             .user_headers_map()?
             .and_then(|map| map.get(key).cloned()))
@@ -303,12 +303,12 @@ impl IggyMessage {
     ///
     /// * `Ok(true)` - User header exists
     /// * `Ok(false)` - User header doesn't exist or user headers couldn't be parsed
-    /// * `Err(IggyError)` - Error accessing user headers
+    /// * `Err(MessengerError)` - Error accessing user headers
     ///
     /// # Examples
     ///
     /// ```
-    /// use iggy_common::*;
+    /// use messenger_common::*;
     /// use std::str::FromStr;
     /// use std::collections::HashMap;
     ///
@@ -316,7 +316,7 @@ impl IggyMessage {
     /// let value = HeaderValue::from_str("text/plain").unwrap();
     /// let user_headers_map = HashMap::from([(key.clone(), value)]);
     ///
-    /// let message = IggyMessage::builder()
+    /// let message = MessengerMessage::builder()
     ///     .payload("Hello".into())
     ///     .user_headers(user_headers_map)
     ///     .build()
@@ -325,7 +325,7 @@ impl IggyMessage {
     /// assert!(message.has_user_header(&key).unwrap());
     /// assert!(!message.has_user_header(&HeaderKey::from_str("non-existent").unwrap()).unwrap());
     /// ```
-    pub fn has_user_header(&self, key: &HeaderKey) -> Result<bool, IggyError> {
+    pub fn has_user_header(&self, key: &HeaderKey) -> Result<bool, MessengerError> {
         Ok(self
             .user_headers_map()?
             .is_some_and(|map| map.contains_key(key)))
@@ -336,34 +336,34 @@ impl IggyMessage {
     /// # Returns
     ///
     /// * `Ok(String)` - Successfully converted payload to string
-    /// * `Err(IggyError)` - Payload is not valid UTF-8
+    /// * `Err(MessengerError)` - Payload is not valid UTF-8
     ///
     /// # Examples
     ///
     /// ```
-    /// use iggy_common::*;
+    /// use messenger_common::*;
     ///
-    /// let message = IggyMessage::builder()
+    /// let message = MessengerMessage::builder()
     ///     .payload("Hello world".into())
     ///     .build()
     ///     .unwrap();
     ///
     /// assert_eq!(message.payload_as_string().unwrap(), "Hello world");
     /// ```
-    pub fn payload_as_string(&self) -> Result<String, IggyError> {
-        String::from_utf8(self.payload.to_vec()).map_err(|_| IggyError::InvalidUtf8)
+    pub fn payload_as_string(&self) -> Result<String, MessengerError> {
+        String::from_utf8(self.payload.to_vec()).map_err(|_| MessengerError::InvalidUtf8)
     }
 }
 
-impl FromStr for IggyMessage {
-    type Err = IggyError;
+impl FromStr for MessengerMessage {
+    type Err = MessengerError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         Self::builder().payload(Bytes::from(s.to_owned())).build()
     }
 }
 
-impl std::fmt::Display for IggyMessage {
+impl std::fmt::Display for MessengerMessage {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match String::from_utf8(self.payload.to_vec()) {
             Ok(payload) => {
@@ -392,9 +392,9 @@ impl std::fmt::Display for IggyMessage {
     }
 }
 
-impl Sizeable for IggyMessage {
-    fn get_size_bytes(&self) -> IggyByteSize {
-        let message_header_len = IGGY_MESSAGE_HEADER_SIZE;
+impl Sizeable for MessengerMessage {
+    fn get_size_bytes(&self) -> MessengerByteSize {
+        let message_header_len = MESSENGER_MESSAGE_HEADER_SIZE;
         let payload_len = self.payload.len();
         let user_headers_len = self.user_headers.as_ref().map(|h| h.len()).unwrap_or(0);
 
@@ -411,11 +411,11 @@ impl Sizeable for IggyMessage {
             )
         }
 
-        IggyByteSize::from((message_header_len + payload_len + user_headers_len) as u64)
+        MessengerByteSize::from((message_header_len + payload_len + user_headers_len) as u64)
     }
 }
 
-impl BytesSerializable for IggyMessage {
+impl BytesSerializable for MessengerMessage {
     fn to_bytes(&self) -> Bytes {
         let mut bytes = BytesMut::with_capacity(self.get_size_bytes().as_bytes_usize());
         let message_header = self.header.to_bytes();
@@ -427,19 +427,19 @@ impl BytesSerializable for IggyMessage {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError> {
-        if bytes.len() < IGGY_MESSAGE_HEADER_SIZE {
-            return Err(IggyError::InvalidCommand);
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError> {
+        if bytes.len() < MESSENGER_MESSAGE_HEADER_SIZE {
+            return Err(MessengerError::InvalidCommand);
         }
 
         let mut position = 0;
-        let header = IggyMessageHeader::from_bytes(bytes.slice(0..IGGY_MESSAGE_HEADER_SIZE))?;
+        let header = MessengerMessageHeader::from_bytes(bytes.slice(0..MESSENGER_MESSAGE_HEADER_SIZE))?;
 
-        position += IGGY_MESSAGE_HEADER_SIZE;
+        position += MESSENGER_MESSAGE_HEADER_SIZE;
         let payload_end = position + header.payload_length as usize;
 
         if payload_end > bytes.len() {
-            return Err(IggyError::InvalidMessagePayloadLength);
+            return Err(MessengerError::InvalidMessagePayloadLength);
         }
 
         let payload = bytes.slice(position..payload_end);
@@ -448,7 +448,7 @@ impl BytesSerializable for IggyMessage {
         let user_headers = if header.user_headers_length > 0 {
             let headers_end = position + header.user_headers_length as usize;
             if headers_end > bytes.len() {
-                return Err(IggyError::InvalidHeaderValue);
+                return Err(MessengerError::InvalidHeaderValue);
             }
             Some(bytes.slice(position..headers_end))
         } else {
@@ -470,7 +470,7 @@ impl BytesSerializable for IggyMessage {
             )
         }
 
-        Ok(IggyMessage {
+        Ok(MessengerMessage {
             header,
             payload,
             user_headers,
@@ -486,13 +486,13 @@ impl BytesSerializable for IggyMessage {
     }
 }
 
-impl From<IggyMessage> for Bytes {
-    fn from(message: IggyMessage) -> Self {
+impl From<MessengerMessage> for Bytes {
+    fn from(message: MessengerMessage) -> Self {
         message.to_bytes()
     }
 }
 
-impl From<String> for IggyMessage {
+impl From<String> for MessengerMessage {
     fn from(s: String) -> Self {
         Self::builder()
             .payload(Bytes::from(s))
@@ -501,7 +501,7 @@ impl From<String> for IggyMessage {
     }
 }
 
-impl From<&str> for IggyMessage {
+impl From<&str> for MessengerMessage {
     fn from(s: &str) -> Self {
         Self::builder()
             .payload(Bytes::from(s.to_owned()))
@@ -510,7 +510,7 @@ impl From<&str> for IggyMessage {
     }
 }
 
-impl From<Vec<u8>> for IggyMessage {
+impl From<Vec<u8>> for MessengerMessage {
     fn from(v: Vec<u8>) -> Self {
         Self::builder()
             .payload(Bytes::from(v))
@@ -519,7 +519,7 @@ impl From<Vec<u8>> for IggyMessage {
     }
 }
 
-impl From<&[u8]> for IggyMessage {
+impl From<&[u8]> for MessengerMessage {
     fn from(bytes: &[u8]) -> Self {
         Self::builder()
             .payload(Bytes::copy_from_slice(bytes))
@@ -528,15 +528,15 @@ impl From<&[u8]> for IggyMessage {
     }
 }
 
-impl TryFrom<Bytes> for IggyMessage {
-    type Error = IggyError;
+impl TryFrom<Bytes> for MessengerMessage {
+    type Error = MessengerError;
 
     fn try_from(bytes: Bytes) -> Result<Self, Self::Error> {
         Self::from_bytes(bytes)
     }
 }
 
-impl Serialize for IggyMessage {
+impl Serialize for MessengerMessage {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -546,7 +546,7 @@ impl Serialize for IggyMessage {
 
         let field_count = 2 + self.user_headers.is_some() as usize;
 
-        let mut state = serializer.serialize_struct("IggyMessage", field_count)?;
+        let mut state = serializer.serialize_struct("MessengerMessage", field_count)?;
         state.serialize_field("header", &self.header)?;
 
         let base64_payload = STANDARD.encode(&self.payload);
@@ -562,7 +562,7 @@ impl Serialize for IggyMessage {
     }
 }
 
-impl<'de> Deserialize<'de> for IggyMessage {
+impl<'de> Deserialize<'de> for MessengerMessage {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
@@ -570,20 +570,20 @@ impl<'de> Deserialize<'de> for IggyMessage {
         use serde::de::{self, MapAccess, Visitor};
         use std::fmt;
 
-        struct IggyMessageVisitor;
+        struct MessengerMessageVisitor;
 
-        impl<'de> Visitor<'de> for IggyMessageVisitor {
-            type Value = IggyMessage;
+        impl<'de> Visitor<'de> for MessengerMessageVisitor {
+            type Value = MessengerMessage;
 
             fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-                formatter.write_str("struct IggyMessage")
+                formatter.write_str("struct MessengerMessage")
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error>
             where
                 A: MapAccess<'de>,
             {
-                let mut header: Option<IggyMessageHeader> = None;
+                let mut header: Option<MessengerMessageHeader> = None;
                 let mut payload: Option<Bytes> = None;
                 let mut user_headers: Option<HashMap<HeaderKey, HeaderValue>> = None;
 
@@ -622,7 +622,7 @@ impl<'de> Deserialize<'de> for IggyMessage {
                 let mut header = header;
                 header.user_headers_length = user_headers_length;
 
-                Ok(IggyMessage {
+                Ok(MessengerMessage {
                     header,
                     payload,
                     user_headers: user_headers_bytes,
@@ -631,9 +631,9 @@ impl<'de> Deserialize<'de> for IggyMessage {
         }
 
         deserializer.deserialize_struct(
-            "IggyMessage",
+            "MessengerMessage",
             &["header", "payload", "user_headers"],
-            IggyMessageVisitor,
+            MessengerMessageVisitor,
         )
     }
 }
@@ -644,7 +644,7 @@ mod tests {
 
     #[test]
     fn test_create_simple_message() {
-        let message = IggyMessage::builder()
+        let message = MessengerMessage::builder()
             .payload(Bytes::from("test message"))
             .build()
             .expect("String conversion should not fail");
@@ -655,7 +655,7 @@ mod tests {
 
     #[test]
     fn test_create_with_id() {
-        let message = IggyMessage::builder()
+        let message = MessengerMessage::builder()
             .id(42)
             .payload(Bytes::from("test with id"))
             .build()
@@ -672,7 +672,7 @@ mod tests {
             HeaderValue::from_str("text/plain").unwrap(),
         );
 
-        let message = IggyMessage::builder()
+        let message = MessengerMessage::builder()
             .payload(Bytes::from("test with headers"))
             .user_headers(headers)
             .build()
@@ -687,19 +687,19 @@ mod tests {
 
     #[test]
     fn test_empty_payload() {
-        let message = IggyMessage::builder().payload(Bytes::new()).build();
-        assert_eq!(message, Err(IggyError::InvalidMessagePayloadLength));
+        let message = MessengerMessage::builder().payload(Bytes::new()).build();
+        assert_eq!(message, Err(MessengerError::InvalidMessagePayloadLength));
     }
 
     #[test]
     fn test_from_string() {
-        let message: IggyMessage = "simple message".into();
+        let message: MessengerMessage = "simple message".into();
         assert_eq!(message.payload, Bytes::from("simple message"));
     }
 
     #[test]
     fn test_payload_as_string() {
-        let message = IggyMessage::builder()
+        let message = MessengerMessage::builder()
             .payload(Bytes::from("test message"))
             .build()
             .expect("String conversion should not fail");
@@ -708,13 +708,13 @@ mod tests {
 
     #[test]
     fn test_serialization_roundtrip() {
-        let original = IggyMessage::builder()
+        let original = MessengerMessage::builder()
             .id(123)
             .payload(Bytes::from("serialization test"))
             .build()
             .expect("String conversion should not fail");
         let bytes = original.to_bytes();
-        let decoded = IggyMessage::from_bytes(bytes).unwrap();
+        let decoded = MessengerMessage::from_bytes(bytes).unwrap();
 
         assert_eq!(original.header.id, decoded.header.id);
         assert_eq!(original.payload, decoded.payload);
@@ -732,7 +732,7 @@ mod tests {
             HeaderValue::from_str("123456").unwrap(),
         );
 
-        let original = IggyMessage::builder()
+        let original = MessengerMessage::builder()
             .id(42)
             .payload(Bytes::from("JSON serialization test"))
             .user_headers(headers)
@@ -741,7 +741,7 @@ mod tests {
 
         let json = serde_json::to_string(&original).expect("JSON serialization should not fail");
 
-        let deserialized: IggyMessage =
+        let deserialized: MessengerMessage =
             serde_json::from_str(&json).expect("JSON deserialization should not fail");
 
         assert_eq!(original.header.id, deserialized.header.id);

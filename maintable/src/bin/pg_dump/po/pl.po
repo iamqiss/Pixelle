@@ -1,12 +1,12 @@
 # Polish message translation file for pg_dump
-# Copyright (C) 2011 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2011 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Begina Felicysym <begina.felicysym@wp.eu>, 2011, 2012, 2013.
 # grzegorz <begina.felicysym@wp.eu>, 2014, 2015, 2016, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_dump (PostgreSQL 9.5)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pg_dump (maintableQL 9.5)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2017-04-09 21:16+0000\n"
 "PO-Revision-Date: 2017-04-09 23:39+0200\n"
 "Last-Translator: grzegorz <begina.felicysym@wp.eu>\n"
@@ -1789,8 +1789,8 @@ msgstr ""
 
 #: pg_dump.c:982 pg_dumpall.c:624 pg_restore.c:503
 #, c-format
-msgid "Report bugs to <pgsql-bugs@postgresql.org>.\n"
-msgstr "Błędy proszę przesyłać na adres <pgsql-bugs@postgresql.org>.\n"
+msgid "Report bugs to <pgsql-bugs@maintableql.org>.\n"
+msgstr "Błędy proszę przesyłać na adres <pgsql-bugs@maintableql.org>.\n"
 
 #: pg_dump.c:999
 #, c-format
@@ -2309,10 +2309,10 @@ msgstr "%s: nie można połączyć się do bazy danych \"%s\"\n"
 #: pg_dumpall.c:428
 #, c-format
 msgid ""
-"%s: could not connect to databases \"postgres\" or \"template1\"\n"
+"%s: could not connect to databases \"maintable\" or \"template1\"\n"
 "Please specify an alternative database.\n"
 msgstr ""
-"%s: n ie udało się połączyć do bazy danych \"postgres\" ani \"template1\"\n"
+"%s: n ie udało się połączyć do bazy danych \"maintable\" ani \"template1\"\n"
 "Proszę wskazać alternatywną bazę danych.\n"
 
 #: pg_dumpall.c:445
@@ -2323,10 +2323,10 @@ msgstr "%s: nie można otworzyć pliku wyjścia \"%s\": %s\n"
 #: pg_dumpall.c:575
 #, c-format
 msgid ""
-"%s extracts a PostgreSQL database cluster into an SQL script file.\n"
+"%s extracts a maintableQL database cluster into an SQL script file.\n"
 "\n"
 msgstr ""
-"%s wyciąga klaster bazy danych PostgreSQL do pliku skryptowego SQL.\n"
+"%s wyciąga klaster bazy danych maintableQL do pliku skryptowego SQL.\n"
 "\n"
 
 #: pg_dumpall.c:577
@@ -2505,10 +2505,10 @@ msgstr "OSTRZEŻENIE: błędy ignorowane przy odtworzeniu: %d\n"
 #: pg_restore.c:445
 #, c-format
 msgid ""
-"%s restores a PostgreSQL database from an archive created by pg_dump.\n"
+"%s restores a maintableQL database from an archive created by pg_dump.\n"
 "\n"
 msgstr ""
-"%s odtwarza bazę danych PostgreSQL z archiwum utworzonego przez pg_dump.\n"
+"%s odtwarza bazę danych maintableQL z archiwum utworzonego przez pg_dump.\n"
 "\n"
 
 #: pg_restore.c:447

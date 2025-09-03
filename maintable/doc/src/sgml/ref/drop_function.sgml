@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_function.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-dropfunction">
@@ -164,7 +164,7 @@ DROP FUNCTION update_employee_salaries();
 
   <para>
    This command conforms to the SQL standard, with
-   these <productname>PostgreSQL</productname> extensions:
+   these <productname>maintableQL</productname> extensions:
    <itemizedlist>
     <listitem>
      <para>The standard only allows one function to be dropped per command.</para>

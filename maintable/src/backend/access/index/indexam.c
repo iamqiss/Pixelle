@@ -3,7 +3,7 @@
  * indexam.c
  *	  general index access method routines
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -41,7 +41,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/amapi.h"
 #include "access/relation.h"
@@ -865,7 +865,7 @@ index_can_return(Relation indexRelation, int attno)
  *		involved; it just builds an ordered list of them for
  *		each attribute on which an index is defined.
  *
- *		As of Postgres 8.3, support routines within an operator family
+ *		As of Maintable 8.3, support routines within an operator family
  *		are further subdivided by the "left type" and "right type" of the
  *		query operator(s) that they support.  The "default" functions for a
  *		particular indexed attribute are those with both types equal to

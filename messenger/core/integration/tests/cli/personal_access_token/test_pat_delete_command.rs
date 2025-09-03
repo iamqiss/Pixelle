@@ -16,11 +16,11 @@
  * under the License.
  */
 
-use crate::cli::common::{IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, USAGE_PREFIX};
+use crate::cli::common::{MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, USAGE_PREFIX};
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
-use iggy::prelude::PersonalAccessTokenExpiry;
+use messenger::prelude::Client;
+use messenger::prelude::PersonalAccessTokenExpiry;
 use predicates::str::diff;
 use serial_test::parallel;
 
@@ -39,7 +39,7 @@ impl TestPatDeleteCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestPatDeleteCmd {
+impl MessengerCmdTestCase for TestPatDeleteCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let pat = client
             .create_personal_access_token(&self.name, PersonalAccessTokenExpiry::NeverExpire)
@@ -47,8 +47,8 @@ impl IggyCmdTestCase for TestPatDeleteCmd {
         assert!(pat.is_ok());
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("pat")
             .arg("delete")
             .args(self.to_args())
@@ -76,13 +76,13 @@ impl IggyCmdTestCase for TestPatDeleteCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestPatDeleteCmd::new(String::from("name")))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestPatDeleteCmd::new(String::from("client")))
         .await;
 }
@@ -90,17 +90,17 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["pat", "delete", "--help"],
             format!(
                 r#"Delete personal access token
 
 Examples
- iggy pat delete name
- iggy pat delete client
+ messenger pat delete name
+ messenger pat delete client
 
 {USAGE_PREFIX} pat delete <NAME>
 
@@ -120,9 +120,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["pat", "delete", "-h"],
             format!(

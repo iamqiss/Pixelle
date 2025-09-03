@@ -31,8 +31,8 @@ FROM --platform=$BUILDPLATFORM chef AS builder
 ARG PROFILE=release
 ARG TARGETPLATFORM
 ARG LIBC=musl
-ARG IGGY_CI_BUILD
-ENV IGGY_CI_BUILD=${IGGY_CI_BUILD}
+ARG MESSENGER_CI_BUILD
+ENV MESSENGER_CI_BUILD=${MESSENGER_CI_BUILD}
 
 RUN apk add --no-cache zig && \
     cargo install cargo-zigbuild --locked && \
@@ -72,57 +72,57 @@ RUN --mount=type=cache,target=/usr/local/cargo/registry,id=cargo-registry-${TARG
     *) echo "Unsupported $TARGETPLATFORM/$LIBC" && exit 1 ;; \
     esac && \
     if [ "$PROFILE" = "debug" ]; then \
-    cargo zigbuild --target ${RUST_TARGET} --bin iggy-server --bin iggy && \
-    cp /app/target/${RUST_TARGET}/debug/iggy-server /app/iggy-server && \
-    cp /app/target/${RUST_TARGET}/debug/iggy /app/iggy; \
+    cargo zigbuild --target ${RUST_TARGET} --bin messenger-server --bin messenger && \
+    cp /app/target/${RUST_TARGET}/debug/messenger-server /app/messenger-server && \
+    cp /app/target/${RUST_TARGET}/debug/messenger /app/messenger; \
     else \
-    cargo zigbuild --target ${RUST_TARGET} --bin iggy-server --bin iggy --release && \
-    cp /app/target/${RUST_TARGET}/release/iggy-server /app/iggy-server && \
-    cp /app/target/${RUST_TARGET}/release/iggy /app/iggy; \
+    cargo zigbuild --target ${RUST_TARGET} --bin messenger-server --bin messenger --release && \
+    cp /app/target/${RUST_TARGET}/release/messenger-server /app/messenger-server && \
+    cp /app/target/${RUST_TARGET}/release/messenger /app/messenger; \
     fi
 
 # ── prebuilt path (FAST) ──────────────────────────────────────────────────────
 FROM debian:trixie-slim AS prebuilt
 WORKDIR /out
-ARG PREBUILT_IGGY_SERVER
-ARG PREBUILT_IGGY_CLI
-COPY ${PREBUILT_IGGY_SERVER} /out/iggy-server
-COPY ${PREBUILT_IGGY_CLI}    /out/iggy
-RUN chmod +x /out/iggy-server /out/iggy
+ARG PREBUILT_MESSENGER_SERVER
+ARG PREBUILT_MESSENGER_CLI
+COPY ${PREBUILT_MESSENGER_SERVER} /out/messenger-server
+COPY ${PREBUILT_MESSENGER_CLI}    /out/messenger
+RUN chmod +x /out/messenger-server /out/messenger
 
 # ── final images ──────────────────────────────────────────────────────────────
 FROM debian:trixie-slim AS runtime-prebuilt
 ARG TARGETPLATFORM
-ARG PREBUILT_IGGY_SERVER
-ARG PREBUILT_IGGY_CLI
+ARG PREBUILT_MESSENGER_SERVER
+ARG PREBUILT_MESSENGER_CLI
 WORKDIR /app
-COPY --from=prebuilt /out/iggy-server /usr/local/bin/iggy-server
-COPY --from=prebuilt /out/iggy        /usr/local/bin/iggy
+COPY --from=prebuilt /out/messenger-server /usr/local/bin/messenger-server
+COPY --from=prebuilt /out/messenger        /usr/local/bin/messenger
 RUN echo "═══════════════════════════════════════════════════════════════" && \
-    echo "                    IGGY SERVER BUILD SUMMARY                  " && \
+    echo "                    MESSENGER SERVER BUILD SUMMARY                  " && \
     echo "═══════════════════════════════════════════════════════════════" && \
     echo "Build Type:     PREBUILT BINARIES" && \
     echo "Platform:       ${TARGETPLATFORM:-linux/amd64}" && \
-    echo "Source Path:    ${PREBUILT_IGGY_SERVER:-not specified}" && \
+    echo "Source Path:    ${PREBUILT_MESSENGER_SERVER:-not specified}" && \
     echo "Binary Info:" && \
-    (command -v file >/dev/null 2>&1 && file /usr/local/bin/iggy-server | sed 's/^/  /' || \
-    echo "  $(ldd /usr/local/bin/iggy-server 2>&1 | head -1)") && \
+    (command -v file >/dev/null 2>&1 && file /usr/local/bin/messenger-server | sed 's/^/  /' || \
+    echo "  $(ldd /usr/local/bin/messenger-server 2>&1 | head -1)") && \
     echo "Binary Size:" && \
-    ls -lh /usr/local/bin/iggy-server /usr/local/bin/iggy | awk '{print "  " $9 ": " $5}' && \
+    ls -lh /usr/local/bin/messenger-server /usr/local/bin/messenger | awk '{print "  " $9 ": " $5}' && \
     echo "Build Date:     $(date -u '+%Y-%m-%d %H:%M:%S UTC')" && \
     echo "Container Base: debian:trixie-slim" && \
     echo "═══════════════════════════════════════════════════════════════"
-ENTRYPOINT ["iggy-server"]
+ENTRYPOINT ["messenger-server"]
 
 FROM debian:trixie-slim AS runtime
 ARG TARGETPLATFORM
 ARG PROFILE=release
 ARG LIBC=musl
 WORKDIR /app
-COPY --from=builder /app/iggy-server /usr/local/bin/iggy-server
-COPY --from=builder /app/iggy        /usr/local/bin/iggy
+COPY --from=builder /app/messenger-server /usr/local/bin/messenger-server
+COPY --from=builder /app/messenger        /usr/local/bin/messenger
 RUN echo "═══════════════════════════════════════════════════════════════" && \
-    echo "                    IGGY SERVER BUILD SUMMARY                  " && \
+    echo "                    MESSENGER SERVER BUILD SUMMARY                  " && \
     echo "═══════════════════════════════════════════════════════════════" && \
     echo "Build Type:     FROM SOURCE" && \
     echo "Platform:       ${TARGETPLATFORM:-linux/amd64}" && \
@@ -136,10 +136,10 @@ RUN echo "═══════════════════════�
     *) echo "Target:         unknown" ;; \
     esac && \
     echo "Binary Info:" && \
-    (command -v file >/dev/null 2>&1 && file /usr/local/bin/iggy-server | sed 's/^/  /' || \
-    echo "  $(ldd /usr/local/bin/iggy-server 2>&1 | head -1)") && \
+    (command -v file >/dev/null 2>&1 && file /usr/local/bin/messenger-server | sed 's/^/  /' || \
+    echo "  $(ldd /usr/local/bin/messenger-server 2>&1 | head -1)") && \
     echo "Binary Size:" && \
-    ls -lh /usr/local/bin/iggy-server /usr/local/bin/iggy | awk '{print "  " $9 ": " $5}' && \
+    ls -lh /usr/local/bin/messenger-server /usr/local/bin/messenger | awk '{print "  " $9 ": " $5}' && \
     echo "Build Date:     $(date -u '+%Y-%m-%d %H:%M:%S UTC')" && \
     echo "═══════════════════════════════════════════════════════════════"
-ENTRYPOINT ["iggy-server"]
+ENTRYPOINT ["messenger-server"]

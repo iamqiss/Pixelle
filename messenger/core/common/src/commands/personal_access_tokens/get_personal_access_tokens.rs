@@ -18,7 +18,7 @@
 
 use crate::BytesSerializable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, GET_PERSONAL_ACCESS_TOKENS_CODE};
 use bytes::Bytes;
 use serde::{Deserialize, Serialize};
@@ -35,8 +35,8 @@ impl Command for GetPersonalAccessTokens {
     }
 }
 
-impl Validatable<IggyError> for GetPersonalAccessTokens {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for GetPersonalAccessTokens {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -46,9 +46,9 @@ impl BytesSerializable for GetPersonalAccessTokens {
         Bytes::new()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<GetPersonalAccessTokens, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<GetPersonalAccessTokens, MessengerError> {
         if !bytes.is_empty() {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         Ok(GetPersonalAccessTokens {})

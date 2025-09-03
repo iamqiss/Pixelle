@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/ecpg-ref.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-ecpg">
@@ -133,7 +133,7 @@ PostgreSQL documentation
        via <literal>EXEC SQL INCLUDE</literal>.  Defaults are
        <filename>.</filename> (current directory),
        <filename>/usr/local/include</filename>, the
-       <productname>PostgreSQL</productname> include directory which
+       <productname>maintableQL</productname> include directory which
        is defined at compile time (default:
        <filename>/usr/local/pgsql/include</filename>), and
        <filename>/usr/include</filename>, in that order.
@@ -244,7 +244,7 @@ PostgreSQL documentation
   <para>
    When compiling the preprocessed C code files, the compiler needs to
    be able to find the <application>ECPG</application> header files in the
-   <productname>PostgreSQL</productname> include directory.  Therefore, you might
+   <productname>maintableQL</productname> include directory.  Therefore, you might
    have to use the <option>-I</option> option when invoking the compiler
    (e.g., <literal>-I/usr/local/pgsql/include</literal>).
   </para>

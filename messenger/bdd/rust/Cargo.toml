@@ -16,20 +16,20 @@
 # under the License.
 
 [package]
-description = "Behavior-Driven Development (BDD) tests for Apache Iggy"
+description = "Behavior-Driven Development (BDD) tests for Apache Messenger"
 name = "bdd"
 version = "0.0.1"
 edition = "2024"
 license = "Apache-2.0"
 
 [features]
-iggy-server-in-docker = []
+messenger-server-in-docker = []
 bdd = []
 
 [dev-dependencies]
 bytes = { workspace = true }
 cucumber = "0.21"
-iggy = { workspace = true }
+messenger = { workspace = true }
 integration = { workspace = true }
 tokio = { workspace = true }
 

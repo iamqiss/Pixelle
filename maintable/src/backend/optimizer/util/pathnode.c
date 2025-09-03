@@ -3,7 +3,7 @@
  * pathnode.c
  *	  Routines to manipulate pathlists and create path nodes
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 
@@ -2053,7 +2053,7 @@ create_worktablescan_path(PlannerInfo *root, RelOptInfo *rel,
  *	  Creates a path corresponding to a scan of a foreign base table,
  *	  returning the pathnode.
  *
- * This function is never called from core Postgres; rather, it's expected
+ * This function is never called from core Maintable; rather, it's expected
  * to be called by the GetForeignPaths function of a foreign data wrapper.
  * We make the FDW supply all fields of the path, since we do not have any way
  * to calculate them in core.  However, there is a usually-sane default for
@@ -2101,7 +2101,7 @@ create_foreignscan_path(PlannerInfo *root, RelOptInfo *rel,
  *	  Creates a path corresponding to a scan of a foreign join,
  *	  returning the pathnode.
  *
- * This function is never called from core Postgres; rather, it's expected
+ * This function is never called from core Maintable; rather, it's expected
  * to be called by the GetForeignJoinPaths function of a foreign data wrapper.
  * We make the FDW supply all fields of the path, since we do not have any way
  * to calculate them in core.  However, there is a usually-sane default for
@@ -2155,7 +2155,7 @@ create_foreign_join_path(PlannerInfo *root, RelOptInfo *rel,
  *	  Creates a path corresponding to an upper relation that's computed
  *	  directly by an FDW, returning the pathnode.
  *
- * This function is never called from core Postgres; rather, it's expected to
+ * This function is never called from core Maintable; rather, it's expected to
  * be called by the GetForeignUpperPaths function of a foreign data wrapper.
  * We make the FDW supply all fields of the path, since we do not have any way
  * to calculate them in core.  However, there is a usually-sane default for

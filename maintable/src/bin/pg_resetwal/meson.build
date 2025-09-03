@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 pg_resetwal_sources = files(
   'pg_resetwal.c',
@@ -7,7 +7,7 @@ pg_resetwal_sources = files(
 if host_system == 'windows'
   pg_resetwal_sources += rc_bin_gen.process(win32ver_rc, extra_args: [
     '--NAME', 'pg_resetwal',
-    '--FILEDESC', 'pg_resetwal - reset PostgreSQL WAL log'])
+    '--FILEDESC', 'pg_resetwal - reset maintableQL WAL log'])
 endif
 
 pg_resetwal = executable('pg_resetwal',

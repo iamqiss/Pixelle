@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * rbtree.h
- *	  interface for PostgreSQL generic Red-Black binary tree package
+ *	  interface for maintableQL generic Red-Black binary tree package
  *
- * Copyright (c) 2009-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2009-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/include/lib/rbtree.h

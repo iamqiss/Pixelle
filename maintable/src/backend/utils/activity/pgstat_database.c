@@ -8,14 +8,14 @@
  * storage implementation and the details about individual types of
  * statistics.
  *
- * Copyright (c) 2001-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2001-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/utils/activity/pgstat_database.c
  * -------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "storage/procsignal.h"
 #include "utils/pgstat_internal.h"
@@ -48,7 +48,7 @@ pgstat_drop_database(Oid databaseid)
 
 /*
  * Called from autovacuum.c to report startup of an autovacuum process.
- * We are called before InitPostgres is done, so can't rely on MyDatabaseId;
+ * We are called before InitMaintable is done, so can't rely on MyDatabaseId;
  * the db OID must be passed in, instead.
  */
 void

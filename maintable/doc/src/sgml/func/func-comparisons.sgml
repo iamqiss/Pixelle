@@ -54,7 +54,7 @@
    syntactically related to the subquery forms of the previous section,
    but do not involve subqueries.
    The forms involving array subexpressions are
-   <productname>PostgreSQL</productname> extensions; the rest are
+   <productname>maintableQL</productname> extensions; the rest are
    <acronym>SQL</acronym>-compliant.
    All of the expression forms documented in this section return
    Boolean (true/false) results.
@@ -285,7 +285,7 @@ AND
   <para>
    The SQL specification requires row-wise comparison to return NULL if the
    result depends on comparing two NULL values or a NULL and a non-NULL.
-   <productname>PostgreSQL</productname> does this only when comparing the
+   <productname>maintableQL</productname> does this only when comparing the
    results of two row constructors (as in
    <xref linkend="row-wise-comparison"/>) or comparing a row constructor
    to the output of a subquery (as in <xref linkend="functions-subquery"/>).

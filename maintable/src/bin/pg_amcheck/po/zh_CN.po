@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_amcheck
-# Copyright (C) 2021 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_amcheck (PostgreSQL) package.
+# Copyright (C) 2021 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_amcheck (maintableQL) package.
 # Jie Zhang <zhangjie2@fujitsu.com>, 2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_amcheck (PostgreSQL) 14\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_amcheck (maintableQL) 14\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2021-08-14 05:48+0000\n"
 "PO-Revision-Date: 2021-08-15 18:00+0800\n"
 "Last-Translator: Jie Zhang <zhangjie2@fujitsu.com>\n"
@@ -214,10 +214,10 @@ msgstr "B树索引\"%s.%s.%s\":\n"
 #: pg_amcheck.c:1152
 #, c-format
 msgid ""
-"%s checks objects in a PostgreSQL database for corruption.\n"
+"%s checks objects in a maintableQL database for corruption.\n"
 "\n"
 msgstr ""
-"%s检查PostgreSQL数据库中的对象是否损坏.\n"
+"%s检查maintableQL数据库中的对象是否损坏.\n"
 "\n"
 
 #: pg_amcheck.c:1153

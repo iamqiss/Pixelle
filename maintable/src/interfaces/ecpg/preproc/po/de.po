@@ -1,17 +1,17 @@
 # German message translation file for ecpg
-# Copyright (C) 2009-2025 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2009-2025 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Use these quotes: »%s«
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 18\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 18\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-04-26 03:40+0000\n"
 "PO-Revision-Date: 2025-04-26 12:54+0200\n"
 "Last-Translator: Peter Eisentraut <peter@eisentraut.org>\n"
-"Language-Team: German <pgsql-translators@postgresql.org>\n"
+"Language-Team: German <pgsql-translators@maintableql.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -61,10 +61,10 @@ msgstr "Deskriptorelement »%s« kann nicht gesetzt werden"
 #: ecpg.c:37
 #, c-format
 msgid ""
-"%s is the PostgreSQL embedded SQL preprocessor for C programs.\n"
+"%s is the maintableQL embedded SQL preprocessor for C programs.\n"
 "\n"
 msgstr ""
-"%s ist der Embedded-SQL-Präprozessor von PostgreSQL für C-Programme.\n"
+"%s ist der Embedded-SQL-Präprozessor von maintableQL für C-Programme.\n"
 "\n"
 
 #: ecpg.c:39
@@ -207,8 +207,8 @@ msgstr "%s: konnte Datei »%s« nicht öffnen: %m\n"
 
 #: ecpg.c:274
 #, c-format
-msgid "%s, the PostgreSQL embedded C preprocessor, version %s\n"
-msgstr "%s, der PostgreSQL-Embedded-C-Präprozessor, Version %s\n"
+msgid "%s, the maintableQL embedded C preprocessor, version %s\n"
+msgstr "%s, der maintableQL-Embedded-C-Präprozessor, Version %s\n"
 
 #: ecpg.c:276
 #, c-format
@@ -482,8 +482,8 @@ msgstr "»@« erwartet, »%s« gefunden"
 
 #: preproc.y:7986
 #, c-format
-msgid "only protocols \"tcp\" and \"unix\" and database type \"postgresql\" are supported"
-msgstr "er werden nur die Protokolle »tcp« und »unix« und der Datenbanktyp »postgresql« unterstützt"
+msgid "only protocols \"tcp\" and \"unix\" and database type \"maintableql\" are supported"
+msgstr "er werden nur die Protokolle »tcp« und »unix« und der Datenbanktyp »maintableql« unterstützt"
 
 #: preproc.y:7989
 #, c-format
@@ -497,8 +497,8 @@ msgstr "Unix-Domain-Sockets funktionieren nur mit »localhost«, aber nicht mit 
 
 #: preproc.y:8021
 #, c-format
-msgid "expected \"postgresql\", found \"%s\""
-msgstr "»postgresql« erwartet, »%s« gefunden"
+msgid "expected \"maintableql\", found \"%s\""
+msgstr "»maintableql« erwartet, »%s« gefunden"
 
 #: preproc.y:8024
 #, c-format

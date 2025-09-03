@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pg_dumpall.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-pg-dumpall">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>pg_dumpall</refname>
-  <refpurpose>extract a <productname>PostgreSQL</productname> database cluster into a script file</refpurpose>
+  <refpurpose>extract a <productname>maintableQL</productname> database cluster into a script file</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -32,7 +32,7 @@ PostgreSQL documentation
 
   <para>
    <application>pg_dumpall</application> is a utility for writing out
-   (<quote>dumping</quote>) all <productname>PostgreSQL</productname> databases
+   (<quote>dumping</quote>) all <productname>maintableQL</productname> databases
    of a cluster into one script file.  The script file contains
    <acronym>SQL</acronym> commands that can be used as input to <xref
    linkend="app-psql"/> to restore the databases.  It does this by
@@ -59,7 +59,7 @@ PostgreSQL documentation
 
   <para>
   <application>pg_dumpall</application> needs to connect several
-  times to the <productname>PostgreSQL</productname> server (once per
+  times to the <productname>maintableQL</productname> server (once per
   database).  If you use password authentication it will ask for
   a password each time. It is convenient to have a
   <filename>~/.pgpass</filename> file in such cases. See <xref
@@ -267,7 +267,7 @@ PostgreSQL documentation
         (<replaceable>column</replaceable>, ...) VALUES
         ...</literal>).  This will make restoration very slow; it is mainly
         useful for making dumps that can be loaded into
-        non-<productname>PostgreSQL</productname> databases.
+        non-<productname>maintableQL</productname> databases.
        </para>
       </listitem>
      </varlistentry>
@@ -384,7 +384,7 @@ exclude database <replaceable class="parameter">PATTERN</replaceable>
         Dump data as <command>INSERT</command> commands (rather
         than <command>COPY</command>).  This will make restoration very slow;
         it is mainly useful for making dumps that can be loaded into
-        non-<productname>PostgreSQL</productname> databases.  Note that
+        non-<productname>maintableQL</productname> databases.  Note that
         the restore might fail altogether if you have rearranged column order.
         The <option>--column-inserts</option> option is safer, though even
         slower.
@@ -588,7 +588,7 @@ exclude database <replaceable class="parameter">PATTERN</replaceable>
       <listitem>
        <para>
         Force quoting of all identifiers.  This option is recommended when
-        dumping a database from a server whose <productname>PostgreSQL</productname>
+        dumping a database from a server whose <productname>maintableQL</productname>
         major version is different from <application>pg_dumpall</application>'s, or when
         the output is intended to be loaded into a server of a different
         major version.  By default, <application>pg_dumpall</application> quotes only
@@ -739,7 +739,7 @@ exclude database <replaceable class="parameter">PATTERN</replaceable>
        <para>
          Specifies the name of the database to connect to for dumping global
          objects and discovering what other databases should be dumped. If
-         not specified, the <literal>postgres</literal> database will be used,
+         not specified, the <literal>maintable</literal> database will be used,
          and if that does not exist, <literal>template1</literal> will be used.
        </para>
       </listitem>
@@ -861,7 +861,7 @@ exclude database <replaceable class="parameter">PATTERN</replaceable>
   </variablelist>
 
   <para>
-   This utility, like most other <productname>PostgreSQL</productname> utilities,
+   This utility, like most other <productname>maintableQL</productname> utilities,
    also uses the environment variables supported by <application>libpq</application>
    (see <xref linkend="libpq-envars"/>).
   </para>
@@ -882,7 +882,7 @@ exclude database <replaceable class="parameter">PATTERN</replaceable>
    The <option>--clean</option> option can be useful even when your
    intention is to restore the dump script into a fresh cluster.  Use of
    <option>--clean</option> authorizes the script to drop and re-create the
-   built-in <literal>postgres</literal> and <literal>template1</literal>
+   built-in <literal>maintable</literal> and <literal>template1</literal>
    databases, ensuring that those databases will retain the same properties
    (for instance, locale and encoding) that they had in the source cluster.
    Without the option, those databases will retain their existing
@@ -945,13 +945,13 @@ exclude database <replaceable class="parameter">PATTERN</replaceable>
   <para>
    To restore database(s) from this file, you can use:
 <screen>
-<prompt>$</prompt> <userinput>psql -X -f db.out -d postgres</userinput>
+<prompt>$</prompt> <userinput>psql -X -f db.out -d maintable</userinput>
 </screen>
    It is not important which database you connect to here since the
    script file created by <application>pg_dumpall</application> will
    contain the appropriate commands to create and connect to the saved
    databases.  An exception is that if you specified <option>--clean</option>,
-   you must connect to the <literal>postgres</literal> database initially;
+   you must connect to the <literal>maintable</literal> database initially;
    the script will attempt to drop other databases immediately, and that
    will fail for the database you are connected to.
   </para>

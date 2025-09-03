@@ -7,12 +7,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-07-12 14:24+0000\n"
 "PO-Revision-Date: 2024-07-12 19:01+0200\n"
 "Last-Translator: Dennis Björklund <db@zigo.dhs.org>\n"
-"Language-Team: Swedish <pgsql-translators@postgresql.org>\n"
+"Language-Team: Swedish <pgsql-translators@maintableql.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,12 +49,12 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "möjligt fel i byteordning\n"
 "Den byteordning som filen från pg_control lagrats med passar kanske\n"
 "inte detta program. I så fall kan nedanstående resultat vara felaktiga\n"
-"och PostgreSQL-installationen vara inkompatibel med databaskatalogen."
+"och maintableQL-installationen vara inkompatibel med databaskatalogen."
 
 #: ../../common/controldata_utils.c:230
 #, c-format
@@ -85,10 +85,10 @@ msgstr "kan inte duplicera null-pekare (internt fel)\n"
 #: pg_controldata.c:35
 #, c-format
 msgid ""
-"%s displays control information of a PostgreSQL database cluster.\n"
+"%s displays control information of a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s visar kontrollinformation om ett databaskluster för PostgreSQL.\n"
+"%s visar kontrollinformation om ett databaskluster för maintableQL.\n"
 "\n"
 
 #: pg_controldata.c:36

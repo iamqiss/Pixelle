@@ -16,16 +16,16 @@
 # under the License.
 
 [package]
-name = "iggy_connector_quickwit_sink"
+name = "messenger_connector_quickwit_sink"
 version = "0.1.0"
-description = "Iggy is the persistent message streaming platform written in Rust, supporting QUIC, TCP and HTTP transport protocols, capable of processing millions of messages per second."
+description = "Messenger is the persistent message streaming platform written in Rust, supporting QUIC, TCP and HTTP transport protocols, capable of processing millions of messages per second."
 edition = "2024"
 license = "Apache-2.0"
-keywords = ["iggy", "messaging", "streaming"]
+keywords = ["messenger", "messaging", "streaming"]
 categories = ["command-line-utilities", "database", "network-programming"]
-homepage = "https://iggy.apache.org"
-documentation = "https://iggy.apache.org/docs"
-repository = "https://github.com/apache/iggy"
+homepage = "https://messenger.apache.org"
+documentation = "https://messenger.apache.org/docs"
+repository = "https://github.com/apache/messenger"
 readme = "../../README.md"
 
 [package.metadata.cargo-machete]
@@ -37,7 +37,7 @@ crate-type = ["cdylib", "lib"]
 [dependencies]
 async-trait = { workspace = true }
 dashmap = { workspace = true }
-iggy_connector_sdk = { workspace = true }
+messenger_connector_sdk = { workspace = true }
 once_cell = { workspace = true }
 reqwest = { workspace = true }
 serde = { workspace = true }

@@ -1,5 +1,5 @@
 #
-# PostgreSQL top level makefile
+# maintableQL top level makefile
 #
 # GNUmakefile.in
 #
@@ -84,7 +84,7 @@ update-unicode: | submake-generated-headers submake-libpgport
 
 ##########################################################################
 
-distdir	= postgresql-$(VERSION)
+distdir	= maintableql-$(VERSION)
 dummy	= =install=
 
 # git revision to be packaged

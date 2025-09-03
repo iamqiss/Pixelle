@@ -459,7 +459,7 @@ fn size_str(size: usize) -> String {
 mod tests {
     use super::*;
     use crate::{configs::system::MemoryPoolConfig, streaming::utils::PooledBuffer};
-    use iggy_common::IggyByteSize;
+    use messenger_common::MessengerByteSize;
     use serial_test::serial;
     use std::{str::FromStr, sync::Once};
 
@@ -470,7 +470,7 @@ mod tests {
             let config = Arc::new(SystemConfig {
                 memory_pool: MemoryPoolConfig {
                     enabled: true,
-                    size: IggyByteSize::from_str("4GiB").unwrap(),
+                    size: MessengerByteSize::from_str("4GiB").unwrap(),
                     bucket_capacity: 8192,
                 },
                 ..SystemConfig::default()

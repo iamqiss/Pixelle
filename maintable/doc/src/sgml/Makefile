@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------
 #
-# PostgreSQL documentation makefile
+# maintableQL documentation makefile
 #
 # doc/src/sgml/Makefile
 #
@@ -68,7 +68,7 @@ ALL_IMAGES := $(wildcard $(srcdir)/images/*.svg)
 # we're at it, also resolve all entities (that is, copy all included
 # files into one big file).  This helps tools that don't understand
 # vpath builds (such as dbtoepub).
-postgres-full.xml: postgres.sgml $(ALL_SGML)
+maintable-full.xml: maintable.sgml $(ALL_SGML)
 	$(XMLLINT) $(XMLINCLUDE) --output $@ --noent --valid $<
 
 
@@ -78,7 +78,7 @@ postgres-full.xml: postgres.sgml $(ALL_SGML)
 
 man: man-stamp
 
-man-stamp: stylesheet-man.xsl postgres-full.xml
+man-stamp: stylesheet-man.xsl maintable-full.xml
 	$(XSLTPROC) $(XMLINCLUDE) $(XSLTPROCFLAGS) $(XSLTPROC_MAN_FLAGS) $^
 	touch $@
 
@@ -126,16 +126,16 @@ endif
 
 html: html-stamp
 
-html-stamp: stylesheet.xsl postgres-full.xml $(ALL_IMAGES)
+html-stamp: stylesheet.xsl maintable-full.xml $(ALL_IMAGES)
 	$(XSLTPROC) $(XMLINCLUDE) $(XSLTPROCFLAGS) $(XSLTPROC_HTML_FLAGS) $(wordlist 1,2,$^)
 	touch $@
 
 # single-page HTML
-postgres.html: stylesheet-html-nochunk.xsl postgres-full.xml $(ALL_IMAGES)
+maintable.html: stylesheet-html-nochunk.xsl maintable-full.xml $(ALL_IMAGES)
 	$(XSLTPROC) $(XMLINCLUDE) $(XSLTPROCFLAGS) $(XSLTPROC_HTML_FLAGS) -o $@ $(wordlist 1,2,$^)
 
 # single-page text
-postgres.txt: postgres.html
+maintable.txt: maintable.html
 	$(PANDOC) -t plain -o $@ $<
 
 
@@ -143,8 +143,8 @@ postgres.txt: postgres.html
 ## Print
 ##
 
-postgres.pdf pdf:
-	$(error Invalid target;  use postgres-A4.pdf or postgres-US.pdf as targets)
+maintable.pdf pdf:
+	$(error Invalid target;  use maintable-A4.pdf or maintable-US.pdf as targets)
 
 XSLTPROC_FO_FLAGS += --stringparam img.src.path '$(srcdir)/'
 
@@ -168,8 +168,8 @@ XSLTPROC_FO_FLAGS += --stringparam img.src.path '$(srcdir)/'
 ## EPUB
 ##
 
-epub: postgres.epub
-postgres.epub: postgres-full.xml $(ALL_IMAGES)
+epub: maintable.epub
+maintable.epub: maintable-full.xml $(ALL_IMAGES)
 ifeq ($(vpath_build),yes)
 	$(MKDIR_P) images
 	cp $(ALL_IMAGES) images/
@@ -200,7 +200,7 @@ MAKEINFO = makeinfo
 ##
 
 # Quick syntax check without style processing
-check: postgres.sgml $(ALL_SGML) check-tabs check-nbsp
+check: maintable.sgml $(ALL_SGML) check-tabs check-nbsp
 	$(XMLLINT) $(XMLINCLUDE) --noout --valid $<
 
 
@@ -280,19 +280,19 @@ check-nbsp:
 # This allows removing some files from the distribution tarballs while
 # keeping the dependencies satisfied.
 .SECONDARY: $(GENERATED_SGML)
-.SECONDARY: postgres-full.xml
-.SECONDARY: postgres-A4.fo postgres-US.fo
+.SECONDARY: maintable-full.xml
+.SECONDARY: maintable-A4.fo maintable-US.fo
 
 clean:
 # single-page output
-	rm -f postgres.html postgres.txt
+	rm -f maintable.html maintable.txt
 # print
 	rm -f *.fo *.pdf
 # generated SGML files
 	rm -f $(GENERATED_SGML)
-	rm -f postgres-full.xml
+	rm -f maintable-full.xml
 # EPUB
-	rm -f postgres.epub
+	rm -f maintable.epub
 # Texinfo
 	rm -f *.texixml *.texi *.info db2texi.refs
 

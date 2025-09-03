@@ -19,10 +19,10 @@
 use crate::streaming::common::test_setup::TestSetup;
 use crate::streaming::create_messages;
 use ahash::AHashMap;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use server::state::system::StreamState;
 use server::streaming::polling_consumer::PollingConsumer;
-use server::streaming::segments::IggyMessagesBatchMut;
+use server::streaming::segments::MessengerMessagesBatchMut;
 use server::streaming::streams::stream::Stream;
 use tokio::fs;
 
@@ -71,7 +71,7 @@ async fn should_load_existing_stream_from_disk() {
         let state = StreamState {
             id: stream_id,
             name: name.clone(),
-            created_at: IggyTimestamp::now(),
+            created_at: MessengerTimestamp::now(),
             topics: AHashMap::new(),
         };
         loaded_stream.load(state).await.unwrap();
@@ -127,7 +127,7 @@ async fn should_purge_existing_stream_on_disk() {
                 Some(topic_id),
                 "test",
                 1,
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 Default::default(),
                 MaxTopicSize::ServerDefault,
                 1,
@@ -141,7 +141,7 @@ async fn should_purge_existing_stream_on_disk() {
             .iter()
             .map(|msg| msg.get_size_bytes().as_bytes_u32())
             .sum::<u32>();
-        let batch = IggyMessagesBatchMut::from_messages(&messages, messages_size);
+        let batch = MessengerMessagesBatchMut::from_messages(&messages, messages_size);
         let topic = stream
             .get_topic(&Identifier::numeric(topic_id).unwrap())
             .unwrap();

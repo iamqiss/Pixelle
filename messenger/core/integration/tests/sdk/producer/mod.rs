@@ -19,8 +19,8 @@
 mod background;
 
 use bytes::Bytes;
-use iggy::clients::client::IggyClient;
-use iggy::prelude::*;
+use messenger::clients::client::MessengerClient;
+use messenger::prelude::*;
 
 const STREAM_ID: u32 = 1;
 const TOPIC_ID: u32 = 1;
@@ -33,7 +33,7 @@ fn create_message_payload(offset: u64) -> Bytes {
     Bytes::from(format!("message {offset}"))
 }
 
-async fn init_system(client: &IggyClient) {
+async fn init_system(client: &MessengerClient) {
     // 1. Create the stream
     client
         .create_stream(STREAM_NAME, Some(STREAM_ID))
@@ -49,14 +49,14 @@ async fn init_system(client: &IggyClient) {
             CompressionAlgorithm::default(),
             None,
             Some(TOPIC_ID),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await
         .unwrap();
 }
 
-async fn cleanup(system_client: &IggyClient) {
+async fn cleanup(system_client: &MessengerClient) {
     system_client
         .delete_stream(&Identifier::numeric(STREAM_ID).unwrap())
         .await

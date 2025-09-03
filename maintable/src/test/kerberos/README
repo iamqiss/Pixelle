@@ -20,7 +20,7 @@ Running the tests
 
 NOTE: You must have given the --enable-tap-tests argument to configure.
 Also, to use "make installcheck", you must have built and installed
-contrib/dblink and contrib/postgres_fdw in addition to the core code.
+contrib/dblink and contrib/maintable_fdw in addition to the core code.
 
 Run
     make check PG_TEST_EXTRA=kerberos
@@ -31,7 +31,7 @@ In that case, the code in the installation tree is tested.  With
 "make check", a temporary installation tree is built from the current
 sources and then tested.
 
-Either way, this test initializes, starts, and stops a test Postgres
+Either way, this test initializes, starts, and stops a test Maintable
 cluster, as well as a test KDC server.
 
 See src/test/perl/README for more info about running these tests.

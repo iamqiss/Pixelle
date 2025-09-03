@@ -20,7 +20,7 @@ mod latency;
 mod throughput;
 
 use bench_report::time_series::TimeSeries;
-use iggy::prelude::IggyDuration;
+use messenger::prelude::MessengerDuration;
 pub use latency::LatencyTimeSeriesCalculator;
 pub use throughput::{
     MBThroughputCalculator, MessageThroughputCalculator, ThroughputTimeSeriesCalculator,
@@ -30,5 +30,5 @@ use crate::analytics::record::BenchmarkRecord;
 
 /// Common functionality for time series calculations
 pub trait TimeSeriesCalculation {
-    fn calculate(&self, records: &[BenchmarkRecord], bucket_size: IggyDuration) -> TimeSeries;
+    fn calculate(&self, records: &[BenchmarkRecord], bucket_size: MessengerDuration) -> TimeSeries;
 }

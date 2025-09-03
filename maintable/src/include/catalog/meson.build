@@ -1,7 +1,7 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 # Note: the order of this list determines the order in which the catalog
-# header files are assembled into postgres.bki.  BKI_BOOTSTRAP catalogs
+# header files are assembled into maintable.bki.  BKI_BOOTSTRAP catalogs
 # must appear first, and pg_statistic before pg_statistic_ext_data, and
 # there are reputedly other, undocumented ordering dependencies.
 catalog_headers = [
@@ -103,7 +103,7 @@ bki_data_f = files(bki_data)
 
 input = []
 output_files = [
-  'postgres.bki',
+  'maintable.bki',
   'system_constraints.sql',
   'schemapg.h',
   'syscache_ids.h',

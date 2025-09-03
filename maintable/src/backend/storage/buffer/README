@@ -100,7 +100,7 @@ or a VACUUM must use the conditional variant of the function.
 Buffer Manager's Internal Locking
 ---------------------------------
 
-Before PostgreSQL 8.1, all operations of the shared buffer manager itself
+Before maintableQL 8.1, all operations of the shared buffer manager itself
 were protected by a single system-wide lock, the BufMgrLock, which
 unsurprisingly proved to be a source of contention.  The new locking scheme
 avoids grabbing system-wide exclusive locks in common code paths.  It works

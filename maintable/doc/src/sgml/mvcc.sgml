@@ -9,7 +9,7 @@
 
   <para>
    This chapter describes the behavior of the
-   <productname>PostgreSQL</productname> database system when two or
+   <productname>maintableQL</productname> database system when two or
    more sessions try to access the same data at the same time.  The
    goals in that situation are to allow efficient access for all
    sessions while maintaining strict data integrity.  Every developer
@@ -37,7 +37,7 @@
    </indexterm>
 
    <para>
-    <productname>PostgreSQL</productname> provides a rich set of tools
+    <productname>maintableQL</productname> provides a rich set of tools
     for developers to manage concurrent access to data.  Internally,
     data consistency is maintained by using a multiversion
     model (Multiversion Concurrency Control, <acronym>MVCC</acronym>).
@@ -60,7 +60,7 @@
     <acronym>MVCC</acronym> locks acquired for querying (reading) data
     do not conflict with locks acquired for writing data, and so
     reading never blocks writing and writing never blocks reading.
-    <productname>PostgreSQL</productname> maintains this guarantee
+    <productname>maintableQL</productname> maintains this guarantee
     even when providing the strictest level of transaction
     isolation through the use of an innovative <firstterm>Serializable
     Snapshot Isolation</firstterm> (<acronym>SSI</acronym>) level.
@@ -68,7 +68,7 @@
 
    <para>
     Table- and row-level locking facilities are also available in
-    <productname>PostgreSQL</productname> for applications which don't
+    <productname>maintableQL</productname> for applications which don't
     generally need full transaction isolation and prefer to explicitly
     manage particular points of conflict.  However, proper
     use of <acronym>MVCC</acronym> will generally provide better
@@ -164,7 +164,7 @@
     <indexterm>
      <primary>transaction isolation level</primary>
     </indexterm>
-    The SQL standard and PostgreSQL-implemented transaction isolation levels
+    The SQL standard and maintableQL-implemented transaction isolation levels
     are described in <xref linkend="mvcc-isolevel-table"/>.
    </para>
 
@@ -267,16 +267,16 @@
     </table>
 
    <para>
-    In <productname>PostgreSQL</productname>, you can request any of
+    In <productname>maintableQL</productname>, you can request any of
     the four standard transaction isolation levels, but internally only
-    three distinct isolation levels are implemented, i.e., PostgreSQL's
+    three distinct isolation levels are implemented, i.e., maintableQL's
     Read Uncommitted mode behaves like Read Committed.  This is because
     it is the only sensible way to map the standard isolation levels to
-    PostgreSQL's multiversion concurrency control architecture.
+    maintableQL's multiversion concurrency control architecture.
    </para>
 
    <para>
-    The table also shows that PostgreSQL's Repeatable Read implementation
+    The table also shows that maintableQL's Repeatable Read implementation
     does not allow phantom reads.  This is acceptable under the SQL
     standard because the standard specifies which anomalies must
     <emphasis>not</emphasis> occur at certain isolation levels;  higher
@@ -292,7 +292,7 @@
 
    <important>
      <para>
-       Some <productname>PostgreSQL</productname> data types and functions have
+       Some <productname>maintableQL</productname> data types and functions have
        special rules regarding transactional behavior.  In particular, changes
        made to a sequence (and therefore the counter of a
        column declared using <type>serial</type>) are immediately visible
@@ -316,7 +316,7 @@
 
    <para>
     <firstterm>Read Committed</firstterm> is the default isolation
-    level in <productname>PostgreSQL</productname>.  When a transaction
+    level in <productname>maintableQL</productname>.  When a transaction
     uses this isolation level, a <command>SELECT</command> query
     (without a <literal>FOR UPDATE/SHARE</literal> clause) sees only data
     committed before the query began; it never sees either uncommitted
@@ -589,7 +589,7 @@ ERROR:  could not serialize access due to concurrent update
 
    <note>
     <para>
-     Prior to <productname>PostgreSQL</productname> version 9.1, a request
+     Prior to <productname>maintableQL</productname> version 9.1, a request
      for the Serializable transaction isolation level provided exactly the
      same behavior described here.  To retain the legacy Serializable
      behavior, Repeatable Read should now be requested.
@@ -690,11 +690,11 @@ ERROR:  could not serialize access due to read/write dependencies among transact
    </para>
 
    <para>
-    To guarantee true serializability <productname>PostgreSQL</productname>
+    To guarantee true serializability <productname>maintableQL</productname>
     uses <firstterm>predicate locking</firstterm>, which means that it keeps locks
     which allow it to determine when a write would have had an impact on
     the result of a previous read from a concurrent transaction, had it run
-    first.  In <productname>PostgreSQL</productname> these locks do not
+    first.  In <productname>maintableQL</productname> these locks do not
     cause any blocking and therefore can <emphasis>not</emphasis> play any part in
     causing a deadlock.  They are used to identify and flag dependencies
     among concurrent Serializable transactions which in certain combinations
@@ -707,7 +707,7 @@ ERROR:  could not serialize access due to read/write dependencies among transact
    </para>
 
    <para>
-    Predicate locks in <productname>PostgreSQL</productname>, like in most
+    Predicate locks in <productname>maintableQL</productname>, like in most
     other database systems, are based on data actually accessed by a
     transaction.  These will show up in the
     <link linkend="view-pg-locks"><structname>pg_locks</structname></link>
@@ -753,7 +753,7 @@ ERROR:  could not serialize access due to read/write dependencies among transact
    </para>
 
    <para>
-    While <productname>PostgreSQL</productname>'s Serializable transaction isolation
+    While <productname>maintableQL</productname>'s Serializable transaction isolation
     level only allows concurrent transactions to commit if it can prove there
     is a serial order of execution that would produce the same effect, it
     doesn't always prevent errors from being raised that would not occur in
@@ -855,11 +855,11 @@ ERROR:  could not serialize access due to read/write dependencies among transact
    </indexterm>
 
    <para>
-    <productname>PostgreSQL</productname> provides various lock modes
+    <productname>maintableQL</productname> provides various lock modes
     to control concurrent access to data in tables.  These modes can
     be used for application-controlled locking in situations where
     <acronym>MVCC</acronym> does not give the desired behavior.  Also,
-    most <productname>PostgreSQL</productname> commands automatically
+    most <productname>maintableQL</productname> commands automatically
     acquire locks of appropriate modes to ensure that referenced
     tables are not dropped or modified in incompatible ways while the
     command executes.  (For example, <command>TRUNCATE</command> cannot safely be
@@ -886,7 +886,7 @@ ERROR:  could not serialize access due to read/write dependencies among transact
    <para>
     The list below shows the available lock modes and the contexts in
     which they are used automatically by
-    <productname>PostgreSQL</productname>.  You can also acquire any
+    <productname>maintableQL</productname>.  You can also acquire any
     of these locks explicitly with the command <xref
     linkend="sql-lock"/>.
     Remember that all of these lock modes are table-level locks,
@@ -1244,7 +1244,7 @@ ERROR:  could not serialize access due to read/write dependencies among transact
     <para>
      In addition to table-level locks, there are row-level locks, which
      are listed as below with the contexts in which they are used
-     automatically by <productname>PostgreSQL</productname>.  See
+     automatically by <productname>maintableQL</productname>.  See
      <xref linkend="row-lock-compatibility"/> for a complete table of
      row-level lock conflicts.  Note that a transaction can hold
      conflicting locks on the same row, even in different subtransactions;
@@ -1350,7 +1350,7 @@ ERROR:  could not serialize access due to read/write dependencies among transact
      </variablelist>
 
     <para>
-     <productname>PostgreSQL</productname> doesn't remember any
+     <productname>maintableQL</productname> doesn't remember any
      information about modified rows in memory, so there is no limit on
      the number of rows locked at one time.  However, locking a row
      might cause a disk write, e.g., <command>SELECT FOR
@@ -1441,7 +1441,7 @@ ERROR:  could not serialize access due to read/write dependencies among transact
      an exclusive lock on table B, while transaction 2 has already
      exclusive-locked table B and now wants an exclusive lock on table
      A, then neither one can proceed.
-     <productname>PostgreSQL</productname> automatically detects
+     <productname>maintableQL</productname> automatically detects
      deadlock situations and resolves them by aborting one of the
      transactions involved, allowing the other(s) to complete.
      (Exactly which transaction will be aborted is difficult to
@@ -1484,7 +1484,7 @@ UPDATE accounts SET balance = balance - 100.00 WHERE acctnum = 22222;
      a lock. So it waits for transaction two to complete. Thus,
      transaction one is blocked on transaction two, and transaction
      two is blocked on transaction one: a deadlock
-     condition. <productname>PostgreSQL</productname> will detect this
+     condition. <productname>maintableQL</productname> will detect this
      situation and abort one of the transactions.
     </para>
 
@@ -1523,7 +1523,7 @@ UPDATE accounts SET balance = balance - 100.00 WHERE acctnum = 22222;
     </indexterm>
 
     <para>
-     <productname>PostgreSQL</productname> provides a means for
+     <productname>maintableQL</productname> provides a means for
      creating locks that have application-defined meanings.  These are
      called <firstterm>advisory locks</firstterm>, because the system does not
      enforce their use &mdash; it is up to the application to use them
@@ -1539,7 +1539,7 @@ UPDATE accounts SET balance = balance - 100.00 WHERE acctnum = 22222;
 
     <para>
      There are two ways to acquire an advisory lock in
-     <productname>PostgreSQL</productname>: at session level or at
+     <productname>maintableQL</productname>: at session level or at
      transaction level.
      Once acquired at session level, an advisory lock is held until
      explicitly released or the session ends.  Unlike standard lock requests,
@@ -1564,7 +1564,7 @@ UPDATE accounts SET balance = balance - 100.00 WHERE acctnum = 22222;
 
     <para>
      Like all locks in
-     <productname>PostgreSQL</productname>, a complete list of advisory locks
+     <productname>maintableQL</productname>, a complete list of advisory locks
      currently held by any session can be found in the <link
      linkend="view-pg-locks"><structname>pg_locks</structname></link> system
      view.
@@ -1660,7 +1660,7 @@ SELECT pg_advisory_lock(q.id) FROM
      effort is required to ensure consistency.  Software from other
      environments which is written to use serializable transactions to
      ensure consistency should <quote>just work</quote> in this regard in
-     <productname>PostgreSQL</productname>.
+     <productname>maintableQL</productname>.
     </para>
 
     <para>
@@ -1704,14 +1704,14 @@ SELECT pg_advisory_lock(q.id) FROM
      returned rows against concurrent updates, while <command>LOCK
      TABLE</command> locks the whole table.)  This should be taken into
      account when porting applications to
-     <productname>PostgreSQL</productname> from other environments.
+     <productname>maintableQL</productname> from other environments.
     </para>
 
     <para>
      Also of note to those converting from other environments is the fact
      that <command>SELECT FOR UPDATE</command> does not ensure that a
      concurrent transaction will not update or delete a selected row.
-     To do that in <productname>PostgreSQL</productname> you must actually
+     To do that in <productname>maintableQL</productname> you must actually
      update the row, even if no values need to be changed.
      <command>SELECT FOR UPDATE</command> <emphasis>temporarily blocks</emphasis>
      other transactions from acquiring the same lock or executing an
@@ -1814,7 +1814,7 @@ SELECT pg_advisory_lock(q.id) FROM
    <para>
     It is important to retry the complete transaction, including all logic
     that decides which SQL to issue and/or which values to use.
-    Therefore, <productname>PostgreSQL</productname> does not offer an
+    Therefore, <productname>maintableQL</productname> does not offer an
     automatic retry facility, since it cannot do so with any guarantee of
     correctness.
    </para>
@@ -1880,11 +1880,11 @@ SELECT pg_advisory_lock(q.id) FROM
    </indexterm>
 
    <para>
-    Though <productname>PostgreSQL</productname>
+    Though <productname>maintableQL</productname>
     provides nonblocking read/write access to table
     data, nonblocking read/write access is not currently offered for every
     index access method implemented
-    in <productname>PostgreSQL</productname>.
+    in <productname>maintableQL</productname>.
     The various index types are handled as follows:
 
     <variablelist>

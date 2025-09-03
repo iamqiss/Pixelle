@@ -1,7 +1,7 @@
 /*
  * contrib/hstore/hstore_gin.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/gin.h"
 #include "access/stratnum.h"

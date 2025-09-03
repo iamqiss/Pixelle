@@ -16,10 +16,10 @@
  * under the License.
  */
 
-use iggy_connector_sdk::decoders::flatbuffer::{FlatBufferConfig, FlatBufferStreamDecoder};
-use iggy_connector_sdk::encoders::flatbuffer::{FlatBufferEncoderConfig, FlatBufferStreamEncoder};
-use iggy_connector_sdk::transforms::{FlatBufferConvert, FlatBufferConvertConfig, Transform};
-use iggy_connector_sdk::{Payload, Schema, StreamDecoder, StreamEncoder};
+use messenger_connector_sdk::decoders::flatbuffer::{FlatBufferConfig, FlatBufferStreamDecoder};
+use messenger_connector_sdk::encoders::flatbuffer::{FlatBufferEncoderConfig, FlatBufferStreamEncoder};
+use messenger_connector_sdk::transforms::{FlatBufferConvert, FlatBufferConvertConfig, Transform};
+use messenger_connector_sdk::{Payload, Schema, StreamDecoder, StreamEncoder};
 use std::collections::HashMap;
 use std::path::PathBuf;
 
@@ -39,12 +39,12 @@ async fn should_transform_with_real_schema_and_field_mapping() {
     };
 
     let converter = FlatBufferConvert::new(config);
-    let metadata = iggy_connector_sdk::TopicMetadata {
+    let metadata = messenger_connector_sdk::TopicMetadata {
         stream: "test_stream".to_string(),
         topic: "test_topic".to_string(),
     };
 
-    let input_message = iggy_connector_sdk::DecodedMessage {
+    let input_message = messenger_connector_sdk::DecodedMessage {
         id: Some(1),
         offset: Some(0),
         checksum: Some(0),
@@ -198,12 +198,12 @@ async fn should_transform_json_to_flatbuffer_with_field_mappings() {
     };
 
     let converter = FlatBufferConvert::new(config);
-    let metadata = iggy_connector_sdk::TopicMetadata {
+    let metadata = messenger_connector_sdk::TopicMetadata {
         stream: "test_stream".to_string(),
         topic: "test_topic".to_string(),
     };
 
-    let input_message = iggy_connector_sdk::DecodedMessage {
+    let input_message = messenger_connector_sdk::DecodedMessage {
         id: Some(1),
         offset: Some(0),
         checksum: Some(0),

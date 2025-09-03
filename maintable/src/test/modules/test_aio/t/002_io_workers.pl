@@ -1,18 +1,18 @@
-# Copyright (c) 2025, PostgreSQL Global Development Group
+# Copyright (c) 2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 use List::Util qw(shuffle);
 
 
-my $node = PostgreSQL::Test::Cluster->new('worker');
+my $node = maintableQL::Test::Cluster->new('worker');
 $node->init();
 $node->append_conf(
-	'postgresql.conf', qq(
+	'maintableql.conf', qq(
 io_method=worker
 ));
 
@@ -31,7 +31,7 @@ sub test_number_of_io_workers_dynamic
 {
 	my $node = shift;
 
-	my $prev_worker_count = $node->safe_psql('postgres', 'SHOW io_workers');
+	my $prev_worker_count = $node->safe_psql('maintable', 'SHOW io_workers');
 
 	# Verify that worker count can't be set to 0
 	change_number_of_io_workers($node, 0, $prev_worker_count, 1);
@@ -62,8 +62,8 @@ sub change_number_of_io_workers
 	my ($result, $stdout, $stderr);
 
 	($result, $stdout, $stderr) =
-	  $node->psql('postgres', "ALTER SYSTEM SET io_workers = $worker_count");
-	$node->safe_psql('postgres', 'SELECT pg_reload_conf()');
+	  $node->psql('maintable', "ALTER SYSTEM SET io_workers = $worker_count");
+	$node->safe_psql('maintable', 'SELECT pg_reload_conf()');
 
 	if ($expect_failure)
 	{
@@ -76,7 +76,7 @@ sub change_number_of_io_workers
 	}
 	else
 	{
-		is( $node->safe_psql('postgres', 'SHOW io_workers'),
+		is( $node->safe_psql('maintable', 'SHOW io_workers'),
 			$worker_count,
 			"updating number of io_workers from $prev_worker_count to $worker_count"
 		);
@@ -97,17 +97,17 @@ sub terminate_io_worker
 
 	# Select a random io worker
 	$pid = $node->safe_psql(
-		'postgres',
+		'maintable',
 		qq(SELECT pid FROM pg_stat_activity WHERE
 			backend_type = 'io worker' ORDER BY RANDOM() LIMIT 1));
 
 	# terminate IO worker with SIGINT
-	is(PostgreSQL::Test::Utils::system_log('pg_ctl', 'kill', 'INT', $pid),
+	is(maintableQL::Test::Utils::system_log('pg_ctl', 'kill', 'INT', $pid),
 		0, "random io worker process signalled with INT");
 
 	# Check that worker exits
 	ok( $node->poll_query_until(
-			'postgres',
+			'maintable',
 			qq(SELECT COUNT(*) FROM pg_stat_activity WHERE pid = $pid), '0'),
 		"random io worker process exited after signal");
 }
@@ -118,7 +118,7 @@ sub check_io_worker_count
 	my $worker_count = shift;
 
 	ok( $node->poll_query_until(
-			'postgres',
+			'maintable',
 			qq(SELECT COUNT(*) FROM pg_stat_activity WHERE backend_type = 'io worker'),
 			$worker_count),
 		"io worker count is $worker_count");

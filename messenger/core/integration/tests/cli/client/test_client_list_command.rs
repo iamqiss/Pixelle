@@ -17,12 +17,12 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, OutputFormat, TestHelpCmd,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, OutputFormat, TestHelpCmd,
     USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
+use messenger::prelude::Client;
 use predicates::str::{contains, starts_with};
 use serial_test::parallel;
 
@@ -45,15 +45,15 @@ impl TestClientListCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestClientListCmd {
+impl MessengerCmdTestCase for TestClientListCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let client_info = client.get_me().await;
         assert!(client_info.is_ok());
         self.client_id = Some(client_info.unwrap().client_id);
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("client")
             .arg("list")
             .args(self.to_args())
@@ -76,16 +76,16 @@ impl IggyCmdTestCase for TestClientListCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestClientListCmd::new(OutputFormat::Default))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestClientListCmd::new(OutputFormat::List))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestClientListCmd::new(OutputFormat::Table))
         .await;
 }
@@ -93,20 +93,20 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["client", "list", "--help"],
             format!(
-                r#"List all currently connected clients to iggy server
+                r#"List all currently connected clients to messenger server
 
 Clients shall not to be confused with the users
 
 Examples:
- iggy client list
- iggy client list --list-mode table
- iggy client list -l table
+ messenger client list
+ messenger client list --list-mode table
+ messenger client list -l table
 
 {USAGE_PREFIX} client list [OPTIONS]
 
@@ -128,13 +128,13 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["client", "list", "-h"],
             format!(
-                r#"List all currently connected clients to iggy server
+                r#"List all currently connected clients to messenger server
 
 {USAGE_PREFIX} client list [OPTIONS]
 

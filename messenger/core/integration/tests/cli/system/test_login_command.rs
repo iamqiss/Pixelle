@@ -16,21 +16,21 @@
  * under the License.
  */
 
-use crate::cli::common::{IggyCmdTest, TestHelpCmd, USAGE_PREFIX};
+use crate::cli::common::{MessengerCmdTest, TestHelpCmd, USAGE_PREFIX};
 use serial_test::parallel;
 
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["login", "--help"],
             format!(
-                r#"login to Iggy server
+                r#"login to Messenger server
 
-Command logs in to Iggy server using provided credentials and stores session token
+Command logs in to Messenger server using provided credentials and stores session token
 in platform-specific secure storage. Session token is used for authentication in
 subsequent commands until logout command is executed.
 
@@ -55,13 +55,13 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["login", "-h"],
             format!(
-                r#"login to Iggy server
+                r#"login to Messenger server
 
 {USAGE_PREFIX} login [EXPIRY]...
 

@@ -21,7 +21,7 @@ import (
 	"encoding/binary"
 	"math"
 
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
 )
 
 type TcpStats struct {

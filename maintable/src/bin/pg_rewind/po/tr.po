@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_rewind
-# Copyright (C) 2018 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_rewind (PostgreSQL) package.
+# Copyright (C) 2018 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_rewind (maintableQL) package.
 # Abdullah GÜLNER <agulner@gmail.com>, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_rewind (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_rewind (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2019-04-26 13:48+0000\n"
 "PO-Revision-Date: 2019-06-12 16:57+0300\n"
 "Last-Translator: Abdullah Gülner\n"
@@ -417,10 +417,10 @@ msgstr "WAL kaydı bir nesneyi değiştiriyor, fakat kayıt türü tanınmıyor:
 #: pg_rewind.c:69
 #, c-format
 msgid ""
-"%s resynchronizes a PostgreSQL cluster with another copy of the cluster.\n"
+"%s resynchronizes a maintableQL cluster with another copy of the cluster.\n"
 "\n"
 msgstr ""
-"%s bir PostgreSQL kümesini kümenin diğer bir kopyasıyla yeniden senkronize eder.\n"
+"%s bir maintableQL kümesini kümenin diğer bir kopyasıyla yeniden senkronize eder.\n"
 "\n"
 
 #: pg_rewind.c:70
@@ -497,10 +497,10 @@ msgstr "  -?, --help                     bu yardımı göster, sonra çık\n"
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 msgstr ""
 "\n"
-"Hataları <pgsql-bugs@lists.postgresql.org> adresine bildirebilirsiniz.\n"
+"Hataları <pgsql-bugs@lists.maintableql.org> adresine bildirebilirsiniz.\n"
 
 #: pg_rewind.c:139 pg_rewind.c:175 pg_rewind.c:182 pg_rewind.c:189
 #: pg_rewind.c:197
@@ -535,8 +535,8 @@ msgstr "\"root\" tarafından çalıştırılamaz"
 
 #: pg_rewind.c:211
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser.\n"
-msgstr "%s komutunu PostgreSQL superuser olarak çalıştırmalısınız.\n"
+msgid "You must run %s as the maintableQL superuser.\n"
+msgstr "%s komutunu maintableQL superuser olarak çalıştırmalısınız.\n"
 
 #: pg_rewind.c:222
 #, c-format

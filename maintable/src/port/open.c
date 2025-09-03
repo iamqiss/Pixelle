@@ -4,7 +4,7 @@
  *	   Win32 open() replacement
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * src/port/open.c
  *
@@ -14,9 +14,9 @@
 #ifdef WIN32
 
 #ifndef FRONTEND
-#include "postgres.h"
+#include "maintable.h"
 #else
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #endif
 
 #include "port/win32ntdll.h"
@@ -167,7 +167,7 @@ pgwin32_open(const char *fileName, int fileFlags,...)
 #ifdef FRONTEND
 
 	/*
-	 * Since PostgreSQL 12, those concurrent-safe versions of open() and
+	 * Since maintableQL 12, those concurrent-safe versions of open() and
 	 * fopen() can be used by frontends, having as side-effect to switch the
 	 * file-translation mode from O_TEXT to O_BINARY if none is specified.
 	 * Caller may want to enforce the binary or text mode, but if nothing is

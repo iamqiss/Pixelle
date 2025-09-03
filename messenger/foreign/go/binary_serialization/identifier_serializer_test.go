@@ -19,10 +19,10 @@ package binaryserialization
 
 import (
 	"errors"
-	ierror "github.com/apache/iggy/foreign/go/errors"
+	ierror "github.com/apache/messenger/foreign/go/errors"
 	"testing"
 
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
 )
 
 func TestSerializeIdentifier_StringId(t *testing.T) {

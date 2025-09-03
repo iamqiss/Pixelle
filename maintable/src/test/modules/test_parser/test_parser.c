@@ -3,14 +3,14 @@
  * test_parser.c
  *	  Simple example of a text search parser
  *
- * Copyright (c) 2007-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2007-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/test/modules/test_parser/test_parser.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "fmgr.h"
 

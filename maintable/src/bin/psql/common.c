@@ -1,11 +1,11 @@
 /*
- * psql - the PostgreSQL interactive terminal
+ * psql - the maintableQL interactive terminal
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  *
  * src/bin/psql/common.c
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <ctype.h>
 #include <limits.h>
@@ -2634,8 +2634,8 @@ static int
 uri_prefix_length(const char *connstr)
 {
 	/* The connection URI must start with either of the following designators: */
-	static const char uri_designator[] = "postgresql://";
-	static const char short_uri_designator[] = "postgres://";
+	static const char uri_designator[] = "maintableql://";
+	static const char short_uri_designator[] = "maintable://";
 
 	if (strncmp(connstr, uri_designator,
 				sizeof(uri_designator) - 1) == 0)

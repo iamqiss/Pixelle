@@ -22,9 +22,9 @@ echo "🐍 Python SDK Test Runner"
 echo "========================="
 
 # Wait for server to be ready
-echo "⏳ Waiting for Iggy server to be ready..."
+echo "⏳ Waiting for Messenger server to be ready..."
 timeout 60 bash -c "
-    until timeout 5 bash -c '</dev/tcp/\${IGGY_SERVER_HOST}/\${IGGY_SERVER_TCP_PORT}'; do
+    until timeout 5 bash -c '</dev/tcp/\${MESSENGER_SERVER_HOST}/\${MESSENGER_SERVER_TCP_PORT}'; do
         echo '   Server not ready, waiting...'
         sleep 2
     done
@@ -35,23 +35,23 @@ echo "✅ Server is ready!"
 echo "🔗 Testing basic connectivity..."
 
 # Resolve hostname to IP address for Rust client compatibility
-SERVER_IP=$(getent hosts "${IGGY_SERVER_HOST}" | awk '{ print $1 }' | head -n1)
+SERVER_IP=$(getent hosts "${MESSENGER_SERVER_HOST}" | awk '{ print $1 }' | head -n1)
 if [ -z "$SERVER_IP" ]; then
-    echo "❌ Could not resolve hostname: ${IGGY_SERVER_HOST}"
+    echo "❌ Could not resolve hostname: ${MESSENGER_SERVER_HOST}"
     exit 1
 fi
-echo "📍 Resolved ${IGGY_SERVER_HOST} to ${SERVER_IP}"
+echo "📍 Resolved ${MESSENGER_SERVER_HOST} to ${SERVER_IP}"
 
 if ! python3 -c "
 import asyncio
 import sys
-from apache_iggy import IggyClient
+from apache_messenger import MessengerClient
 
 async def test_connection():
     try:
-        client = IggyClient('${SERVER_IP}:${IGGY_SERVER_TCP_PORT}')
+        client = MessengerClient('${SERVER_IP}:${MESSENGER_SERVER_TCP_PORT}')
         await client.connect()
-        await client.login_user('iggy', 'iggy')
+        await client.login_user('messenger', 'messenger')
         await client.ping()
         print('✅ Connection test passed')
         return True

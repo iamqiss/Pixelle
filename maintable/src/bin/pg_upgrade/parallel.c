@@ -3,11 +3,11 @@
  *
  *	multi-process support
  *
- *	Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ *	Copyright (c) 2010-2025, maintableQL Global Development Group
  *	src/bin/pg_upgrade/parallel.c
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <sys/wait.h>
 #ifdef WIN32

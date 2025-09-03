@@ -17,11 +17,11 @@
 
 use bench_report::numeric_parameter::BenchmarkNumericParameter;
 use bytes::Bytes;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use rand::{Rng, distr::Alphanumeric};
 
 pub struct BenchmarkMessagesBatch {
-    pub messages: Vec<IggyMessage>,
+    pub messages: Vec<MessengerMessage>,
     pub user_data_bytes: u64,
     pub total_bytes: u64,
 }
@@ -69,7 +69,7 @@ impl BenchmarkBatchGenerator {
             // Set origin timestamp for fixed batch.
             // Technically it's not correct, because we're setting one
             // timestamp for all messages, but it's close enough.
-            let now = IggyTimestamp::now().as_micros();
+            let now = MessengerTimestamp::now().as_micros();
             for msg in &mut self.batch.messages {
                 msg.header.origin_timestamp = now;
             }
@@ -90,7 +90,7 @@ impl BenchmarkBatchGenerator {
         // When using builder, origin timestamp is set by default
         let messages = (0..messages_per_batch)
             .map(|_| {
-                let msg = IggyMessage::builder()
+                let msg = MessengerMessage::builder()
                     .payload(full.slice(0..message_size.get() as usize))
                     .build()
                     .unwrap();
@@ -127,7 +127,7 @@ impl BenchmarkBatchGenerator {
         let mut total_bytes = 0u64;
         let messages = (0..messages_per_batch)
             .map(|_| {
-                let msg = IggyMessage::builder()
+                let msg = MessengerMessage::builder()
                     .payload(payload.clone())
                     .build()
                     .unwrap();

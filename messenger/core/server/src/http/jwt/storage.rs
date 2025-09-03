@@ -25,7 +25,7 @@ use crate::{
 use ahash::AHashMap;
 use anyhow::Context;
 use error_set::ErrContext;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use std::sync::Arc;
 use tokio::io::AsyncReadExt;
 use tracing::{error, info};
@@ -46,7 +46,7 @@ impl TokenStorage {
 
     pub async fn load_all_revoked_access_tokens(
         &self,
-    ) -> Result<Vec<RevokedAccessToken>, IggyError> {
+    ) -> Result<Vec<RevokedAccessToken>, MessengerError> {
         let file = file::open(&self.path).await;
         if file.is_err() {
             info!("No revoked access tokens found to load.");
@@ -56,7 +56,7 @@ impl TokenStorage {
         info!("Loading revoked access tokens from: {}", self.path);
         let mut file = file.map_err(|error| {
             error!("Cannot open revoked access tokens file: {error}");
-            IggyError::CannotReadFile
+            MessengerError::CannotReadFile
         })?;
         let file_size = file
             .metadata()
@@ -67,7 +67,7 @@ impl TokenStorage {
                     self.path
                 )
             })
-            .map_err(|_| IggyError::CannotReadFileMetadata)?
+            .map_err(|_| MessengerError::CannotReadFileMetadata)?
             .len() as usize;
         let mut buffer = PooledBuffer::with_capacity(file_size);
         buffer.put_bytes(0, file_size);
@@ -79,12 +79,12 @@ impl TokenStorage {
                     self.path
                 )
             })
-            .map_err(|_| IggyError::CannotReadFile)?;
+            .map_err(|_| MessengerError::CannotReadFile)?;
 
         let tokens: AHashMap<String, u64> =
             bincode::serde::decode_from_slice(&buffer, bincode::config::standard())
                 .with_context(|| "Failed to deserialize revoked access tokens")
-                .map_err(|_| IggyError::CannotDeserializeResource)?
+                .map_err(|_| MessengerError::CannotDeserializeResource)?
                 .0;
 
         let tokens = tokens
@@ -99,7 +99,7 @@ impl TokenStorage {
     pub async fn save_revoked_access_token(
         &self,
         token: &RevokedAccessToken,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let tokens = self.load_all_revoked_access_tokens().await?;
         let mut map = tokens
             .into_iter()
@@ -108,7 +108,7 @@ impl TokenStorage {
         map.insert(token.id.to_owned(), token.expiry);
         let bytes = bincode::serde::encode_to_vec(&map, bincode::config::standard())
             .with_context(|| "Failed to serialize revoked access tokens")
-            .map_err(|_| IggyError::CannotSerializeResource)?;
+            .map_err(|_| MessengerError::CannotSerializeResource)?;
         self.persister
             .overwrite(&self.path, &bytes)
             .await
@@ -121,7 +121,7 @@ impl TokenStorage {
         Ok(())
     }
 
-    pub async fn delete_revoked_access_tokens(&self, id: &[String]) -> Result<(), IggyError> {
+    pub async fn delete_revoked_access_tokens(&self, id: &[String]) -> Result<(), MessengerError> {
         let tokens = self
             .load_all_revoked_access_tokens()
             .await
@@ -142,7 +142,7 @@ impl TokenStorage {
 
         let bytes = bincode::serde::encode_to_vec(&map, bincode::config::standard())
             .with_context(|| "Failed to serialize revoked access tokens")
-            .map_err(|_| IggyError::CannotSerializeResource)?;
+            .map_err(|_| MessengerError::CannotSerializeResource)?;
         self.persister
             .overwrite(&self.path, &bytes)
             .await

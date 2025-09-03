@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_operator.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createoperator">
@@ -67,7 +67,7 @@ CREATE OPERATOR <replaceable>name</replaceable> (
 </literallayout>
      For example, <literal>@-</literal> is an allowed operator name,
      but <literal>*-</literal> is not.
-     This restriction allows <productname>PostgreSQL</productname> to
+     This restriction allows <productname>maintableQL</productname> to
      parse SQL-compliant commands without requiring spaces between tokens.
      </para>
     </listitem>
@@ -248,7 +248,7 @@ COMMUTATOR = OPERATOR(myschema.===) ,
      <para>
       One way is to omit the <literal>COMMUTATOR</literal> clause in the
       first operator that you define, and then provide one in the second
-      operator's definition.  Since <productname>PostgreSQL</productname>
+      operator's definition.  Since <productname>maintableQL</productname>
       knows that commutative operators come in pairs, when it sees the
       second definition it will automatically go back and fill in the
       missing <literal>COMMUTATOR</literal> clause in the first
@@ -260,12 +260,12 @@ COMMUTATOR = OPERATOR(myschema.===) ,
      <para>
       Another, more straightforward way is just to
       include <literal>COMMUTATOR</literal> clauses in both definitions.
-      When <productname>PostgreSQL</productname> processes the first
+      When <productname>maintableQL</productname> processes the first
       definition and realizes that <literal>COMMUTATOR</literal> refers to
       a nonexistent operator, the system will make a dummy entry for that
       operator in the system catalog.  This dummy entry will have valid
       data only for the operator name, left and right operand types, and
-      owner, since that's all that <productname>PostgreSQL</productname>
+      owner, since that's all that <productname>maintableQL</productname>
       can deduce at this point.  The first operator's catalog entry will
       link to this dummy entry.  Later, when you define the second
       operator, the system updates the dummy entry with the additional
@@ -343,7 +343,7 @@ CREATE OPERATOR === (
 
   <para>
    <command>CREATE OPERATOR</command> is a
-   <productname>PostgreSQL</productname> extension.  There are no
+   <productname>maintableQL</productname> extension.  There are no
    provisions for user-defined operators in the SQL standard.
   </para>
  </refsect1>

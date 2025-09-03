@@ -22,7 +22,7 @@
  * SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/heapam.h"
 #include "access/multixact.h"

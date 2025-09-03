@@ -17,12 +17,12 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, TestStreamId,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, TestStreamId,
     USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use predicates::str::diff;
 use serial_test::parallel;
 use std::str::FromStr;
@@ -55,7 +55,7 @@ impl TestStreamPurgeCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestStreamPurgeCmd {
+impl MessengerCmdTestCase for TestStreamPurgeCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let stream = client
             .create_stream(&self.stream_name, Some(self.stream_id))
@@ -70,7 +70,7 @@ impl IggyCmdTestCase for TestStreamPurgeCmd {
                 Default::default(),
                 None,
                 Some(self.topic_id),
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 MaxTopicSize::ServerDefault,
             )
             .await;
@@ -78,7 +78,7 @@ impl IggyCmdTestCase for TestStreamPurgeCmd {
 
         let mut messages = (1..100)
             .map(|n| format!("message {n}"))
-            .filter_map(|s| IggyMessage::from_str(s.as_str()).ok())
+            .filter_map(|s| MessengerMessage::from_str(s.as_str()).ok())
             .collect::<Vec<_>>();
 
         let send_status = client
@@ -97,8 +97,8 @@ impl IggyCmdTestCase for TestStreamPurgeCmd {
         assert!(stream_state.size > 0);
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("stream")
             .arg("purge")
             .arg(self.to_arg())
@@ -134,17 +134,17 @@ impl IggyCmdTestCase for TestStreamPurgeCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestStreamPurgeCmd::new(
             1,
             String::from("production"),
             TestStreamId::Named,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestStreamPurgeCmd::new(
             2,
             String::from("testing"),
@@ -156,9 +156,9 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["stream", "purge", "--help"],
             format!(
@@ -168,8 +168,8 @@ Command removes all messages from given stream
 Stream ID can be specified as a stream name or ID
 
 Examples:
- iggy stream purge 1
- iggy stream purge test
+ messenger stream purge 1
+ messenger stream purge test
 
 {USAGE_PREFIX} stream purge <STREAM_ID>
 
@@ -191,9 +191,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["stream", "purge", "-h"],
             format!(

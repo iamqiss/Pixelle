@@ -10,36 +10,36 @@
 
  <para>
   The directions in this chapter assume that you are working with
-  plain <productname>PostgreSQL</productname> without any additional
+  plain <productname>maintableQL</productname> without any additional
   infrastructure, for example a copy that you built from source
   according to the directions in the preceding chapters.
   If you are working with a pre-packaged or vendor-supplied
-  version of <productname>PostgreSQL</productname>, it is likely that
+  version of <productname>maintableQL</productname>, it is likely that
   the packager has made special provisions for installing and starting
   the database server according to your system's conventions.
   Consult the package-level documentation for details.
  </para>
 
- <sect1 id="postgres-user">
-  <title>The <productname>PostgreSQL</productname> User Account</title>
+ <sect1 id="maintable-user">
+  <title>The <productname>maintableQL</productname> User Account</title>
 
   <indexterm>
-   <primary>postgres user</primary>
+   <primary>maintable user</primary>
   </indexterm>
 
   <para>
    As with any server daemon that is accessible to the outside world,
-   it is advisable to run <productname>PostgreSQL</productname> under a
+   it is advisable to run <productname>maintableQL</productname> under a
    separate user account. This user account should only own the data
    that is managed by the server, and should not be shared with other
    daemons. (For example, using the user <literal>nobody</literal> is a bad
    idea.) In particular, it is advisable that this user account not own
-   the <productname>PostgreSQL</productname> executable files, to ensure
+   the <productname>maintableQL</productname> executable files, to ensure
    that a compromised server process could not modify those executables.
   </para>
 
   <para>
-   Pre-packaged versions of <productname>PostgreSQL</productname> will
+   Pre-packaged versions of <productname>maintableQL</productname> will
    typically create a suitable user account automatically during
    package installation.
   </para>
@@ -47,7 +47,7 @@
   <para>
    To add a Unix user account to your system, look for a command
    <command>useradd</command> or <command>adduser</command>. The user
-   name <systemitem>postgres</systemitem> is often used, and is assumed
+   name <systemitem>maintable</systemitem> is often used, and is assumed
    throughout this book, but you can use another name if you like.
   </para>
  </sect1>
@@ -70,10 +70,10 @@
    (The <acronym>SQL</acronym> standard uses the term catalog cluster.) A
    database cluster is a collection of databases that is managed by a
    single instance of a running database server. After initialization, a
-   database cluster will contain a database named <literal>postgres</literal>,
+   database cluster will contain a database named <literal>maintable</literal>,
    which is meant as a default database for use by utilities, users and third
    party applications.  The database server itself does not require the
-   <literal>postgres</literal> database to exist, but many external utility
+   <literal>maintable</literal> database to exist, but many external utility
    programs assume it exists.  There are two more databases created within
    each cluster during initialization, named <literal>template1</literal>
    and <literal>template0</literal>.  As the names suggest, these will be
@@ -92,12 +92,12 @@
    <filename>/var/lib/pgsql/data</filename> are popular.
    The data directory must be initialized before being used, using the program
    <xref linkend="app-initdb"/><indexterm><primary>initdb</primary></indexterm>
-   which is installed with <productname>PostgreSQL</productname>.
+   which is installed with <productname>maintableQL</productname>.
   </para>
 
   <para>
    If you are using a pre-packaged version
-   of <productname>PostgreSQL</productname>, it may well have a specific
+   of <productname>maintableQL</productname>, it may well have a specific
    convention for where to place the data directory, and it may also
    provide a script for creating the data directory.  In that case you
    should use that script in preference to
@@ -114,7 +114,7 @@
 <prompt>$</prompt> <userinput>initdb -D /usr/local/pgsql/data</userinput>
 </screen>
    Note that you must execute this command while logged into the
-   <productname>PostgreSQL</productname> user account, which is
+   <productname>maintableQL</productname> user account, which is
    described in the previous section.
   </para>
 
@@ -145,7 +145,7 @@
    specify if it does not already exist.  Of course, this will fail if
    <command>initdb</command> does not have permissions to write in the
    parent directory.  It's generally recommendable that the
-   <productname>PostgreSQL</productname> user own not just the data
+   <productname>maintableQL</productname> user own not just the data
    directory but its parent directory as well, so that this should not
    be a problem.  If the desired parent directory doesn't exist either,
    you will need to create it first, using root privileges if the
@@ -153,9 +153,9 @@
    like this:
 <screen>
 root# <userinput>mkdir /usr/local/pgsql</userinput>
-root# <userinput>chown postgres /usr/local/pgsql</userinput>
-root# <userinput>su postgres</userinput>
-postgres$ <userinput>initdb -D /usr/local/pgsql/data</userinput>
+root# <userinput>chown maintable /usr/local/pgsql</userinput>
+root# <userinput>su maintable</userinput>
+maintable$ <userinput>initdb -D /usr/local/pgsql/data</userinput>
 </screen>
   </para>
 
@@ -170,7 +170,7 @@ postgres$ <userinput>initdb -D /usr/local/pgsql/data</userinput>
    database, it is essential that it be secured from unauthorized
    access. <command>initdb</command> therefore revokes access
    permissions from everyone but the
-   <productname>PostgreSQL</productname> user, and optionally, group.
+   <productname>maintableQL</productname> user, and optionally, group.
    Group access, when enabled, is read-only.  This allows an unprivileged
    user in the same group as the cluster owner to take a backup of the
    cluster data or perform other operations that only require read access.
@@ -180,7 +180,7 @@ postgres$ <userinput>initdb -D /usr/local/pgsql/data</userinput>
    Note that enabling or disabling group access on an existing cluster requires
    the cluster to be shut down and the appropriate mode to be set on all
    directories and files before restarting
-   <productname>PostgreSQL</productname>.  Otherwise, a mix of modes might
+   <productname>maintableQL</productname>.  Otherwise, a mix of modes might
    exist in the data directory.  For clusters that allow access only by the
    owner, the appropriate modes are <literal>0700</literal> for directories
    and <literal>0600</literal> for files.  For clusters that also allow
@@ -253,7 +253,7 @@ postgres$ <userinput>initdb -D /usr/local/pgsql/data</userinput>
     choose to do this, it is not advisable to try to use the secondary
     volume's topmost directory (mount point) as the data directory.
     Best practice is to create a directory within the mount-point
-    directory that is owned by the <productname>PostgreSQL</productname>
+    directory that is owned by the <productname>maintableQL</productname>
     user, and then create the data directory within that.  This avoids
     permissions problems, particularly for operations such
     as <application>pg_upgrade</application>, and it also ensures clean failures if
@@ -267,7 +267,7 @@ postgres$ <userinput>initdb -D /usr/local/pgsql/data</userinput>
 
    <para>
     Generally, any file system with POSIX semantics can be used for
-    PostgreSQL.  Users prefer different file systems for a variety of reasons,
+    maintableQL.  Users prefer different file systems for a variety of reasons,
     including vendor support, performance, and familiarity.  Experience
     suggests that, all other things being equal, one should not expect major
     performance or behavior changes merely from switching file systems or
@@ -283,24 +283,24 @@ postgres$ <userinput>initdb -D /usr/local/pgsql/data</userinput>
 
     <para>
      It is possible to use an <acronym>NFS</acronym> file system for storing
-     the <productname>PostgreSQL</productname> data directory.
-     <productname>PostgreSQL</productname> does nothing special for
+     the <productname>maintableQL</productname> data directory.
+     <productname>maintableQL</productname> does nothing special for
      <acronym>NFS</acronym> file systems, meaning it assumes
      <acronym>NFS</acronym> behaves exactly like locally-connected drives.
-     <productname>PostgreSQL</productname> does not use any functionality that
+     <productname>maintableQL</productname> does not use any functionality that
      is known to have nonstandard behavior on <acronym>NFS</acronym>, such as
      file locking.
     </para>
 
     <para>
      The only firm requirement for using <acronym>NFS</acronym> with
-     <productname>PostgreSQL</productname> is that the file system is mounted
+     <productname>maintableQL</productname> is that the file system is mounted
      using the <literal>hard</literal> option.  With the
      <literal>hard</literal> option, processes can <quote>hang</quote>
      indefinitely if there are network problems, so this configuration will
      require a careful monitoring setup.  The <literal>soft</literal> option
      will interrupt system calls in case of network problems, but
-     <productname>PostgreSQL</productname> will not repeat system calls
+     <productname>maintableQL</productname> will not repeat system calls
      interrupted in this way, so any such interruption will result in an I/O
      error being reported.
     </para>
@@ -308,7 +308,7 @@ postgres$ <userinput>initdb -D /usr/local/pgsql/data</userinput>
     <para>
      It is not necessary to use the <literal>sync</literal> mount option.  The
      behavior of the <literal>async</literal> option is sufficient, since
-     <productname>PostgreSQL</productname> issues <literal>fsync</literal>
+     <productname>maintableQL</productname> issues <literal>fsync</literal>
      calls at appropriate times to flush the write caches.  (This is analogous
      to how it works on a local file system.)  However, it is strongly
      recommended to use the <literal>sync</literal> export option on the NFS
@@ -341,12 +341,12 @@ postgres$ <userinput>initdb -D /usr/local/pgsql/data</userinput>
   <para>
    Before anyone can access the database, you must start the database
    server. The database server program is called
-   <command>postgres</command>.<indexterm><primary>postgres</primary></indexterm>
+   <command>maintable</command>.<indexterm><primary>maintable</primary></indexterm>
   </para>
 
   <para>
    If you are using a pre-packaged version
-   of <productname>PostgreSQL</productname>, it almost certainly includes
+   of <productname>maintableQL</productname>, it almost certainly includes
    provisions for running the server as a background task according to the
    conventions of your operating system.  Using the package's
    infrastructure to start the server will be much less work than figuring
@@ -356,23 +356,23 @@ postgres$ <userinput>initdb -D /usr/local/pgsql/data</userinput>
 
   <para>
    The bare-bones way to start the server manually is just to invoke
-   <command>postgres</command> directly, specifying the location of the
+   <command>maintable</command> directly, specifying the location of the
    data directory with the <option>-D</option> option, for example:
 <screen>
-$ <userinput>postgres -D /usr/local/pgsql/data</userinput>
+$ <userinput>maintable -D /usr/local/pgsql/data</userinput>
 </screen>
    which will leave the server running in the foreground. This must be
-   done while logged into the <productname>PostgreSQL</productname> user
+   done while logged into the <productname>maintableQL</productname> user
    account. Without <option>-D</option>, the server will try to use
    the data directory named by the environment variable <envar>PGDATA</envar>.
    If that variable is not provided either, it will fail.
   </para>
 
   <para>
-   Normally it is better to start <command>postgres</command> in the
+   Normally it is better to start <command>maintable</command> in the
    background.  For this, use the usual Unix shell syntax:
 <screen>
-$ <userinput>postgres -D /usr/local/pgsql/data &gt;logfile 2&gt;&amp;1 &amp;</userinput>
+$ <userinput>maintable -D /usr/local/pgsql/data &gt;logfile 2&gt;&amp;1 &amp;</userinput>
 </screen>
    It is important to store the server's <systemitem>stdout</systemitem> and
    <systemitem>stderr</systemitem> output somewhere, as shown above. It will help
@@ -382,9 +382,9 @@ $ <userinput>postgres -D /usr/local/pgsql/data &gt;logfile 2&gt;&amp;1 &amp;</us
   </para>
 
   <para>
-   The <command>postgres</command> program also takes a number of other
+   The <command>maintable</command> program also takes a number of other
    command-line options. For more information, see the
-   <xref linkend="app-postgres"/> reference page
+   <xref linkend="app-maintable"/> reference page
    and <xref linkend="runtime-config"/> below.
   </para>
 
@@ -398,7 +398,7 @@ pg_ctl start -l logfile
 </programlisting>
    will start the server in the background and put the output into the
    named log file. The <option>-D</option> option has the same meaning
-   here as for <command>postgres</command>. <command>pg_ctl</command>
+   here as for <command>maintable</command>. <command>pg_ctl</command>
    is also capable of stopping the server.
   </para>
 
@@ -410,7 +410,7 @@ pg_ctl start -l logfile
    </indexterm>
    Autostart scripts are operating-system-specific.
    There are a few example scripts distributed with
-   <productname>PostgreSQL</productname> in the
+   <productname>maintableQL</productname> in the
    <filename>contrib/start-scripts</filename> directory. Installing one will require
    root privileges.
   </para>
@@ -421,12 +421,12 @@ pg_ctl start -l logfile
    <filename>/etc/rc.local</filename> or
    <filename>/etc/rc.d/rc.local</filename>. Others use <filename>init.d</filename> or
    <filename>rc.d</filename> directories. Whatever you do, the server must be
-   run by the <productname>PostgreSQL</productname> user account
+   run by the <productname>maintableQL</productname> user account
    <emphasis>and not by root</emphasis> or any other user. Therefore you
    probably should form your commands using
-   <literal>su postgres -c '...'</literal>.  For example:
+   <literal>su maintable -c '...'</literal>.  For example:
 <programlisting>
-su postgres -c 'pg_ctl start -D /usr/local/pgsql/data -l serverlog'
+su maintable -c 'pg_ctl start -D /usr/local/pgsql/data -l serverlog'
 </programlisting>
   </para>
 
@@ -440,7 +440,7 @@ su postgres -c 'pg_ctl start -D /usr/local/pgsql/data -l serverlog'
      <para>
       For <productname>FreeBSD</productname>, look at the file
       <filename>contrib/start-scripts/freebsd</filename> in the
-      <productname>PostgreSQL</productname> source distribution.
+      <productname>maintableQL</productname> source distribution.
       <indexterm><primary>FreeBSD</primary><secondary>start script</secondary></indexterm>
      </para>
     </listitem>
@@ -451,9 +451,9 @@ su postgres -c 'pg_ctl start -D /usr/local/pgsql/data -l serverlog'
       to the file <filename>/etc/rc.local</filename>:
       <indexterm><primary>OpenBSD</primary><secondary>start script</secondary></indexterm>
 <programlisting>
-if [ -x /usr/local/pgsql/bin/pg_ctl -a -x /usr/local/pgsql/bin/postgres ]; then
-    su -l postgres -c '/usr/local/pgsql/bin/pg_ctl start -s -l /var/postgresql/log -D /usr/local/pgsql/data'
-    echo -n ' postgresql'
+if [ -x /usr/local/pgsql/bin/pg_ctl -a -x /usr/local/pgsql/bin/maintable ]; then
+    su -l maintable -c '/usr/local/pgsql/bin/pg_ctl start -s -l /var/maintableql/log -D /usr/local/pgsql/data'
+    echo -n ' maintableql'
 fi
 </programlisting>
      </para>
@@ -469,24 +469,24 @@ fi
       to <filename>/etc/rc.d/rc.local</filename>
       or <filename>/etc/rc.local</filename> or look at the file
       <filename>contrib/start-scripts/linux</filename> in the
-      <productname>PostgreSQL</productname> source distribution.
+      <productname>maintableQL</productname> source distribution.
      </para>
 
      <para>
       When using <application>systemd</application>, you can use the following
       service unit file (e.g.,
-      at <filename>/etc/systemd/system/postgresql.service</filename>):<indexterm><primary>systemd</primary></indexterm>
+      at <filename>/etc/systemd/system/maintableql.service</filename>):<indexterm><primary>systemd</primary></indexterm>
 <programlisting>
 [Unit]
-Description=PostgreSQL database server
-Documentation=man:postgres(1)
+Description=maintableQL database server
+Documentation=man:maintable(1)
 After=network-online.target
 Wants=network-online.target
 
 [Service]
 Type=notify
-User=postgres
-ExecStart=/usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data
+User=maintable
+ExecStart=/usr/local/pgsql/bin/maintable -D /usr/local/pgsql/data
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=mixed
 KillSignal=SIGINT
@@ -503,7 +503,7 @@ WantedBy=multi-user.target
       Consider carefully the timeout
       setting.  <application>systemd</application> has a default timeout of 90
       seconds as of this writing and will kill a process that does not report
-      readiness within that time.  But a <productname>PostgreSQL</productname>
+      readiness within that time.  But a <productname>maintableQL</productname>
       server that might have to perform crash recovery at startup could take
       much longer to become ready.  The suggested value
       of <literal>infinity</literal> disables the timeout logic.
@@ -523,14 +523,14 @@ WantedBy=multi-user.target
     <listitem>
      <para>
       On <productname>Solaris</productname>, create a file called
-      <filename>/etc/init.d/postgresql</filename> that contains
+      <filename>/etc/init.d/maintableql</filename> that contains
       the following line:
       <indexterm><primary>Solaris</primary><secondary>start script</secondary></indexterm>
 <programlisting>
-su - postgres -c "/usr/local/pgsql/bin/pg_ctl start -l logfile -D /usr/local/pgsql/data"
+su - maintable -c "/usr/local/pgsql/bin/pg_ctl start -l logfile -D /usr/local/pgsql/data"
 </programlisting>
       Then, create a symbolic link to it in <filename>/etc/rc3.d</filename> as
-      <filename>S99postgresql</filename>.
+      <filename>S99maintableql</filename>.
      </para>
     </listitem>
    </itemizedlist>
@@ -570,7 +570,7 @@ FATAL:  could not create any TCP/IP sockets
      be a different problem. For example, trying to start a server
      on a reserved port number might draw something like:
 <screen>
-$ <userinput>postgres -p 666</userinput>
+$ <userinput>maintable -p 666</userinput>
 LOG:  could not bind IPv4 address "127.0.0.1": Permission denied
 HINT:  Is another postmaster already running on port 666? If not, wait a few seconds and retry.
 FATAL:  could not create any TCP/IP sockets
@@ -584,7 +584,7 @@ FATAL:  could not create shared memory segment: Invalid argument
 DETAIL:  Failed system call was shmget(key=5440001, size=4011376640, 03600).
 </screen>
      probably means your kernel's limit on the size of shared memory is
-     smaller than the work area <productname>PostgreSQL</productname>
+     smaller than the work area <productname>maintableQL</productname>
      is trying to create (4011376640 bytes in this example).
      This is only likely to happen if you have set <literal>shared_memory_type</literal>
      to <literal>sysv</literal>.  In that case, you
@@ -605,7 +605,7 @@ DETAIL:  Failed system call was semget(5440126, 17, 03600).
      does <emphasis>not</emphasis> mean you've run out of disk
      space. It means your kernel's limit on the number of <systemitem
      class="osname">System V</systemitem> semaphores is smaller than the number
-     <productname>PostgreSQL</productname> wants to create. As above,
+     <productname>maintableQL</productname> wants to create. As above,
      you might be able to work around the problem by starting the
      server with a reduced number of allowed connections
      (<xref linkend="guc-max-connections"/>), but you'll eventually want to
@@ -677,10 +677,10 @@ psql: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: No such
   <title>Managing Kernel Resources</title>
 
   <para>
-   <productname>PostgreSQL</productname> can sometimes exhaust various operating system
+   <productname>maintableQL</productname> can sometimes exhaust various operating system
    resource limits, especially when multiple copies of the server are running
    on the same system, or in very large installations.  This section explains
-   the kernel resources used by <productname>PostgreSQL</productname> and the steps you
+   the kernel resources used by <productname>maintableQL</productname> and the steps you
    can take to resolve problems related to kernel resource consumption.
   </para>
 
@@ -696,7 +696,7 @@ psql: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: No such
    </indexterm>
 
    <para>
-    <productname>PostgreSQL</productname> requires the operating system to provide
+    <productname>maintableQL</productname> requires the operating system to provide
     inter-process communication (<acronym>IPC</acronym>) features, specifically
     shared memory and semaphores.  Unix-derived systems typically provide
     <quote><systemitem class="osname">System V</systemitem></quote> <acronym>IPC</acronym>,
@@ -706,7 +706,7 @@ psql: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: No such
    </para>
 
    <para>
-    By default, <productname>PostgreSQL</productname> allocates
+    By default, <productname>maintableQL</productname> allocates
     a very small amount of System V shared memory, as well as a much larger
     amount of anonymous <function>mmap</function> shared memory.
     Alternatively, a single large System V shared memory region can be used
@@ -721,7 +721,7 @@ psql: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: No such
    <para>
     System V <acronym>IPC</acronym> features are typically constrained by
     system-wide allocation limits.
-    When <productname>PostgreSQL</productname> exceeds one of these limits,
+    When <productname>maintableQL</productname> exceeds one of these limits,
     the server will refuse to start and
     should leave an instructive error message describing the problem
     and what to do about it. (See also <xref
@@ -742,7 +742,7 @@ psql: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: No such
       <row>
        <entry>Name</entry>
        <entry>Description</entry>
-       <entry>Values needed to run one <productname>PostgreSQL</productname> instance</entry>
+       <entry>Values needed to run one <productname>maintableQL</productname> instance</entry>
       </row>
      </thead>
 
@@ -814,7 +814,7 @@ psql: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: No such
    </table>
 
    <para>
-    <productname>PostgreSQL</productname> requires a few bytes of System V shared memory
+    <productname>maintableQL</productname> requires a few bytes of System V shared memory
     (typically 48 bytes, on 64-bit platforms) for each copy of the server.
     On most modern operating systems, this amount can easily be allocated.
     However, if you are running many copies of the server or you explicitly
@@ -829,7 +829,7 @@ psql: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: No such
    <para>
     Less likely to cause problems is the minimum size for shared
     memory segments (<varname>SHMMIN</varname>), which should be at most
-    approximately 32 bytes for <productname>PostgreSQL</productname> (it is
+    approximately 32 bytes for <productname>maintableQL</productname> (it is
     usually just 1). The maximum number of segments system-wide
     (<varname>SHMMNI</varname>) or per-process (<varname>SHMSEG</varname>) are unlikely
     to cause a problem unless your system has them set to zero.
@@ -837,16 +837,16 @@ psql: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: No such
 
    <para>
     When using System V semaphores,
-    <productname>PostgreSQL</productname> uses one semaphore per allowed connection
+    <productname>maintableQL</productname> uses one semaphore per allowed connection
     (<xref linkend="guc-max-connections"/>), allowed autovacuum worker process
     (<xref linkend="guc-autovacuum-worker-slots"/>), allowed WAL sender process
     (<xref linkend="guc-max-wal-senders"/>), allowed background
     process (<xref linkend="guc-max-worker-processes"/>), etc., in sets of 16.
     The runtime-computed parameter <xref linkend="guc-num-os-semaphores"/>
     reports the number of semaphores required.  This parameter can be viewed
-    before starting the server with a <command>postgres</command> command like:
+    before starting the server with a <command>maintable</command> command like:
 <programlisting>
-$ <userinput>postgres -D $PGDATA -C num_os_semaphores</userinput>
+$ <userinput>maintable -D $PGDATA -C num_os_semaphores</userinput>
 </programlisting>
    </para>
 
@@ -885,7 +885,7 @@ $ <userinput>postgres -D $PGDATA -C num_os_semaphores</userinput>
    <para>
     Various other settings related to <quote>semaphore undo</quote>, such as
     <varname>SEMMNU</varname> and <varname>SEMUME</varname>, do not affect
-    <productname>PostgreSQL</productname>.
+    <productname>maintableQL</productname>.
    </para>
 
    <para>
@@ -1083,23 +1083,23 @@ kern.sysv.shmall=1024
       <listitem>
        <para>
         The default shared memory and semaphore settings are usually good enough for most
-        <productname>PostgreSQL</productname> applications.  Solaris defaults
+        <productname>maintableQL</productname> applications.  Solaris defaults
         to a <varname>SHMMAX</varname> of one-quarter of system <acronym>RAM</acronym>.
         To further adjust this setting, use a project setting associated
-        with the <literal>postgres</literal> user.  For example, run the
+        with the <literal>maintable</literal> user.  For example, run the
         following as <literal>root</literal>:
 <programlisting>
-projadd -c "PostgreSQL DB User" -K "project.max-shm-memory=(privileged,8GB,deny)" -U postgres -G postgres user.postgres
+projadd -c "maintableQL DB User" -K "project.max-shm-memory=(privileged,8GB,deny)" -U maintable -G maintable user.maintable
 </programlisting>
        </para>
 
        <para>
-        This command adds the <literal>user.postgres</literal> project and
-        sets the shared memory maximum for the <literal>postgres</literal>
+        This command adds the <literal>user.maintable</literal> project and
+        sets the shared memory maximum for the <literal>maintable</literal>
         user to 8GB, and takes effect the next time that user logs
-        in, or when you restart <productname>PostgreSQL</productname> (not reload).
-        The above assumes that <productname>PostgreSQL</productname> is run by
-        the <literal>postgres</literal> user in the <literal>postgres</literal>
+        in, or when you restart <productname>maintableQL</productname> (not reload).
+        The above assumes that <productname>maintableQL</productname> is run by
+        the <literal>maintable</literal> user in the <literal>maintable</literal>
         group.  No server reboot is required.
        </para>
 
@@ -1114,7 +1114,7 @@ project.max-msg-ids=(priv,4096,deny)
        </para>
 
        <para>
-        Additionally, if you are running <productname>PostgreSQL</productname>
+        Additionally, if you are running <productname>maintableQL</productname>
         inside a zone, you may need to raise the zone resource usage
         limits as well.  See "Chapter2:  Projects and Tasks" in the
         <citetitle>System Administrator's Guide</citetitle> for more
@@ -1139,9 +1139,9 @@ project.max-msg-ids=(priv,4096,deny)
     If <productname>systemd</productname> is in use, some care must be taken
     that IPC resources (including shared memory) are not prematurely
     removed by the operating system.  This is especially of concern when
-    installing PostgreSQL from source.  Users of distribution packages of
-    PostgreSQL are less likely to be affected, as
-    the <literal>postgres</literal> user is then normally created as a system
+    installing maintableQL from source.  Users of distribution packages of
+    maintableQL are less likely to be affected, as
+    the <literal>maintable</literal> user is then normally created as a system
     user.
    </para>
 
@@ -1159,7 +1159,7 @@ project.max-msg-ids=(priv,4096,deny)
     times, leading to errors and warnings while attempting to open and remove
     them, like
 <screen>
-WARNING:  could not remove shared memory segment "/PostgreSQL.1450751626": No such file or directory
+WARNING:  could not remove shared memory segment "/maintableQL.1450751626": No such file or directory
 </screen>
     Different types of IPC objects (shared memory vs. semaphores, System V
     vs. POSIX) are treated slightly differently
@@ -1171,7 +1171,7 @@ WARNING:  could not remove shared memory segment "/PostgreSQL.1450751626": No su
    <para>
     A <quote>user logging out</quote> might happen as part of a maintenance
     job or manually when an administrator logs in as
-    the <literal>postgres</literal> user or something similar, so it is hard
+    the <literal>maintable</literal> user or something similar, so it is hard
     to prevent in general.
    </para>
 
@@ -1184,7 +1184,7 @@ WARNING:  could not remove shared memory segment "/PostgreSQL.1450751626": No su
 
    <para>
     Packaging and deployment scripts should be careful to create
-    the <literal>postgres</literal> user as a system user by
+    the <literal>maintable</literal> user as a system user by
     using <literal>useradd -r</literal>, <literal>adduser --system</literal>,
     or equivalent.
    </para>
@@ -1201,7 +1201,7 @@ RemoveIPC=no
 
    <caution>
     <para>
-     At least one of these two things has to be ensured, or the PostgreSQL
+     At least one of these two things has to be ensured, or the maintableQL
      server will be very unreliable.
     </para>
    </caution>
@@ -1213,7 +1213,7 @@ RemoveIPC=no
    <para>
     Unix-like operating systems enforce various kinds of resource limits
     that might interfere with the operation of your
-    <productname>PostgreSQL</productname> server. Of particular
+    <productname>maintableQL</productname> server. Of particular
     importance are limits on the number of processes per user, the
     number of open files per process, and the amount of memory available
     to each process. Each of these have a <quote>hard</quote> and a
@@ -1263,7 +1263,7 @@ default:\
    </para>
 
    <para>
-    The <productname>PostgreSQL</productname> server uses one process
+    The <productname>maintableQL</productname> server uses one process
     per connection so you should provide for at least as many processes
     as allowed connections, in addition to what you need for the rest
     of your system.  This is usually not a problem but if you run
@@ -1284,7 +1284,7 @@ default:\
     processes to open large numbers of files; if more than a few
     processes do so then the system-wide limit can easily be exceeded.
     If you find this happening, and you do not want to alter the
-    system-wide limit, you can set <productname>PostgreSQL</productname>'s <xref
+    system-wide limit, you can set <productname>maintableQL</productname>'s <xref
     linkend="guc-max-files-per-process"/> configuration parameter to
     limit the consumption of open files.
    </para>
@@ -1293,12 +1293,12 @@ default:\
     Another kernel limit that may be of concern when supporting large
     numbers of client connections is the maximum socket connection queue
     length.  If more than that many connection requests arrive within a very
-    short period, some may get rejected before the <productname>PostgreSQL</productname> server can service
+    short period, some may get rejected before the <productname>maintableQL</productname> server can service
     the requests, with those clients receiving unhelpful connection failure
     errors such as <quote>Resource temporarily unavailable</quote> or
     <quote>Connection refused</quote>.  The default queue length limit is 128
     on many platforms.  To raise it, adjust the appropriate kernel parameter
-    via <application>sysctl</application>, then restart the <productname>PostgreSQL</productname> server.
+    via <application>sysctl</application>, then restart the <productname>maintableQL</productname> server.
     The parameter is variously named <varname>net.core.somaxconn</varname>
     on Linux, <varname>kern.ipc.soacceptqueue</varname> on newer FreeBSD,
     and <varname>kern.ipc.somaxconn</varname> on macOS and other BSD
@@ -1323,11 +1323,11 @@ default:\
 
    <para>
     The default virtual memory behavior on Linux is not
-    optimal for <productname>PostgreSQL</productname>. Because of the
+    optimal for <productname>maintableQL</productname>. Because of the
     way that the kernel implements memory overcommit, the kernel might
-    terminate the <productname>PostgreSQL</productname> postmaster (the
+    terminate the <productname>maintableQL</productname> postmaster (the
     supervisor server process) if the memory demands of either
-    <productname>PostgreSQL</productname> or another process cause the
+    <productname>maintableQL</productname> or another process cause the
     system to run out of virtual memory.
    </para>
 
@@ -1336,18 +1336,18 @@ default:\
     this (consult your system documentation and configuration on where
     to look for such a message):
 <programlisting>
-Out of Memory: Killed process 12345 (postgres).
+Out of Memory: Killed process 12345 (maintable).
 </programlisting>
-    This indicates that the <filename>postgres</filename> process
+    This indicates that the <filename>maintable</filename> process
     has been terminated due to memory pressure.
     Although existing database connections will continue to function
     normally, no new connections will be accepted.  To recover,
-    <productname>PostgreSQL</productname> will need to be restarted.
+    <productname>maintableQL</productname> will need to be restarted.
    </para>
 
    <para>
     One way to avoid this problem is to run
-    <productname>PostgreSQL</productname> on a machine where you can
+    <productname>maintableQL</productname> on a machine where you can
     be sure that other processes will not run the machine out of
     memory.  If memory is tight, increasing the swap space of the
     operating system can help avoid the problem, because the
@@ -1356,7 +1356,7 @@ Out of Memory: Killed process 12345 (postgres).
    </para>
 
    <para>
-    If <productname>PostgreSQL</productname> itself is the cause of the
+    If <productname>maintableQL</productname> itself is the cause of the
     system running out of memory, you can avoid the problem by changing
     your configuration.  In some cases, it may help to lower memory-related
     configuration parameters, particularly
@@ -1396,12 +1396,12 @@ sysctl -w vm.overcommit_memory=2
 <programlisting>
 echo -1000 > /proc/self/oom_score_adj
 </programlisting>
-    in the <productname>PostgreSQL</productname> startup script just before
-    invoking <filename>postgres</filename>.
+    in the <productname>maintableQL</productname> startup script just before
+    invoking <filename>maintable</filename>.
     Note that this action must be done as root, or it will have no effect;
     so a root-owned startup script is the easiest place to do it.  If you
     do this, you should also set these environment variables in the startup
-    script before invoking <filename>postgres</filename>:
+    script before invoking <filename>maintable</filename>:
 <programlisting>
 export PG_OOM_ADJUST_FILE=/proc/self/oom_score_adj
 export PG_OOM_ADJUST_VALUE=0
@@ -1424,18 +1424,18 @@ export PG_OOM_ADJUST_VALUE=0
 
    <para>
     Using huge pages reduces overhead when using large contiguous chunks of
-    memory, as <productname>PostgreSQL</productname> does, particularly when
+    memory, as <productname>maintableQL</productname> does, particularly when
     using large values of <xref linkend="guc-shared-buffers"/>.  To use this
-    feature in <productname>PostgreSQL</productname> you need a kernel
+    feature in <productname>maintableQL</productname> you need a kernel
     with <varname>CONFIG_HUGETLBFS=y</varname> and
     <varname>CONFIG_HUGETLB_PAGE=y</varname>. You will also have to configure
     the operating system to provide enough huge pages of the desired size.
     The runtime-computed parameter
     <xref linkend="guc-shared-memory-size-in-huge-pages"/> reports the number
     of huge pages required.  This parameter can be viewed before starting the
-    server with a <command>postgres</command> command like:
+    server with a <command>maintable</command> command like:
 <programlisting>
-$ <userinput>postgres -D $PGDATA -C shared_memory_size_in_huge_pages</userinput>
+$ <userinput>maintable -D $PGDATA -C shared_memory_size_in_huge_pages</userinput>
 3170
 $ <userinput>grep ^Hugepagesize /proc/meminfo</userinput>
 Hugepagesize:       2048 kB
@@ -1485,12 +1485,12 @@ $ <userinput>cat /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages</userinp
 
    <para>
     The default behavior for huge pages in
-    <productname>PostgreSQL</productname> is to use them when possible, with
+    <productname>maintableQL</productname> is to use them when possible, with
     the system's default huge page size, and
     to fall back to normal pages on failure. To enforce the use of huge
     pages, you can set <xref linkend="guc-huge-pages"/>
-    to <literal>on</literal> in <filename>postgresql.conf</filename>.
-    Note that with this setting <productname>PostgreSQL</productname> will fail to
+    to <literal>on</literal> in <filename>maintableql.conf</filename>.
+    Note that with this setting <productname>maintableQL</productname> will fail to
     start if not enough huge pages are available.
    </para>
 
@@ -1514,12 +1514,12 @@ $ <userinput>cat /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages</userinp
   <para>
    There are several ways to shut down the database server.
    Under the hood, they all reduce to sending a signal to the supervisor
-   <command>postgres</command> process.
+   <command>maintable</command> process.
   </para>
 
   <para>
    If you are using a pre-packaged version
-   of <productname>PostgreSQL</productname>, and you used its provisions
+   of <productname>maintableQL</productname>, and you used its provisions
    for starting the server, then you should also use its provisions for
    stopping the server.  Consult the package-level documentation for
    details.
@@ -1527,7 +1527,7 @@ $ <userinput>cat /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages</userinp
 
   <para>
    When managing the server directly, you can control the type of shutdown
-   by sending different signals to the <command>postgres</command>
+   by sending different signals to the <command>maintable</command>
    process:
 
    <variablelist>
@@ -1583,7 +1583,7 @@ $ <userinput>cat /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages</userinp
    interface for sending these signals to shut down the server.
    Alternatively, you can send the signal directly using <command>kill</command>
    on non-Windows systems.
-   The <acronym>PID</acronym> of the <command>postgres</command> process can be
+   The <acronym>PID</acronym> of the <command>maintable</command> process can be
    found using the <command>ps</command> program, or from the file
    <filename>postmaster.pid</filename> in the data directory. For
    example, to do a fast shutdown:
@@ -1597,7 +1597,7 @@ $ <userinput>kill -INT `head -1 /usr/local/pgsql/data/postmaster.pid`</userinput
     It is best not to use <systemitem>SIGKILL</systemitem> to shut down the
     server.  Doing so will prevent the server from releasing shared memory and
     semaphores.  Furthermore, <systemitem>SIGKILL</systemitem> kills
-    the <command>postgres</command> process without letting it relay the
+    the <command>maintable</command> process without letting it relay the
     signal to its subprocesses, so it might be necessary to kill the
     individual subprocesses by hand as well.
    </para>
@@ -1613,7 +1613,7 @@ $ <userinput>kill -INT `head -1 /usr/local/pgsql/data/postmaster.pid`</userinput
  </sect1>
 
  <sect1 id="upgrading">
-  <title>Upgrading a <productname>PostgreSQL</productname> Cluster</title>
+  <title>Upgrading a <productname>maintableQL</productname> Cluster</title>
 
   <indexterm zone="upgrading">
    <primary>upgrading</primary>
@@ -1626,15 +1626,15 @@ $ <userinput>kill -INT `head -1 /usr/local/pgsql/data/postmaster.pid`</userinput
 
   <para>
    This section discusses how to upgrade your database data from one
-   <productname>PostgreSQL</productname> release to a newer one.
+   <productname>maintableQL</productname> release to a newer one.
   </para>
 
   <para>
-   Current <productname>PostgreSQL</productname> version numbers consist of a
+   Current <productname>maintableQL</productname> version numbers consist of a
    major and a minor version number.  For example, in the version number 10.1,
    the 10 is the major version number and the 1 is the minor version number,
    meaning this would be the first minor release of the major release 10.  For
-   releases before <productname>PostgreSQL</productname> version 10.0, version
+   releases before <productname>maintableQL</productname> version 10.0, version
    numbers consist of three numbers, for example, 9.5.3.  In those cases, the
    major version consists of the first two digit groups of the version number,
    e.g., 9.5, and the minor version is the third number, e.g., 3, meaning this
@@ -1653,14 +1653,14 @@ $ <userinput>kill -INT `head -1 /usr/local/pgsql/data/postmaster.pid`</userinput
   </para>
 
   <para>
-   For <emphasis>major</emphasis> releases of <productname>PostgreSQL</productname>, the
+   For <emphasis>major</emphasis> releases of <productname>maintableQL</productname>, the
    internal data storage format is subject to change, thus complicating
    upgrades.  The traditional method for moving data to a new major version
    is to dump and restore the database, though this can be slow.  A
    faster method is <xref linkend="pgupgrade"/>.  Replication methods are
    also available, as discussed below.
    (If you are using a pre-packaged version
-   of <productname>PostgreSQL</productname>, it may provide scripts to
+   of <productname>maintableQL</productname>, it may provide scripts to
    assist with major version upgrades.  Consult the package-level
    documentation for details.)
   </para>
@@ -1679,7 +1679,7 @@ $ <userinput>kill -INT `head -1 /usr/local/pgsql/data/postmaster.pid`</userinput
    Cautious users will want to test their client applications on the new
    version before switching over fully; therefore, it's often a good idea to
    set up concurrent installations of old and new versions.  When
-   testing a <productname>PostgreSQL</productname> major upgrade, consider the
+   testing a <productname>maintableQL</productname> major upgrade, consider the
    following categories of possible changes:
   </para>
 
@@ -1742,12 +1742,12 @@ $ <userinput>kill -INT `head -1 /usr/local/pgsql/data/postmaster.pid`</userinput
 
    <para>
     One upgrade method is to dump data from one major version of
-    <productname>PostgreSQL</productname> and restore it in another &mdash;  to do
+    <productname>maintableQL</productname> and restore it in another &mdash;  to do
     this, you must use a <emphasis>logical</emphasis> backup tool like
     <application>pg_dumpall</application>; file system
     level backup methods will not work. (There are checks in place that prevent
     you from using a data directory with an incompatible version of
-    <productname>PostgreSQL</productname>, so no great harm can be done by
+    <productname>maintableQL</productname>, so no great harm can be done by
     trying to start the wrong server version on a data directory.)
    </para>
 
@@ -1755,7 +1755,7 @@ $ <userinput>kill -INT `head -1 /usr/local/pgsql/data/postmaster.pid`</userinput
     It is recommended that you use the <application>pg_dump</application> and
     <application>pg_dumpall</application> programs from the <emphasis>newer</emphasis>
     version of
-    <productname>PostgreSQL</productname>, to take advantage of enhancements
+    <productname>maintableQL</productname>, to take advantage of enhancements
     that might have been made in these programs.  Current releases of the
     dump programs can read data from any server version back to 9.2.
    </para>
@@ -1796,7 +1796,7 @@ $ <userinput>kill -INT `head -1 /usr/local/pgsql/data/postmaster.pid`</userinput
       command from the version you are currently running;  see <xref
       linkend="backup-dump-all"/> for more details.  For best
       results, however, try to use the <application>pg_dumpall</application>
-      command from <productname>PostgreSQL</productname> &version;,
+      command from <productname>maintableQL</productname> &version;,
       since this version contains bug fixes and improvements over older
       versions.  While this advice might seem idiosyncratic since you
       haven't installed the new version yet, it is advisable to follow
@@ -1813,12 +1813,12 @@ $ <userinput>kill -INT `head -1 /usr/local/pgsql/data/postmaster.pid`</userinput
 <screen>
 <userinput>pg_ctl stop</userinput>
 </screen>
-      On systems that have <productname>PostgreSQL</productname> started at boot time,
+      On systems that have <productname>maintableQL</productname> started at boot time,
       there is probably a start-up file that will accomplish the same thing. For
       example, on a <systemitem class="osname">Red Hat Linux</systemitem> system one
       might find that this works:
 <screen>
-<userinput>/etc/rc.d/init.d/postgresql stop</userinput>
+<userinput>/etc/rc.d/init.d/maintableql stop</userinput>
 </screen>
       See <xref linkend="runtime"/> for details about starting and
       stopping the server.
@@ -1843,7 +1843,7 @@ $ <userinput>kill -INT `head -1 /usr/local/pgsql/data/postmaster.pid`</userinput
 
     <step>
      <para>
-      Install the new version of <productname>PostgreSQL</productname> as
+      Install the new version of <productname>maintableQL</productname> as
       outlined in <xref linkend="installation"/>.
      </para>
     </step>
@@ -1862,7 +1862,7 @@ $ <userinput>kill -INT `head -1 /usr/local/pgsql/data/postmaster.pid`</userinput
     <step>
      <para>
       Restore your previous <filename>pg_hba.conf</filename> and any
-      <filename>postgresql.conf</filename> modifications.
+      <filename>maintableql.conf</filename> modifications.
      </para>
     </step>
 
@@ -1871,7 +1871,7 @@ $ <userinput>kill -INT `head -1 /usr/local/pgsql/data/postmaster.pid`</userinput
       Start the database server, again using the special database user
       account:
 <programlisting>
-<userinput>/usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data</userinput>
+<userinput>/usr/local/pgsql/bin/maintable -D /usr/local/pgsql/data</userinput>
 </programlisting>
      </para>
     </step>
@@ -1880,7 +1880,7 @@ $ <userinput>kill -INT `head -1 /usr/local/pgsql/data/postmaster.pid`</userinput
      <para>
       Finally, restore your data from backup with:
 <screen>
-<userinput>/usr/local/pgsql/bin/psql -d postgres -f <replaceable>outputfile</replaceable></userinput>
+<userinput>/usr/local/pgsql/bin/psql -d maintable -f <replaceable>outputfile</replaceable></userinput>
 </screen>
       using the <emphasis>new</emphasis> <application>psql</application>.
      </para>
@@ -1893,7 +1893,7 @@ $ <userinput>kill -INT `head -1 /usr/local/pgsql/data/postmaster.pid`</userinput
     in parallel, on different ports. Then you can use something like:
 
 <programlisting>
-pg_dumpall -p 5432 | psql -d postgres -p 5433
+pg_dumpall -p 5432 | psql -d maintable -p 5433
 </programlisting>
     to transfer your data.
    </para>
@@ -1905,7 +1905,7 @@ pg_dumpall -p 5432 | psql -d postgres -p 5433
 
    <para>
     The <xref linkend="pgupgrade"/> module allows an installation to
-    be migrated in-place from one major <productname>PostgreSQL</productname>
+    be migrated in-place from one major <productname>maintableQL</productname>
     version to another.  Upgrades can be performed in minutes,
     particularly with <option>--link</option> mode.  It requires steps similar to
     <application>pg_dumpall</application> above, e.g.,  starting/stopping the server,
@@ -1920,12 +1920,12 @@ pg_dumpall -p 5432 | psql -d postgres -p 5433
 
    <para>
     It is also possible to use logical replication methods to create a standby
-    server with the updated version of <productname>PostgreSQL</productname>.
+    server with the updated version of <productname>maintableQL</productname>.
     This is possible because logical replication supports
     replication between different major versions of
-    <productname>PostgreSQL</productname>.  The standby can be on the same computer or
+    <productname>maintableQL</productname>.  The standby can be on the same computer or
     a different computer.  Once it has synced up with the primary server
-    (running the older version of <productname>PostgreSQL</productname>), you can
+    (running the older version of <productname>maintableQL</productname>), you can
     switch primaries and make the standby the primary and shut down the older
     database instance.  Such a switch-over results in only several seconds
     of downtime for an upgrade.
@@ -2031,7 +2031,7 @@ pg_dumpall -p 5432 | psql -d postgres -p 5433
   </indexterm>
 
   <para>
-   <productname>PostgreSQL</productname> offers encryption at several
+   <productname>maintableQL</productname> offers encryption at several
    levels, and provides flexibility in protecting data from disclosure
    due to database server theft, unscrupulous administrators, and
    insecure networks. Encryption might also be required to secure
@@ -2051,14 +2051,14 @@ pg_dumpall -p 5432 | psql -d postgres -p 5433
      encryption is used for client authentication, the unencrypted password is
      never even temporarily present on the server because the client encrypts
      it before being sent across the network. SCRAM is preferred, because it
-     is an Internet standard and is more secure than the PostgreSQL-specific
+     is an Internet standard and is more secure than the maintableQL-specific
      MD5 authentication protocol.
     </para>
 
     <warning>
      <para>
       Support for MD5-encrypted passwords is deprecated and will be removed in
-      a future release of <productname>PostgreSQL</productname>.  Refer to
+      a future release of <productname>maintableQL</productname>.  Refer to
       <xref linkend="auth-password"/> for details about migrating to another
       password type.
      </para>
@@ -2195,11 +2195,11 @@ pg_dumpall -p 5432 | psql -d postgres -p 5433
   </indexterm>
 
   <para>
-   <productname>PostgreSQL</productname> has native support for using
+   <productname>maintableQL</productname> has native support for using
    <acronym>SSL</acronym> connections to encrypt client/server communications
    for increased security. This requires that
    <productname>OpenSSL</productname> is installed on both client and
-   server systems and that support in <productname>PostgreSQL</productname> is
+   server systems and that support in <productname>maintableQL</productname> is
    enabled at build time (see <xref linkend="installation"/>).
   </para>
 
@@ -2211,7 +2211,7 @@ pg_dumpall -p 5432 | psql -d postgres -p 5433
    <acronym>SSL</acronym> is still used for encrypted connections even though
    <acronym>SSL</acronym> protocols are no longer supported.
    <acronym>SSL</acronym> is used interchangeably with <acronym>TLS</acronym>
-   in <productname>PostgreSQL</productname>.
+   in <productname>maintableQL</productname>.
 
   </para>
   <sect2 id="ssl-setup">
@@ -2219,11 +2219,11 @@ pg_dumpall -p 5432 | psql -d postgres -p 5433
 
   <para>
    With <acronym>SSL</acronym> support compiled in, the
-   <productname>PostgreSQL</productname> server can be started with
+   <productname>maintableQL</productname> server can be started with
    support for encrypted connections using <acronym>TLS</acronym> protocols
    enabled by setting the parameter
    <xref linkend="guc-ssl"/> to <literal>on</literal> in
-   <filename>postgresql.conf</filename>.  The server will listen for both normal
+   <filename>maintableql.conf</filename>.  The server will listen for both normal
    and <acronym>SSL</acronym> connections on the same TCP port, and will negotiate
    with any connecting client on whether to use <acronym>SSL</acronym>.  By
    default, this is at the client's option; see <xref
@@ -2247,7 +2247,7 @@ pg_dumpall -p 5432 | psql -d postgres -p 5433
    owned by root and have group read access (that is, <literal>0640</literal>
    permissions).  That setup is intended for installations where certificate
    and key files are managed by the operating system.  The user under which
-   the <productname>PostgreSQL</productname> server runs should then be made a
+   the <productname>maintableQL</productname> server runs should then be made a
    member of the group that has access to those certificate and key files.
   </para>
 
@@ -2294,7 +2294,7 @@ pg_dumpall -p 5432 | psql -d postgres -p 5433
    <title>OpenSSL Configuration</title>
 
   <para>
-   <productname>PostgreSQL</productname> reads the system-wide
+   <productname>maintableQL</productname> reads the system-wide
    <productname>OpenSSL</productname> configuration file. By default, this
    file is named <filename>openssl.cnf</filename> and is located in the
    directory reported by <literal>openssl version -d</literal>.
@@ -2308,7 +2308,7 @@ pg_dumpall -p 5432 | psql -d postgres -p 5433
    ciphers can be specified in the <productname>OpenSSL</productname>
    configuration file, you can specify ciphers specifically for use by
    the database server by modifying <xref linkend="guc-ssl-ciphers"/> in
-   <filename>postgresql.conf</filename>.
+   <filename>maintableql.conf</filename>.
   </para>
 
   <note>
@@ -2331,7 +2331,7 @@ pg_dumpall -p 5432 | psql -d postgres -p 5433
    place certificates of the root certificate authorities
    (<acronym>CA</acronym>s) you trust in a file in the data
    directory, set the parameter <xref linkend="guc-ssl-ca-file"/> in
-   <filename>postgresql.conf</filename> to the new file name, and add the
+   <filename>maintableql.conf</filename> to the new file name, and add the
    authentication option <literal>clientcert=verify-ca</literal> or
    <literal>clientcert=verify-full</literal> to the appropriate
    <literal>hostssl</literal> line(s) in <filename>pg_hba.conf</filename>.
@@ -2582,11 +2582,11 @@ openssl x509 -req -in server.csr -text -days 365 \
   </indexterm>
 
   <para>
-   <productname>PostgreSQL</productname> also has native support for
+   <productname>maintableQL</productname> also has native support for
    using <acronym>GSSAPI</acronym> to encrypt client/server communications for
    increased security.  Support requires that a <acronym>GSSAPI</acronym>
    implementation (such as MIT Kerberos) is installed on both client and server
-   systems, and that support in <productname>PostgreSQL</productname> is
+   systems, and that support in <productname>maintableQL</productname> is
    enabled at build time (see <xref linkend="installation"/>).
   </para>
 
@@ -2594,7 +2594,7 @@ openssl x509 -req -in server.csr -text -days 365 \
    <title>Basic Setup</title>
 
    <para>
-    The <productname>PostgreSQL</productname> server will listen for both
+    The <productname>maintableQL</productname> server will listen for both
     normal and <acronym>GSSAPI</acronym>-encrypted connections on the same TCP
     port, and will negotiate with any connecting client whether to
     use <acronym>GSSAPI</acronym> for encryption (and for authentication).  By
@@ -2610,7 +2610,7 @@ openssl x509 -req -in server.csr -text -days 365 \
     underlying mechanism will determine both client and server identities
     (according to the <acronym>GSSAPI</acronym> implementation) in any
     case.  But this is not required;
-    another <productname>PostgreSQL</productname> authentication method
+    another <productname>maintableQL</productname> authentication method
     can be chosen to perform additional verification.
    </para>
 
@@ -2633,7 +2633,7 @@ openssl x509 -req -in server.csr -text -days 365 \
   <para>
    It is possible to use <application>SSH</application> to encrypt the network
    connection between clients and a
-   <productname>PostgreSQL</productname> server. Done properly, this
+   <productname>maintableQL</productname> server. Done properly, this
    provides an adequately secure network connection, even for non-SSL-capable
    clients.
   </para>
@@ -2641,7 +2641,7 @@ openssl x509 -req -in server.csr -text -days 365 \
   <para>
    First make sure that an <application>SSH</application> server is
    running properly on the same machine as the
-   <productname>PostgreSQL</productname> server and that you can log in using
+   <productname>maintableQL</productname> server and that you can log in using
    <command>ssh</command> as some user;  you then can establish a
    secure tunnel to the remote server.  A secure tunnel listens on a
    local port and forwards all traffic to a port on the remote machine.
@@ -2663,7 +2663,7 @@ ssh -L 63333:localhost:5432 joe@foo.com
    server using this tunnel, you connect to port 63333 on the local
    machine:
 <programlisting>
-psql -h localhost -p 63333 postgres
+psql -h localhost -p 63333 maintable
 </programlisting>
    To the database server it will then look as though you are
    user <literal>joe</literal> on host <literal>foo.com</literal>
@@ -2673,7 +2673,7 @@ psql -h localhost -p 63333 postgres
    think the connection is SSL-encrypted, since in fact it is not
    encrypted between the
    <application>SSH</application> server and the
-   <productname>PostgreSQL</productname> server.  This should not pose any
+   <productname>maintableQL</productname> server.  This should not pose any
    extra security risk because they are on the same machine.
   </para>
 
@@ -2737,7 +2737,7 @@ ssh -L 63333:db.foo.com:5432 joe@shell.foo.com
 <userinput>regsvr32 <replaceable>pgsql_library_directory</replaceable>/pgevent.dll</userinput>
 </screen>
    This creates registry entries used by the event viewer, under the default
-   event source named <literal>PostgreSQL</literal>.
+   event source named <literal>maintableQL</literal>.
   </para>
 
   <para>
@@ -2761,7 +2761,7 @@ ssh -L 63333:db.foo.com:5432 joe@shell.foo.com
    <para>
     To enable event logging in the database server, modify
     <xref linkend="guc-log-destination"/> to include
-    <literal>eventlog</literal> in <filename>postgresql.conf</filename>.
+    <literal>eventlog</literal> in <filename>maintableql.conf</filename>.
    </para>
   </note>
  </sect1>

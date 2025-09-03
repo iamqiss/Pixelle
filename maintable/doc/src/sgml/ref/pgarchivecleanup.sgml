@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pgarchivecleanup.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="pgarchivecleanup">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>pg_archivecleanup</refname>
-  <refpurpose>clean up <productname>PostgreSQL</productname> WAL archive files</refpurpose>
+  <refpurpose>clean up <productname>maintableQL</productname> WAL archive files</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -42,7 +42,7 @@ PostgreSQL documentation
   <para>
    To configure a standby
    server to use <application>pg_archivecleanup</application>, put this into its
-   <filename>postgresql.conf</filename> configuration file:
+   <filename>maintableql.conf</filename> configuration file:
 <programlisting>
 archive_cleanup_command = 'pg_archivecleanup <replaceable>archivelocation</replaceable> %r'
 </programlisting>
@@ -181,8 +181,8 @@ pg_archivecleanup:  removing file "archive/00000001000000370000000E"
 
   <para>
    <application>pg_archivecleanup</application> is designed to work with
-   <productname>PostgreSQL</productname> 8.0 and later when used as a standalone utility,
-   or with <productname>PostgreSQL</productname> 9.0 and later when used as an
+   <productname>maintableQL</productname> 8.0 and later when used as a standalone utility,
+   or with <productname>maintableQL</productname> 9.0 and later when used as an
    archive cleanup command.
   </para>
 

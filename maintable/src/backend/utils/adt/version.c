@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * version.c
- *	 Returns the PostgreSQL version string
+ *	 Returns the maintableQL version string
  *
- * Copyright (c) 1998-2025, PostgreSQL Global Development Group
+ * Copyright (c) 1998-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *
@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "utils/builtins.h"
 

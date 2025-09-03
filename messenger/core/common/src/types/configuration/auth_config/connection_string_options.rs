@@ -15,14 +15,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-use crate::{IggyDuration, IggyError};
+use crate::{MessengerDuration, MessengerError};
 
 pub trait ConnectionStringOptions {
     fn retries(&self) -> Option<u32>;
 
-    fn heartbeat_interval(&self) -> IggyDuration;
+    fn heartbeat_interval(&self) -> MessengerDuration;
 
-    fn parse_options(options: &str) -> Result<Self, IggyError>
+    fn parse_options(options: &str) -> Result<Self, MessengerError>
     where
         Self: Sized;
 }

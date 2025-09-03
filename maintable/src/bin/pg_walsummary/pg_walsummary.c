@@ -3,14 +3,14 @@
  * pg_walsummary.c
  *		Prints the contents of WAL summary files.
  *
- * Copyright (c) 2017-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2017-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/bin/pg_walsummary/pg_walsummary.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <fcntl.h>
 #include <limits.h>

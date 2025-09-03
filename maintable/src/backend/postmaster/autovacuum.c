@@ -2,7 +2,7 @@
  *
  * autovacuum.c
  *
- * PostgreSQL Integrated Autovacuum Daemon
+ * maintableQL Integrated Autovacuum Daemon
  *
  * The autovacuum system is structured in two different kinds of processes: the
  * autovacuum launcher and the autovacuum worker.  The launcher is an
@@ -51,7 +51,7 @@
  * holding the relation lock) during which a worker may choose a table that was
  * already vacuumed; this is a bug in the current design.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -60,7 +60,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <signal.h>
 #include <sys/time.h>
@@ -401,7 +401,7 @@ AutoVacLauncherMain(const void *startup_data, size_t startup_data_len)
 	/*
 	 * Set up signal handlers.  We operate on databases much like a regular
 	 * backend, so we use the same signal handling.  See equivalent code in
-	 * tcop/postgres.c.
+	 * tcop/maintable.c.
 	 */
 	pqsignal(SIGHUP, SignalHandlerForConfigReload);
 	pqsignal(SIGINT, StatementCancelHandler);
@@ -425,7 +425,7 @@ AutoVacLauncherMain(const void *startup_data, size_t startup_data_len)
 	/* Early initialization */
 	BaseInit();
 
-	InitPostgres(NULL, InvalidOid, NULL, InvalidOid, 0, NULL);
+	InitMaintable(NULL, InvalidOid, NULL, InvalidOid, 0, NULL);
 
 	SetProcessingMode(NormalProcessing);
 
@@ -442,7 +442,7 @@ AutoVacLauncherMain(const void *startup_data, size_t startup_data_len)
 	/*
 	 * If an exception is encountered, processing resumes here.
 	 *
-	 * This code is a stripped down version of PostgresMain error recovery.
+	 * This code is a stripped down version of MaintableMain error recovery.
 	 *
 	 * Note that we use sigsetjmp(..., 1), so that the prevailing signal mask
 	 * (to wit, BlockSig) will be restored when longjmp'ing to here.  Thus,
@@ -527,7 +527,7 @@ AutoVacLauncherMain(const void *startup_data, size_t startup_data_len)
 
 	/*
 	 * Force zero_damaged_pages OFF in the autovac process, even if it is set
-	 * in postgresql.conf.  We don't really want such a dangerous option being
+	 * in maintableql.conf.  We don't really want such a dangerous option being
 	 * applied non-interactively.
 	 */
 	SetConfigOption("zero_damaged_pages", "false", PGC_SUSET, PGC_S_OVERRIDE);
@@ -1408,7 +1408,7 @@ AutoVacWorkerMain(const void *startup_data, size_t startup_data_len)
 	/*
 	 * Set up signal handlers.  We operate on databases much like a regular
 	 * backend, so we use the same signal handling.  See equivalent code in
-	 * tcop/postgres.c.
+	 * tcop/maintable.c.
 	 */
 	pqsignal(SIGHUP, SignalHandlerForConfigReload);
 
@@ -1484,7 +1484,7 @@ AutoVacWorkerMain(const void *startup_data, size_t startup_data_len)
 
 	/*
 	 * Force zero_damaged_pages OFF in the autovac process, even if it is set
-	 * in postgresql.conf.  We don't really want such a dangerous option being
+	 * in maintableql.conf.  We don't really want such a dangerous option being
 	 * applied non-interactively.
 	 */
 	SetConfigOption("zero_damaged_pages", "false", PGC_SUSET, PGC_S_OVERRIDE);
@@ -1570,7 +1570,7 @@ AutoVacWorkerMain(const void *startup_data, size_t startup_data_len)
 
 		/*
 		 * Report autovac startup to the cumulative stats system.  We
-		 * deliberately do this before InitPostgres, so that the
+		 * deliberately do this before InitMaintable, so that the
 		 * last_autovac_time will get updated even if the connection attempt
 		 * fails.  This is to prevent autovac from getting "stuck" repeatedly
 		 * selecting an unopenable database, rather than making any progress
@@ -1586,7 +1586,7 @@ AutoVacWorkerMain(const void *startup_data, size_t startup_data_len)
 		 * Note: if we have selected a just-deleted database (due to using
 		 * stale stats info), we'll fail and exit here.
 		 */
-		InitPostgres(NULL, dbid, NULL, InvalidOid,
+		InitMaintable(NULL, dbid, NULL, InvalidOid,
 					 INIT_PG_OVERRIDE_ALLOW_CONNS,
 					 dbname);
 		SetProcessingMode(NormalProcessing);

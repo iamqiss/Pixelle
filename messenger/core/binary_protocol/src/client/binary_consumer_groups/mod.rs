@@ -20,13 +20,13 @@ use crate::{BinaryClient, ConsumerGroupClient};
 
 use crate::utils::auth::fail_if_not_authenticated;
 use crate::utils::mapper;
-use iggy_common::create_consumer_group::CreateConsumerGroup;
-use iggy_common::delete_consumer_group::DeleteConsumerGroup;
-use iggy_common::get_consumer_group::GetConsumerGroup;
-use iggy_common::get_consumer_groups::GetConsumerGroups;
-use iggy_common::join_consumer_group::JoinConsumerGroup;
-use iggy_common::leave_consumer_group::LeaveConsumerGroup;
-use iggy_common::{ConsumerGroup, ConsumerGroupDetails, Identifier, IggyError};
+use messenger_common::create_consumer_group::CreateConsumerGroup;
+use messenger_common::delete_consumer_group::DeleteConsumerGroup;
+use messenger_common::get_consumer_group::GetConsumerGroup;
+use messenger_common::get_consumer_groups::GetConsumerGroups;
+use messenger_common::join_consumer_group::JoinConsumerGroup;
+use messenger_common::leave_consumer_group::LeaveConsumerGroup;
+use messenger_common::{ConsumerGroup, ConsumerGroupDetails, Identifier, MessengerError};
 
 #[async_trait::async_trait]
 impl<B: BinaryClient> ConsumerGroupClient for B {
@@ -35,7 +35,7 @@ impl<B: BinaryClient> ConsumerGroupClient for B {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<Option<ConsumerGroupDetails>, IggyError> {
+    ) -> Result<Option<ConsumerGroupDetails>, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self
             .send_with_response(&GetConsumerGroup {
@@ -55,7 +55,7 @@ impl<B: BinaryClient> ConsumerGroupClient for B {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<Vec<ConsumerGroup>, IggyError> {
+    ) -> Result<Vec<ConsumerGroup>, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self
             .send_with_response(&GetConsumerGroups {
@@ -72,7 +72,7 @@ impl<B: BinaryClient> ConsumerGroupClient for B {
         topic_id: &Identifier,
         name: &str,
         group_id: Option<u32>,
-    ) -> Result<ConsumerGroupDetails, IggyError> {
+    ) -> Result<ConsumerGroupDetails, MessengerError> {
         fail_if_not_authenticated(self).await?;
         let response = self
             .send_with_response(&CreateConsumerGroup {
@@ -90,7 +90,7 @@ impl<B: BinaryClient> ConsumerGroupClient for B {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&DeleteConsumerGroup {
             stream_id: stream_id.clone(),
@@ -106,7 +106,7 @@ impl<B: BinaryClient> ConsumerGroupClient for B {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&JoinConsumerGroup {
             stream_id: stream_id.clone(),
@@ -122,7 +122,7 @@ impl<B: BinaryClient> ConsumerGroupClient for B {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&LeaveConsumerGroup {
             stream_id: stream_id.clone(),

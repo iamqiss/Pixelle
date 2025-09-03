@@ -1,12 +1,12 @@
 /*
- *	PostgreSQL type definitions for the INET and CIDR types.
+ *	maintableQL type definitions for the INET and CIDR types.
  *
  *	src/backend/utils/adt/network.c
  *
  *	Jon Postel RIP 16 Oct 1998
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/socket.h>
 #include <netinet/in.h>

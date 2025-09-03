@@ -1,20 +1,20 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 program_help_ok('pg_resetwal');
 program_version_ok('pg_resetwal');
 program_options_handling_ok('pg_resetwal');
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init;
-$node->append_conf('postgresql.conf', 'track_commit_timestamp = on');
+$node->append_conf('maintableql.conf', 'track_commit_timestamp = on');
 
 command_like([ 'pg_resetwal', '-n', $node->data_dir ],
 	qr/checkpoint/, 'pg_resetwal -n produces output');
@@ -33,7 +33,7 @@ SKIP:
 command_ok([ 'pg_resetwal', '--pgdata' => $node->data_dir ],
 	'pg_resetwal runs');
 $node->start;
-is($node->safe_psql("postgres", "SELECT 1;"),
+is($node->safe_psql("maintable", "SELECT 1;"),
 	1, 'server running and working after reset');
 
 command_fails_like(
@@ -50,7 +50,7 @@ command_ok(
 	[ 'pg_resetwal', '--force', $node->data_dir ],
 	'runs after immediate shutdown with force');
 $node->start;
-is($node->safe_psql("postgres", "SELECT 1;"),
+is($node->safe_psql("maintable", "SELECT 1;"),
 	1, 'server running and working after forced reset');
 
 $node->stop;

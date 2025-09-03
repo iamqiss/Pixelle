@@ -10,7 +10,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <olectl.h>
 
@@ -50,7 +50,7 @@ DllInstall(BOOL bInstall,
 	 *
 	 * This strange behavior forces us to specify -n (i.e. "regsvr32 /n /i").
 	 * Without -n, DllRegisterServer called before DllInstall would mistakenly
-	 * overwrite the default "PostgreSQL" event source registration.
+	 * overwrite the default "maintableQL" event source registration.
 	 */
 	if (bInstall)
 		DllRegisterServer();
@@ -72,12 +72,12 @@ DllRegisterServer(void)
 	/* Set the name of DLL full path name. */
 	if (!GetModuleFileName((HMODULE) g_module, buffer, sizeof(buffer)))
 	{
-		MessageBox(NULL, "Could not retrieve DLL filename", "PostgreSQL error", MB_OK | MB_ICONSTOP);
+		MessageBox(NULL, "Could not retrieve DLL filename", "maintableQL error", MB_OK | MB_ICONSTOP);
 		return SELFREG_E_TYPELIB;
 	}
 
 	/*
-	 * Add PostgreSQL source name as a subkey under the Application key in the
+	 * Add maintableQL source name as a subkey under the Application key in the
 	 * EventLog registry key.
 	 */
 	_snprintf(key_name, sizeof(key_name),
@@ -85,7 +85,7 @@ DllRegisterServer(void)
 			  event_source);
 	if (RegCreateKey(HKEY_LOCAL_MACHINE, key_name, &key))
 	{
-		MessageBox(NULL, "Could not create the registry key.", "PostgreSQL error", MB_OK | MB_ICONSTOP);
+		MessageBox(NULL, "Could not create the registry key.", "maintableQL error", MB_OK | MB_ICONSTOP);
 		return SELFREG_E_TYPELIB;
 	}
 
@@ -97,7 +97,7 @@ DllRegisterServer(void)
 					  (LPBYTE) buffer,
 					  strlen(buffer) + 1))
 	{
-		MessageBox(NULL, "Could not set the event message file.", "PostgreSQL error", MB_OK | MB_ICONSTOP);
+		MessageBox(NULL, "Could not set the event message file.", "maintableQL error", MB_OK | MB_ICONSTOP);
 		return SELFREG_E_TYPELIB;
 	}
 
@@ -111,7 +111,7 @@ DllRegisterServer(void)
 					  (LPBYTE) &data,
 					  sizeof(DWORD)))
 	{
-		MessageBox(NULL, "Could not set the supported types.", "PostgreSQL error", MB_OK | MB_ICONSTOP);
+		MessageBox(NULL, "Could not set the supported types.", "maintableQL error", MB_OK | MB_ICONSTOP);
 		return SELFREG_E_TYPELIB;
 	}
 
@@ -129,7 +129,7 @@ DllUnregisterServer(void)
 	char		key_name[400];
 
 	/*
-	 * Remove PostgreSQL source name as a subkey under the Application key in
+	 * Remove maintableQL source name as a subkey under the Application key in
 	 * the EventLog registry key.
 	 */
 
@@ -138,7 +138,7 @@ DllUnregisterServer(void)
 			  event_source);
 	if (RegDeleteKey(HKEY_LOCAL_MACHINE, key_name))
 	{
-		MessageBox(NULL, "Could not delete the registry key.", "PostgreSQL error", MB_OK | MB_ICONSTOP);
+		MessageBox(NULL, "Could not delete the registry key.", "maintableQL error", MB_OK | MB_ICONSTOP);
 		return SELFREG_E_TYPELIB;
 	}
 	return S_OK;

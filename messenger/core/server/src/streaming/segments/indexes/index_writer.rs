@@ -17,8 +17,8 @@
  */
 
 use error_set::ErrContext;
-use iggy_common::INDEX_SIZE;
-use iggy_common::IggyError;
+use messenger_common::INDEX_SIZE;
+use messenger_common::MessengerError;
 use std::sync::{
     Arc,
     atomic::{AtomicU64, Ordering},
@@ -45,7 +45,7 @@ impl IndexWriter {
         index_size_bytes: Arc<AtomicU64>,
         fsync: bool,
         file_exists: bool,
-    ) -> Result<Self, IggyError> {
+    ) -> Result<Self, MessengerError> {
         let file = OpenOptions::new()
             .write(true)
             .append(true)
@@ -53,7 +53,7 @@ impl IndexWriter {
             .open(file_path)
             .await
             .with_error_context(|error| format!("Failed to open index file: {file_path}. {error}"))
-            .map_err(|_| IggyError::CannotReadFile)?;
+            .map_err(|_| MessengerError::CannotReadFile)?;
 
         if file_exists {
             let _ = file.sync_all().await.with_error_context(|error| {
@@ -66,7 +66,7 @@ impl IndexWriter {
                 .with_error_context(|error| {
                     format!("Failed to get metadata of index file: {file_path}. {error}")
                 })
-                .map_err(|_| IggyError::CannotReadFileMetadata)?
+                .map_err(|_| MessengerError::CannotReadFileMetadata)?
                 .len();
 
             index_size_bytes.store(actual_index_size, Ordering::Release);
@@ -86,7 +86,7 @@ impl IndexWriter {
     }
 
     /// Appends multiple index buffer to the index file in a single operation.
-    pub async fn save_indexes(&mut self, indexes: &[u8]) -> Result<(), IggyError> {
+    pub async fn save_indexes(&mut self, indexes: &[u8]) -> Result<(), MessengerError> {
         if indexes.is_empty() {
             return Ok(());
         }
@@ -102,7 +102,7 @@ impl IndexWriter {
                     count, self.file_path
                 )
             })
-            .map_err(|_| IggyError::CannotSaveIndexToSegment)?;
+            .map_err(|_| MessengerError::CannotSaveIndexToSegment)?;
 
         self.index_size_bytes
             .fetch_add(indexes.len() as u64, Ordering::Release);
@@ -119,14 +119,14 @@ impl IndexWriter {
         Ok(())
     }
 
-    pub async fn fsync(&self) -> Result<(), IggyError> {
+    pub async fn fsync(&self) -> Result<(), MessengerError> {
         self.file
             .sync_all()
             .await
             .with_error_context(|error| {
                 format!("Failed to fsync index file: {}. {error}", self.file_path)
             })
-            .map_err(|_| IggyError::CannotWriteToFile)?;
+            .map_err(|_| MessengerError::CannotWriteToFile)?;
         Ok(())
     }
 }

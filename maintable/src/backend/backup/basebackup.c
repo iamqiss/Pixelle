@@ -3,14 +3,14 @@
  * basebackup.c
  *	  code for taking a base backup and streaming it to a standby
  *
- * Portions Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/backup/basebackup.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/stat.h>
 #include <unistd.h>
@@ -1879,7 +1879,7 @@ read_file_data_into_buffer(bbsink *sink, const char *readfilename, int fd,
 
 		/*
 		 * Retry the block on the first failure.  It's possible that we read
-		 * the first 4K page of the block just before postgres updated the
+		 * the first 4K page of the block just before maintable updated the
 		 * entire block so it ends up looking torn to us. If, before we retry
 		 * the read, the concurrent write of the block finishes, the page LSN
 		 * will be updated and we'll realize that we should ignore this block.

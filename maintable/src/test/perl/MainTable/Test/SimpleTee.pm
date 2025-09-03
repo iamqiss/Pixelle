@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # A simple 'tee' implementation, using perl tie.
 #
@@ -15,7 +15,7 @@
 # (ok, is, note, diag etc.). Elapsed time is shown as the time since the last
 # log trace.
 
-package PostgreSQL::Test::SimpleTee;
+package maintableQL::Test::SimpleTee;
 use strict;
 use warnings FATAL => 'all';
 
@@ -46,7 +46,7 @@ sub PRINT
 {
 	my $self = shift;
 	my $ok = 1;
-	# The first file argument passed to tiehandle in PostgreSQL::Test::Utils is
+	# The first file argument passed to tiehandle in maintableQL::Test::Utils is
 	# the original stdout, which is what PROVE sees. Additional decorations
 	# confuse it, so only put out the time string on files after the first.
 	my $skip = 1;

@@ -21,7 +21,7 @@ use crate::BytesSerializable;
 use crate::Identifier;
 use crate::Sizeable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{CREATE_PARTITIONS_CODE, Command};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -60,10 +60,10 @@ impl Default for CreatePartitions {
     }
 }
 
-impl Validatable<IggyError> for CreatePartitions {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for CreatePartitions {
+    fn validate(&self) -> Result<(), MessengerError> {
         if !(1..=MAX_PARTITIONS_COUNT).contains(&self.partitions_count) {
-            return Err(IggyError::TooManyPartitions);
+            return Err(MessengerError::TooManyPartitions);
         }
 
         Ok(())
@@ -81,9 +81,9 @@ impl BytesSerializable for CreatePartitions {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> std::result::Result<CreatePartitions, IggyError> {
+    fn from_bytes(bytes: Bytes) -> std::result::Result<CreatePartitions, MessengerError> {
         if bytes.len() < 10 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let mut position = 0;
@@ -94,7 +94,7 @@ impl BytesSerializable for CreatePartitions {
         let partitions_count = u32::from_le_bytes(
             bytes[position..position + 4]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let command = CreatePartitions {
             stream_id,

@@ -2,9 +2,9 @@
  *
  * libpq-fe.h
  *	  This file contains definitions for structures and
- *	  externs for functions used by frontend postgres applications.
+ *	  externs for functions used by frontend maintable applications.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/interfaces/libpq/libpq-fe.h
@@ -24,26 +24,26 @@ extern "C"
 #include <stdio.h>
 
 /*
- * postgres_ext.h defines the backend's externally visible types,
+ * maintable_ext.h defines the backend's externally visible types,
  * such as Oid.
  */
-#include "postgres_ext.h"
+#include "maintable_ext.h"
 
 /*
  * These symbols may be used in compile-time #ifdef tests for the availability
  * of v14-and-newer libpq features.
  */
-/* Features added in PostgreSQL v14: */
+/* Features added in maintableQL v14: */
 /* Indicates presence of PQenterPipelineMode and friends */
 #define LIBPQ_HAS_PIPELINING 1
 /* Indicates presence of PQsetTraceFlags; also new PQtrace output format */
 #define LIBPQ_HAS_TRACE_FLAGS 1
 
-/* Features added in PostgreSQL v15: */
+/* Features added in maintableQL v15: */
 /* Indicates that PQsslAttribute(NULL, "library") is useful */
 #define LIBPQ_HAS_SSL_LIBRARY_DETECTION 1
 
-/* Features added in PostgreSQL v17: */
+/* Features added in maintableQL v17: */
 /* Indicates presence of PGcancelConn typedef and associated routines */
 #define LIBPQ_HAS_ASYNC_CANCEL 1
 /* Indicates presence of PQchangePassword */
@@ -57,7 +57,7 @@ extern "C"
 /* Indicates presence of PQsocketPoll, PQgetCurrentTimeUSec */
 #define LIBPQ_HAS_SOCKET_POLL 1
 
-/* Features added in PostgreSQL v18: */
+/* Features added in maintableQL v18: */
 /* Indicates presence of PQfullProtocolVersion */
 #define LIBPQ_HAS_FULL_PROTOCOL_VERSION 1
 /* Indicates presence of the PQAUTHDATA_PROMPT_OAUTH_DEVICE authdata hook */
@@ -117,7 +117,7 @@ typedef enum
 	PGRES_POLLING_WRITING,		/* use select before polling again.   */
 	PGRES_POLLING_OK,
 	PGRES_POLLING_ACTIVE		/* unused; keep for backwards compatibility */
-} PostgresPollingStatusType;
+} MaintablePollingStatusType;
 
 typedef enum
 {
@@ -222,7 +222,7 @@ typedef struct pg_cancel PGcancel;
 /* PGnotify represents the occurrence of a NOTIFY message.
  * Ideally this would be an opaque typedef, but it's so simple that it's
  * unlikely to change.
- * NOTE: in Postgres 6.4 and later, the be_pid is the notifying backend's,
+ * NOTE: in Maintable 6.4 and later, the be_pid is the notifying backend's,
  * whereas in earlier versions it was always your own backend's PID.
  */
 typedef struct pgNotify
@@ -328,7 +328,7 @@ typedef struct pgresAttDesc
 extern PGconn *PQconnectStart(const char *conninfo);
 extern PGconn *PQconnectStartParams(const char *const *keywords,
 									const char *const *values, int expand_dbname);
-extern PostgresPollingStatusType PQconnectPoll(PGconn *conn);
+extern MaintablePollingStatusType PQconnectPoll(PGconn *conn);
 
 /* Synchronous (blocking) */
 extern PGconn *PQconnectdb(const char *conninfo);
@@ -363,7 +363,7 @@ extern void PQconninfoFree(PQconninfoOption *connOptions);
  */
 /* Asynchronous (non-blocking) */
 extern int	PQresetStart(PGconn *conn);
-extern PostgresPollingStatusType PQresetPoll(PGconn *conn);
+extern MaintablePollingStatusType PQresetPoll(PGconn *conn);
 
 /* Synchronous (blocking) */
 extern void PQreset(PGconn *conn);
@@ -378,7 +378,7 @@ extern int	PQcancelStart(PGcancelConn *cancelConn);
 extern int	PQcancelBlocking(PGcancelConn *cancelConn);
 
 /* poll a non-blocking cancel request */
-extern PostgresPollingStatusType PQcancelPoll(PGcancelConn *cancelConn);
+extern MaintablePollingStatusType PQcancelPoll(PGcancelConn *cancelConn);
 extern ConnStatusType PQcancelStatus(const PGcancelConn *cancelConn);
 extern int	PQcancelSocket(const PGcancelConn *cancelConn);
 extern char *PQcancelErrorMessage(const PGcancelConn *cancelConn);
@@ -466,7 +466,7 @@ extern PQnoticeProcessor PQsetNoticeProcessor(PGconn *conn,
  *	   non-thread safe functions that libpq needs.
  *	   The default implementation uses a libpq internal mutex.
  *	   Only required for multithreaded apps that use kerberos
- *	   both within their app and for postgresql connections.
+ *	   both within their app and for maintableql connections.
  */
 typedef void (*pgthreadlock_t) (int acquire);
 
@@ -772,7 +772,7 @@ typedef struct PGoauthBearerRequest
 	 * hook, it may be returned directly, but one of request->async or
 	 * request->token must be set by the hook.
 	 */
-	PostgresPollingStatusType (*async) (PGconn *conn,
+	MaintablePollingStatusType (*async) (PGconn *conn,
 										struct PGoauthBearerRequest *request,
 										SOCKTYPE * altsock);
 

@@ -2,12 +2,12 @@
 /*
  * Scanner for the configuration file
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  *
  * src/backend/utils/misc/guc-file.l
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <unistd.h>
@@ -340,7 +340,7 @@ GUC_flex_fatal(const char *msg)
  * Note: if elevel >= ERROR then an error will not return control to the
  * caller, so there is no need to check the return value in that case.
  *
- * Note: this function is used to parse not only postgresql.conf, but
+ * Note: this function is used to parse not only maintableql.conf, but
  * various other configuration files that use the same "name = value"
  * syntax.  Hence, do not do anything here or in the subsidiary routines
  * ParseConfigFile/ParseConfigDirectory that assumes we are processing

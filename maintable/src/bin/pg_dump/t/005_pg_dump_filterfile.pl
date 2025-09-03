@@ -1,17 +1,17 @@
 
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $tempdir = PostgreSQL::Test::Utils::tempdir;
+my $tempdir = maintableQL::Test::Utils::tempdir;
 my $inputfile;
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 my $port = $node->port;
 my $backupdir = $node->backup_dir;
 my $plainfile = "$backupdir/plain.sql";
@@ -20,37 +20,37 @@ $node->init;
 $node->start;
 
 # Generate test objects
-$node->safe_psql('postgres', 'CREATE FOREIGN DATA WRAPPER dummy;');
-$node->safe_psql('postgres',
+$node->safe_psql('maintable', 'CREATE FOREIGN DATA WRAPPER dummy;');
+$node->safe_psql('maintable',
 	'CREATE SERVER dummyserver FOREIGN DATA WRAPPER dummy;');
 
-$node->safe_psql('postgres', "CREATE TABLE table_one(a varchar)");
-$node->safe_psql('postgres', "CREATE TABLE table_two(a varchar)");
-$node->safe_psql('postgres', "CREATE TABLE table_three(a varchar)");
-$node->safe_psql('postgres', "CREATE TABLE table_three_one(a varchar)");
-$node->safe_psql('postgres', "CREATE TABLE footab(a varchar)");
-$node->safe_psql('postgres', "CREATE TABLE bootab() inherits (footab)");
+$node->safe_psql('maintable', "CREATE TABLE table_one(a varchar)");
+$node->safe_psql('maintable', "CREATE TABLE table_two(a varchar)");
+$node->safe_psql('maintable', "CREATE TABLE table_three(a varchar)");
+$node->safe_psql('maintable', "CREATE TABLE table_three_one(a varchar)");
+$node->safe_psql('maintable', "CREATE TABLE footab(a varchar)");
+$node->safe_psql('maintable', "CREATE TABLE bootab() inherits (footab)");
 $node->safe_psql(
-	'postgres', "CREATE TABLE \"strange aaa
+	'maintable', "CREATE TABLE \"strange aaa
 name\"(a varchar)");
 $node->safe_psql(
-	'postgres', "CREATE TABLE \"
+	'maintable', "CREATE TABLE \"
 t
 t
 \"(a int)");
 
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"INSERT INTO table_one VALUES('*** TABLE ONE ***')");
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"INSERT INTO table_two VALUES('*** TABLE TWO ***')");
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"INSERT INTO table_three VALUES('*** TABLE THREE ***')");
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"INSERT INTO table_three_one VALUES('*** TABLE THREE_ONE ***')");
-$node->safe_psql('postgres', "INSERT INTO bootab VALUES(10)");
+$node->safe_psql('maintable', "INSERT INTO bootab VALUES(10)");
 
-$node->safe_psql('postgres', "CREATE DATABASE sourcedb");
-$node->safe_psql('postgres', "CREATE DATABASE targetdb");
+$node->safe_psql('maintable', "CREATE DATABASE sourcedb");
+$node->safe_psql('maintable', "CREATE DATABASE targetdb");
 
 $node->safe_psql('sourcedb',
 	'CREATE FUNCTION foo1(a int) RETURNS int AS $$ select $1 $$ LANGUAGE sql'
@@ -94,7 +94,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	"filter file without patterns");
 
@@ -124,7 +124,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	"dump tables with filter patterns as well as comments and whitespace");
 
@@ -153,7 +153,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	"filter file without patterns");
 
@@ -175,7 +175,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	"dump tables with exclusion of a single table");
 
@@ -199,7 +199,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	"dump tables with wildcard in pattern");
 
@@ -224,7 +224,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	"dump tables with multiline names requiring quoting");
 
@@ -245,7 +245,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	"dump tables with filter");
 
@@ -266,7 +266,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	"exclude the public schema");
 
@@ -292,7 +292,7 @@ command_ok(
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
 		'--filter' => "$tempdir/inputfile2.txt",
-		'postgres'
+		'maintable'
 	],
 	"exclude the public schema with multiple filters");
 
@@ -315,7 +315,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	"dump tables with filter");
 
@@ -335,7 +335,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	"dump tables with filter");
 
@@ -358,7 +358,7 @@ command_fails_like(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	qr/pg_dump: error: no matching foreign servers were found for pattern/,
 	"dump nonexisting foreign server");
@@ -374,7 +374,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	"dump foreign_data with filter");
 
@@ -393,7 +393,7 @@ command_fails_like(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	qr/exclude filter for "foreign data" is not allowed/,
 	"erroneously exclude foreign server");
@@ -413,7 +413,7 @@ command_fails_like(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	qr/invalid filter command/,
 	"invalid syntax: incorrect filter command");
@@ -436,7 +436,7 @@ command_fails_like(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	qr/unsupported filter object type: "table-data"/,
 	"invalid syntax: invalid object type specified"
@@ -454,7 +454,7 @@ command_fails_like(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	qr/missing object name/,
 	"invalid syntax: missing object identifier pattern");
@@ -471,7 +471,7 @@ command_fails_like(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	qr/no matching tables were found/,
 	"invalid syntax: extra content after object identifier pattern");
@@ -491,7 +491,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'--strict-names', 'postgres'
+		'--strict-names', 'maintable'
 	],
 	"strict names with matching pattern");
 
@@ -511,7 +511,7 @@ command_fails_like(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'--strict-names', 'postgres'
+		'--strict-names', 'maintable'
 	],
 	qr/no matching tables were found/,
 	"inclusion of non-existing objects with --strict names");
@@ -523,7 +523,7 @@ command_fails_like(
 # Test dumping all tables except one
 open $inputfile, '>', "$tempdir/inputfile.txt"
   or die "unable to open filterfile for writing";
-print $inputfile "exclude database postgres\n";
+print $inputfile "exclude database maintable\n";
 close $inputfile;
 
 command_ok(
@@ -537,7 +537,7 @@ command_ok(
 
 $dump = slurp_file($plainfile);
 
-ok($dump !~ qr/^\\connect postgres/m, "database postgres is not dumped");
+ok($dump !~ qr/^\\connect maintable/m, "database maintable is not dumped");
 ok($dump =~ qr/^\\connect template1/m, "database template1 is dumped");
 
 # Make sure this option dont break the existing limitation of using
@@ -610,7 +610,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => "$tempdir/filter_test.dump",
 		'--format' => 'custom',
-		'postgres'
+		'maintable'
 	],
 	"dump all tables");
 
@@ -843,7 +843,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	"filter file without patterns");
 
@@ -863,7 +863,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	"filter file without patterns");
 
@@ -884,7 +884,7 @@ command_ok(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	"filter file without patterns");
 
@@ -907,7 +907,7 @@ command_fails_like(
 		'--port' => $port,
 		'--file' => $plainfile,
 		'--filter' => "$tempdir/inputfile.txt",
-		'postgres'
+		'maintable'
 	],
 	qr/pg_dump: error: no matching extensions were found/,
 	"dump nonexisting extension");

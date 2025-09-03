@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 pg_upgrade_sources = files(
   'check.c',
@@ -27,7 +27,7 @@ endif
 
 pg_upgrade = executable('pg_upgrade',
   pg_upgrade_sources,
-  c_pch: pch_postgres_fe_h,
+  c_pch: pch_maintable_fe_h,
   dependencies: [frontend_code, libpq],
   kwargs: default_bin_args,
 )

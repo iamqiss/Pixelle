@@ -18,7 +18,7 @@
 
 use crate::server_error::CompatError;
 use crate::streaming::utils::file;
-use iggy_common::{IGGY_MESSAGE_HEADER_SIZE, IggyMessageHeader};
+use messenger_common::{MESSENGER_MESSAGE_HEADER_SIZE, MessengerMessageHeader};
 use std::io::SeekFrom;
 use tokio::io::{AsyncReadExt, AsyncSeekExt, AsyncWriteExt, BufReader, BufWriter};
 
@@ -39,16 +39,16 @@ impl IndexRebuilder {
 
     async fn read_message_header(
         reader: &mut BufReader<tokio::fs::File>,
-    ) -> Result<IggyMessageHeader, std::io::Error> {
-        let mut buf = [0u8; IGGY_MESSAGE_HEADER_SIZE];
+    ) -> Result<MessengerMessageHeader, std::io::Error> {
+        let mut buf = [0u8; MESSENGER_MESSAGE_HEADER_SIZE];
         reader.read_exact(&mut buf).await?;
-        IggyMessageHeader::from_raw_bytes(&buf)
+        MessengerMessageHeader::from_raw_bytes(&buf)
             .map_err(|_| std::io::Error::from(std::io::ErrorKind::InvalidData))
     }
 
     async fn write_index_entry(
         writer: &mut BufWriter<tokio::fs::File>,
-        header: &IggyMessageHeader,
+        header: &MessengerMessageHeader,
         position: usize,
         start_offset: u64,
     ) -> Result<(), CompatError> {
@@ -76,7 +76,7 @@ impl IndexRebuilder {
             match Self::read_message_header(&mut reader).await {
                 Ok(header) => {
                     next_position = position
-                        + IGGY_MESSAGE_HEADER_SIZE
+                        + MESSENGER_MESSAGE_HEADER_SIZE
                         + header.payload_length as usize
                         + header.user_headers_length as usize;
 

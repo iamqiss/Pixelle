@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>org.postgresql.postgres</string>
+	<string>org.maintableql.maintable</string>
 	<key>ProgramArguments</key>
 	<array>
 		<string>/bin/sh</string>
-		<string>/usr/local/pgsql/bin/postgres-wrapper.sh</string>
+		<string>/usr/local/pgsql/bin/maintable-wrapper.sh</string>
 	</array>
 	<key>UserName</key>
-	<string>postgres</string>
+	<string>maintable</string>
 	<key>KeepAlive</key>
 	<true/>
 </dict>

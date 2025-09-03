@@ -1,9 +1,9 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 if ($ENV{with_icu} ne 'yes')
@@ -11,11 +11,11 @@ if ($ENV{with_icu} ne 'yes')
 	plan skip_all => 'ICU not supported by this build';
 }
 
-my $node1 = PostgreSQL::Test::Cluster->new('node1');
+my $node1 = maintableQL::Test::Cluster->new('node1');
 $node1->init;
 $node1->start;
 
-$node1->safe_psql('postgres',
+$node1->safe_psql('maintable',
 	q{CREATE DATABASE dbicu LOCALE_PROVIDER icu LOCALE 'C' ICU_LOCALE 'en@colCaseFirst=upper' ENCODING 'UTF8' TEMPLATE template0}
 );
 
@@ -56,7 +56,7 @@ b),
 
 # Test that LOCALE='C' works for ICU
 is( $node1->psql(
-		'postgres',
+		'maintable',
 		q{CREATE DATABASE dbicu1 LOCALE_PROVIDER icu LOCALE 'C' TEMPLATE template0 ENCODING UTF8}
 	),
 	0,
@@ -65,14 +65,14 @@ is( $node1->psql(
 # Test that LOCALE works for ICU locales if LC_COLLATE and LC_CTYPE
 # are specified
 is( $node1->psql(
-		'postgres',
+		'maintable',
 		q{CREATE DATABASE dbicu2 LOCALE_PROVIDER icu LOCALE '@colStrength=primary'
           LC_COLLATE='C' LC_CTYPE='C' TEMPLATE template0 ENCODING UTF8}
 	),
 	0,
 	"LOCALE works for ICU locales if LC_COLLATE and LC_CTYPE are specified");
 
-my ($ret, $stdout, $stderr) = $node1->psql('postgres',
+my ($ret, $stdout, $stderr) = $node1->psql('maintable',
 	q{CREATE DATABASE dbicu3 LOCALE_PROVIDER builtin LOCALE 'C' TEMPLATE dbicu}
 );
 isnt($ret, 0, "locale provider must match template: exit code not 0");

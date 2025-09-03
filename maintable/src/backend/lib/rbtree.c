@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * rbtree.c
- *	  implementation for PostgreSQL generic Red-Black binary tree package
+ *	  implementation for maintableQL generic Red-Black binary tree package
  *	  Adopted from http://algolist.manual.ru/ds/rbtree.php
  *
  * This code comes from Thomas Niemann's "Sorting and Searching Algorithms:
@@ -17,14 +17,14 @@
  * longest path from root to leaf is only about twice as long as the shortest,
  * so lookups are guaranteed to run in O(lg n) time.
  *
- * Copyright (c) 2009-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2009-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/lib/rbtree.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "lib/rbtree.h"
 

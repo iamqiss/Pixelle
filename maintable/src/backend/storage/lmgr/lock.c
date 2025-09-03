@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * lock.c
- *	  POSTGRES primary lock mechanism
+ *	  MAINTABLE primary lock mechanism
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -27,7 +27,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <signal.h>
 #include <unistd.h>
@@ -1934,7 +1934,7 @@ WaitOnLock(LOCALLOCK *locallock, ResourceOwner owner)
 	ProcWaitStatus result;
 	ErrorContextCallback waiterrcontext;
 
-	TRACE_POSTGRESQL_LOCK_WAIT_START(locallock->tag.lock.locktag_field1,
+	TRACE_MAINTABLEQL_LOCK_WAIT_START(locallock->tag.lock.locktag_field1,
 									 locallock->tag.lock.locktag_field2,
 									 locallock->tag.lock.locktag_field3,
 									 locallock->tag.lock.locktag_field4,
@@ -2000,7 +2000,7 @@ WaitOnLock(LOCALLOCK *locallock, ResourceOwner owner)
 
 	error_context_stack = waiterrcontext.previous;
 
-	TRACE_POSTGRESQL_LOCK_WAIT_DONE(locallock->tag.lock.locktag_field1,
+	TRACE_MAINTABLEQL_LOCK_WAIT_DONE(locallock->tag.lock.locktag_field1,
 									locallock->tag.lock.locktag_field2,
 									locallock->tag.lock.locktag_field3,
 									locallock->tag.lock.locktag_field4,

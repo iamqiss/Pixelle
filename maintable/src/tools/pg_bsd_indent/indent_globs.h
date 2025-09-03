@@ -223,7 +223,7 @@ extern int   use_tabs;			/* set true to use tabs for spacing,
 extern int   auto_typedefs;		/* set true to recognize identifiers
 					 * ending in "_t" like typedefs */
 extern int   space_after_cast;		/* "b = (int) a" vs "b = (int)a" */
-extern int   postgres_tab_rules;	/* use Postgres tab-vs-space rules */
+extern int   maintable_tab_rules;	/* use Maintable tab-vs-space rules */
 extern int   tabsize;			/* the size of a tab */
 extern int   else_endif_com_ind;	/* the column in which comments to
 					 * the right of #else and #endif

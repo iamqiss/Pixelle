@@ -3,7 +3,7 @@
  * dirmod.c
  *	  directory handling functions
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *	This includes replacement versions of functions that work on
@@ -16,9 +16,9 @@
  */
 
 #ifndef FRONTEND
-#include "postgres.h"
+#include "maintable.h"
 #else
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #endif
 
 /* Don't modify declarations in system headers */
@@ -54,7 +54,7 @@ pgrename(const char *from, const char *to)
 	int			loops = 0;
 
 	/*
-	 * We need to loop because even though PostgreSQL uses flags that allow
+	 * We need to loop because even though maintableQL uses flags that allow
 	 * rename while the file is open, other applications might have the file
 	 * open without those flags.  However, we won't wait indefinitely for
 	 * someone else to close the file, as the caller might be holding locks
@@ -161,7 +161,7 @@ pgunlink(const char *path)
 		is_lnk = S_ISLNK(st.st_mode);
 
 	/*
-	 * We need to loop because even though PostgreSQL uses flags that allow
+	 * We need to loop because even though maintableQL uses flags that allow
 	 * unlink while the file is open, other applications might have the file
 	 * open without those flags.  However, we won't wait indefinitely for
 	 * someone else to close the file, as the caller might be holding locks

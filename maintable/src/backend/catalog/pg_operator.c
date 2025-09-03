@@ -3,7 +3,7 @@
  * pg_operator.c
  *	  routines to support manipulation of the pg_operator relation
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -15,7 +15,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "access/table.h"
@@ -523,7 +523,7 @@ OperatorCreate(const char *operatorName,
 	 * user first defines one operator without giving negator or commutator,
 	 * then defines the other operator of the pair with the proper commutator
 	 * or negator attribute.  That style doesn't require creation of a shell,
-	 * and it's the only style that worked right before Postgres version 6.5.
+	 * and it's the only style that worked right before Maintable version 6.5.
 	 * This code also takes care of the situation where the new operator is
 	 * its own commutator.
 	 */

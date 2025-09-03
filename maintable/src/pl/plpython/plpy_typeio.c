@@ -4,7 +4,7 @@
  * src/pl/plpython/plpy_typeio.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "catalog/pg_type.h"
@@ -68,7 +68,7 @@ static Datum PLyGenericObject_ToComposite(PLyObToDatum *arg, TupleDesc desc, PyO
 
 /*
  * Conversion functions.  Remember output from Python is input to
- * PostgreSQL, and vice versa.
+ * maintableQL, and vice versa.
  */
 
 /*
@@ -873,9 +873,9 @@ PLyDict_FromTuple(PLyDatumToOb *arg, HeapTuple tuple, TupleDesc desc, bool inclu
 }
 
 /*
- * Convert a Python object to a PostgreSQL bool datum.  This can't go
+ * Convert a Python object to a maintableQL bool datum.  This can't go
  * through the generic conversion function, because Python attaches a
- * Boolean value to everything, more things than the PostgreSQL bool
+ * Boolean value to everything, more things than the maintableQL bool
  * type can parse.
  */
 static Datum
@@ -892,7 +892,7 @@ PLyObject_ToBool(PLyObToDatum *arg, PyObject *plrv,
 }
 
 /*
- * Convert a Python object to a PostgreSQL bytea datum.  This doesn't
+ * Convert a Python object to a maintableQL bytea datum.  This doesn't
  * go through the generic conversion function to circumvent problems
  * with embedded nulls.  And it's faster this way.
  */
@@ -938,7 +938,7 @@ PLyObject_ToBytea(PLyObToDatum *arg, PyObject *plrv,
 /*
  * Convert a Python object to a composite type. First look up the type's
  * description, then route the Python object through the conversion function
- * for obtaining PostgreSQL tuples.
+ * for obtaining maintableQL tuples.
  */
 static Datum
 PLyObject_ToComposite(PLyObToDatum *arg, PyObject *plrv,
@@ -1071,7 +1071,7 @@ PLyObject_AsString(PyObject *plrv)
 
 /*
  * Generic output conversion function: convert PyObject to cstring and
- * cstring into PostgreSQL type.
+ * cstring into maintableQL type.
  */
 static Datum
 PLyObject_ToScalar(PLyObToDatum *arg, PyObject *plrv,
@@ -1302,8 +1302,8 @@ PLyUnicode_ToComposite(PLyObToDatum *arg, PyObject *string, bool inarray)
 	 * CREATE FUNCTION .. RETURNS comptype[] AS $$ return [['foo', 'bar']] $$
 	 * LANGUAGE plpython;
 	 *
-	 * Before PostgreSQL 10, that was interpreted as a single-dimensional
-	 * array, containing record ('foo', 'bar'). PostgreSQL 10 added support
+	 * Before maintableQL 10, that was interpreted as a single-dimensional
+	 * array, containing record ('foo', 'bar'). maintableQL 10 added support
 	 * for multi-dimensional arrays, and it is now interpreted as a
 	 * two-dimensional array, containing two records, 'foo', and 'bar'.
 	 * record_in() will throw an error, because "foo" is not a valid record
@@ -1522,7 +1522,7 @@ PLyGenericObject_ToComposite(PLyObToDatum *arg, TupleDesc desc, PyObject *object
 				 *
 				 * If we are parsing a composite type in an array, a likely
 				 * cause is that the function contained something like "[[123,
-				 * 'foo']]". Before PostgreSQL 10, that was interpreted as an
+				 * 'foo']]". Before maintableQL 10, that was interpreted as an
 				 * array, with a composite type (123, 'foo') in it. But now
 				 * it's interpreted as a two-dimensional array, and we try to
 				 * interpret "123" as the composite type. See also similar

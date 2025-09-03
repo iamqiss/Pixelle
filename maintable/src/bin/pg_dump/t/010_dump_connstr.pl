@@ -1,14 +1,14 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-if ($PostgreSQL::Test::Utils::is_msys2)
+if ($maintableQL::Test::Utils::is_msys2)
 {
 	plan skip_all => 'High bit name tests fail on Msys2';
 }
@@ -31,7 +31,7 @@ my $dbname1 =
   . generate_ascii_string(11, 12)
   . generate_ascii_string(14, 33)
   . (
-	$PostgreSQL::Test::Utils::windows_os
+	$maintableQL::Test::Utils::windows_os
 	? ''
 	: '"x"')    # IPC::Run mishandles '"' on Windows
   . generate_ascii_string(35, 43)    # skip ','
@@ -47,10 +47,10 @@ my $dbname4 = 'regression' . generate_ascii_string(203, 255);
 (my $username3 = $dbname3) =~ s/^regression/regress_/;
 (my $username4 = $dbname4) =~ s/^regression/regress_/;
 
-my $src_bootstrap_super = 'regress_postgres';
+my $src_bootstrap_super = 'regress_maintable';
 my $dst_bootstrap_super = 'boot';
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init(
 	extra => [
 		'--username' => $src_bootstrap_super,
@@ -231,13 +231,13 @@ my ($stderr, $result);
 my $restore_super = qq{regress_a'b\\c=d\\ne"f};
 $restore_super =~ s/"//g
   if
-  $PostgreSQL::Test::Utils::windows_os;   # IPC::Run mishandles '"' on Windows
+  $maintableQL::Test::Utils::windows_os;   # IPC::Run mishandles '"' on Windows
 
 
 # Restore full dump through psql using environment variables for
 # dbname/user connection parameters
 
-my $envar_node = PostgreSQL::Test::Cluster->new('destination_envar');
+my $envar_node = maintableQL::Test::Cluster->new('destination_envar');
 $envar_node->init(
 	extra => [
 		'--username' => $dst_bootstrap_super,
@@ -273,7 +273,7 @@ is($stderr, '', 'no dump errors');
 # dbname/user connection parameters.  "\connect dbname=" forgets
 # user/port from command line.
 
-my $cmdline_node = PostgreSQL::Test::Cluster->new('destination_cmdline');
+my $cmdline_node = maintableQL::Test::Cluster->new('destination_cmdline');
 $cmdline_node->init(
 	extra => [
 		'--username' => $dst_bootstrap_super,

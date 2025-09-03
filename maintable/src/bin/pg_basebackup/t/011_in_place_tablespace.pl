@@ -1,12 +1,12 @@
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $tempdir = PostgreSQL::Test::Utils::tempdir;
+my $tempdir = maintableQL::Test::Utils::tempdir;
 
 # For nearly all pg_basebackup invocations some options should be specified,
 # to keep test times reasonable. Using @pg_basebackup_defs as the first
@@ -16,12 +16,12 @@ my @pg_basebackup_defs =
   ('pg_basebackup', '--no-sync', '--checkpoint' => 'fast');
 
 # Set up an instance.
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init(allows_streaming => 1);
 $node->start();
 
 # Create an in-place tablespace.
-$node->safe_psql('postgres', <<EOM);
+$node->safe_psql('maintable', <<EOM);
 SET allow_in_place_tablespaces = on;
 CREATE TABLESPACE inplace LOCATION '';
 EOM

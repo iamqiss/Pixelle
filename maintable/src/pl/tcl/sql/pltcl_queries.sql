@@ -134,7 +134,7 @@ RAISE 'my message'
 END$$;"
 $tcl$);
 
--- verify tcl_error_handling_test() properly reports non-postgres errors
+-- verify tcl_error_handling_test() properly reports non-maintable errors
 select tcl_error_handling_test('moo');
 
 -- test elog

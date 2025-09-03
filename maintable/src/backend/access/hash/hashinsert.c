@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * hashinsert.c
- *	  Item insertion in hash tables for Postgres.
+ *	  Item insertion in hash tables for Maintable.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/hash.h"
 #include "access/hash_xlog.h"

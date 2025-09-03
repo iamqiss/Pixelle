@@ -2,7 +2,7 @@
  * applyparallelworker.c
  *	   Support routines for applying xact by parallel apply worker
  *
- * Copyright (c) 2023-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2023-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/replication/logical/applyparallelworker.c
@@ -155,7 +155,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "libpq/pqformat.h"
 #include "libpq/pqmq.h"

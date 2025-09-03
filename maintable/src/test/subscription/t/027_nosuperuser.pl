@@ -1,11 +1,11 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test that logical replication respects permissions
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 my ($node_publisher, $node_subscriber, $publisher_connstr, $result, $offset);
@@ -15,7 +15,7 @@ sub publish_insert
 {
 	my ($tbl, $new_i) = @_;
 	$node_publisher->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
   SET SESSION AUTHORIZATION regress_alice;
   INSERT INTO $tbl (i) VALUES ($new_i);
   ));
@@ -25,7 +25,7 @@ sub publish_update
 {
 	my ($tbl, $old_i, $new_i) = @_;
 	$node_publisher->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
   SET SESSION AUTHORIZATION regress_alice;
   UPDATE $tbl SET i = $new_i WHERE i = $old_i;
   ));
@@ -35,7 +35,7 @@ sub publish_delete
 {
 	my ($tbl, $old_i) = @_;
 	$node_publisher->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
   SET SESSION AUTHORIZATION regress_alice;
   DELETE FROM $tbl WHERE i = $old_i;
   ));
@@ -46,7 +46,7 @@ sub expect_replication
 	my ($tbl, $cnt, $min, $max, $testname) = @_;
 	$node_publisher->wait_for_catchup('admin_sub');
 	$result = $node_subscriber->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
   SELECT COUNT(i), MIN(i), MAX(i) FROM $tbl));
 	is($result, "$cnt|$min|$max", $testname);
 }
@@ -56,7 +56,7 @@ sub expect_failure
 	my ($tbl, $cnt, $min, $max, $re, $testname) = @_;
 	$offset = $node_subscriber->wait_for_log($re, $offset);
 	$result = $node_subscriber->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
   SELECT COUNT(i), MIN(i), MAX(i) FROM $tbl));
 	is($result, "$cnt|$min|$max", $testname);
 }
@@ -65,7 +65,7 @@ sub revoke_superuser
 {
 	my ($role) = @_;
 	$node_subscriber->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
   ALTER ROLE $role NOSUPERUSER));
 }
 
@@ -73,7 +73,7 @@ sub grant_superuser
 {
 	my ($role) = @_;
 	$node_subscriber->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
   ALTER ROLE $role SUPERUSER));
 }
 
@@ -82,13 +82,13 @@ sub grant_superuser
 # "regress_admin".  For partitioned tables, layout the partitions differently
 # on the publisher than on the subscriber.
 #
-$node_publisher = PostgreSQL::Test::Cluster->new('publisher');
-$node_subscriber = PostgreSQL::Test::Cluster->new('subscriber');
+$node_publisher = maintableQL::Test::Cluster->new('publisher');
+$node_subscriber = maintableQL::Test::Cluster->new('subscriber');
 $node_publisher->init(allows_streaming => 'logical');
 $node_subscriber->init;
 $node_publisher->start;
 $node_subscriber->start;
-$publisher_connstr = $node_publisher->connstr . ' dbname=postgres';
+$publisher_connstr = $node_publisher->connstr . ' dbname=maintable';
 my %remainder_a = (
 	publisher => 0,
 	subscriber => 1);
@@ -101,10 +101,10 @@ for my $node ($node_publisher, $node_subscriber)
 	my $remainder_a = $remainder_a{ $node->name };
 	my $remainder_b = $remainder_b{ $node->name };
 	$node->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
   CREATE ROLE regress_admin SUPERUSER LOGIN;
   CREATE ROLE regress_alice NOSUPERUSER LOGIN;
-  GRANT CREATE ON DATABASE postgres TO regress_alice;
+  GRANT CREATE ON DATABASE maintable TO regress_alice;
   GRANT PG_CREATE_SUBSCRIPTION TO regress_alice;
   SET SESSION AUTHORIZATION regress_alice;
   CREATE SCHEMA alice;
@@ -126,7 +126,7 @@ for my $node ($node_publisher, $node_subscriber)
   ));
 }
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 SET SESSION AUTHORIZATION regress_alice;
 
 CREATE PUBLICATION alice
@@ -134,7 +134,7 @@ CREATE PUBLICATION alice
   WITH (publish_via_partition_root = true);
 ));
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 SET SESSION AUTHORIZATION regress_admin;
 CREATE SUBSCRIPTION admin_sub CONNECTION '$publisher_connstr' PUBLICATION alice WITH (password_required=false);
 ));
@@ -171,7 +171,7 @@ expect_replication("alice.unpartitioned", 2, 7, 9,
 
 # Privileges on the target role suffice for non-superuser replication.
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 ALTER ROLE regress_admin NOSUPERUSER;
 GRANT regress_alice TO regress_admin;
 ));
@@ -203,7 +203,7 @@ expect_replication("alice.hashpart", 2, 103, 120,
 
 # Force RLS on the target table and check that replication fails.
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 SET SESSION AUTHORIZATION regress_alice;
 ALTER TABLE alice.unpartitioned ENABLE ROW LEVEL SECURITY;
 ALTER TABLE alice.unpartitioned FORCE ROW LEVEL SECURITY;
@@ -220,14 +220,14 @@ expect_failure(
 
 # Since replication acts as the table owner, replication will succeed if we don't force it.
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 ALTER TABLE alice.unpartitioned NO FORCE ROW LEVEL SECURITY;
 ));
 expect_replication("alice.unpartitioned", 3, 11, 15,
 	"non-superuser admin can replicate insert if rls is not forced");
 
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 ALTER TABLE alice.unpartitioned FORCE ROW LEVEL SECURITY;
 ));
 publish_update("alice.unpartitioned", 11 => 17);
@@ -239,7 +239,7 @@ expect_failure(
 	qr/ERROR: ( [A-Z0-9]+:)? user "regress_alice" cannot replicate into relation with row-level security enabled: "unpartitioned\w*"/msi,
 	"replication of update into table with forced rls fails");
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 ALTER TABLE alice.unpartitioned NO FORCE ROW LEVEL SECURITY;
 ));
 expect_replication("alice.unpartitioned", 3, 13, 17,
@@ -247,7 +247,7 @@ expect_replication("alice.unpartitioned", 3, 13, 17,
 
 # Remove some of alice's privileges on her own table. Then replication should fail.
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 REVOKE SELECT, INSERT ON alice.unpartitioned FROM regress_alice;
 ));
 publish_insert("alice.unpartitioned", 19);
@@ -261,7 +261,7 @@ expect_failure(
 
 # alice needs INSERT but not SELECT to replicate an INSERT.
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 GRANT INSERT ON alice.unpartitioned TO regress_alice;
 ));
 expect_replication("alice.unpartitioned", 4, 13, 19,
@@ -269,7 +269,7 @@ expect_replication("alice.unpartitioned", 4, 13, 19,
 
 # Now let's try an UPDATE and a DELETE.
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 REVOKE UPDATE, DELETE ON alice.unpartitioned FROM regress_alice;
 ));
 publish_update("alice.unpartitioned", 13 => 21);
@@ -285,7 +285,7 @@ expect_failure(
 
 # Restoring UPDATE and DELETE is insufficient.
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 GRANT UPDATE, DELETE ON alice.unpartitioned TO regress_alice;
 ));
 expect_failure(
@@ -299,7 +299,7 @@ expect_failure(
 
 # alice needs INSERT but not SELECT to replicate an INSERT.
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 GRANT SELECT ON alice.unpartitioned TO regress_alice;
 ));
 expect_replication("alice.unpartitioned", 3, 17, 21,
@@ -309,7 +309,7 @@ expect_replication("alice.unpartitioned", 3, 17, 21,
 # revoked for subscription owner alice.
 grant_superuser("regress_alice");
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 SET SESSION AUTHORIZATION regress_alice;
 CREATE SUBSCRIPTION regression_sub CONNECTION '$publisher_connstr' PUBLICATION alice;
 ));
@@ -338,35 +338,35 @@ SKIP:
 	  3
 	  unless $use_unix_sockets;
 
-	my $node_publisher1 = PostgreSQL::Test::Cluster->new('publisher1');
-	my $node_subscriber1 = PostgreSQL::Test::Cluster->new('subscriber1');
+	my $node_publisher1 = maintableQL::Test::Cluster->new('publisher1');
+	my $node_subscriber1 = maintableQL::Test::Cluster->new('subscriber1');
 	$node_publisher1->init(allows_streaming => 'logical');
 	$node_subscriber1->init;
 	$node_publisher1->start;
 	$node_subscriber1->start;
 	my $publisher_connstr1 =
-	  $node_publisher1->connstr . ' user=regress_test_user dbname=postgres';
+	  $node_publisher1->connstr . ' user=regress_test_user dbname=maintable';
 	my $publisher_connstr2 =
 	  $node_publisher1->connstr
-	  . ' user=regress_test_user dbname=postgres password=secret';
+	  . ' user=regress_test_user dbname=maintable password=secret';
 
 	for my $node ($node_publisher1, $node_subscriber1)
 	{
 		$node->safe_psql(
-			'postgres', qq(
+			'maintable', qq(
 			CREATE ROLE regress_test_user PASSWORD 'secret' LOGIN REPLICATION;
-			GRANT CREATE ON DATABASE postgres TO regress_test_user;
+			GRANT CREATE ON DATABASE maintable TO regress_test_user;
 			GRANT PG_CREATE_SUBSCRIPTION TO regress_test_user;
 		));
 	}
 
 	$node_publisher1->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
 		SET SESSION AUTHORIZATION regress_test_user;
 		CREATE PUBLICATION regress_test_pub;
 	));
 	$node_subscriber1->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
 		CREATE SUBSCRIPTION regress_test_sub CONNECTION '$publisher_connstr1' PUBLICATION regress_test_pub;
 	));
 
@@ -386,13 +386,13 @@ SKIP:
 
 	# Change the subscription owner to a non-superuser
 	$node_subscriber1->safe_psql(
-		'postgres', qq(
+		'maintable', qq(
 		ALTER SUBSCRIPTION regress_test_sub OWNER TO regress_test_user;
 	));
 
 	# Non-superuser must specify password in the connection string
 	my ($ret, $stdout, $stderr) = $node_subscriber1->psql(
-		'postgres', qq(
+		'maintable', qq(
 		SET SESSION AUTHORIZATION regress_test_user;
 		ALTER SUBSCRIPTION regress_test_sub REFRESH PUBLICATION;
 	));
@@ -409,7 +409,7 @@ SKIP:
 	# It should succeed after including the password parameter of the connection
 	# string.
 	($ret, $stdout, $stderr) = $node_subscriber1->psql(
-		'postgres', qq(
+		'maintable', qq(
 		SET SESSION AUTHORIZATION regress_test_user;
 		ALTER SUBSCRIPTION regress_test_sub CONNECTION '$publisher_connstr2';
 		ALTER SUBSCRIPTION regress_test_sub REFRESH PUBLICATION;

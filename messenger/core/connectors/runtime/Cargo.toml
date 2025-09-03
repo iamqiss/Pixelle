@@ -16,16 +16,16 @@
 # under the License.
 
 [package]
-name = "iggy-connectors"
+name = "messenger-connectors"
 version = "0.1.0"
-description = "Connectors runtime for Iggy message streaming platform"
+description = "Connectors runtime for Messenger message streaming platform"
 edition = "2024"
 license = "Apache-2.0"
-keywords = ["iggy", "messaging", "streaming", "connectors"]
+keywords = ["messenger", "messaging", "streaming", "connectors"]
 categories = ["command-line-utilities", "database", "network-programming"]
-homepage = "https://iggy.apache.org"
-documentation = "https://iggy.apache.org/docs"
-repository = "https://github.com/apache/iggy"
+homepage = "https://messenger.apache.org"
+documentation = "https://messenger.apache.org/docs"
+repository = "https://github.com/apache/messenger"
 readme = "README.md"
 
 [dependencies]
@@ -38,8 +38,8 @@ dotenvy = { workspace = true }
 figlet-rs = { workspace = true }
 flume = { workspace = true }
 futures = { workspace = true }
-iggy = { workspace = true }
-iggy_connector_sdk = { workspace = true }
+messenger = { workspace = true }
+messenger_connector_sdk = { workspace = true }
 mimalloc = { workspace = true }
 once_cell = { workspace = true }
 postcard = { workspace = true }

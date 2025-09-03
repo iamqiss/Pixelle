@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_resetwal
-# Copyright (C) 2019 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_resetwal (PostgreSQL) package.
+# Copyright (C) 2019 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_resetwal (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_resetwal (PostgreSQL) 14\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_resetwal (maintableQL) 14\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2021-08-14 05:47+0000\n"
 "PO-Revision-Date: 2021-08-15 17:30+0800\n"
 "Last-Translator: Jie Zhang <zhangjie2@fujitsu.com>\n"
@@ -153,8 +153,8 @@ msgstr "不能由\"root\"执行"
 
 #: pg_resetwal.c:362
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "您现在作为PostgreSQL超级用户运行%s."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "您现在作为maintableQL超级用户运行%s."
 
 #: pg_resetwal.c:373
 #, c-format
@@ -541,9 +541,9 @@ msgstr "fsync 错误: %m"
 #: pg_resetwal.c:1217
 #, c-format
 msgid ""
-"%s resets the PostgreSQL write-ahead log.\n"
+"%s resets the maintableQL write-ahead log.\n"
 "\n"
-msgstr "%s 重置一个PostgreSQL数据库集簇的预写式日志.\n"
+msgstr "%s 重置一个maintableQL数据库集簇的预写式日志.\n"
 
 #: pg_resetwal.c:1218
 #, c-format

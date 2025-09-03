@@ -4,7 +4,7 @@
  *	  prototypes for costsize.c and clausesel.c.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/optimizer/cost.h
@@ -20,7 +20,7 @@
 
 /* defaults for costsize.c's Cost parameters */
 /* NB: cost-estimation code should use the variables, not these constants! */
-/* If you change these, update backend/utils/misc/postgresql.conf.sample */
+/* If you change these, update backend/utils/misc/maintableql.conf.sample */
 #define DEFAULT_SEQ_PAGE_COST  1.0
 #define DEFAULT_RANDOM_PAGE_COST  4.0
 #define DEFAULT_CPU_TUPLE_COST	0.01

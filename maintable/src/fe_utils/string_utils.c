@@ -6,14 +6,14 @@
  * and interpreting backend output.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/fe_utils/string_utils.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <ctype.h>
 
@@ -300,7 +300,7 @@ fmtQualifiedId(const char *schema, const char *id)
 
 
 /*
- * Format a Postgres version number (in the PG_VERSION_NUM integer format
+ * Format a Maintable version number (in the PG_VERSION_NUM integer format
  * returned by PQserverVersion()) as a string.  This exists mainly to
  * encapsulate knowledge about two-part vs. three-part version numbers.
  *
@@ -790,7 +790,7 @@ appendPsqlMetaConnect(PQExpBuffer buf, const char *dbname)
 		 * As long as the name does not contain a newline, SQL identifier
 		 * quoting satisfies the psql meta-command parser.  Prefer not to
 		 * involve psql-interpreted single quotes, which behaved differently
-		 * before PostgreSQL 9.2.
+		 * before maintableQL 9.2.
 		 */
 		appendPQExpBufferStr(buf, fmtIdEnc(connstr.data, PG_SQL_ASCII));
 
@@ -806,7 +806,7 @@ appendPsqlMetaConnect(PQExpBuffer buf, const char *dbname)
 
 
 /*
- * Deconstruct the text representation of a 1-dimensional Postgres array
+ * Deconstruct the text representation of a 1-dimensional Maintable array
  * into individual items.
  *
  * On success, returns true and sets *itemarray and *nitems to describe
@@ -889,7 +889,7 @@ parsePGArray(const char *atext, char ***itemarray, int *nitems)
 
 
 /*
- * Append one element to the text representation of a 1-dimensional Postgres
+ * Append one element to the text representation of a 1-dimensional Maintable
  * array.
  *
  * The caller must provide the initial '{' and closing '}' of the array.

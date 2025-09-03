@@ -4,7 +4,7 @@
  *	  definitions for query plan nodes
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/nodes/plannodes.h
@@ -1441,7 +1441,7 @@ typedef struct LockRows
 /* ----------------
  *		limit node
  *
- * Note: as of Postgres 8.2, the offset and count expressions are expected
+ * Note: as of Maintable 8.2, the offset and count expressions are expected
  * to yield int8, rather than int4 as before.
  * ----------------
  */

@@ -19,8 +19,8 @@
 use crate::streaming::common::test_setup::TestSetup;
 use crate::streaming::create_message;
 use bytes::Bytes;
-use iggy::prelude::locking::IggySharedMutFn;
-use iggy::prelude::*;
+use messenger::prelude::locking::MessengerSharedMutFn;
+use messenger::prelude::*;
 use server::configs::server::{DataMaintenanceConfig, PersonalAccessTokenConfig};
 use server::configs::system::{PartitionConfig, SegmentConfig, SystemConfig};
 use server::streaming::segments::*;
@@ -49,7 +49,7 @@ async fn should_persist_segment() {
             partition_id,
             start_offset,
             setup.config.clone(),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
@@ -87,7 +87,7 @@ async fn should_load_existing_segment_from_disk() {
             partition_id,
             start_offset,
             setup.config.clone(),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
@@ -114,7 +114,7 @@ async fn should_load_existing_segment_from_disk() {
             partition_id,
             start_offset,
             setup.config.clone(),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
@@ -156,7 +156,7 @@ async fn should_persist_and_load_segment_with_messages() {
         partition_id,
         start_offset,
         setup.config.clone(),
-        IggyExpiry::NeverExpire,
+        MessengerExpiry::NeverExpire,
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
@@ -181,7 +181,7 @@ async fn should_persist_and_load_segment_with_messages() {
     let mut messages = Vec::new();
     let mut messages_size = 0;
     for i in 0..messages_count {
-        let message = IggyMessage::builder()
+        let message = MessengerMessage::builder()
             .id(i as u128)
             .payload(Bytes::from("test"))
             .build()
@@ -189,7 +189,7 @@ async fn should_persist_and_load_segment_with_messages() {
         messages_size += message.get_size_bytes().as_bytes_u32();
         messages.push(message);
     }
-    let batch = IggyMessagesBatchMut::from_messages(&messages, messages_size);
+    let batch = MessengerMessagesBatchMut::from_messages(&messages, messages_size);
 
     segment.append_batch(0, batch, None).await.unwrap();
     segment.persist_messages(None).await.unwrap();
@@ -199,7 +199,7 @@ async fn should_persist_and_load_segment_with_messages() {
         partition_id,
         start_offset,
         setup.config.clone(),
-        IggyExpiry::NeverExpire,
+        MessengerExpiry::NeverExpire,
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
@@ -236,7 +236,7 @@ async fn should_persist_and_load_segment_with_messages_with_nowait_confirmation(
         partition_id,
         start_offset,
         setup.config.clone(),
-        IggyExpiry::NeverExpire,
+        MessengerExpiry::NeverExpire,
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
@@ -261,7 +261,7 @@ async fn should_persist_and_load_segment_with_messages_with_nowait_confirmation(
     let mut messages = Vec::new();
     let mut messages_size = 0;
     for i in 0..messages_count {
-        let message = IggyMessage::builder()
+        let message = MessengerMessage::builder()
             .id(i as u128)
             .payload(Bytes::from("test"))
             .build()
@@ -269,7 +269,7 @@ async fn should_persist_and_load_segment_with_messages_with_nowait_confirmation(
         messages_size += message.get_size_bytes().as_bytes_u32();
         messages.push(message);
     }
-    let batch = IggyMessagesBatchMut::from_messages(&messages, messages_size);
+    let batch = MessengerMessagesBatchMut::from_messages(&messages, messages_size);
     segment.append_batch(0, batch, None).await.unwrap();
     segment
         .persist_messages(Some(Confirmation::NoWait))
@@ -282,7 +282,7 @@ async fn should_persist_and_load_segment_with_messages_with_nowait_confirmation(
         partition_id,
         start_offset,
         setup.config.clone(),
-        IggyExpiry::NeverExpire,
+        MessengerExpiry::NeverExpire,
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
@@ -307,7 +307,7 @@ async fn given_all_expired_messages_segment_should_be_expired() {
             ..Default::default()
         },
         segment: SegmentConfig {
-            size: IggyByteSize::from_str("10B").unwrap(), // small size to force expiration
+            size: MessengerByteSize::from_str("10B").unwrap(), // small size to force expiration
             ..Default::default()
         },
         ..Default::default()
@@ -350,7 +350,7 @@ async fn given_all_expired_messages_segment_should_be_expired() {
     let mut messages = Vec::new();
     let mut messages_size = 0;
     for i in 0..messages_count {
-        let message = IggyMessage::builder()
+        let message = MessengerMessage::builder()
             .id(i as u128)
             .payload(Bytes::from("test"))
             .build()
@@ -358,11 +358,11 @@ async fn given_all_expired_messages_segment_should_be_expired() {
         messages_size += message.get_size_bytes().as_bytes_u32();
         messages.push(message);
     }
-    let batch = IggyMessagesBatchMut::from_messages(&messages, messages_size);
+    let batch = MessengerMessagesBatchMut::from_messages(&messages, messages_size);
     segment.append_batch(0, batch, None).await.unwrap();
     segment.persist_messages(None).await.unwrap();
-    let not_expired_ts = IggyTimestamp::now();
-    let expired_ts = not_expired_ts + IggyDuration::from(message_expiry_us + 1);
+    let not_expired_ts = MessengerTimestamp::now();
+    let expired_ts = not_expired_ts + MessengerDuration::from(message_expiry_us + 1);
 
     assert!(segment.is_expired(expired_ts).await);
     assert!(!segment.is_expired(not_expired_ts).await);
@@ -376,7 +376,7 @@ async fn given_at_least_one_not_expired_message_segment_should_not_be_expired() 
             ..Default::default()
         },
         segment: SegmentConfig {
-            size: IggyByteSize::from_str("10B").unwrap(), // small size to force expiration
+            size: MessengerByteSize::from_str("10B").unwrap(), // small size to force expiration
             ..Default::default()
         },
         ..Default::default()
@@ -416,33 +416,33 @@ async fn given_at_least_one_not_expired_message_segment_should_not_be_expired() 
     )
     .await;
 
-    let nothing_expired_ts = IggyTimestamp::now();
+    let nothing_expired_ts = MessengerTimestamp::now();
 
     let first_message = vec![
-        IggyMessage::builder()
+        MessengerMessage::builder()
             .payload(Bytes::from("expired"))
             .build()
             .expect("Failed to create message"),
     ];
     let first_message_size = first_message[0].get_size_bytes().as_bytes_u32();
-    let first_batch = IggyMessagesBatchMut::from_messages(&first_message, first_message_size);
+    let first_batch = MessengerMessagesBatchMut::from_messages(&first_message, first_message_size);
     segment.append_batch(0, first_batch, None).await.unwrap();
 
     sleep(Duration::from_micros(message_expiry_us / 2)).await;
-    let first_message_expired_ts = IggyTimestamp::now();
+    let first_message_expired_ts = MessengerTimestamp::now();
 
     let second_message = vec![
-        IggyMessage::builder()
+        MessengerMessage::builder()
             .payload(Bytes::from("not-expired"))
             .build()
             .expect("Failed to create message"),
     ];
     let second_message_size = second_message[0].get_size_bytes().as_bytes_u32();
-    let second_batch = IggyMessagesBatchMut::from_messages(&second_message, second_message_size);
+    let second_batch = MessengerMessagesBatchMut::from_messages(&second_message, second_message_size);
     segment.append_batch(1, second_batch, None).await.unwrap();
 
     let second_message_expired_ts =
-        IggyTimestamp::now() + IggyDuration::from(message_expiry_us * 2);
+        MessengerTimestamp::now() + MessengerDuration::from(message_expiry_us * 2);
 
     segment.persist_messages(None).await.unwrap();
 
@@ -464,7 +464,7 @@ async fn given_at_least_one_not_expired_message_segment_should_not_be_expired() 
 async fn should_delete_persisted_segments() -> Result<(), Box<dyn std::error::Error>> {
     let config = SystemConfig {
         segment: SegmentConfig {
-            size: IggyByteSize::from_str("10B").unwrap(), // small size to force segment closure
+            size: MessengerByteSize::from_str("10B").unwrap(), // small size to force segment closure
             ..Default::default()
         },
         ..Default::default()
@@ -506,7 +506,7 @@ async fn should_delete_persisted_segments() -> Result<(), Box<dyn std::error::Er
             Some(topic_id.get_u32_value()?),
             topic_name,
             partition_id,
-            IggyExpiry::default(),
+            MessengerExpiry::default(),
             CompressionAlgorithm::default(),
             MaxTopicSize::default(),
             None,
@@ -517,7 +517,7 @@ async fn should_delete_persisted_segments() -> Result<(), Box<dyn std::error::Er
     let partitions = topic.get_partitions();
     let partition = partitions
         .first()
-        .ok_or(IggyError::Error)
+        .ok_or(MessengerError::Error)
         .inspect_err(|_| log::error!("Cannot retrieve initial partition."))?;
 
     // Create multiple segments by sending messages one by one
@@ -533,7 +533,7 @@ async fn should_delete_persisted_segments() -> Result<(), Box<dyn std::error::Er
             .iter()
             .map(|m| m.get_size_bytes().as_bytes_u32())
             .sum();
-        let batch = IggyMessagesBatchMut::from_messages(&messages, messages_size);
+        let batch = MessengerMessagesBatchMut::from_messages(&messages, messages_size);
 
         partition_lock.append_messages(batch, None).await.unwrap();
 

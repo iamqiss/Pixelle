@@ -17,7 +17,7 @@
  */
 
 use crate::utils::topic_size::MaxTopicSize;
-use crate::{IggyMessage, utils::byte_size::IggyByteSize};
+use crate::{MessengerMessage, utils::byte_size::MessengerByteSize};
 use std::sync::Arc;
 use strum::{EnumDiscriminants, FromRepr, IntoStaticStr};
 use thiserror::Error;
@@ -30,7 +30,7 @@ use thiserror::Error;
     derive(FromRepr, IntoStaticStr),
     strum(serialize_all = "snake_case")
 )]
-pub enum IggyError {
+pub enum MessengerError {
     #[default]
     #[error("Error")]
     Error = 1,
@@ -209,7 +209,7 @@ pub enum IggyError {
     #[error(
         "Max topic size cannot be lower than segment size. Max topic size: {0} < segment size: {1}."
     )]
-    InvalidTopicSize(MaxTopicSize, IggyByteSize) = 1019,
+    InvalidTopicSize(MaxTopicSize, MessengerByteSize) = 1019,
     #[error("Cannot create topics directory for stream with ID: {0}, Path: {1}")]
     CannotCreateTopicsDirectory(u32, String) = 2000,
     #[error("Failed to create directory for topic with ID: {0} for stream with ID: {1}, Path: {2}")]
@@ -376,8 +376,8 @@ pub enum IggyError {
     BackgroundSendBufferOverflow = 4055,
     #[error("Producer send failed")]
     ProducerSendFailed {
-        cause: Box<IggyError>,
-        failed: Arc<Vec<IggyMessage>>,
+        cause: Box<MessengerError>,
+        failed: Arc<Vec<MessengerMessage>>,
         stream_name: String,
         topic_name: String,
     } = 4056,
@@ -461,7 +461,7 @@ pub enum IggyError {
     CannotReadIndexTimestamp = 10012,
 }
 
-impl IggyError {
+impl MessengerError {
     pub fn as_code(&self) -> u32 {
         // SAFETY: SdkError specifies #[repr(u32)] representation.
         // https://doc.rust-lang.org/reference/items/enumerations.html#pointer-casting
@@ -473,17 +473,17 @@ impl IggyError {
     }
 
     pub fn from_code(code: u32) -> Self {
-        IggyError::from_repr(code).unwrap_or(IggyError::Error)
+        MessengerError::from_repr(code).unwrap_or(MessengerError::Error)
     }
 
     pub fn from_code_as_string(code: u32) -> &'static str {
-        IggyErrorDiscriminants::from_repr(code)
+        MessengerErrorDiscriminants::from_repr(code)
             .map(|discriminant| discriminant.into())
             .unwrap_or("unknown error code")
     }
 }
 
-impl PartialEq for IggyError {
+impl PartialEq for MessengerError {
     fn eq(&self, other: &Self) -> bool {
         self.as_code() == other.as_code()
     }
@@ -499,11 +499,11 @@ mod tests {
     fn derived_sdk_error_discriminant_keeps_codes() {
         assert_eq!(
             GROUP_NAME_ERROR_CODE,
-            IggyError::InvalidConsumerGroupName.as_code()
+            MessengerError::InvalidConsumerGroupName.as_code()
         );
         assert_eq!(
             GROUP_NAME_ERROR_CODE,
-            IggyErrorDiscriminants::InvalidConsumerGroupName as u32
+            MessengerErrorDiscriminants::InvalidConsumerGroupName as u32
         );
     }
 
@@ -511,15 +511,15 @@ mod tests {
     fn static_str_uses_kebab_case() {
         assert_eq!(
             "invalid_consumer_group_name",
-            IggyError::InvalidConsumerGroupName.as_string()
+            MessengerError::InvalidConsumerGroupName.as_string()
         )
     }
 
     #[test]
     fn gets_string_from_code() {
         assert_eq!(
-            IggyError::InvalidConsumerGroupName.as_string(),
-            IggyError::from_code_as_string(GROUP_NAME_ERROR_CODE)
+            MessengerError::InvalidConsumerGroupName.as_string(),
+            MessengerError::from_code_as_string(GROUP_NAME_ERROR_CODE)
         )
     }
 }

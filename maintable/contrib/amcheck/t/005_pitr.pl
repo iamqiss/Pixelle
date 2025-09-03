@@ -1,16 +1,16 @@
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test integrity of intermediate states by PITR to those states
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # origin node: generate WAL records of interest.
-my $origin = PostgreSQL::Test::Cluster->new('origin');
+my $origin = maintableQL::Test::Cluster->new('origin');
 $origin->init(has_archiving => 1, allows_streaming => 1);
-$origin->append_conf('postgresql.conf', 'autovacuum = off');
+$origin->append_conf('maintableql.conf', 'autovacuum = off');
 $origin->start;
 $origin->backup('my_backup');
 # Create a table with each of 6 PK values spanning 1/4 of a block.  Delete the
@@ -29,9 +29,9 @@ DELETE FROM not_leftmost WHERE c ~ '^[1-4]';
 SELECT pg_create_physical_replication_slot('for_walinspect', true, false);
 COMMIT;
 EOSQL
-$origin->safe_psql('postgres', $setup);
+$origin->safe_psql('maintable', $setup);
 my $before_vacuum_lsn =
-  $origin->safe_psql('postgres', "SELECT pg_current_wal_lsn()");
+  $origin->safe_psql('maintable', "SELECT pg_current_wal_lsn()");
 # VACUUM to delete the aforementioned leaf page.  Force an XLogFlush() by
 # dropping a permanent table.  That way, the XLogReader infrastructure can
 # always see VACUUM's records, even under synchronous_commit=off.  Finally,
@@ -45,25 +45,25 @@ SELECT max(start_lsn)
   FROM pg_get_wal_records_info('$before_vacuum_lsn', 'FFFFFFFF/FFFFFFFF')
   WHERE resource_manager = 'Btree' AND record_type = 'UNLINK_PAGE';
 EOSQL
-my $unlink_lsn = $origin->safe_psql('postgres', $vacuum);
+my $unlink_lsn = $origin->safe_psql('maintable', $vacuum);
 $origin->stop;
 die "did not find UNLINK_PAGE record" unless $unlink_lsn;
 
 # replica node: amcheck at notable points in the WAL stream
-my $replica = PostgreSQL::Test::Cluster->new('replica');
+my $replica = maintableQL::Test::Cluster->new('replica');
 $replica->init_from_backup($origin, 'my_backup', has_restoring => 1);
-$replica->append_conf('postgresql.conf',
+$replica->append_conf('maintableql.conf',
 	"recovery_target_lsn = '$unlink_lsn'");
-$replica->append_conf('postgresql.conf', 'recovery_target_inclusive = off');
-$replica->append_conf('postgresql.conf', 'recovery_target_action = promote');
+$replica->append_conf('maintableql.conf', 'recovery_target_inclusive = off');
+$replica->append_conf('maintableql.conf', 'recovery_target_action = promote');
 $replica->start;
-$replica->poll_query_until('postgres', "SELECT pg_is_in_recovery() = 'f';")
+$replica->poll_query_until('maintable', "SELECT pg_is_in_recovery() = 'f';")
   or die "Timed out while waiting for PITR promotion";
 # recovery done; run amcheck
 my $debug = "SET client_min_messages = 'debug1'";
 my ($rc, $stderr);
 $rc = $replica->psql(
-	'postgres',
+	'maintable',
 	"$debug; SELECT bt_index_parent_check('not_leftmost_pk', true)",
 	stderr => \$stderr);
 print STDERR $stderr, "\n";
@@ -73,7 +73,7 @@ like(
 	qr/interrupted page deletion detected/,
 	"bt_index_parent_check: interrupted page deletion detected");
 $rc = $replica->psql(
-	'postgres',
+	'maintable',
 	"$debug; SELECT bt_index_check('not_leftmost_pk', true)",
 	stderr => \$stderr);
 print STDERR $stderr, "\n";

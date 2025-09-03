@@ -24,13 +24,13 @@ use crate::binary::sender::SenderKind;
 use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::get_me::GetMe;
-use iggy_common::locking::IggySharedMutFn;
+use messenger_common::MessengerError;
+use messenger_common::get_me::GetMe;
+use messenger_common::locking::MessengerSharedMutFn;
 
 impl ServerCommandHandler for GetMe {
     fn code(&self) -> u32 {
-        iggy_common::GET_ME_CODE
+        messenger_common::GET_ME_CODE
     }
 
     async fn handle(
@@ -39,7 +39,7 @@ impl ServerCommandHandler for GetMe {
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let system = system.read().await;
         let Some(client) = system
             .get_client(session, session.client_id)
@@ -48,7 +48,7 @@ impl ServerCommandHandler for GetMe {
                 format!("{COMPONENT} (error: {error}) - failed to get current client for session: {session}")
             })?
         else {
-            return Err(IggyError::ClientNotFound(session.client_id));
+            return Err(MessengerError::ClientNotFound(session.client_id));
         };
 
         let client = client.read().await;
@@ -60,13 +60,13 @@ impl ServerCommandHandler for GetMe {
 }
 
 impl BinaryServerCommand for GetMe {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::GetMe(get_me) => Ok(get_me),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

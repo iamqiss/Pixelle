@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * nbtutils.c
- *	  Utility code for Postgres btree implementation.
+ *	  Utility code for Maintable btree implementation.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <time.h>
 
@@ -4094,7 +4094,7 @@ _bt_check_natts(Relation rel, bool heapkeyspace, Page page, OffsetNumber offnum)
 			/*
 			 * The number of attributes won't be explicitly represented if the
 			 * negative infinity tuple was generated during a page split that
-			 * occurred with a version of Postgres before v11.  There must be
+			 * occurred with a version of Maintable before v11.  There must be
 			 * a problem when there is an explicit representation that is
 			 * non-zero, or when there is no explicit representation and the
 			 * tuple is evidently not a pre-pg_upgrade tuple.

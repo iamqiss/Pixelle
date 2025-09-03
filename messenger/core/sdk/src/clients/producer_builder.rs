@@ -17,10 +17,10 @@
 
 use crate::client_wrappers::client_wrapper::ClientWrapper;
 use crate::clients::producer_config::{BackgroundConfig, DirectConfig};
-use crate::prelude::IggyProducer;
-use iggy_common::locking::IggySharedMut;
-use iggy_common::{
-    EncryptorKind, Identifier, IggyDuration, IggyExpiry, MaxTopicSize, Partitioner, Partitioning,
+use crate::prelude::MessengerProducer;
+use messenger_common::locking::MessengerSharedMut;
+use messenger_common::{
+    EncryptorKind, Identifier, MessengerDuration, MessengerExpiry, MaxTopicSize, Partitioner, Partitioning,
 };
 use std::sync::Arc;
 
@@ -35,8 +35,8 @@ impl Default for SendMode {
     }
 }
 
-pub struct IggyProducerBuilder {
-    client: IggySharedMut<ClientWrapper>,
+pub struct MessengerProducerBuilder {
+    client: MessengerSharedMut<ClientWrapper>,
     stream: Identifier,
     stream_name: String,
     topic: Identifier,
@@ -48,17 +48,17 @@ pub struct IggyProducerBuilder {
     topic_partitions_count: u32,
     topic_replication_factor: Option<u8>,
     send_retries_count: Option<u32>,
-    send_retries_interval: Option<IggyDuration>,
-    topic_message_expiry: IggyExpiry,
+    send_retries_interval: Option<MessengerDuration>,
+    topic_message_expiry: MessengerExpiry,
     topic_max_size: MaxTopicSize,
     partitioning: Option<Partitioning>,
     mode: SendMode,
 }
 
-impl IggyProducerBuilder {
+impl MessengerProducerBuilder {
     #[allow(clippy::too_many_arguments)]
     pub(crate) fn new(
-        client: IggySharedMut<ClientWrapper>,
+        client: MessengerSharedMut<ClientWrapper>,
         stream: Identifier,
         stream_name: String,
         topic: Identifier,
@@ -79,10 +79,10 @@ impl IggyProducerBuilder {
             create_topic_if_not_exists: true,
             topic_partitions_count: 1,
             topic_replication_factor: None,
-            topic_message_expiry: IggyExpiry::ServerDefault,
+            topic_message_expiry: MessengerExpiry::ServerDefault,
             topic_max_size: MaxTopicSize::ServerDefault,
             send_retries_count: Some(3),
-            send_retries_interval: Some(IggyDuration::ONE_SECOND),
+            send_retries_interval: Some(MessengerDuration::ONE_SECOND),
             mode: SendMode::default(),
         }
     }
@@ -166,7 +166,7 @@ impl IggyProducerBuilder {
         self,
         partitions_count: u32,
         replication_factor: Option<u8>,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         max_size: MaxTopicSize,
     ) -> Self {
         Self {
@@ -190,7 +190,7 @@ impl IggyProducerBuilder {
     /// Sets the retry policy (maximum number of retries and interval between them) in case of messages sending failure.
     /// The error can be related either to disconnecting from the server or to the server rejecting the messages.
     /// Default is 3 retries with 1 second interval between them.
-    pub fn send_retries(self, retries: Option<u32>, interval: Option<IggyDuration>) -> Self {
+    pub fn send_retries(self, retries: Option<u32>, interval: Option<MessengerDuration>) -> Self {
         Self {
             send_retries_count: retries,
             send_retries_interval: interval,
@@ -213,8 +213,8 @@ impl IggyProducerBuilder {
         self
     }
 
-    pub fn build(self) -> IggyProducer {
-        IggyProducer::new(
+    pub fn build(self) -> MessengerProducer {
+        MessengerProducer::new(
             self.client,
             self.stream,
             self.stream_name,

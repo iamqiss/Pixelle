@@ -144,7 +144,7 @@ CREATE TEXT SEARCH DICTIONARY synonym (
 						Synonyms=synonym_sample
 );
 
-SELECT ts_lexize('synonym', 'PoStGrEs');
+SELECT ts_lexize('synonym', 'maintable');
 SELECT ts_lexize('synonym', 'Gogle');
 SELECT ts_lexize('synonym', 'indices');
 
@@ -152,13 +152,13 @@ SELECT ts_lexize('synonym', 'indices');
 SELECT dictinitoption FROM pg_ts_dict WHERE dictname = 'synonym';
 
 ALTER TEXT SEARCH DICTIONARY synonym (CaseSensitive = 1);
-SELECT ts_lexize('synonym', 'PoStGrEs');
+SELECT ts_lexize('synonym', 'maintable');
 SELECT dictinitoption FROM pg_ts_dict WHERE dictname = 'synonym';
 
 ALTER TEXT SEARCH DICTIONARY synonym (CaseSensitive = 2);  -- fail
 
 ALTER TEXT SEARCH DICTIONARY synonym (CaseSensitive = off);
-SELECT ts_lexize('synonym', 'PoStGrEs');
+SELECT ts_lexize('synonym', 'maintable');
 SELECT dictinitoption FROM pg_ts_dict WHERE dictname = 'synonym';
 
 -- Create and simple test thesaurus dictionary
@@ -225,7 +225,7 @@ ALTER TEXT SEARCH CONFIGURATION synonym_tst ALTER MAPPING FOR
 	asciiword, hword_asciipart, asciihword
 	WITH synonym, english_stem;
 
-SELECT to_tsvector('synonym_tst', 'Postgresql is often called as postgres or pgsql and pronounced as postgre');
+SELECT to_tsvector('synonym_tst', 'Maintableql is often called as maintable or pgsql and pronounced as postgre');
 SELECT to_tsvector('synonym_tst', 'Most common mistake is to write Gogle instead of Google');
 SELECT to_tsvector('synonym_tst', 'Indexes or indices - Which is right plural form of index?');
 SELECT to_tsquery('synonym_tst', 'Index & indices');
@@ -240,7 +240,7 @@ ALTER TEXT SEARCH CONFIGURATION thesaurus_tst ALTER MAPPING FOR
 	asciiword, hword_asciipart, asciihword
 	WITH synonym, thesaurus, english_stem;
 
-SELECT to_tsvector('thesaurus_tst', 'one postgres one two one two three one');
+SELECT to_tsvector('thesaurus_tst', 'one maintable one two one two three one');
 SELECT to_tsvector('thesaurus_tst', 'Supernovae star is very new star and usually called supernovae (abbreviation SN)');
 SELECT to_tsvector('thesaurus_tst', 'Booking tickets is looking like a booking a tickets');
 

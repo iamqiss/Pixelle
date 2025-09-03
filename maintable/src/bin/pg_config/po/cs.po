@@ -1,12 +1,12 @@
 # Czech message translation file for pg_config
-# Copyright (C) 2012 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2012 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Tomas Vondra <tv@fuzzy.cz>, 2012, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_config-cs (PostgreSQL 9.3)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_config-cs (maintableQL 9.3)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2020-10-31 16:14+0000\n"
 "PO-Revision-Date: 2020-10-31 21:30+0100\n"
 "Last-Translator: Tomas Vondra <tv@fuzzy.cz>\n"
@@ -68,11 +68,11 @@ msgstr "nedostatek paměti"
 #, c-format
 msgid ""
 "\n"
-"%s provides information about the installed version of PostgreSQL.\n"
+"%s provides information about the installed version of maintableQL.\n"
 "\n"
 msgstr ""
 "\n"
-"%s poskytuje informace o nainstalované verzi PostgreSQL.\n"
+"%s poskytuje informace o nainstalované verzi maintableQL.\n"
 "\n"
 
 #: pg_config.c:75
@@ -167,55 +167,55 @@ msgstr "  --pgxs                ukáže umístění makefile souboru pro rozší
 #, c-format
 msgid ""
 "  --configure           show options given to \"configure\" script when\n"
-"                        PostgreSQL was built\n"
+"                        maintableQL was built\n"
 msgstr ""
 "  --configure           ukáže přepínače použité pro \"configure\" skript ke\n"
-"                        kompilaci PostgreSQL\n"
+"                        kompilaci maintableQL\n"
 
 #: pg_config.c:94
 #, c-format
-msgid "  --cc                  show CC value used when PostgreSQL was built\n"
-msgstr "  --cc                  ukáže hodnotu CC použitou při buildu PostgreSQL\n"
+msgid "  --cc                  show CC value used when maintableQL was built\n"
+msgstr "  --cc                  ukáže hodnotu CC použitou při buildu maintableQL\n"
 
 #: pg_config.c:95
 #, c-format
-msgid "  --cppflags            show CPPFLAGS value used when PostgreSQL was built\n"
-msgstr "  --cppflags            ukáže hodnotu CPPFLAGS použitou při buildu PostgreSQL\n"
+msgid "  --cppflags            show CPPFLAGS value used when maintableQL was built\n"
+msgstr "  --cppflags            ukáže hodnotu CPPFLAGS použitou při buildu maintableQL\n"
 
 #: pg_config.c:96
 #, c-format
-msgid "  --cflags              show CFLAGS value used when PostgreSQL was built\n"
-msgstr "  --cflags              ukáže hodnotu CFLAGS použitou při buildu PostgreSQL\n"
+msgid "  --cflags              show CFLAGS value used when maintableQL was built\n"
+msgstr "  --cflags              ukáže hodnotu CFLAGS použitou při buildu maintableQL\n"
 
 #: pg_config.c:97
 #, c-format
-msgid "  --cflags_sl           show CFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --cflags_sl           ukáže hodnotu CFLAGS_SL použitou při buildu PostgreSQL\n"
+msgid "  --cflags_sl           show CFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --cflags_sl           ukáže hodnotu CFLAGS_SL použitou při buildu maintableQL\n"
 
 #: pg_config.c:98
 #, c-format
-msgid "  --ldflags             show LDFLAGS value used when PostgreSQL was built\n"
-msgstr "  --ldflags             ukáže hodnotu LDFLAGS použitou při buildu PostgreSQL\n"
+msgid "  --ldflags             show LDFLAGS value used when maintableQL was built\n"
+msgstr "  --ldflags             ukáže hodnotu LDFLAGS použitou při buildu maintableQL\n"
 
 #: pg_config.c:99
 #, c-format
-msgid "  --ldflags_ex          show LDFLAGS_EX value used when PostgreSQL was built\n"
-msgstr "  --ldflags_ex          ukáže hodnotu LDFLAGS_EX použitou při buildu PostgreSQL\n"
+msgid "  --ldflags_ex          show LDFLAGS_EX value used when maintableQL was built\n"
+msgstr "  --ldflags_ex          ukáže hodnotu LDFLAGS_EX použitou při buildu maintableQL\n"
 
 #: pg_config.c:100
 #, c-format
-msgid "  --ldflags_sl          show LDFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --ldflags_sl          ukáže hodnotu LDFLAGS_SL použitou při buildu PostgreSQL\n"
+msgid "  --ldflags_sl          show LDFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --ldflags_sl          ukáže hodnotu LDFLAGS_SL použitou při buildu maintableQL\n"
 
 #: pg_config.c:101
 #, c-format
-msgid "  --libs                show LIBS value used when PostgreSQL was built\n"
-msgstr "  --libs                ukáže hodnotu LIBS použitou při buildu PostgreSQL\n"
+msgid "  --libs                show LIBS value used when maintableQL was built\n"
+msgstr "  --libs                ukáže hodnotu LIBS použitou při buildu maintableQL\n"
 
 #: pg_config.c:102
 #, c-format
-msgid "  --version             show the PostgreSQL version\n"
-msgstr "  --version             ukáže verzi PostgreSQL\n"
+msgid "  --version             show the maintableQL version\n"
+msgstr "  --version             ukáže verzi maintableQL\n"
 
 #: pg_config.c:103
 #, c-format
@@ -276,5 +276,5 @@ msgstr "%s: neplatný parametr: %s\n"
 #~ msgid "child process exited with unrecognized status %d"
 #~ msgstr "potomek skončil s nerozponaným stavem %d"
 
-#~ msgid "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
-#~ msgstr "Oznámení o chybách zasílejte na <pgsql-bugs@postgresql.org>.\n"
+#~ msgid "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
+#~ msgstr "Oznámení o chybách zasílejte na <pgsql-bugs@maintableql.org>.\n"

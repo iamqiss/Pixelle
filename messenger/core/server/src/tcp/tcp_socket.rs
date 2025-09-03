@@ -62,7 +62,7 @@ pub fn build(ipv6: bool, config: TcpSocketConfig) -> TcpSocket {
 mod tests {
     use std::time::Duration;
 
-    use iggy_common::{IggyByteSize, IggyDuration};
+    use messenger_common::{MessengerByteSize, MessengerDuration};
 
     use super::*;
 
@@ -72,11 +72,11 @@ mod tests {
         let linger_dur = Duration::new(1, 0);
         let config = TcpSocketConfig {
             override_defaults: true,
-            recv_buffer_size: IggyByteSize::from(buffer_size),
-            send_buffer_size: IggyByteSize::from(buffer_size),
+            recv_buffer_size: MessengerByteSize::from(buffer_size),
+            send_buffer_size: MessengerByteSize::from(buffer_size),
             keepalive: true,
             nodelay: true,
-            linger: IggyDuration::new(linger_dur),
+            linger: MessengerDuration::new(linger_dur),
         };
         let socket = build(false, config);
         assert!(socket.recv_buffer_size().unwrap() >= buffer_size as u32);

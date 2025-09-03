@@ -19,7 +19,7 @@
 use std::{str::FromStr, time::Duration};
 
 use async_trait::async_trait;
-use iggy_connector_sdk::{
+use messenger_connector_sdk::{
     ConnectorState, Error, ProducedMessage, ProducedMessages, Schema, Source, source_connector,
 };
 use rand::{
@@ -129,7 +129,7 @@ impl RandomSource {
 
 #[async_trait]
 impl Source for RandomSource {
-    async fn open(&mut self) -> Result<(), iggy_connector_sdk::Error> {
+    async fn open(&mut self) -> Result<(), messenger_connector_sdk::Error> {
         info!(
             "Opened random source connector with ID: {}. Interval: {:#?}, max offset: {:#?}, messages range: {} - {}, payload size: {}",
             self.id,
@@ -142,7 +142,7 @@ impl Source for RandomSource {
         Ok(())
     }
 
-    async fn poll(&self) -> Result<ProducedMessages, iggy_connector_sdk::Error> {
+    async fn poll(&self) -> Result<ProducedMessages, messenger_connector_sdk::Error> {
         sleep(self.interval).await;
         let mut state = self.state.lock().await;
         if let Some(max_count) = self.max_count

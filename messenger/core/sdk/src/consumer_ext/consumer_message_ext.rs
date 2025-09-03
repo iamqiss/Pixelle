@@ -16,16 +16,16 @@
  * under the License.
  */
 
-use crate::clients::consumer::{AutoCommit, AutoCommitAfter, IggyConsumer};
-use crate::consumer_ext::{IggyConsumerMessageExt, MessageConsumer};
-use crate::prelude::IggyError;
+use crate::clients::consumer::{AutoCommit, AutoCommitAfter, MessengerConsumer};
+use crate::consumer_ext::{MessengerConsumerMessageExt, MessageConsumer};
+use crate::prelude::MessengerError;
 use async_trait::async_trait;
 use futures_util::StreamExt;
 use tokio::sync::oneshot;
 use tracing::{error, info, trace};
 
 #[async_trait]
-impl<'a> IggyConsumerMessageExt<'a> for IggyConsumer {
+impl<'a> MessengerConsumerMessageExt<'a> for MessengerConsumer {
     /// Consume messages from the stream and process them with the given message consumer.
     ///
     /// # Arguments
@@ -37,19 +37,19 @@ impl<'a> IggyConsumerMessageExt<'a> for IggyConsumer {
     ///
     /// # Errors
     ///
-    /// * `IggyError::Disconnected`: The client has been disconnected.
-    /// * `IggyError::CannotEstablishConnection`: The client cannot establish a connection to iggy.
-    /// * `IggyError::StaleClient`: This client is stale and cannot be used to consume messages.
-    /// * `IggyError::InvalidServerAddress`: The server address is invalid.
-    /// * `IggyError::InvalidClientAddress`: The client address is invalid.
-    /// * `IggyError::NotConnected`: The client is not connected.
-    /// * `IggyError::ClientShutdown`: The client has been shut down.
+    /// * `MessengerError::Disconnected`: The client has been disconnected.
+    /// * `MessengerError::CannotEstablishConnection`: The client cannot establish a connection to messenger.
+    /// * `MessengerError::StaleClient`: This client is stale and cannot be used to consume messages.
+    /// * `MessengerError::InvalidServerAddress`: The server address is invalid.
+    /// * `MessengerError::InvalidClientAddress`: The client address is invalid.
+    /// * `MessengerError::NotConnected`: The client is not connected.
+    /// * `MessengerError::ClientShutdown`: The client has been shut down.
     ///
     async fn consume_messages<P>(
         &mut self,
         message_consumer: &'a P,
         mut shutdown_rx: oneshot::Receiver<()>,
-    ) -> Result<(), IggyError>
+    ) -> Result<(), MessengerError>
     where
         P: MessageConsumer + Sync,
     {
@@ -113,13 +113,13 @@ impl<'a> IggyConsumerMessageExt<'a> for IggyConsumer {
                         }
                         Some(Err(err)) => {
                             match err {
-                                IggyError::Disconnected |
-                                IggyError::CannotEstablishConnection |
-                                IggyError::StaleClient |
-                                IggyError::InvalidServerAddress |
-                                IggyError::InvalidClientAddress |
-                                IggyError::NotConnected |
-                                IggyError::ClientShutdown => {
+                                MessengerError::Disconnected |
+                                MessengerError::CannotEstablishConnection |
+                                MessengerError::StaleClient |
+                                MessengerError::InvalidServerAddress |
+                                MessengerError::InvalidClientAddress |
+                                MessengerError::NotConnected |
+                                MessengerError::ClientShutdown => {
                                     error!("Client error: {err} for consumer: {name} on topic: {topic} and stream: {stream}",
                                         name = self.name(), topic = self.topic(), stream = self.stream());
                                     return Err(err);

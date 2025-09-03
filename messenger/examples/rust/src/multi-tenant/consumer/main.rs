@@ -19,8 +19,8 @@
 use ahash::AHashMap;
 use futures_util::StreamExt;
 use futures_util::future::join_all;
-use iggy::prelude::*;
-use iggy_examples::shared::args::Args;
+use messenger::prelude::*;
+use messenger_examples::shared::args::Args;
 use std::collections::HashMap;
 use std::env;
 use std::error::Error;
@@ -39,12 +39,12 @@ struct Tenant {
     id: u32,
     stream: String,
     user: String,
-    client: IggyClient,
+    client: MessengerClient,
     consumers: Vec<TenantConsumer>,
 }
 
 impl Tenant {
-    pub fn new(id: u32, stream: String, user: String, client: IggyClient) -> Self {
+    pub fn new(id: u32, stream: String, user: String, client: MessengerClient) -> Self {
         Self {
             id,
             stream,
@@ -63,11 +63,11 @@ struct TenantConsumer {
     id: u32,
     stream: String,
     topic: String,
-    consumer: IggyConsumer,
+    consumer: MessengerConsumer,
 }
 
 impl TenantConsumer {
-    pub fn new(id: u32, stream: String, topic: String, consumer: IggyConsumer) -> Self {
+    pub fn new(id: u32, stream: String, topic: String, consumer: MessengerConsumer) -> Self {
         Self {
             id,
             stream,
@@ -186,8 +186,8 @@ async fn create_user(
     stream_name: &str,
     topics: &[&str],
     username: &str,
-    client: &IggyClient,
-) -> Result<(), IggyError> {
+    client: &MessengerClient,
+) -> Result<(), MessengerError> {
     let stream = client
         .get_stream(&stream_name.try_into()?)
         .await?
@@ -283,20 +283,20 @@ fn start_consumers(
 }
 
 async fn create_consumers(
-    client: &IggyClient,
+    client: &MessengerClient,
     consumers_count: u32,
     stream: &str,
     topics: &[&str],
     batch_length: u32,
     interval: &str,
-) -> Result<Vec<TenantConsumer>, IggyError> {
+) -> Result<Vec<TenantConsumer>, MessengerError> {
     let mut consumers = Vec::new();
     for topic in topics {
         for id in 1..=consumers_count {
             let mut consumer = client
                 .consumer_group(CONSUMER_GROUP, stream, topic)?
                 .batch_length(batch_length)
-                .poll_interval(IggyDuration::from_str(interval).expect("Invalid duration"))
+                .poll_interval(MessengerDuration::from_str(interval).expect("Invalid duration"))
                 .polling_strategy(PollingStrategy::next())
                 .auto_join_consumer_group()
                 .auto_commit(AutoCommit::When(AutoCommitWhen::PollingMessages))
@@ -314,11 +314,11 @@ async fn create_consumers(
 }
 
 async fn ensure_stream_topics_access(
-    client: &IggyClient,
+    client: &MessengerClient,
     topics: &[&str],
     available_stream: &str,
     unavailable_streams: &[&str],
-) -> Result<(), IggyError> {
+) -> Result<(), MessengerError> {
     for topic in topics {
         let topic_id = Identifier::named(topic)?;
         client
@@ -345,9 +345,9 @@ async fn create_client(
     address: &str,
     username: &str,
     password: &str,
-) -> Result<IggyClient, IggyError> {
-    let connection_string = format!("iggy://{username}:{password}@{address}");
-    let client = IggyClient::builder_from_connection_string(&connection_string)?.build()?;
+) -> Result<MessengerClient, MessengerError> {
+    let connection_string = format!("messenger://{username}:{password}@{address}");
+    let client = MessengerClient::builder_from_connection_string(&connection_string)?.build()?;
     client.connect().await?;
     Ok(client)
 }

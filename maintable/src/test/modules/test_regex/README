@@ -1,7 +1,7 @@
 test_regex is a module for testing the regular expression package.
 It is mostly meant to allow us to absorb Tcl's regex test suite.
 Therefore, there are provisions to exercise regex features that
-aren't currently exposed at the SQL level by PostgreSQL.
+aren't currently exposed at the SQL level by maintableQL.
 
 Currently, one function is provided:
 
@@ -45,7 +45,7 @@ are as follows.  It is admitted that some are not very mnemonic.
 	;	set REG_FTRACE (only useful in REG_DEBUG builds)
 
 	&	test as both ARE and BRE
-		(Not implemented in Postgres, we use separate tests)
+		(Not implemented in Maintable, we use separate tests)
 	b	BRE
 	e	ERE
 	a	turn advanced-features bit on (error unless ERE already)
@@ -59,7 +59,7 @@ are as follows.  It is admitted that some are not very mnemonic.
 	n	newlines are fully magic, both effects
 	x	expanded RE syntax
 	t	incomplete-match reporting
-	c	canmatch (equivalent to "t0!", in Postgres implementation)
+	c	canmatch (equivalent to "t0!", in Maintable implementation)
 	s	match only at start (REG_BOSONLY)
 
 	A	backslash-_a_lphanumeric seen

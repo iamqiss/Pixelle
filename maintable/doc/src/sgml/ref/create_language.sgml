@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_language.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createlanguage">
@@ -32,7 +32,7 @@ CREATE [ OR REPLACE ] [ TRUSTED ] [ PROCEDURAL ] LANGUAGE <replaceable class="pa
 
   <para>
    <command>CREATE LANGUAGE</command> registers a new
-   procedural language with a <productname>PostgreSQL</productname>
+   procedural language with a <productname>maintableQL</productname>
    database.  Subsequently, functions and procedures can be
    defined in this new language.
   </para>
@@ -55,7 +55,7 @@ CREATE [ OR REPLACE ] [ TRUSTED ] [ PROCEDURAL ] LANGUAGE <replaceable class="pa
 
   <para>
    One must have the
-   <productname>PostgreSQL</productname> superuser privilege to
+   <productname>maintableQL</productname> superuser privilege to
    register a new language or change an existing language's parameters.
    However, once the language is created it is valid to assign ownership of
    it to a non-superuser, who may then drop it, change its permissions,
@@ -86,7 +86,7 @@ CREATE [ OR REPLACE ] [ TRUSTED ] [ PROCEDURAL ] LANGUAGE <replaceable class="pa
        not grant access to data that the user would not otherwise
        have.  If this key word is omitted
        when registering the language, only users with the
-       <productname>PostgreSQL</productname> superuser privilege can
+       <productname>maintableQL</productname> superuser privilege can
        use this language to create new functions.
       </para>
      </listitem>
@@ -122,7 +122,7 @@ CREATE [ OR REPLACE ] [ TRUSTED ] [ PROCEDURAL ] LANGUAGE <replaceable class="pa
        called to execute the procedural language's functions.  The call
        handler for a procedural language must be written in a compiled
        language such as C with version 1 call convention and
-       registered with <productname>PostgreSQL</productname> as a
+       registered with <productname>maintableQL</productname> as a
        function taking no arguments and returning the
        <type>language_handler</type> type, a placeholder type that is
        simply used to identify the function as a call handler.
@@ -232,7 +232,7 @@ CREATE EXTENSION plsample;
 
   <para>
    <command>CREATE LANGUAGE</command> is a
-   <productname>PostgreSQL</productname> extension.
+   <productname>maintableQL</productname> extension.
   </para>
  </refsect1>
 

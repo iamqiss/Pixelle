@@ -18,7 +18,7 @@
 
 use crate::streaming::deduplication::message_deduplicator::MessageDeduplicator;
 
-use super::types::{IggyMessagesBatchMut, IggyMessagesBatchSet};
+use super::types::{MessengerMessagesBatchMut, MessengerMessagesBatchSet};
 use tracing::trace;
 
 /// A container that accumulates messages in memory before they are written to disk.
@@ -38,7 +38,7 @@ pub struct MessagesAccumulator {
     current_position: u32,
 
     /// Collection of all message batches in the accumulator
-    batches: IggyMessagesBatchSet,
+    batches: MessengerMessagesBatchSet,
 
     /// Total number of messages in the accumulator
     messages_count: u32,
@@ -66,7 +66,7 @@ impl MessagesAccumulator {
         segment_start_offset: u64,
         segment_current_offset: u64,
         segment_current_position: u32,
-        mut batch: IggyMessagesBatchMut,
+        mut batch: MessengerMessagesBatchMut,
         deduplicator: Option<&MessageDeduplicator>,
     ) {
         let batch_messages_count = batch.count();
@@ -121,7 +121,7 @@ impl MessagesAccumulator {
     /// # Returns
     ///
     /// A batch set containing the requested messages
-    pub fn get_messages_by_offset(&self, start_offset: u64, count: u32) -> IggyMessagesBatchSet {
+    pub fn get_messages_by_offset(&self, start_offset: u64, count: u32) -> MessengerMessagesBatchSet {
         trace!(
             "Getting {count} messages from accumulator by offset {start_offset}, current_offset: {}, current_position: {}",
             self.current_offset, self.current_position
@@ -143,7 +143,7 @@ impl MessagesAccumulator {
         &self,
         start_timestamp: u64,
         count: u32,
-    ) -> IggyMessagesBatchSet {
+    ) -> MessengerMessagesBatchSet {
         self.batches.get_by_timestamp(start_timestamp, count)
     }
 
@@ -185,7 +185,7 @@ impl MessagesAccumulator {
     /// Consumes the accumulator and returns the contained message batches.
     ///
     /// This is typically called when it's time to persist the accumulated messages to disk.
-    pub fn into_batch_set(self) -> IggyMessagesBatchSet {
+    pub fn into_batch_set(self) -> MessengerMessagesBatchSet {
         self.batches
     }
 

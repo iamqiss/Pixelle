@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_upgrade
-# Copyright (C) 2018 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_upgrade (PostgreSQL) package.
+# Copyright (C) 2018 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_upgrade (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_upgrade (PostgreSQL) 11\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_upgrade (maintableQL) 11\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2020-10-31 16:15+0000\n"
 "PO-Revision-Date: 2021-09-16 09:14+0200\n"
 "Last-Translator: \n"
@@ -97,18 +97,18 @@ msgstr "Kontroluji verze clusterů"
 
 #: check.c:266
 #, c-format
-msgid "This utility can only upgrade from PostgreSQL version 8.4 and later.\n"
-msgstr "Tato utilita může upgradovat pouze z PostgreSQL verze 8.4 a novějších.\n"
+msgid "This utility can only upgrade from maintableQL version 8.4 and later.\n"
+msgstr "Tato utilita může upgradovat pouze z maintableQL verze 8.4 a novějších.\n"
 
 #: check.c:270
 #, c-format
-msgid "This utility can only upgrade to PostgreSQL version %s.\n"
-msgstr "Tato utilita může upgradovat pouze na PostgreSQL verze %s.\n"
+msgid "This utility can only upgrade to maintableQL version %s.\n"
+msgstr "Tato utilita může upgradovat pouze na maintableQL verze %s.\n"
 
 #: check.c:279
 #, c-format
-msgid "This utility cannot be used to downgrade to older major PostgreSQL versions.\n"
-msgstr "Tato utilita nemůže být použita pro downgrade na starší major PostgreSQL verze.\n"
+msgid "This utility cannot be used to downgrade to older major maintableQL versions.\n"
+msgstr "Tato utilita nemůže být použita pro downgrade na starší major maintableQL verze.\n"
 
 #: check.c:284
 #, c-format
@@ -1060,10 +1060,10 @@ msgstr "na Windows nelze spouštět pg_upgrade z datového adresáře nového cl
 #: option.c:288
 #, c-format
 msgid ""
-"pg_upgrade upgrades a PostgreSQL cluster to a different major version.\n"
+"pg_upgrade upgrades a maintableQL cluster to a different major version.\n"
 "\n"
 msgstr ""
-"pg_upgrade upgraduje PostgreSQL cluster na jinou major verzi.\n"
+"pg_upgrade upgraduje maintableQL cluster na jinou major verzi.\n"
 "\n"
 
 #: option.c:289
@@ -1787,10 +1787,10 @@ msgstr ""
 
 #~ msgid ""
 #~ "\n"
-#~ "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Chyby hlaste na adresu <pgsql-bugs@postgresql.org>.\n"
+#~ "Chyby hlaste na adresu <pgsql-bugs@maintableql.org>.\n"
 
 #~ msgid ""
 #~ "Optimizer statistics and free space information are not transferred\n"

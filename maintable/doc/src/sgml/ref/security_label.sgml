@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/security_label.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-security-label">
@@ -76,7 +76,7 @@ SECURITY LABEL [ FOR <replaceable class="parameter">provider</replaceable> ] ON
    The label provider determines whether a given label is valid and whether
    it is permissible to assign that label to a given object.  The meaning of a
    given label is likewise at the discretion of the label provider.
-   <productname>PostgreSQL</productname> places no restrictions on whether or how a
+   <productname>maintableQL</productname> places no restrictions on whether or how a
    label provider must interpret security labels; it merely provides a
    mechanism for storing them.  In practice, this facility is intended to allow
    integration with label-based mandatory access control (MAC) systems such as

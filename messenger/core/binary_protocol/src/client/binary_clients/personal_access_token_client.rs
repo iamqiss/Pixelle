@@ -17,8 +17,8 @@
  */
 
 use async_trait::async_trait;
-use iggy_common::{
-    IdentityInfo, IggyError, PersonalAccessTokenExpiry, PersonalAccessTokenInfo,
+use messenger_common::{
+    IdentityInfo, MessengerError, PersonalAccessTokenExpiry, PersonalAccessTokenInfo,
     RawPersonalAccessToken,
 };
 
@@ -26,18 +26,18 @@ use iggy_common::{
 #[async_trait]
 pub trait PersonalAccessTokenClient {
     /// Get the info about all the personal access tokens of the currently authenticated user.
-    async fn get_personal_access_tokens(&self) -> Result<Vec<PersonalAccessTokenInfo>, IggyError>;
+    async fn get_personal_access_tokens(&self) -> Result<Vec<PersonalAccessTokenInfo>, MessengerError>;
     /// Create a new personal access token for the currently authenticated user.
     async fn create_personal_access_token(
         &self,
         name: &str,
         expiry: PersonalAccessTokenExpiry,
-    ) -> Result<RawPersonalAccessToken, IggyError>;
+    ) -> Result<RawPersonalAccessToken, MessengerError>;
     /// Delete a personal access token of the currently authenticated user by unique token name.
-    async fn delete_personal_access_token(&self, name: &str) -> Result<(), IggyError>;
+    async fn delete_personal_access_token(&self, name: &str) -> Result<(), MessengerError>;
     /// Login the user with the provided personal access token.
     async fn login_with_personal_access_token(
         &self,
         token: &str,
-    ) -> Result<IdentityInfo, IggyError>;
+    ) -> Result<IdentityInfo, MessengerError>;
 }

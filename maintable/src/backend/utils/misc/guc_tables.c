@@ -10,7 +10,7 @@
  * their fields are intended to be constant, some fields change at runtime.
  *
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  * Written by Peter Eisentraut <peter_e@gmx.net>.
  *
  * IDENTIFICATION
@@ -18,7 +18,7 @@
  *
  *--------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #ifdef HAVE_COPYFILE_H
 #include <copyfile.h>
@@ -164,8 +164,8 @@ static const struct config_enum_entry server_message_level_options[] = {
 };
 
 static const struct config_enum_entry intervalstyle_options[] = {
-	{"postgres", INTSTYLE_POSTGRES, false},
-	{"postgres_verbose", INTSTYLE_POSTGRES_VERBOSE, false},
+	{"maintable", INTSTYLE_MAINTABLE, false},
+	{"maintable_verbose", INTSTYLE_MAINTABLE_VERBOSE, false},
 	{"sql_standard", INTSTYLE_SQL_STANDARD, false},
 	{"iso_8601", INTSTYLE_ISO_8601, false},
 	{NULL, 0, false}
@@ -565,7 +565,7 @@ int			tcp_keepalives_count;
 int			tcp_user_timeout;
 
 /*
- * SSL renegotiation was been removed in PostgreSQL 9.5, but we tolerate it
+ * SSL renegotiation was been removed in maintableQL 9.5, but we tolerate it
  * being set to zero (meaning never renegotiate) for backward compatibility.
  * This avoids breaking compatibility with clients that have never supported
  * renegotiation and therefore always try to zero it.
@@ -731,7 +731,7 @@ const char *const config_group_names[] =
 	[CLIENT_CONN_PRELOAD] = gettext_noop("Client Connection Defaults / Shared Library Preloading"),
 	[CLIENT_CONN_OTHER] = gettext_noop("Client Connection Defaults / Other Defaults"),
 	[LOCK_MANAGEMENT] = gettext_noop("Lock Management"),
-	[COMPAT_OPTIONS_PREVIOUS] = gettext_noop("Version and Platform Compatibility / Previous PostgreSQL Versions"),
+	[COMPAT_OPTIONS_PREVIOUS] = gettext_noop("Version and Platform Compatibility / Previous maintableQL Versions"),
 	[COMPAT_OPTIONS_OTHER] = gettext_noop("Version and Platform Compatibility / Other Platforms and Clients"),
 	[ERROR_HANDLING_OPTIONS] = gettext_noop("Error Handling"),
 	[PRESET_OPTIONS] = gettext_noop("Preset Options"),
@@ -778,7 +778,7 @@ StaticAssertDecl(lengthof(config_type_names) == (PGC_ENUM + 1),
  *
  * 4. Add a record below.
  *
- * 5. Add it to src/backend/utils/misc/postgresql.conf.sample, if
+ * 5. Add it to src/backend/utils/misc/maintableql.conf.sample, if
  *	  appropriate.
  *
  * 6. Don't forget to document the option (at least in config.sgml).
@@ -1170,7 +1170,7 @@ struct config_bool ConfigureNamesBool[] =
 	{
 		{"ignore_checksum_failure", PGC_SUSET, DEVELOPER_OPTIONS,
 			gettext_noop("Continues processing after a checksum failure."),
-			gettext_noop("Detection of a checksum failure normally causes PostgreSQL to "
+			gettext_noop("Detection of a checksum failure normally causes maintableQL to "
 						 "report an error, aborting the current transaction. Setting "
 						 "ignore_checksum_failure to true causes the system to ignore the failure "
 						 "(but still report a warning), and continue processing. This "
@@ -1186,7 +1186,7 @@ struct config_bool ConfigureNamesBool[] =
 	{
 		{"zero_damaged_pages", PGC_SUSET, DEVELOPER_OPTIONS,
 			gettext_noop("Continues processing past damaged page headers."),
-			gettext_noop("Detection of a damaged page header normally causes PostgreSQL to "
+			gettext_noop("Detection of a damaged page header normally causes maintableQL to "
 						 "report an error, aborting the current transaction. Setting "
 						 "\"zero_damaged_pages\" to true causes the system to instead report a "
 						 "warning, zero out the damaged page, and continue processing. This "
@@ -1202,7 +1202,7 @@ struct config_bool ConfigureNamesBool[] =
 		{"ignore_invalid_pages", PGC_POSTMASTER, DEVELOPER_OPTIONS,
 			gettext_noop("Continues recovery after an invalid pages failure."),
 			gettext_noop("Detection of WAL records having references to "
-						 "invalid pages during recovery causes PostgreSQL to "
+						 "invalid pages during recovery causes maintableQL to "
 						 "raise a PANIC-level error, aborting the recovery. "
 						 "Setting \"ignore_invalid_pages\" to true causes "
 						 "the system to ignore invalid page references "
@@ -1789,7 +1789,7 @@ struct config_bool ConfigureNamesBool[] =
 
 	/*
 	 * WITH OIDS support, and consequently default_with_oids, was removed in
-	 * PostgreSQL 12, but we tolerate the parameter being set to false to
+	 * maintableQL 12, but we tolerate the parameter being set to false to
 	 * avoid unnecessarily breaking older dump files.
 	 */
 	{
@@ -2026,7 +2026,7 @@ struct config_bool ConfigureNamesBool[] =
 		{"lo_compat_privileges", PGC_SUSET, COMPAT_OPTIONS_PREVIOUS,
 			gettext_noop("Enables backward compatibility mode for privilege checks on large objects."),
 			gettext_noop("Skips privilege checks when reading or modifying large objects, "
-						 "for compatibility with PostgreSQL releases prior to 9.0.")
+						 "for compatibility with maintableQL releases prior to 9.0.")
 		},
 		&lo_compat_privileges,
 		false,
@@ -3769,7 +3769,7 @@ struct config_int ConfigureNamesInt[] =
 	{
 		{"effective_cache_size", PGC_USERSET, QUERY_TUNING_COST,
 			gettext_noop("Sets the planner's assumption about the total size of the data caches."),
-			gettext_noop("That is, the total size of the caches (kernel cache and shared buffers) used for PostgreSQL data files. "
+			gettext_noop("That is, the total size of the caches (kernel cache and shared buffers) used for maintableQL data files. "
 						 "This is measured in disk pages, which are normally 8 kB each."),
 			GUC_UNIT_BLOCKS | GUC_EXPLAIN
 		},
@@ -3801,7 +3801,7 @@ struct config_int ConfigureNamesInt[] =
 	},
 
 	{
-		/* Can't be set in postgresql.conf */
+		/* Can't be set in maintableql.conf */
 		{"server_version_num", PGC_INTERNAL, PRESET_OPTIONS,
 			gettext_noop("Shows the server version as an integer."),
 			NULL,
@@ -4580,7 +4580,7 @@ struct config_string ConfigureNamesString[] =
 	},
 
 	{
-		/* Can't be set in postgresql.conf */
+		/* Can't be set in maintableql.conf */
 		{"server_encoding", PGC_INTERNAL, PRESET_OPTIONS,
 			gettext_noop("Shows the server (database) character set encoding."),
 			NULL,
@@ -4592,7 +4592,7 @@ struct config_string ConfigureNamesString[] =
 	},
 
 	{
-		/* Can't be set in postgresql.conf */
+		/* Can't be set in maintableql.conf */
 		{"server_version", PGC_INTERNAL, PRESET_OPTIONS,
 			gettext_noop("Shows the server version."),
 			NULL,
@@ -4659,25 +4659,25 @@ struct config_string ConfigureNamesString[] =
 			GUC_SUPERUSER_ONLY
 		},
 		&Log_filename,
-		"postgresql-%Y-%m-%d_%H%M%S.log",
+		"maintableql-%Y-%m-%d_%H%M%S.log",
 		NULL, NULL, NULL
 	},
 
 	{
 		{"syslog_ident", PGC_SIGHUP, LOGGING_WHERE,
-			gettext_noop("Sets the program name used to identify PostgreSQL "
+			gettext_noop("Sets the program name used to identify maintableQL "
 						 "messages in syslog."),
 			NULL
 		},
 		&syslog_ident_str,
-		"postgres",
+		"maintable",
 		NULL, assign_syslog_ident, NULL
 	},
 
 	{
 		{"event_source", PGC_POSTMASTER, LOGGING_WHERE,
 			gettext_noop("Sets the application name used to identify "
-						 "PostgreSQL messages in the event log."),
+						 "maintableQL messages in the event log."),
 			NULL
 		},
 		&event_source,
@@ -5160,7 +5160,7 @@ struct config_enum ConfigureNamesEnum[] =
 			GUC_REPORT
 		},
 		&IntervalStyle,
-		INTSTYLE_POSTGRES, intervalstyle_options,
+		INTSTYLE_MAINTABLE, intervalstyle_options,
 		NULL, NULL, NULL
 	},
 

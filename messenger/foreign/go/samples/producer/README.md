@@ -2,7 +2,7 @@
 
 ## About The Project
 
-Sample message producer written using the `iggy-go` sdk.
+Sample message producer written using the `messenger-go` sdk.
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -18,18 +18,18 @@ In order to use this SDK you need to install golang on your enviroment. Here's a
 
 In order to successfully launch the producer app follow these steps:
 
-1. Clone iggy repo and run it in background
+1. Clone messenger repo and run it in background
 
     ```sh
-    git clone https://github.com/apache/iggy.git
-    cd iggy
-    cargo run --bin iggy-server -r
+    git clone https://github.com/apache/messenger.git
+    cd messenger
+    cargo run --bin messenger-server -r
     ```
 
-2. Open new terminal instance and enter `iggy-go` root folder
+2. Open new terminal instance and enter `messenger-go` root folder
 
     ```sh
-    cd iggy-go
+    cd messenger-go
     ```
 
 3. Run the producer

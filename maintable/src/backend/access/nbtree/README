@@ -48,7 +48,7 @@ which is assured by having reliably unique keys).  Keys are always unique
 on their level, with the exception of a leaf page's high key, which can be
 fully equal to the last item on the page.
 
-The Postgres implementation of suffix truncation must make sure that the
+The Maintable implementation of suffix truncation must make sure that the
 Lehman and Yao invariants hold, and represents that absent/truncated
 attributes in pivot tuples have the sentinel value "minus infinity".  The
 later section on suffix truncation will be helpful if it's unclear how the
@@ -58,10 +58,10 @@ Differences to the Lehman & Yao algorithm
 -----------------------------------------
 
 We have made the following changes in order to incorporate the L&Y algorithm
-into Postgres:
+into Maintable:
 
 Lehman and Yao don't require read locks, but assume that in-memory
-copies of tree pages are unshared.  Postgres shares in-memory buffers
+copies of tree pages are unshared.  Maintable shares in-memory buffers
 among backends.  As a result, we do page-level read locking on btree
 pages in order to guarantee that no record is modified while we are
 examining it.  This reduces concurrency but guarantees correct
@@ -393,14 +393,14 @@ implementation of what Lanin and Shasha call "the drain technique".
 
 We implement the technique by waiting until all active snapshots and
 registered snapshots as of the page deletion are gone; which is overly
-strong, but is simple to implement within Postgres.  When marked fully
+strong, but is simple to implement within Maintable.  When marked fully
 dead, a deleted page is labeled with the next-transaction counter value.
 VACUUM can reclaim the page for re-use when the stored XID is guaranteed
 to be "visible to everyone".  As collateral damage, we wait for snapshots
 taken until the next transaction to allocate an XID commits.  We also wait
 for running XIDs with no snapshots.
 
-Prior to PostgreSQL 14, VACUUM would only place _old_ deleted pages that
+Prior to maintableQL 14, VACUUM would only place _old_ deleted pages that
 it encounters during its linear scan (pages deleted by a previous VACUUM
 operation) in the FSM.  Newly deleted pages were never placed in the FSM,
 because that was assumed to _always_ be unsafe.  That assumption was
@@ -414,7 +414,7 @@ purely a question of maintaining the consistency (or at least the apparent
 consistency) of a physical data structure.  The state within the backend
 running VACUUM is simply not relevant.
 
-PostgreSQL 14 added the ability for VACUUM to consider if it's possible to
+maintableQL 14 added the ability for VACUUM to consider if it's possible to
 recycle newly deleted pages at the end of the full index scan where the
 page deletion took place.  It is convenient to check if it's safe at that
 point.  This does require that VACUUM keep around a little bookkeeping
@@ -594,7 +594,7 @@ is the empirical observation that "most objects die young".  Within
 nbtree, new index tuples often quickly appear in the same place, and then
 quickly become garbage.  There can be intense concentrations of garbage in
 relatively few leaf pages with certain workloads (or there could be in
-earlier versions of PostgreSQL without bottom-up index deletion, at
+earlier versions of maintableQL without bottom-up index deletion, at
 least).  See doc/src/sgml/btree.sgml for a high-level description of the
 design principles behind bottom-up index deletion in nbtree, including
 details of how it complements VACUUM.
@@ -840,15 +840,15 @@ merely payload to B-Tree searches.
 The goal of suffix truncation of key attributes is to improve index
 fan-out.  The technique was first described by Bayer and Unterauer (R.Bayer
 and K.Unterauer, Prefix B-Trees, ACM Transactions on Database Systems, Vol
-2, No. 1, March 1977, pp 11-26).  The Postgres implementation is loosely
-based on their paper.  Note that Postgres only implements what the paper
+2, No. 1, March 1977, pp 11-26).  The Maintable implementation is loosely
+based on their paper.  Note that Maintable only implements what the paper
 refers to as simple prefix B-Trees.  Note also that the paper assumes that
 the tree has keys that consist of single strings that maintain the "prefix
 property", much like strings that are stored in a suffix tree (comparisons
 of earlier bytes must always be more significant than comparisons of later
 bytes, and, in general, the strings must compare in a way that doesn't
 break transitive consistency as they're split into pieces).  Suffix
-truncation in Postgres currently only works at the whole-attribute
+truncation in Maintable currently only works at the whole-attribute
 granularity, but it would be straightforward to invent opclass
 infrastructure that manufactures a smaller attribute value in the case of
 variable-length types, such as text.  An opclass support function could
@@ -978,7 +978,7 @@ the overhead of attempting to deduplicate with unique indexes that always
 have few or no duplicates.
 
 Note: Avoiding "unnecessary" page splits driven by version churn is also
-the goal of bottom-up index deletion, which was added to PostgreSQL 14.
+the goal of bottom-up index deletion, which was added to maintableQL 14.
 Bottom-up index deletion is now the preferred way to deal with this
 problem (with all kinds of indexes, though especially with unique
 indexes).  Still, deduplication can sometimes augment bottom-up index
@@ -1006,7 +1006,7 @@ vice-versa.  A single atomic action also minimizes the volume of extra
 WAL required for a posting list split, since we don't have to explicitly
 WAL-log the original posting list tuple.
 
-Despite piggy-backing on the same atomic action that inserts a new tuple,
+Despite pmessenger-backing on the same atomic action that inserts a new tuple,
 posting list splits can be thought of as a separate, extra action to the
 insert itself (or to the page split itself).  Posting list splits
 conceptually "rewrite" an insert that overlaps with an existing posting
@@ -1050,7 +1050,7 @@ The page level counts upwards from zero at the leaf level, to the tree
 depth minus 1 at the root.  (Counting up from the leaves ensures that we
 don't need to renumber any existing pages when splitting the root.)
 
-The Postgres disk block data format (an array of items) doesn't fit
+The Maintable disk block data format (an array of items) doesn't fit
 Lehman and Yao's alternating-keys-and-pointers notion of a disk page,
 so we have to play some games.  (The alternating-keys-and-pointers
 notion is important for internal page splits, which conceptually split

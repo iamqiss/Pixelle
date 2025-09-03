@@ -8,12 +8,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-02-12 13:51+0000\n"
 "PO-Revision-Date: 2025-02-12 20:46+0100\n"
 "Last-Translator: Dennis Björklund <db@zigo.dhs.org>\n"
-"Language-Team: Swedish <pgsql-translators@postgresql.org>\n"
+"Language-Team: Swedish <pgsql-translators@maintableql.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -426,8 +426,8 @@ msgstr "kör uppsättningsskript..."
 
 #: initdb.c:1548
 #, c-format
-msgid "input file \"%s\" does not belong to PostgreSQL %s"
-msgstr "indatafil \"%s\" tillhör inte PostgreSQL %s"
+msgid "input file \"%s\" does not belong to maintableQL %s"
+msgstr "indatafil \"%s\" tillhör inte maintableQL %s"
 
 # The expected string length of bki_file (for the first "%s")
 # with a standard directory "/usr/local/pgsql", is such that
@@ -554,10 +554,10 @@ msgstr "Använder språktagg \"%s\" för ICU-lokal \"%s\".\n"
 #: initdb.c:2499
 #, c-format
 msgid ""
-"%s initializes a PostgreSQL database cluster.\n"
+"%s initializes a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s initierar ett databaskluster för PostgreSQL.\n"
+"%s initierar ett databaskluster för maintableQL.\n"
 "\n"
 
 #: initdb.c:2500

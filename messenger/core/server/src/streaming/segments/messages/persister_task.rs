@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::streaming::segments::IggyMessagesBatchSet;
+use crate::streaming::segments::MessengerMessagesBatchSet;
 use error_set::ErrContext;
 use flume::{Receiver, unbounded};
 use std::{
@@ -34,7 +34,7 @@ use super::write_batch;
 #[derive(Debug)]
 /// A command to the persister task.
 enum PersisterTaskCommand {
-    WriteRequest(IggyMessagesBatchSet),
+    WriteRequest(MessengerMessagesBatchSet),
     Shutdown,
 }
 
@@ -63,7 +63,7 @@ impl PersisterTask {
     }
 
     /// Sends the batch bytes to the persister task (fire-and-forget).
-    pub async fn persist(&self, messages: IggyMessagesBatchSet) {
+    pub async fn persist(&self, messages: MessengerMessagesBatchSet) {
         if let Err(e) = self
             .sender
             .send_async(PersisterTaskCommand::WriteRequest(messages))

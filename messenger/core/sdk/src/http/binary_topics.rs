@@ -18,12 +18,12 @@
 
 use crate::http::http_client::HttpClient;
 use crate::http::http_transport::HttpTransport;
-use crate::prelude::{CompressionAlgorithm, Identifier, IggyError, IggyExpiry, MaxTopicSize};
+use crate::prelude::{CompressionAlgorithm, Identifier, MessengerError, MessengerExpiry, MaxTopicSize};
 use async_trait::async_trait;
-use iggy_binary_protocol::TopicClient;
-use iggy_common::create_topic::CreateTopic;
-use iggy_common::update_topic::UpdateTopic;
-use iggy_common::{Topic, TopicDetails};
+use messenger_binary_protocol::TopicClient;
+use messenger_common::create_topic::CreateTopic;
+use messenger_common::update_topic::UpdateTopic;
+use messenger_common::{Topic, TopicDetails};
 
 #[async_trait]
 impl TopicClient for HttpClient {
@@ -31,7 +31,7 @@ impl TopicClient for HttpClient {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<Option<TopicDetails>, IggyError> {
+    ) -> Result<Option<TopicDetails>, MessengerError> {
         let response = self
             .get(&get_details_path(
                 &stream_id.as_cow_str(),
@@ -39,7 +39,7 @@ impl TopicClient for HttpClient {
             ))
             .await;
         if let Err(error) = response {
-            if matches!(error, IggyError::ResourceNotFound(_)) {
+            if matches!(error, MessengerError::ResourceNotFound(_)) {
                 return Ok(None);
             }
 
@@ -49,16 +49,16 @@ impl TopicClient for HttpClient {
         let topic = response?
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(Some(topic))
     }
 
-    async fn get_topics(&self, stream_id: &Identifier) -> Result<Vec<Topic>, IggyError> {
+    async fn get_topics(&self, stream_id: &Identifier) -> Result<Vec<Topic>, MessengerError> {
         let response = self.get(&get_path(&stream_id.as_cow_str())).await?;
         let topics = response
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(topics)
     }
 
@@ -70,9 +70,9 @@ impl TopicClient for HttpClient {
         compression_algorithm: CompressionAlgorithm,
         replication_factor: Option<u8>,
         topic_id: Option<u32>,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         max_topic_size: MaxTopicSize,
-    ) -> Result<TopicDetails, IggyError> {
+    ) -> Result<TopicDetails, MessengerError> {
         let response = self
             .post(
                 &get_path(&stream_id.as_cow_str()),
@@ -91,7 +91,7 @@ impl TopicClient for HttpClient {
         let topic = response
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(topic)
     }
 
@@ -102,9 +102,9 @@ impl TopicClient for HttpClient {
         name: &str,
         compression_algorithm: CompressionAlgorithm,
         replication_factor: Option<u8>,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         max_topic_size: MaxTopicSize,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.put(
             &get_details_path(&stream_id.as_cow_str(), &topic_id.as_cow_str()),
             &UpdateTopic {
@@ -125,7 +125,7 @@ impl TopicClient for HttpClient {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.delete(&get_details_path(
             &stream_id.as_cow_str(),
             &topic_id.as_cow_str(),
@@ -138,7 +138,7 @@ impl TopicClient for HttpClient {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.delete(&format!(
             "{}/purge",
             &get_details_path(&stream_id.as_cow_str(), &topic_id.as_cow_str(),)

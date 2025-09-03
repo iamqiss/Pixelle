@@ -17,12 +17,12 @@
  */
 
 use crate::consumer_ext::MessageConsumer;
-use crate::prelude::IggyError;
+use crate::prelude::MessengerError;
 use async_trait::async_trait;
 use tokio::sync::oneshot;
 
 #[async_trait]
-pub trait IggyConsumerMessageExt<'a> {
+pub trait MessengerConsumerMessageExt<'a> {
     /// This function starts an event loop that consumes messages from the stream and
     /// applies the provided consumer. The loop will exit when the shutdown receiver is triggered.
     ///
@@ -37,7 +37,7 @@ pub trait IggyConsumerMessageExt<'a> {
         &mut self,
         message_consumer: &'a P,
         shutdown_rx: oneshot::Receiver<()>,
-    ) -> Result<(), IggyError>
+    ) -> Result<(), MessengerError>
     where
         P: MessageConsumer + Sync;
 }

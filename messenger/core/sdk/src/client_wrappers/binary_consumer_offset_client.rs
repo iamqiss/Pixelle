@@ -18,8 +18,8 @@
 
 use crate::client_wrappers::client_wrapper::ClientWrapper;
 use async_trait::async_trait;
-use iggy_binary_protocol::ConsumerOffsetClient;
-use iggy_common::{Consumer, ConsumerOffsetInfo, Identifier, IggyError};
+use messenger_binary_protocol::ConsumerOffsetClient;
+use messenger_common::{Consumer, ConsumerOffsetInfo, Identifier, MessengerError};
 
 #[async_trait]
 impl ConsumerOffsetClient for ClientWrapper {
@@ -30,9 +30,9 @@ impl ConsumerOffsetClient for ClientWrapper {
         topic_id: &Identifier,
         partition_id: Option<u32>,
         offset: u64,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .store_consumer_offset(consumer, stream_id, topic_id, partition_id, offset)
                     .await
@@ -61,9 +61,9 @@ impl ConsumerOffsetClient for ClientWrapper {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partition_id: Option<u32>,
-    ) -> Result<Option<ConsumerOffsetInfo>, IggyError> {
+    ) -> Result<Option<ConsumerOffsetInfo>, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .get_consumer_offset(consumer, stream_id, topic_id, partition_id)
                     .await
@@ -92,9 +92,9 @@ impl ConsumerOffsetClient for ClientWrapper {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partition_id: Option<u32>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .delete_consumer_offset(consumer, stream_id, topic_id, partition_id)
                     .await

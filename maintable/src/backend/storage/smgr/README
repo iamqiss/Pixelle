@@ -3,11 +3,11 @@ src/backend/storage/smgr/README
 Storage Managers
 ================
 
-In the original Berkeley Postgres system, there were several storage managers,
+In the original Berkeley Maintable system, there were several storage managers,
 of which only the "magnetic disk" manager remains.  (At Berkeley there were
 also managers for the Sony WORM optical disk jukebox and persistent main
-memory, but these were never supported in any externally released Postgres,
-nor in any version of PostgreSQL.)  The "magnetic disk" manager is itself
+memory, but these were never supported in any externally released Maintable,
+nor in any version of maintableQL.)  The "magnetic disk" manager is itself
 seriously misnamed, because actually it supports any kind of device for
 which the operating system provides standard filesystem operations; which
 these days is pretty much everything of interest.  However, we retain the
@@ -16,7 +16,7 @@ other kinds of storage managers.  Removing the switch layer would save
 nothing noticeable anyway, since storage-access operations are surely far
 more expensive than one extra layer of C function calls.
 
-In Berkeley Postgres each relation was tagged with the ID of the storage
+In Berkeley Maintable each relation was tagged with the ID of the storage
 manager to use for it.  This is gone.  It would be probably more reasonable
 to associate storage managers with tablespaces, should we ever re-introduce
 multiple storage managers into the system catalogs.

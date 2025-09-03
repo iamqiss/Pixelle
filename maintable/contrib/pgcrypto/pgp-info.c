@@ -28,7 +28,7 @@
  *
  * contrib/pgcrypto/pgp-info.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "mbuf.h"
 #include "pgp.h"

@@ -8,9 +8,9 @@
  * and setof composite.
  * Joe Conway <mail@joeconway.com>
  * And contributors:
- * Nabil Sayegh <postgresql@e-trolley.de>
+ * Nabil Sayegh <maintableql@e-trolley.de>
  *
- * Copyright (c) 2002-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2002-2025, maintableQL Global Development Group
  *
  * Permission to use, copy, modify, and distribute this software and its
  * documentation for any purpose, without fee, and without a written agreement
@@ -30,7 +30,7 @@
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  *
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 

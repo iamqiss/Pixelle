@@ -2,7 +2,7 @@
 # Exercises the API for custom OAuth client flows, using the oauth_hook_client
 # test driver.
 #
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 #
 
 use strict;
@@ -10,8 +10,8 @@ use warnings FATAL => 'all';
 
 use JSON::PP     qw(encode_json);
 use MIME::Base64 qw(encode_base64);
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 if (!$ENV{PG_TEST_EXTRA} || $ENV{PG_TEST_EXTRA} !~ /\boauth\b/)
@@ -24,21 +24,21 @@ if (!$ENV{PG_TEST_EXTRA} || $ENV{PG_TEST_EXTRA} !~ /\boauth\b/)
 # Cluster Setup
 #
 
-my $node = PostgreSQL::Test::Cluster->new('primary');
+my $node = maintableQL::Test::Cluster->new('primary');
 $node->init;
-$node->append_conf('postgresql.conf', "log_connections = all\n");
-$node->append_conf('postgresql.conf',
+$node->append_conf('maintableql.conf', "log_connections = all\n");
+$node->append_conf('maintableql.conf',
 	"oauth_validator_libraries = 'validator'\n");
 $node->start;
 
-$node->safe_psql('postgres', 'CREATE USER test;');
+$node->safe_psql('maintable', 'CREATE USER test;');
 
 # These tests don't use the builtin flow, and we don't have an authorization
 # server running, so the address used here shouldn't matter. Use an invalid IP
 # address, so if there's some cascade of errors that causes the client to
 # attempt a connection, we'll fail noisily.
 my $issuer = "https://256.256.256.256";
-my $scope = "openid postgres";
+my $scope = "openid maintable";
 
 unlink($node->data_dir . '/pg_hba.conf');
 $node->append_conf(

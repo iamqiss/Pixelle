@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 #
 # This test aims to validate that an incremental backup can be combined
 # with a valid prior backup and that it cannot be combined with an invalid
@@ -9,8 +9,8 @@ use warnings FATAL => 'all';
 use File::Compare;
 use File::Path qw(rmtree);
 use File::Copy;
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Can be changed to test the other modes.
@@ -19,9 +19,9 @@ my $mode = $ENV{PG_TEST_PG_COMBINEBACKUP_MODE} || '--copy';
 note "testing using mode $mode";
 
 # Set up a new database instance.
-my $node1 = PostgreSQL::Test::Cluster->new('node1');
+my $node1 = maintableQL::Test::Cluster->new('node1');
 $node1->init(has_archiving => 1, allows_streaming => 1);
-$node1->append_conf('postgresql.conf', 'summarize_wal = on');
+$node1->append_conf('maintableql.conf', 'summarize_wal = on');
 $node1->start;
 
 # Create a file called INCREMENTAL.config in the root directory of the
@@ -35,9 +35,9 @@ close($icfg);
 
 # Set up another new database instance.  force_initdb is used because
 # we want it to be a separate cluster with a different system ID.
-my $node2 = PostgreSQL::Test::Cluster->new('node2');
+my $node2 = maintableQL::Test::Cluster->new('node2');
 $node2->init(force_initdb => 1, has_archiving => 1, allows_streaming => 1);
-$node2->append_conf('postgresql.conf', 'summarize_wal = on');
+$node2->append_conf('maintableql.conf', 'summarize_wal = on');
 $node2->start;
 
 # Take a full backup from node1.

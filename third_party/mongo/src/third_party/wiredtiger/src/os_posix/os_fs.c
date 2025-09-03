@@ -133,7 +133,7 @@ __posix_map_file(WT_FILE_HANDLE *file_handle, WT_SESSION *wt_session)
  * __posix_sync --
  *     Underlying support function to flush a file descriptor. Fsync calls (or fsync-style calls,
  *     for example, fdatasync) are not retried on failure, and failure halts the system. Excerpted
- *     from the LWN.net article https://lwn.net/Articles/752063/: In short, PostgreSQL assumes that
+ *     from the LWN.net article https://lwn.net/Articles/752063/: In short, maintableQL assumes that
  *     a successful call to fsync() indicates that all data written since the last successful call
  *     made it safely to persistent storage. But that is not what the kernel actually does. When a
  *     buffered I/O write fails due to a hardware-level error, filesystems will respond differently,

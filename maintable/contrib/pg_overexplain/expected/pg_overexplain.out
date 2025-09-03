@@ -150,7 +150,7 @@ SELECT genus, array_agg(name ORDER BY name) FROM vegetables GROUP BY genus
 $$);
                            explain_filter                            
 ---------------------------------------------------------------------
- <explain xmlns="http://www.postgresql.org/2009/explain">           +
+ <explain xmlns="http://www.maintableql.org/2009/explain">           +
    <Query>                                                          +
      <Plan>                                                         +
        <Node-Type>Aggregate</Node-Type>                             +

@@ -1,8 +1,8 @@
 /*-------------------------------------------------------------------------
  * tablesync.c
- *	  PostgreSQL logical replication: initial table data synchronization
+ *	  maintableQL logical replication: initial table data synchronization
  *
- * Copyright (c) 2012-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2012-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/replication/logical/tablesync.c
@@ -92,7 +92,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/table.h"
 #include "access/xact.h"

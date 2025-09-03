@@ -1,11 +1,11 @@
-# Copyright (c) 2025, PostgreSQL Global Development Group
+# Copyright (c) 2025, maintableQL Global Development Group
 
 # Test manipulations of replication slots with the single-user mode.
 
 use strict;
 use warnings;
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Skip the tests on Windows, as single-user mode would fail on permission
@@ -22,10 +22,10 @@ sub test_single_mode
 
 	my $result = run_log(
 		[
-			'postgres', '--single', '-F',
+			'maintable', '--single', '-F',
 			'-c' => 'exit_on_error=true',
 			'-D' => $node->data_dir,
-			'postgres'
+			'maintable'
 		],
 		'<' => \$queries);
 
@@ -36,12 +36,12 @@ my $slot_logical = 'slot_logical';
 my $slot_physical = 'slot_physical';
 
 # Initialize a node
-my $node = PostgreSQL::Test::Cluster->new('node');
+my $node = maintableQL::Test::Cluster->new('node');
 $node->init(allows_streaming => "logical");
 $node->start;
 
 # Define initial table
-$node->safe_psql('postgres', "CREATE TABLE foo (id int)");
+$node->safe_psql('maintable', "CREATE TABLE foo (id int)");
 
 $node->stop;
 

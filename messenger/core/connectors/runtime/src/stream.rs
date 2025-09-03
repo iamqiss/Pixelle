@@ -15,24 +15,24 @@
 // specific language governing permissions and limitations
 // under the License.
 
-use iggy::prelude::{Client, IggyClient, IggyClientBuilder};
+use messenger::prelude::{Client, MessengerClient, MessengerClientBuilder};
 use tracing::{error, info};
 
-use crate::{configs::IggyConfig, error::RuntimeError};
+use crate::{configs::MessengerConfig, error::RuntimeError};
 
-pub struct IggyClients {
-    pub producer: IggyClient,
-    pub consumer: IggyClient,
+pub struct MessengerClients {
+    pub producer: MessengerClient,
+    pub consumer: MessengerClient,
 }
 
-pub async fn init(config: IggyConfig) -> Result<IggyClients, RuntimeError> {
+pub async fn init(config: MessengerConfig) -> Result<MessengerClients, RuntimeError> {
     let consumer = create_client(&config).await?;
     let producer = create_client(&config).await?;
-    let iggy_clients = IggyClients { producer, consumer };
-    Ok(iggy_clients)
+    let messenger_clients = MessengerClients { producer, consumer };
+    Ok(messenger_clients)
 }
 
-async fn create_client(config: &IggyConfig) -> Result<IggyClient, RuntimeError> {
+async fn create_client(config: &MessengerConfig) -> Result<MessengerClient, RuntimeError> {
     let address = config.address.to_owned();
     let username = config.username.to_owned();
     let password = config.password.to_owned();
@@ -40,36 +40,36 @@ async fn create_client(config: &IggyConfig) -> Result<IggyClient, RuntimeError> 
 
     let connection_string = if let Some(token) = token {
         if token.is_empty() {
-            error!("Iggy token cannot be empty (if username and password are not provided)");
-            return Err(RuntimeError::MissingIggyCredentials);
+            error!("Messenger token cannot be empty (if username and password are not provided)");
+            return Err(RuntimeError::MissingMessengerCredentials);
         }
 
         let redacted_token = token.chars().take(3).collect::<String>();
-        info!("Using token: {redacted_token}*** for Iggy authentication");
-        format!("iggy://{token}@{address}")
+        info!("Using token: {redacted_token}*** for Messenger authentication");
+        format!("messenger://{token}@{address}")
     } else {
-        info!("Using username and password for Iggy authentication");
-        let username = username.ok_or(RuntimeError::MissingIggyCredentials)?;
+        info!("Using username and password for Messenger authentication");
+        let username = username.ok_or(RuntimeError::MissingMessengerCredentials)?;
         if username.is_empty() {
-            error!("Iggy password cannot be empty (if token is not provided)");
-            return Err(RuntimeError::MissingIggyCredentials);
+            error!("Messenger password cannot be empty (if token is not provided)");
+            return Err(RuntimeError::MissingMessengerCredentials);
         }
 
-        let password = password.ok_or(RuntimeError::MissingIggyCredentials)?;
+        let password = password.ok_or(RuntimeError::MissingMessengerCredentials)?;
         if password.is_empty() {
-            error!("Iggy password cannot be empty (if token is not provided)");
-            return Err(RuntimeError::MissingIggyCredentials);
+            error!("Messenger password cannot be empty (if token is not provided)");
+            return Err(RuntimeError::MissingMessengerCredentials);
         }
 
         let redacted_username = username.chars().take(3).collect::<String>();
         let redacted_password = password.chars().take(3).collect::<String>();
         info!(
-            "Using username: {redacted_username}***, password: {redacted_password}*** for Iggy authentication"
+            "Using username: {redacted_username}***, password: {redacted_password}*** for Messenger authentication"
         );
-        format!("iggy://{username}:{password}@{address}")
+        format!("messenger://{username}:{password}@{address}")
     };
 
-    let client = IggyClientBuilder::from_connection_string(&connection_string)?.build()?;
+    let client = MessengerClientBuilder::from_connection_string(&connection_string)?.build()?;
     client.connect().await?;
     Ok(client)
 }

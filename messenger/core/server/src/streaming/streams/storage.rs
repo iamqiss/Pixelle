@@ -24,8 +24,8 @@ use crate::streaming::topics::topic::Topic;
 use ahash::AHashSet;
 use error_set::ErrContext;
 use futures::future::join_all;
-use iggy_common::IggyError;
-use iggy_common::IggyTimestamp;
+use messenger_common::MessengerError;
+use messenger_common::MessengerTimestamp;
 use serde::{Deserialize, Serialize};
 use std::path::Path;
 use std::sync::Arc;
@@ -40,20 +40,20 @@ pub struct FileStreamStorage;
 #[derive(Debug, Serialize, Deserialize)]
 struct StreamData {
     name: String,
-    created_at: IggyTimestamp,
+    created_at: MessengerTimestamp,
 }
 
 impl StreamStorage for FileStreamStorage {
-    async fn load(&self, stream: &mut Stream, mut state: StreamState) -> Result<(), IggyError> {
+    async fn load(&self, stream: &mut Stream, mut state: StreamState) -> Result<(), MessengerError> {
         info!("Loading stream with ID: {} from disk...", stream.stream_id);
         if !Path::new(&stream.path).exists() {
-            return Err(IggyError::StreamIdNotFound(stream.stream_id));
+            return Err(MessengerError::StreamIdNotFound(stream.stream_id));
         }
 
         let mut unloaded_topics = Vec::new();
         let dir_entries = fs::read_dir(&stream.topics_path).await;
         if dir_entries.is_err() {
-            return Err(IggyError::CannotReadTopics(stream.stream_id));
+            return Err(MessengerError::CannotReadTopics(stream.stream_id));
         }
 
         let mut dir_entries = dir_entries.unwrap();
@@ -198,9 +198,9 @@ impl StreamStorage for FileStreamStorage {
         Ok(())
     }
 
-    async fn save(&self, stream: &Stream) -> Result<(), IggyError> {
+    async fn save(&self, stream: &Stream) -> Result<(), MessengerError> {
         if !Path::new(&stream.path).exists() && create_dir_all(&stream.path).await.is_err() {
-            return Err(IggyError::CannotCreateStreamDirectory(
+            return Err(MessengerError::CannotCreateStreamDirectory(
                 stream.stream_id,
                 stream.path.clone(),
             ));
@@ -209,7 +209,7 @@ impl StreamStorage for FileStreamStorage {
         if !Path::new(&stream.topics_path).exists()
             && create_dir_all(&stream.topics_path).await.is_err()
         {
-            return Err(IggyError::CannotCreateTopicsDirectory(
+            return Err(MessengerError::CannotCreateTopicsDirectory(
                 stream.stream_id,
                 stream.topics_path.clone(),
             ));
@@ -220,10 +220,10 @@ impl StreamStorage for FileStreamStorage {
         Ok(())
     }
 
-    async fn delete(&self, stream: &Stream) -> Result<(), IggyError> {
+    async fn delete(&self, stream: &Stream) -> Result<(), MessengerError> {
         info!("Deleting stream with ID: {}...", stream.stream_id);
         if fs::remove_dir_all(&stream.path).await.is_err() {
-            return Err(IggyError::CannotDeleteStreamDirectory(stream.stream_id));
+            return Err(MessengerError::CannotDeleteStreamDirectory(stream.stream_id));
         }
         info!("Deleted stream with ID: {}.", stream.stream_id);
         Ok(())

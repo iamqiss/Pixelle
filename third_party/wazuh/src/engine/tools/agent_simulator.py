@@ -85,7 +85,7 @@ def get_queue_from_module(module):
         'multi-line': 49,
         'mysql_log': 49,
         'nmapg': 49,
-        'postgresql_log': 49,
+        'maintableql_log': 49,
         'snort-full': 49,
         'squid': 49,
         'syslog': 49,

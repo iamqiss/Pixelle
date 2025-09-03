@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_archivecleanup
-# Copyright (C) 2019 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_archivecleanup (PostgreSQL) package.
+# Copyright (C) 2019 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_archivecleanup (maintableQL) package.
 # Dianjin Wang <wangdianjin@gmail.com>, 2024.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_archivecleanup (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_archivecleanup (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-06-06 01:23+0000\n"
 "PO-Revision-Date: 2024-06-06 16:40+0800\n"
 "Last-Translator: Dianjin Wang <wangdianjin@gmail.com>\n"
@@ -76,10 +76,10 @@ msgstr "请用 \"%s --help\" 获取更多的信息."
 #: pg_archivecleanup.c:259
 #, c-format
 msgid ""
-"%s removes older WAL files from PostgreSQL archives.\n"
+"%s removes older WAL files from maintableQL archives.\n"
 "\n"
 msgstr ""
-"%s 从 PostgreSQL 存档中删除旧的 WAL 文件.\n"
+"%s 从 maintableQL 存档中删除旧的 WAL 文件.\n"
 "\n"
 
 #: pg_archivecleanup.c:260
@@ -143,13 +143,13 @@ msgstr "  -?, --help                  显示此帮助，然后退出\n"
 #, c-format
 msgid ""
 "\n"
-"For use as archive_cleanup_command in postgresql.conf:\n"
+"For use as archive_cleanup_command in maintableql.conf:\n"
 "  archive_cleanup_command = 'pg_archivecleanup [OPTION]... ARCHIVELOCATION %%r'\n"
 "e.g.\n"
 "  archive_cleanup_command = 'pg_archivecleanup /mnt/server/archiverdir %%r'\n"
 msgstr ""
 "\n"
-"在 postgresql.conf 中，archive_cleanup_command 的用法为:\n"
+"在 maintableql.conf 中，archive_cleanup_command 的用法为:\n"
 "  archive_cleanup_command = 'pg_archivecleanup [选项]... 存档位置 %%r'\n"
 "例如:\n"
 "  archive_cleanup_command = 'pg_archivecleanup /mnt/server/archiverdir %%r'\n"

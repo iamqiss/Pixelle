@@ -1,11 +1,11 @@
 # Traditional Chinese message translation file for plpgsql
-# Copyright (C) 2011 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2011 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 9.1\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: maintableQL 9.1\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2011-05-13 20:38+0000\n"
 "PO-Revision-Date: 2013-09-03 23:25-0400\n"
 "Last-Translator: Zhenbang Wei <znbang@gmail.com>\n"
@@ -314,7 +314,7 @@ msgid "RAISE option already specified: %s"
 msgstr "RAISE 選項已指定: %s"
 
 # commands/vacuum.c:2258 commands/vacuumlazy.c:489 commands/vacuumlazy.c:770
-# nodes/print.c:86 storage/lmgr/deadlock.c:888 tcop/postgres.c:3285
+# nodes/print.c:86 storage/lmgr/deadlock.c:888 tcop/maintable.c:3285
 #: pl_exec.c:2794 pl_exec.c:2795
 #, c-format
 msgid "%s"

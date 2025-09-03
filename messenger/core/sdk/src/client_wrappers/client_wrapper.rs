@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::clients::client::IggyClient;
+use crate::clients::client::MessengerClient;
 use crate::http::http_client::HttpClient;
 use crate::quic::quic_client::QuicClient;
 use crate::tcp::tcp_client::TcpClient;
@@ -24,7 +24,7 @@ use crate::tcp::tcp_client::TcpClient;
 #[allow(clippy::large_enum_variant)]
 #[derive(Debug)]
 pub enum ClientWrapper {
-    Iggy(IggyClient),
+    Messenger(MessengerClient),
     Http(HttpClient),
     Tcp(TcpClient),
     Quic(QuicClient),

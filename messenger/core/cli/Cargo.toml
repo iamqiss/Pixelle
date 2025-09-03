@@ -16,15 +16,15 @@
 # under the License.
 
 [package]
-name = "iggy-cli"
+name = "messenger-cli"
 version = "0.9.1"
 edition = "2024"
 authors = ["bartosz.ciesla@gmail.com"]
-repository = "https://github.com/apache/iggy"
-homepage = "https://iggy.apache.org"
-description = "CLI for Iggy message streaming platform"
+repository = "https://github.com/apache/messenger"
+homepage = "https://messenger.apache.org"
+description = "CLI for Messenger message streaming platform"
 license = "Apache-2.0"
-keywords = ["iggy", "cli", "messaging", "streaming"]
+keywords = ["messenger", "cli", "messaging", "streaming"]
 readme = "../../README.md"
 
 [package.metadata.binstall]
@@ -32,7 +32,7 @@ pkg-url = "{ repo }/releases/download/{ name }-{ version }/{ name }-{ target }{ 
 bin-dir = "{ bin }{ binary-ext }"
 
 [[bin]]
-name = "iggy"
+name = "messenger"
 path = "src/main.rs"
 
 [features]
@@ -45,8 +45,8 @@ anyhow = { workspace = true }
 clap = { workspace = true }
 clap_complete = "4.5.57"
 figlet-rs = { workspace = true }
-iggy = { workspace = true }
-iggy_binary_protocol = { workspace = true }
+messenger = { workspace = true }
+messenger_binary_protocol = { workspace = true }
 keyring = { workspace = true, optional = true }
 passterm = { workspace = true }
 thiserror = { workspace = true }

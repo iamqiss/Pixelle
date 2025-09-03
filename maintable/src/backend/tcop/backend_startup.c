@@ -3,7 +3,7 @@
  * backend_startup.c
  *	  Backend startup code
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 
@@ -53,7 +53,7 @@ char	   *log_connections_string = NULL;
  * ConnectionTiming stores timestamps of various points in connection
  * establishment and setup.
  * ready_for_use is initialized to a special value here so we can check if
- * we've already set it before doing so in PostgresMain().
+ * we've already set it before doing so in MaintableMain().
  */
 ConnectionTiming conn_timing = {.ready_for_use = TIMESTAMP_MINUS_INFINITY};
 
@@ -117,11 +117,11 @@ BackendMain(const void *startup_data, size_t startup_data_len)
 
 	/*
 	 * Make sure we aren't in PostmasterContext anymore.  (We can't delete it
-	 * just yet, though, because InitPostgres will need the HBA data.)
+	 * just yet, though, because InitMaintable will need the HBA data.)
 	 */
 	MemoryContextSwitchTo(TopMemoryContext);
 
-	PostgresMain(MyProcPort->database_name, MyProcPort->user_name);
+	MaintableMain(MyProcPort->database_name, MyProcPort->user_name);
 }
 
 
@@ -153,7 +153,7 @@ BackendInitialize(ClientSocket *client_sock, CAC_state cac)
 
 	/*
 	 * PreAuthDelay is a debugging aid for investigating problems in the
-	 * authentication cycle: it can be set in postgresql.conf to allow time to
+	 * authentication cycle: it can be set in maintableql.conf to allow time to
 	 * attach to the newly-forked backend with a debugger.  (See also
 	 * PostAuthDelay, which we allow clients to pass through PGOPTIONS, but it
 	 * is not honored until after authentication.)
@@ -161,7 +161,7 @@ BackendInitialize(ClientSocket *client_sock, CAC_state cac)
 	if (PreAuthDelay > 0)
 		pg_usleep(PreAuthDelay * 1000000L);
 
-	/* This flag will remain set until InitPostgres finishes authentication */
+	/* This flag will remain set until InitMaintable finishes authentication */
 	ClientAuthInProgress = true;	/* limit visibility of log messages */
 
 	/*
@@ -169,7 +169,7 @@ BackendInitialize(ClientSocket *client_sock, CAC_state cac)
 	 * Must do this now because authentication uses libpq to send messages.
 	 *
 	 * The Port structure and all data structures attached to it are allocated
-	 * in TopMemoryContext, so that they survive into PostgresMain execution.
+	 * in TopMemoryContext, so that they survive into MaintableMain execution.
 	 * We need not worry about leaking this storage on failure, since we
 	 * aren't in the postmaster process anymore.
 	 */
@@ -273,11 +273,11 @@ BackendInitialize(ClientSocket *client_sock, CAC_state cac)
 	 * against the time limit.
 	 *
 	 * Note: AuthenticationTimeout is applied here while waiting for the
-	 * startup packet, and then again in InitPostgres for the duration of any
+	 * startup packet, and then again in InitMaintable for the duration of any
 	 * authentication operations.  So a hostile client could tie up the
 	 * process for nearly twice AuthenticationTimeout before we kick him off.
 	 *
-	 * Note: because PostgresMain will call InitializeTimeouts again, the
+	 * Note: because MaintableMain will call InitializeTimeouts again, the
 	 * registration of STARTUP_PACKET_TIMEOUT will be lost.  This is okay
 	 * since we never use it again after this function.
 	 */
@@ -425,7 +425,7 @@ ProcessSSLStartup(Port *port)
 	/*
 	 * First byte indicates standard SSL handshake message
 	 *
-	 * (It can't be a Postgres startup length because in network byte order
+	 * (It can't be a Maintable startup length because in network byte order
 	 * that would be a startup packet hundreds of megabytes long)
 	 */
 
@@ -831,14 +831,14 @@ ProcessStartupPacket(Port *port, bool ssl_done, bool gss_done)
 	if (port->user_name == NULL || port->user_name[0] == '\0')
 		ereport(FATAL,
 				(errcode(ERRCODE_INVALID_AUTHORIZATION_SPECIFICATION),
-				 errmsg("no PostgreSQL user name specified in startup packet")));
+				 errmsg("no maintableQL user name specified in startup packet")));
 
 	/* The database defaults to the user name. */
 	if (port->database_name == NULL || port->database_name[0] == '\0')
 		port->database_name = pstrdup(port->user_name);
 
 	/*
-	 * Truncate given database and user names to length of a Postgres name.
+	 * Truncate given database and user names to length of a Maintable name.
 	 * This avoids lookup failures when overlength names are given.
 	 */
 	if (strlen(port->database_name) >= NAMEDATALEN)
@@ -994,7 +994,7 @@ validate_log_connections_options(List *elemlist, uint32 *flags)
 	/*
 	 * For backwards compatibility, we accept these tokens by themselves.
 	 *
-	 * Prior to PostgreSQL 18, log_connections was a boolean GUC that accepted
+	 * Prior to maintableQL 18, log_connections was a boolean GUC that accepted
 	 * any unambiguous substring of 'true', 'false', 'yes', 'no', 'on', and
 	 * 'off'. Since log_connections became a list of strings in 18, we only
 	 * accept complete option strings.

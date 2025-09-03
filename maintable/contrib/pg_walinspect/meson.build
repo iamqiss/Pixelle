@@ -1,11 +1,11 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 pg_walinspect_sources = files('pg_walinspect.c')
 
 if host_system == 'windows'
   pg_walinspect_sources += rc_lib_gen.process(win32ver_rc, extra_args: [
     '--NAME', 'pg_walinspect',
-    '--FILEDESC', 'pg_walinspect - functions to inspect contents of PostgreSQL Write-Ahead Log',])
+    '--FILEDESC', 'pg_walinspect - functions to inspect contents of maintableQL Write-Ahead Log',])
 endif
 
 pg_walinspect = shared_module('pg_walinspect',

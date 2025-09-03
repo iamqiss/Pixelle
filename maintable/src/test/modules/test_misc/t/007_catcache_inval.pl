@@ -1,5 +1,5 @@
 
-# Copyright (c) 2025, PostgreSQL Global Development Group
+# Copyright (c) 2025, maintableQL Global Development Group
 
 # Test recursive catalog cache invalidation, i.e. invalidation while a
 # catalog cache entry is being built.
@@ -7,8 +7,8 @@
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 if ($ENV{enable_injection_points} ne 'yes')
@@ -17,7 +17,7 @@ if ($ENV{enable_injection_points} ne 'yes')
 }
 
 # Node initialization
-my $node = PostgreSQL::Test::Cluster->new('node');
+my $node = maintableQL::Test::Cluster->new('node');
 $node->init();
 $node->start;
 
@@ -29,7 +29,7 @@ if (!$node->check_extension('injection_points'))
 	plan skip_all => 'Extension injection_points not installed';
 }
 
-$node->safe_psql('postgres', 'CREATE EXTENSION injection_points;');
+$node->safe_psql('maintable', 'CREATE EXTENSION injection_points;');
 
 
 sub randStr
@@ -42,12 +42,12 @@ sub randStr
 # Create a function with a large body, so that it is toasted.
 my $longtext = randStr(10000);
 $node->safe_psql(
-	'postgres', qq[
+	'maintable', qq[
     CREATE FUNCTION foofunc(dummy integer) RETURNS integer AS \$\$ SELECT 1; /* $longtext */ \$\$ LANGUAGE SQL
 ]);
 
-my $psql_session = $node->background_psql('postgres');
-my $psql_session2 = $node->background_psql('postgres');
+my $psql_session = $node->background_psql('maintable');
+my $psql_session2 = $node->background_psql('maintable');
 
 # Set injection point in the session, to pause while populating the
 # catcache list
@@ -69,7 +69,7 @@ $psql_session->query_until(
 # function that overloads the same name. This sends a catcache
 # invalidation.
 $node->safe_psql(
-	'postgres', qq[
+	'maintable', qq[
     CREATE FUNCTION foofunc() RETURNS integer AS \$\$ SELECT 123 \$\$ LANGUAGE SQL
 ]);
 

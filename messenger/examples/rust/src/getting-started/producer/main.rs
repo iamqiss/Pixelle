@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use iggy::prelude::*;
+use messenger::prelude::*;
 use std::env;
 use std::error::Error;
 use std::str::FromStr;
@@ -37,14 +37,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .with(EnvFilter::try_from_default_env().unwrap_or(EnvFilter::new("INFO")))
         .init();
 
-    let client = IggyClientBuilder::new()
+    let client = MessengerClientBuilder::new()
         .with_tcp()
         .with_server_address(get_tcp_server_addr())
         .build()?;
 
-    // Or, instead of above lines, you can just use below code, which will create a Iggy
+    // Or, instead of above lines, you can just use below code, which will create a Messenger
     // TCP client with default config (default server address for TCP is 127.0.0.1:8090):
-    // let client = IggyClient::default();
+    // let client = MessengerClient::default();
 
     client.connect().await?;
     client
@@ -54,7 +54,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     produce_messages(&client).await
 }
 
-async fn init_system(client: &IggyClient) {
+async fn init_system(client: &MessengerClient) {
     match client.create_stream("sample-stream", Some(STREAM_ID)).await {
         Ok(_) => info!("Stream was created."),
         Err(_) => warn!("Stream already exists and will not be created again."),
@@ -68,7 +68,7 @@ async fn init_system(client: &IggyClient) {
             CompressionAlgorithm::default(),
             None,
             Some(TOPIC_ID),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await
@@ -79,7 +79,7 @@ async fn init_system(client: &IggyClient) {
 }
 
 async fn produce_messages(client: &dyn Client) -> Result<(), Box<dyn Error>> {
-    let duration = IggyDuration::from_str("500ms")?;
+    let duration = MessengerDuration::from_str("500ms")?;
     let mut interval = tokio::time::interval(duration.get_duration());
     info!(
         "Messages will be sent to stream: {}, topic: {}, partition: {} with interval {}.",
@@ -104,7 +104,7 @@ async fn produce_messages(client: &dyn Client) -> Result<(), Box<dyn Error>> {
         for _ in 0..messages_per_batch {
             current_id += 1;
             let payload = format!("message-{current_id}");
-            let message = IggyMessage::from_str(&payload)?;
+            let message = MessengerMessage::from_str(&payload)?;
             messages.push(message);
         }
         client

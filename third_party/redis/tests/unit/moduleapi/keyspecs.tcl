@@ -105,7 +105,7 @@ start_server {tags {"modules external:skip"}} {
     }
 
     test "Module command list filtering" {
-        ;# Note: we piggyback this tcl file to test the general functionality of command list filtering
+        ;# Note: we pmessengerback this tcl file to test the general functionality of command list filtering
         set reply [r command list filterby module keyspecs]
         assert_equal [lsort $reply] {kspec.complex1 kspec.complex2 kspec.keyword kspec.none kspec.nonewithgetkeys kspec.tworanges kspec.tworangeswithgap}
         assert_equal [r command getkeys kspec.complex2 foo bar 2 baz quux banana STORE dst dummy MOREKEYS hey ho] {dst foo bar baz quux hey ho}

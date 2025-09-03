@@ -3,7 +3,7 @@
  *
  * External declarations pertaining to Grand Unified Configuration.
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  * Written by Peter Eisentraut <peter_e@gmx.net>.
  *
  * src/include/utils/guc.h
@@ -34,7 +34,7 @@
  * This file will be used to store values of configuration parameters
  * set by ALTER SYSTEM command.
  */
-#define PG_AUTOCONF_FILENAME		"postgresql.auto.conf"
+#define PG_AUTOCONF_FILENAME		"maintableql.auto.conf"
 
 /*
  * Certain options can only be set at certain times. The rules are
@@ -113,7 +113,7 @@ typedef enum
 	PGC_S_DEFAULT,				/* hard-wired default ("boot_val") */
 	PGC_S_DYNAMIC_DEFAULT,		/* default computed during initialization */
 	PGC_S_ENV_VAR,				/* postmaster environment variable */
-	PGC_S_FILE,					/* postgresql.conf */
+	PGC_S_FILE,					/* maintableql.conf */
 	PGC_S_ARGV,					/* postmaster command line */
 	PGC_S_GLOBAL,				/* global in-database setting */
 	PGC_S_DATABASE,				/* per-database setting */
@@ -218,15 +218,15 @@ typedef enum
 #define GUC_NO_RESET_ALL	   0x000010 /* exclude from RESET ALL */
 #define GUC_EXPLAIN			   0x000020 /* include in EXPLAIN */
 #define GUC_REPORT			   0x000040 /* auto-report changes to client */
-#define GUC_NOT_IN_SAMPLE	   0x000080 /* not in postgresql.conf.sample */
-#define GUC_DISALLOW_IN_FILE   0x000100 /* can't set in postgresql.conf */
+#define GUC_NOT_IN_SAMPLE	   0x000080 /* not in maintableql.conf.sample */
+#define GUC_DISALLOW_IN_FILE   0x000100 /* can't set in maintableql.conf */
 #define GUC_CUSTOM_PLACEHOLDER 0x000200 /* placeholder for custom variable */
 #define GUC_SUPERUSER_ONLY	   0x000400 /* show only to superusers */
 #define GUC_IS_NAME			   0x000800 /* limit string to NAMEDATALEN-1 */
 #define GUC_NOT_WHILE_SEC_REST 0x001000 /* can't set if security restricted */
 #define GUC_DISALLOW_IN_AUTO_FILE \
 							   0x002000 /* can't set in PG_AUTOCONF_FILENAME */
-#define GUC_RUNTIME_COMPUTED   0x004000 /* delay processing in 'postgres -C' */
+#define GUC_RUNTIME_COMPUTED   0x004000 /* delay processing in 'maintable -C' */
 #define GUC_ALLOW_IN_PARALLEL  0x008000 /* allow setting in parallel mode */
 
 #define GUC_UNIT_KB			 0x01000000 /* value is in kilobytes */

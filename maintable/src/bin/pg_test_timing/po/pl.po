@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_test_timing
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
 # grzegorz <begina.felicysym@wp.eu>, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_test_timing (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pg_test_timing (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2017-04-09 21:15+0000\n"
 "PO-Revision-Date: 2017-05-02 13:55-0400\n"
 "Last-Translator: grzegorz <begina.felicysym@wp.eu>\n"

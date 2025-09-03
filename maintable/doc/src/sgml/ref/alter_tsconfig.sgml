@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_tsconfig.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-altertsconfig">

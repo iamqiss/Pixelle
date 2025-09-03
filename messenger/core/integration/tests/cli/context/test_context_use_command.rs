@@ -19,41 +19,41 @@
 use std::collections::HashMap;
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, USAGE_PREFIX,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
-use iggy_binary_protocol::cli::binary_context::common::ContextConfig;
+use messenger::prelude::Client;
+use messenger_binary_protocol::cli::binary_context::common::ContextConfig;
 use predicates::str::contains;
 use serial_test::parallel;
 
-use super::common::TestIggyContext;
+use super::common::TestMessengerContext;
 struct TestContextUseCmd {
-    test_iggy_context: TestIggyContext,
+    test_messenger_context: TestMessengerContext,
     new_context_key: String,
 }
 
 impl TestContextUseCmd {
-    fn new(test_iggy_context: TestIggyContext, new_context_key: String) -> Self {
+    fn new(test_messenger_context: TestMessengerContext, new_context_key: String) -> Self {
         Self {
-            test_iggy_context,
+            test_messenger_context,
             new_context_key,
         }
     }
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestContextUseCmd {
+impl MessengerCmdTestCase for TestContextUseCmd {
     async fn prepare_server_state(&mut self, _client: &dyn Client) {
-        self.test_iggy_context.prepare().await;
+        self.test_messenger_context.prepare().await;
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .env(
-                "IGGY_HOME",
-                self.test_iggy_context.get_iggy_home().to_str().unwrap(),
+                "MESSENGER_HOME",
+                self.test_messenger_context.get_messenger_home().to_str().unwrap(),
             )
             .arg("context")
             .arg("use")
@@ -70,7 +70,7 @@ impl IggyCmdTestCase for TestContextUseCmd {
 
     async fn verify_server_state(&self, _client: &dyn Client) {
         let saved_key = self
-            .test_iggy_context
+            .test_messenger_context
             .read_saved_context_key()
             .await
             .unwrap();
@@ -81,12 +81,12 @@ impl IggyCmdTestCase for TestContextUseCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
-    iggy_cmd_test.setup().await;
+    let mut messenger_cmd_test = MessengerCmdTest::default();
+    messenger_cmd_test.setup().await;
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestContextUseCmd::new(
-            TestIggyContext::new(
+            TestMessengerContext::new(
                 Some(HashMap::from([
                     ("default".to_string(), ContextConfig::default()),
                     ("second".to_string(), ContextConfig::default()),
@@ -101,17 +101,17 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["context", "use", "--help"],
             format!(
                 r#"Set the active context
 
 Examples
- iggy context use dev
- iggy context use default
+ messenger context use dev
+ messenger context use default
 
 {USAGE_PREFIX} context use <CONTEXT_NAME>
 
@@ -131,9 +131,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["context", "use", "-h"],
             format!(

@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * pquery.c
- *	  POSTGRES process query command code
+ *	  MAINTABLE process query command code
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 
@@ -697,7 +697,7 @@ PortalRun(Portal portal, long count, bool isTopLevel,
 
 	Assert(PortalIsValid(portal));
 
-	TRACE_POSTGRESQL_QUERY_EXECUTE_START();
+	TRACE_MAINTABLEQL_QUERY_EXECUTE_START();
 
 	/* Initialize empty completion data */
 	if (qc)
@@ -837,7 +837,7 @@ PortalRun(Portal portal, long count, bool isTopLevel,
 	if (log_executor_stats && portal->strategy != PORTAL_MULTI_QUERY)
 		ShowUsage("EXECUTOR STATISTICS");
 
-	TRACE_POSTGRESQL_QUERY_EXECUTE_DONE();
+	TRACE_MAINTABLEQL_QUERY_EXECUTE_DONE();
 
 	return result;
 }
@@ -1223,7 +1223,7 @@ PortalRunMulti(Portal portal,
 			/*
 			 * process a plannable query.
 			 */
-			TRACE_POSTGRESQL_QUERY_EXECUTE_START();
+			TRACE_MAINTABLEQL_QUERY_EXECUTE_START();
 
 			if (log_executor_stats)
 				ResetUsage();
@@ -1288,7 +1288,7 @@ PortalRunMulti(Portal portal,
 			if (log_executor_stats)
 				ShowUsage("EXECUTOR STATISTICS");
 
-			TRACE_POSTGRESQL_QUERY_EXECUTE_DONE();
+			TRACE_MAINTABLEQL_QUERY_EXECUTE_DONE();
 		}
 		else
 		{

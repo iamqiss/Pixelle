@@ -3,7 +3,7 @@
  * tsvector_parser.c
  *	  Parser for tsvector
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "tsearch/ts_locale.h"
 #include "tsearch/ts_utils.h"

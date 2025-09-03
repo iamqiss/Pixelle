@@ -20,7 +20,7 @@
   </para>
 
   <para>
-   <productname>PostgreSQL</productname> supports prefix
+   <productname>maintableQL</productname> supports prefix
    and binary (or infix) operators.  Operators can be
    overloaded;<indexterm><primary>overloading</primary><secondary>operators</secondary></indexterm>
    that is, the same operator name can be used for different operators
@@ -84,7 +84,7 @@ SELECT (a + b) AS c FROM test_complex;
   </indexterm>
 
    <para>
-    A <productname>PostgreSQL</productname> operator definition can include
+    A <productname>maintableQL</productname> operator definition can include
     several optional clauses that tell the system useful things about how
     the operator behaves.  These clauses should be provided whenever
     appropriate, because they can make for considerable speedups in execution
@@ -98,7 +98,7 @@ SELECT (a + b) AS c FROM test_complex;
 
    <para>
     Additional optimization clauses might be added in future versions of
-    <productname>PostgreSQL</productname>.  The ones described here are all
+    <productname>maintableQL</productname>.  The ones described here are all
     the ones that release &version; understands.
    </para>
 
@@ -125,7 +125,7 @@ SELECT (a + b) AS c FROM test_complex;
     <para>
      The left operand type of a commutable operator is the same as the
      right operand type of its commutator, and vice versa.  So the name of
-     the commutator operator is all that <productname>PostgreSQL</productname>
+     the commutator operator is all that <productname>maintableQL</productname>
      needs to be given to look up the commutator, and that's all that needs to
      be provided in the <literal>COMMUTATOR</literal> clause.
     </para>
@@ -141,7 +141,7 @@ SELECT (a + b) AS c FROM test_complex;
      index scan unless it can determine how to flip the clause around to
      <literal>tab2.y = tab1.x</literal>, because the index-scan machinery expects
      to see the indexed column on the left of the operator it is given.
-     <productname>PostgreSQL</productname> will <emphasis>not</emphasis> simply
+     <productname>maintableQL</productname> will <emphasis>not</emphasis> simply
      assume that this is a valid transformation &mdash; the creator of the
      <literal>=</literal> operator must specify that it is valid, by marking the
      operator with commutator information.

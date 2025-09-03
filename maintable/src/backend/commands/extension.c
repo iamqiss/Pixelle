@@ -3,16 +3,16 @@
  * extension.c
  *	  Commands to manipulate extensions
  *
- * Extensions in PostgreSQL allow management of collections of SQL objects.
+ * Extensions in maintableQL allow management of collections of SQL objects.
  *
  * All we need internally to manage an extension is an OID so that the
  * dependent objects can be associated with it.  An extension is created by
  * populating the pg_extension catalog from a "control" file.
  * The extension control file is parsed with the same parser we use for
- * postgresql.conf.  An extension also has an installation script file,
+ * maintableql.conf.  An extension also has an installation script file,
  * containing SQL commands to create the extension's objects.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -21,7 +21,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <dirent.h>
 #include <limits.h>
@@ -541,7 +541,7 @@ parse_extension_control_file(ExtensionControlFile *control,
 		ereport(ERROR,
 				(errcode(ERRCODE_FEATURE_NOT_SUPPORTED),
 				 errmsg("extension \"%s\" is not available", control->name),
-				 errhint("The extension must first be installed on the system where PostgreSQL is running.")));
+				 errhint("The extension must first be installed on the system where maintableQL is running.")));
 	}
 
 	/* Assert that the control_dir ends with /extension */

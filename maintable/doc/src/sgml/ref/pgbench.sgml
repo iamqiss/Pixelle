@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pgbench.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="pgbench">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>pgbench</refname>
-  <refpurpose>run a benchmark test on <productname>PostgreSQL</productname></refpurpose>
+  <refpurpose>run a benchmark test on <productname>maintableQL</productname></refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -37,7 +37,7 @@ PostgreSQL documentation
   <title>Description</title>
  <para>
   <application>pgbench</application> is a simple program for running benchmark
-  tests on <productname>PostgreSQL</productname>.  It runs the same sequence of SQL
+  tests on <productname>maintableQL</productname>.  It runs the same sequence of SQL
   commands over and over, possibly in multiple concurrent database sessions,
   and then calculates the average transaction rate (transactions per second).
   By default, <application>pgbench</application> tests a scenario that is
@@ -232,7 +232,7 @@ pgbench <optional> <replaceable>options</replaceable> </optional> <replaceable>d
             extensively through a <command>COPY</command>.
             <command>pgbench</command> uses the <option>FREEZE</option> option
             to load data into ordinary (non-partition) tables with version 14
-            or later of <productname>PostgreSQL</productname> to speed up
+            or later of <productname>maintableQL</productname> to speed up
             subsequent <command>VACUUM</command>.
             Using <literal>g</literal> causes logging to
             print one message every 100,000 rows while generating data for all
@@ -1026,7 +1026,7 @@ pgbench <optional> <replaceable>options</replaceable> </optional> <replaceable>d
   </variablelist>
 
   <para>
-   This utility, like most other <productname>PostgreSQL</productname> utilities,
+   This utility, like most other <productname>maintableQL</productname> utilities,
    uses the environment variables supported by <application>libpq</application>
    (see <xref linkend="libpq-envars"/>).
   </para>
@@ -1108,7 +1108,7 @@ pgbench <optional> <replaceable>options</replaceable> </optional> <replaceable>d
 
   <note>
    <para>
-    Before <productname>PostgreSQL</productname> 9.6, SQL commands in script files
+    Before <productname>maintableQL</productname> 9.6, SQL commands in script files
     were terminated by newlines, and so they could not be continued across
     lines.  Now a semicolon is <emphasis>required</emphasis> to separate consecutive
     SQL commands (though an SQL command does not need one if it is followed
@@ -2922,7 +2922,7 @@ statement latencies in milliseconds, failures and retries:
   <para>
    You may specify the <link linkend="tableam">Table Access Method</link>
    for the pgbench tables.  The environment variable <envar>PGOPTIONS</envar>
-   specifies database configuration options that are passed to PostgreSQL via
+   specifies database configuration options that are passed to maintableQL via
    the command line (See <xref linkend="config-setting-shell"/>).
    For example, a hypothetical default Table Access Method for the tables that
    pgbench creates called <literal>wuzza</literal> can be specified with:

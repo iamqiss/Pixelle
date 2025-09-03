@@ -1,18 +1,18 @@
 # Russian message translation file for pg_controldata
-# Copyright (C) 2002-2016 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2002-2016 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Serguei A. Mokhov <mokhov@cs.concordia.ca>, 2002-2004.
 # Oleg Bartunov <oleg@sai.msu.su>, 2004.
 # Andrey Sudnik <sudnikand@gmail.com>, 2011.
 # Alexander Lakhin <exclusion@gmail.com>, 2012-2017, 2018, 2019, 2020, 2021, 2022, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_controldata (PostgreSQL current)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_controldata (maintableQL current)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-02-08 07:44+0200\n"
 "PO-Revision-Date: 2024-09-04 17:08+0300\n"
 "Last-Translator: Alexander Lakhin <exclusion@gmail.com>\n"
-"Language-Team: Russian <pgsql-ru-general@postgresql.org>\n"
+"Language-Team: Russian <pgsql-ru-general@maintableql.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,12 +51,12 @@ msgid ""
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, "
 "and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "возможно несоответствие порядка байт\n"
 "Порядок байт в файле pg_control может не соответствовать используемому\n"
 "этой программой. В этом случае результаты будут неверными и\n"
-"установленный PostgreSQL будет несовместим с этим каталогом данных."
+"установленный maintableQL будет несовместим с этим каталогом данных."
 
 #: ../../common/controldata_utils.c:230
 #, c-format
@@ -87,10 +87,10 @@ msgstr "попытка дублирования нулевого указате�
 #: pg_controldata.c:35
 #, c-format
 msgid ""
-"%s displays control information of a PostgreSQL database cluster.\n"
+"%s displays control information of a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s показывает информацию о работе кластера баз PostgreSQL.\n"
+"%s показывает информацию о работе кластера баз maintableQL.\n"
 "\n"
 
 #: pg_controldata.c:36
@@ -576,8 +576,8 @@ msgstr "Случ. число для псевдоаутентификации: %s
 #~ "подлежит сомнению.\n"
 #~ "\n"
 
-#~ msgid "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
-#~ msgstr "Об ошибках сообщайте по адресу <pgsql-bugs@lists.postgresql.org>.\n"
+#~ msgid "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
+#~ msgstr "Об ошибках сообщайте по адресу <pgsql-bugs@lists.maintableql.org>.\n"
 
 #~ msgid "Float4 argument passing:              %s\n"
 #~ msgstr "Передача аргумента Float4:            %s\n"

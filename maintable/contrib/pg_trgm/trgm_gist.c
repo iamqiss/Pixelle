@@ -1,7 +1,7 @@
 /*
  * contrib/pg_trgm/trgm_gist.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/reloptions.h"
 #include "access/stratnum.h"

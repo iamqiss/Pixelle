@@ -6,7 +6,7 @@
  * Unfortunately neither (re)setting the C++ new handler, nor the LLVM OOM
  * handler are exposed to C. Therefore this file wraps the necessary code.
  *
- * Copyright (c) 2016-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2016-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/jit/llvm/llvmjit_error.cpp
@@ -16,7 +16,7 @@
 
 extern "C"
 {
-#include "postgres.h"
+#include "maintable.h"
 }
 
 #include <llvm/Support/ErrorHandling.h>
@@ -38,7 +38,7 @@ static void fatal_llvm_error_handler(void *user_data, const char *reason, bool g
  *
  * This is necessary for LLVM as LLVM's error handling for such cases
  * (exit()ing, throwing std::bad_alloc() if compiled with exceptions, abort())
- * isn't compatible with postgres error handling.  Thus in sections where LLVM
+ * isn't compatible with maintable error handling.  Thus in sections where LLVM
  * code, not LLVM generated functions!, is executing, standard new, LLVM OOM
  * and LLVM fatal errors (some OOM errors masquerade as those) are redirected
  * to our own error handlers.
@@ -90,7 +90,7 @@ llvm_in_fatal_on_oom(void)
 
 /*
  * Reset fatal error handling. This should only be called in error recovery
- * loops like PostgresMain()'s.
+ * loops like MaintableMain()'s.
  */
 void
 llvm_reset_after_error(void)

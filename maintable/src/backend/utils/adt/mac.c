@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * mac.c
- *	  PostgreSQL type definitions for 6 byte, EUI-48, MAC addresses.
+ *	  maintableQL type definitions for 6 byte, EUI-48, MAC addresses.
  *
- * Portions Copyright (c) 1998-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1998-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  src/backend/utils/adt/mac.c
@@ -11,7 +11,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "common/hashfn.h"
 #include "lib/hyperloglog.h"

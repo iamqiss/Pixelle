@@ -16,21 +16,21 @@
  * under the License.
  */
 
-use crate::prelude::IggyClient;
+use crate::prelude::MessengerClient;
 use async_trait::async_trait;
-use iggy_binary_protocol::SegmentClient;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{Identifier, IggyError};
+use messenger_binary_protocol::SegmentClient;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{Identifier, MessengerError};
 
 #[async_trait]
-impl SegmentClient for IggyClient {
+impl SegmentClient for MessengerClient {
     async fn delete_segments(
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
         partition_id: u32,
         segments_count: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.client
             .read()
             .await

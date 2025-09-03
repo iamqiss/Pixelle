@@ -16,14 +16,14 @@
  * under the License.
  */
 
-use crate::IggyError;
+use crate::MessengerError;
 use base64::Engine;
 use base64::engine::general_purpose;
 
-pub fn from_base64_as_bytes(value: &str) -> Result<Vec<u8>, IggyError> {
+pub fn from_base64_as_bytes(value: &str) -> Result<Vec<u8>, MessengerError> {
     let result = general_purpose::STANDARD.decode(value);
     if result.is_err() {
-        return Err(IggyError::InvalidFormat);
+        return Err(MessengerError::InvalidFormat);
     }
 
     Ok(result.unwrap())

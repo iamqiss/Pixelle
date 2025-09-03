@@ -17,13 +17,13 @@
  */
 
 use crate::shared::args::Args;
-use iggy::client_provider;
-use iggy::client_provider::ClientProviderConfig;
-use iggy::clients::client::IggyClient;
-use iggy::prelude::IggyError;
+use messenger::client_provider;
+use messenger::client_provider::ClientProviderConfig;
+use messenger::clients::client::MessengerClient;
+use messenger::prelude::MessengerError;
 use std::sync::Arc;
 
-/// Builds an Iggy client using the provided stream and topic identifiers.
+/// Builds an Messenger client using the provided stream and topic identifiers.
 ///
 /// # Arguments
 ///
@@ -32,18 +32,18 @@ use std::sync::Arc;
 ///
 /// # Returns
 ///
-/// A `Result` wrapping the `IggyClient` instance or an `IggyError`.
+/// A `Result` wrapping the `MessengerClient` instance or an `MessengerError`.
 ///
 pub async fn build_client(
     stream_id: &str,
     topic_id: &str,
     connect: bool,
-) -> Result<IggyClient, IggyError> {
+) -> Result<MessengerClient, MessengerError> {
     let args = Args::new(stream_id.to_string(), topic_id.to_string());
     build_client_from_args(args.to_sdk_args(), connect).await
 }
 
-/// Builds an Iggy client using the provided `Args`.
+/// Builds an Messenger client using the provided `Args`.
 ///
 /// # Arguments
 ///
@@ -51,12 +51,12 @@ pub async fn build_client(
 ///
 /// # Returns
 ///
-/// A `Result` wrapping the `IggyClient` instance or an `IggyError`.
+/// A `Result` wrapping the `MessengerClient` instance or an `MessengerError`.
 ///
 pub async fn build_client_from_args(
-    args: iggy::prelude::Args,
+    args: messenger::prelude::Args,
     connect: bool,
-) -> Result<IggyClient, IggyError> {
+) -> Result<MessengerClient, MessengerError> {
     // Build client provider configuration
     let client_provider_config = Arc::new(
         ClientProviderConfig::from_args(args).expect("Failed to create client provider config"),
@@ -68,7 +68,7 @@ pub async fn build_client_from_args(
         .expect("Failed to build client provider");
 
     // Build client
-    let client = match IggyClient::builder().with_client(client).build() {
+    let client = match MessengerClient::builder().with_client(client).build() {
         Ok(client) => client,
         Err(e) => return Err(e),
     };

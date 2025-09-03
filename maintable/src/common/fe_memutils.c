@@ -3,7 +3,7 @@
  * fe_memutils.c
  *	  memory management support for frontend code
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -17,7 +17,7 @@
 #error "This file is not expected to be compiled for backend code"
 #endif
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 static inline void *
 pg_malloc_internal(size_t size, int flags)

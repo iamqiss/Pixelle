@@ -4,7 +4,7 @@
  * src/pl/plpython/plpy_spi.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 

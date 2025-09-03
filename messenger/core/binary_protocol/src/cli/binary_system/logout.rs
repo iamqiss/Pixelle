@@ -55,7 +55,7 @@ impl CliCommand for LogoutCmd {
 
             self.server_session.delete()?;
         }
-        event!(target: PRINT_TARGET, Level::INFO, "Successfully logged out from Iggy server {}", self.server_session.get_server_address());
+        event!(target: PRINT_TARGET, Level::INFO, "Successfully logged out from Messenger server {}", self.server_session.get_server_address());
 
         Ok(())
     }

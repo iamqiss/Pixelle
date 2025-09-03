@@ -18,8 +18,8 @@
 
 use crate::client_wrappers::client_wrapper::ClientWrapper;
 use async_trait::async_trait;
-use iggy_binary_protocol::SegmentClient;
-use iggy_common::{Identifier, IggyError};
+use messenger_binary_protocol::SegmentClient;
+use messenger_common::{Identifier, MessengerError};
 
 #[async_trait]
 impl SegmentClient for ClientWrapper {
@@ -29,9 +29,9 @@ impl SegmentClient for ClientWrapper {
         topic_id: &Identifier,
         partition_id: u32,
         segments_count: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .delete_segments(stream_id, topic_id, partition_id, segments_count)
                     .await

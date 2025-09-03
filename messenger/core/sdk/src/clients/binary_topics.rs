@@ -16,21 +16,21 @@
  * under the License.
  */
 
-use crate::prelude::IggyClient;
+use crate::prelude::MessengerClient;
 use async_trait::async_trait;
-use iggy_binary_protocol::TopicClient;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{
-    CompressionAlgorithm, Identifier, IggyError, IggyExpiry, MaxTopicSize, Topic, TopicDetails,
+use messenger_binary_protocol::TopicClient;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{
+    CompressionAlgorithm, Identifier, MessengerError, MessengerExpiry, MaxTopicSize, Topic, TopicDetails,
 };
 
 #[async_trait]
-impl TopicClient for IggyClient {
+impl TopicClient for MessengerClient {
     async fn get_topic(
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<Option<TopicDetails>, IggyError> {
+    ) -> Result<Option<TopicDetails>, MessengerError> {
         self.client
             .read()
             .await
@@ -38,7 +38,7 @@ impl TopicClient for IggyClient {
             .await
     }
 
-    async fn get_topics(&self, stream_id: &Identifier) -> Result<Vec<Topic>, IggyError> {
+    async fn get_topics(&self, stream_id: &Identifier) -> Result<Vec<Topic>, MessengerError> {
         self.client.read().await.get_topics(stream_id).await
     }
 
@@ -50,9 +50,9 @@ impl TopicClient for IggyClient {
         compression_algorithm: CompressionAlgorithm,
         replication_factor: Option<u8>,
         topic_id: Option<u32>,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         max_topic_size: MaxTopicSize,
-    ) -> Result<TopicDetails, IggyError> {
+    ) -> Result<TopicDetails, MessengerError> {
         self.client
             .read()
             .await
@@ -76,9 +76,9 @@ impl TopicClient for IggyClient {
         name: &str,
         compression_algorithm: CompressionAlgorithm,
         replication_factor: Option<u8>,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         max_topic_size: MaxTopicSize,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.client
             .read()
             .await
@@ -98,7 +98,7 @@ impl TopicClient for IggyClient {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.client
             .read()
             .await
@@ -110,7 +110,7 @@ impl TopicClient for IggyClient {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.client
             .read()
             .await

@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for plpgsql
-# Copyright (C) 2018 PostgreSQL Global Development Group
-# This file is distributed under the same license as the plpgsql (PostgreSQL) package.
+# Copyright (C) 2018 maintableQL Global Development Group
+# This file is distributed under the same license as the plpgsql (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: plpgsql (PostgreSQL) 11\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: plpgsql (maintableQL) 11\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2018-04-22 12:08+0000\n"
 "PO-Revision-Date: 2018-05-13 15:28+0900\n"
 "Language-Team: \n"

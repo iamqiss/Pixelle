@@ -2,7 +2,7 @@
  *	qsort_interruptible.c: qsort_arg that includes CHECK_FOR_INTERRUPTS
  */
 
-#include "postgres.h"
+#include "maintable.h"
 #include "miscadmin.h"
 
 #define ST_SORT qsort_interruptible

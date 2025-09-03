@@ -1,58 +1,58 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Tests that logical decoding messages
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Create publisher node
-my $node_publisher = PostgreSQL::Test::Cluster->new('publisher');
+my $node_publisher = maintableQL::Test::Cluster->new('publisher');
 $node_publisher->init(allows_streaming => 'logical');
-$node_publisher->append_conf('postgresql.conf', 'autovacuum = off');
+$node_publisher->append_conf('maintableql.conf', 'autovacuum = off');
 $node_publisher->start;
 
 # Create subscriber node
-my $node_subscriber = PostgreSQL::Test::Cluster->new('subscriber');
+my $node_subscriber = maintableQL::Test::Cluster->new('subscriber');
 $node_subscriber->init;
 $node_subscriber->start;
 
 # Create some preexisting content on publisher
-$node_publisher->safe_psql('postgres',
+$node_publisher->safe_psql('maintable',
 	"CREATE TABLE tab_test (a int primary key)");
 
 # Setup structure on subscriber
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	"CREATE TABLE tab_test (a int primary key)");
 
 # Setup logical replication
-my $publisher_connstr = $node_publisher->connstr . ' dbname=postgres';
-$node_publisher->safe_psql('postgres',
+my $publisher_connstr = $node_publisher->connstr . ' dbname=maintable';
+$node_publisher->safe_psql('maintable',
 	"CREATE PUBLICATION tap_pub FOR TABLE tab_test");
 
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	"CREATE SUBSCRIPTION tap_sub CONNECTION '$publisher_connstr' PUBLICATION tap_pub"
 );
 
 $node_publisher->wait_for_catchup('tap_sub');
 
 # Ensure a transactional logical decoding message shows up on the slot
-$node_subscriber->safe_psql('postgres', "ALTER SUBSCRIPTION tap_sub DISABLE");
+$node_subscriber->safe_psql('maintable', "ALTER SUBSCRIPTION tap_sub DISABLE");
 
 # wait for the replication slot to become inactive on the publisher
 $node_publisher->poll_query_until(
-	'postgres',
+	'maintable',
 	"SELECT COUNT(*) FROM pg_catalog.pg_replication_slots WHERE slot_name = 'tap_sub' AND active='f'",
 	1);
 
-$node_publisher->safe_psql('postgres',
+$node_publisher->safe_psql('maintable',
 	"SELECT pg_logical_emit_message(true, 'pgoutput', 'a transactional message')"
 );
 
 my $result = $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		SELECT get_byte(data, 0)
 		FROM pg_logical_slot_peek_binary_changes('tap_sub', NULL, NULL,
 			'proto_version', '1',
@@ -67,7 +67,7 @@ is( $result, qq(66
 	'messages on slot are B M C with message option');
 
 $result = $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		SELECT get_byte(data, 1), encode(substr(data, 11, 8), 'escape')
 		FROM pg_logical_slot_peek_binary_changes('tap_sub', NULL, NULL,
 			'proto_version', '1',
@@ -80,7 +80,7 @@ is($result, qq(1|pgoutput),
 	"flag transactional is set to 1 and prefix is pgoutput");
 
 $result = $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		SELECT get_byte(data, 0)
 		FROM pg_logical_slot_get_binary_changes('tap_sub', NULL, NULL,
 			'proto_version', '1',
@@ -92,16 +92,16 @@ is($result, qq(),
 	'option messages defaults to false so message (M) is not available on slot'
 );
 
-$node_publisher->safe_psql('postgres', "INSERT INTO tab_test VALUES (1)");
+$node_publisher->safe_psql('maintable', "INSERT INTO tab_test VALUES (1)");
 
-my $message_lsn = $node_publisher->safe_psql('postgres',
+my $message_lsn = $node_publisher->safe_psql('maintable',
 	"SELECT pg_logical_emit_message(false, 'pgoutput', 'a non-transactional message')"
 );
 
-$node_publisher->safe_psql('postgres', "INSERT INTO tab_test VALUES (2)");
+$node_publisher->safe_psql('maintable', "INSERT INTO tab_test VALUES (2)");
 
 $result = $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		SELECT get_byte(data, 0), get_byte(data, 1)
 		FROM pg_logical_slot_get_binary_changes('tap_sub', NULL, NULL,
 			'proto_version', '1',
@@ -117,7 +117,7 @@ is($result, qq(77|0), 'non-transactional message on slot is M');
 # something advances the LSN, hence, we intentionally forces the server to
 # switch to a new WAL file.
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		BEGIN;
 		SELECT pg_logical_emit_message(false, 'pgoutput',
 			'a non-transactional message is available even if the transaction is aborted 1');
@@ -131,7 +131,7 @@ $node_publisher->safe_psql(
 ));
 
 $result = $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		SELECT get_byte(data, 0), get_byte(data, 1)
 		FROM pg_logical_slot_peek_binary_changes('tap_sub', NULL, NULL,
 			'proto_version', '1',

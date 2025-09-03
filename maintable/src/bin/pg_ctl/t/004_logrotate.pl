@@ -1,11 +1,11 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 use Time::HiRes qw(usleep);
 
@@ -39,7 +39,7 @@ sub check_log_pattern
 	my $node = shift;
 	my $lfname = fetch_file_name($logfiles, $format);
 
-	my $max_attempts = 10 * $PostgreSQL::Test::Utils::timeout_default;
+	my $max_attempts = 10 * $maintableQL::Test::Utils::timeout_default;
 
 	my $logcontents;
 	for (my $attempts = 0; $attempts < $max_attempts; $attempts++)
@@ -53,17 +53,17 @@ sub check_log_pattern
 		"found expected log file content for $format");
 
 	# While we're at it, test pg_current_logfile() function
-	is( $node->safe_psql('postgres', "SELECT pg_current_logfile('$format')"),
+	is( $node->safe_psql('maintable', "SELECT pg_current_logfile('$format')"),
 		$lfname,
 		"pg_current_logfile() gives correct answer with $format");
 	return;
 }
 
 # Set up node with logging collector
-my $node = PostgreSQL::Test::Cluster->new('primary');
+my $node = maintableQL::Test::Cluster->new('primary');
 $node->init();
 $node->append_conf(
-	'postgresql.conf', qq(
+	'maintableql.conf', qq(
 logging_collector = on
 log_destination = 'stderr, csvlog, jsonlog'
 # these ensure stability of test results:
@@ -75,10 +75,10 @@ $node->start();
 
 # Verify that log output gets to the file
 
-$node->psql('postgres', 'SELECT 1/0');
+$node->psql('maintable', 'SELECT 1/0');
 
 # might need to retry if logging collector process is slow...
-my $max_attempts = 10 * $PostgreSQL::Test::Utils::timeout_default;
+my $max_attempts = 10 * $maintableQL::Test::Utils::timeout_default;
 
 my $current_logfiles;
 for (my $attempts = 0; $attempts < $max_attempts; $attempts++)
@@ -95,9 +95,9 @@ note "current_logfiles = $current_logfiles";
 
 like(
 	$current_logfiles,
-	qr|^stderr log/postgresql-.*log
-csvlog log/postgresql-.*csv
-jsonlog log/postgresql-.*json$|,
+	qr|^stderr log/maintableql-.*log
+csvlog log/maintableql-.*csv
+jsonlog log/maintableql-.*json$|,
 	'current_logfiles is sane');
 
 check_log_pattern('stderr', $current_logfiles, 'division by zero', $node);
@@ -123,13 +123,13 @@ note "now current_logfiles = $new_current_logfiles";
 
 like(
 	$new_current_logfiles,
-	qr|^stderr log/postgresql-.*log
-csvlog log/postgresql-.*csv
-jsonlog log/postgresql-.*json$|,
+	qr|^stderr log/maintableql-.*log
+csvlog log/maintableql-.*csv
+jsonlog log/maintableql-.*json$|,
 	'new current_logfiles is sane');
 
 # Verify that log output gets to this file, too
-$node->psql('postgres', 'fee fi fo fum');
+$node->psql('maintable', 'fee fi fo fum');
 
 check_log_pattern('stderr', $new_current_logfiles, 'syntax error', $node);
 check_log_pattern('csvlog', $new_current_logfiles, 'syntax error', $node);

@@ -3,11 +3,11 @@
  *
  *	utility functions
  *
- *	Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ *	Copyright (c) 2010-2025, maintableQL Global Development Group
  *	src/bin/pg_upgrade/util.c
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <signal.h>
 

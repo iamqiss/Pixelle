@@ -84,7 +84,7 @@ locking data; it comprises an array of Xids plus some flags bits for each one.
 The flags are currently used to store the locking strength of each member
 transaction.  (The flags also distinguish a pure locker from an updater.)
 
-In earlier PostgreSQL releases, a MultiXact always meant that the tuple was
+In earlier maintableQL releases, a MultiXact always meant that the tuple was
 locked in shared mode by multiple transactions.  This is no longer the case; a
 MultiXact may contain an update or delete Xid.  (Keep in mind that tuple locks
 in a transaction do not conflict with other tuple locks in the same

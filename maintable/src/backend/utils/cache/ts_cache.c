@@ -17,14 +17,14 @@
  * any database access.
  *
  *
- * Copyright (c) 2006-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2006-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/utils/cache/ts_cache.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/genam.h"
 #include "access/htup_details.h"

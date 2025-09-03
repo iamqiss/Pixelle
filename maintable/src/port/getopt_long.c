@@ -5,7 +5,7 @@
  * The Regents of the University of California.  All rights reserved.
  *
  * Portions Copyright (c) 2003
- * PostgreSQL Global Development Group
+ * maintableQL Global Development Group
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions

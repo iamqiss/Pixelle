@@ -1,16 +1,16 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test pg_verifybackup's WAL verification.
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Start up the server and take a backup.
-my $primary = PostgreSQL::Test::Cluster->new('primary');
+my $primary = maintableQL::Test::Cluster->new('primary');
 $primary->init(allows_streaming => 1);
 $primary->start;
 my $backup_path = $primary->backup_dir . '/test_wal';
@@ -74,7 +74,7 @@ $primary->stop;
 $primary->append_conf('standby.signal', '');
 $primary->start;
 $primary->promote;
-$primary->safe_psql('postgres', 'SELECT pg_switch_wal()');
+$primary->safe_psql('maintable', 'SELECT pg_switch_wal()');
 my $backup_path2 = $primary->backup_dir . '/test_tli';
 # The base backup run below does a checkpoint, that removes the first segment
 # of the current timeline.

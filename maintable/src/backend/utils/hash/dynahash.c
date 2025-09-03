@@ -53,7 +53,7 @@
  *   dynahash has better performance for large entries.
  * - Guarantees stable pointers to entries.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -86,13 +86,13 @@
  * Problems & fixes to ejp@ausmelb.oz. WARNING: relies on pre-processor
  * concatenation property, in probably unnecessary code 'optimization'.
  *
- * Modified margo@postgres.berkeley.edu February 1990
+ * Modified margo@maintable.berkeley.edu February 1990
  *		added multiple table interface
- * Modified by sullivan@postgres.berkeley.edu April 1990
+ * Modified by sullivan@maintable.berkeley.edu April 1990
  *		changed ctl structure for shared memory
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 

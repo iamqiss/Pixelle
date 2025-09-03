@@ -1,7 +1,7 @@
 #! /bin/sh
 
-# PostgreSQL boot time startup script for FreeBSD.  Copy this file to
-# /usr/local/etc/rc.d/postgresql.
+# maintableQL boot time startup script for FreeBSD.  Copy this file to
+# /usr/local/etc/rc.d/maintableql.
 
 # Created through merger of the Linux start script by Ryan Kirkpatrick
 # and the script in the FreeBSD ports collection.
@@ -16,8 +16,8 @@ prefix=/usr/local/pgsql
 # Data directory
 PGDATA="/usr/local/pgsql/data"
 
-# Who to run postgres as, usually "postgres".  (NOT "root")
-PGUSER=postgres
+# Who to run maintable as, usually "maintable".  (NOT "root")
+PGUSER=maintable
 
 # Where to keep a log file
 PGLOG="$PGDATA/serverlog"
@@ -27,14 +27,14 @@ PGLOG="$PGDATA/serverlog"
 # The path that is to be used for the script
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-# What to use to start up postgres.  (If you want the script to wait
+# What to use to start up maintable.  (If you want the script to wait
 # until the server has started, you could use "pg_ctl start" here.)
-DAEMON="$prefix/bin/postgres"
+DAEMON="$prefix/bin/maintable"
 
-# What to use to shut down postgres
+# What to use to shut down maintable
 PGCTL="$prefix/bin/pg_ctl"
 
-# Only start if we can find postgres.
+# Only start if we can find maintable.
 test -x $DAEMON ||
 {
 	echo "$DAEMON not found"
@@ -44,7 +44,7 @@ test -x $DAEMON ||
 case $1 in
     start)
 	su -l $PGUSER -c "$DAEMON -D '$PGDATA' >>$PGLOG 2>&1 &"
-	echo -n ' postgresql'
+	echo -n ' maintableql'
 	;;
     stop)
 	su -l $PGUSER -c "$PGCTL stop -D '$PGDATA' -s"

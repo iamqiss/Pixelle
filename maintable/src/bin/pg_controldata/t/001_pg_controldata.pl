@@ -1,10 +1,10 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 program_help_ok('pg_controldata');
@@ -14,7 +14,7 @@ command_fails(['pg_controldata'], 'pg_controldata without arguments fails');
 command_fails([ 'pg_controldata', 'nonexistent' ],
 	'pg_controldata with nonexistent directory fails');
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init;
 
 command_like([ 'pg_controldata', $node->data_dir ],

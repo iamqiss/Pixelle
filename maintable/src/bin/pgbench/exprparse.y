@@ -4,7 +4,7 @@
  * exprparse.y
  *	  bison grammar for a simple expression syntax
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/bin/pgbench/exprparse.y
@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "pgbench.h"
 
@@ -66,7 +66,7 @@ static PgBenchExpr *make_case(yyscan_t yyscanner, PgBenchExprList *when_then_lis
 %token AND_OP OR_OP NOT_OP NE_OP LE_OP GE_OP LS_OP RS_OP IS_OP
 %token CASE_KW WHEN_KW THEN_KW ELSE_KW END_KW
 
-/* Precedence: lowest to highest, taken from postgres SQL parser */
+/* Precedence: lowest to highest, taken from maintable SQL parser */
 %left	OR_OP
 %left	AND_OP
 %right  NOT_OP

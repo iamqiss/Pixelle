@@ -18,10 +18,10 @@
 
 use crate::streaming::common::test_setup::TestSetup;
 use bytes::Bytes;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use server::configs::system::SystemConfig;
 use server::streaming::polling_consumer::PollingConsumer;
-use server::streaming::segments::IggyMessagesBatchMut;
+use server::streaming::segments::MessengerMessagesBatchMut;
 use server::streaming::topics::topic::Topic;
 use server::streaming::utils::hash;
 use std::collections::HashMap;
@@ -42,7 +42,7 @@ async fn assert_polling_messages() {
     let partitioning = Partitioning::partition_id(partition_id);
     let messages = (0..messages_count)
         .map(|id| {
-            IggyMessage::builder()
+            MessengerMessage::builder()
                 .id(id as u128)
                 .payload(Bytes::from(format!(
                     "{}:{}",
@@ -60,8 +60,8 @@ async fn assert_polling_messages() {
     let batch_size = messages
         .iter()
         .map(|m| m.get_size_bytes())
-        .sum::<IggyByteSize>();
-    let batch = IggyMessagesBatchMut::from_messages(&messages, batch_size.as_bytes_u32());
+        .sum::<MessengerByteSize>();
+    let batch = MessengerMessagesBatchMut::from_messages(&messages, batch_size.as_bytes_u32());
     topic
         .append_messages(&partitioning, batch, None)
         .await
@@ -100,9 +100,9 @@ async fn given_key_none_messages_should_be_appended_to_the_next_partition_using_
     let partitioning = Partitioning::balanced();
     for i in 1..=partitions_count * messages_per_partition_count {
         let payload = get_payload(i);
-        let batch_size = IggyByteSize::from(16 + 4 + payload.len() as u64);
-        let messages = IggyMessagesBatchMut::from_messages(
-            &[IggyMessage::builder()
+        let batch_size = MessengerByteSize::from(16 + 4 + payload.len() as u64);
+        let messages = MessengerMessagesBatchMut::from_messages(
+            &[MessengerMessage::builder()
                 .id(i as u128)
                 .payload(Bytes::from(payload.to_owned()))
                 .build()
@@ -129,9 +129,9 @@ async fn given_key_partition_id_messages_should_be_appended_to_the_chosen_partit
     let partitioning = Partitioning::partition_id(partition_id);
     for i in 1..=partitions_count * messages_per_partition_count {
         let payload = get_payload(i);
-        let batch_size = IggyByteSize::from(16 + 4 + payload.len() as u64);
-        let messages = IggyMessagesBatchMut::from_messages(
-            &[IggyMessage::builder()
+        let batch_size = MessengerByteSize::from(16 + 4 + payload.len() as u64);
+        let messages = MessengerMessagesBatchMut::from_messages(
+            &[MessengerMessage::builder()
                 .id(i as u128)
                 .payload(Bytes::from(payload.to_owned()))
                 .build()
@@ -162,9 +162,9 @@ async fn given_key_messages_key_messages_should_be_appended_to_the_calculated_pa
     for entity_id in 1..=partitions_count * messages_count {
         let payload = get_payload(entity_id);
         let partitioning = Partitioning::messages_key_u32(entity_id);
-        let batch_size = IggyByteSize::from(16 + 4 + payload.len() as u64);
-        let messages = IggyMessagesBatchMut::from_messages(
-            &[IggyMessage::builder()
+        let batch_size = MessengerByteSize::from(16 + 4 + payload.len() as u64);
+        let messages = MessengerMessagesBatchMut::from_messages(
+            &[MessengerMessage::builder()
                 .id(entity_id as u128)
                 .payload(Bytes::from(payload.to_owned()))
                 .build()
@@ -225,7 +225,7 @@ async fn init_topic(setup: &TestSetup, partitions_count: u32) -> Topic {
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU32::new(0)),
-        IggyExpiry::NeverExpire,
+        MessengerExpiry::NeverExpire,
         Default::default(),
         MaxTopicSize::ServerDefault,
         1,

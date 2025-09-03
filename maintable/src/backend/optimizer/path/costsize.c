@@ -20,7 +20,7 @@
  * database is fully cached in RAM, it is reasonable to set them equal.)
  *
  * We also use a rough estimate "effective_cache_size" of the number of
- * disk pages in Postgres + OS-level disk cache.  (We can't simply use
+ * disk pages in Maintable + OS-level disk cache.  (We can't simply use
  * NBuffers for this purpose because that would ignore the effects of
  * the kernel's disk cache.)
  *
@@ -71,7 +71,7 @@
  * values.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -80,7 +80,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 #include <math.h>

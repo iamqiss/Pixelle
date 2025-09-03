@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * pg_list.h
- *	  interface for PostgreSQL generic list package
+ *	  interface for maintableQL generic list package
  *
- * Once upon a time, parts of Postgres were written in Lisp and used real
+ * Once upon a time, parts of Maintable were written in Lisp and used real
  * cons-cell lists for major data structures.  When that code was rewritten
  * in C, we initially had a faithful emulation of cons-cell lists, which
  * unsurprisingly was a performance bottleneck.  A couple of major rewrites
@@ -29,7 +29,7 @@
  * always be so; be careful to use the appropriate list type for your data.)
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/nodes/pg_list.h

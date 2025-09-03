@@ -3,7 +3,7 @@
  * xlogreader.c
  *		Generic XLog reading facility
  *
- * Portions Copyright (c) 2013-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2013-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/backend/access/transam/xlogreader.c
@@ -15,7 +15,7 @@
  *		may not use ereport, server-defined static variables, etc.
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 #ifdef USE_LZ4

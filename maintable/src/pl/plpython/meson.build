@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 if not python3_dep.found()
   subdir_done()
@@ -38,8 +38,8 @@ endif
 
 plpython = shared_module('plpython3',
   plpython_sources,
-  c_pch: pch_postgres_h,
-  include_directories: [plpython_inc, postgres_inc],
+  c_pch: pch_maintable_h,
+  include_directories: [plpython_inc, maintable_inc],
   kwargs: pg_mod_args + {
     'dependencies': [python3_dep, pg_mod_args['dependencies']],
   },

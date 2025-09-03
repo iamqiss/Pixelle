@@ -3,7 +3,7 @@
  * nodeIndexscan.c
  *	  Routines to support indexed scans of relations
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -27,7 +27,7 @@
  *		ExecIndexScanReInitializeDSM reinitialize DSM for fresh scan
  *		ExecIndexScanInitializeWorker attach to DSM info in parallel worker
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/nbtree.h"
 #include "access/relscan.h"

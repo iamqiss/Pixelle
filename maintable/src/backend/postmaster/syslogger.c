@@ -2,18 +2,18 @@
  *
  * syslogger.c
  *
- * The system logger (syslogger) appeared in Postgres 8.0. It catches all
+ * The system logger (syslogger) appeared in Maintable 8.0. It catches all
  * stderr output from the postmaster, backends, and other subprocesses
  * by redirecting to a pipe, and writes it to a set of logfiles.
  * It's possible to have size and age limits for the logfile configured
- * in postgresql.conf. If these limits are reached or passed, the
+ * in maintableql.conf. If these limits are reached or passed, the
  * current logfile is closed and a new one is created (rotated).
  * The logfiles are stored in a subdirectory (configurable in
- * postgresql.conf), using a user-selectable naming scheme.
+ * maintableql.conf), using a user-selectable naming scheme.
  *
  * Author: Andreas Pflug <pgadmin@pse-consulting.de>
  *
- * Copyright (c) 2004-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2004-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -21,7 +21,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <fcntl.h>
 #include <limits.h>
@@ -368,7 +368,7 @@ SysLoggerMain(const void *startup_data, size_t startup_data_len)
 
 			/*
 			 * Check if the log directory or filename pattern changed in
-			 * postgresql.conf. If so, force rotation to make sure we're
+			 * maintableql.conf. If so, force rotation to make sure we're
 			 * writing the logfiles in the right place.
 			 */
 			if (strcmp(Log_directory, currentLogDir) != 0)
@@ -868,7 +868,7 @@ syslogger_fdopen(int fd)
  * . messages from different backends being interleaved (messages garbled).
  *
  * Any non-protocol messages are written out directly. These should only come
- * from non-PostgreSQL sources, however (e.g. third party libraries writing to
+ * from non-maintableQL sources, however (e.g. third party libraries writing to
  * stderr).
  *
  * logbuffer is the data input buffer, and *bytes_in_logbuffer is the number

@@ -1,10 +1,10 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 program_help_ok('pg_waldump');
@@ -77,10 +77,10 @@ LogicalMessage$/,
 	'rmgr list');
 
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init;
 $node->append_conf(
-	'postgresql.conf', q{
+	'maintableql.conf', q{
 autovacuum = off
 checkpoint_timeout = 1h
 
@@ -94,12 +94,12 @@ wal_level=logical
 $node->start;
 
 my ($start_lsn, $start_walfile) = split /\|/,
-  $node->safe_psql('postgres',
+  $node->safe_psql('maintable',
 	q{SELECT pg_current_wal_insert_lsn(), pg_walfile_name(pg_current_wal_insert_lsn())}
   );
 
 $node->safe_psql(
-	'postgres', q{
+	'maintable', q{
 -- heap, btree, hash, sequence
 CREATE TABLE t1 (a int GENERATED ALWAYS AS IDENTITY, b text);
 CREATE INDEX i1a ON t1 USING btree (a);
@@ -154,26 +154,26 @@ CREATE DATABASE d1;
 DROP DATABASE d1;
 });
 
-my $tblspc_path = PostgreSQL::Test::Utils::tempdir_short();
+my $tblspc_path = maintableQL::Test::Utils::tempdir_short();
 
 $node->safe_psql(
-	'postgres', qq{
+	'maintable', qq{
 CREATE TABLESPACE ts1 LOCATION '$tblspc_path';
 DROP TABLESPACE ts1;
 });
 
 my ($end_lsn, $end_walfile) = split /\|/,
-  $node->safe_psql('postgres',
+  $node->safe_psql('maintable',
 	q{SELECT pg_current_wal_insert_lsn(), pg_walfile_name(pg_current_wal_insert_lsn())}
   );
 
-my $default_ts_oid = $node->safe_psql('postgres',
+my $default_ts_oid = $node->safe_psql('maintable',
 	q{SELECT oid FROM pg_tablespace WHERE spcname = 'pg_default'});
-my $postgres_db_oid = $node->safe_psql('postgres',
-	q{SELECT oid FROM pg_database WHERE datname = 'postgres'});
-my $rel_t1_oid = $node->safe_psql('postgres',
+my $maintable_db_oid = $node->safe_psql('maintable',
+	q{SELECT oid FROM pg_database WHERE datname = 'maintable'});
+my $rel_t1_oid = $node->safe_psql('maintable',
 	q{SELECT oid FROM pg_class WHERE relname = 't1'});
-my $rel_i1a_oid = $node->safe_psql('postgres',
+my $rel_i1a_oid = $node->safe_psql('maintable',
 	q{SELECT oid FROM pg_class WHERE relname = 'i1a'});
 
 $node->stop;
@@ -312,12 +312,12 @@ is(grep(!/^rmgr: Btree/, @lines), 0, 'only Btree lines');
 is(grep(!/fork init/, @lines), 0, 'only init fork lines');
 
 @lines = test_pg_waldump(
-	'--relation' => "$default_ts_oid/$postgres_db_oid/$rel_t1_oid");
-is(grep(!/rel $default_ts_oid\/$postgres_db_oid\/$rel_t1_oid/, @lines),
+	'--relation' => "$default_ts_oid/$maintable_db_oid/$rel_t1_oid");
+is(grep(!/rel $default_ts_oid\/$maintable_db_oid\/$rel_t1_oid/, @lines),
 	0, 'only lines for selected relation');
 
 @lines = test_pg_waldump(
-	'--relation' => "$default_ts_oid/$postgres_db_oid/$rel_i1a_oid",
+	'--relation' => "$default_ts_oid/$maintable_db_oid/$rel_i1a_oid",
 	'--block' => 1);
 is(grep(!/\bblk 1\b/, @lines), 0, 'only lines for selected block');
 

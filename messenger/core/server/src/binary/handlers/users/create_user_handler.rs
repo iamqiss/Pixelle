@@ -27,23 +27,23 @@ use crate::streaming::systems::system::SharedSystem;
 use crate::streaming::utils::crypto;
 use anyhow::Result;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::create_user::CreateUser;
+use messenger_common::MessengerError;
+use messenger_common::create_user::CreateUser;
 use tracing::{debug, instrument};
 
 impl ServerCommandHandler for CreateUser {
     fn code(&self) -> u32 {
-        iggy_common::CREATE_USER_CODE
+        messenger_common::CREATE_USER_CODE
     }
 
-    #[instrument(skip_all, name = "trace_create_user", fields(iggy_user_id = session.get_user_id(), iggy_client_id = session.client_id))]
+    #[instrument(skip_all, name = "trace_create_user", fields(messenger_user_id = session.get_user_id(), messenger_client_id = session.client_id))]
     async fn handle(
         self,
         sender: &mut SenderKind,
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
 
         let mut system = system.write().await;
@@ -94,13 +94,13 @@ impl ServerCommandHandler for CreateUser {
 }
 
 impl BinaryServerCommand for CreateUser {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::CreateUser(create_user) => Ok(create_user),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

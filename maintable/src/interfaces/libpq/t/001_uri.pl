@@ -1,8 +1,8 @@
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use Test::More;
 use IPC::Run;
 
@@ -13,127 +13,127 @@ use IPC::Run;
 # environment variables for the duration of the test.
 my @tests = (
 	[
-		q{postgresql://uri-user:secret@host:12345/db},
+		q{maintableql://uri-user:secret@host:12345/db},
 		q{user='uri-user' password='secret' dbname='db' host='host' port='12345' (inet)},
 		q{},
 	],
 	[
-		q{postgresql://uri-user@host:12345/db},
+		q{maintableql://uri-user@host:12345/db},
 		q{user='uri-user' dbname='db' host='host' port='12345' (inet)}, q{},
 	],
 	[
-		q{postgresql://uri-user@host/db},
+		q{maintableql://uri-user@host/db},
 		q{user='uri-user' dbname='db' host='host' (inet)}, q{},
 	],
 	[
-		q{postgresql://host:12345/db},
+		q{maintableql://host:12345/db},
 		q{dbname='db' host='host' port='12345' (inet)}, q{},
 	],
-	[ q{postgresql://host/db}, q{dbname='db' host='host' (inet)}, q{}, ],
+	[ q{maintableql://host/db}, q{dbname='db' host='host' (inet)}, q{}, ],
 	[
-		q{postgresql://uri-user@host:12345/},
+		q{maintableql://uri-user@host:12345/},
 		q{user='uri-user' host='host' port='12345' (inet)},
 		q{},
 	],
 	[
-		q{postgresql://uri-user@host/},
+		q{maintableql://uri-user@host/},
 		q{user='uri-user' host='host' (inet)},
 		q{},
 	],
-	[ q{postgresql://uri-user@}, q{user='uri-user' (local)}, q{}, ],
-	[ q{postgresql://host:12345/}, q{host='host' port='12345' (inet)}, q{}, ],
-	[ q{postgresql://host:12345}, q{host='host' port='12345' (inet)}, q{}, ],
-	[ q{postgresql://host/db}, q{dbname='db' host='host' (inet)}, q{}, ],
-	[ q{postgresql://host/}, q{host='host' (inet)}, q{}, ],
-	[ q{postgresql://host}, q{host='host' (inet)}, q{}, ],
-	[ q{postgresql://}, q{(local)}, q{}, ],
+	[ q{maintableql://uri-user@}, q{user='uri-user' (local)}, q{}, ],
+	[ q{maintableql://host:12345/}, q{host='host' port='12345' (inet)}, q{}, ],
+	[ q{maintableql://host:12345}, q{host='host' port='12345' (inet)}, q{}, ],
+	[ q{maintableql://host/db}, q{dbname='db' host='host' (inet)}, q{}, ],
+	[ q{maintableql://host/}, q{host='host' (inet)}, q{}, ],
+	[ q{maintableql://host}, q{host='host' (inet)}, q{}, ],
+	[ q{maintableql://}, q{(local)}, q{}, ],
 	[
-		q{postgresql://?hostaddr=127.0.0.1}, q{hostaddr='127.0.0.1' (inet)},
+		q{maintableql://?hostaddr=127.0.0.1}, q{hostaddr='127.0.0.1' (inet)},
 		q{},
 	],
 	[
-		q{postgresql://example.com?hostaddr=63.1.2.4},
+		q{maintableql://example.com?hostaddr=63.1.2.4},
 		q{host='example.com' hostaddr='63.1.2.4' (inet)},
 		q{},
 	],
-	[ q{postgresql://%68ost/}, q{host='host' (inet)}, q{}, ],
+	[ q{maintableql://%68ost/}, q{host='host' (inet)}, q{}, ],
 	[
-		q{postgresql://host/db?user=uri-user},
+		q{maintableql://host/db?user=uri-user},
 		q{user='uri-user' dbname='db' host='host' (inet)},
 		q{},
 	],
 	[
-		q{postgresql://host/db?user=uri-user&port=12345},
+		q{maintableql://host/db?user=uri-user&port=12345},
 		q{user='uri-user' dbname='db' host='host' port='12345' (inet)},
 		q{},
 	],
 	[
-		q{postgresql://host/db?u%73er=someotheruser&port=12345},
+		q{maintableql://host/db?u%73er=someotheruser&port=12345},
 		q{user='someotheruser' dbname='db' host='host' port='12345' (inet)},
 		q{},
 	],
 	[
-		q{postgresql://host/db?u%7aer=someotheruser&port=12345}, q{},
+		q{maintableql://host/db?u%7aer=someotheruser&port=12345}, q{},
 		q{libpq_uri_regress: invalid URI query parameter: "uzer"},
 	],
 	[
-		q{postgresql://host:12345?user=uri-user},
+		q{maintableql://host:12345?user=uri-user},
 		q{user='uri-user' host='host' port='12345' (inet)},
 		q{},
 	],
 	[
-		q{postgresql://host?user=uri-user},
+		q{maintableql://host?user=uri-user},
 		q{user='uri-user' host='host' (inet)},
 		q{},
 	],
 	[
 		# Leading and trailing spaces, works.
-		q{postgresql://host?  user = uri-user & port  = 12345 },
+		q{maintableql://host?  user = uri-user & port  = 12345 },
 		q{user='uri-user' host='host' port='12345' (inet)},
 		q{},
 	],
 	[
 		# Trailing data in parameter.
-		q{postgresql://host?  user user  =  uri  & port = 12345 12 },
+		q{maintableql://host?  user user  =  uri  & port = 12345 12 },
 		q{},
 		q{libpq_uri_regress: unexpected spaces found in "  user user  ", use percent-encoded spaces (%20) instead},
 	],
 	[
 		# Trailing data in value.
-		q{postgresql://host?  user  =  uri-user  & port = 12345 12 },
+		q{maintableql://host?  user  =  uri-user  & port = 12345 12 },
 		q{},
 		q{libpq_uri_regress: unexpected spaces found in " 12345 12 ", use percent-encoded spaces (%20) instead},
 	],
-	[ q{postgresql://host?}, q{host='host' (inet)}, q{}, ],
+	[ q{maintableql://host?}, q{host='host' (inet)}, q{}, ],
 	[
-		q{postgresql://[::1]:12345/db},
+		q{maintableql://[::1]:12345/db},
 		q{dbname='db' host='::1' port='12345' (inet)},
 		q{},
 	],
-	[ q{postgresql://[::1]/db}, q{dbname='db' host='::1' (inet)}, q{}, ],
+	[ q{maintableql://[::1]/db}, q{dbname='db' host='::1' (inet)}, q{}, ],
 	[
-		q{postgresql://[2001:db8::1234]/}, q{host='2001:db8::1234' (inet)},
+		q{maintableql://[2001:db8::1234]/}, q{host='2001:db8::1234' (inet)},
 		q{},
 	],
 	[
-		q{postgresql://[200z:db8::1234]/}, q{host='200z:db8::1234' (inet)},
+		q{maintableql://[200z:db8::1234]/}, q{host='200z:db8::1234' (inet)},
 		q{},
 	],
-	[ q{postgresql://[::1]}, q{host='::1' (inet)}, q{}, ],
-	[ q{postgres://}, q{(local)}, q{}, ],
-	[ q{postgres:///}, q{(local)}, q{}, ],
-	[ q{postgres:///db}, q{dbname='db' (local)}, q{}, ],
+	[ q{maintableql://[::1]}, q{host='::1' (inet)}, q{}, ],
+	[ q{maintable://}, q{(local)}, q{}, ],
+	[ q{maintable:///}, q{(local)}, q{}, ],
+	[ q{maintable:///db}, q{dbname='db' (local)}, q{}, ],
 	[
-		q{postgres://uri-user@/db}, q{user='uri-user' dbname='db' (local)},
+		q{maintable://uri-user@/db}, q{user='uri-user' dbname='db' (local)},
 		q{},
 	],
 	[
-		q{postgres://?host=/path/to/socket/dir},
+		q{maintable://?host=/path/to/socket/dir},
 		q{host='/path/to/socket/dir' (local)},
 		q{},
 	],
 	[
-		q{postgresql://host?uzer=}, q{},
+		q{maintableql://host?uzer=}, q{},
 		q{libpq_uri_regress: invalid URI query parameter: "uzer"},
 	],
 	[
@@ -142,111 +142,111 @@ my @tests = (
 		q{libpq_uri_regress: missing "=" after "postgre://" in connection info string},
 	],
 	[
-		q{postgres://[::1},
+		q{maintable://[::1},
 		q{},
-		q{libpq_uri_regress: end of string reached when looking for matching "]" in IPv6 host address in URI: "postgres://[::1"},
+		q{libpq_uri_regress: end of string reached when looking for matching "]" in IPv6 host address in URI: "maintable://[::1"},
 	],
 	[
-		q{postgres://[]},
+		q{maintable://[]},
 		q{},
-		q{libpq_uri_regress: IPv6 host address may not be empty in URI: "postgres://[]"},
+		q{libpq_uri_regress: IPv6 host address may not be empty in URI: "maintable://[]"},
 	],
 	[
-		q{postgres://[::1]z},
+		q{maintable://[::1]z},
 		q{},
-		q{libpq_uri_regress: unexpected character "z" at position 17 in URI (expected ":" or "/"): "postgres://[::1]z"},
+		q{libpq_uri_regress: unexpected character "z" at position 17 in URI (expected ":" or "/"): "maintable://[::1]z"},
 	],
 	[
-		q{postgresql://host?zzz},
+		q{maintableql://host?zzz},
 		q{},
 		q{libpq_uri_regress: missing key/value separator "=" in URI query parameter: "zzz"},
 	],
 	[
-		q{postgresql://host?value1&value2},
+		q{maintableql://host?value1&value2},
 		q{},
 		q{libpq_uri_regress: missing key/value separator "=" in URI query parameter: "value1"},
 	],
 	[
-		q{postgresql://host?key=key=value},
+		q{maintableql://host?key=key=value},
 		q{},
 		q{libpq_uri_regress: extra key/value separator "=" in URI query parameter: "key"},
 	],
 	[
-		q{postgres://host?dbname=%XXfoo}, q{},
+		q{maintable://host?dbname=%XXfoo}, q{},
 		q{libpq_uri_regress: invalid percent-encoded token: "%XXfoo"},
 	],
 	[
-		q{postgresql://a%00b},
+		q{maintableql://a%00b},
 		q{},
 		q{libpq_uri_regress: forbidden value %00 in percent-encoded value: "a%00b"},
 	],
 	[
-		q{postgresql://%zz}, q{},
+		q{maintableql://%zz}, q{},
 		q{libpq_uri_regress: invalid percent-encoded token: "%zz"},
 	],
 	[
-		q{postgresql://%1}, q{},
+		q{maintableql://%1}, q{},
 		q{libpq_uri_regress: invalid percent-encoded token: "%1"},
 	],
 	[
-		q{postgresql://%}, q{},
+		q{maintableql://%}, q{},
 		q{libpq_uri_regress: invalid percent-encoded token: "%"},
 	],
-	[ q{postgres://@host}, q{host='host' (inet)}, q{}, ],
-	[ q{postgres://host:/}, q{host='host' (inet)}, q{}, ],
-	[ q{postgres://:12345/}, q{port='12345' (local)}, q{}, ],
+	[ q{maintable://@host}, q{host='host' (inet)}, q{}, ],
+	[ q{maintable://host:/}, q{host='host' (inet)}, q{}, ],
+	[ q{maintable://:12345/}, q{port='12345' (local)}, q{}, ],
 	[
-		q{postgres://otheruser@?host=/no/such/directory},
+		q{maintable://otheruser@?host=/no/such/directory},
 		q{user='otheruser' host='/no/such/directory' (local)},
 		q{},
 	],
 	[
-		q{postgres://otheruser@/?host=/no/such/directory},
+		q{maintable://otheruser@/?host=/no/such/directory},
 		q{user='otheruser' host='/no/such/directory' (local)},
 		q{},
 	],
 	[
-		q{postgres://otheruser@:12345?host=/no/such/socket/path},
+		q{maintable://otheruser@:12345?host=/no/such/socket/path},
 		q{user='otheruser' host='/no/such/socket/path' port='12345' (local)},
 		q{},
 	],
 	[
-		q{postgres://otheruser@:12345/db?host=/path/to/socket},
+		q{maintable://otheruser@:12345/db?host=/path/to/socket},
 		q{user='otheruser' dbname='db' host='/path/to/socket' port='12345' (local)},
 		q{},
 	],
 	[
-		q{postgres://:12345/db?host=/path/to/socket},
+		q{maintable://:12345/db?host=/path/to/socket},
 		q{dbname='db' host='/path/to/socket' port='12345' (local)},
 		q{},
 	],
 	[
-		q{postgres://:12345?host=/path/to/socket},
+		q{maintable://:12345?host=/path/to/socket},
 		q{host='/path/to/socket' port='12345' (local)},
 		q{},
 	],
 	[
-		q{postgres://%2Fvar%2Flib%2Fpostgresql/dbname},
-		q{dbname='dbname' host='/var/lib/postgresql' (local)},
+		q{maintable://%2Fvar%2Flib%2Fmaintableql/dbname},
+		q{dbname='dbname' host='/var/lib/maintableql' (local)},
 		q{},
 	],
 	# Usually the default sslmode is 'prefer' (for libraries with SSL) or
 	# 'disable' (for those without). This default changes to 'verify-full' if
 	# the system CA store is in use.
 	[
-		q{postgresql://host?sslmode=disable},
+		q{maintableql://host?sslmode=disable},
 		q{host='host' sslmode='disable' (inet)},
 		q{},
 		PGSSLROOTCERT => "system",
 	],
 	[
-		q{postgresql://host?sslmode=prefer},
+		q{maintableql://host?sslmode=prefer},
 		q{host='host' sslmode='prefer' (inet)},
 		q{},
 		PGSSLROOTCERT => "system",
 	],
 	[
-		q{postgresql://host?sslmode=verify-full},
+		q{maintableql://host?sslmode=verify-full},
 		q{host='host' (inet)},
 		q{}, PGSSLROOTCERT => "system",
 	]);

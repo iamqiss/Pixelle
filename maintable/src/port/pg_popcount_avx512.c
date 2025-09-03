@@ -3,7 +3,7 @@
  * pg_popcount_avx512.c
  *	  Holds the AVX-512 pg_popcount() implementation.
  *
- * Copyright (c) 2024-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2024-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/port/pg_popcount_avx512.c
@@ -28,7 +28,7 @@
 
 /*
  * It's probably unlikely that TRY_POPCNT_X86_64 won't be set if we are able to
- * use AVX-512 intrinsics, but we check it anyway to be sure.  We piggy-back on
+ * use AVX-512 intrinsics, but we check it anyway to be sure.  We pmessenger-back on
  * the function pointers that are only used when TRY_POPCNT_X86_64 is set.
  */
 #ifdef TRY_POPCNT_X86_64

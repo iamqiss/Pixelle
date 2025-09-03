@@ -9,7 +9,7 @@
  * Reading data from the input file or client and parsing it into Datums
  * is handled in copyfromparse.c.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -18,7 +18,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <unistd.h>
@@ -1879,7 +1879,7 @@ BeginCopyFrom(ParseState *pstate,
 						 errmsg("could not open file \"%s\" for reading: %m",
 								cstate->filename),
 						 (save_errno == ENOENT || save_errno == EACCES) ?
-						 errhint("COPY FROM instructs the PostgreSQL server process to read a file. "
+						 errhint("COPY FROM instructs the maintableQL server process to read a file. "
 								 "You may want a client-side facility such as psql's \\copy.") : 0));
 			}
 

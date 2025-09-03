@@ -23,7 +23,7 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::system::System;
 use async_zip::tokio::write::ZipFileWriter;
 use async_zip::{Compression, ZipEntryBuilder};
-use iggy_common::{IggyDuration, IggyError, Snapshot, SnapshotCompression, SystemSnapshotType};
+use messenger_common::{MessengerDuration, MessengerError, Snapshot, SnapshotCompression, SystemSnapshotType};
 use std::io::Cursor;
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -41,13 +41,13 @@ impl System {
         session: &Session,
         compression: SnapshotCompression,
         snapshot_types: &Vec<SystemSnapshotType>,
-    ) -> Result<Snapshot, IggyError> {
+    ) -> Result<Snapshot, MessengerError> {
         self.ensure_authenticated(session)?;
 
         let snapshot_types = if snapshot_types.contains(&SystemSnapshotType::All) {
             if snapshot_types.len() > 1 {
                 error!("When using 'All' snapshot type, no other types can be specified");
-                return Err(IggyError::InvalidCommand);
+                return Err(MessengerError::InvalidCommand);
             }
             &SystemSnapshotType::all_snapshot_types()
         } else {
@@ -77,7 +77,7 @@ impl System {
 
                     let mut file = File::open(temp_file.path()).await.map_err(|e| {
                         error!("Failed to open temporary file: {}", e);
-                        IggyError::SnapshotFileCompletionFailed
+                        MessengerError::SnapshotFileCompletionFailed
                     })?;
 
                     let mut content = Vec::new();
@@ -110,13 +110,13 @@ impl System {
         info!(
             "Snapshot commands {:?} finished in {}",
             snapshot_types,
-            IggyDuration::new(now.elapsed())
+            MessengerDuration::new(now.elapsed())
         );
 
         let writer = zip_writer
             .close()
             .await
-            .map_err(|_| IggyError::SnapshotFileCompletionFailed)?;
+            .map_err(|_| MessengerError::SnapshotFileCompletionFailed)?;
 
         let cursor = writer.into_inner();
         let zip_data = cursor.into_inner();

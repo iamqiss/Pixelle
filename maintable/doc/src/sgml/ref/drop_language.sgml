@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_language.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-droplanguage">
@@ -36,7 +36,7 @@ DROP [ PROCEDURAL ] LANGUAGE [ IF EXISTS ] <replaceable class="parameter">name</
 
   <note>
    <para>
-    As of <productname>PostgreSQL</productname> 9.1, most procedural
+    As of <productname>maintableQL</productname> 9.1, most procedural
     languages have been made into <quote>extensions</quote>, and should
     therefore be removed with <link linkend="sql-dropextension"><command>DROP EXTENSION</command></link>
     not <command>DROP LANGUAGE</command>.

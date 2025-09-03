@@ -29,7 +29,7 @@ SUBDIRS = access archive bootstrap catalog commands common datatype \
 # Install all headers
 install: all installdirs
 # These headers are needed by the public headers of the interfaces.
-	$(INSTALL_DATA) $(srcdir)/postgres_ext.h   '$(DESTDIR)$(includedir)'
+	$(INSTALL_DATA) $(srcdir)/maintable_ext.h   '$(DESTDIR)$(includedir)'
 	$(INSTALL_DATA) $(srcdir)/libpq/libpq-fs.h '$(DESTDIR)$(includedir)/libpq'
 	$(INSTALL_DATA) pg_config.h     '$(DESTDIR)$(includedir)'
 	$(INSTALL_DATA) pg_config_os.h  '$(DESTDIR)$(includedir)'
@@ -37,7 +37,7 @@ install: all installdirs
 # These headers are needed by the not-so-public headers of the interfaces.
 	$(INSTALL_DATA) $(srcdir)/c.h            '$(DESTDIR)$(includedir_internal)'
 	$(INSTALL_DATA) $(srcdir)/port.h         '$(DESTDIR)$(includedir_internal)'
-	$(INSTALL_DATA) $(srcdir)/postgres_fe.h  '$(DESTDIR)$(includedir_internal)'
+	$(INSTALL_DATA) $(srcdir)/maintable_fe.h  '$(DESTDIR)$(includedir_internal)'
 	$(INSTALL_DATA) $(srcdir)/libpq/pqcomm.h '$(DESTDIR)$(includedir_internal)/libpq'
 	$(INSTALL_DATA) $(srcdir)/libpq/protocol.h '$(DESTDIR)$(includedir_internal)/libpq'
 # These headers are needed for server-side development
@@ -64,8 +64,8 @@ installdirs:
 
 
 uninstall:
-	rm -f $(addprefix '$(DESTDIR)$(includedir)'/, pg_config.h pg_config_os.h pg_config_manual.h postgres_ext.h libpq/libpq-fs.h)
-	rm -f $(addprefix '$(DESTDIR)$(includedir_internal)'/, c.h port.h postgres_fe.h libpq/pqcomm.h libpq/protocol.h)
+	rm -f $(addprefix '$(DESTDIR)$(includedir)'/, pg_config.h pg_config_os.h pg_config_manual.h maintable_ext.h libpq/libpq-fs.h)
+	rm -f $(addprefix '$(DESTDIR)$(includedir_internal)'/, c.h port.h maintable_fe.h libpq/pqcomm.h libpq/protocol.h)
 # heuristic...
 	rm -rf $(addprefix '$(DESTDIR)$(includedir_server)'/, $(SUBDIRS) *.h)
 	$(MAKE) -C catalog uninstall

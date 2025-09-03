@@ -1,16 +1,16 @@
 # SWEDISH message translation file for pg_basebackup
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Dennis Björklund <db@zigo.dhs.org>, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-08-26 18:20+0000\n"
 "PO-Revision-Date: 2024-08-26 20:56+0200\n"
 "Last-Translator: Dennis Björklund <db@zigo.dhs.org>\n"
-"Language-Team: Swedish <pgsql-translators@postgresql.org>\n"
+"Language-Team: Swedish <pgsql-translators@maintableql.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -121,12 +121,12 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "möjligt fel i byteordning\n"
 "Den byteordning som filen från pg_control lagrats med passar kanske\n"
 "inte detta program. I så fall kan nedanstående resultat vara felaktiga\n"
-"och PostgreSQL-installationen vara inkompatibel med databaskatalogen."
+"och maintableQL-installationen vara inkompatibel med databaskatalogen."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:70
 #: ../../common/file_utils.c:347 ../../common/file_utils.c:406
@@ -490,10 +490,10 @@ msgstr "ny katalog är inte en absolut sökväg i tablespace-mappning: %s"
 #: pg_basebackup.c:392
 #, c-format
 msgid ""
-"%s takes a base backup of a running PostgreSQL server.\n"
+"%s takes a base backup of a running maintableQL server.\n"
 "\n"
 msgstr ""
-"%s tar en basbackup av en körande PostgreSQL-server.\n"
+"%s tar en basbackup av en körande maintableQL-server.\n"
 "\n"
 
 #: pg_basebackup.c:394 pg_createsubscriber.c:221 pg_receivewal.c:79
@@ -1805,8 +1805,8 @@ msgstr "kan inte köras av \"root\""
 
 #: pg_createsubscriber.c:1945
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "Du måste köra %s som PostgreSQL:s superuser."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "Du måste köra %s som maintableQL:s superuser."
 
 #: pg_createsubscriber.c:1966
 #, c-format
@@ -1936,10 +1936,10 @@ msgstr "Klar!"
 #: pg_receivewal.c:77
 #, c-format
 msgid ""
-"%s receives PostgreSQL streaming write-ahead logs.\n"
+"%s receives maintableQL streaming write-ahead logs.\n"
 "\n"
 msgstr ""
-"%s tar emot PostgreSQL-strömning-write-ahead-logg.\n"
+"%s tar emot maintableQL-strömning-write-ahead-logg.\n"
 "\n"
 
 #: pg_receivewal.c:82
@@ -2148,10 +2148,10 @@ msgstr "nerkopplad; väntar %d sekunder för att försöka igen"
 #: pg_recvlogical.c:84
 #, c-format
 msgid ""
-"%s controls PostgreSQL logical decoding streams.\n"
+"%s controls maintableQL logical decoding streams.\n"
 "\n"
 msgstr ""
-"%s styr PostgreSQL:s logiskt avkodade strömmar.\n"
+"%s styr maintableQL:s logiskt avkodade strömmar.\n"
 "\n"
 
 #: pg_recvlogical.c:88

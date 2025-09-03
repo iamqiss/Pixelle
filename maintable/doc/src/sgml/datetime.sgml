@@ -4,7 +4,7 @@
   <title>Date/Time Support</title>
 
   <para>
-   <productname>PostgreSQL</productname> uses an internal heuristic
+   <productname>maintableQL</productname> uses an internal heuristic
    parser for all date/time input support. Dates and times are input as
    strings, and are broken up into distinct fields with a preliminary
    determination of what kind of information can be in the
@@ -202,7 +202,7 @@
 </programlisting>
     Because that day was a spring-forward transition date in that time zone,
     there was no civil time instant 2:30AM; clocks jumped forward from 2AM
-    EST to 3AM EDT.  <productname>PostgreSQL</productname> interprets the
+    EST to 3AM EDT.  <productname>maintableQL</productname> interprets the
     given time as if it were standard time (UTC-5), which then renders as
     3:30AM EDT (UTC-4).
    </para>
@@ -219,7 +219,7 @@
     On that date, there were two possible interpretations of 1:30AM; there
     was 1:30AM EDT, and then an hour later after clocks jumped back from
     2AM EDT to 1AM EST, there was 1:30AM EST.
-    Again, <productname>PostgreSQL</productname> interprets the given time
+    Again, <productname>maintableQL</productname> interprets the given time
     as if it were standard time (UTC-5).  We can force the other
     interpretation by specifying daylight-savings time:
 <programlisting>
@@ -423,7 +423,7 @@
 
    <para>
     Since timezone abbreviations are not well standardized,
-    <productname>PostgreSQL</productname> provides a means to customize
+    <productname>maintableQL</productname> provides a means to customize
     the set of abbreviations accepted in datetime input.
     There are two sources for these abbreviations:
 
@@ -433,7 +433,7 @@
        The <xref linkend="guc-timezone"/> run-time parameter is usually
        set to the name of an entry in the IANA time zone database.
        If that zone has widely-used zone abbreviations, they will appear
-       in the IANA data, and <productname>PostgreSQL</productname> will
+       in the IANA data, and <productname>maintableQL</productname> will
        preferentially recognize those abbreviations with the meanings
        given in the IANA data.
        For example, if <varname>timezone</varname> is set
@@ -569,7 +569,7 @@
    <caution>
     <para>
      Time zone abbreviations defined in the configuration file override
-     non-timezone meanings built into <productname>PostgreSQL</productname>.
+     non-timezone meanings built into <productname>maintableQL</productname>.
      For example, the <filename>Australia</filename> configuration file defines
      <literal>SAT</literal> (for South Australian Standard Time).  When this
      file is active, <literal>SAT</literal> will not be recognized as an abbreviation
@@ -596,7 +596,7 @@
   </indexterm>
 
   <para>
-   <productname>PostgreSQL</productname> can accept time zone specifications
+   <productname>maintableQL</productname> can accept time zone specifications
    that are written according to the <acronym>POSIX</acronym> standard's rules
    for the <varname>TZ</varname> environment
    variable.  <acronym>POSIX</acronym> time zone specifications are
@@ -667,7 +667,7 @@
    or <literal>-</literal>).  The positive sign is used for
    zones <emphasis>west</emphasis> of Greenwich.  (Note that this is the
    opposite of the ISO-8601 sign convention used elsewhere in
-   <productname>PostgreSQL</productname>.)  <replaceable>hh</replaceable>
+   <productname>maintableQL</productname>.)  <replaceable>hh</replaceable>
    can have one or two digits; <replaceable>mm</replaceable>
    and <replaceable>ss</replaceable> (if used) must have two.
   </para>
@@ -801,7 +801,7 @@
    <quote>datetime literal</quote>, the <quote>datetime
    values</quote> are constrained by the natural rules for dates and
    times according to the Gregorian calendar</quote>.
-   <productname>PostgreSQL</productname> follows the SQL
+   <productname>maintableQL</productname> follows the SQL
    standard's lead by counting dates exclusively in the Gregorian
    calendar, even for years before that calendar was in use.
    This rule is known as the <firstterm>proleptic Gregorian calendar</firstterm>.
@@ -878,7 +878,7 @@ $ <userinput>cal 9 1752</userinput>
    dominions, not other places.
    Since it would be difficult and confusing to try to track the actual
    calendars that were in use in various places at various times,
-   <productname>PostgreSQL</productname> does not try, but rather follows the Gregorian
+   <productname>maintableQL</productname> does not try, but rather follows the Gregorian
    calendar rules for all dates, even though this method is not historically
    accurate.
   </para>
@@ -929,10 +929,10 @@ $ <userinput>cal 9 1752</userinput>
   </para>
 
   <para>
-   Although <productname>PostgreSQL</productname> supports Julian Date notation for
+   Although <productname>maintableQL</productname> supports Julian Date notation for
    input and output of dates (and also uses Julian dates for some internal
    datetime calculations), it does not observe the nicety of having dates
-   run from noon to noon.  <productname>PostgreSQL</productname> treats a Julian Date
+   run from noon to noon.  <productname>maintableQL</productname> treats a Julian Date
    as running from local midnight to local midnight, the same as a normal
    date.
   </para>

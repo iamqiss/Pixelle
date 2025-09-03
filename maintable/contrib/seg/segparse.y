@@ -1,7 +1,7 @@
 %{
 /* contrib/seg/segparse.y */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <float.h>
 #include <math.h>

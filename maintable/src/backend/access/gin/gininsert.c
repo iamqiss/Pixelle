@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * gininsert.c
- *	  insert routines for the postgres inverted index access method.
+ *	  insert routines for the maintable inverted index access method.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/gin_private.h"
 #include "access/gin_tuple.h"
@@ -918,7 +918,7 @@ _gin_begin_parallel(GinBuildState *buildstate, Relation heap, Relation index,
 	 */
 	EnterParallelMode();
 	Assert(request > 0);
-	pcxt = CreateParallelContext("postgres", "_gin_parallel_build_main",
+	pcxt = CreateParallelContext("maintable", "_gin_parallel_build_main",
 								 request);
 
 	scantuplesortstates = leaderparticipates ? request + 1 : request;

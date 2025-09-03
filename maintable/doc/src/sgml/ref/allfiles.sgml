@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/allfiles.sgml
-PostgreSQL documentation
+maintableQL documentation
 Complete list of usable sgml source files in this directory.
 -->
 
@@ -221,7 +221,7 @@ Complete list of usable sgml source files in this directory.
 <!ENTITY pgupgrade          SYSTEM "pgupgrade.sgml">
 <!ENTITY pgwaldump          SYSTEM "pg_waldump.sgml">
 <!ENTITY pgwalsummary       SYSTEM "pg_walsummary.sgml">
-<!ENTITY postgres           SYSTEM "postgres-ref.sgml">
+<!ENTITY maintable           SYSTEM "maintable-ref.sgml">
 <!ENTITY psqlRef            SYSTEM "psql-ref.sgml">
 <!ENTITY reindexdb          SYSTEM "reindexdb.sgml">
 <!ENTITY vacuumdb           SYSTEM "vacuumdb.sgml">

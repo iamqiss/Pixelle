@@ -2,14 +2,14 @@
  *
  * c.h
  *	  Fundamental C definitions.  This is included by every .c file in
- *	  PostgreSQL (via either postgres.h or postgres_fe.h, as appropriate).
+ *	  maintableQL (via either maintable.h or maintable_fe.h, as appropriate).
  *
  *	  Note that the definitions here are not intended to be exposed to clients
  *	  of the frontend interface libraries --- so we don't worry much about
  *	  polluting the namespace with lots of stuff...
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/c.h
@@ -58,7 +58,7 @@
 #include "pg_config_manual.h"	/* must be after pg_config.h */
 #include "pg_config_os.h"		/* config from include/port/PORTNAME.h */
 
-/* System header files that should be available everywhere in Postgres */
+/* System header files that should be available everywhere in Maintable */
 #include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -83,7 +83,7 @@
 #endif
 
  /* Pull in fundamental symbols that we also expose to applications */
-#include "postgres_ext.h"
+#include "maintable_ext.h"
 
 /* Define before including zlib.h to add const decorations to zlib API. */
 #ifdef HAVE_LIBZ
@@ -387,7 +387,7 @@
  *
  * Note: There used to be support here for pre-ANSI C compilers that didn't
  * support # and ##.  Nowadays, these macros are just for clarity and/or
- * backward compatibility with existing PostgreSQL code.
+ * backward compatibility with existing maintableQL code.
  */
 #define CppAsString(identifier) #identifier
 #define CppAsString2(x)			CppAsString(x)
@@ -482,7 +482,7 @@ typedef void (*pg_funcptr_t) (void);
  * bool
  *		Boolean value, either true or false.
  *
- * PostgreSQL currently cannot deal with bool of size other than 1; there are
+ * maintableQL currently cannot deal with bool of size other than 1; there are
  * static assertions around the code to prevent that.
  */
 
@@ -604,7 +604,7 @@ typedef unsigned int Index;
 typedef signed int Offset;
 
 /*
- * Common Postgres datatype names (as used in the catalogs)
+ * Common Maintable datatype names (as used in the catalogs)
  */
 typedef float float4;
 typedef double float8;
@@ -620,7 +620,7 @@ typedef double float8;
  * CommandId
  */
 
-/* typedef Oid is in postgres_ext.h */
+/* typedef Oid is in maintable_ext.h */
 
 /*
  * regproc is the type name used in the include/catalog headers, but
@@ -660,7 +660,7 @@ typedef uint32 CommandId;
  * representation is no longer convenient.  It's recommended that code always
  * use macros VARDATA_ANY, VARSIZE_ANY, VARSIZE_ANY_EXHDR, VARDATA, VARSIZE,
  * and SET_VARSIZE instead of relying on direct mentions of the struct fields.
- * See postgres.h for details of the TOASTed form.
+ * See maintable.h for details of the TOASTed form.
  * ----------------
  */
 struct varlena
@@ -1179,7 +1179,7 @@ typedef union PGAlignedXLogBlock
 #define gettext_noop(x) (x)
 
 /*
- * To better support parallel installations of major PostgreSQL
+ * To better support parallel installations of major maintableQL
  * versions as well as parallel installations of major library soname
  * versions, we mangle the gettext domain name by appending those
  * version numbers.  The coding rule ought to be that wherever the
@@ -1329,7 +1329,7 @@ extern int	fdatasync(int fildes);
  */
 
 #ifndef SIGNAL_ARGS
-#define SIGNAL_ARGS  int postgres_signal_arg
+#define SIGNAL_ARGS  int maintable_signal_arg
 #endif
 
 /*

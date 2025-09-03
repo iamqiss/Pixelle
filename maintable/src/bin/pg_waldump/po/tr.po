@@ -1,17 +1,17 @@
 # LANGUAGE message translation file for pg_waldump
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_waldump (PostgreSQL) package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_waldump (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
 # Abdullah Gülner <agulner@gmail.com>, 2017, 2018, 2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_waldump (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_waldump (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2019-04-26 13:46+0000\n"
 "PO-Revision-Date: 2019-06-12 17:17+0300\n"
 "Last-Translator: Abdullah Gülner\n"
-"Language-Team: Turkish <ceviri@postgresql.org.tr>\n"
+"Language-Team: Turkish <ceviri@maintableql.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -89,10 +89,10 @@ msgstr "%1$s log dosyasından okunamadı , göreli konum (offset) %2$u: %4$zu'ni
 #: pg_waldump.c:787
 #, c-format
 msgid ""
-"%s decodes and displays PostgreSQL write-ahead logs for debugging.\n"
+"%s decodes and displays maintableQL write-ahead logs for debugging.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL write-ahead loglarını hata ayıklama için çözer (decode) ve görüntüler.\n"
+"%s maintableQL write-ahead loglarını hata ayıklama için çözer (decode) ve görüntüler.\n"
 "\n"
 
 #: pg_waldump.c:789

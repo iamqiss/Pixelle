@@ -3,7 +3,7 @@
  * test_rls_hooks.c
  *		Code for testing RLS hooks.
  *
- * Copyright (c) 2015-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2015-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/test/modules/test_rls_hooks/test_rls_hooks.c
@@ -11,7 +11,7 @@
  * -------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_type.h"
 #include "fmgr.h"

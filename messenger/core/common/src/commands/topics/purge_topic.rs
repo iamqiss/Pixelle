@@ -20,7 +20,7 @@ use crate::BytesSerializable;
 use crate::Identifier;
 use crate::Sizeable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, PURGE_TOPIC_CODE};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -46,8 +46,8 @@ impl Command for PurgeTopic {
     }
 }
 
-impl Validatable<IggyError> for PurgeTopic {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for PurgeTopic {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -62,9 +62,9 @@ impl BytesSerializable for PurgeTopic {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<PurgeTopic, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<PurgeTopic, MessengerError> {
         if bytes.len() < 10 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let mut position = 0;

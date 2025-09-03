@@ -31,13 +31,13 @@ allow_private_network = false
 
 [http_api.tls] # Optional TLS configuration for HTTP API
 enabled = false
-cert_file = "core/certs/iggy_cert.pem"
-key_file = "core/certs/iggy_key.pem"
+cert_file = "core/certs/messenger_cert.pem"
+key_file = "core/certs/messenger_key.pem"
 
-[iggy]
+[messenger]
 address = "localhost:8090"
-username = "iggy"
-password = "iggy"
+username = "messenger"
+password = "messenger"
 # token = "secret" # Personal Access Token (PAT) can be used instead of username and password
 
 [state]
@@ -46,7 +46,7 @@ path = "local_state"
 [sinks.stdout]
 enabled = true
 name = "Stdout sink"
-path = "target/release/libiggy_connector_stdout_sink"
+path = "target/release/libmessenger_connector_stdout_sink"
 
 [[sinks.stdout.streams]]
 stream = "example_stream"
@@ -69,7 +69,7 @@ value.static = "hello"
 [sources.random]
 enabled = true
 name = "Random source"
-path = "target/release/libiggy_connector_random_source"
+path = "target/release/libmessenger_connector_random_source"
 config_format = "json"
 
 [[sources.random.streams]]
@@ -95,7 +95,7 @@ value.static = "hello!"
 [sinks.quickwit]
 enabled = true
 name = "Quickwit sink 1"
-path = "target/release/libiggy_connector_quickwit_sink"
+path = "target/release/libmessenger_connector_quickwit_sink"
 config_format = "yaml"
 
 [[sinks.quickwit.streams]]

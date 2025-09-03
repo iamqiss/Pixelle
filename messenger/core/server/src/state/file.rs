@@ -23,11 +23,11 @@ use crate::streaming::utils::file;
 use crate::versioning::SemanticVersion;
 use bytes::{Buf, BufMut, Bytes, BytesMut};
 use error_set::ErrContext;
-use iggy_common::BytesSerializable;
-use iggy_common::EncryptorKind;
-use iggy_common::IggyByteSize;
-use iggy_common::IggyError;
-use iggy_common::IggyTimestamp;
+use messenger_common::BytesSerializable;
+use messenger_common::EncryptorKind;
+use messenger_common::MessengerByteSize;
+use messenger_common::MessengerError;
+use messenger_common::MessengerTimestamp;
 use std::fmt::Debug;
 use std::path::Path;
 use std::sync::Arc;
@@ -83,7 +83,7 @@ impl FileState {
 }
 
 impl State for FileState {
-    async fn init(&self) -> Result<Vec<StateEntry>, IggyError> {
+    async fn init(&self) -> Result<Vec<StateEntry>, MessengerError> {
         if !Path::new(&self.path).exists() {
             info!("State file does not exist, creating a new one");
             self.persister
@@ -112,9 +112,9 @@ impl State for FileState {
         Ok(entries)
     }
 
-    async fn load_entries(&self) -> Result<Vec<StateEntry>, IggyError> {
+    async fn load_entries(&self) -> Result<Vec<StateEntry>, MessengerError> {
         if !Path::new(&self.path).exists() {
-            return Err(IggyError::StateFileNotFound);
+            return Err(MessengerError::StateFileNotFound);
         }
 
         let file = file::open(&self.path)
@@ -125,7 +125,7 @@ impl State for FileState {
                     self.path
                 )
             })
-            .map_err(|_| IggyError::CannotReadFile)?;
+            .map_err(|_| MessengerError::CannotReadFile)?;
         let file_size = file
             .metadata()
             .await
@@ -135,7 +135,7 @@ impl State for FileState {
                     self.path
                 )
             })
-            .map_err(|_| IggyError::CannotReadFileMetadata)?
+            .map_err(|_| MessengerError::CannotReadFileMetadata)?
             .len();
         if file_size == 0 {
             info!("State file is empty");
@@ -144,7 +144,7 @@ impl State for FileState {
 
         info!(
             "Loading state, file size: {}",
-            IggyByteSize::from(file_size).as_human_string()
+            MessengerByteSize::from(file_size).as_human_string()
         );
         let mut entries = Vec::new();
         let mut total_size: u64 = 0;
@@ -156,7 +156,7 @@ impl State for FileState {
                 .read_u64_le()
                 .await
                 .with_error_context(|error| format!("{FILE_STATE_PARSE_ERROR} index. {error}"))
-                .map_err(|_| IggyError::InvalidNumberEncoding)?;
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?;
             total_size += 8;
             if entries_count > 0 && index != current_index + 1 {
                 error!(
@@ -164,7 +164,7 @@ impl State for FileState {
                     current_index + 1,
                     index
                 );
-                return Err(IggyError::StateFileCorrupted);
+                return Err(MessengerError::StateFileCorrupted);
             }
 
             current_index = index;
@@ -173,47 +173,47 @@ impl State for FileState {
                 .read_u64_le()
                 .await
                 .with_error_context(|error| format!("{FILE_STATE_PARSE_ERROR} term. {error}"))
-                .map_err(|_| IggyError::InvalidNumberEncoding)?;
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?;
             total_size += 8;
             let leader_id = reader
                 .read_u32_le()
                 .await
                 .with_error_context(|error| format!("{FILE_STATE_PARSE_ERROR} leader_id. {error}"))
-                .map_err(|_| IggyError::InvalidNumberEncoding)?;
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?;
             total_size += 4;
             let version = reader
                 .read_u32_le()
                 .await
                 .with_error_context(|error| format!("{FILE_STATE_PARSE_ERROR} version. {error}"))
-                .map_err(|_| IggyError::InvalidNumberEncoding)?;
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?;
             total_size += 4;
             let flags = reader
                 .read_u64_le()
                 .await
                 .with_error_context(|error| format!("{FILE_STATE_PARSE_ERROR} flags. {error}"))
-                .map_err(|_| IggyError::InvalidNumberEncoding)?;
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?;
             total_size += 8;
-            let timestamp = IggyTimestamp::from(
+            let timestamp = MessengerTimestamp::from(
                 reader
                     .read_u64_le()
                     .await
                     .with_error_context(|error| {
                         format!("{FILE_STATE_PARSE_ERROR} timestamp. {error}")
                     })
-                    .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                    .map_err(|_| MessengerError::InvalidNumberEncoding)?,
             );
             total_size += 8;
             let user_id = reader
                 .read_u32_le()
                 .await
                 .with_error_context(|error| format!("{FILE_STATE_PARSE_ERROR} user_id. {error}"))
-                .map_err(|_| IggyError::InvalidNumberEncoding)?;
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?;
             total_size += 4;
             let checksum = reader
                 .read_u32_le()
                 .await
                 .with_error_context(|error| format!("{FILE_STATE_PARSE_ERROR} checksum. {error}"))
-                .map_err(|_| IggyError::InvalidNumberEncoding)?;
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?;
             total_size += 4;
             let context_length = reader
                 .read_u32_le()
@@ -221,7 +221,7 @@ impl State for FileState {
                 .with_error_context(|error| {
                     format!("{FILE_STATE_PARSE_ERROR} context context_length. {error}")
                 })
-                .map_err(|_| IggyError::InvalidNumberEncoding)?
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?
                 as usize;
             total_size += 4;
             let mut context = BytesMut::with_capacity(context_length);
@@ -229,14 +229,14 @@ impl State for FileState {
             reader
                 .read_exact(&mut context)
                 .await
-                .map_err(|_| IggyError::CannotReadFile)?;
+                .map_err(|_| MessengerError::CannotReadFile)?;
             let context = context.freeze();
             total_size += context_length as u64;
             let code = reader
                 .read_u32_le()
                 .await
                 .with_error_context(|error| format!("{FILE_STATE_PARSE_ERROR} code. {error}"))
-                .map_err(|_| IggyError::InvalidNumberEncoding)?;
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?;
             total_size += 4;
             let mut command_length = reader
                 .read_u32_le()
@@ -244,7 +244,7 @@ impl State for FileState {
                 .with_error_context(|error| {
                     format!("{FILE_STATE_PARSE_ERROR} command_length. {error}")
                 })
-                .map_err(|_| IggyError::InvalidNumberEncoding)?
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?
                 as usize;
             total_size += 4;
             let mut command = BytesMut::with_capacity(command_length);
@@ -252,7 +252,7 @@ impl State for FileState {
             reader
                 .read_exact(&mut command)
                 .await
-                .map_err(|_| IggyError::CannotReadFile)?;
+                .map_err(|_| MessengerError::CannotReadFile)?;
             total_size += command_length as u64;
             let command_payload;
             if let Some(encryptor) = &self.encryptor {
@@ -288,7 +288,7 @@ impl State for FileState {
             );
             debug!("Read state entry: {entry}");
             if entry.checksum != checksum {
-                return Err(IggyError::InvalidStateEntryChecksum(
+                return Err(MessengerError::InvalidStateEntryChecksum(
                     entry.checksum,
                     checksum,
                     entry.index,
@@ -305,9 +305,9 @@ impl State for FileState {
         Ok(entries)
     }
 
-    async fn apply(&self, user_id: u32, command: &EntryCommand) -> Result<(), IggyError> {
+    async fn apply(&self, user_id: u32, command: &EntryCommand) -> Result<(), MessengerError> {
         debug!("Applying state entry with command: {command}, user ID: {user_id}");
-        let timestamp = IggyTimestamp::now();
+        let timestamp = MessengerTimestamp::now();
         let index = if self.entries_count.load(Ordering::SeqCst) == 0 {
             0
         } else {

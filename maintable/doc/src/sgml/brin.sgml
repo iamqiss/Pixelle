@@ -143,7 +143,7 @@ LOG:  request for BRIN range summarization for index "brin_wi_idx" page 128 was 
  <title>Built-in Operator Classes</title>
 
  <para>
-  The core <productname>PostgreSQL</productname> distribution
+  The core <productname>maintableQL</productname> distribution
   includes the <acronym>BRIN</acronym> operator classes shown in
   <xref linkend="brin-builtin-opclasses-table"/>.
  </para>

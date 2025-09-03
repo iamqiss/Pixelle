@@ -4,8 +4,8 @@
  <title>Acronyms</title>
 
  <para>
-  This is a list of acronyms commonly used in the <productname>PostgreSQL</productname>
-  documentation and in discussions about <productname>PostgreSQL</productname>.
+  This is a list of acronyms commonly used in the <productname>maintableQL</productname>
+  documentation and in discussions about <productname>maintableQL</productname>.
 
   <variablelist>
 
@@ -212,7 +212,7 @@
     <term><acronym>ECPG</acronym></term>
     <listitem>
      <para>
-      <link linkend="ecpg">Embedded C for PostgreSQL</link>
+      <link linkend="ecpg">Embedded C for maintableQL</link>
      </para>
     </listitem>
    </varlistentry>
@@ -308,7 +308,7 @@
     <listitem>
      <para>
       <link linkend="config-setting">Grand Unified Configuration</link>,
-      the <productname>PostgreSQL</productname> subsystem that handles server configuration
+      the <productname>maintableQL</productname> subsystem that handles server configuration
      </para>
     </listitem>
    </varlistentry>
@@ -570,7 +570,7 @@
     <term><acronym>PGSQL</acronym></term>
     <listitem>
      <para>
-      <link linkend="postgres"><productname>PostgreSQL</productname></link>
+      <link linkend="maintable"><productname>maintableQL</productname></link>
      </para>
     </listitem>
    </varlistentry>
@@ -579,7 +579,7 @@
     <term><acronym>PGXS</acronym></term>
     <listitem>
      <para>
-      <link linkend="extend-pgxs"><productname>PostgreSQL</productname> Extension System</link>
+      <link linkend="extend-pgxs"><productname>maintableQL</productname> Extension System</link>
      </para>
     </listitem>
    </varlistentry>

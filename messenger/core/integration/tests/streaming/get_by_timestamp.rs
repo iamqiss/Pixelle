@@ -18,12 +18,12 @@
 
 use crate::streaming::common::test_setup::TestSetup;
 use bytes::BytesMut;
-use iggy::prelude::Confirmation;
-use iggy::prelude::*;
+use messenger::prelude::Confirmation;
+use messenger::prelude::*;
 use server::configs::cache_indexes::CacheIndexesConfig;
 use server::configs::system::{PartitionConfig, SegmentConfig, SystemConfig};
 use server::streaming::partitions::partition::Partition;
-use server::streaming::segments::IggyMessagesBatchMut;
+use server::streaming::segments::MessengerMessagesBatchMut;
 use std::collections::HashMap;
 use std::str::FromStr;
 use std::sync::Arc;
@@ -35,12 +35,12 @@ use test_case::test_matrix;
  * Below helper functions are here only to make test function name more readable.
  */
 
-fn msg_size(size: u64) -> IggyByteSize {
-    IggyByteSize::from_str(&format!("{size}B")).unwrap()
+fn msg_size(size: u64) -> MessengerByteSize {
+    MessengerByteSize::from_str(&format!("{size}B")).unwrap()
 }
 
-fn segment_size(size: u64) -> IggyByteSize {
-    IggyByteSize::from_str(&format!("{size}B")).unwrap()
+fn segment_size(size: u64) -> MessengerByteSize {
+    MessengerByteSize::from_str(&format!("{size}B")).unwrap()
 }
 
 fn msgs_req_to_save(count: u32) -> u32 {
@@ -83,10 +83,10 @@ fn very_large_batches() -> Vec<u32> {
     [index_cache_none(), index_cache_all(), index_cache_open_segment()])]
 #[tokio::test]
 async fn test_get_messages_by_timestamp(
-    message_size: IggyByteSize,
+    message_size: MessengerByteSize,
     batch_lengths: Vec<u32>,
     messages_required_to_save: u32,
-    segment_size: IggyByteSize,
+    segment_size: MessengerByteSize,
     cache_indexes: CacheIndexesConfig,
 ) {
     println!(
@@ -122,13 +122,13 @@ async fn test_get_messages_by_timestamp(
         true,
         config.clone(),
         setup.storage.clone(),
-        IggyExpiry::NeverExpire,
+        MessengerExpiry::NeverExpire,
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU64::new(0)),
         Arc::new(AtomicU32::new(0)),
-        IggyTimestamp::now(),
+        MessengerTimestamp::now(),
     )
     .await;
 
@@ -160,7 +160,7 @@ async fn test_get_messages_by_timestamp(
             HeaderValue::from_uint64(123456).unwrap(),
         );
 
-        let message = IggyMessage::builder()
+        let message = MessengerMessage::builder()
             .id(id)
             .payload(payload)
             .user_headers(headers)
@@ -171,7 +171,7 @@ async fn test_get_messages_by_timestamp(
     }
 
     // Timestamp tracking for messages
-    let initial_timestamp = IggyTimestamp::now();
+    let initial_timestamp = MessengerTimestamp::now();
     let mut batch_timestamps = Vec::with_capacity(batch_lengths.len());
     let mut current_pos = 0;
 
@@ -200,7 +200,7 @@ async fn test_get_messages_by_timestamp(
             .map(|m| m.get_size_bytes().as_bytes_u64() as u32)
             .sum();
 
-        let batch = IggyMessagesBatchMut::from_messages(messages_slice_to_append, messages_size);
+        let batch = MessengerMessagesBatchMut::from_messages(messages_slice_to_append, messages_size);
         assert_eq!(batch.count(), batch_len);
         partition
             .append_messages(batch, Some(Confirmation::Wait))
@@ -208,14 +208,14 @@ async fn test_get_messages_by_timestamp(
             .unwrap();
 
         // Capture the timestamp of this batch
-        batch_timestamps.push(IggyTimestamp::now());
+        batch_timestamps.push(MessengerTimestamp::now());
         current_pos += batch_len as usize;
 
         // Add a small delay between batches to ensure distinct timestamps
         sleep(std::time::Duration::from_millis(2));
     }
 
-    let final_timestamp = IggyTimestamp::now();
+    let final_timestamp = MessengerTimestamp::now();
 
     // Use the exact total messages count from the test matrix
     let total_sent_messages = total_messages_count;
@@ -237,7 +237,7 @@ async fn test_get_messages_by_timestamp(
     if batch_timestamps.len() >= 3 {
         // Use a timestamp that's just before the 3rd batch's timestamp to ensure we get messages
         // from that batch onwards
-        let middle_timestamp = IggyTimestamp::from(batch_timestamps[2].as_micros() + 1000);
+        let middle_timestamp = MessengerTimestamp::from(batch_timestamps[2].as_micros() + 1000);
 
         // Calculate how many messages should be in batches after the 3rd
         let prior_batches_sum: u32 = batch_lengths[..3].iter().sum();
@@ -286,7 +286,7 @@ async fn test_get_messages_by_timestamp(
     // Test 5: Messages spanning multiple batches by timestamp
     if batch_timestamps.len() >= 4 {
         // Use a timestamp that's just before the 2nd batch's timestamp
-        let span_timestamp = IggyTimestamp::from(batch_timestamps[1].as_micros() + 1000);
+        let span_timestamp = MessengerTimestamp::from(batch_timestamps[1].as_micros() + 1000);
         let span_size = 8; // Should span across multiple batches
 
         let spanning_messages = partition

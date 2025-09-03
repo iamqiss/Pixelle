@@ -17,7 +17,7 @@
  * under the License.
  */
 
-import { fetchIggyApi } from '$lib/api/fetchApi';
+import { fetchMessengerApi } from '$lib/api/fetchApi';
 import { handleFetchErrors } from '$lib/api/handleFetchErrors';
 import { error, json, type RequestHandler } from '@sveltejs/kit';
 import { convertBigIntsToStrings } from '$lib/api/convertBigIntsToStrings';
@@ -33,7 +33,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
           });
   }
 
-  const result = await fetchIggyApi({ body, path, method, cookies, queryParams });
+  const result = await fetchMessengerApi({ body, path, method, cookies, queryParams });
 
   const { data, response } = await handleFetchErrors(result, cookies);
 

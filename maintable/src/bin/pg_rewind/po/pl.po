@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_rewind
-# Copyright (C) 2015 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2015 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
 # grzegorz <begina.felicysym@wp.eu>, 2015, 2016, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_rewind (PostgreSQL) 9.5\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pg_rewind (maintableQL) 9.5\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2017-03-14 17:46+0000\n"
 "PO-Revision-Date: 2017-03-14 19:38+0200\n"
 "Last-Translator: grzegorz <begina.felicysym@wp.eu>\n"
@@ -435,10 +435,10 @@ msgstr ""
 #: pg_rewind.c:64
 #, c-format
 msgid ""
-"%s resynchronizes a PostgreSQL cluster with another copy of the cluster.\n"
+"%s resynchronizes a maintableQL cluster with another copy of the cluster.\n"
 "\n"
 msgstr ""
-"%s resynchronizuje klaster PostgreSQL z inną kopią tego klastra.\n"
+"%s resynchronizuje klaster maintableQL z inną kopią tego klastra.\n"
 "\n"
 
 #: pg_rewind.c:65
@@ -501,10 +501,10 @@ msgstr "  -?, --help                     pokaż tą pomoc i zakończ działanie\
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@maintableql.org>.\n"
 msgstr ""
 "\n"
-"Błędy proszę przesyłać na adres <pgsql-bugs@postgresql.org>.\n"
+"Błędy proszę przesyłać na adres <pgsql-bugs@maintableql.org>.\n"
 
 #: pg_rewind.c:130 pg_rewind.c:161 pg_rewind.c:168 pg_rewind.c:175
 #: pg_rewind.c:183
@@ -539,8 +539,8 @@ msgstr "nie może być wykonywane pod \"rootem\"\n"
 
 #: pg_rewind.c:197
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser.\n"
-msgstr "Musisz uruchomić %s jako superużytkownik PostgreSQL.\n"
+msgid "You must run %s as the maintableQL superuser.\n"
+msgstr "Musisz uruchomić %s jako superużytkownik maintableQL.\n"
 
 #: pg_rewind.c:228
 #, c-format

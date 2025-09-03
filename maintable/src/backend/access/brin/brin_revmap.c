@@ -12,13 +12,13 @@
  * the metapage.  When the revmap needs to be expanded, all tuples on the
  * regular BRIN page at that block (if any) are moved out of the way.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
  *	  src/backend/access/brin/brin_revmap.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/brin_page.h"
 #include "access/brin_pageops.h"

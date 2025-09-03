@@ -2,7 +2,7 @@
  *
  * walreceiver.c
  *
- * The WAL receiver process (walreceiver) is new as of Postgres 9.0. It
+ * The WAL receiver process (walreceiver) is new as of Maintable 9.0. It
  * is the process in the standby server that takes charge of receiving
  * XLOG records from a primary server during streaming replication.
  *
@@ -39,7 +39,7 @@
  * specific parts are in the libpqwalreceiver module. It's loaded
  * dynamically to avoid linking the server with libpq.
  *
- * Portions Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -47,7 +47,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 

@@ -1,4 +1,4 @@
-# Copyright (c) 2025, PostgreSQL Global Development Group
+# Copyright (c) 2025, maintableQL Global Development Group
 #
 # This test verifies the case when the physical slot is advanced during
 # checkpoint. The test checks that the physical slot's restart_lsn still refers
@@ -7,8 +7,8 @@
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 
 use Test::More;
 
@@ -19,9 +19,9 @@ if ($ENV{enable_injection_points} ne 'yes')
 
 my ($node, $result);
 
-$node = PostgreSQL::Test::Cluster->new('mike');
+$node = maintableQL::Test::Cluster->new('mike');
 $node->init;
-$node->append_conf('postgresql.conf', "wal_level = 'replica'");
+$node->append_conf('maintableql.conf', "wal_level = 'replica'");
 $node->start;
 
 # Check if the extension injection_points is available, as it may be
@@ -32,35 +32,35 @@ if (!$node->check_extension('injection_points'))
 	plan skip_all => 'Extension injection_points not installed';
 }
 
-$node->safe_psql('postgres', q(CREATE EXTENSION injection_points));
+$node->safe_psql('maintable', q(CREATE EXTENSION injection_points));
 
 # Create a physical replication slot.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	q{select pg_create_physical_replication_slot('slot_physical', true)});
 
 # Advance slot to the current position, just to have everything "valid".
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	q{select pg_replication_slot_advance('slot_physical', pg_current_wal_lsn())}
 );
 
 # Run checkpoint to flush current state to disk and set a baseline.
-$node->safe_psql('postgres', q{checkpoint});
+$node->safe_psql('maintable', q{checkpoint});
 
 # Insert 2M rows; that's about 260MB (~20 segments) worth of WAL.
 $node->advance_wal(20);
 
 # Advance slot to the current position, just to have everything "valid".
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	q{select pg_replication_slot_advance('slot_physical', pg_current_wal_lsn())}
 );
 
 # Run another checkpoint to set a new restore LSN.
-$node->safe_psql('postgres', q{checkpoint});
+$node->safe_psql('maintable', q{checkpoint});
 
 # Another 2M rows; that's about 260MB (~20 segments) worth of WAL.
 $node->advance_wal(20);
 
-my $restart_lsn_init = $node->safe_psql('postgres',
+my $restart_lsn_init = $node->safe_psql('maintable',
 	q{select restart_lsn from pg_replication_slots where slot_name = 'slot_physical'}
 );
 chomp($restart_lsn_init);
@@ -71,7 +71,7 @@ note("restart lsn before checkpoint: $restart_lsn_init");
 # removing old WAL segments.
 note('starting checkpoint');
 
-my $checkpoint = $node->background_psql('postgres');
+my $checkpoint = $node->background_psql('maintable');
 $checkpoint->query_safe(
 	q{select injection_points_attach('checkpoint-before-old-wal-removal','wait')}
 );
@@ -90,17 +90,17 @@ note('injection_point is reached');
 # OK, we're in the right situation: time to advance the physical slot, which
 # recalculates the required LSN and then unblock the checkpoint, which
 # removes the WAL still needed by the physical slot.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	q{select pg_replication_slot_advance('slot_physical', pg_current_wal_lsn())}
 );
 
 # Continue the checkpoint and wait for its completion.
 my $log_offset = -s $node->logfile;
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	q{select injection_points_wakeup('checkpoint-before-old-wal-removal')});
 $node->wait_for_log(qr/checkpoint complete/, $log_offset);
 
-my $restart_lsn_old = $node->safe_psql('postgres',
+my $restart_lsn_old = $node->safe_psql('maintable',
 	q{select restart_lsn from pg_replication_slots where slot_name = 'slot_physical'}
 );
 chomp($restart_lsn_old);
@@ -112,14 +112,14 @@ $node->stop('immediate');
 $node->start;
 
 # Get the restart_lsn of the slot right after restarting.
-my $restart_lsn = $node->safe_psql('postgres',
+my $restart_lsn = $node->safe_psql('maintable',
 	q{select restart_lsn from pg_replication_slots where slot_name = 'slot_physical'}
 );
 chomp($restart_lsn);
 note("restart lsn: $restart_lsn");
 
 # Get the WAL segment name for the slot's restart_lsn.
-my $restart_lsn_segment = $node->safe_psql('postgres',
+my $restart_lsn_segment = $node->safe_psql('maintable',
 	"SELECT pg_walfile_name('$restart_lsn'::pg_lsn)");
 chomp($restart_lsn_segment);
 

@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * snapmgr.c
- *		PostgreSQL snapshot manager
+ *		maintableQL snapshot manager
  *
  * The following functions return an MVCC snapshot that can be used in tuple
  * visibility checks:
@@ -94,7 +94,7 @@
  * stack is empty.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -102,7 +102,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/stat.h>
 #include <unistd.h>
@@ -275,7 +275,7 @@ GetTransactionSnapshot(void)
 	 *
 	 * Historic snapshots are only usable for catalog access, not for
 	 * general-purpose queries.  The caller is responsible for ensuring that
-	 * the snapshot is used correctly! (PostgreSQL code never calls this
+	 * the snapshot is used correctly! (maintableQL code never calls this
 	 * during logical decoding, but extensions can do it.)
 	 */
 	if (HistoricSnapshotActive())

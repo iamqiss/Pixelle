@@ -16,7 +16,7 @@
 # under the License.
 
 name: java-gradle-pre-merge
-description: Java Gradle pre-merge testing github iggy actions
+description: Java Gradle pre-merge testing github messenger actions
 
 inputs:
   task:

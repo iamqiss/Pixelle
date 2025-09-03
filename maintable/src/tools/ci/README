@@ -1,13 +1,13 @@
-Postgres Continuous Integration (CI)
+Maintable Continuous Integration (CI)
 ====================================
 
-Postgres has two forms of CI:
+Maintable has two forms of CI:
 
-1) All supported branches in the main postgres repository are continuously
+1) All supported branches in the main maintable repository are continuously
    tested via the buildfarm. As this covers only the main repository, it
    cannot be used during development of features.
 
-   For details see https://buildfarm.postgresql.org/
+   For details see https://buildfarm.maintableql.org/
 
 2) For not yet merged development work, CI can be enabled for some git hosting
    providers. This allows developers to test patches on a number of platforms
@@ -17,7 +17,7 @@ Postgres has two forms of CI:
 Configuring CI on personal repositories
 =======================================
 
-Currently postgres contains CI support utilizing cirrus-ci. cirrus-ci
+Currently maintable contains CI support utilizing cirrus-ci. cirrus-ci
 currently is only available for github.
 
 

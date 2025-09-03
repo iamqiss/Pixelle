@@ -16,7 +16,7 @@
  <para>
   The module must be loaded by adding <literal>pg_stat_statements</literal> to
   <xref linkend="guc-shared-preload-libraries"/> in
-  <filename>postgresql.conf</filename>, because it requires additional shared memory.
+  <filename>maintableql.conf</filename>, because it requires additional shared memory.
   This means that a server restart is needed to add or remove the module.
   In addition, query identifier calculation must be enabled in order for the
   module to be active, which is done automatically if <xref linkend="guc-compute-query-id"/>
@@ -701,7 +701,7 @@ calls | 2
    The hashing process is also sensitive to differences in
    machine architecture and other facets of the platform.
    Furthermore, it is not safe to assume that <structfield>queryid</structfield>
-   will be stable across major versions of <productname>PostgreSQL</productname>.
+   will be stable across major versions of <productname>maintableQL</productname>.
   </para>
 
   <para>
@@ -716,7 +716,7 @@ calls | 2
 
   <para>
    Generally, it can be assumed that <structfield>queryid</structfield> values
-   are stable between minor version releases of <productname>PostgreSQL</productname>,
+   are stable between minor version releases of <productname>maintableQL</productname>,
    providing that instances are running on the same machine architecture and
    the catalog metadata details match.  Compatibility will only be broken
    between minor versions as a last resort.
@@ -999,7 +999,7 @@ calls | 2
       If it is <literal>off</literal> then statistics are not saved at
       shutdown nor reloaded at server start.
       The default value is <literal>on</literal>.
-      This parameter can only be set in the <filename>postgresql.conf</filename>
+      This parameter can only be set in the <filename>maintableql.conf</filename>
       file or on the server command line.
      </para>
     </listitem>
@@ -1014,11 +1014,11 @@ calls | 2
   </para>
 
   <para>
-   These parameters must be set in <filename>postgresql.conf</filename>.
+   These parameters must be set in <filename>maintableql.conf</filename>.
    Typical usage might be:
 
 <programlisting>
-# postgresql.conf
+# maintableql.conf
 shared_preload_libraries = 'pg_stat_statements'
 
 compute_query_id = on

@@ -3,7 +3,7 @@
  *
  *	main source file
  *
- *	Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ *	Copyright (c) 2010-2025, maintableQL Global Development Group
  *	src/bin/pg_upgrade/pg_upgrade.c
  */
 
@@ -39,7 +39,7 @@
 
 
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <time.h>
 
@@ -643,7 +643,7 @@ create_new_objects(void)
 				  true,
 				  "\"%s/pg_restore\" %s %s --exit-on-error --verbose "
 				  "--transaction-size=%d "
-				  "--dbname postgres \"%s/%s\"",
+				  "--dbname maintable \"%s/%s\"",
 				  new_cluster.bindir,
 				  cluster_conn_opts(&new_cluster),
 				  create_opts,
@@ -671,11 +671,11 @@ create_new_objects(void)
 		snprintf(log_file_name, sizeof(log_file_name), DB_DUMP_LOG_FILE_MASK, old_db->db_oid);
 
 		/*
-		 * postgres database will already exist in the target installation, so
+		 * maintable database will already exist in the target installation, so
 		 * tell pg_restore to drop and recreate it; otherwise we would fail to
 		 * propagate its database-level properties.
 		 */
-		if (strcmp(old_db->db_name, "postgres") == 0)
+		if (strcmp(old_db->db_name, "maintable") == 0)
 			create_opts = "--clean --create";
 		else
 			create_opts = "--create";

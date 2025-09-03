@@ -1,11 +1,11 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Runs the specified query and returns the emitted server log.
@@ -22,17 +22,17 @@ sub query_log
 	my $log = $node->logfile();
 	my $offset = -s $log;
 
-	$node->safe_psql("postgres", $sql);
+	$node->safe_psql("maintable", $sql);
 
 	return slurp_file($log, $offset);
 }
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init(auth_extra => [ '--create-role' => 'regress_user1' ]);
-$node->append_conf('postgresql.conf',
+$node->append_conf('maintableql.conf',
 	"session_preload_libraries = 'auto_explain'");
-$node->append_conf('postgresql.conf', "auto_explain.log_min_duration = 0");
-$node->append_conf('postgresql.conf', "auto_explain.log_analyze = on");
+$node->append_conf('maintableql.conf', "auto_explain.log_min_duration = 0");
+$node->append_conf('maintableql.conf', "auto_explain.log_analyze = on");
 $node->start;
 
 # Simple query.
@@ -176,7 +176,7 @@ like(
 # otherwise not
 
 $node->safe_psql(
-	"postgres", q{
+	"maintable", q{
 CREATE USER regress_user1;
 GRANT SET ON PARAMETER auto_explain.log_format TO regress_user1;
 });
@@ -207,7 +207,7 @@ GRANT SET ON PARAMETER auto_explain.log_format TO regress_user1;
 }    # end queries run as regress_user1
 
 $node->safe_psql(
-	"postgres", q{
+	"maintable", q{
 REVOKE SET ON PARAMETER auto_explain.log_format FROM regress_user1;
 DROP USER regress_user1;
 });
@@ -216,7 +216,7 @@ DROP USER regress_user1;
 # useful for modules with no SQL presence, such as auto_explain.
 
 my $res = $node->safe_psql(
-	"postgres", q{
+	"maintable", q{
 SELECT module_name,
        version = current_setting('server_version') as version_ok,
        regexp_replace(file_name, '\..*', '') as file_name_stripped

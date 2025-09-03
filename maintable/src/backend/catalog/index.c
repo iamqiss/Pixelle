@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * index.c
- *	  code to create and destroy POSTGRES index relations
+ *	  code to create and destroy MAINTABLE index relations
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -19,7 +19,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 
@@ -2994,7 +2994,7 @@ index_update_stats(Relation rel,
  * isreindex indicates we are recreating a previously-existing index.
  * parallel indicates if parallelism may be useful.
  *
- * Note: before Postgres 8.2, the passed-in heap and index Relations
+ * Note: before Maintable 8.2, the passed-in heap and index Relations
  * were automatically closed by this routine.  This is no longer the case.
  * The caller opened 'em, and the caller should close 'em.
  */

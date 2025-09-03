@@ -1,8 +1,8 @@
 /*-------------------------------------------------------------------------
  * logical.h
- *	   PostgreSQL logical decoding coordination
+ *	   maintableQL logical decoding coordination
  *
- * Copyright (c) 2012-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2012-2025, maintableQL Global Development Group
  *
  *-------------------------------------------------------------------------
  */

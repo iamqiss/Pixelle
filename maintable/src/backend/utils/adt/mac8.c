@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * mac8.c
- *	  PostgreSQL type definitions for 8 byte (EUI-64) MAC addresses.
+ *	  maintableQL type definitions for 8 byte (EUI-64) MAC addresses.
  *
  * EUI-48 (6 byte) MAC addresses are accepted as input and are stored in
  * EUI-64 format, with the 4th and 5th bytes set to FF and FE, respectively.
@@ -11,7 +11,7 @@
  * The following code is written with the assumption that the OUI field
  * size is 24 bits.
  *
- * Portions Copyright (c) 1998-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1998-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  src/backend/utils/adt/mac8.c
@@ -19,7 +19,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "common/hashfn.h"
 #include "libpq/pqformat.h"

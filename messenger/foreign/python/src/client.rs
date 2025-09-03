@@ -19,8 +19,8 @@
 use std::str::FromStr;
 use std::sync::Arc;
 
-use iggy::prelude::{
-    Consumer as RustConsumer, IggyClient as RustIggyClient, IggyMessage as RustMessage,
+use messenger::prelude::{
+    Consumer as RustConsumer, MessengerClient as RustMessengerClient, MessengerMessage as RustMessage,
     PollingStrategy as RustPollingStrategy, *,
 };
 use pyo3::prelude::*;
@@ -29,7 +29,7 @@ use pyo3_async_runtimes::tokio::future_into_py;
 use pyo3_stub_gen::define_stub_info_gatherer;
 use pyo3_stub_gen::derive::{gen_stub_pyclass, gen_stub_pymethods};
 
-use crate::consumer::{py_delta_to_iggy_duration, AutoCommit, IggyConsumer};
+use crate::consumer::{py_delta_to_messenger_duration, AutoCommit, MessengerConsumer};
 use crate::identifier::PyIdentifier;
 use crate::receive_message::{PollingStrategy, ReceiveMessage};
 use crate::send_message::SendMessage;
@@ -37,36 +37,36 @@ use crate::stream::StreamDetails;
 use crate::topic::TopicDetails;
 use tokio::sync::Mutex;
 
-/// A Python class representing the Iggy client.
-/// It wraps the RustIggyClient and provides asynchronous functionality
+/// A Python class representing the Messenger client.
+/// It wraps the RustMessengerClient and provides asynchronous functionality
 /// through the contained runtime.
 #[gen_stub_pyclass]
 #[pyclass]
-pub struct IggyClient {
-    inner: Arc<RustIggyClient>,
+pub struct MessengerClient {
+    inner: Arc<RustMessengerClient>,
 }
 
 #[gen_stub_pymethods]
 #[pymethods]
-impl IggyClient {
-    /// Constructs a new IggyClient from a TCP server address.
+impl MessengerClient {
+    /// Constructs a new MessengerClient from a TCP server address.
     ///
     /// This initializes a new runtime for asynchronous operations.
     /// Future versions might utilize asyncio for more Pythonic async.
     #[new]
     #[pyo3(signature = (conn=None))]
     fn new(conn: Option<String>) -> Self {
-        let client = IggyClientBuilder::new()
+        let client = MessengerClientBuilder::new()
             .with_tcp()
             .with_server_address(conn.unwrap_or("127.0.0.1:8090".to_string()))
             .build()
             .unwrap();
-        IggyClient {
+        MessengerClient {
             inner: Arc::new(client),
         }
     }
 
-    /// Constructs a new IggyClient from a connection string.
+    /// Constructs a new MessengerClient from a connection string.
     ///
     /// Returns an error if the connection string provided is invalid.
     // TODO: add examples for connection strings or at least a link to the doc page where
@@ -77,7 +77,7 @@ impl IggyClient {
         _cls: &Bound<'_, PyType>,
         connection_string: String,
     ) -> PyResult<Self> {
-        let client = RustIggyClient::from_connection_string(&connection_string)
+        let client = RustMessengerClient::from_connection_string(&connection_string)
             .map_err(|e| PyErr::new::<pyo3::exceptions::PyRuntimeError, _>(format!("{e:?}")))?;
         Ok(Self {
             inner: Arc::new(client),
@@ -119,7 +119,7 @@ impl IggyClient {
         })
     }
 
-    /// Connects the IggyClient to its service.
+    /// Connects the MessengerClient to its service.
     ///
     /// Returns Ok(()) on successful connection or a PyRuntimeError on failure.
     #[gen_stub(override_return_type(type_repr="collections.abc.Awaitable[None]", imports=("collections.abc")))]
@@ -212,7 +212,7 @@ impl IggyClient {
                     compression_algorithm,
                     replication_factor,
                     topic_id,
-                    IggyExpiry::NeverExpire,
+                    MessengerExpiry::NeverExpire,
                     MaxTopicSize::ServerDefault,
                 )
                 .await
@@ -359,7 +359,7 @@ impl IggyClient {
         init_retries: Option<u32>,
         init_retry_interval: Option<Py<PyDelta>>,
         allow_replay: bool,
-    ) -> PyResult<IggyConsumer> {
+    ) -> PyResult<MessengerConsumer> {
         let mut builder = self
             .inner
             .consumer_group(name, stream, topic)
@@ -387,13 +387,13 @@ impl IggyClient {
             builder = builder.auto_commit(auto_commit.into())
         };
         if let Some(poll_interval) = poll_interval {
-            builder = builder.poll_interval(py_delta_to_iggy_duration(&poll_interval))
+            builder = builder.poll_interval(py_delta_to_messenger_duration(&poll_interval))
         } else {
             builder = builder.without_poll_interval()
         };
         if let Some(polling_retry_interval) = polling_retry_interval {
             builder =
-                builder.polling_retry_interval(py_delta_to_iggy_duration(&polling_retry_interval))
+                builder.polling_retry_interval(py_delta_to_messenger_duration(&polling_retry_interval))
         }
         if init_retries.is_some() && init_retry_interval.is_none() {
             return Err(PyErr::new::<pyo3::exceptions::PyRuntimeError, _>(
@@ -409,7 +409,7 @@ impl IggyClient {
         {
             builder = builder.init_retries(
                 init_retries,
-                py_delta_to_iggy_duration(&init_retry_interval),
+                py_delta_to_messenger_duration(&init_retry_interval),
             );
         }
         if allow_replay {
@@ -417,7 +417,7 @@ impl IggyClient {
         }
         let consumer = builder.build();
 
-        Ok(IggyConsumer {
+        Ok(MessengerConsumer {
             inner: Arc::new(Mutex::new(consumer)),
         })
     }

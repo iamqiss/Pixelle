@@ -1,18 +1,18 @@
 # Brazilian Portuguese message translation file for initdb
 #
-# Copyright (C) 2003-2023 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2003-2023 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Euler Taveira <euler@eulerto.com>, 2003-2024.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 16\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 16\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-01-02 12:54-0300\n"
 "PO-Revision-Date: 2024-07-02 00:07+0200\n"
 "Last-Translator: Euler Taveira <euler@eulerto.com>\n"
-"Language-Team: Brazilian Portuguese <pgsql-translators@postgresql.org>\n"
+"Language-Team: Brazilian Portuguese <pgsql-translators@maintableql.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -358,8 +358,8 @@ msgstr "executando script de inicialização ... "
 
 #: initdb.c:1489
 #, c-format
-msgid "input file \"%s\" does not belong to PostgreSQL %s"
-msgstr "arquivo de entrada \"%s\" não pertence ao PostgreSQL %s"
+msgid "input file \"%s\" does not belong to maintableQL %s"
+msgstr "arquivo de entrada \"%s\" não pertence ao maintableQL %s"
 
 #: initdb.c:1491
 #, c-format
@@ -482,10 +482,10 @@ msgstr "Utilizando tag da língua \"%s\" para configuração regional ICU \"%s\"
 #: initdb.c:2427
 #, c-format
 msgid ""
-"%s initializes a PostgreSQL database cluster.\n"
+"%s initializes a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s inicializa um agrupamento de banco de dados PostgreSQL.\n"
+"%s inicializa um agrupamento de banco de dados maintableQL.\n"
 "\n"
 
 #: initdb.c:2428

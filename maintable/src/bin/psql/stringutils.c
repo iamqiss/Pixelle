@@ -1,11 +1,11 @@
 /*
- * psql - the PostgreSQL interactive terminal
+ * psql - the maintableQL interactive terminal
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  *
  * src/bin/psql/stringutils.c
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <ctype.h>
 

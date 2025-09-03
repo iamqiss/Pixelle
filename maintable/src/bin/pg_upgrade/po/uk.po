@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: postgresql\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableql\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-08-31 06:20+0000\n"
 "PO-Revision-Date: 2024-09-23 19:38\n"
 "Last-Translator: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
-"X-Crowdin-Project: postgresql\n"
+"X-Crowdin-Project: maintableql\n"
 "X-Crowdin-Project-ID: 324573\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: /REL_17_STABLE/pg_upgrade.pot\n"
@@ -63,11 +63,11 @@ msgstr "Перевірка складених типів визначених с
 
 #: check.c:118
 msgid "Your installation contains system-defined composite types in user tables.\n"
-"These type OIDs are not stable across PostgreSQL versions,\n"
+"These type OIDs are not stable across maintableQL versions,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns and restart the upgrade.\n"
 msgstr "Ваша інсталяція містить системно визначені складені типи у таблицях користувачів.\n"
-"OID цих типів не стабільні між версіями PostgreSQL, тому цей кластер наразі не може бути оновлений.\n"
+"OID цих типів не стабільні між версіями maintableQL, тому цей кластер наразі не може бути оновлений.\n"
 "Ви можете видалити проблемні стовпці та перезапустити оновлення.\n"
 
 #: check.c:132
@@ -104,7 +104,7 @@ msgstr "Перевірка несумісного типу даних \"aclitem\
 
 #: check.c:198
 msgid "Your installation contains the \"aclitem\" data type in user tables.\n"
-"The internal format of \"aclitem\" changed in PostgreSQL version 16\n"
+"The internal format of \"aclitem\" changed in maintableQL version 16\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns and restart the upgrade.\n"
 msgstr "Ваша інсталяція містить тип даних \"aclitem\" у таблицях користувача. Внутрішній формат \"aclitem\" змінено під час версії 16,\n"
@@ -159,12 +159,12 @@ msgstr "Перевірка видаленого типу даних \"abstime\" 
 
 #: check.c:277
 msgid "Your installation contains the \"abstime\" data type in user tables.\n"
-"The \"abstime\" type has been removed in PostgreSQL version 12,\n"
+"The \"abstime\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr "Користувацькі таблиці у вашій інсталяції містять тип даних \"abstime\".\n"
-"Тип \"abstime\" був видалений з версії PostgreSQL 12, тому цей кластер \n"
+"Тип \"abstime\" був видалений з версії maintableQL 12, тому цей кластер \n"
 "наразі не може бути оновлений. Ви можете видалите проблемні \n"
 "стовпці або змінити їх на інший тип даних, і перезапустити\n"
 "оновлення.\n"
@@ -175,12 +175,12 @@ msgstr "Перевірка видаленого типу даних \"reltime\" 
 
 #: check.c:290
 msgid "Your installation contains the \"reltime\" data type in user tables.\n"
-"The \"reltime\" type has been removed in PostgreSQL version 12,\n"
+"The \"reltime\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr "Користувацькі таблиці у вашій інсталяції містять тип даних \"reltime\".\n"
-"Тип \"reltime\" був видалений з версії PostgreSQL 12, тому цей кластер \n"
+"Тип \"reltime\" був видалений з версії maintableQL 12, тому цей кластер \n"
 "наразі не може бути оновлений. Ви можете видалите проблемні \n"
 "стовпці або змінити їх на інший тип даних, і перезапустити\n"
 "оновлення.\n"
@@ -191,12 +191,12 @@ msgstr "Перевірка видаленого типу даних \"tinterval\
 
 #: check.c:303
 msgid "Your installation contains the \"tinterval\" data type in user tables.\n"
-"The \"tinterval\" type has been removed in PostgreSQL version 12,\n"
+"The \"tinterval\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr "Користувацькі таблиці у вашій інсталяції містять тип даних \"tinterval\".\n"
-"Тип \"tinterval\" був видалений з версії PostgreSQL 12, тому цей кластер \n"
+"Тип \"tinterval\" був видалений з версії maintableQL 12, тому цей кластер \n"
 "наразі не може бути оновлений. Ви можете видалите проблемні \n"
 "стовпці або змінити їх на інший тип даних, і перезапустити\n"
 "оновлення.\n"
@@ -292,18 +292,18 @@ msgstr "Перевірка версій кластерів"
 
 #: check.c:802
 #, c-format
-msgid "This utility can only upgrade from PostgreSQL version %s and later."
-msgstr "Ця утиліта може виконувати оновлення тільки з версії PostgreSQL %s і новіше."
+msgid "This utility can only upgrade from maintableQL version %s and later."
+msgstr "Ця утиліта може виконувати оновлення тільки з версії maintableQL %s і новіше."
 
 #: check.c:807
 #, c-format
-msgid "This utility can only upgrade to PostgreSQL version %s."
-msgstr "Ця утиліта може тільки підвищувати версію PostgreSQL до версії %s."
+msgid "This utility can only upgrade to maintableQL version %s."
+msgstr "Ця утиліта може тільки підвищувати версію maintableQL до версії %s."
 
 #: check.c:816
 #, c-format
-msgid "This utility cannot be used to downgrade to older major PostgreSQL versions."
-msgstr "Ця утиліта не може використовуватись для пониження версії до більш старих основних версій PostgreSQL."
+msgid "This utility cannot be used to downgrade to older major maintableQL versions."
+msgstr "Ця утиліта не може використовуватись для пониження версії до більш старих основних версій maintableQL."
 
 #: check.c:821
 #, c-format
@@ -526,13 +526,13 @@ msgstr "Перевірка користувацьких перетворення
 #: check.c:1707
 #, c-format
 msgid "Your installation contains user-defined encoding conversions.\n"
-"The conversion function parameters changed in PostgreSQL version 14\n"
+"The conversion function parameters changed in maintableQL version 14\n"
 "so this cluster cannot currently be upgraded.  You can remove the\n"
 "encoding conversions in the old cluster and restart the upgrade.\n"
 "A list of user-defined encoding conversions is in the file:\n"
 "    %s"
 msgstr "Ваша інсталяція містить користувацькі перетворення кодувань.\n"
-"Параметри функції перетворення змінено у версії PostgreSQL 14,\n"
+"Параметри функції перетворення змінено у версії maintableQL 14,\n"
 "тому цей кластер наразі не може бути оновлений.\n"
 "Ви можете видалити перетворення кодувань в старому кластері та перезапустити оновлення.\n"
 "Список перетворень кодувань знаходиться у файлі:\n"
@@ -1241,8 +1241,8 @@ msgstr "у Windows не можна виконати pg_upgrade всередин�
 
 #: option.c:284
 #, c-format
-msgid "pg_upgrade upgrades a PostgreSQL cluster to a different major version.\n\n"
-msgstr "pg_upgrade оновлює кластер PostgreSQL до іншої основної версії.\n\n"
+msgid "pg_upgrade upgrades a maintableQL cluster to a different major version.\n\n"
+msgstr "pg_upgrade оновлює кластер maintableQL до іншої основної версії.\n\n"
 
 #: option.c:285
 #, c-format

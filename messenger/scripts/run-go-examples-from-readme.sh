@@ -32,7 +32,7 @@ set -euo pipefail
 # If any command fails, it will print the command and exit with non-zero status.
 # If all commands pass, it will remove the log file and exit with zero status.
 #
-# Note: This script assumes that the iggy-server is not running and will start it in the background.
+# Note: This script assumes that the messenger-server is not running and will start it in the background.
 #       It will wait until the server is started before running the commands.
 #       It will also terminate the server after running all the commands.
 #       Script executes every command in examples/go/README.md files which is enclosed in backticks (`) and starts
@@ -40,13 +40,13 @@ set -euo pipefail
 #       Order of commands in README files is important as script will execute them from top to bottom.
 #
 
-readonly LOG_FILE="iggy-server.log"
-readonly PID_FILE="iggy-server.pid"
+readonly LOG_FILE="messenger-server.log"
+readonly PID_FILE="messenger-server.pid"
 readonly TIMEOUT=300
 
 GOOS="" # Go target OS
 GOARCH="" # Go target architecture
-TARGET="" # Iggy server target architecture
+TARGET="" # Messenger server target architecture
 
 # Get GOOS, GOARCH, and Cargo --target values from arguments or use defaults
 while [[ $# -gt 0 ]]; do
@@ -89,39 +89,39 @@ test -e ${PID_FILE} && rm ${PID_FILE}
 # Check if server binary exists
 SERVER_BIN=""
 if [ -n "${TARGET}" ]; then
-    SERVER_BIN="target/${TARGET}/debug/iggy-server"
+    SERVER_BIN="target/${TARGET}/debug/messenger-server"
 else
-    SERVER_BIN="target/debug/iggy-server"
+    SERVER_BIN="target/debug/messenger-server"
 fi
 
 if [ ! -f "${SERVER_BIN}" ]; then
     echo "Error: Server binary not found at ${SERVER_BIN}"
     echo "Please build the server binary before running this script:"
     if [ -n "${TARGET}" ]; then
-        echo "  cargo build --target ${TARGET} --bin iggy-server"
+        echo "  cargo build --target ${TARGET} --bin messenger-server"
     else
-        echo "  cargo build --bin iggy-server"
+        echo "  cargo build --bin messenger-server"
     fi
     exit 1
 fi
 
 echo "Using server binary at ${SERVER_BIN}"
 
-# Run iggy server using the prebuilt binary
+# Run messenger server using the prebuilt binary
 echo "Starting server from ${SERVER_BIN}..."
 ${SERVER_BIN} &>${LOG_FILE} &
 echo $! >${PID_FILE}
 
-# Wait until "Iggy server has started" string is present inside iggy-server.log
+# Wait until "Messenger server has started" string is present inside messenger-server.log
 SERVER_START_TIME=0
-while ! grep -q "Iggy server has started" ${LOG_FILE}; do
+while ! grep -q "Messenger server has started" ${LOG_FILE}; do
     if [ ${SERVER_START_TIME} -gt ${TIMEOUT} ]; then
         echo "Server did not start within ${TIMEOUT} seconds."
         ps fx
         cat ${LOG_FILE}
         exit 1
     fi
-    echo "Waiting for Iggy server to start... ${SERVER_START_TIME}"
+    echo "Waiting for Messenger server to start... ${SERVER_START_TIME}"
     sleep 1
     ((SERVER_START_TIME += 1))
 done

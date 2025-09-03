@@ -16,18 +16,18 @@
  * under the License.
  */
 
-use crate::prelude::IggyClient;
+use crate::prelude::MessengerClient;
 use async_trait::async_trait;
-use iggy_binary_protocol::PersonalAccessTokenClient;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{
-    IdentityInfo, IggyError, PersonalAccessTokenExpiry, PersonalAccessTokenInfo,
+use messenger_binary_protocol::PersonalAccessTokenClient;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{
+    IdentityInfo, MessengerError, PersonalAccessTokenExpiry, PersonalAccessTokenInfo,
     RawPersonalAccessToken,
 };
 
 #[async_trait]
-impl PersonalAccessTokenClient for IggyClient {
-    async fn get_personal_access_tokens(&self) -> Result<Vec<PersonalAccessTokenInfo>, IggyError> {
+impl PersonalAccessTokenClient for MessengerClient {
+    async fn get_personal_access_tokens(&self) -> Result<Vec<PersonalAccessTokenInfo>, MessengerError> {
         self.client.read().await.get_personal_access_tokens().await
     }
 
@@ -35,7 +35,7 @@ impl PersonalAccessTokenClient for IggyClient {
         &self,
         name: &str,
         expiry: PersonalAccessTokenExpiry,
-    ) -> Result<RawPersonalAccessToken, IggyError> {
+    ) -> Result<RawPersonalAccessToken, MessengerError> {
         self.client
             .read()
             .await
@@ -43,7 +43,7 @@ impl PersonalAccessTokenClient for IggyClient {
             .await
     }
 
-    async fn delete_personal_access_token(&self, name: &str) -> Result<(), IggyError> {
+    async fn delete_personal_access_token(&self, name: &str) -> Result<(), MessengerError> {
         self.client
             .read()
             .await
@@ -54,7 +54,7 @@ impl PersonalAccessTokenClient for IggyClient {
     async fn login_with_personal_access_token(
         &self,
         token: &str,
-    ) -> Result<IdentityInfo, IggyError> {
+    ) -> Result<IdentityInfo, MessengerError> {
         self.client
             .read()
             .await

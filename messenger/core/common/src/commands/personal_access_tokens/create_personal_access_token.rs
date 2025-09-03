@@ -19,8 +19,8 @@
 use crate::BytesSerializable;
 use crate::Validatable;
 use crate::defaults::*;
-use crate::error::IggyError;
-use crate::utils::expiry::IggyExpiry;
+use crate::error::MessengerError;
+use crate::utils::expiry::MessengerExpiry;
 use crate::{CREATE_PERSONAL_ACCESS_TOKEN_CODE, Command};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -36,7 +36,7 @@ pub struct CreatePersonalAccessToken {
     /// Unique name of the token, must be between 3 and 30 characters long.
     pub name: String,
     /// Expiry of the token.
-    pub expiry: IggyExpiry,
+    pub expiry: MessengerExpiry,
 }
 
 impl Command for CreatePersonalAccessToken {
@@ -49,18 +49,18 @@ impl Default for CreatePersonalAccessToken {
     fn default() -> Self {
         CreatePersonalAccessToken {
             name: "token".to_string(),
-            expiry: IggyExpiry::NeverExpire,
+            expiry: MessengerExpiry::NeverExpire,
         }
     }
 }
 
-impl Validatable<IggyError> for CreatePersonalAccessToken {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for CreatePersonalAccessToken {
+    fn validate(&self) -> Result<(), MessengerError> {
         if self.name.is_empty()
             || self.name.len() > MAX_PERSONAL_ACCESS_TOKEN_NAME_LENGTH
             || self.name.len() < MIN_PERSONAL_ACCESS_TOKEN_NAME_LENGTH
         {
-            return Err(IggyError::InvalidPersonalAccessTokenName);
+            return Err(MessengerError::InvalidPersonalAccessTokenName);
         }
 
         Ok(())
@@ -77,26 +77,26 @@ impl BytesSerializable for CreatePersonalAccessToken {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<CreatePersonalAccessToken, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<CreatePersonalAccessToken, MessengerError> {
         if bytes.len() < 12 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let name_length = bytes[0];
         let name = from_utf8(&bytes.slice(1..1 + name_length as usize))
-            .map_err(|_| IggyError::InvalidUtf8)?
+            .map_err(|_| MessengerError::InvalidUtf8)?
             .to_string();
         if name.len() != name_length as usize {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let position = 1 + name_length as usize;
         let expiry = u64::from_le_bytes(
             bytes[position..position + 8]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
-        let expiry: IggyExpiry = expiry.into();
+        let expiry: MessengerExpiry = expiry.into();
 
         let command = CreatePersonalAccessToken { name, expiry };
         Ok(command)
@@ -117,7 +117,7 @@ mod tests {
     fn should_be_serialized_as_bytes() {
         let command = CreatePersonalAccessToken {
             name: "test".to_string(),
-            expiry: IggyExpiry::NeverExpire,
+            expiry: MessengerExpiry::NeverExpire,
         };
 
         let bytes = command.to_bytes();
@@ -128,7 +128,7 @@ mod tests {
                 .try_into()
                 .unwrap(),
         );
-        let expiry: IggyExpiry = expiry.into();
+        let expiry: MessengerExpiry = expiry.into();
         assert!(!bytes.is_empty());
         assert_eq!(name, command.name);
         assert_eq!(expiry, command.expiry);
@@ -137,7 +137,7 @@ mod tests {
     #[test]
     fn should_be_deserialized_from_bytes() {
         let name = "test";
-        let expiry = IggyExpiry::NeverExpire;
+        let expiry = MessengerExpiry::NeverExpire;
         let mut bytes = BytesMut::new();
         #[allow(clippy::cast_possible_truncation)]
         bytes.put_u8(name.len() as u8);

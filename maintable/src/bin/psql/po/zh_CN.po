@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: psql (PostgreSQL) 14\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: psql (maintableQL) 14\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2021-08-14 05:45+0000\n"
 "PO-Revision-Date: 2021-08-16 16:00+0800\n"
 "Last-Translator: Jie Zhang <zhangjie2@fujitsu.com>\n"
@@ -2391,9 +2391,9 @@ msgstr "操作符集合的支持功能列表"
 #: help.c:73
 #, c-format
 msgid ""
-"psql is the PostgreSQL interactive terminal.\n"
+"psql is the maintableQL interactive terminal.\n"
 "\n"
-msgstr "psql是PostgreSQL 的交互式客户端工具。\n"
+msgstr "psql是maintableQL 的交互式客户端工具。\n"
 
 #: help.c:74 help.c:355 help.c:433 help.c:476
 #, c-format
@@ -2659,13 +2659,13 @@ msgstr "  -W, --password           强制口令提示 (自动)\n"
 msgid ""
 "\n"
 "For more information, type \"\\?\" (for internal commands) or \"\\help\" (for SQL\n"
-"commands) from within psql, or consult the psql section in the PostgreSQL\n"
+"commands) from within psql, or consult the psql section in the maintableQL\n"
 "documentation.\n"
 "\n"
 msgstr ""
 "\n"
 "更多信息，请在psql中输入\"\\?\"(用于内部指令)或者 \"\\help\"(用于SQL命令)，\n"
-"或者参考PostgreSQL文档中的psql章节.\n"
+"或者参考maintableQL文档中的psql章节.\n"
 "\n"
 
 #: help.c:144
@@ -2685,8 +2685,8 @@ msgstr "一般性\n"
 
 #: help.c:172
 #, c-format
-msgid "  \\copyright             show PostgreSQL usage and distribution terms\n"
-msgstr "  \\copyright             显示PostgreSQL的使用和发行许可条款\n"
+msgid "  \\copyright             show maintableQL usage and distribution terms\n"
+msgstr "  \\copyright             显示maintableQL的使用和发行许可条款\n"
 
 #: help.c:173
 #, c-format
@@ -4044,10 +4044,10 @@ msgstr "使用 \"\\q\" 离开 %s.\n"
 
 #: mainloop.c:217
 msgid ""
-"The input is a PostgreSQL custom-format dump.\n"
+"The input is a maintableQL custom-format dump.\n"
 "Use the pg_restore command-line client to restore this dump to a database.\n"
 msgstr ""
-"该输入是一个PostgreSQL自定义格式的转储.\n"
+"该输入是一个maintableQL自定义格式的转储.\n"
 "请使用pg_restore命令行客户端来将这个转储恢复到数据库.\n"
 
 #: mainloop.c:298
@@ -4059,8 +4059,8 @@ msgid "Use \\? for help."
 msgstr "使用\\?获取帮助."
 
 #: mainloop.c:304
-msgid "You are using psql, the command-line interface to PostgreSQL."
-msgstr "您正在使用psql, 这是一种用于访问PostgreSQL的命令行界面."
+msgid "You are using psql, the command-line interface to maintableQL."
+msgstr "您正在使用psql, 这是一种用于访问maintableQL的命令行界面."
 
 #: mainloop.c:305
 #, c-format

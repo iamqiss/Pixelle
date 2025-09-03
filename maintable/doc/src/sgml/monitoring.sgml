@@ -22,12 +22,12 @@
   <para>
    Several tools are available for monitoring database activity and
    analyzing performance.  Most of this chapter is devoted to describing
-   <productname>PostgreSQL</productname>'s cumulative statistics system,
+   <productname>maintableQL</productname>'s cumulative statistics system,
    but one should not neglect regular Unix monitoring programs such as
    <command>ps</command>, <command>top</command>, <command>iostat</command>, and <command>vmstat</command>.
    Also, once one has identified a
    poorly-performing query, further investigation might be needed using
-   <productname>PostgreSQL</productname>'s <link linkend="sql-explain"><command>EXPLAIN</command></link> command.
+   <productname>maintableQL</productname>'s <link linkend="sql-explain"><command>EXPLAIN</command></link> command.
    <xref linkend="using-explain"/> discusses <command>EXPLAIN</command>
    and other methods for understanding the behavior of an individual
    query.
@@ -42,20 +42,20 @@
   </indexterm>
 
   <para>
-   On most Unix platforms, <productname>PostgreSQL</productname> modifies its
+   On most Unix platforms, <productname>maintableQL</productname> modifies its
    command title as reported by <command>ps</command>, so that individual server
    processes can readily be identified.  A sample display is
 
 <screen>
-$ ps auxww | grep ^postgres
-postgres  15551  0.0  0.1  57536  7132 pts/0    S    18:02   0:00 postgres -i
-postgres  15554  0.0  0.0  57536  1184 ?        Ss   18:02   0:00 postgres: background writer
-postgres  15555  0.0  0.0  57536   916 ?        Ss   18:02   0:00 postgres: checkpointer
-postgres  15556  0.0  0.0  57536   916 ?        Ss   18:02   0:00 postgres: walwriter
-postgres  15557  0.0  0.0  58504  2244 ?        Ss   18:02   0:00 postgres: autovacuum launcher
-postgres  15582  0.0  0.0  58772  3080 ?        Ss   18:04   0:00 postgres: joe runbug 127.0.0.1 idle
-postgres  15606  0.0  0.0  58772  3052 ?        Ss   18:07   0:00 postgres: tgl regression [local] SELECT waiting
-postgres  15610  0.0  0.0  58772  3056 ?        Ss   18:07   0:00 postgres: tgl regression [local] idle in transaction
+$ ps auxww | grep ^maintable
+maintable  15551  0.0  0.1  57536  7132 pts/0    S    18:02   0:00 maintable -i
+maintable  15554  0.0  0.0  57536  1184 ?        Ss   18:02   0:00 maintable: background writer
+maintable  15555  0.0  0.0  57536   916 ?        Ss   18:02   0:00 maintable: checkpointer
+maintable  15556  0.0  0.0  57536   916 ?        Ss   18:02   0:00 maintable: walwriter
+maintable  15557  0.0  0.0  58504  2244 ?        Ss   18:02   0:00 maintable: autovacuum launcher
+maintable  15582  0.0  0.0  58772  3080 ?        Ss   18:04   0:00 maintable: joe runbug 127.0.0.1 idle
+maintable  15606  0.0  0.0  58772  3052 ?        Ss   18:07   0:00 maintable: tgl regression [local] SELECT waiting
+maintable  15610  0.0  0.0  58772  3056 ?        Ss   18:07   0:00 maintable: tgl regression [local] idle in transaction
 </screen>
 
    (The appropriate invocation of <command>ps</command> varies across different
@@ -71,7 +71,7 @@ postgres  15610  0.0  0.0  58772  3056 ?        Ss   18:07   0:00 postgres: tgl 
    process sets its command line display in the form
 
 <screen>
-postgres: <replaceable>user</replaceable> <replaceable>database</replaceable> <replaceable>host</replaceable> <replaceable>activity</replaceable>
+maintable: <replaceable>user</replaceable> <replaceable>database</replaceable> <replaceable>host</replaceable> <replaceable>activity</replaceable>
 </screen>
 
   The user, database, and (client) host items remain the same for
@@ -100,7 +100,7 @@ $ psql -c 'SHOW cluster_name'
 (1 row)
 
 $ ps aux|grep server1
-postgres   27093  0.0  0.0  30096  2752 ?        Ss   11:34   0:00 postgres: server1: background writer
+maintable   27093  0.0  0.0  30096  2752 ?        Ss   11:34   0:00 maintable: server1: background writer
 ...
 </screen>
   </para>
@@ -118,10 +118,10 @@ postgres   27093  0.0  0.0  30096  2752 ?        Ss   11:34   0:00 postgres: ser
   use <command>/usr/ucb/ps</command>, rather than
   <command>/bin/ps</command>. You also must use two <option>w</option>
   flags, not just one. In addition, your original invocation of the
-  <command>postgres</command> command must have a shorter
+  <command>maintable</command> command must have a shorter
   <command>ps</command> status display than that provided by each
   server process.  If you fail to do all three things, the <command>ps</command>
-  output for each server process will be the original <command>postgres</command>
+  output for each server process will be the original <command>maintable</command>
   command line.
   </para>
   </tip>
@@ -135,7 +135,7 @@ postgres   27093  0.0  0.0  30096  2752 ?        Ss   11:34   0:00 postgres: ser
   </indexterm>
 
   <para>
-   <productname>PostgreSQL</productname>'s <firstterm>cumulative statistics
+   <productname>maintableQL</productname>'s <firstterm>cumulative statistics
    system</firstterm> supports collection and reporting of information about
    server activity.  Presently, accesses to tables and indexes in both
    disk-block and individual-row terms are counted.  The total number of rows
@@ -145,7 +145,7 @@ postgres   27093  0.0  0.0  30096  2752 ?        Ss   11:34   0:00 postgres: ser
   </para>
 
   <para>
-   <productname>PostgreSQL</productname> also supports reporting dynamic
+   <productname>maintableQL</productname> also supports reporting dynamic
    information about exactly what is going on in the system right now, such as
    the exact command currently being executed by other server processes, and
    which other connections exist in the system.  This facility is independent
@@ -159,7 +159,7 @@ postgres   27093  0.0  0.0  30096  2752 ?        Ss   11:34   0:00 postgres: ser
    Since collection of statistics adds some overhead to query execution,
    the system can be configured to collect or not collect information.
    This is controlled by configuration parameters that are normally set in
-   <filename>postgresql.conf</filename>.  (See <xref linkend="runtime-config"/> for
+   <filename>maintableql.conf</filename>.  (See <xref linkend="runtime-config"/> for
    details about setting configuration parameters.)
   </para>
 
@@ -194,7 +194,7 @@ postgres   27093  0.0  0.0  30096  2752 ?        Ss   11:34   0:00 postgres: ser
   </para>
 
   <para>
-   Normally these parameters are set in <filename>postgresql.conf</filename> so
+   Normally these parameters are set in <filename>maintableql.conf</filename> so
    that they apply to all server processes, but it is possible to turn
    them on or off in individual sessions using the <xref
    linkend="sql-set"/> command. (To prevent
@@ -205,7 +205,7 @@ postgres   27093  0.0  0.0  30096  2752 ?        Ss   11:34   0:00 postgres: ser
 
   <para>
    Cumulative statistics are collected in shared memory. Every
-   <productname>PostgreSQL</productname> process collects statistics locally,
+   <productname>maintableQL</productname> process collects statistics locally,
    then updates the shared data at appropriate intervals.  When a server,
    including a physical replica, shuts down cleanly, a permanent copy of the
    statistics data is stored in the <filename>pg_stat</filename> subdirectory,
@@ -692,11 +692,11 @@ postgres   27093  0.0  0.0  30096  2752 ?        Ss   11:34   0:00 postgres: ser
    The <structname>pg_stat_io</structname> and
    <structname>pg_statio_</structname> set of views are useful for determining
    the effectiveness of the buffer cache. They can be used to calculate a cache
-   hit ratio. Note that while <productname>PostgreSQL</productname>'s I/O
+   hit ratio. Note that while <productname>maintableQL</productname>'s I/O
    statistics capture most instances in which the kernel was invoked in order
    to perform I/O, they do not differentiate between data which had to be
    fetched from disk and that which already resided in the kernel page cache.
-   Users are advised to use the <productname>PostgreSQL</productname>
+   Users are advised to use the <productname>maintableQL</productname>
    statistics views in combination with operating system utilities for a more
    complete picture of their database's I/O performance.
   </para>
@@ -1805,7 +1805,7 @@ description | Waiting for a newly initialized WAL file to reach durable storage
        <structfield>sender_host</structfield> <type>text</type>
       </para>
       <para>
-       Host of the <productname>PostgreSQL</productname> instance
+       Host of the <productname>maintableQL</productname> instance
        this WAL receiver is connected to. This can be a host name,
        an IP address, or a directory path if the connection is via
        Unix socket.  (The path case can be distinguished because it
@@ -1818,7 +1818,7 @@ description | Waiting for a newly initialized WAL file to reach durable storage
        <structfield>sender_port</structfield> <type>integer</type>
       </para>
       <para>
-       Port number of the <productname>PostgreSQL</productname> instance
+       Port number of the <productname>maintableQL</productname> instance
        this WAL receiver is connected to.
       </para></entry>
      </row>
@@ -3427,7 +3427,7 @@ description | Waiting for a newly initialized WAL file to reach durable storage
       <para>
        Number of times disk blocks were found already in the buffer
        cache, so that a read was not necessary (this only includes hits in the
-       PostgreSQL buffer cache, not the operating system's file system cache)
+       maintableQL buffer cache, not the operating system's file system cache)
       </para></entry>
      </row>
 
@@ -4718,7 +4718,7 @@ description | Waiting for a newly initialized WAL file to reach durable storage
   </indexterm>
 
   <para>
-   <productname>PostgreSQL</productname> accesses certain on-disk information
+   <productname>maintableQL</productname> accesses certain on-disk information
    via <literal>SLRU</literal> (<firstterm>simple least-recently-used</firstterm>)
    caches.
    The <structname>pg_stat_slru</structname> view will contain
@@ -5470,7 +5470,7 @@ FROM pg_stat_get_backend_idset() AS backendid;
       View all the locks currently outstanding, all the locks on
       relations in a particular database, all the locks on a
       particular relation, or all the locks held by a particular
-      <productname>PostgreSQL</productname> session.
+      <productname>maintableQL</productname> session.
      </para>
     </listitem>
 
@@ -5494,7 +5494,7 @@ FROM pg_stat_get_backend_idset() AS backendid;
    Details of the <structname>pg_locks</structname> view appear in
    <xref linkend="view-pg-locks"/>.
    For more information on locking and managing concurrency with
-   <productname>PostgreSQL</productname>, refer to <xref linkend="mvcc"/>.
+   <productname>maintableQL</productname>, refer to <xref linkend="mvcc"/>.
   </para>
  </sect1>
 
@@ -5502,7 +5502,7 @@ FROM pg_stat_get_backend_idset() AS backendid;
   <title>Progress Reporting</title>
 
   <para>
-   <productname>PostgreSQL</productname> has the ability to report the progress of
+   <productname>maintableQL</productname> has the ability to report the progress of
    certain commands during command execution.  Currently, the only commands
    which support progress reporting are <command>ANALYZE</command>,
    <command>CLUSTER</command>,
@@ -6887,7 +6887,7 @@ FROM pg_stat_get_backend_idset() AS backendid;
  </indexterm>
 
   <para>
-   <productname>PostgreSQL</productname> provides facilities to support
+   <productname>maintableQL</productname> provides facilities to support
    dynamic tracing of the database server. This allows an external
    utility to be called at specific points in the code and thereby trace
    execution.
@@ -6897,7 +6897,7 @@ FROM pg_stat_get_backend_idset() AS backendid;
    A number of probes or trace points are already inserted into the source
    code. These probes are intended to be used by database developers and
    administrators. By default the probes are not compiled into
-   <productname>PostgreSQL</productname>; the user needs to explicitly tell
+   <productname>maintableQL</productname>; the user needs to explicitly tell
    the configure script to make the probes available.
   </para>
 
@@ -6918,7 +6918,7 @@ FROM pg_stat_get_backend_idset() AS backendid;
   <para>
    By default, probes are not available, so you will need to
    explicitly tell the configure script to make the probes available
-   in <productname>PostgreSQL</productname>. To include DTrace support
+   in <productname>maintableQL</productname>. To include DTrace support
    specify <option>--enable-dtrace</option> to configure.  See <xref
    linkend="configure-options-devel"/> for further information.
   </para>
@@ -6932,7 +6932,7 @@ FROM pg_stat_get_backend_idset() AS backendid;
    as shown in <xref linkend="dtrace-probe-point-table"/>;
    <xref linkend="typedefs-table"/>
    shows the types used in the probes.  More probes can certainly be
-   added to enhance <productname>PostgreSQL</productname>'s observability.
+   added to enhance <productname>maintableQL</productname>'s observability.
   </para>
 
  <table id="dtrace-probe-point-table">
@@ -7431,18 +7431,18 @@ FROM pg_stat_get_backend_idset() AS backendid;
 <programlisting>
 #!/usr/sbin/dtrace -qs
 
-postgresql$1:::transaction-start
+maintableql$1:::transaction-start
 {
       @start["Start"] = count();
       self->ts  = timestamp;
 }
 
-postgresql$1:::transaction-abort
+maintableql$1:::transaction-abort
 {
       @abort["Abort"] = count();
 }
 
-postgresql$1:::transaction-commit
+maintableql$1:::transaction-commit
 /self->ts/
 {
       @commit["Commit"] = count();
@@ -7452,7 +7452,7 @@ postgresql$1:::transaction-commit
 </programlisting>
    When executed, the example D script gives output such as:
 <screen>
-# ./txn_count.d `pgrep -n postgres` or ./txn_count.d &lt;PID&gt;
+# ./txn_count.d `pgrep -n maintable` or ./txn_count.d &lt;PID&gt;
 ^C
 
 Start                                          71
@@ -7507,7 +7507,7 @@ Total time (ns)                        2312105013
     <para>
      Include <filename>pg_trace.h</filename> if it is not already present in the
      module(s) containing the probe points, and insert
-     <literal>TRACE_POSTGRESQL</literal> probe macros at the desired locations
+     <literal>TRACE_MAINTABLEQL</literal> probe macros at the desired locations
      in the source code
     </para>
    </step>
@@ -7551,13 +7551,13 @@ probe transaction__start(LocalTransactionId);
    <step>
     <para>
      At compile time, <literal>transaction__start</literal> is converted to a macro
-     called <literal>TRACE_POSTGRESQL_TRANSACTION_START</literal> (notice the
+     called <literal>TRACE_MAINTABLEQL_TRANSACTION_START</literal> (notice the
      underscores are single here), which is available by including
      <filename>pg_trace.h</filename>.  Add the macro call to the appropriate location
      in the source code.  In this case, it looks like the following:
 
 <programlisting>
-TRACE_POSTGRESQL_TRANSACTION_START(vxid.localTransactionId);
+TRACE_MAINTABLEQL_TRANSACTION_START(vxid.localTransactionId);
 </programlisting>
     </para>
    </step>
@@ -7570,11 +7570,11 @@ TRACE_POSTGRESQL_TRANSACTION_START(vxid.localTransactionId);
 <screen>
 # dtrace -ln transaction-start
    ID    PROVIDER          MODULE           FUNCTION NAME
-18705 postgresql49878     postgres     StartTransactionCommand transaction-start
-18755 postgresql49877     postgres     StartTransactionCommand transaction-start
-18805 postgresql49876     postgres     StartTransactionCommand transaction-start
-18855 postgresql49875     postgres     StartTransactionCommand transaction-start
-18986 postgresql49873     postgres     StartTransactionCommand transaction-start
+18705 maintableql49878     maintable     StartTransactionCommand transaction-start
+18755 maintableql49877     maintable     StartTransactionCommand transaction-start
+18805 maintableql49876     maintable     StartTransactionCommand transaction-start
+18855 maintableql49875     maintable     StartTransactionCommand transaction-start
+18986 maintableql49873     maintable     StartTransactionCommand transaction-start
 </screen>
     </para>
    </step>
@@ -7596,7 +7596,7 @@ TRACE_POSTGRESQL_TRANSACTION_START(vxid.localTransactionId);
 
     <listitem>
      <para>
-      On most platforms, if <productname>PostgreSQL</productname> is
+      On most platforms, if <productname>maintableQL</productname> is
       built with <option>--enable-dtrace</option>, the arguments to a trace
       macro will be evaluated whenever control passes through the
       macro, <emphasis>even if no tracing is being done</emphasis>.  This is
@@ -7607,8 +7607,8 @@ TRACE_POSTGRESQL_TRANSACTION_START(vxid.localTransactionId);
       is actually enabled:
 
 <programlisting>
-if (TRACE_POSTGRESQL_TRANSACTION_START_ENABLED())
-    TRACE_POSTGRESQL_TRANSACTION_START(some_function(...));
+if (TRACE_MAINTABLEQL_TRANSACTION_START_ENABLED())
+    TRACE_MAINTABLEQL_TRANSACTION_START(some_function(...));
 </programlisting>
 
       Each trace macro has a corresponding <literal>ENABLED</literal> macro.
@@ -7627,7 +7627,7 @@ if (TRACE_POSTGRESQL_TRANSACTION_START_ENABLED())
 
   <para>
    This section discusses how to monitor the disk usage of a
-   <productname>PostgreSQL</productname> database system.
+   <productname>maintableQL</productname> database system.
   </para>
 
   <sect2 id="disk-usage">

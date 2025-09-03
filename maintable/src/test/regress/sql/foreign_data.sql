@@ -33,7 +33,7 @@ CREATE ROLE regress_unprivileged_role;
 
 CREATE FOREIGN DATA WRAPPER dummy;
 COMMENT ON FOREIGN DATA WRAPPER dummy IS 'useless';
-CREATE FOREIGN DATA WRAPPER postgresql VALIDATOR postgresql_fdw_validator;
+CREATE FOREIGN DATA WRAPPER maintableql VALIDATOR maintableql_fdw_validator;
 
 -- At this point we should have 2 built-in wrappers and no servers.
 SELECT fdwname, fdwhandler::regproc, fdwvalidator::regproc, fdwoptions FROM pg_foreign_data_wrapper ORDER BY 1, 2, 3;
@@ -59,7 +59,7 @@ DROP FOREIGN DATA WRAPPER foo;
 SET ROLE regress_test_role;
 CREATE FOREIGN DATA WRAPPER foo; -- ERROR
 RESET ROLE;
-CREATE FOREIGN DATA WRAPPER foo VALIDATOR postgresql_fdw_validator;
+CREATE FOREIGN DATA WRAPPER foo VALIDATOR maintableql_fdw_validator;
 \dew+
 
 -- HANDLER related checks
@@ -156,8 +156,8 @@ CREATE SERVER s4 TYPE 'oracle' FOREIGN DATA WRAPPER foo OPTIONS (host 'a', dbnam
 CREATE SERVER s5 VERSION '15.0' FOREIGN DATA WRAPPER foo;
 CREATE SERVER s6 VERSION '16.0' FOREIGN DATA WRAPPER foo OPTIONS (host 'a', dbname 'b');
 CREATE SERVER s7 TYPE 'oracle' VERSION '17.0' FOREIGN DATA WRAPPER foo OPTIONS (host 'a', dbname 'b');
-CREATE SERVER s8 FOREIGN DATA WRAPPER postgresql OPTIONS (foo '1'); -- ERROR
-CREATE SERVER s8 FOREIGN DATA WRAPPER postgresql OPTIONS (host 'localhost', dbname 's8db');
+CREATE SERVER s8 FOREIGN DATA WRAPPER maintableql OPTIONS (foo '1'); -- ERROR
+CREATE SERVER s8 FOREIGN DATA WRAPPER maintableql OPTIONS (host 'localhost', dbname 's8db');
 \des+
 SET ROLE regress_test_role;
 CREATE SERVER t1 FOREIGN DATA WRAPPER foo;                 -- ERROR: no usage on FDW
@@ -510,7 +510,7 @@ GRANT USAGE ON FOREIGN SERVER s4 TO regress_test_role;
 DROP USER MAPPING FOR public SERVER s4;
 ALTER SERVER s6 OPTIONS (DROP host, DROP dbname);
 ALTER USER MAPPING FOR regress_test_role SERVER s6 OPTIONS (DROP username);
-ALTER FOREIGN DATA WRAPPER foo VALIDATOR postgresql_fdw_validator;
+ALTER FOREIGN DATA WRAPPER foo VALIDATOR maintableql_fdw_validator;
 
 -- Privileges
 SET ROLE regress_unprivileged_role;
@@ -529,15 +529,15 @@ ALTER USER MAPPING FOR regress_test_role SERVER s6 OPTIONS (gotcha 'true'); -- E
 DROP USER MAPPING FOR regress_test_role SERVER s6;              -- ERROR
 RESET ROLE;
 
-GRANT USAGE ON FOREIGN DATA WRAPPER postgresql TO regress_unprivileged_role;
+GRANT USAGE ON FOREIGN DATA WRAPPER maintableql TO regress_unprivileged_role;
 GRANT USAGE ON FOREIGN DATA WRAPPER foo TO regress_unprivileged_role WITH GRANT OPTION;
 SET ROLE regress_unprivileged_role;
 CREATE FOREIGN DATA WRAPPER foobar;                             -- ERROR
 ALTER FOREIGN DATA WRAPPER foo OPTIONS (gotcha 'true');         -- ERROR
 DROP FOREIGN DATA WRAPPER foo;                                  -- ERROR
-GRANT USAGE ON FOREIGN DATA WRAPPER postgresql TO regress_test_role; -- WARNING
+GRANT USAGE ON FOREIGN DATA WRAPPER maintableql TO regress_test_role; -- WARNING
 GRANT USAGE ON FOREIGN DATA WRAPPER foo TO regress_test_role;
-CREATE SERVER s9 FOREIGN DATA WRAPPER postgresql;
+CREATE SERVER s9 FOREIGN DATA WRAPPER maintableql;
 ALTER SERVER s6 VERSION '0.5';                                  -- ERROR
 DROP SERVER s6;                                                 -- ERROR
 GRANT USAGE ON FOREIGN SERVER s6 TO regress_test_role;          -- ERROR
@@ -854,10 +854,10 @@ DROP SERVER s8 CASCADE;
 DROP ROLE regress_test_indirect;
 DROP ROLE regress_test_role;
 DROP ROLE regress_unprivileged_role;                        -- ERROR
-REVOKE ALL ON FOREIGN DATA WRAPPER postgresql FROM regress_unprivileged_role;
+REVOKE ALL ON FOREIGN DATA WRAPPER maintableql FROM regress_unprivileged_role;
 DROP ROLE regress_unprivileged_role;
 DROP ROLE regress_test_role2;
-DROP FOREIGN DATA WRAPPER postgresql CASCADE;
+DROP FOREIGN DATA WRAPPER maintableql CASCADE;
 DROP FOREIGN DATA WRAPPER dummy CASCADE;
 \c
 DROP ROLE regress_foreign_data_user;

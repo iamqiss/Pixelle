@@ -19,7 +19,7 @@ use crate::clients::MIB;
 use crate::clients::producer_error_callback::{ErrorCallback, LogErrorCallback};
 use crate::clients::producer_sharding::{BalancedSharding, Sharding};
 use bon::Builder;
-use iggy_common::{IggyByteSize, IggyDuration};
+use messenger_common::{MessengerByteSize, MessengerDuration};
 use std::sync::Arc;
 
 /// Determines how the `send_messages` API should behave when problem is encountered
@@ -28,7 +28,7 @@ pub enum BackpressureMode {
     /// Block until the send succeeds
     Block,
     /// Block with a timeout, after which the send fails
-    BlockWithTimeout(IggyDuration),
+    BlockWithTimeout(MessengerDuration),
     /// Fail immediately without retrying
     FailImmediately,
 }
@@ -37,8 +37,8 @@ pub enum BackpressureMode {
 /// # Examples
 ///
 /// ```
-/// use iggy::prelude::*;
-/// use iggy_common::{IggyDuration, IggyByteSize};
+/// use messenger::prelude::*;
+/// use messenger_common::{MessengerDuration, MessengerByteSize};
 ///
 /// // Use default config
 /// let config = BackgroundConfig::builder()
@@ -52,14 +52,14 @@ pub enum BackpressureMode {
 ///
 /// // Configure low-latency flush
 /// let config = BackgroundConfig::builder()
-///     .linger_time(IggyDuration::from(200)) // 200ms
+///     .linger_time(MessengerDuration::from(200)) // 200ms
 ///     .build();
 ///
 /// // Disable all limits (not recommended for production)
 /// let config = BackgroundConfig::builder()
 ///     .batch_size(0)
 ///     .batch_length(0)
-///     .max_buffer_size(IggyByteSize::from(0))
+///     .max_buffer_size(MessengerByteSize::from(0))
 ///     .max_in_flight(0)
 ///     .build();
 /// ```
@@ -76,8 +76,8 @@ pub struct BackgroundConfig {
     ///
     /// Combines with `batch_size` / `batch_length`: whichever limit fires
     /// first triggers the flush.
-    #[builder(default = IggyDuration::from(1000))]
-    pub linger_time: IggyDuration,
+    #[builder(default = MessengerDuration::from(1000))]
+    pub linger_time: MessengerDuration,
     /// User-supplied asynchronous callback that will be executed whenever
     /// the producer encounters an error it cannot automatically recover from
     /// (e.g. network failure).
@@ -98,9 +98,9 @@ pub struct BackgroundConfig {
     #[builder(default = BackpressureMode::Block)]
     pub failure_mode: BackpressureMode,
     /// Upper bound for the **bytes held in memory** across *all* shards.  
-    /// `IggyByteSize::from(0)` ⇒ unlimited.
-    #[builder(default = IggyByteSize::from(32 * MIB as u64))]
-    pub max_buffer_size: IggyByteSize,
+    /// `MessengerByteSize::from(0)` ⇒ unlimited.
+    #[builder(default = MessengerByteSize::from(32 * MIB as u64))]
+    pub max_buffer_size: MessengerByteSize,
     /// Maximum number of **in-flight requests** (batches being sent).  
     /// `0` ⇒ unlimited.
     #[builder(default = default_shard_count() * 2)]
@@ -111,20 +111,20 @@ pub struct BackgroundConfig {
 /// # Examples
 ///
 /// ```rust
-/// use iggy::prelude::*;
-/// use iggy_common::IggyDuration;
+/// use messenger::prelude::*;
+/// use messenger_common::MessengerDuration;
 ///
 /// // Send messages one-by-one (max latency, min memory per request)
 /// let cfg = DirectConfig::builder()
 ///     .batch_length(1)
-///     .linger_time(IggyDuration::from(0))
+///     .linger_time(MessengerDuration::from(0))
 ///     .build();
 ///
 /// // Send in chunks of up to 500 messages,
 /// // with a delay of at least 200 ms between consecutive sends.
 /// let cfg = DirectConfig::builder()
 ///     .batch_length(500)
-///     .linger_time(IggyDuration::from(200))
+///     .linger_time(MessengerDuration::from(200))
 ///     .build();
 /// ```
 #[derive(Clone, Builder)]
@@ -134,8 +134,8 @@ pub struct DirectConfig {
     #[builder(default = 1000)]
     pub batch_length: u32,
     /// How long to wait for more messages before flushing the current set.
-    #[builder(default = IggyDuration::from(1000))]
-    pub linger_time: IggyDuration,
+    #[builder(default = MessengerDuration::from(1000))]
+    pub linger_time: MessengerDuration,
 }
 
 fn default_shard_count() -> usize {

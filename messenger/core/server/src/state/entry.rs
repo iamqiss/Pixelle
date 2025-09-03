@@ -18,9 +18,9 @@
 
 use crate::state::command::EntryCommand;
 use bytes::{Buf, BufMut, Bytes, BytesMut};
-use iggy_common::IggyError;
-use iggy_common::IggyTimestamp;
-use iggy_common::{BytesSerializable, calculate_checksum};
+use messenger_common::MessengerError;
+use messenger_common::MessengerTimestamp;
+use messenger_common::{BytesSerializable, calculate_checksum};
 use std::fmt::{Display, Formatter};
 
 /// State entry in the log
@@ -42,7 +42,7 @@ pub struct StateEntry {
     pub leader_id: u32,
     pub version: u32,
     pub flags: u64,
-    pub timestamp: IggyTimestamp,
+    pub timestamp: MessengerTimestamp,
     pub user_id: u32,
     pub checksum: u32,
     pub context: Bytes,
@@ -57,7 +57,7 @@ impl StateEntry {
         leader_id: u32,
         version: u32,
         flags: u64,
-        timestamp: IggyTimestamp,
+        timestamp: MessengerTimestamp,
         user_id: u32,
         checksum: u32,
         context: Bytes,
@@ -77,7 +77,7 @@ impl StateEntry {
         }
     }
 
-    pub fn command(&self) -> Result<EntryCommand, IggyError> {
+    pub fn command(&self) -> Result<EntryCommand, MessengerError> {
         EntryCommand::from_bytes(self.command.clone())
     }
 
@@ -88,7 +88,7 @@ impl StateEntry {
         leader_id: u32,
         version: u32,
         flags: u64,
-        timestamp: IggyTimestamp,
+        timestamp: MessengerTimestamp,
         user_id: u32,
         context: &Bytes,
         command: &Bytes,
@@ -145,7 +145,7 @@ impl BytesSerializable for StateEntry {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError>
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
@@ -154,7 +154,7 @@ impl BytesSerializable for StateEntry {
         let leader_id = bytes.slice(16..20).get_u32_le();
         let version = bytes.slice(20..24).get_u32_le();
         let flags = bytes.slice(24..32).get_u64_le();
-        let timestamp = IggyTimestamp::from(bytes.slice(32..40).get_u64_le());
+        let timestamp = MessengerTimestamp::from(bytes.slice(32..40).get_u64_le());
         let user_id = bytes.slice(40..44).get_u32_le();
         let checksum = bytes.slice(44..48).get_u32_le();
         let context_length = bytes.slice(48..52).get_u32_le() as usize;

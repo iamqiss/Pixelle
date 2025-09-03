@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * datum.c
- *	  POSTGRES Datum (abstract data type) manipulation routines.
+ *	  MAINTABLE Datum (abstract data type) manipulation routines.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -40,7 +40,7 @@
  * result from datumCopy().  See also datumTransfer().
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/detoast.h"
 #include "common/hashfn.h"

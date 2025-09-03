@@ -17,10 +17,10 @@
  * under the License.
  */
 
-rootProject.name = "iggy-java-sdk"
+rootProject.name = "messenger-java-sdk"
 
-include("iggy")
-project(":iggy").projectDir = file("java-sdk")
+include("messenger")
+project(":messenger").projectDir = file("java-sdk")
 
-include("iggy-example")
-project(":iggy-example").projectDir = file("examples")
+include("messenger-example")
+project(":messenger-example").projectDir = file("examples")

@@ -1,5 +1,5 @@
 /*
- * A small header than can be included by backported LLVM code or PostgreSQL
+ * A small header than can be included by backported LLVM code or maintableQL
  * code, to control conditional compilation.
  */
 #ifndef LLVMJIT_BACKPORT_H

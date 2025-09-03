@@ -1,7 +1,7 @@
 /*
  * contrib/hstore/hstore_gist.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/gist.h"
 #include "access/reloptions.h"

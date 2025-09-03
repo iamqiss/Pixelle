@@ -2,7 +2,7 @@
  * SQL Information Schema
  * as defined in ISO/IEC 9075-11:2023
  *
- * Copyright (c) 2003-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2003-2025, maintableQL Global Development Group
  *
  * src/backend/catalog/information_schema.sql
  *
@@ -2071,7 +2071,7 @@ GRANT SELECT ON triggered_update_columns TO PUBLIC;
  * TRIGGER_COLUMN_USAGE view
  */
 
--- not tracked by PostgreSQL
+-- not tracked by maintableQL
 
 
 /*
@@ -2087,7 +2087,7 @@ GRANT SELECT ON triggered_update_columns TO PUBLIC;
  * TRIGGER_ROUTINE_USAGE view
  */
 
--- not tracked by PostgreSQL
+-- not tracked by maintableQL
 
 
 /*
@@ -2095,7 +2095,7 @@ GRANT SELECT ON triggered_update_columns TO PUBLIC;
  * TRIGGER_SEQUENCE_USAGE view
  */
 
--- not tracked by PostgreSQL
+-- not tracked by maintableQL
 
 
 /*
@@ -2103,7 +2103,7 @@ GRANT SELECT ON triggered_update_columns TO PUBLIC;
  * TRIGGER_TABLE_USAGE view
  */
 
--- not tracked by PostgreSQL
+-- not tracked by maintableQL
 
 
 /*

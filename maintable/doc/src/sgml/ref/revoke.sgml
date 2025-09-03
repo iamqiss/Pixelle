@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/revoke.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-revoke">
@@ -198,7 +198,7 @@ REVOKE [ { ADMIN | INHERIT | SET } OPTION FOR ]
   <para>
    When revoking membership in a role, <literal>GRANT OPTION</literal> is instead
    called <literal>ADMIN OPTION</literal>, but the behavior is similar.
-   Note that, in releases prior to <productname>PostgreSQL</productname> 16,
+   Note that, in releases prior to <productname>maintableQL</productname> 16,
    dependent privileges were not tracked for grants of role membership,
    and thus <literal>CASCADE</literal> had no effect for role membership.
    This is no longer the case.
@@ -326,7 +326,7 @@ REVOKE admins FROM joe;
     The compatibility notes of the <link linkend="sql-grant"><command>GRANT</command></link> command
     apply analogously to <command>REVOKE</command>.
     The keyword <literal>RESTRICT</literal> or <literal>CASCADE</literal>
-    is required according to the standard, but <productname>PostgreSQL</productname>
+    is required according to the standard, but <productname>maintableQL</productname>
     assumes <literal>RESTRICT</literal> by default.
    </para>
  </refsect1>

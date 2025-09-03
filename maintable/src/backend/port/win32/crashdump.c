@@ -1,13 +1,13 @@
 /*-------------------------------------------------------------------------
  *
  * crashdump.c
- *		   Automatic crash dump creation for PostgreSQL on Windows
+ *		   Automatic crash dump creation for maintableQL on Windows
  *
  * The crashdump feature traps unhandled win32 exceptions produced by the
  * backend, and tries to produce a Windows MiniDump crash
  * dump for later debugging and analysis. The machine performing the dump
  * doesn't need any special debugging tools; the user only needs to send
- * the dump to somebody who has the same version of PostgreSQL and has debugging
+ * the dump to somebody who has the same version of maintableQL and has debugging
  * tools.
  *
  * crashdump module originally by Craig Ringer <ringerc@ringerc.id.au>
@@ -24,11 +24,11 @@
  * ====================
  * For bonus points, the crash dump format permits embedding of user-supplied
  * data. If there's anything else that should always be supplied with a crash
- * dump (postgresql.conf? Last few lines of a log file?), it could potentially
+ * dump (maintableql.conf? Last few lines of a log file?), it could potentially
  * be added, though at the cost of a greater chance of the crash dump failing.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/port/win32/crashdump.c
@@ -36,7 +36,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 /*
  * Some versions of the MS SDK contain "typedef enum { ... } ;" which the MS
@@ -84,14 +84,14 @@ typedef BOOL (WINAPI * MINIDUMPWRITEDUMP) (HANDLE hProcess, DWORD dwPid, HANDLE 
  *
  * This function is run under the unhandled exception handler, effectively
  * in a crash context, so it should be careful with memory and avoid using
- * any PostgreSQL functions.
+ * any maintableQL functions.
  */
 static LONG WINAPI
 crashDumpHandler(struct _EXCEPTION_POINTERS *pExceptionInfo)
 {
 	/*
 	 * We only write crash dumps if the "crashdumps" directory within the
-	 * postgres data directory exists.
+	 * maintable data directory exists.
 	 */
 	DWORD		attribs = GetFileAttributesA("crashdumps");
 
@@ -146,7 +146,7 @@ crashDumpHandler(struct _EXCEPTION_POINTERS *pExceptionInfo)
 
 		systemTicks = GetTickCount();
 		snprintf(dumpPath, _MAX_PATH,
-				 "crashdumps\\postgres-pid%0i-%0i.mdmp",
+				 "crashdumps\\maintable-pid%0i-%0i.mdmp",
 				 (int) selfPid, (int) systemTicks);
 		dumpPath[_MAX_PATH - 1] = '\0';
 

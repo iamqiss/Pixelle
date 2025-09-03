@@ -21,9 +21,9 @@ use configs::{McpServerConfig, McpTransport};
 use dotenvy::dotenv;
 use error::McpRuntimeError;
 use figlet_rs::FIGfont;
-use iggy::prelude::{Client, Identifier};
+use messenger::prelude::{Client, Identifier};
 use rmcp::{ServiceExt, model::ErrorData, transport::stdio};
-use service::IggyService;
+use service::MessengerService;
 use std::{env, sync::Arc};
 use tracing::{error, info};
 use tracing_subscriber::{EnvFilter, Registry, layer::SubscriberExt, util::SubscriberInitExt};
@@ -37,10 +37,10 @@ mod stream;
 #[tokio::main]
 async fn main() -> Result<(), McpRuntimeError> {
     let standard_font = FIGfont::standard().unwrap();
-    let figure = standard_font.convert("Iggy MCP Server");
+    let figure = standard_font.convert("Messenger MCP Server");
     eprintln!("{}", figure.unwrap());
 
-    if let Ok(env_path) = std::env::var("IGGY_MCP_ENV_PATH") {
+    if let Ok(env_path) = std::env::var("MESSENGER_MCP_ENV_PATH") {
         if dotenvy::from_path(&env_path).is_ok() {
             eprintln!("Loaded environment variables from path: {env_path}");
         }
@@ -51,12 +51,12 @@ async fn main() -> Result<(), McpRuntimeError> {
         );
     }
 
-    let config_path = env::var("IGGY_MCP_CONFIG_PATH").unwrap_or_else(|_| "config".to_string());
+    let config_path = env::var("MESSENGER_MCP_CONFIG_PATH").unwrap_or_else(|_| "config".to_string());
     eprintln!("Configuration file path: {config_path}");
     let config: McpServerConfig = Config::builder()
         .add_source(Config::try_from(&McpServerConfig::default()).expect("Failed to init config"))
         .add_source(File::with_name(&config_path).required(false))
-        .add_source(Environment::with_prefix("IGGY_MCP").separator("_"))
+        .add_source(Environment::with_prefix("MESSENGER_MCP").separator("_"))
         .build()
         .expect("Failed to build runtime config")
         .try_deserialize()
@@ -76,18 +76,18 @@ async fn main() -> Result<(), McpRuntimeError> {
             .init();
     }
 
-    info!("Starting Iggy MCP Server, transport: {transport}...");
+    info!("Starting Messenger MCP Server, transport: {transport}...");
 
     let consumer_id = Identifier::from_str_value(
-        config.iggy.consumer.as_deref().unwrap_or("iggy-mcp"),
+        config.messenger.consumer.as_deref().unwrap_or("messenger-mcp"),
     )
     .map_err(|error| {
-        error!("Failed to create Iggy consumer ID: {:?}", error);
+        error!("Failed to create Messenger consumer ID: {:?}", error);
         McpRuntimeError::FailedToCreateConsumerId
     })?;
-    let iggy_consumer = Arc::new(iggy::prelude::Consumer::new(consumer_id));
-    let iggy_client = Arc::new(stream::init(config.iggy).await?);
-    let client_to_shutdown = iggy_client.clone();
+    let messenger_consumer = Arc::new(messenger::prelude::Consumer::new(consumer_id));
+    let messenger_client = Arc::new(stream::init(config.messenger).await?);
+    let client_to_shutdown = messenger_client.clone();
     let permissions = Permissions {
         create: config.permissions.create,
         read: config.permissions.read,
@@ -96,7 +96,7 @@ async fn main() -> Result<(), McpRuntimeError> {
     };
 
     if transport == McpTransport::Stdio {
-        let Ok(service) = IggyService::new(iggy_client, iggy_consumer, permissions)
+        let Ok(service) = MessengerService::new(messenger_client, messenger_consumer, permissions)
             .serve(stdio())
             .await
             .inspect_err(|e| {
@@ -116,7 +116,7 @@ async fn main() -> Result<(), McpRuntimeError> {
             return Err(McpRuntimeError::MissingConfig);
         };
 
-        api::init(http_config, iggy_client, iggy_consumer, permissions).await?;
+        api::init(http_config, messenger_client, messenger_consumer, permissions).await?;
     }
 
     #[cfg(unix)]
@@ -131,15 +131,15 @@ async fn main() -> Result<(), McpRuntimeError> {
     #[cfg(unix)]
     tokio::select! {
         _ = ctrl_c.recv() => {
-            info!("Received SIGINT. Shutting down Iggy MCP Server...");
+            info!("Received SIGINT. Shutting down Messenger MCP Server...");
         },
         _ = sigterm.recv() => {
-            info!("Received SIGTERM. Shutting down Iggy MCP Server...");
+            info!("Received SIGTERM. Shutting down Messenger MCP Server...");
         }
     }
 
     client_to_shutdown.shutdown().await?;
-    info!("Iggy MCP Server stopped successfully");
+    info!("Messenger MCP Server stopped successfully");
     Ok(())
 }
 

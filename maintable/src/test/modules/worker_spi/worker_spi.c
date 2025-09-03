@@ -13,14 +13,14 @@
  * "delta" type.  Delta rows will be deleted by this worker and their values
  * aggregated into the total.
  *
- * Copyright (c) 2013-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2013-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/test/modules/worker_spi/worker_spi.c
  *
  * -------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 /* These are always necessary for a bgworker */
 #include "miscadmin.h"
@@ -326,7 +326,7 @@ _PG_init(void)
 							   "Database to connect to.",
 							   NULL,
 							   &worker_spi_database,
-							   "postgres",
+							   "maintable",
 							   PGC_SIGHUP,
 							   0,
 							   NULL, NULL, NULL);

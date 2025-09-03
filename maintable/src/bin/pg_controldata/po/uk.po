@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: postgresql\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableql\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-08-31 06:24+0000\n"
 "PO-Revision-Date: 2024-09-23 19:38\n"
 "Last-Translator: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
-"X-Crowdin-Project: postgresql\n"
+"X-Crowdin-Project: maintableql\n"
 "X-Crowdin-Project-ID: 324573\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: /REL_17_STABLE/pg_controldata.pot\n"
@@ -46,9 +46,9 @@ msgstr "неправильний порядок байтів"
 msgid "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr "можлива помилка у послідовності байтів.\n"
-"Порядок байтів, що використовують для зберігання файлу pg_control, може не відповідати тому, який використовується цією програмою. У такому випадку результати нижче будуть неправильним, і інсталяція PostgreSQL буде несумісною з цим каталогом даних."
+"Порядок байтів, що використовують для зберігання файлу pg_control, може не відповідати тому, який використовується цією програмою. У такому випадку результати нижче будуть неправильним, і інсталяція maintableQL буде несумісною з цим каталогом даних."
 
 #: ../../common/controldata_utils.c:230
 #, c-format
@@ -78,8 +78,8 @@ msgstr "неможливо дублювати нульовий покажчик 
 
 #: pg_controldata.c:35
 #, c-format
-msgid "%s displays control information of a PostgreSQL database cluster.\n\n"
-msgstr "%s відображає контрольну інформацію щодо кластеру PostgreSQL.\n\n"
+msgid "%s displays control information of a maintableQL database cluster.\n\n"
+msgstr "%s відображає контрольну інформацію щодо кластеру maintableQL.\n\n"
 
 #: pg_controldata.c:36
 #, c-format

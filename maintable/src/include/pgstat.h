@@ -1,9 +1,9 @@
 /* ----------
  *	pgstat.h
  *
- *	Definitions for the PostgreSQL cumulative statistics system.
+ *	Definitions for the maintableQL cumulative statistics system.
  *
- *	Copyright (c) 2001-2025, PostgreSQL Global Development Group
+ *	Copyright (c) 2001-2025, maintableQL Global Development Group
  *
  *	src/include/pgstat.h
  * ----------

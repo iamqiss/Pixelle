@@ -19,7 +19,7 @@
 use super::MAX_NAME_LENGTH;
 use crate::BytesSerializable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{CREATE_STREAM_CODE, Command};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -53,16 +53,16 @@ impl Default for CreateStream {
     }
 }
 
-impl Validatable<IggyError> for CreateStream {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for CreateStream {
+    fn validate(&self) -> Result<(), MessengerError> {
         if let Some(stream_id) = self.stream_id
             && stream_id == 0
         {
-            return Err(IggyError::InvalidStreamId);
+            return Err(MessengerError::InvalidStreamId);
         }
 
         if self.name.is_empty() || self.name.len() > MAX_NAME_LENGTH {
-            return Err(IggyError::InvalidStreamName);
+            return Err(MessengerError::InvalidStreamName);
         }
 
         Ok(())
@@ -79,15 +79,15 @@ impl BytesSerializable for CreateStream {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<CreateStream, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<CreateStream, MessengerError> {
         if bytes.len() < 6 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let stream_id = u32::from_le_bytes(
             bytes[..4]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let stream_id = if stream_id == 0 {
             None
@@ -96,10 +96,10 @@ impl BytesSerializable for CreateStream {
         };
         let name_length = bytes[4];
         let name = from_utf8(&bytes[5..5 + name_length as usize])
-            .map_err(|_| IggyError::InvalidUtf8)?
+            .map_err(|_| MessengerError::InvalidUtf8)?
             .to_string();
         if name.len() != name_length as usize {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let command = CreateStream { stream_id, name };

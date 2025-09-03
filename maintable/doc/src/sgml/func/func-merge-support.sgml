@@ -7,7 +7,7 @@
   </indexterm>
 
   <para>
-   <productname>PostgreSQL</productname> includes one merge support function
+   <productname>maintableQL</productname> includes one merge support function
    that may be used in the <literal>RETURNING</literal> list of a
    <xref linkend="sql-merge"/> command to identify the action taken for each
    row; see <xref linkend="functions-merge-support-table"/>.

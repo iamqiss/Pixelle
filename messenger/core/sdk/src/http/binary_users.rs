@@ -18,24 +18,24 @@
 
 use crate::http::http_client::HttpClient;
 use crate::http::http_transport::HttpTransport;
-use crate::prelude::{Identifier, IggyError};
+use crate::prelude::{Identifier, MessengerError};
 use async_trait::async_trait;
-use iggy_binary_protocol::UserClient;
-use iggy_common::change_password::ChangePassword;
-use iggy_common::create_user::CreateUser;
-use iggy_common::login_user::LoginUser;
-use iggy_common::update_permissions::UpdatePermissions;
-use iggy_common::update_user::UpdateUser;
-use iggy_common::{IdentityInfo, Permissions, UserInfo, UserInfoDetails, UserStatus};
+use messenger_binary_protocol::UserClient;
+use messenger_common::change_password::ChangePassword;
+use messenger_common::create_user::CreateUser;
+use messenger_common::login_user::LoginUser;
+use messenger_common::update_permissions::UpdatePermissions;
+use messenger_common::update_user::UpdateUser;
+use messenger_common::{IdentityInfo, Permissions, UserInfo, UserInfoDetails, UserStatus};
 
 const PATH: &str = "/users";
 
 #[async_trait]
 impl UserClient for HttpClient {
-    async fn get_user(&self, user_id: &Identifier) -> Result<Option<UserInfoDetails>, IggyError> {
+    async fn get_user(&self, user_id: &Identifier) -> Result<Option<UserInfoDetails>, MessengerError> {
         let response = self.get(&format!("{PATH}/{user_id}")).await;
         if let Err(error) = response {
-            if matches!(error, IggyError::ResourceNotFound(_)) {
+            if matches!(error, MessengerError::ResourceNotFound(_)) {
                 return Ok(None);
             }
 
@@ -45,16 +45,16 @@ impl UserClient for HttpClient {
         let user = response?
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(Some(user))
     }
 
-    async fn get_users(&self) -> Result<Vec<UserInfo>, IggyError> {
+    async fn get_users(&self) -> Result<Vec<UserInfo>, MessengerError> {
         let response = self.get(PATH).await?;
         let users = response
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(users)
     }
 
@@ -64,7 +64,7 @@ impl UserClient for HttpClient {
         password: &str,
         status: UserStatus,
         permissions: Option<Permissions>,
-    ) -> Result<UserInfoDetails, IggyError> {
+    ) -> Result<UserInfoDetails, MessengerError> {
         let response = self
             .post(
                 PATH,
@@ -79,11 +79,11 @@ impl UserClient for HttpClient {
         let user = response
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(user)
     }
 
-    async fn delete_user(&self, user_id: &Identifier) -> Result<(), IggyError> {
+    async fn delete_user(&self, user_id: &Identifier) -> Result<(), MessengerError> {
         self.delete(&format!("{PATH}/{}", &user_id.as_cow_str()))
             .await?;
         Ok(())
@@ -94,7 +94,7 @@ impl UserClient for HttpClient {
         user_id: &Identifier,
         username: Option<&str>,
         status: Option<UserStatus>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.put(
             &format!("{PATH}/{}", &user_id.as_cow_str()),
             &UpdateUser {
@@ -111,7 +111,7 @@ impl UserClient for HttpClient {
         &self,
         user_id: &Identifier,
         permissions: Option<Permissions>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.put(
             &format!("{PATH}/{}/permissions", &user_id.as_cow_str()),
             &UpdatePermissions {
@@ -128,7 +128,7 @@ impl UserClient for HttpClient {
         user_id: &Identifier,
         current_password: &str,
         new_password: &str,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.put(
             &format!("{PATH}/{}/password", &user_id.as_cow_str()),
             &ChangePassword {
@@ -141,7 +141,7 @@ impl UserClient for HttpClient {
         Ok(())
     }
 
-    async fn login_user(&self, username: &str, password: &str) -> Result<IdentityInfo, IggyError> {
+    async fn login_user(&self, username: &str, password: &str) -> Result<IdentityInfo, MessengerError> {
         let response = self
             .post(
                 &format!("{PATH}/login"),
@@ -156,12 +156,12 @@ impl UserClient for HttpClient {
         let identity_info = response
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         self.set_token_from_identity(&identity_info).await?;
         Ok(identity_info)
     }
 
-    async fn logout_user(&self) -> Result<(), IggyError> {
+    async fn logout_user(&self) -> Result<(), MessengerError> {
         self.delete(&format!("{PATH}/logout")).await?;
         self.set_access_token(None).await;
         Ok(())

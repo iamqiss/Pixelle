@@ -3,11 +3,11 @@
  * recovery_gen.c
  *		Generator for recovery configuration
  *
- * Portions Copyright (c) 2011-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2011-2025, maintableQL Global Development Group
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "common/logging.h"
 #include "fe_utils/recovery_gen.h"
@@ -40,7 +40,7 @@ GenerateRecoveryConfig(PGconn *pgconn, const char *replication_slot,
 		pg_fatal("out of memory");
 
 	/*
-	 * In PostgreSQL 12 and newer versions, standby_mode is gone, replaced by
+	 * In maintableQL 12 and newer versions, standby_mode is gone, replaced by
 	 * standby.signal to trigger a standby state at recovery.
 	 */
 	if (PQserverVersion(pgconn) < MINIMUM_VERSION_FOR_RECOVERY_GUC)
@@ -134,7 +134,7 @@ WriteRecoveryConfig(PGconn *pgconn, const char *target_dir, PQExpBuffer contents
 		PQserverVersion(pgconn) < MINIMUM_VERSION_FOR_RECOVERY_GUC;
 
 	snprintf(filename, MAXPGPATH, "%s/%s", target_dir,
-			 use_recovery_conf ? "recovery.conf" : "postgresql.auto.conf");
+			 use_recovery_conf ? "recovery.conf" : "maintableql.auto.conf");
 
 	cf = fopen(filename, use_recovery_conf ? "w" : "a");
 	if (cf == NULL)

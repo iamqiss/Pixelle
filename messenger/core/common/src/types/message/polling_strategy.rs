@@ -17,9 +17,9 @@
  */
 
 use crate::BytesSerializable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::types::message::polling_kind::PollingKind;
-use crate::utils::timestamp::IggyTimestamp;
+use crate::utils::timestamp::MessengerTimestamp;
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
 use serde_with::{DisplayFromStr, serde_as};
@@ -73,7 +73,7 @@ impl PollingStrategy {
     }
 
     /// Poll messages from the specified timestamp.
-    pub fn timestamp(value: IggyTimestamp) -> Self {
+    pub fn timestamp(value: MessengerTimestamp) -> Self {
         Self {
             kind: PollingKind::Timestamp,
             value: value.into(),
@@ -130,16 +130,16 @@ impl BytesSerializable for PollingStrategy {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError> {
         if bytes.len() != 9 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let kind = PollingKind::from_code(bytes[0])?;
         let value = u64::from_le_bytes(
             bytes[1..9]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let strategy = PollingStrategy { kind, value };
         Ok(strategy)

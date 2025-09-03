@@ -29,14 +29,14 @@ use charming::{
     series::Line,
 };
 
-pub struct IggyChart {
+pub struct MessengerChart {
     pub inner: Chart,
 }
 
 const AXIS_TEXT_SIZE: u32 = 16;
 
-impl IggyChart {
-    /// Create a new `IggyChart` with default tooltip, legend, grid, and toolbox.
+impl MessengerChart {
+    /// Create a new `MessengerChart` with default tooltip, legend, grid, and toolbox.
     pub fn new(title: &str, subtext: &str, dark: bool, strip_title_and_subtext: bool) -> Self {
         let chart = Chart::new();
         let chart = if !strip_title_and_subtext {

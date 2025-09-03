@@ -24,7 +24,7 @@ use crate::streaming::utils::PooledBuffer;
 use crate::streaming::utils::file;
 use anyhow::Context;
 use error_set::ErrContext;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use std::sync::Arc;
 use tokio::io::AsyncReadExt;
 use tracing::info;
@@ -42,10 +42,10 @@ impl FileSystemInfoStorage {
 }
 
 impl SystemInfoStorage for FileSystemInfoStorage {
-    async fn load(&self) -> Result<SystemInfo, IggyError> {
+    async fn load(&self) -> Result<SystemInfo, MessengerError> {
         let file = file::open(&self.path).await;
         if file.is_err() {
-            return Err(IggyError::ResourceNotFound(self.path.to_owned()));
+            return Err(MessengerError::ResourceNotFound(self.path.to_owned()));
         }
 
         let mut file = file.unwrap();
@@ -58,7 +58,7 @@ impl SystemInfoStorage for FileSystemInfoStorage {
                     self.path
                 )
             })
-            .map_err(|_| IggyError::CannotReadFileMetadata)?
+            .map_err(|_| MessengerError::CannotReadFileMetadata)?
             .len() as usize;
         let mut buffer = PooledBuffer::with_capacity(file_size);
         buffer.put_bytes(0, file_size);
@@ -70,18 +70,18 @@ impl SystemInfoStorage for FileSystemInfoStorage {
                     self.path
                 )
             })
-            .map_err(|_| IggyError::CannotReadFile)?;
+            .map_err(|_| MessengerError::CannotReadFile)?;
         let (system_info, _) =
             bincode::serde::decode_from_slice(&buffer, bincode::config::standard())
                 .with_context(|| "Failed to deserialize system info")
-                .map_err(|_| IggyError::CannotDeserializeResource)?;
+                .map_err(|_| MessengerError::CannotDeserializeResource)?;
         Ok(system_info)
     }
 
-    async fn save(&self, system_info: &SystemInfo) -> Result<(), IggyError> {
+    async fn save(&self, system_info: &SystemInfo) -> Result<(), MessengerError> {
         let data = bincode::serde::encode_to_vec(system_info, bincode::config::standard())
             .with_context(|| "Failed to serialize system info")
-            .map_err(|_| IggyError::CannotSerializeResource)?;
+            .map_err(|_| MessengerError::CannotSerializeResource)?;
         self.persister
             .overwrite(&self.path, &data)
             .await

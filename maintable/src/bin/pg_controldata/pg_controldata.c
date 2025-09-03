@@ -10,13 +10,13 @@
  */
 
 /*
- * We have to use postgres.h not postgres_fe.h here, because there's so much
+ * We have to use maintable.h not maintable_fe.h here, because there's so much
  * backend-only stuff in the XLOG include files we need.  But we need a
  * frontend-ish environment otherwise.  Hence this ugly hack.
  */
 #define FRONTEND 1
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <time.h>
 
@@ -32,7 +32,7 @@
 static void
 usage(const char *progname)
 {
-	printf(_("%s displays control information of a PostgreSQL database cluster.\n\n"), progname);
+	printf(_("%s displays control information of a maintableQL database cluster.\n\n"), progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION] [DATADIR]\n"), progname);
 	printf(_("\nOptions:\n"));
@@ -121,7 +121,7 @@ main(int argc, char *argv[])
 		}
 		if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			puts("pg_controldata (PostgreSQL) " PG_VERSION);
+			puts("pg_controldata (maintableQL) " PG_VERSION);
 			exit(0);
 		}
 	}

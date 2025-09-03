@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # This test case aims to verify that server-side backups and server-side
 # backup compression work properly, and it also aims to verify that
@@ -8,11 +8,11 @@
 use strict;
 use warnings FATAL => 'all';
 use File::Path qw(rmtree);
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $primary = PostgreSQL::Test::Cluster->new('primary');
+my $primary = maintableQL::Test::Cluster->new('primary');
 $primary->init(allows_streaming => 1);
 $primary->start;
 
@@ -22,7 +22,7 @@ $primary->start;
 # detect some issues related to LZ4, and low enough to not impact the runtime
 # of the test significantly.
 my $junk_data = $primary->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		SELECT string_agg(encode(sha256(i::bytea), 'hex'), '')
 		FROM generate_series(1, 10240) s(i);));
 my $data_dir = $primary->data_dir;
@@ -33,17 +33,17 @@ print $jf $junk_data;
 close $jf;
 
 # Create a tablespace directory.
-my $source_ts_path = PostgreSQL::Test::Utils::tempdir_short();
+my $source_ts_path = maintableQL::Test::Utils::tempdir_short();
 
 # Create a tablespace with table in it.
 $primary->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		CREATE TABLESPACE regress_ts1 LOCATION '$source_ts_path';
 		SELECT oid FROM pg_tablespace WHERE spcname = 'regress_ts1';
 		CREATE TABLE regress_tbl1(i int) TABLESPACE regress_ts1;
 		INSERT INTO regress_tbl1 VALUES(generate_series(1,5));));
 my $tsoid = $primary->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		SELECT oid FROM pg_tablespace WHERE spcname = 'regress_ts1'));
 
 my $backup_path = $primary->backup_dir . '/server-backup';

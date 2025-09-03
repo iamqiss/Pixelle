@@ -6,11 +6,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: psql-tr\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2019-06-17 21:43+0000\n"
 "PO-Revision-Date: 2019-06-19 12:48+0300\n"
 "Last-Translator: Abdullah Gülner <>\n"
-"Language-Team: Turkish <ceviri@postgresql.org.tr>\n"
+"Language-Team: Turkish <ceviri@maintableql.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=0;\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Generator: Poedit 1.8.7.1\n"
-"X-Poedit-Basepath: /home/devrim/PostgreSQL/pgsql-cvs/pgsql\n"
+"X-Poedit-Basepath: /home/devrim/maintableQL/pgsql-cvs/pgsql\n"
 "X-Poedit-Bookmarks: -1,-1,333,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: ../../../src/common/logging.c:188
@@ -2341,10 +2341,10 @@ msgstr "Aboneliklerin listesi"
 #: help.c:74
 #, c-format
 msgid ""
-"psql is the PostgreSQL interactive terminal.\n"
+"psql is the maintableQL interactive terminal.\n"
 "\n"
 msgstr ""
-"psql PostgreSQL'in  etkilişimli arayüzüdür.\n"
+"psql maintableQL'in  etkilişimli arayüzüdür.\n"
 "\n"
 
 #: help.c:75 help.c:349 help.c:425 help.c:468
@@ -2615,20 +2615,20 @@ msgstr "  -W              şifre sor (otomatik olarak her zaman açık)\n"
 msgid ""
 "\n"
 "For more information, type \"\\?\" (for internal commands) or \"\\help\" (for SQL\n"
-"commands) from within psql, or consult the psql section in the PostgreSQL\n"
+"commands) from within psql, or consult the psql section in the maintableQL\n"
 "documentation.\n"
 "\n"
 msgstr ""
 "\n"
 "Daha fazla bilgi için  yapsql içinde: \"\\?\" (dahili komutlar için) ya  \"\\help\"\n"
-"(SQL komutlar için) yazın, ya da PostgreSQL belgelerinin psql bölümüne \n"
+"(SQL komutlar için) yazın, ya da maintableQL belgelerinin psql bölümüne \n"
 "bakın.\n"
 "\n"
 
 #: help.c:148
 #, c-format
-msgid "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
-msgstr "Hataları <pgsql-bugs@lists.postgresql.org> adresine bildirebilirsiniz.\n"
+msgid "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
+msgstr "Hataları <pgsql-bugs@lists.maintableql.org> adresine bildirebilirsiniz.\n"
 
 #: help.c:174
 #, c-format
@@ -2637,8 +2637,8 @@ msgstr "Genel\n"
 
 #: help.c:175
 #, c-format
-msgid "  \\copyright             show PostgreSQL usage and distribution terms\n"
-msgstr "  \\copyright             PostgreSQL kullanım ve dağıtım şartlarını göster\n"
+msgid "  \\copyright             show maintableQL usage and distribution terms\n"
+msgstr "  \\copyright             maintableQL kullanım ve dağıtım şartlarını göster\n"
 
 #: help.c:176
 #, c-format
@@ -3975,10 +3975,10 @@ msgstr "%s'den çıkmak için \"\\q\" kullanın.\n"
 
 #: mainloop.c:205
 msgid ""
-"The input is a PostgreSQL custom-format dump.\n"
+"The input is a maintableQL custom-format dump.\n"
 "Use the pg_restore command-line client to restore this dump to a database.\n"
 msgstr ""
-"Girdi özel formatta bir PostgreSQL dökümüdür (dump).\n"
+"Girdi özel formatta bir maintableQL dökümüdür (dump).\n"
 "Bu dökümü bir veritabanına geri yüklemek için pg_restore komut satırı istemcisini kullanın.\n"
 
 #: mainloop.c:282
@@ -3990,8 +3990,8 @@ msgid "Use \\? for help."
 msgstr "Yardım için \\? yazınız."
 
 #: mainloop.c:288
-msgid "You are using psql, the command-line interface to PostgreSQL."
-msgstr "PostgreSQL'in komut satırı arabirimi olan psql'i kullanıyorsunuz."
+msgid "You are using psql, the command-line interface to maintableQL."
+msgstr "maintableQL'in komut satırı arabirimi olan psql'i kullanıyorsunuz."
 
 #: mainloop.c:289
 #, c-format
@@ -6420,17 +6420,17 @@ msgstr ""
 #~ "\n"
 
 #~ msgid ""
-#~ "Welcome to %s %s, the PostgreSQL interactive terminal.\n"
+#~ "Welcome to %s %s, the maintableQL interactive terminal.\n"
 #~ "\n"
 #~ msgstr ""
-#~ "PostgreSQL etkilişimli arayüzü %s %s.\n"
+#~ "maintableQL etkilişimli arayüzü %s %s.\n"
 #~ "\n"
 
 #~ msgid ""
-#~ "Welcome to %s %s (server %s), the PostgreSQL interactive terminal.\n"
+#~ "Welcome to %s %s (server %s), the maintableQL interactive terminal.\n"
 #~ "\n"
 #~ msgstr ""
-#~ "PostgreSQL etkilişimli arayüzü %s %s(server %s).\n"
+#~ "maintableQL etkilişimli arayüzü %s %s(server %s).\n"
 #~ "\n"
 
 #~ msgid "Copy, Large Object\n"
@@ -8555,8 +8555,8 @@ msgstr ""
 #~ msgid "could not read from input file: %s\n"
 #~ msgstr "girdi dosyasından okunamadı: %s\n"
 
-#~ msgid "Report bugs to <pgsql-bugs@postgresql.org>.\n"
-#~ msgstr "Hataları <pgsql-bugs@postgresql.org> adresine bildirebilirsiniz.\n"
+#~ msgid "Report bugs to <pgsql-bugs@maintableql.org>.\n"
+#~ msgstr "Hataları <pgsql-bugs@maintableql.org> adresine bildirebilirsiniz.\n"
 
 #~ msgid "%s\n"
 #~ msgstr "%s\n"

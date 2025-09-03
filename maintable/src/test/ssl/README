@@ -28,7 +28,7 @@ In that case, the code in the installation tree is tested.  With
 "make check", a temporary installation tree is built from the current
 sources and then tested.
 
-Either way, this test initializes, starts, and stops a test Postgres
+Either way, this test initializes, starts, and stops a test Maintable
 cluster that is accessible to other local users!
 
 See src/test/perl/README for more info about running these tests.

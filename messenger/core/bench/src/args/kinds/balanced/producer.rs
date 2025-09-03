@@ -17,7 +17,7 @@
  */
 
 use crate::args::{
-    common::IggyBenchArgs,
+    common::MessengerBenchArgs,
     defaults::{
         DEFAULT_BALANCED_NUMBER_OF_PARTITIONS, DEFAULT_BALANCED_NUMBER_OF_STREAMS,
         DEFAULT_NUMBER_OF_PRODUCERS,
@@ -26,7 +26,7 @@ use crate::args::{
     transport::BenchmarkTransportCommand,
 };
 use clap::{CommandFactory, Parser, error::ErrorKind};
-use iggy::prelude::IggyByteSize;
+use messenger::prelude::MessengerByteSize;
 use std::num::NonZeroU32;
 
 /// N producers sending to N separated stream-topic with single partition (one stream per one producer)
@@ -49,7 +49,7 @@ pub struct BalancedProducerArgs {
 
     /// Max topic size in human readable format, e.g. "1GiB", "2MB", "1GiB". If not provided then the server default will be used.
     #[arg(long, short = 'T')]
-    pub max_topic_size: Option<IggyByteSize>,
+    pub max_topic_size: Option<MessengerByteSize>,
 }
 
 impl BenchmarkKindProps for BalancedProducerArgs {
@@ -77,13 +77,13 @@ impl BenchmarkKindProps for BalancedProducerArgs {
         0
     }
 
-    fn max_topic_size(&self) -> Option<IggyByteSize> {
+    fn max_topic_size(&self) -> Option<MessengerByteSize> {
         self.max_topic_size
     }
 
     fn validate(&self) {
         let partitions = self.partitions.get();
-        let mut cmd = IggyBenchArgs::command();
+        let mut cmd = MessengerBenchArgs::command();
 
         if partitions < 2 {
             cmd.error(

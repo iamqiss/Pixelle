@@ -18,8 +18,8 @@
 
 use ahash::AHashMap;
 use futures_util::future::join_all;
-use iggy::prelude::*;
-use iggy_examples::shared::args::Args;
+use messenger::prelude::*;
+use messenger_examples::shared::args::Args;
 use std::collections::HashMap;
 use std::env;
 use std::error::Error;
@@ -37,12 +37,12 @@ struct Tenant {
     id: u32,
     stream: String,
     user: String,
-    client: IggyClient,
+    client: MessengerClient,
     producers: Vec<TenantProducer>,
 }
 
 impl Tenant {
-    pub fn new(id: u32, stream: String, user: String, client: IggyClient) -> Self {
+    pub fn new(id: u32, stream: String, user: String, client: MessengerClient) -> Self {
         Self {
             id,
             stream,
@@ -61,11 +61,11 @@ struct TenantProducer {
     id: u32,
     stream: String,
     topic: String,
-    producer: IggyProducer,
+    producer: MessengerProducer,
 }
 
 impl TenantProducer {
-    pub fn new(id: u32, stream: String, topic: String, producer: IggyProducer) -> Self {
+    pub fn new(id: u32, stream: String, topic: String, producer: MessengerProducer) -> Self {
         Self {
             id,
             stream,
@@ -223,7 +223,7 @@ fn start_producers(
                 let mut messages = Vec::with_capacity(batch_length as usize);
                 for _ in 1..=batch_length {
                     let payload = format!("{message}-{producer_id}-{message_id}");
-                    let message = IggyMessage::from_str(&payload).expect("Invalid message");
+                    let message = MessengerMessage::from_str(&payload).expect("Invalid message");
                     messages.push(message);
                 }
 
@@ -248,14 +248,14 @@ fn start_producers(
 }
 
 async fn create_producers(
-    client: &IggyClient,
+    client: &MessengerClient,
     producers_count: u32,
     partitions_count: u32,
     stream: &str,
     topics: &[&str],
     batch_length: u32,
     interval: &str,
-) -> Result<Vec<TenantProducer>, IggyError> {
+) -> Result<Vec<TenantProducer>, MessengerError> {
     let mut producers = Vec::new();
     for topic in topics {
         for id in 1..=producers_count {
@@ -264,14 +264,14 @@ async fn create_producers(
                 .direct(
                     DirectConfig::builder()
                         .batch_length(batch_length)
-                        .linger_time(IggyDuration::from_str(interval).expect("Invalid duration"))
+                        .linger_time(MessengerDuration::from_str(interval).expect("Invalid duration"))
                         .build(),
                 )
                 .partitioning(Partitioning::balanced())
                 .create_topic_if_not_exists(
                     partitions_count,
                     None,
-                    IggyExpiry::ServerDefault,
+                    MessengerExpiry::ServerDefault,
                     MaxTopicSize::ServerDefault,
                 )
                 .build();
@@ -288,10 +288,10 @@ async fn create_producers(
 }
 
 async fn ensure_stream_access(
-    client: &IggyClient,
+    client: &MessengerClient,
     available_stream: &str,
     unavailable_streams: &[&str],
-) -> Result<(), IggyError> {
+) -> Result<(), MessengerError> {
     client
         .get_stream(&available_stream.try_into()?)
         .await?
@@ -315,9 +315,9 @@ async fn create_client(
     address: &str,
     username: &str,
     password: &str,
-) -> Result<IggyClient, IggyError> {
-    let connection_string = format!("iggy://{username}:{password}@{address}");
-    let client = IggyClientBuilder::from_connection_string(&connection_string)?.build()?;
+) -> Result<MessengerClient, MessengerError> {
+    let connection_string = format!("messenger://{username}:{password}@{address}");
+    let client = MessengerClientBuilder::from_connection_string(&connection_string)?.build()?;
     client.connect().await?;
     Ok(client)
 }
@@ -325,8 +325,8 @@ async fn create_client(
 async fn create_stream_and_user(
     stream_name: &str,
     username: &str,
-    client: &IggyClient,
-) -> Result<(), IggyError> {
+    client: &MessengerClient,
+) -> Result<(), MessengerError> {
     let stream = client.create_stream(stream_name, None).await?;
     info!("Created stream: {stream_name} with ID: {}", stream.id);
     let mut streams_permissions = AHashMap::new();

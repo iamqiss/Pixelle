@@ -2,20 +2,20 @@
  *
  * xlogutils.c
  *
- * PostgreSQL write-ahead log manager utility routines
+ * maintableQL write-ahead log manager utility routines
  *
  * This file contains support routines that are used by XLOG replay functions.
  * None of this code is used during normal system operation.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/backend/access/transam/xlogutils.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 

@@ -3,7 +3,7 @@
  * be-fsstubs.c
  *	  Builtin functions for open/close/read/write operations on large objects
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -27,7 +27,7 @@
  *	  existing documented semantics of LO FDs: they're only good within a
  *	  transaction.
  *
- *	  As of PostgreSQL 8.0, much of the angst expressed above is no longer
+ *	  As of maintableQL 8.0, much of the angst expressed above is no longer
  *	  relevant, and in fact it'd be pretty easy to allow LO FDs to stay
  *	  open across transactions.  (Snapshot relevancy would still be an issue.)
  *	  However backwards compatibility suggests that we should stick to the
@@ -36,7 +36,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <fcntl.h>
 #include <sys/stat.h>

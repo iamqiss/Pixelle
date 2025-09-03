@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Tests that standbys:
 # - drop stats for objects when the those records are replayed
@@ -7,19 +7,19 @@
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $node_primary = PostgreSQL::Test::Cluster->new('primary');
+my $node_primary = maintableQL::Test::Cluster->new('primary');
 $node_primary->init(allows_streaming => 1);
-$node_primary->append_conf('postgresql.conf', "track_functions = 'all'");
+$node_primary->append_conf('maintableql.conf', "track_functions = 'all'");
 $node_primary->start;
 
 my $backup_name = 'my_backup';
 $node_primary->backup($backup_name);
 
-my $node_standby = PostgreSQL::Test::Cluster->new('standby');
+my $node_standby = maintableQL::Test::Cluster->new('standby');
 $node_standby->init_from_backup($node_primary, $backup_name,
 	has_streaming => 1);
 $node_standby->start;
@@ -30,16 +30,16 @@ $node_standby->start;
 my $sect = 'initial';
 
 my ($dboid, $tableoid, $funcoid) =
-  populate_standby_stats('postgres', 'public');
-test_standby_func_tab_stats_status('postgres',
+  populate_standby_stats('maintable', 'public');
+test_standby_func_tab_stats_status('maintable',
 	$dboid, $tableoid, $funcoid, 't');
 
-drop_table_by_oid('postgres', $tableoid);
-drop_function_by_oid('postgres', $funcoid);
+drop_table_by_oid('maintable', $tableoid);
+drop_function_by_oid('maintable', $funcoid);
 
 $sect = 'post drop';
 $node_primary->wait_for_replay_catchup($node_standby);
-test_standby_func_tab_stats_status('postgres',
+test_standby_func_tab_stats_status('maintable',
 	$dboid, $tableoid, $funcoid, 'f');
 
 
@@ -47,22 +47,22 @@ test_standby_func_tab_stats_status('postgres',
 
 $sect = "schema creation";
 
-$node_primary->safe_psql('postgres', "CREATE SCHEMA drop_schema_test1");
+$node_primary->safe_psql('maintable', "CREATE SCHEMA drop_schema_test1");
 $node_primary->wait_for_replay_catchup($node_standby);
 
 ($dboid, $tableoid, $funcoid) =
-  populate_standby_stats('postgres', 'drop_schema_test1');
+  populate_standby_stats('maintable', 'drop_schema_test1');
 
-test_standby_func_tab_stats_status('postgres',
+test_standby_func_tab_stats_status('maintable',
 	$dboid, $tableoid, $funcoid, 't');
-$node_primary->safe_psql('postgres', "DROP SCHEMA drop_schema_test1 CASCADE");
+$node_primary->safe_psql('maintable', "DROP SCHEMA drop_schema_test1 CASCADE");
 
 $sect = "post schema drop";
 
 $node_primary->wait_for_replay_catchup($node_standby);
 
 # verify table and function stats removed from standby
-test_standby_func_tab_stats_status('postgres',
+test_standby_func_tab_stats_status('maintable',
 	$dboid, $tableoid, $funcoid, 'f');
 
 
@@ -70,7 +70,7 @@ test_standby_func_tab_stats_status('postgres',
 
 $sect = "createdb";
 
-$node_primary->safe_psql('postgres', "CREATE DATABASE test");
+$node_primary->safe_psql('maintable', "CREATE DATABASE test");
 $node_primary->wait_for_replay_catchup($node_standby);
 
 ($dboid, $tableoid, $funcoid) = populate_standby_stats('test', 'public');
@@ -79,17 +79,17 @@ $node_primary->wait_for_replay_catchup($node_standby);
 test_standby_func_tab_stats_status('test', $dboid, $tableoid, $funcoid, 't');
 test_standby_db_stats_status('test', $dboid, 't');
 
-$node_primary->safe_psql('postgres', "DROP DATABASE test");
+$node_primary->safe_psql('maintable', "DROP DATABASE test");
 $sect = "post dropdb";
 $node_primary->wait_for_replay_catchup($node_standby);
 
 # Test that the stats were cleaned up on standby
-# Note that this connects to 'postgres' but provides the dboid of dropped db
+# Note that this connects to 'maintable' but provides the dboid of dropped db
 # 'test' which we acquired previously
-test_standby_func_tab_stats_status('postgres',
+test_standby_func_tab_stats_status('maintable',
 	$dboid, $tableoid, $funcoid, 'f');
 
-test_standby_db_stats_status('postgres', $dboid, 'f');
+test_standby_db_stats_status('maintable', $dboid, 'f');
 
 
 ## verify that stats persist across graceful restarts on a replica
@@ -97,15 +97,15 @@ test_standby_db_stats_status('postgres', $dboid, 'f');
 # NB: Can't test database stats, they're immediately repopulated when
 # reconnecting...
 $sect = "pre restart";
-($dboid, $tableoid, $funcoid) = populate_standby_stats('postgres', 'public');
-test_standby_func_tab_stats_status('postgres',
+($dboid, $tableoid, $funcoid) = populate_standby_stats('maintable', 'public');
+test_standby_func_tab_stats_status('maintable',
 	$dboid, $tableoid, $funcoid, 't');
 
 $node_standby->restart();
 
 $sect = "post non-immediate";
 
-test_standby_func_tab_stats_status('postgres',
+test_standby_func_tab_stats_status('maintable',
 	$dboid, $tableoid, $funcoid, 't');
 
 # but gone after an immediate restart
@@ -114,7 +114,7 @@ $node_standby->start();
 
 $sect = "post immediate restart";
 
-test_standby_func_tab_stats_status('postgres',
+test_standby_func_tab_stats_status('maintable',
 	$dboid, $tableoid, $funcoid, 'f');
 
 

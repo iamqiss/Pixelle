@@ -6,8 +6,8 @@
  * is a simple free(sqlda) as expected by the ESQL/C examples.
  */
 
-#define POSTGRES_ECPG_INTERNAL
-#include "postgres_fe.h"
+#define MAINTABLE_ECPG_INTERNAL
+#include "maintable_fe.h"
 
 #include "catalog/pg_type_d.h"
 #include "decimal.h"

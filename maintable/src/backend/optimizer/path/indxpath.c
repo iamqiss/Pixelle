@@ -4,7 +4,7 @@
  *	  Routines to determine which indexes are usable for scanning a
  *	  given relation, and create Paths accordingly.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 
@@ -2804,7 +2804,7 @@ IsBooleanOpfamily(Oid opfamily)
  * BooleanEqualOperator, we can transform a plain reference to the indexkey
  * into "indexkey = true", or "NOT indexkey" into "indexkey = false", etc,
  * so as to make the expression indexable using the index's "=" operator.
- * Since Postgres 8.1, we must do this because constant simplification does
+ * Since Maintable 8.1, we must do this because constant simplification does
  * the reverse transformation; without this code there'd be no way to use
  * such an index at all.
  *

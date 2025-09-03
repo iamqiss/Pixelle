@@ -2425,7 +2425,7 @@ All notable changes to this project will be documented in this file.
 - Added SCA policy for Mongo Database 3.6. ([#11247](https://github.com/wazuh/wazuh/pull/11247))
 - Added SCA policy for NGINX. ([#11248](https://github.com/wazuh/wazuh/pull/11248))
 - Added SCA policy for Oracle Database 19c. ([#11245](https://github.com/wazuh/wazuh/pull/11245))
-- Added SCA policy for PostgreSQL 13. ([#11154](https://github.com/wazuh/wazuh/pull/11154))
+- Added SCA policy for maintableQL 13. ([#11154](https://github.com/wazuh/wazuh/pull/11154))
 - Added SCA policy for SUSE Linux Enterprise Server 15. ([#11223](https://github.com/wazuh/wazuh/pull/11223))
 - Added SCA policy for Ubuntu 14. ([#11432](https://github.com/wazuh/wazuh/pull/11432))
 - Added SCA policy for Ubuntu 16. ([#11452](https://github.com/wazuh/wazuh/pull/11452))
@@ -4580,7 +4580,7 @@ All notable changes to this project will be documented in this file.
 - Fixed log group permission when created by a daemon running as root.
 - Prevented Agentd from logging too many errors when restarted while receiving the merged file.
 - Prevented Remoted from sending data to disconnected agents in TCP mode.
-- Fixed alerts storage in PostgreSQL databases.
+- Fixed alerts storage in maintableQL databases.
 - Fixed invalid previous output data in JSON alerts.
 - Fixed memory error in modulesd for invalid configurations.
 - Fixed default Auth configuration to support custom install directory.
@@ -4952,7 +4952,7 @@ All notable changes to this project will be documented in this file.
 - Fixed glob broken implementation.
 - Fixed memory corruption on the OSSEC alert decoder.
 - Fixed command "useradd" on OpenBSD.
-- Fixed some PostgreSQL issues.
+- Fixed some maintableQL issues.
 - Allow to disable syscheck:check_perm after enable check_all.
 
 ## [v1.0.4] - 2016-02-24

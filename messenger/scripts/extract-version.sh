@@ -16,7 +16,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-# Extract version information for Iggy components
+# Extract version information for Messenger components
 #
 # This script reads version information from various file formats based on
 # the configuration in .github/config/publish.yml. It supports extracting
@@ -30,7 +30,7 @@
 #   ./extract-version.sh rust-sdk                    # Output: 0.7.0
 #
 #   # Get git tag for Rust SDK
-#   ./extract-version.sh rust-sdk --tag              # Output: iggy-0.7.0
+#   ./extract-version.sh rust-sdk --tag              # Output: messenger-0.7.0
 #
 #   # Get version for Python SDK
 #   ./extract-version.sh sdk-python                  # Output: 0.5.0
@@ -212,7 +212,7 @@ if [[ "$RETURN_TAG" == "true" ]]; then
     fi
 
     # Replace the capture group in the pattern with the actual version
-    # The pattern has a capture group like "^iggy-([0-9]+\\.[0-9]+\\.[0-9]+...)$"
+    # The pattern has a capture group like "^messenger-([0-9]+\\.[0-9]+\\.[0-9]+...)$"
     # We need to replace the (...) part with the actual version
 
     # Extract the prefix (everything before the first capture group)

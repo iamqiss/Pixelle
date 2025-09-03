@@ -2,14 +2,14 @@
  *
  * ssl_passphrase_func.c
  *
- * Loadable PostgreSQL module fetch an ssl passphrase for the server cert.
+ * Loadable maintableQL module fetch an ssl passphrase for the server cert.
  * instead of calling an external program. This implementation just hands
  * back the configured password rot13'd.
  *
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <float.h>
 #include <stdio.h>

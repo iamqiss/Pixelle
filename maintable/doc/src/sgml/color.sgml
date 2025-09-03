@@ -8,7 +8,7 @@
  </indexterm>
 
  <para>
-  Most programs in the PostgreSQL package can produce colorized console
+  Most programs in the maintableQL package can produce colorized console
   output.  This appendix describes how that is configured.
  </para>
 

@@ -16,7 +16,7 @@
 # under the License.
 
 name: python-maturin-pre-merge
-description: Python pre-merge testing with maturin github iggy actions
+description: Python pre-merge testing with maturin github messenger actions
 
 inputs:
   task:
@@ -65,7 +65,7 @@ runs:
       run: |
         # Build list of directories to check using absolute paths
         DIRS_TO_CHECK="${GITHUB_WORKSPACE}/foreign/python/tests ${GITHUB_WORKSPACE}/foreign/python"
-        STUB_FILE="${GITHUB_WORKSPACE}/foreign/python/apache_iggy.pyi"
+        STUB_FILE="${GITHUB_WORKSPACE}/foreign/python/apache_messenger.pyi"
 
         echo "Directories to check: $DIRS_TO_CHECK"
         echo "Stub file: $STUB_FILE"
@@ -111,28 +111,28 @@ runs:
         fi
       shell: bash
 
-    - name: Start Iggy server
+    - name: Start Messenger server
       if: inputs.task == 'test'
-      id: iggy
+      id: messenger
       uses: ./.github/actions/utils/server-start
       with:
         mode: cargo
-        cargo-bin: iggy-server
+        cargo-bin: messenger-server
         host: 127.0.0.1
         port: 8090
         wait-timeout-seconds: 45
       continue-on-error: true
 
     - name: Run Python integration tests
-      if: inputs.task == 'test' && steps.iggy.outcome == 'success'
+      if: inputs.task == 'test' && steps.messenger.outcome == 'success'
       run: |
         cd foreign/python
 
-        echo "Running integration tests with Iggy server at ${{ steps.iggy.outputs.address }}..."
+        echo "Running integration tests with Messenger server at ${{ steps.messenger.outputs.address }}..."
 
         # Run all tests with server connection
-        IGGY_SERVER_HOST=127.0.0.1 \
-        IGGY_SERVER_TCP_PORT=8090 \
+        MESSENGER_SERVER_HOST=127.0.0.1 \
+        MESSENGER_SERVER_TCP_PORT=8090 \
           pytest tests/ -v \
             --junitxml=../../reports/python-junit.xml \
             --tb=short \
@@ -143,7 +143,7 @@ runs:
       shell: bash
 
     - name: Run Python unit tests only (fallback)
-      if: inputs.task == 'test' && steps.iggy.outcome != 'success'
+      if: inputs.task == 'test' && steps.messenger.outcome != 'success'
       run: |
         cd foreign/python
 
@@ -159,12 +159,12 @@ runs:
         exit ${TEST_EXIT_CODE:-0}
       shell: bash
 
-    - name: Stop Iggy server
+    - name: Stop Messenger server
       if: always() && inputs.task == 'test'
       uses: ./.github/actions/utils/server-stop
       with:
-        pid-file: ${{ steps.iggy.outputs.pid_file }}
-        log-file: ${{ steps.iggy.outputs.log_file }}
+        pid-file: ${{ steps.messenger.outputs.pid_file }}
+        log-file: ${{ steps.messenger.outputs.log_file }}
 
     - name: Upload test artifacts
       if: always() && inputs.task == 'test'

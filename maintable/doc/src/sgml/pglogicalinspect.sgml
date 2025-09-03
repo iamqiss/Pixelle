@@ -11,7 +11,7 @@
   The <filename>pg_logicalinspect</filename> module provides SQL functions
   that allow you to inspect the contents of logical decoding components. It
   allows the inspection of serialized logical snapshots of a running
-  <productname>PostgreSQL</productname> database cluster, which is useful
+  <productname>maintableQL</productname> database cluster, which is useful
   for debugging or educational purposes.
  </para>
 
@@ -38,19 +38,19 @@
       file name.
       For example:
 <screen>
-postgres=# SELECT * FROM pg_ls_logicalsnapdir();
+maintable=# SELECT * FROM pg_ls_logicalsnapdir();
 -[ RECORD 1 ]+-----------------------
 name         | 0-40796E18.snap
 size         | 152
 modification | 2024-08-14 16:36:32+00
 
-postgres=# SELECT * FROM pg_get_logical_snapshot_meta('0-40796E18.snap');
+maintable=# SELECT * FROM pg_get_logical_snapshot_meta('0-40796E18.snap');
 -[ RECORD 1 ]--------
 magic    | 1369563137
 checksum | 1028045905
 version  | 6
 
-postgres=# SELECT ss.name, meta.* FROM pg_ls_logicalsnapdir() AS ss,
+maintable=# SELECT ss.name, meta.* FROM pg_ls_logicalsnapdir() AS ss,
 pg_get_logical_snapshot_meta(ss.name) AS meta;
 -[ RECORD 1 ]-------------
 name     | 0-40796E18.snap
@@ -79,13 +79,13 @@ version  | 6
       file name.
       For example:
 <screen>
-postgres=# SELECT * FROM pg_ls_logicalsnapdir();
+maintable=# SELECT * FROM pg_ls_logicalsnapdir();
 -[ RECORD 1 ]+-----------------------
 name         | 0-40796E18.snap
 size         | 152
 modification | 2024-08-14 16:36:32+00
 
-postgres=# SELECT * FROM pg_get_logical_snapshot_info('0-40796E18.snap');
+maintable=# SELECT * FROM pg_get_logical_snapshot_info('0-40796E18.snap');
 -[ RECORD 1 ]------------+-----------
 state                    | consistent
 xmin                     | 751
@@ -102,7 +102,7 @@ committed_xip            |
 catchange_count          | 2
 catchange_xip            | {751,752}
 
-postgres=# SELECT ss.name, info.* FROM pg_ls_logicalsnapdir() AS ss,
+maintable=# SELECT ss.name, info.* FROM pg_ls_logicalsnapdir() AS ss,
 pg_get_logical_snapshot_info(ss.name) AS info;
 -[ RECORD 1 ]------------+----------------
 name                     | 0-40796E18.snap

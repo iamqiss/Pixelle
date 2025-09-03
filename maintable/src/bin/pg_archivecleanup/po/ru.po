@@ -1,15 +1,15 @@
 # Russian message translation file for pg_archivecleanup
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
-# Alexander Lakhin <a.lakhin@postgrespro.ru>, 2017, 2019, 2020, 2022, 2024.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
+# Alexander Lakhin <a.lakhin@maintablepro.ru>, 2017, 2019, 2020, 2022, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_archivecleanup (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_archivecleanup (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-09-02 09:29+0300\n"
 "PO-Revision-Date: 2024-09-07 06:17+0300\n"
 "Last-Translator: Alexander Lakhin <exclusion@gmail.com>\n"
-"Language-Team: Russian <pgsql-ru-general@postgresql.org>\n"
+"Language-Team: Russian <pgsql-ru-general@maintableql.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -87,10 +87,10 @@ msgstr "Для дополнительной информации попробу�
 #: pg_archivecleanup.c:259
 #, c-format
 msgid ""
-"%s removes older WAL files from PostgreSQL archives.\n"
+"%s removes older WAL files from maintableQL archives.\n"
 "\n"
 msgstr ""
-"%s удаляет старые файлы WAL из архивов PostgreSQL.\n"
+"%s удаляет старые файлы WAL из архивов maintableQL.\n"
 "\n"
 
 #: pg_archivecleanup.c:260
@@ -164,14 +164,14 @@ msgstr "  -?, --help                  показать эту справку и 
 #, c-format
 msgid ""
 "\n"
-"For use as archive_cleanup_command in postgresql.conf:\n"
+"For use as archive_cleanup_command in maintableql.conf:\n"
 "  archive_cleanup_command = 'pg_archivecleanup [OPTION]... ARCHIVELOCATION "
 "%%r'\n"
 "e.g.\n"
 "  archive_cleanup_command = 'pg_archivecleanup /mnt/server/archiverdir %%r'\n"
 msgstr ""
 "\n"
-"Для использования в качестве archive_cleanup_command в postgresql.conf:\n"
+"Для использования в качестве archive_cleanup_command в maintableql.conf:\n"
 "  archive_cleanup_command = 'pg_archivecleanup [ПАРАМЕТР]... "
 "РАСПОЛОЖЕНИЕ_АРХИВА %%r'\n"
 "например:\n"
@@ -231,10 +231,10 @@ msgstr "слишком много аргументов командной стр
 
 #~ msgid ""
 #~ "\n"
-#~ "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Об ошибках сообщайте по адресу <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Об ошибках сообщайте по адресу <pgsql-bugs@lists.maintableql.org>.\n"
 
 #~ msgid "%s: file \"%s\" would be removed\n"
 #~ msgstr "%s: файл \"%s\" не будет удалён\n"

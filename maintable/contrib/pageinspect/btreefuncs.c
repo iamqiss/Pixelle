@@ -25,7 +25,7 @@
  * SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/nbtree.h"
 #include "access/relation.h"
@@ -531,7 +531,7 @@ bt_page_print_tuples(ua_page_items *uargs)
 	 * there cannot possibly be a pivot tuple heap TID representation that we
 	 * fail to make an adjustment for.  A !heapkeyspace index can have
 	 * BTreeTupleIsPivot() return true (due to things like suffix truncation
-	 * for INCLUDE indexes in Postgres v11), but when that happens
+	 * for INCLUDE indexes in Maintable v11), but when that happens
 	 * BTreeTupleGetHeapTID() can be trusted to work reliably (i.e. return
 	 * NULL).
 	 *
@@ -909,7 +909,7 @@ bt_metap(PG_FUNCTION_ARGS)
 	 * Get values of extended metadata if available, use default values
 	 * otherwise.  Note that we rely on the assumption that btm_allequalimage
 	 * is initialized to zero with indexes that were built on versions prior
-	 * to Postgres 13 (just like _bt_metaversion()).
+	 * to Maintable 13 (just like _bt_metaversion()).
 	 */
 	if (metad->btm_version >= BTREE_NOVAC_VERSION)
 	{

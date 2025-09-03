@@ -4,7 +4,7 @@
  *		Functions for archiving WAL files and restoring from the archive.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/backend/access/transam/xlogarchive.c
@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -340,7 +340,7 @@ ExecuteRecoveryCommand(const char *command, const char *commandName,
 		 */
 		ereport((failOnSignal && wait_result_is_any_signal(rc, true)) ? FATAL : WARNING,
 		/*------
-		   translator: First %s represents a postgresql.conf parameter name like
+		   translator: First %s represents a maintableql.conf parameter name like
 		  "recovery_end_command", the 2nd is the value of that parameter, the
 		  third an already translated error message. */
 				(errmsg("%s \"%s\": %s", commandName,

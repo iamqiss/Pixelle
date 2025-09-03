@@ -23,7 +23,7 @@ use crate::{
 };
 use flume::{Receiver, Sender};
 use human_repr::HumanCount;
-use iggy_common::IggyDuration;
+use messenger_common::MessengerDuration;
 use tokio::time::{self};
 use tracing::{error, info, warn};
 
@@ -31,14 +31,14 @@ use tracing::{error, info, warn};
 pub struct SysInfoPrintCommand;
 
 pub struct SysInfoPrinter {
-    interval: IggyDuration,
+    interval: MessengerDuration,
     sender: Sender<SysInfoPrintCommand>,
 }
 
 pub struct SysInfoPrintExecutor;
 
 impl SysInfoPrinter {
-    pub fn new(interval: IggyDuration, sender: Sender<SysInfoPrintCommand>) -> Self {
+    pub fn new(interval: MessengerDuration, sender: Sender<SysInfoPrintCommand>) -> Self {
         Self { interval, sender }
     }
 
@@ -79,7 +79,7 @@ impl BackgroundServerCommand<SysInfoPrintCommand> for SysInfoPrintExecutor {
             * 100f64;
 
         info!(
-            "CPU: {:.2}%/{:.2}% (IggyUsage/Total), Mem: {:.2}%/{}/{}/{} (Free/IggyUsage/TotalUsed/Total), Clients: {}, Messages processed: {}, Read: {}, Written: {}, Uptime: {}",
+            "CPU: {:.2}%/{:.2}% (MessengerUsage/Total), Mem: {:.2}%/{}/{}/{} (Free/MessengerUsage/TotalUsed/Total), Clients: {}, Messages processed: {}, Read: {}, Written: {}, Uptime: {}",
             stats.cpu_usage,
             stats.total_cpu_usage,
             free_memory_percent,

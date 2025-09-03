@@ -16,6 +16,6 @@
  * under the License.
  */
 
-use crate::utils::expiry::IggyExpiry;
+use crate::utils::expiry::MessengerExpiry;
 
-pub type PersonalAccessTokenExpiry = IggyExpiry;
+pub type PersonalAccessTokenExpiry = MessengerExpiry;

@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * indexfsm.c
- *	  POSTGRES free space map for quickly finding free pages in relations
+ *	  MAINTABLE free space map for quickly finding free pages in relations
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -20,7 +20,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "storage/freespace.h"
 #include "storage/indexfsm.h"

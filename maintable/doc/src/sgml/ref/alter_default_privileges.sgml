@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_default_privileges.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-alterdefaultprivileges">
@@ -134,7 +134,7 @@ REVOKE [ GRANT OPTION FOR ]
    The words <literal>FUNCTIONS</literal> and <literal>ROUTINES</literal> are
    equivalent in this command.  (<literal>ROUTINES</literal> is preferred
    going forward as the standard term for functions and procedures taken
-   together.  In earlier PostgreSQL releases, only the
+   together.  In earlier maintableQL releases, only the
    word <literal>FUNCTIONS</literal> was allowed.  It is not possible to set
    default privileges for functions and procedures separately.)
   </para>

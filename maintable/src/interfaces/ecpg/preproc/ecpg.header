@@ -2,7 +2,7 @@
 
 /* Copyright comment */
 %{
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "preproc_extern.h"
 #include "preproc.h"

@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_extension.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-dropextension">
@@ -109,7 +109,7 @@ DROP EXTENSION hstore;
   <title>Compatibility</title>
 
   <para>
-   <command>DROP EXTENSION</command> is a <productname>PostgreSQL</productname>
+   <command>DROP EXTENSION</command> is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

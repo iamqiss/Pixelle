@@ -3,7 +3,7 @@
  * mkdtemp.c
  *	  create a mode-0700 temporary directory
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -58,7 +58,7 @@
 
 #if !HAVE_NBTOOL_CONFIG_H || !HAVE_MKSTEMP || !HAVE_MKDTEMP
 
-#ifdef NOT_POSTGRESQL
+#ifdef NOT_MAINTABLEQL
 #include <sys/cdefs.h>
 #if defined(LIBC_SCCS) && !defined(lint)
 #if 0
@@ -80,7 +80,7 @@ __RCSID("$NetBSD: gettemp.c,v 1.17 2014/01/21 19:09:48 seanb Exp $");
 #include <stdlib.h>
 #include <unistd.h>
 
-#ifdef NOT_POSTGRESQL
+#ifdef NOT_MAINTABLEQL
 #if HAVE_NBTOOL_CONFIG_H
 #define GETTEMP		__nbcompat_gettemp
 #else
@@ -256,7 +256,7 @@ GETTEMP(char *path, int *doopen, int domkdir)
 
 #if !HAVE_NBTOOL_CONFIG_H || !HAVE_MKDTEMP
 
-#ifdef NOT_POSTGRESQL
+#ifdef NOT_MAINTABLEQL
 
 #include <sys/cdefs.h>
 #if defined(LIBC_SCCS) && !defined(lint)

@@ -3,14 +3,14 @@
  * test_integerset.c
  *		Test integer set data structure.
  *
- * Copyright (c) 2019-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2019-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/test/modules/test_integerset/test_integerset.c
  *
  * -------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "common/pg_prng.h"
 #include "fmgr.h"

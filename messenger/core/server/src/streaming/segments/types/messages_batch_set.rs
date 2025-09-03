@@ -16,27 +16,27 @@
  * under the License.
  */
 
-use crate::binary::handlers::messages::poll_messages_handler::IggyPollMetadata;
-use crate::streaming::segments::IggyIndexesMut;
+use crate::binary::handlers::messages::poll_messages_handler::MessengerPollMetadata;
+use crate::streaming::segments::MessengerIndexesMut;
 use bytes::Bytes;
-use iggy_common::{IggyByteSize, IggyMessage, IggyMessageView, PolledMessages, Sizeable};
+use messenger_common::{MessengerByteSize, MessengerMessage, MessengerMessageView, PolledMessages, Sizeable};
 use std::ops::Index;
 use tracing::trace;
 
-use super::IggyMessagesBatchMut;
+use super::MessengerMessagesBatchMut;
 
-/// A container for multiple IggyMessagesBatch objects
+/// A container for multiple MessengerMessagesBatch objects
 #[derive(Debug, Default)]
-pub struct IggyMessagesBatchSet {
+pub struct MessengerMessagesBatchSet {
     /// The collection of message containers
-    batches: Vec<IggyMessagesBatchMut>,
+    batches: Vec<MessengerMessagesBatchMut>,
     /// Total number of messages across all containers
     count: u32,
     /// Total size in bytes across all containers
     size: u32,
 }
 
-impl IggyMessagesBatchSet {
+impl MessengerMessagesBatchSet {
     /// Create a new empty batch
     pub fn empty() -> Self {
         Self {
@@ -55,8 +55,8 @@ impl IggyMessagesBatchSet {
         }
     }
 
-    /// Create a batch set from an existing vector of IggyMessages
-    pub fn from_vec(messages: Vec<IggyMessagesBatchMut>) -> Self {
+    /// Create a batch set from an existing vector of MessengerMessages
+    pub fn from_vec(messages: Vec<MessengerMessagesBatchMut>) -> Self {
         let mut batch = Self::with_capacity(messages.len());
         for msg in messages {
             batch.add_batch(msg);
@@ -65,14 +65,14 @@ impl IggyMessagesBatchSet {
     }
 
     /// Add another batch of messages to the batch set
-    pub fn add_batch(&mut self, batch: IggyMessagesBatchMut) {
+    pub fn add_batch(&mut self, batch: MessengerMessagesBatchMut) {
         self.count += batch.count();
         self.size += batch.size();
         self.batches.push(batch);
     }
 
     /// Add another batch set of messages to the batch set
-    pub fn add_batch_set(&mut self, mut other_batch_set: IggyMessagesBatchSet) {
+    pub fn add_batch_set(&mut self, mut other_batch_set: MessengerMessagesBatchSet) {
         self.count += other_batch_set.count();
         self.size += other_batch_set.size();
         let other_batches = std::mem::take(&mut other_batch_set.batches);
@@ -80,7 +80,7 @@ impl IggyMessagesBatchSet {
     }
 
     /// Extract indexes from all batches in the set
-    pub fn append_indexes_to(&self, target: &mut IggyIndexesMut) {
+    pub fn append_indexes_to(&self, target: &mut MessengerIndexesMut) {
         for batch in self.iter() {
             let indexes = batch.indexes();
             target.append_slice(indexes);
@@ -137,28 +137,28 @@ impl IggyMessagesBatchSet {
     }
 
     /// Get a reference to the underlying vector of message containers
-    pub fn inner(&self) -> &Vec<IggyMessagesBatchMut> {
+    pub fn inner(&self) -> &Vec<MessengerMessagesBatchMut> {
         &self.batches
     }
 
     /// Consume the batch, returning the underlying vector of message containers
-    pub fn into_inner(mut self) -> Vec<IggyMessagesBatchMut> {
+    pub fn into_inner(mut self) -> Vec<MessengerMessagesBatchMut> {
         std::mem::take(&mut self.batches)
     }
 
     /// Iterate over all message containers in the batch
-    pub fn iter(&self) -> impl Iterator<Item = &IggyMessagesBatchMut> {
+    pub fn iter(&self) -> impl Iterator<Item = &MessengerMessagesBatchMut> {
         self.batches.iter()
     }
 
     /// Iterate over all mutable message containers in the batch
-    pub fn iter_mut(&mut self) -> impl Iterator<Item = &mut IggyMessagesBatchMut> {
+    pub fn iter_mut(&mut self) -> impl Iterator<Item = &mut MessengerMessagesBatchMut> {
         self.batches.iter_mut()
     }
 
-    /// Convert this batch and poll metadata into a vector of fully-formed IggyMessage objects
+    /// Convert this batch and poll metadata into a vector of fully-formed MessengerMessage objects
     ///
-    /// This method transforms the internal message views into complete IggyMessage objects
+    /// This method transforms the internal message views into complete MessengerMessage objects
     /// that can be returned to clients. It should only be used by server http implementation.
     ///
     /// # Arguments
@@ -167,8 +167,8 @@ impl IggyMessagesBatchSet {
     ///
     /// # Returns
     ///
-    /// A vector of IggyMessage objects with proper metadata
-    pub fn into_polled_messages(&self, poll_metadata: IggyPollMetadata) -> PolledMessages {
+    /// A vector of MessengerMessage objects with proper metadata
+    pub fn into_polled_messages(&self, poll_metadata: MessengerPollMetadata) -> PolledMessages {
         if self.is_empty() {
             return PolledMessages::empty();
         }
@@ -180,7 +180,7 @@ impl IggyMessagesBatchSet {
                 let header = message.header().to_header();
                 let payload = Bytes::copy_from_slice(message.payload());
                 let user_headers = message.user_headers().map(Bytes::copy_from_slice);
-                let message = IggyMessage {
+                let message = MessengerMessage {
                     header,
                     payload,
                     user_headers,
@@ -204,7 +204,7 @@ impl IggyMessagesBatchSet {
         }
     }
 
-    /// Returns a new IggyMessagesBatch containing only messages with offsets greater than or equal to the specified offset,
+    /// Returns a new MessengerMessagesBatch containing only messages with offsets greater than or equal to the specified offset,
     /// up to the specified count.
     ///
     /// If no messages match the criteria, returns an empty batch.
@@ -247,7 +247,7 @@ impl IggyMessagesBatchSet {
         result
     }
 
-    /// Returns a new IggyMessagesBatch containing only messages with timestamps greater than or equal
+    /// Returns a new MessengerMessagesBatch containing only messages with timestamps greater than or equal
     /// to the specified timestamp, up to the specified count.
     ///
     /// If no messages match the criteria, returns an empty batch.
@@ -282,7 +282,7 @@ impl IggyMessagesBatchSet {
 
     /// Get the message at the specified index.
     /// Returns None if the index is out of bounds.
-    pub fn get(&self, index: usize) -> Option<IggyMessageView<'_>> {
+    pub fn get(&self, index: usize) -> Option<MessengerMessageView<'_>> {
         if index >= self.count as usize {
             return None;
         }
@@ -304,7 +304,7 @@ impl IggyMessagesBatchSet {
     }
 }
 
-impl Index<usize> for IggyMessagesBatchSet {
+impl Index<usize> for MessengerMessagesBatchSet {
     type Output = [u8];
 
     /// Get the message bytes at the specified index across all batches
@@ -337,20 +337,20 @@ impl Index<usize> for IggyMessagesBatchSet {
     }
 }
 
-impl Sizeable for IggyMessagesBatchSet {
-    fn get_size_bytes(&self) -> IggyByteSize {
-        IggyByteSize::from(self.size as u64)
+impl Sizeable for MessengerMessagesBatchSet {
+    fn get_size_bytes(&self) -> MessengerByteSize {
+        MessengerByteSize::from(self.size as u64)
     }
 }
 
-impl From<Vec<IggyMessagesBatchMut>> for IggyMessagesBatchSet {
-    fn from(messages: Vec<IggyMessagesBatchMut>) -> Self {
+impl From<Vec<MessengerMessagesBatchMut>> for MessengerMessagesBatchSet {
+    fn from(messages: Vec<MessengerMessagesBatchMut>) -> Self {
         Self::from_vec(messages)
     }
 }
 
-impl From<IggyMessagesBatchMut> for IggyMessagesBatchSet {
-    fn from(messages: IggyMessagesBatchMut) -> Self {
+impl From<MessengerMessagesBatchMut> for MessengerMessagesBatchSet {
+    fn from(messages: MessengerMessagesBatchMut) -> Self {
         Self::from_vec(vec![messages])
     }
 }

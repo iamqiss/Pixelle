@@ -1,19 +1,19 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test replication statistics data in pg_stat_replication_slots is sane after
 # drop replication slot and restart.
 use strict;
 use warnings FATAL => 'all';
 use File::Path qw(rmtree);
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Test set-up
-my $node = PostgreSQL::Test::Cluster->new('test');
+my $node = maintableQL::Test::Cluster->new('test');
 $node->init(allows_streaming => 'logical');
-$node->append_conf('postgresql.conf', 'synchronous_commit = on');
+$node->append_conf('maintableql.conf', 'synchronous_commit = on');
 $node->start;
 
 # Check that replication slot stats are expected.
@@ -24,7 +24,7 @@ sub test_slot_stats
 	my ($node, $expected, $msg) = @_;
 
 	my $result = $node->safe_psql(
-		'postgres', qq[
+		'maintable', qq[
 		SELECT slot_name, total_txns > 0 AS total_txn,
 			   total_bytes > 0 AS total_bytes
 			   FROM pg_stat_replication_slots
@@ -33,11 +33,11 @@ sub test_slot_stats
 }
 
 # Create table.
-$node->safe_psql('postgres', "CREATE TABLE test_repl_stat(col1 int)");
+$node->safe_psql('maintable', "CREATE TABLE test_repl_stat(col1 int)");
 
 # Create replication slots.
 $node->safe_psql(
-	'postgres', qq[
+	'maintable', qq[
 	SELECT pg_create_logical_replication_slot('regression_slot1', 'test_decoding');
 	SELECT pg_create_logical_replication_slot('regression_slot2', 'test_decoding');
 	SELECT pg_create_logical_replication_slot('regression_slot3', 'test_decoding');
@@ -45,11 +45,11 @@ $node->safe_psql(
 ]);
 
 # Insert some data.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"INSERT INTO test_repl_stat values(generate_series(1, 5));");
 
 $node->safe_psql(
-	'postgres', qq[
+	'maintable', qq[
 	SELECT data FROM pg_logical_slot_get_changes('regression_slot1', NULL,
 	NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
 	SELECT data FROM pg_logical_slot_get_changes('regression_slot2', NULL,
@@ -62,7 +62,7 @@ $node->safe_psql(
 
 # Wait for the statistics to be updated.
 $node->poll_query_until(
-	'postgres', qq[
+	'maintable', qq[
 	SELECT count(slot_name) >= 4 FROM pg_stat_replication_slots
 	WHERE slot_name ~ 'regression_slot'
 	AND total_txns > 0 AND total_bytes > 0;
@@ -70,7 +70,7 @@ $node->poll_query_until(
 
 # Test to drop one of the replication slot and verify replication statistics data is
 # fine after restart.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"SELECT pg_drop_replication_slot('regression_slot4')");
 
 $node->stop;
@@ -97,7 +97,7 @@ my $slot3_replslotdir = "$datadir/pg_replslot/regression_slot3";
 
 rmtree($slot3_replslotdir);
 
-$node->append_conf('postgresql.conf', 'max_replication_slots = 2');
+$node->append_conf('maintableql.conf', 'max_replication_slots = 2');
 $node->start;
 
 # Verify statistics data present in pg_stat_replication_slots are sane after
@@ -109,10 +109,10 @@ regression_slot2|t|t),
 	'check replication statistics after removing the slot file');
 
 # cleanup
-$node->safe_psql('postgres', "DROP TABLE test_repl_stat");
-$node->safe_psql('postgres',
+$node->safe_psql('maintable', "DROP TABLE test_repl_stat");
+$node->safe_psql('maintable',
 	"SELECT pg_drop_replication_slot('regression_slot1')");
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"SELECT pg_drop_replication_slot('regression_slot2')");
 
 # shutdown
@@ -124,12 +124,12 @@ $node->stop;
 $node->start;
 
 my $slot_name_restart = 'regression_slot5';
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"SELECT pg_create_logical_replication_slot('$slot_name_restart', 'test_decoding');"
 );
 
 # Look at slot data, with a persistent connection.
-my $bpgsql = $node->background_psql('postgres', on_error_stop => 1);
+my $bpgsql = $node->background_psql('maintable', on_error_stop => 1);
 
 # Launch query and look at slot data, incrementing the refcount of the
 # stats entry.
@@ -139,12 +139,12 @@ $bpgsql->query_safe(
 
 # Drop the slot entry.  The stats entry is not dropped yet as the previous
 # session still holds a reference to it.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"SELECT pg_drop_replication_slot('$slot_name_restart')");
 
 # Create again the same slot.  The stats entry is reinitialized, not marked
 # as dropped anymore.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"SELECT pg_create_logical_replication_slot('$slot_name_restart', 'test_decoding');"
 );
 
@@ -155,7 +155,7 @@ $bpgsql->query_safe(
 );
 # Drop again the slot, the entry is not dropped yet as the previous session
 # still has a refcount on it.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"SELECT pg_drop_replication_slot('$slot_name_restart')");
 
 # Shutdown the node, which should happen cleanly with the stats file written

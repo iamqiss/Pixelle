@@ -19,9 +19,9 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::COMPONENT;
 use crate::streaming::systems::system::System;
 use error_set::ErrContext;
-use iggy_common::Identifier;
-use iggy_common::IggyError;
-use iggy_common::locking::IggySharedMutFn;
+use messenger_common::Identifier;
+use messenger_common::MessengerError;
+use messenger_common::locking::MessengerSharedMutFn;
 
 impl System {
     pub async fn delete_segments(
@@ -31,7 +31,7 @@ impl System {
         topic_id: &Identifier,
         partition_id: u32,
         segments_count: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         // Assert authentication.
         self.ensure_authenticated(session)?;
 
@@ -74,7 +74,7 @@ impl System {
             .take(
                 segments_count
                     .try_into()
-                    .map_err(|_| IggyError::InvalidSegmentsCount(segments_count))?,
+                    .map_err(|_| MessengerError::InvalidSegmentsCount(segments_count))?,
             )
             // coerce to tuple of u64 as this has copy implicit.
             .map(|segment| (segment.start_offset(), segment.get_messages_count()))

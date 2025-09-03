@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/rollback.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-rollback">
@@ -96,7 +96,7 @@ ROLLBACK;
 
   <para>
    The command <command>ROLLBACK</command> conforms to the SQL standard.  The
-   form <literal>ROLLBACK TRANSACTION</literal> is a PostgreSQL extension.
+   form <literal>ROLLBACK TRANSACTION</literal> is a maintableQL extension.
   </para>
  </refsect1>
 

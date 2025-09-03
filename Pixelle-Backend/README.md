@@ -14,7 +14,7 @@ The backend is organized as a collection of microservices, each responsible for 
 - **Auth Service** (`:8084`) - Authentication and authorization
 
 ### Infrastructure Services
-- **Database Service** - PostgreSQL database management
+- **Database Service** - maintableQL database management
 - **Cache Service** - Redis caching layer
 - **File Storage** - Media file storage and processing
 - **Notification Service** - Push notifications and email
@@ -24,7 +24,7 @@ The backend is organized as a collection of microservices, each responsible for 
 ### Prerequisites
 - Rust 1.75+
 - Docker and Docker Compose
-- PostgreSQL (optional, for production)
+- maintableQL (optional, for production)
 
 ### Development Setup
 

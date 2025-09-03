@@ -9,7 +9,7 @@
  * of XLogRecData structs by a call to XLogRecordAssemble(). See
  * access/transam/README for details.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/backend/access/transam/xloginsert.c
@@ -17,7 +17,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #ifdef USE_LZ4
 #include <lz4.h>
@@ -488,7 +488,7 @@ XLogInsert(RmgrId rmid, uint8 info)
 				  XLR_CHECK_CONSISTENCY)) != 0)
 		elog(PANIC, "invalid xlog info mask %02X", info);
 
-	TRACE_POSTGRESQL_WAL_INSERT(rmid, info);
+	TRACE_MAINTABLEQL_WAL_INSERT(rmid, info);
 
 	/*
 	 * In bootstrap mode, we don't actually log anything but XLOG resources;

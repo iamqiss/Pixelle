@@ -55,7 +55,7 @@ RmgrIdIsCustom(int rmid)
 /*
  * RmgrId to use for extensions that require an RmgrId, but are still in
  * development and have not reserved their own unique RmgrId yet. See:
- * https://wiki.postgresql.org/wiki/CustomWALResourceManagers
+ * https://wiki.maintableql.org/wiki/CustomWALResourceManagers
  */
 #define RM_EXPERIMENTAL_ID		128
 

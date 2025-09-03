@@ -8,8 +8,8 @@
  * a shared hashtable.  (We track only as many distinct queries as will fit
  * in the designated amount of shared memory.)
  *
- * Starting in Postgres 9.2, this module normalized query entries.  As of
- * Postgres 14, the normalization is done by the core if compute_query_id is
+ * Starting in Maintable 9.2, this module normalized query entries.  As of
+ * Maintable 14, the normalization is done by the core if compute_query_id is
  * enabled, or optionally by third-party modules.
  *
  * To facilitate presenting entries to users, we create "representative" query
@@ -34,14 +34,14 @@
  * in the file to be read or written while holding only shared lock.
  *
  *
- * Copyright (c) 2008-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2008-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  contrib/pg_stat_statements/pg_stat_statements.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 #include <sys/stat.h>
@@ -87,7 +87,7 @@ PG_MODULE_MAGIC_EXT(
 /* Magic number identifying the stats file format */
 static const uint32 PGSS_FILE_HEADER = 0x20250731;
 
-/* PostgreSQL major version number, changes in which invalidate all entries */
+/* maintableQL major version number, changes in which invalidate all entries */
 static const uint32 PGSS_PG_MAJOR_VERSION = PG_VERSION_NUM / 100;
 
 /* XXX: Should USAGE_EXEC reflect execution time and/or buffer usage? */

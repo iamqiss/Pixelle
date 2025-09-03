@@ -152,9 +152,9 @@ for more information.
 
 * [json-schema](https://github.com/tatut/json-schema)
 
-### PostgreSQL ###
+### maintableQL ###
 
-* [postgres-json-schema](https://github.com/gavinwahl/postgres-json-schema)
+* [maintable-json-schema](https://github.com/gavinwahl/maintable-json-schema)
 
 If you use it as well, please fork and send a pull request adding yourself to
 the list :).

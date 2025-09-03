@@ -17,7 +17,7 @@
  */
 
 use crate::api::config::HttpApiConfig;
-use iggy_connector_sdk::{Schema, transforms::TransformType};
+use messenger_connector_sdk::{Schema, transforms::TransformType};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use strum::Display;
@@ -41,14 +41,14 @@ pub enum ConfigFormat {
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct RuntimeConfig {
     pub http_api: HttpApiConfig,
-    pub iggy: IggyConfig,
+    pub messenger: MessengerConfig,
     pub sinks: HashMap<String, SinkConfig>,
     pub sources: HashMap<String, SourceConfig>,
     pub state: StateConfig,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct IggyConfig {
+pub struct MessengerConfig {
     pub address: String,
     pub username: Option<String>,
     pub password: Option<String>,

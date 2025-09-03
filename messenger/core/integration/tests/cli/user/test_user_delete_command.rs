@@ -17,13 +17,13 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, TestUserId,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, TestUserId,
     USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
-use iggy::prelude::UserStatus;
+use messenger::prelude::Client;
+use messenger::prelude::UserStatus;
 use predicates::str::diff;
 use serial_test::parallel;
 
@@ -61,7 +61,7 @@ impl TestUserDeleteCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestUserDeleteCmd {
+impl MessengerCmdTestCase for TestUserDeleteCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let user = client
             .create_user(&self.username, &self.password, self.status, None)
@@ -69,8 +69,8 @@ impl IggyCmdTestCase for TestUserDeleteCmd {
         assert!(user.is_ok());
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("user")
             .arg("delete")
             .arg(self.to_arg())
@@ -103,10 +103,10 @@ impl IggyCmdTestCase for TestUserDeleteCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestUserDeleteCmd::new(
             String::from("username"),
             String::from("password"),
@@ -115,7 +115,7 @@ pub async fn should_be_successful() {
             TestUserId::Numeric,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserDeleteCmd::new(
             String::from("testuser"),
             String::from("testpass"),
@@ -129,9 +129,9 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["user", "delete", "--help"],
             format!(
@@ -140,8 +140,8 @@ pub async fn should_help_match() {
 The user ID can be specified as either a username or an ID
 
 Examples:
- iggy user delete 2
- iggy user delete testuser
+ messenger user delete 2
+ messenger user delete testuser
 
 {USAGE_PREFIX} user delete <USER_ID>
 
@@ -163,9 +163,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["user", "delete", "-h"],
             format!(

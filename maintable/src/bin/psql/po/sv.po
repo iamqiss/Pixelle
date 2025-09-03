@@ -6,12 +6,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-02-12 13:48+0000\n"
 "PO-Revision-Date: 2025-02-12 20:57+0100\n"
 "Last-Translator: Dennis Björklund <db@zigo.dhs.org>\n"
-"Language-Team: Swedish <pgsql-translators@postgresql.org>\n"
+"Language-Team: Swedish <pgsql-translators@maintableql.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2519,10 +2519,10 @@ msgstr "Stora objekt"
 
 #: help.c:63
 msgid ""
-"psql is the PostgreSQL interactive terminal.\n"
+"psql is the maintableQL interactive terminal.\n"
 "\n"
 msgstr ""
-"psql är den interaktiva PostgreSQL-terminalen.\n"
+"psql är den interaktiva maintableQL-terminalen.\n"
 "\n"
 
 #: help.c:64 help.c:372 help.c:456 help.c:502
@@ -2744,14 +2744,14 @@ msgstr "  -W, --password           fråga om lösenord (borde ske automatiskt)\n
 msgid ""
 "\n"
 "For more information, type \"\\?\" (for internal commands) or \"\\help\" (for SQL\n"
-"commands) from within psql, or consult the psql section in the PostgreSQL\n"
+"commands) from within psql, or consult the psql section in the maintableQL\n"
 "documentation.\n"
 "\n"
 msgstr ""
 "\n"
 "För mer information, skriv \"\\?\" (för interna kommandon) eller\n"
 "\"\\help\" (för SQL-kommandon) i psql, eller läs avsnittet om psql\n"
-"i PostgreSQL-dokumentationen.\n"
+"i maintableQL-dokumentationen.\n"
 "\n"
 
 #: help.c:123
@@ -2773,8 +2773,8 @@ msgid "  \\bind [PARAM]...       set query parameters\n"
 msgstr "  \\bind [PARAM]...       sätt frågeparameter\n"
 
 #: help.c:168
-msgid "  \\copyright             show PostgreSQL usage and distribution terms\n"
-msgstr "  \\copyright             visa PostgreSQL-upphovsrättsinformation\n"
+msgid "  \\copyright             show maintableQL usage and distribution terms\n"
+msgstr "  \\copyright             visa maintableQL-upphovsrättsinformation\n"
 
 #: help.c:169
 msgid "  \\crosstabview [COLUMNS] execute query and display result in crosstab\n"
@@ -4034,10 +4034,10 @@ msgstr "Använd \"\\q\" för att lämna %s.\n"
 
 #: mainloop.c:214
 msgid ""
-"The input is a PostgreSQL custom-format dump.\n"
+"The input is a maintableQL custom-format dump.\n"
 "Use the pg_restore command-line client to restore this dump to a database.\n"
 msgstr ""
-"Indatan är en PostgreSQL-specifik dump.\n"
+"Indatan är en maintableQL-specifik dump.\n"
 "Använd kommandoradsprogrammet pg_restore för att läsa in denna dump till databasen.\n"
 
 #: mainloop.c:295
@@ -4049,8 +4049,8 @@ msgid "Use \\? for help."
 msgstr "Använd \\? för hjälp."
 
 #: mainloop.c:301
-msgid "You are using psql, the command-line interface to PostgreSQL."
-msgstr "Du använder psql, den interaktiva PostgreSQL-terminalen."
+msgid "You are using psql, the command-line interface to maintableQL."
+msgstr "Du använder psql, den interaktiva maintableQL-terminalen."
 
 #: mainloop.c:302
 #, c-format

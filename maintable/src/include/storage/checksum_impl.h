@@ -4,11 +4,11 @@
  *	  Checksum implementation for data pages.
  *
  * This file exists for the benefit of external programs that may wish to
- * check Postgres page checksums.  They can #include this to get the code
+ * check Maintable page checksums.  They can #include this to get the code
  * referenced by storage/checksum.h.  (Note: you may need to redefine
  * Assert() as empty to compile this successfully externally.)
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/storage/checksum_impl.h
@@ -30,7 +30,7 @@
  *
  * FNV-1a algorithm is described at http://www.isthe.com/chongo/tech/comp/fnv/
  *
- * PostgreSQL doesn't use FNV-1a hash directly because it has bad mixing of
+ * maintableQL doesn't use FNV-1a hash directly because it has bad mixing of
  * high bits - high order bits in input data only affect high order bits in
  * output data. To resolve this we xor in the value prior to multiplication
  * shifted right by 17 bits. The number 17 was chosen because it doesn't
@@ -174,7 +174,7 @@ pg_checksum_block(const PGChecksummablePage *page)
 }
 
 /*
- * Compute the checksum for a Postgres page.
+ * Compute the checksum for a Maintable page.
  *
  * The page must be adequately aligned (at least on a 4-byte boundary).
  * Beware also that the checksum field of the page is transiently zeroed.

@@ -16,13 +16,13 @@
  * under the License.
  */
 
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::{bench_utils::run_bench_and_wait_for_finish, test_server::ClientFactory};
 
 pub async fn run(client_factory: &dyn ClientFactory) {
     let server_addr = client_factory.server_addr();
     let transport = client_factory.transport();
-    let data_size = IggyByteSize::from(8 * 1024 * 1024);
+    let data_size = MessengerByteSize::from(8 * 1024 * 1024);
 
     run_bench_and_wait_for_finish(&server_addr, &transport, "pinned-producer", data_size);
     run_bench_and_wait_for_finish(&server_addr, &transport, "pinned-consumer", data_size);

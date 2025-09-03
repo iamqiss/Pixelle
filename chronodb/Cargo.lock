@@ -6362,7 +6362,7 @@ dependencies = [
  "sqlx-core",
  "sqlx-macros",
  "sqlx-mysql",
- "sqlx-postgres",
+ "sqlx-maintable",
  "sqlx-sqlite",
 ]
 
@@ -6434,7 +6434,7 @@ dependencies = [
  "sha2",
  "sqlx-core",
  "sqlx-mysql",
- "sqlx-postgres",
+ "sqlx-maintable",
  "sqlx-sqlite",
  "syn 2.0.104",
  "tokio",
@@ -6485,7 +6485,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "sqlx-postgres"
+name = "sqlx-maintable"
 version = "0.8.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "db58fcd5a53cf07c184b154801ff91347e4c30d17a3562a635ff028ad5deda46"
@@ -8168,7 +8168,7 @@ dependencies = [
  "smallvec",
  "socket2 0.6.0",
  "sqlx-core",
- "sqlx-postgres",
+ "sqlx-maintable",
  "sqlx-sqlite",
  "syn 2.0.104",
  "sync_wrapper 1.0.2",

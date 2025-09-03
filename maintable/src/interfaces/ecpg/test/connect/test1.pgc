@@ -32,33 +32,33 @@ exec sql end declare section;
 	/* exec sql connect to :@TEMP_PORT@ as main user regress_ecpg_user2;
 	exec sql disconnect main; */
 
-	exec sql connect to tcp:postgresql://localhost/ecpg2_regression user regress_ecpg_user1 identified by connectpw;
+	exec sql connect to tcp:maintableql://localhost/ecpg2_regression user regress_ecpg_user1 identified by connectpw;
 	exec sql disconnect;
 
-	exec sql connect to tcp:postgresql://localhost/ user regress_ecpg_user2;
+	exec sql connect to tcp:maintableql://localhost/ user regress_ecpg_user2;
 	exec sql disconnect;
 
 	strcpy(pw, "connectpw");
-	strcpy(db, "tcp:postgresql://localhost/ecpg2_regression");
+	strcpy(db, "tcp:maintableql://localhost/ecpg2_regression");
 	exec sql connect to :db user regress_ecpg_user1 using :pw;
 	exec sql disconnect;
 
-	exec sql connect to unix:postgresql://localhost/ecpg2_regression user regress_ecpg_user1 using "connectpw";
+	exec sql connect to unix:maintableql://localhost/ecpg2_regression user regress_ecpg_user1 using "connectpw";
 	exec sql disconnect;
 
-	exec sql connect to unix:postgresql://localhost/ecpg2_regression?connect_timeout=180 user regress_ecpg_user1;
+	exec sql connect to unix:maintableql://localhost/ecpg2_regression?connect_timeout=180 user regress_ecpg_user1;
 	exec sql disconnect;
 
 	/* wrong db */
-	exec sql connect to tcp:postgresql://localhost/nonexistent user regress_ecpg_user1 identified by connectpw;
+	exec sql connect to tcp:maintableql://localhost/nonexistent user regress_ecpg_user1 identified by connectpw;
 	exec sql disconnect;
 
 	/* wrong port */
-	exec sql connect to tcp:postgresql://127.0.0.1:20/ecpg2_regression user regress_ecpg_user1 identified by connectpw;
+	exec sql connect to tcp:maintableql://127.0.0.1:20/ecpg2_regression user regress_ecpg_user1 identified by connectpw;
 	/* no disconnect necessary */
 
 	/* wrong password */
-	exec sql connect to unix:postgresql://localhost/ecpg2_regression user regress_ecpg_user1 identified by "wrongpw";
+	exec sql connect to unix:maintableql://localhost/ecpg2_regression user regress_ecpg_user1 identified by "wrongpw";
 	/* no disconnect necessary */
 
 	return 0;

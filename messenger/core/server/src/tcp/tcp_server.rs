@@ -26,9 +26,9 @@ use tracing::info;
 /// Returns the address the server is listening on.
 pub async fn start(config: TcpConfig, system: SharedSystem) -> SocketAddr {
     let server_name = if config.tls.enabled {
-        "Iggy TCP TLS"
+        "Messenger TCP TLS"
     } else {
-        "Iggy TCP"
+        "Messenger TCP"
     };
     info!("Initializing {server_name} server...");
     let socket = tcp_socket::build(config.ipv6, config.socket);

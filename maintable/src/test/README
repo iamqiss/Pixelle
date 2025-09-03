@@ -1,8 +1,8 @@
-PostgreSQL tests
+maintableQL tests
 ================
 
 This directory contains a variety of test infrastructure as well as some of the
-tests in PostgreSQL. Not all tests are here -- in particular, there are more in
+tests in maintableQL. Not all tests are here -- in particular, there are more in
 individual contrib/ modules and in src/bin.
 
 Not all these tests get run by "make check". Check src/test/Makefile to see
@@ -41,7 +41,7 @@ recovery/
   Test suite for recovery and replication
 
 regress/
-  PostgreSQL's main regression test suite, pg_regress
+  maintableQL's main regression test suite, pg_regress
 
 ssl/
   Tests to exercise and verify SSL certificate handling

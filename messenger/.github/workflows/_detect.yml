@@ -52,7 +52,7 @@ jobs:
   detect:
     runs-on: ubuntu-latest
     env:
-      IGGY_CI_BUILD: true
+      MESSENGER_CI_BUILD: true
     outputs:
       rust_matrix: ${{ steps.mk.outputs.rust_matrix }}
       python_matrix: ${{ steps.mk.outputs.python_matrix }}

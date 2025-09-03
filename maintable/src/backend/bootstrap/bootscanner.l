@@ -4,7 +4,7 @@
  * bootscanner.l
  *	  a lexical scanner for the bootstrap parser
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 /*
  * NB: include bootparse.h only AFTER including bootstrap.h, because bootstrap.h

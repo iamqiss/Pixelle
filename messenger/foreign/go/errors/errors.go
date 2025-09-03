@@ -19,31 +19,31 @@ package ierror
 
 import "fmt"
 
-type IggyError struct {
+type MessengerError struct {
 	Code    int
 	Message string
 }
 
-func (e *IggyError) Error() string {
+func (e *MessengerError) Error() string {
 	return fmt.Sprintf("%v: '%v'", e.Code, e.Message)
 }
 
 func CustomError(message string) error {
-	return &IggyError{
+	return &MessengerError{
 		Code:    9999,
 		Message: message,
 	}
 }
 
 func TextTooLong(message string) error {
-	return &IggyError{
+	return &MessengerError{
 		Code:    9999,
 		Message: message + "_too_long",
 	}
 }
 
 func MapFromCode(code int) error {
-	return &IggyError{
+	return &MessengerError{
 		Code:    code,
 		Message: TranslateErrorCode(code),
 	}

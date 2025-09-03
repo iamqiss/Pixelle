@@ -9,10 +9,10 @@
    <para>
     In the previous chapter we have covered the basics of using
     <acronym>SQL</acronym> to store and access your data in
-    <productname>PostgreSQL</productname>.  We will now discuss some
+    <productname>maintableQL</productname>.  We will now discuss some
     more advanced features of <acronym>SQL</acronym> that simplify
     management and prevent loss or corruption of your data.  Finally,
-    we will look at some <productname>PostgreSQL</productname>
+    we will look at some <productname>maintableQL</productname>
     extensions.
    </para>
 
@@ -93,7 +93,7 @@ SELECT * FROM myview;
     exists, and then inserting or rejecting the new
     <classname>weather</classname> records.  This approach has a
     number of problems and is very inconvenient, so
-    <productname>PostgreSQL</productname> can do this for you.
+    <productname>maintableQL</productname> can do this for you.
    </para>
 
    <para>
@@ -216,7 +216,7 @@ UPDATE branches SET balance = balance + 100.00
    </para>
 
    <para>
-    In <productname>PostgreSQL</productname>, a transaction is set up by surrounding
+    In <productname>maintableQL</productname>, a transaction is set up by surrounding
     the SQL commands of the transaction with
     <command>BEGIN</command> and <command>COMMIT</command> commands.  So our banking
     transaction would actually look like:
@@ -238,7 +238,7 @@ COMMIT;
    </para>
 
    <para>
-    <productname>PostgreSQL</productname> actually treats every SQL statement as being
+    <productname>maintableQL</productname> actually treats every SQL statement as being
     executed within a transaction.  If you do not issue a <command>BEGIN</command>
     command,
     then each individual statement has an implicit <command>BEGIN</command> and
@@ -630,12 +630,12 @@ CREATE TABLE capitals (
     <structfield>population</structfield>, and <structfield>elevation</structfield>) from its
     <firstterm>parent</firstterm>, <classname>cities</classname>.  The
     type of the column <structfield>name</structfield> is
-    <type>text</type>, a native <productname>PostgreSQL</productname>
+    <type>text</type>, a native <productname>maintableQL</productname>
     type for variable length character strings.  The
     <classname>capitals</classname> table has
     an additional column, <structfield>state</structfield>, which shows its
     state abbreviation.  In
-    <productname>PostgreSQL</productname>, a table can inherit from
+    <productname>maintableQL</productname>, a table can inherit from
     zero or more other tables.
    </para>
 
@@ -707,7 +707,7 @@ SELECT name, elevation
    <title>Conclusion</title>
 
    <para>
-    <productname>PostgreSQL</productname> has many features not
+    <productname>maintableQL</productname> has many features not
     touched upon in this tutorial introduction, which has been
     oriented toward newer users of <acronym>SQL</acronym>.  These
     features are discussed in more detail in the remainder of this
@@ -715,8 +715,8 @@ SELECT name, elevation
    </para>
 
    <para>
-    If you feel you need more introductory material, please visit the PostgreSQL
-    <ulink url="https://www.postgresql.org">web site</ulink>
+    If you feel you need more introductory material, please visit the maintableQL
+    <ulink url="https://www.maintableql.org">web site</ulink>
     for links to more resources.
    </para>
   </sect1>

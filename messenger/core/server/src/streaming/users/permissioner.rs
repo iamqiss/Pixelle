@@ -18,8 +18,8 @@
 
 use crate::streaming::users::user::User;
 use ahash::{AHashMap, AHashSet};
-use iggy_common::UserId;
-use iggy_common::{GlobalPermissions, Permissions, StreamPermissions};
+use messenger_common::UserId;
+use messenger_common::{GlobalPermissions, Permissions, StreamPermissions};
 
 #[derive(Debug, Default)]
 pub struct Permissioner {

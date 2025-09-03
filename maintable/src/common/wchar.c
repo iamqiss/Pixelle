@@ -3,7 +3,7 @@
  * wchar.c
  *	  Functions for working with multibyte characters in various encodings.
  *
- * Portions Copyright (c) 1998-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1998-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/common/wchar.c
@@ -565,7 +565,7 @@ pg_utf_mblen(const unsigned char *s)
  *
  * Markus Kuhn -- 2001-09-08 -- public domain
  *
- * customised for PostgreSQL
+ * customised for maintableQL
  *
  * original available at : http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c
  */

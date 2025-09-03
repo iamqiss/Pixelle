@@ -18,7 +18,7 @@
 package tcp_test
 
 import (
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
 	"github.com/onsi/ginkgo/v2"
 )
 
@@ -98,7 +98,7 @@ var _ = ginkgo.Describe("SEND MESSAGES:", func() {
 				streamIdentifier,
 				topicIdentifier,
 				iggcon.PartitionId(createRandomUInt32()),
-				[]iggcon.IggyMessage{},
+				[]iggcon.MessengerMessage{},
 			)
 			itShouldReturnSpecificError(err, "messages_count_should_be_greater_than_zero")
 		})

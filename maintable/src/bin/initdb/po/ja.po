@@ -1,15 +1,15 @@
 # Japanese message translation file for initdb
-# Copyright (C) 2022-2024 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_archivecleanup (PostgreSQL) package.
+# Copyright (C) 2022-2024 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_archivecleanup (maintableQL) package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: initdb (PostgreSQL 18)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: initdb (maintableQL 18)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-03-26 11:21+0900\n"
 "PO-Revision-Date: 2025-03-31 16:23+0900\n"
 "Last-Translator: Kyotaro Horiguchi <horikyota.ntt@gmail.com>\n"
-"Language-Team: Japan PostgreSQL Users Group <jpug-doc@ml.postgresql.jp>\n"
+"Language-Team: Japan maintableQL Users Group <jpug-doc@ml.maintableql.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -428,8 +428,8 @@ msgstr "ブートストラップスクリプトを実行しています ... "
 
 #: initdb.c:1579
 #, c-format
-msgid "input file \"%s\" does not belong to PostgreSQL %s"
-msgstr "入力ファイル\"%s\"は PostgreSQL %s のものではありません"
+msgid "input file \"%s\" does not belong to maintableQL %s"
+msgstr "入力ファイル\"%s\"は maintableQL %s のものではありません"
 
 #: initdb.c:1581
 #, c-format
@@ -552,9 +552,9 @@ msgstr "ICUロケール\"%s\"に対して言語タグ\"%s\"を使用します。
 #: initdb.c:2532
 #, c-format
 msgid ""
-"%s initializes a PostgreSQL database cluster.\n"
+"%s initializes a maintableQL database cluster.\n"
 "\n"
-msgstr "%sはPostgreSQLデータベースクラスタを初期化します。\n"
+msgstr "%sはmaintableQLデータベースクラスタを初期化します。\n"
 
 #: initdb.c:2533
 #, c-format

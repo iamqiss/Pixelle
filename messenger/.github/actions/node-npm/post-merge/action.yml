@@ -16,7 +16,7 @@
 # under the License.
 
 name: node-npm-post-merge
-description: Node.js post-merge npm publishing github iggy actions
+description: Node.js post-merge npm publishing github messenger actions
 
 inputs:
   version:
@@ -147,10 +147,10 @@ runs:
 
           echo ""
           echo "After publishing, users could install with:"
-          echo "  npm install apache-iggy@${{ inputs.version }}"
+          echo "  npm install apache-messenger@${{ inputs.version }}"
           echo ""
           echo "Or add to package.json:"
-          echo '  "apache-iggy": "^${{ inputs.version }}"'
+          echo '  "apache-messenger": "^${{ inputs.version }}"'
         else
           if [ -z "$NODE_AUTH_TOKEN" ]; then
             echo "❌ NPM_TOKEN is not set"
@@ -168,16 +168,16 @@ runs:
             echo ""
             echo "✅ Successfully published to npm"
             echo ""
-            echo "Package: apache-iggy@${{ inputs.version }}"
-            echo "Registry: https://registry.npmjs.org/apache-iggy"
+            echo "Package: apache-messenger@${{ inputs.version }}"
+            echo "Registry: https://registry.npmjs.org/apache-messenger"
             echo ""
             echo "Users can now install with:"
-            echo "  npm install apache-iggy@${{ inputs.version }}"
+            echo "  npm install apache-messenger@${{ inputs.version }}"
             echo ""
             echo "Or add to package.json:"
-            echo '  "apache-iggy": "^${{ inputs.version }}"'
+            echo '  "apache-messenger": "^${{ inputs.version }}"'
             echo ""
-            echo "View on npm: https://www.npmjs.com/package/apache-iggy/v/${{ inputs.version }}"
+            echo "View on npm: https://www.npmjs.com/package/apache-messenger/v/${{ inputs.version }}"
           else
             echo "❌ Publishing failed"
             exit 1

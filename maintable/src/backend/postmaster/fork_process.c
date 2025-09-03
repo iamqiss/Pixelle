@@ -4,12 +4,12 @@
  *	 EXEC_BACKEND case; it might be extended to do so, but it would be
  *	 considerably more complex.
  *
- * Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/postmaster/fork_process.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <fcntl.h>
 #include <signal.h>

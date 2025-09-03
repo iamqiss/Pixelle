@@ -1,12 +1,12 @@
 # Georgian message translation file for pg_checksums
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_checksums (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_checksums (maintableQL) package.
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_checksums (PostgreSQL) 18\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_checksums (maintableQL) 18\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-03-02 16:24+0000\n"
 "PO-Revision-Date: 2025-03-02 18:36+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -68,11 +68,11 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "ბაიტების მიმდევრობის შესაძლო შეუსაბამობა pg_control ფაილის შესანახად გამოყენებული \n"
 "ბაიტების მიმდევრობა შესაძლოა არ ემთხვეოდეს ამ პროგრამის მიერ გამოყენებულს. ამ შემთხვევაში  ქვემოთ \n"
-"მოცემული შედეგები არასწორი იქნება და PostgreSQL ეს აგება ამ მონაცემთა საქაღალდესთან შეუთავსებელი იქნება."
+"მოცემული შედეგები არასწორი იქნება და maintableQL ეს აგება ამ მონაცემთა საქაღალდესთან შეუთავსებელი იქნება."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:71
 #: ../../common/file_utils.c:348 ../../common/file_utils.c:407
@@ -154,10 +154,10 @@ msgstr "უცნობი სინქრონიზაციის მეთ�
 #: pg_checksums.c:69
 #, c-format
 msgid ""
-"%s enables, disables, or verifies data checksums in a PostgreSQL database cluster.\n"
+"%s enables, disables, or verifies data checksums in a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s ჩართავს, გამორთავს და შეამოწმებს მონაცემების საკონტროლო ჯამებს PostgreSQL მონაცემთა ბაზის კლასტერში.\n"
+"%s ჩართავს, გამორთავს და შეამოწმებს მონაცემების საკონტროლო ჯამებს maintableQL მონაცემთა ბაზის კლასტერში.\n"
 "\n"
 
 #: pg_checksums.c:70

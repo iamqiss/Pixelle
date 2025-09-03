@@ -17,7 +17,7 @@
  */
 
 use async_trait::async_trait;
-use iggy_connector_sdk::{
+use messenger_connector_sdk::{
     ConsumedMessage, Error, MessagesMetadata, Sink, TopicMetadata, sink_connector,
 };
 use serde::{Deserialize, Serialize};

@@ -17,10 +17,10 @@
  */
 
 use bytes::Bytes;
-use iggy_common::{
+use messenger_common::{
     BytesSerializable, CacheMetrics, CacheMetricsKey, ClientInfo, ClientInfoDetails,
     CompressionAlgorithm, ConsumerGroup, ConsumerGroupDetails, ConsumerGroupInfo,
-    ConsumerGroupMember, ConsumerOffsetInfo, IdentityInfo, IggyByteSize, IggyError, IggyExpiry,
+    ConsumerGroupMember, ConsumerOffsetInfo, IdentityInfo, MessengerByteSize, MessengerError, MessengerExpiry,
     MaxTopicSize, Partition, Permissions, PersonalAccessTokenInfo, RawPersonalAccessToken, Stats,
     Stream, StreamDetails, Topic, TopicDetails, UserInfo, UserInfoDetails, UserStatus,
 };
@@ -34,104 +34,104 @@ const EMPTY_USERS: Vec<UserInfo> = vec![];
 const EMPTY_PERSONAL_ACCESS_TOKENS: Vec<PersonalAccessTokenInfo> = vec![];
 const EMPTY_CONSUMER_GROUPS: Vec<ConsumerGroup> = vec![];
 
-pub fn map_stats(payload: Bytes) -> Result<Stats, IggyError> {
+pub fn map_stats(payload: Bytes) -> Result<Stats, MessengerError> {
     let process_id = u32::from_le_bytes(
         payload[..4]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let cpu_usage = f32::from_le_bytes(
         payload[4..8]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let total_cpu_usage = f32::from_le_bytes(
         payload[8..12]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let memory_usage = u64::from_le_bytes(
         payload[12..20]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     )
     .into();
     let total_memory = u64::from_le_bytes(
         payload[20..28]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     )
     .into();
     let available_memory = u64::from_le_bytes(
         payload[28..36]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     )
     .into();
     let run_time = u64::from_le_bytes(
         payload[36..44]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     )
     .into();
     let start_time = u64::from_le_bytes(
         payload[44..52]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     )
     .into();
     let read_bytes = u64::from_le_bytes(
         payload[52..60]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     )
     .into();
     let written_bytes = u64::from_le_bytes(
         payload[60..68]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     )
     .into();
     let messages_size_bytes = u64::from_le_bytes(
         payload[68..76]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     )
     .into();
     let streams_count = u32::from_le_bytes(
         payload[76..80]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let topics_count = u32::from_le_bytes(
         payload[80..84]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let partitions_count = u32::from_le_bytes(
         payload[84..88]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let segments_count = u32::from_le_bytes(
         payload[88..92]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let messages_count = u64::from_le_bytes(
         payload[92..100]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let clients_count = u32::from_le_bytes(
         payload[100..104]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let consumer_groups_count = u32::from_le_bytes(
         payload[104..108]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
 
     let mut current_position = 108;
@@ -140,19 +140,19 @@ pub fn map_stats(payload: Bytes) -> Result<Stats, IggyError> {
     // Safely decode hostname
     //
     if current_position + 4 > payload.len() {
-        return Err(IggyError::InvalidNumberEncoding);
+        return Err(MessengerError::InvalidNumberEncoding);
     }
     let hostname_length = u32::from_le_bytes(
         payload[current_position..current_position + 4]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     ) as usize;
     current_position += 4;
     if current_position + hostname_length > payload.len() {
-        return Err(IggyError::InvalidNumberEncoding);
+        return Err(MessengerError::InvalidNumberEncoding);
     }
     let hostname = from_utf8(&payload[current_position..current_position + hostname_length])
-        .map_err(|_| IggyError::InvalidUtf8)?
+        .map_err(|_| MessengerError::InvalidUtf8)?
         .to_string();
     current_position += hostname_length;
 
@@ -160,19 +160,19 @@ pub fn map_stats(payload: Bytes) -> Result<Stats, IggyError> {
     // Safely Decode OS name
     //
     if current_position + 4 > payload.len() {
-        return Err(IggyError::InvalidNumberEncoding);
+        return Err(MessengerError::InvalidNumberEncoding);
     }
     let os_name_length = u32::from_le_bytes(
         payload[current_position..current_position + 4]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     ) as usize;
     current_position += 4;
     if current_position + os_name_length > payload.len() {
-        return Err(IggyError::InvalidNumberEncoding);
+        return Err(MessengerError::InvalidNumberEncoding);
     }
     let os_name = from_utf8(&payload[current_position..current_position + os_name_length])
-        .map_err(|_| IggyError::InvalidUtf8)?
+        .map_err(|_| MessengerError::InvalidUtf8)?
         .to_string();
     current_position += os_name_length;
 
@@ -180,19 +180,19 @@ pub fn map_stats(payload: Bytes) -> Result<Stats, IggyError> {
     // Safely decode OS version
     //
     if current_position + 4 > payload.len() {
-        return Err(IggyError::InvalidNumberEncoding);
+        return Err(MessengerError::InvalidNumberEncoding);
     }
     let os_version_length = u32::from_le_bytes(
         payload[current_position..current_position + 4]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     ) as usize;
     current_position += 4;
     if current_position + os_version_length > payload.len() {
-        return Err(IggyError::InvalidNumberEncoding);
+        return Err(MessengerError::InvalidNumberEncoding);
     }
     let os_version = from_utf8(&payload[current_position..current_position + os_version_length])
-        .map_err(|_| IggyError::InvalidUtf8)?
+        .map_err(|_| MessengerError::InvalidUtf8)?
         .to_string();
     current_position += os_version_length;
 
@@ -203,66 +203,66 @@ pub fn map_stats(payload: Bytes) -> Result<Stats, IggyError> {
 
     // Default them in case payload doesn't have them (older server)
     let mut kernel_version = String::new();
-    let mut iggy_server_version = String::new();
-    let mut iggy_server_semver: Option<u32> = None;
+    let mut messenger_server_version = String::new();
+    let mut messenger_server_semver: Option<u32> = None;
 
     // kernel_version (if it exists)
     if current_position + 4 <= payload.len() {
         let kernel_version_length = u32::from_le_bytes(
             payload[current_position..current_position + 4]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         ) as usize;
         current_position += 4;
         if current_position + kernel_version_length <= payload.len() {
             let kv =
                 from_utf8(&payload[current_position..current_position + kernel_version_length])
-                    .map_err(|_| IggyError::InvalidUtf8)?
+                    .map_err(|_| MessengerError::InvalidUtf8)?
                     .to_string();
             kernel_version = kv;
             current_position += kernel_version_length;
         } else {
             // Not enough bytes for kernel version string, treat as empty or error out
-            // return Err(IggyError::InvalidNumberEncoding);
+            // return Err(MessengerError::InvalidNumberEncoding);
             kernel_version = String::new(); // fallback
         }
     } else {
         // This means older server didn't send kernel_version, so remain empty
     }
 
-    // iggy_server_version (if it exists)
+    // messenger_server_version (if it exists)
     if current_position + 4 <= payload.len() {
-        let iggy_version_length = u32::from_le_bytes(
+        let messenger_version_length = u32::from_le_bytes(
             payload[current_position..current_position + 4]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         ) as usize;
         current_position += 4;
-        if current_position + iggy_version_length <= payload.len() {
-            let iv = from_utf8(&payload[current_position..current_position + iggy_version_length])
-                .map_err(|_| IggyError::InvalidUtf8)?
+        if current_position + messenger_version_length <= payload.len() {
+            let iv = from_utf8(&payload[current_position..current_position + messenger_version_length])
+                .map_err(|_| MessengerError::InvalidUtf8)?
                 .to_string();
-            iggy_server_version = iv;
-            current_position += iggy_version_length;
+            messenger_server_version = iv;
+            current_position += messenger_version_length;
         } else {
-            // Not enough bytes for iggy version string, treat as empty or error out
-            // return Err(IggyError::InvalidNumberEncoding);
-            iggy_server_version = String::new(); // fallback
+            // Not enough bytes for messenger version string, treat as empty or error out
+            // return Err(MessengerError::InvalidNumberEncoding);
+            messenger_server_version = String::new(); // fallback
         }
     } else {
-        // older server didn't send iggy_server_version, so remain empty
+        // older server didn't send messenger_server_version, so remain empty
     }
 
-    // iggy_server_semver (if it exists)
+    // messenger_server_semver (if it exists)
     if current_position + 4 <= payload.len() {
         let semver = u32::from_le_bytes(
             payload[current_position..current_position + 4]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         current_position += 4; // Increment position after reading semver
         if semver != 0 {
-            iggy_server_semver = Some(semver);
+            messenger_server_semver = Some(semver);
         }
     } else {
         // older server didn't send semver
@@ -274,7 +274,7 @@ pub fn map_stats(payload: Bytes) -> Result<Stats, IggyError> {
         let metrics_count = u32::from_le_bytes(
             payload[current_position..current_position + 4]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         ) as usize;
         current_position += 4;
 
@@ -283,21 +283,21 @@ pub fn map_stats(payload: Bytes) -> Result<Stats, IggyError> {
             let stream_id = u32::from_le_bytes(
                 payload[current_position..current_position + 4]
                     .try_into()
-                    .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                    .map_err(|_| MessengerError::InvalidNumberEncoding)?,
             );
             current_position += 4;
 
             let topic_id = u32::from_le_bytes(
                 payload[current_position..current_position + 4]
                     .try_into()
-                    .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                    .map_err(|_| MessengerError::InvalidNumberEncoding)?,
             );
             current_position += 4;
 
             let partition_id = u32::from_le_bytes(
                 payload[current_position..current_position + 4]
                     .try_into()
-                    .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                    .map_err(|_| MessengerError::InvalidNumberEncoding)?,
             );
             current_position += 4;
 
@@ -305,21 +305,21 @@ pub fn map_stats(payload: Bytes) -> Result<Stats, IggyError> {
             let hits = u64::from_le_bytes(
                 payload[current_position..current_position + 8]
                     .try_into()
-                    .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                    .map_err(|_| MessengerError::InvalidNumberEncoding)?,
             );
             current_position += 8;
 
             let misses = u64::from_le_bytes(
                 payload[current_position..current_position + 8]
                     .try_into()
-                    .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                    .map_err(|_| MessengerError::InvalidNumberEncoding)?,
             );
             current_position += 8;
 
             let hit_ratio = f32::from_le_bytes(
                 payload[current_position..current_position + 4]
                     .try_into()
-                    .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                    .map_err(|_| MessengerError::InvalidNumberEncoding)?,
             );
             current_position += 4;
 
@@ -362,27 +362,27 @@ pub fn map_stats(payload: Bytes) -> Result<Stats, IggyError> {
         os_name,
         os_version,
         kernel_version,
-        iggy_server_version,
-        iggy_server_semver,
+        messenger_server_version,
+        messenger_server_semver,
         cache_metrics,
     })
 }
 
-pub fn map_consumer_offset(payload: Bytes) -> Result<ConsumerOffsetInfo, IggyError> {
+pub fn map_consumer_offset(payload: Bytes) -> Result<ConsumerOffsetInfo, MessengerError> {
     let partition_id = u32::from_le_bytes(
         payload[..4]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let current_offset = u64::from_le_bytes(
         payload[4..12]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let stored_offset = u64::from_le_bytes(
         payload[12..20]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     Ok(ConsumerOffsetInfo {
         partition_id,
@@ -391,14 +391,14 @@ pub fn map_consumer_offset(payload: Bytes) -> Result<ConsumerOffsetInfo, IggyErr
     })
 }
 
-pub fn map_user(payload: Bytes) -> Result<UserInfoDetails, IggyError> {
+pub fn map_user(payload: Bytes) -> Result<UserInfoDetails, MessengerError> {
     let (user, position) = map_to_user_info(payload.clone(), 0)?;
     let has_permissions = payload[position];
     let permissions = if has_permissions == 1 {
         let permissions_length = u32::from_le_bytes(
             payload[position + 1..position + 5]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         ) as usize;
         let permissions = payload.slice(position + 5..position + 5 + permissions_length);
         Some(Permissions::from_bytes(permissions)?)
@@ -416,7 +416,7 @@ pub fn map_user(payload: Bytes) -> Result<UserInfoDetails, IggyError> {
     Ok(user)
 }
 
-pub fn map_users(payload: Bytes) -> Result<Vec<UserInfo>, IggyError> {
+pub fn map_users(payload: Bytes) -> Result<Vec<UserInfo>, MessengerError> {
     if payload.is_empty() {
         return Ok(EMPTY_USERS);
     }
@@ -435,7 +435,7 @@ pub fn map_users(payload: Bytes) -> Result<Vec<UserInfo>, IggyError> {
 
 pub fn map_personal_access_tokens(
     payload: Bytes,
-) -> Result<Vec<PersonalAccessTokenInfo>, IggyError> {
+) -> Result<Vec<PersonalAccessTokenInfo>, MessengerError> {
     if payload.is_empty() {
         return Ok(EMPTY_PERSONAL_ACCESS_TOKENS);
     }
@@ -452,11 +452,11 @@ pub fn map_personal_access_tokens(
     Ok(personal_access_tokens)
 }
 
-pub fn map_identity_info(payload: Bytes) -> Result<IdentityInfo, IggyError> {
+pub fn map_identity_info(payload: Bytes) -> Result<IdentityInfo, MessengerError> {
     let user_id = u32::from_le_bytes(
         payload[..4]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     Ok(IdentityInfo {
         user_id,
@@ -464,15 +464,15 @@ pub fn map_identity_info(payload: Bytes) -> Result<IdentityInfo, IggyError> {
     })
 }
 
-pub fn map_raw_pat(payload: Bytes) -> Result<RawPersonalAccessToken, IggyError> {
+pub fn map_raw_pat(payload: Bytes) -> Result<RawPersonalAccessToken, MessengerError> {
     let token_length = payload[0];
     let token = from_utf8(&payload[1..1 + token_length as usize])
-        .map_err(|_| IggyError::InvalidUtf8)?
+        .map_err(|_| MessengerError::InvalidUtf8)?
         .to_string();
     Ok(RawPersonalAccessToken { token })
 }
 
-pub fn map_client(payload: Bytes) -> Result<ClientInfoDetails, IggyError> {
+pub fn map_client(payload: Bytes) -> Result<ClientInfoDetails, MessengerError> {
     let (client, mut position) = map_to_client_info(payload.clone(), 0)?;
     let mut consumer_groups = Vec::new();
     let length = payload.len();
@@ -481,17 +481,17 @@ pub fn map_client(payload: Bytes) -> Result<ClientInfoDetails, IggyError> {
             let stream_id = u32::from_le_bytes(
                 payload[position..position + 4]
                     .try_into()
-                    .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                    .map_err(|_| MessengerError::InvalidNumberEncoding)?,
             );
             let topic_id = u32::from_le_bytes(
                 payload[position + 4..position + 8]
                     .try_into()
-                    .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                    .map_err(|_| MessengerError::InvalidNumberEncoding)?,
             );
             let group_id = u32::from_le_bytes(
                 payload[position + 8..position + 12]
                     .try_into()
-                    .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                    .map_err(|_| MessengerError::InvalidNumberEncoding)?,
             );
             let consumer_group = ConsumerGroupInfo {
                 stream_id,
@@ -515,7 +515,7 @@ pub fn map_client(payload: Bytes) -> Result<ClientInfoDetails, IggyError> {
     Ok(client)
 }
 
-pub fn map_clients(payload: Bytes) -> Result<Vec<ClientInfo>, IggyError> {
+pub fn map_clients(payload: Bytes) -> Result<Vec<ClientInfo>, MessengerError> {
     if payload.is_empty() {
         return Ok(EMPTY_CLIENTS);
     }
@@ -532,7 +532,7 @@ pub fn map_clients(payload: Bytes) -> Result<Vec<ClientInfo>, IggyError> {
     Ok(clients)
 }
 
-pub fn map_streams(payload: Bytes) -> Result<Vec<Stream>, IggyError> {
+pub fn map_streams(payload: Bytes) -> Result<Vec<Stream>, MessengerError> {
     if payload.is_empty() {
         return Ok(EMPTY_STREAMS);
     }
@@ -549,7 +549,7 @@ pub fn map_streams(payload: Bytes) -> Result<Vec<Stream>, IggyError> {
     Ok(streams)
 }
 
-pub fn map_stream(payload: Bytes) -> Result<StreamDetails, IggyError> {
+pub fn map_stream(payload: Bytes) -> Result<StreamDetails, MessengerError> {
     let (stream, mut position) = map_to_stream(payload.clone(), 0)?;
     let mut topics = Vec::new();
     let length = payload.len();
@@ -572,37 +572,37 @@ pub fn map_stream(payload: Bytes) -> Result<StreamDetails, IggyError> {
     Ok(stream)
 }
 
-fn map_to_stream(payload: Bytes, position: usize) -> Result<(Stream, usize), IggyError> {
+fn map_to_stream(payload: Bytes, position: usize) -> Result<(Stream, usize), MessengerError> {
     let id = u32::from_le_bytes(
         payload[position..position + 4]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let created_at = u64::from_le_bytes(
         payload[position + 4..position + 12]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     )
     .into();
     let topics_count = u32::from_le_bytes(
         payload[position + 12..position + 16]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let size_bytes = u64::from_le_bytes(
         payload[position + 16..position + 24]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     )
     .into();
     let messages_count = u64::from_le_bytes(
         payload[position + 24..position + 32]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let name_length = payload[position + 32];
     let name = from_utf8(&payload[position + 33..position + 33 + name_length as usize])
-        .map_err(|_| IggyError::InvalidUtf8)?
+        .map_err(|_| MessengerError::InvalidUtf8)?
         .to_string();
     let read_bytes = 4 + 8 + 4 + 8 + 8 + 1 + name_length as usize;
     Ok((
@@ -618,7 +618,7 @@ fn map_to_stream(payload: Bytes, position: usize) -> Result<(Stream, usize), Igg
     ))
 }
 
-pub fn map_topics(payload: Bytes) -> Result<Vec<Topic>, IggyError> {
+pub fn map_topics(payload: Bytes) -> Result<Vec<Topic>, MessengerError> {
     if payload.is_empty() {
         return Ok(EMPTY_TOPICS);
     }
@@ -635,7 +635,7 @@ pub fn map_topics(payload: Bytes) -> Result<Vec<Topic>, IggyError> {
     Ok(topics)
 }
 
-pub fn map_topic(payload: Bytes) -> Result<TopicDetails, IggyError> {
+pub fn map_topic(payload: Bytes) -> Result<TopicDetails, MessengerError> {
     let (topic, mut position) = map_to_topic(payload.clone(), 0)?;
     let mut partitions = Vec::new();
     let length = payload.len();
@@ -663,52 +663,52 @@ pub fn map_topic(payload: Bytes) -> Result<TopicDetails, IggyError> {
     Ok(topic)
 }
 
-fn map_to_topic(payload: Bytes, position: usize) -> Result<(Topic, usize), IggyError> {
+fn map_to_topic(payload: Bytes, position: usize) -> Result<(Topic, usize), MessengerError> {
     let id = u32::from_le_bytes(
         payload[position..position + 4]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let created_at = u64::from_le_bytes(
         payload[position + 4..position + 12]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let created_at = created_at.into();
     let partitions_count = u32::from_le_bytes(
         payload[position + 12..position + 16]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let message_expiry = match u64::from_le_bytes(
         payload[position + 16..position + 24]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     ) {
-        0 => IggyExpiry::NeverExpire,
+        0 => MessengerExpiry::NeverExpire,
         message_expiry => message_expiry.into(),
     };
     let compression_algorithm = CompressionAlgorithm::from_code(payload[position + 24])?;
     let max_topic_size = u64::from_le_bytes(
         payload[position + 25..position + 33]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let max_topic_size: MaxTopicSize = max_topic_size.into();
     let replication_factor = payload[position + 33];
-    let size_bytes = IggyByteSize::from(u64::from_le_bytes(
+    let size_bytes = MessengerByteSize::from(u64::from_le_bytes(
         payload[position + 34..position + 42]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     ));
     let messages_count = u64::from_le_bytes(
         payload[position + 42..position + 50]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let name_length = payload[position + 50];
     let name = from_utf8(&payload[position + 51..position + 51 + name_length as usize])
-        .map_err(|_| IggyError::InvalidUtf8)?
+        .map_err(|_| MessengerError::InvalidUtf8)?
         .to_string();
     let read_bytes = 4 + 8 + 4 + 8 + 8 + 8 + 8 + 1 + 1 + 1 + name_length as usize;
     Ok((
@@ -728,38 +728,38 @@ fn map_to_topic(payload: Bytes, position: usize) -> Result<(Topic, usize), IggyE
     ))
 }
 
-fn map_to_partition(payload: Bytes, position: usize) -> Result<(Partition, usize), IggyError> {
+fn map_to_partition(payload: Bytes, position: usize) -> Result<(Partition, usize), MessengerError> {
     let id = u32::from_le_bytes(
         payload[position..position + 4]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let created_at = u64::from_le_bytes(
         payload[position + 4..position + 12]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let created_at = created_at.into();
     let segments_count = u32::from_le_bytes(
         payload[position + 12..position + 16]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let current_offset = u64::from_le_bytes(
         payload[position + 16..position + 24]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let size_bytes = u64::from_le_bytes(
         payload[position + 24..position + 32]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     )
     .into();
     let messages_count = u64::from_le_bytes(
         payload[position + 32..position + 40]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let read_bytes = 4 + 8 + 4 + 8 + 8 + 8;
     Ok((
@@ -775,7 +775,7 @@ fn map_to_partition(payload: Bytes, position: usize) -> Result<(Partition, usize
     ))
 }
 
-pub fn map_consumer_groups(payload: Bytes) -> Result<Vec<ConsumerGroup>, IggyError> {
+pub fn map_consumer_groups(payload: Bytes) -> Result<Vec<ConsumerGroup>, MessengerError> {
     if payload.is_empty() {
         return Ok(EMPTY_CONSUMER_GROUPS);
     }
@@ -792,7 +792,7 @@ pub fn map_consumer_groups(payload: Bytes) -> Result<Vec<ConsumerGroup>, IggyErr
     Ok(consumer_groups)
 }
 
-pub fn map_consumer_group(payload: Bytes) -> Result<ConsumerGroupDetails, IggyError> {
+pub fn map_consumer_group(payload: Bytes) -> Result<ConsumerGroupDetails, MessengerError> {
     let (consumer_group, mut position) = map_to_consumer_group(payload.clone(), 0)?;
     let mut members = Vec::new();
     let length = payload.len();
@@ -815,25 +815,25 @@ pub fn map_consumer_group(payload: Bytes) -> Result<ConsumerGroupDetails, IggyEr
 fn map_to_consumer_group(
     payload: Bytes,
     position: usize,
-) -> Result<(ConsumerGroup, usize), IggyError> {
+) -> Result<(ConsumerGroup, usize), MessengerError> {
     let id = u32::from_le_bytes(
         payload[position..position + 4]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let partitions_count = u32::from_le_bytes(
         payload[position + 4..position + 8]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let members_count = u32::from_le_bytes(
         payload[position + 8..position + 12]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let name_length = payload[position + 12];
     let name = from_utf8(&payload[position + 13..position + 13 + name_length as usize])
-        .map_err(|_| IggyError::InvalidUtf8)?
+        .map_err(|_| MessengerError::InvalidUtf8)?
         .to_string();
     let read_bytes = 13 + name_length as usize;
     Ok((
@@ -850,23 +850,23 @@ fn map_to_consumer_group(
 fn map_to_consumer_group_member(
     payload: Bytes,
     position: usize,
-) -> Result<(ConsumerGroupMember, usize), IggyError> {
+) -> Result<(ConsumerGroupMember, usize), MessengerError> {
     let id = u32::from_le_bytes(
         payload[position..position + 4]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let partitions_count = u32::from_le_bytes(
         payload[position + 4..position + 8]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let mut partitions = Vec::new();
     for i in 0..partitions_count {
         let partition_id = u32::from_le_bytes(
             payload[position + 8 + (i * 4) as usize..position + 8 + ((i + 1) * 4) as usize]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         partitions.push(partition_id);
     }
@@ -885,17 +885,17 @@ fn map_to_consumer_group_member(
 fn map_to_client_info(
     payload: Bytes,
     mut position: usize,
-) -> Result<(ClientInfo, usize), IggyError> {
+) -> Result<(ClientInfo, usize), MessengerError> {
     let mut read_bytes;
     let client_id = u32::from_le_bytes(
         payload[position..position + 4]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let user_id = u32::from_le_bytes(
         payload[position + 4..position + 8]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let user_id = match user_id {
         0 => None,
@@ -913,17 +913,17 @@ fn map_to_client_info(
     let address_length = u32::from_le_bytes(
         payload[position + 9..position + 13]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     ) as usize;
     let address = from_utf8(&payload[position + 13..position + 13 + address_length])
-        .map_err(|_| IggyError::InvalidUtf8)?
+        .map_err(|_| MessengerError::InvalidUtf8)?
         .to_string();
     read_bytes = 4 + 4 + 1 + 4 + address_length;
     position += read_bytes;
     let consumer_groups_count = u32::from_le_bytes(
         payload[position..position + 4]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     read_bytes += 4;
     Ok((
@@ -938,23 +938,23 @@ fn map_to_client_info(
     ))
 }
 
-fn map_to_user_info(payload: Bytes, position: usize) -> Result<(UserInfo, usize), IggyError> {
+fn map_to_user_info(payload: Bytes, position: usize) -> Result<(UserInfo, usize), MessengerError> {
     let id = u32::from_le_bytes(
         payload[position..position + 4]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let created_at = u64::from_le_bytes(
         payload[position + 4..position + 12]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let created_at = created_at.into();
     let status = payload[position + 12];
     let status = UserStatus::from_code(status)?;
     let username_length = payload[position + 13];
     let username = from_utf8(&payload[position + 14..position + 14 + username_length as usize])
-        .map_err(|_| IggyError::InvalidUtf8)?
+        .map_err(|_| MessengerError::InvalidUtf8)?
         .to_string();
     let read_bytes = 4 + 8 + 1 + 1 + username_length as usize;
 
@@ -972,16 +972,16 @@ fn map_to_user_info(payload: Bytes, position: usize) -> Result<(UserInfo, usize)
 fn map_to_pat_info(
     payload: Bytes,
     position: usize,
-) -> Result<(PersonalAccessTokenInfo, usize), IggyError> {
+) -> Result<(PersonalAccessTokenInfo, usize), MessengerError> {
     let name_length = payload[position];
     let name = from_utf8(&payload[position + 1..position + 1 + name_length as usize])
-        .map_err(|_| IggyError::InvalidUtf8)?
+        .map_err(|_| MessengerError::InvalidUtf8)?
         .to_string();
     let position = position + 1 + name_length as usize;
     let expiry_at = u64::from_le_bytes(
         payload[position..position + 8]
             .try_into()
-            .map_err(|_| IggyError::InvalidNumberEncoding)?,
+            .map_err(|_| MessengerError::InvalidNumberEncoding)?,
     );
     let expiry_at = match expiry_at {
         0 => None,

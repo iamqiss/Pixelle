@@ -20,21 +20,21 @@ use crate::state::system::TopicState;
 use crate::streaming::topics::COMPONENT;
 use crate::streaming::topics::topic::Topic;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::locking::IggySharedMutFn;
+use messenger_common::MessengerError;
+use messenger_common::locking::MessengerSharedMutFn;
 
 impl Topic {
-    pub async fn load(&mut self, state: TopicState) -> Result<(), IggyError> {
+    pub async fn load(&mut self, state: TopicState) -> Result<(), MessengerError> {
         let storage = self.storage.clone();
         storage.topic.load(self, state).await?;
         Ok(())
     }
 
-    pub async fn persist(&self) -> Result<(), IggyError> {
+    pub async fn persist(&self) -> Result<(), MessengerError> {
         self.storage.topic.save(self).await
     }
 
-    pub async fn delete(&self) -> Result<(), IggyError> {
+    pub async fn delete(&self) -> Result<(), MessengerError> {
         for partition in self.get_partitions() {
             let mut partition = partition.write().await;
             partition.delete().await.with_error_context(|error| {
@@ -48,7 +48,7 @@ impl Topic {
         self.storage.topic.delete(self).await
     }
 
-    pub async fn persist_messages(&self) -> Result<usize, IggyError> {
+    pub async fn persist_messages(&self) -> Result<usize, MessengerError> {
         let mut saved_messages_number = 0;
         for partition in self.get_partitions() {
             let mut partition = partition.write().await;
@@ -61,7 +61,7 @@ impl Topic {
         Ok(saved_messages_number)
     }
 
-    pub async fn purge(&self) -> Result<(), IggyError> {
+    pub async fn purge(&self) -> Result<(), MessengerError> {
         for partition in self.get_partitions() {
             let mut partition = partition.write().await;
             partition.purge().await?;

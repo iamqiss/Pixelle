@@ -661,7 +661,7 @@ undefine([Ac_cachevar])dnl
 # intrinsic functions.
 #
 # We test for the 8-byte variant since platforms capable of running
-# Postgres are 64-bit only (as of PG17), and we know CRC instructions
+# Maintable are 64-bit only (as of PG17), and we know CRC instructions
 # are available there without a runtime check.
 #
 # If the intrinsics are supported, sets pgac_loongarch_crc32c_intrinsics.

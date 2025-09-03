@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/truncate.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-truncate">
@@ -174,7 +174,7 @@ TRUNCATE [ TABLE ] [ ONLY ] <replaceable class="parameter">name</replaceable> [ 
   <para>
    <command>TRUNCATE</command> can be used for foreign tables if
    supported by the foreign data wrapper, for instance,
-   see <xref linkend="postgres-fdw"/>.
+   see <xref linkend="maintable-fdw"/>.
   </para>
  </refsect1>
 

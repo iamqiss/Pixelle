@@ -17,7 +17,7 @@
  */
 
 use crate::streaming::common::test_setup::TestSetup;
-use iggy::prelude::ConsumerKind;
+use messenger::prelude::ConsumerKind;
 use server::configs::system::SystemConfig;
 use server::streaming::partitions::partition::ConsumerOffset;
 use server::streaming::storage::PartitionStorageKind;

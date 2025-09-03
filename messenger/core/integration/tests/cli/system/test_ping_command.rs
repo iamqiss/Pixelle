@@ -17,11 +17,11 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, USAGE_PREFIX,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, USAGE_PREFIX,
 };
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
+use messenger::prelude::Client;
 use predicates::str::{contains, starts_with};
 use serial_test::parallel;
 
@@ -36,11 +36,11 @@ impl Default for TestPingCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestPingCmd {
+impl MessengerCmdTestCase for TestPingCmd {
     async fn prepare_server_state(&mut self, _client: &dyn Client) {}
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("ping")
             .arg("-c")
             .arg(format!("{}", self.count))
@@ -70,24 +70,24 @@ impl IggyCmdTestCase for TestPingCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test.execute_test(TestPingCmd::default()).await;
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test.execute_test(TestPingCmd::default()).await;
 }
 
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["ping", "--help"],
             format!(
-                r#"ping iggy server
+                r#"ping messenger server
 
-Check if iggy server is up and running and what's the response ping response time
+Check if messenger server is up and running and what's the response ping response time
 
 {USAGE_PREFIX} ping [OPTIONS]
 
@@ -108,13 +108,13 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["ping", "-h"],
             format!(
-                r#"ping iggy server
+                r#"ping messenger server
 
 {USAGE_PREFIX} ping [OPTIONS]
 

@@ -501,7 +501,7 @@ $tcl$);
  table: my table
 (1 row)
 
--- verify tcl_error_handling_test() properly reports non-postgres errors
+-- verify tcl_error_handling_test() properly reports non-maintable errors
 select tcl_error_handling_test('moo');
   tcl_error_handling_test   
 ----------------------------

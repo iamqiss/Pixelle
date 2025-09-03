@@ -19,30 +19,30 @@ components:
 
   # ── Rust crates (crates.io) ────────────────────────────────────────────────
   rust-sdk:
-    tag_pattern: "^iggy-([0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?)$"
+    tag_pattern: "^messenger-([0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?)$"
     registry: crates
-    package: iggy
+    package: messenger
     version_file: "core/sdk/Cargo.toml"
     version_regex: '(?m)^\s*version\s*=\s*"([^"]+)"'
 
   rust-cli:
     tag_pattern: "^cli-([0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?)$"
     registry: crates
-    package: iggy-cli
+    package: messenger-cli
     version_file: "core/cli/Cargo.toml"
     version_regex: '(?m)^\s*version\s*=\s*"([^"]+)"'
 
   rust-binary-protocol:
     tag_pattern: "^binary-protocol-([0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?)$"
     registry: crates
-    package: iggy_binary_protocol
+    package: messenger_binary_protocol
     version_file: "core/binary_protocol/Cargo.toml"
     version_regex: '(?m)^\s*version\s*=\s*"([^"]+)"'
 
   rust-common:
     tag_pattern: "^common-([0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?)$"
     registry: crates
-    package: iggy_common
+    package: messenger_common
     version_file: "core/common/Cargo.toml"
     version_regex: '(?m)^\s*version\s*=\s*"([^"]+)"'
 
@@ -50,7 +50,7 @@ components:
   rust-server:
     tag_pattern: "^server-([0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?)$"
     registry: dockerhub
-    image: apache/iggy
+    image: apache/messenger
     dockerfile: core/server/Dockerfile
     platforms: ["linux/amd64", "linux/arm64"]
     version_file: "core/server/Cargo.toml"
@@ -59,7 +59,7 @@ components:
   rust-mcp:
     tag_pattern: "^mcp-([0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?)$"
     registry: dockerhub
-    image: apache/iggy-mcp
+    image: apache/messenger-mcp
     dockerfile: core/ai/mcp/Dockerfile
     platforms: ["linux/amd64", "linux/arm64"]
     version_file: "core/ai/mcp/Cargo.toml"
@@ -68,7 +68,7 @@ components:
   rust-bench-dashboard:
     tag_pattern: "^bench-dashboard-([0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?)$"
     registry: dockerhub
-    image: apache/iggy-bench-dashboard
+    image: apache/messenger-bench-dashboard
     dockerfile: core/bench/dashboard/server/Dockerfile
     platforms: ["linux/amd64", "linux/arm64"]
     version_file: "core/bench/dashboard/server/Cargo.toml"
@@ -77,7 +77,7 @@ components:
   rust-connectors:
     tag_pattern: "^connectors-([0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?)$"
     registry: dockerhub
-    image: apache/iggy-connect
+    image: apache/messenger-connect
     dockerfile: core/connectors/runtime/Dockerfile
     platforms: ["linux/amd64", "linux/arm64"]
     version_file: "core/connectors/runtime/Cargo.toml"
@@ -86,7 +86,7 @@ components:
   web-ui:
     tag_pattern: "^web-ui-([0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?)$"
     registry: dockerhub
-    image: apache/iggy-web-ui
+    image: apache/messenger-web-ui
     dockerfile: web/Dockerfile
     platforms: ["linux/amd64", "linux/arm64"]
     version_file: "web/package.json"
@@ -114,7 +114,7 @@ components:
   sdk-csharp:
     tag_pattern: "^csharp-sdk-([0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?)$"
     registry: nuget
-    version_file: "foreign/csharp/Iggy_SDK/Iggy_SDK.csproj"
+    version_file: "foreign/csharp/Messenger_SDK/Messenger_SDK.csproj"
     version_regex: '(?ms)<(?:PackageVersion|Version)>\s*([^<]+)\s*</(?:PackageVersion|Version)>'
 
   # ── Go (tag only, no registry publish) ─────────────────────────────────────

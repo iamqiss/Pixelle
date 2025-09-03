@@ -1,17 +1,17 @@
 # LANGUAGE message translation file for ecpg
-# Copyright (C) 2009 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2009 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 # Abdullah GÜLNER <agulner@gmail.com>, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 8.4\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 8.4\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2019-04-26 13:39+0000\n"
 "PO-Revision-Date: 2021-09-16 09:37+0200\n"
 "Last-Translator: Abdullah GÜLNER <agulner@gmail.com>\n"
-"Language-Team: Turkish <ceviri@postgresql.org.tr>\n"
+"Language-Team: Turkish <ceviri@maintableql.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,10 +57,10 @@ msgstr "\"%s\" açıklayıcı öğesi ayarlanamaz"
 #: ecpg.c:36
 #, c-format
 msgid ""
-"%s is the PostgreSQL embedded SQL preprocessor for C programs.\n"
+"%s is the maintableQL embedded SQL preprocessor for C programs.\n"
 "\n"
 msgstr ""
-"%s C programları için PostgreSQL'e gömüşü SQL önişlemcisidir.\n"
+"%s C programları için maintableQL'e gömüşü SQL önişlemcisidir.\n"
 "\n"
 
 #: ecpg.c:38
@@ -171,10 +171,10 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 msgstr ""
 "\n"
-"Hataları <pgsql-bugs@lists.postgresql.org> adresine bildirebilirsiniz.\n"
+"Hataları <pgsql-bugs@lists.maintableql.org> adresine bildirebilirsiniz.\n"
 
 #: ecpg.c:182
 #, c-format
@@ -198,8 +198,8 @@ msgstr "%s: ayrıştırıcı hata ayıklama desteği (-d) yok\n"
 
 #: ecpg.c:303
 #, c-format
-msgid "%s, the PostgreSQL embedded C preprocessor, version %s\n"
-msgstr "%s, PostgreSQL gömülü C önişlemcisi, %s sürümü\n"
+msgid "%s, the maintableQL embedded C preprocessor, version %s\n"
+msgstr "%s, maintableQL gömülü C önişlemcisi, %s sürümü\n"
 
 #: ecpg.c:305
 #, c-format
@@ -318,8 +318,8 @@ msgstr "EXEC SQL INCLUDE komutunda sözdizimi hatası"
 
 #: pgc.l:1411
 #, c-format
-msgid "internal error: unreachable state; please report this to <pgsql-bugs@lists.postgresql.org>"
-msgstr "dahili hata: erişilemeyen durum: bunu lütfen <pgsql-bugs@lists.postgresql.org> adresine bildiriniz."
+msgid "internal error: unreachable state; please report this to <pgsql-bugs@lists.maintableql.org>"
+msgstr "dahili hata: erişilemeyen durum: bunu lütfen <pgsql-bugs@lists.maintableql.org> adresine bildiriniz."
 
 #: pgc.l:1562
 #, c-format
@@ -454,8 +454,8 @@ msgstr "\"@\" bekleniyordu; \"%s\" bulundu"
 
 #: preproc.y:15157
 #, c-format
-msgid "only protocols \"tcp\" and \"unix\" and database type \"postgresql\" are supported"
-msgstr "sadece \"tcp\" ve \"unix\" protokolleri ile \"postgresql\" veritabanı tipi desteklenmektedir."
+msgid "only protocols \"tcp\" and \"unix\" and database type \"maintableql\" are supported"
+msgstr "sadece \"tcp\" ve \"unix\" protokolleri ile \"maintableql\" veritabanı tipi desteklenmektedir."
 
 #: preproc.y:15160
 #, c-format
@@ -469,8 +469,8 @@ msgstr "Unix-domain soketleri sadece \"localhost\" üzerinde çalışabilir; anc
 
 #: preproc.y:15191
 #, c-format
-msgid "expected \"postgresql\", found \"%s\""
-msgstr "\"postgresql\" bekleniyordu; \"%s\" bulundu"
+msgid "expected \"maintableql\", found \"%s\""
+msgstr "\"maintableql\" bekleniyordu; \"%s\" bulundu"
 
 #: preproc.y:15194
 #, c-format

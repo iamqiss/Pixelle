@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # To test successful data directory creation with an additional feature, first
 # try to elaborate the "successful creation" test instead of adding a test.
@@ -9,11 +9,11 @@ use strict;
 use warnings FATAL => 'all';
 use Fcntl ':mode';
 use File::stat qw{lstat};
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $tempdir = PostgreSQL::Test::Utils::tempdir;
+my $tempdir = maintableQL::Test::Utils::tempdir;
 my $xlogdir = "$tempdir/pgxlog";
 my $datadir = "$tempdir/data";
 my $supports_syncfs = check_pg_config("#define HAVE_SYNCFS 1");
@@ -307,7 +307,7 @@ command_ok(
 	],
 	'multiple --set options with different case');
 
-my $conf = slurp_file("$tempdir/dataY/postgresql.conf");
+my $conf = slurp_file("$tempdir/dataY/maintableql.conf");
 ok($conf !~ qr/^WORK_MEM = /m, "WORK_MEM should not be configured");
 ok($conf !~ qr/^Work_Mem = /m, "Work_Mem should not be configured");
 ok($conf =~ qr/^work_mem = 512/m, "work_mem should be in config");

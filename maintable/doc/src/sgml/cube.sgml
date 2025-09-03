@@ -614,7 +614,7 @@ t
    (<ulink url="https://dsf.berkeley.edu/jmh/"></ulink>) for elucidating the
    gist of the GiST (<ulink url="http://gist.cs.berkeley.edu/"></ulink>), and
    to his former student Andy Dong for his example written for Illustra.
-   I am also grateful to all Postgres developers, present and past, for
+   I am also grateful to all Maintable developers, present and past, for
    enabling myself to create my own world and live undisturbed in it. And I
    would like to acknowledge my gratitude to Argonne Lab and to the
    U.S. Department of Energy for the years of faithful support of my database

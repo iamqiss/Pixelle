@@ -1,12 +1,12 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Tests dedicated to two-phase commit in recovery
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 my $psql_out = '';
@@ -20,10 +20,10 @@ sub configure_and_reload
 	my $name = $node->name;
 
 	$node->append_conf(
-		'postgresql.conf', qq(
+		'maintableql.conf', qq(
 		$parameter
 	));
-	$node->psql('postgres', "SELECT pg_reload_conf()", stdout => \$psql_out);
+	$node->psql('maintable', "SELECT pg_reload_conf()", stdout => \$psql_out);
 	is($psql_out, 't', "reload node $name with $parameter");
 	return;
 }
@@ -31,10 +31,10 @@ sub configure_and_reload
 # Set up two nodes, which will alternately be primary and replication standby.
 
 # Setup london node
-my $node_london = PostgreSQL::Test::Cluster->new("london");
+my $node_london = maintableQL::Test::Cluster->new("london");
 $node_london->init(allows_streaming => 1);
 $node_london->append_conf(
-	'postgresql.conf', qq(
+	'maintableql.conf', qq(
 	max_prepared_transactions = 10
 	log_checkpoints = true
 ));
@@ -42,11 +42,11 @@ $node_london->start;
 $node_london->backup('london_backup');
 
 # Setup paris node
-my $node_paris = PostgreSQL::Test::Cluster->new('paris');
+my $node_paris = maintableQL::Test::Cluster->new('paris');
 $node_paris->init_from_backup($node_london, 'london_backup',
 	has_streaming => 1);
 $node_paris->append_conf(
-	'postgresql.conf', qq(
+	'maintableql.conf', qq(
 	subtransaction_buffers = 32
 ));
 $node_paris->start;
@@ -61,17 +61,17 @@ my ($cur_primary, $cur_standby) = ($node_london, $node_paris);
 my $cur_primary_name = $cur_primary->name;
 
 # Create table we'll use in the test transactions
-$cur_primary->psql('postgres', "CREATE TABLE t_009_tbl (id int, msg text)");
+$cur_primary->psql('maintable', "CREATE TABLE t_009_tbl (id int, msg text)");
 
 ###############################################################################
 # Check that we can commit and abort transaction after soft restart.
 # Here checkpoint happens before shutdown and no WAL replay will occur at next
-# startup. In this case postgres re-creates shared-memory state from twophase
+# startup. In this case maintable re-creates shared-memory state from twophase
 # files.
 ###############################################################################
 
 $cur_primary->psql(
-	'postgres', "
+	'maintable', "
 	BEGIN;
 	INSERT INTO t_009_tbl VALUES (1, 'issued to ${cur_primary_name}');
 	SAVEPOINT s1;
@@ -85,10 +85,10 @@ $cur_primary->psql(
 $cur_primary->stop;
 $cur_primary->start;
 
-$psql_rc = $cur_primary->psql('postgres', "COMMIT PREPARED 'xact_009_1'");
+$psql_rc = $cur_primary->psql('maintable', "COMMIT PREPARED 'xact_009_1'");
 is($psql_rc, '0', 'Commit prepared transaction after restart');
 
-$psql_rc = $cur_primary->psql('postgres', "ROLLBACK PREPARED 'xact_009_2'");
+$psql_rc = $cur_primary->psql('maintable', "ROLLBACK PREPARED 'xact_009_2'");
 is($psql_rc, '0', 'Rollback prepared transaction after restart');
 
 ###############################################################################
@@ -98,7 +98,7 @@ is($psql_rc, '0', 'Rollback prepared transaction after restart');
 ###############################################################################
 
 $cur_primary->psql(
-	'postgres', "
+	'maintable', "
 	CHECKPOINT;
 	BEGIN;
 	INSERT INTO t_009_tbl VALUES (5, 'issued to ${cur_primary_name}');
@@ -113,10 +113,10 @@ $cur_primary->psql(
 $cur_primary->teardown_node;
 $cur_primary->start;
 
-$psql_rc = $cur_primary->psql('postgres', "COMMIT PREPARED 'xact_009_3'");
+$psql_rc = $cur_primary->psql('maintable', "COMMIT PREPARED 'xact_009_3'");
 is($psql_rc, '0', 'Commit prepared transaction after teardown');
 
-$psql_rc = $cur_primary->psql('postgres', "ROLLBACK PREPARED 'xact_009_4'");
+$psql_rc = $cur_primary->psql('maintable', "ROLLBACK PREPARED 'xact_009_4'");
 is($psql_rc, '0', 'Rollback prepared transaction after teardown');
 
 ###############################################################################
@@ -124,7 +124,7 @@ is($psql_rc, '0', 'Rollback prepared transaction after teardown');
 ###############################################################################
 
 $cur_primary->psql(
-	'postgres', "
+	'maintable', "
 	CHECKPOINT;
 	BEGIN;
 	INSERT INTO t_009_tbl VALUES (9, 'issued to ${cur_primary_name}');
@@ -140,7 +140,7 @@ $cur_primary->psql(
 $cur_primary->teardown_node;
 $cur_primary->start;
 
-$psql_rc = $cur_primary->psql('postgres', "COMMIT PREPARED 'xact_009_5'");
+$psql_rc = $cur_primary->psql('maintable', "COMMIT PREPARED 'xact_009_5'");
 is($psql_rc, '0', 'Replay several transactions with same GID');
 
 ###############################################################################
@@ -149,7 +149,7 @@ is($psql_rc, '0', 'Replay several transactions with same GID');
 ###############################################################################
 
 $cur_primary->psql(
-	'postgres', "
+	'maintable', "
 	BEGIN;
 	INSERT INTO t_009_tbl VALUES (13, 'issued to ${cur_primary_name}');
 	SAVEPOINT s1;
@@ -159,7 +159,7 @@ $cur_primary->psql(
 $cur_primary->teardown_node;
 $cur_primary->start;
 $psql_rc = $cur_primary->psql(
-	'postgres', "
+	'maintable', "
 	BEGIN;
 	INSERT INTO t_009_tbl VALUES (15, 'issued to ${cur_primary_name}');
 	SAVEPOINT s1;
@@ -169,14 +169,14 @@ $psql_rc = $cur_primary->psql(
 	PREPARE TRANSACTION 'xact_009_7';");
 is($psql_rc, '0', "Cleanup of shared memory state for 2PC commit");
 
-$cur_primary->psql('postgres', "COMMIT PREPARED 'xact_009_7'");
+$cur_primary->psql('maintable', "COMMIT PREPARED 'xact_009_7'");
 
 ###############################################################################
 # Check that WAL replay will cleanup its shared memory state on running standby.
 ###############################################################################
 
 $cur_primary->psql(
-	'postgres', "
+	'maintable', "
 	BEGIN;
 	INSERT INTO t_009_tbl VALUES (17, 'issued to ${cur_primary_name}');
 	SAVEPOINT s1;
@@ -184,7 +184,7 @@ $cur_primary->psql(
 	PREPARE TRANSACTION 'xact_009_8';
 	COMMIT PREPARED 'xact_009_8';");
 $cur_standby->psql(
-	'postgres',
+	'maintable',
 	"SELECT count(*) FROM pg_prepared_xacts",
 	stdout => \$psql_out);
 is($psql_out, '0',
@@ -196,16 +196,16 @@ is($psql_out, '0',
 ###############################################################################
 
 $cur_primary->psql(
-	'postgres', "
+	'maintable', "
 	BEGIN;
 	INSERT INTO t_009_tbl VALUES (19, 'issued to ${cur_primary_name}');
 	SAVEPOINT s1;
 	INSERT INTO t_009_tbl VALUES (20, 'issued to ${cur_primary_name}');
 	PREPARE TRANSACTION 'xact_009_9';");
-$cur_standby->psql('postgres', "CHECKPOINT");
-$cur_primary->psql('postgres', "COMMIT PREPARED 'xact_009_9'");
+$cur_standby->psql('maintable', "CHECKPOINT");
+$cur_primary->psql('maintable', "COMMIT PREPARED 'xact_009_9'");
 $cur_standby->psql(
-	'postgres',
+	'maintable',
 	"SELECT count(*) FROM pg_prepared_xacts",
 	stdout => \$psql_out);
 is($psql_out, '0',
@@ -216,7 +216,7 @@ is($psql_out, '0',
 ###############################################################################
 
 $cur_primary->psql(
-	'postgres', "
+	'maintable', "
 	BEGIN;
 	INSERT INTO t_009_tbl VALUES (21, 'issued to ${cur_primary_name}');
 	SAVEPOINT s1;
@@ -232,7 +232,7 @@ $cur_primary_name = $cur_primary->name;
 
 # because london is not running at this point, we can't use syncrep commit
 # on this command
-$psql_rc = $cur_primary->psql('postgres',
+$psql_rc = $cur_primary->psql('maintable',
 	"SET synchronous_commit = off; COMMIT PREPARED 'xact_009_10'");
 is($psql_rc, '0', "Restore of prepared transaction on promoted standby");
 
@@ -248,7 +248,7 @@ $cur_standby->start;
 ###############################################################################
 
 $cur_primary->psql(
-	'postgres', "
+	'maintable', "
 	BEGIN;
 	INSERT INTO t_009_tbl VALUES (23, 'issued to ${cur_primary_name}');
 	SAVEPOINT s1;
@@ -264,7 +264,7 @@ note "Now london is primary and paris is standby";
 $cur_primary_name = $cur_primary->name;
 
 $cur_primary->psql(
-	'postgres',
+	'maintable',
 	"SELECT count(*) FROM pg_prepared_xacts",
 	stdout => \$psql_out);
 is($psql_out, '1',
@@ -274,7 +274,7 @@ is($psql_out, '1',
 $cur_standby->enable_streaming($cur_primary);
 $cur_standby->start;
 
-$cur_primary->psql('postgres', "COMMIT PREPARED 'xact_009_11'");
+$cur_primary->psql('maintable', "COMMIT PREPARED 'xact_009_11'");
 
 ###############################################################################
 # Check that prepared transactions are correctly replayed after standby hard
@@ -282,7 +282,7 @@ $cur_primary->psql('postgres', "COMMIT PREPARED 'xact_009_11'");
 ###############################################################################
 
 $cur_primary->psql(
-	'postgres', "
+	'maintable', "
 	BEGIN;
 	INSERT INTO t_009_tbl VALUES (25, 'issued to ${cur_primary_name}');
 	SAVEPOINT s1;
@@ -300,7 +300,7 @@ note "Now paris is primary and london is standby";
 $cur_primary_name = $cur_primary->name;
 
 $cur_primary->psql(
-	'postgres',
+	'maintable',
 	"SELECT count(*) FROM pg_prepared_xacts",
 	stdout => \$psql_out);
 is($psql_out, '1',
@@ -310,7 +310,7 @@ is($psql_out, '1',
 $cur_standby->enable_streaming($cur_primary);
 $cur_standby->start;
 
-$cur_primary->psql('postgres', "COMMIT PREPARED 'xact_009_12'");
+$cur_primary->psql('maintable', "COMMIT PREPARED 'xact_009_12'");
 
 ###############################################################################
 # Check visibility of prepared transactions in standby after a restart while
@@ -318,7 +318,7 @@ $cur_primary->psql('postgres', "COMMIT PREPARED 'xact_009_12'");
 ###############################################################################
 
 $cur_primary->psql(
-	'postgres', "
+	'maintable', "
 	SET synchronous_commit='remote_apply'; -- To ensure the standby is caught up
 	CREATE TABLE t_009_tbl_standby_mvcc (id int, msg text);
 	BEGIN;
@@ -332,7 +332,7 @@ $cur_standby->restart;
 
 # Acquire a snapshot in standby, before we commit the prepared transaction
 my $standby_session =
-  $cur_standby->background_psql('postgres', on_error_die => 1);
+  $cur_standby->background_psql('maintable', on_error_die => 1);
 $standby_session->query_safe("BEGIN ISOLATION LEVEL REPEATABLE READ");
 $psql_out =
   $standby_session->query_safe("SELECT count(*) FROM t_009_tbl_standby_mvcc");
@@ -342,7 +342,7 @@ is($psql_out, '0',
 # Commit the transaction in primary
 $cur_primary->start;
 $cur_primary->psql(
-	'postgres', "
+	'maintable', "
 SET synchronous_commit='remote_apply'; -- To ensure the standby is caught up
 COMMIT PREPARED 'xact_009_standby_mvcc';
 ");
@@ -367,7 +367,7 @@ $standby_session->quit;
 ###############################################################################
 
 $cur_primary->psql(
-	'postgres', "
+	'maintable', "
 	BEGIN;
 	CREATE TABLE t_009_tbl2 (id int, msg text);
 	SAVEPOINT s1;
@@ -380,14 +380,14 @@ $cur_primary->psql(
 
 # Ensure that last transaction is replayed on standby.
 my $cur_primary_lsn =
-  $cur_primary->safe_psql('postgres', "SELECT pg_current_wal_lsn()");
+  $cur_primary->safe_psql('maintable', "SELECT pg_current_wal_lsn()");
 my $caughtup_query =
   "SELECT '$cur_primary_lsn'::pg_lsn <= pg_last_wal_replay_lsn()";
-$cur_standby->poll_query_until('postgres', $caughtup_query)
+$cur_standby->poll_query_until('maintable', $caughtup_query)
   or die "Timed out while waiting for standby to catch up";
 
 $cur_standby->psql(
-	'postgres',
+	'maintable',
 	"SELECT count(*) FROM t_009_tbl2",
 	stdout => \$psql_out);
 is($psql_out, '1', "Replay prepared transaction with DDL");
@@ -398,7 +398,7 @@ is($psql_out, '1', "Replay prepared transaction with DDL");
 ###############################################################################
 
 $cur_primary->psql(
-	'postgres', "
+	'maintable', "
 	BEGIN;
 	CREATE TABLE t_009_tbl3 (id int, msg text);
 	SAVEPOINT s1;
@@ -413,10 +413,10 @@ $cur_primary->psql(
 $cur_primary->teardown_node;
 $cur_primary->start;
 
-$psql_rc = $cur_primary->psql('postgres', "COMMIT PREPARED 'xact_009_14'");
+$psql_rc = $cur_primary->psql('maintable', "COMMIT PREPARED 'xact_009_14'");
 is($psql_rc, '0', 'Commit prepared transaction after teardown');
 
-$psql_rc = $cur_primary->psql('postgres', "ROLLBACK PREPARED 'xact_009_15'");
+$psql_rc = $cur_primary->psql('maintable', "ROLLBACK PREPARED 'xact_009_15'");
 is($psql_rc, '0', 'Rollback prepared transaction after teardown');
 
 ###############################################################################
@@ -425,7 +425,7 @@ is($psql_rc, '0', 'Rollback prepared transaction after teardown');
 ###############################################################################
 
 $cur_primary->psql(
-	'postgres', "
+	'maintable', "
 	BEGIN;
 	CREATE TABLE t_009_tbl5 (id int, msg text);
 	SAVEPOINT s1;
@@ -440,10 +440,10 @@ $cur_primary->psql(
 $cur_primary->stop;
 $cur_primary->start;
 
-$psql_rc = $cur_primary->psql('postgres', "COMMIT PREPARED 'xact_009_16'");
+$psql_rc = $cur_primary->psql('maintable', "COMMIT PREPARED 'xact_009_16'");
 is($psql_rc, '0', 'Commit prepared transaction after restart');
 
-$psql_rc = $cur_primary->psql('postgres', "ROLLBACK PREPARED 'xact_009_17'");
+$psql_rc = $cur_primary->psql('maintable', "ROLLBACK PREPARED 'xact_009_17'");
 is($psql_rc, '0', 'Rollback prepared transaction after restart');
 
 ###############################################################################
@@ -451,13 +451,13 @@ is($psql_rc, '0', 'Rollback prepared transaction after restart');
 ###############################################################################
 
 $cur_primary->psql(
-	'postgres',
+	'maintable',
 	"SELECT count(*) FROM pg_prepared_xacts",
 	stdout => \$psql_out);
 is($psql_out, '0', "No uncommitted prepared transactions on primary");
 
 $cur_primary->psql(
-	'postgres',
+	'maintable',
 	"SELECT * FROM t_009_tbl ORDER BY id",
 	stdout => \$psql_out);
 is( $psql_out, qq{1|issued to london
@@ -485,7 +485,7 @@ is( $psql_out, qq{1|issued to london
 	"Check expected t_009_tbl data on primary");
 
 $cur_primary->psql(
-	'postgres',
+	'maintable',
 	"SELECT * FROM t_009_tbl2",
 	stdout => \$psql_out);
 is( $psql_out,
@@ -493,13 +493,13 @@ is( $psql_out,
 	"Check expected t_009_tbl2 data on primary");
 
 $cur_standby->psql(
-	'postgres',
+	'maintable',
 	"SELECT count(*) FROM pg_prepared_xacts",
 	stdout => \$psql_out);
 is($psql_out, '0', "No uncommitted prepared transactions on standby");
 
 $cur_standby->psql(
-	'postgres',
+	'maintable',
 	"SELECT * FROM t_009_tbl ORDER BY id",
 	stdout => \$psql_out);
 is( $psql_out, qq{1|issued to london
@@ -527,7 +527,7 @@ is( $psql_out, qq{1|issued to london
 	"Check expected t_009_tbl data on standby");
 
 $cur_standby->psql(
-	'postgres',
+	'maintable',
 	"SELECT * FROM t_009_tbl2",
 	stdout => \$psql_out);
 is( $psql_out,
@@ -542,14 +542,14 @@ is( $psql_out,
 $cur_standby->stop();
 configure_and_reload($cur_primary, "synchronous_standby_names = ''");
 
-$cur_primary->safe_psql('postgres', "CHECKPOINT");
+$cur_primary->safe_psql('maintable', "CHECKPOINT");
 
 my $start_lsn =
-  $cur_primary->safe_psql('postgres', 'select pg_current_wal_insert_lsn()');
-$cur_primary->safe_psql('postgres',
+  $cur_primary->safe_psql('maintable', 'select pg_current_wal_insert_lsn()');
+$cur_primary->safe_psql('maintable',
 	"CREATE TABLE test(); BEGIN; CREATE TABLE test1(); PREPARE TRANSACTION 'foo';"
 );
-my $osubtrans = $cur_primary->safe_psql('postgres',
+my $osubtrans = $cur_primary->safe_psql('maintable',
 	"select 'pg_subtrans/'||f, s.size from pg_ls_dir('pg_subtrans') f, pg_stat_file('pg_subtrans/'||f) s"
 );
 $cur_primary->pgbench(
@@ -567,7 +567,7 @@ $cur_primary->pgbench(
 # bank, for additional code coverage.
 $cur_primary->stop;
 $cur_primary->start;
-my $nsubtrans = $cur_primary->safe_psql('postgres',
+my $nsubtrans = $cur_primary->safe_psql('maintable',
 	"select 'pg_subtrans/'||f, s.size from pg_ls_dir('pg_subtrans') f, pg_stat_file('pg_subtrans/'||f) s"
 );
 isnt($osubtrans, $nsubtrans, "contents of pg_subtrans/ have changed");

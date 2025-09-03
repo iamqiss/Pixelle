@@ -2,7 +2,7 @@
    <title>Event Trigger Functions</title>
 
    <para>
-    <productname>PostgreSQL</productname> provides these helper functions
+    <productname>maintableQL</productname> provides these helper functions
     to retrieve information from event triggers.
    </para>
 

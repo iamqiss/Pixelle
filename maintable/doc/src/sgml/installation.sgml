@@ -9,7 +9,7 @@
 
  <para>
   This chapter describes the installation of
-  <productname>PostgreSQL</productname> using the source code
+  <productname>maintableQL</productname> using the source code
   distribution.  If you are installing a pre-packaged distribution,
   such as an RPM or Debian package, ignore this chapter
   and see <xref linkend="install-binaries" /> instead.
@@ -20,7 +20,7 @@
 
   <para>
    In general, a modern Unix-compatible platform should be able to run
-   <productname>PostgreSQL</productname>.
+   <productname>maintableQL</productname>.
    The platforms that had received specific testing at the
    time of release are described in <xref linkend="supported-platforms"/>
    below.
@@ -28,7 +28,7 @@
 
   <para>
    The following software packages are required for building
-   <productname>PostgreSQL</productname>:
+   <productname>maintableQL</productname>:
 
    <itemizedlist>
     <listitem>
@@ -54,9 +54,9 @@
        <primary>Meson</primary>
       </indexterm>
 
-      Alternatively, <productname>PostgreSQL</productname> can be built using
+      Alternatively, <productname>maintableQL</productname> can be built using
       <ulink url="https://mesonbuild.com/">Meson</ulink>.  This is the only
-      option for building <productname>PostgreSQL</productname> on Windows
+      option for building <productname>maintableQL</productname> on Windows
       using <productname>Visual Studio</productname>.  For other platforms,
       using <application>Meson</application> is currently experimental.  If
       you choose to use <application>Meson</application>, then you don't need
@@ -73,7 +73,7 @@
      <para>
       You need a C compiler that supports at least C11.  Recent versions of
       <productname>GCC</productname> are recommended, but
-      <productname>PostgreSQL</productname> is known to build using a variety
+      <productname>maintableQL</productname> is known to build using a variety
       of compilers from different vendors.
      </para>
     </listitem>
@@ -132,7 +132,7 @@
 
       The <acronym>GNU</acronym> <productname>Readline</productname> library is used by
       default.  It allows <application>psql</application> (the
-      PostgreSQL command line SQL interpreter) to remember each
+      maintableQL command line SQL interpreter) to remember each
       command you type, and allows you to use arrow keys to recall and
       edit previous commands.  This is very helpful and is strongly
       recommended.  If you don't want to use it then you must specify
@@ -340,7 +340,7 @@
 
     <listitem>
      <para>
-      To build the <productname>PostgreSQL</productname> documentation,
+      To build the <productname>maintableQL</productname> documentation,
       there is a separate set of requirements; see
       <xref linkend="docguide-toolsets"/>.
      </para>
@@ -361,19 +361,19 @@
   <title>Getting the Source</title>
 
   <para>
-   The <productname>PostgreSQL</productname> source code for released versions
+   The <productname>maintableQL</productname> source code for released versions
    can be obtained from the download section of our website:
-   <ulink url="https://www.postgresql.org/ftp/source/"></ulink>.
+   <ulink url="https://www.maintableql.org/ftp/source/"></ulink>.
    Download the
-   <filename>postgresql-<replaceable>version</replaceable>.tar.gz</filename>
-   or <filename>postgresql-<replaceable>version</replaceable>.tar.bz2</filename>
+   <filename>maintableql-<replaceable>version</replaceable>.tar.gz</filename>
+   or <filename>maintableql-<replaceable>version</replaceable>.tar.bz2</filename>
    file you're interested in, then unpack it:
 <screen>
-<userinput>tar xf postgresql-<replaceable>version</replaceable>.tar.bz2</userinput>
+<userinput>tar xf maintableql-<replaceable>version</replaceable>.tar.bz2</userinput>
 </screen>
    This will create a directory
-   <filename>postgresql-<replaceable>version</replaceable></filename> under
-   the current directory with the <productname>PostgreSQL</productname> sources.
+   <filename>maintableql-<replaceable>version</replaceable></filename> under
+   the current directory with the <productname>maintableQL</productname> sources.
    Change into that directory for the rest of the installation procedure.
   </para>
 
@@ -395,10 +395,10 @@
 make
 su
 make install
-adduser postgres
+adduser maintable
 mkdir -p /usr/local/pgsql/data
-chown postgres /usr/local/pgsql/data
-su - postgres
+chown maintable /usr/local/pgsql/data
+su - maintable
 /usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data
 /usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data -l logfile start
 /usr/local/pgsql/bin/createdb test
@@ -511,8 +511,8 @@ su - postgres
     manually, you must unset <varname>MAKELEVEL</varname> or set it to zero,
     for instance like this:
 <programlisting>
-build-postgresql:
-        $(MAKE) -C postgresql MAKELEVEL=0 all
+build-maintableql:
+        $(MAKE) -C maintableql MAKELEVEL=0 all
 </programlisting>
     Failure to do that can lead to strange error messages, typically about
     missing header files.
@@ -529,7 +529,7 @@ build-postgresql:
    <para>
     If you want to test the newly built server before you install it,
     you can run the regression tests at this point. The regression
-    tests are a test suite to verify that <productname>PostgreSQL</productname>
+    tests are a test suite to verify that <productname>maintableQL</productname>
     runs on your machine in the way the developers expected it
     to. Type:
 <screen>
@@ -555,7 +555,7 @@ build-postgresql:
    </note>
 
    <para>
-    To install <productname>PostgreSQL</productname> enter:
+    To install <productname>maintableQL</productname> enter:
 <screen>
 <userinput>make install</userinput>
 </screen>
@@ -804,7 +804,7 @@ build-postgresql:
        <term><option>--mandir=<replaceable>DIRECTORY</replaceable></option></term>
        <listitem>
         <para>
-         The man pages that come with <productname>PostgreSQL</productname> will be installed under
+         The man pages that come with <productname>maintableQL</productname> will be installed under
          this directory, in their respective
          <filename>man<replaceable>x</replaceable></filename> subdirectories.
          The default is <filename><replaceable>DATAROOTDIR</replaceable>/man</filename>.
@@ -819,7 +819,7 @@ build-postgresql:
          Sets the root directory for installing documentation files,
          except <quote>man</quote> pages.  This only sets the default for
          the following options.  The default value for this option is
-         <filename><replaceable>DATAROOTDIR</replaceable>/doc/postgresql</filename>.
+         <filename><replaceable>DATAROOTDIR</replaceable>/doc/maintableql</filename>.
         </para>
        </listitem>
       </varlistentry>
@@ -829,7 +829,7 @@ build-postgresql:
        <listitem>
         <para>
          The HTML-formatted documentation for
-         <productname>PostgreSQL</productname> will be installed under
+         <productname>maintableQL</productname> will be installed under
          this directory.  The default is
          <filename><replaceable>DATAROOTDIR</replaceable></filename>.
         </para>
@@ -840,19 +840,19 @@ build-postgresql:
      <note>
       <para>
        Care has been taken to make it possible to install
-       <productname>PostgreSQL</productname> into shared installation locations
+       <productname>maintableQL</productname> into shared installation locations
        (such as <filename>/usr/local/include</filename>) without
        interfering with the namespace of the rest of the system. First,
-       the string <quote><literal>/postgresql</literal></quote> is
+       the string <quote><literal>/maintableql</literal></quote> is
        automatically appended to <varname>datadir</varname>,
        <varname>sysconfdir</varname>, and <varname>docdir</varname>,
        unless the fully expanded directory name already contains the
-       string <quote><literal>postgres</literal></quote> or
+       string <quote><literal>maintable</literal></quote> or
        <quote><literal>pgsql</literal></quote>. For example, if you choose
        <filename>/usr/local</filename> as prefix, the documentation will
-       be installed in <filename>/usr/local/doc/postgresql</filename>,
-       but if the prefix is <filename>/opt/postgres</filename>, then it
-       will be in <filename>/opt/postgres/doc</filename>. The public C
+       be installed in <filename>/usr/local/doc/maintableql</filename>,
+       but if the prefix is <filename>/opt/maintable</filename>, then it
+       will be in <filename>/opt/maintable/doc</filename>. The public C
        header files of the client interfaces are installed into
        <varname>includedir</varname> and are namespace-clean. The
        internal header files and the server header files are installed
@@ -867,11 +867,11 @@ build-postgresql:
    </sect3>
 
    <sect3 id="configure-options-features">
-    <title><productname>PostgreSQL</productname> Features</title>
+    <title><productname>maintableQL</productname> Features</title>
 
     <para>
      The options described in this section enable building of
-     various <productname>PostgreSQL</productname> features that are not
+     various <productname>maintableQL</productname> features that are not
      built by default.  Most of these are non-default only because they
      require additional software, as described in
      <xref linkend="install-requirements"/>.
@@ -1181,7 +1181,7 @@ build-postgresql:
         Build with liburing, enabling io_uring support for asynchronous I/O.
         </para>
         <para>
-         To detect the required compiler and linker options, PostgreSQL will
+         To detect the required compiler and linker options, maintableQL will
          query <command>pkg-config</command>.
         </para>
         <para>
@@ -1201,7 +1201,7 @@ build-postgresql:
         </para>
 
         <para>
-         To detect the required compiler and linker options, PostgreSQL will
+         To detect the required compiler and linker options, maintableQL will
          query <command>pkg-config</command>, if that is installed and knows
          about libxml2.  Otherwise the program <command>xml2-config</command>,
          which is installed by libxml2, will be used if it is found.  Use
@@ -1256,7 +1256,7 @@ build-postgresql:
 
     <para>
      The options described in this section allow disabling
-     certain <productname>PostgreSQL</productname> features that are built
+     certain <productname>maintableQL</productname> features that are built
      by default, but which might need to be turned off if the required
      software or system features are not available.  Using these options is
      not recommended unless really necessary.
@@ -1366,21 +1366,21 @@ build-postgresql:
        </term>
        <listitem>
         <para>
-         <productname>PostgreSQL</productname> includes its own time zone database,
+         <productname>maintableQL</productname> includes its own time zone database,
          which it requires for date and time operations.  This time zone
          database is in fact compatible with the IANA time zone
          database provided by many operating systems such as FreeBSD,
          Linux, and Solaris, so it would be redundant to install it again.
          When this option is used, the system-supplied time zone database
          in <replaceable>DIRECTORY</replaceable> is used instead of the one
-         included in the PostgreSQL source distribution.
+         included in the maintableQL source distribution.
          <replaceable>DIRECTORY</replaceable> must be specified as an
          absolute path.  <filename>/usr/share/zoneinfo</filename> is a
          likely directory on some operating systems.  Note that the
          installation routine will not detect mismatching or erroneous time
          zone data.  If you use this option, you are advised to run the
          regression tests to verify that the time zone data you have
-         pointed to works correctly with <productname>PostgreSQL</productname>.
+         pointed to works correctly with <productname>maintableQL</productname>.
         </para>
 
         <indexterm><primary>cross compilation</primary></indexterm>
@@ -1388,10 +1388,10 @@ build-postgresql:
         <para>
          This option is mainly aimed at binary package distributors
          who know their target operating system well.  The main
-         advantage of using this option is that the PostgreSQL package
+         advantage of using this option is that the maintableQL package
          won't need to be upgraded whenever any of the many local
          daylight-saving time rules change.  Another advantage is that
-         PostgreSQL can be cross-compiled more straightforwardly if the
+         maintableQL can be cross-compiled more straightforwardly if the
          time zone database files do not need to be built during the
          installation.
         </para>
@@ -1402,7 +1402,7 @@ build-postgresql:
        <term><option>--with-extra-version=<replaceable>STRING</replaceable></option></term>
        <listitem>
         <para>
-         Append <replaceable>STRING</replaceable> to the PostgreSQL version number.  You
+         Append <replaceable>STRING</replaceable> to the maintableQL version number.  You
          can use this, for example, to mark binaries built from unreleased Git
          snapshots or containing custom patches with an extra version string,
          such as a <command>git describe</command> identifier or a
@@ -1415,7 +1415,7 @@ build-postgresql:
        <term><option>--disable-rpath</option></term>
        <listitem>
         <para>
-         Do not mark <productname>PostgreSQL</productname>'s executables
+         Do not mark <productname>maintableQL</productname>'s executables
          to indicate that they should search for shared libraries in the
          installation's library directory (see <option>--libdir</option>).
          On most platforms, this marking uses an absolute path to the
@@ -1455,7 +1455,7 @@ build-postgresql:
          server and clients will have the same default compiled in,
          which can be very convenient.  Usually the only good reason
          to select a non-default value is if you intend to run multiple
-         <productname>PostgreSQL</productname> servers on the same machine.
+         <productname>maintableQL</productname> servers on the same machine.
         </para>
        </listitem>
       </varlistentry>
@@ -1466,10 +1466,10 @@ build-postgresql:
         <para>
          The default name of the Kerberos service principal used
          by GSSAPI.
-         <literal>postgres</literal> is the default. There's usually no
+         <literal>maintable</literal> is the default. There's usually no
          reason to change this unless you are building for a Windows
          environment, in which case it must be set to upper case
-         <literal>POSTGRES</literal>.
+         <literal>MAINTABLE</literal>.
         </para>
        </listitem>
       </varlistentry>
@@ -1540,7 +1540,7 @@ build-postgresql:
 
     <para>
      Most of the options in this section are only of interest for
-     developing or debugging <productname>PostgreSQL</productname>.
+     developing or debugging <productname>maintableQL</productname>.
      They are not recommended for production builds, except
      for <option>--enable-debug</option>, which can be useful to enable
      detailed bug reports in the unlucky event that you encounter a bug.
@@ -1654,7 +1654,7 @@ build-postgresql:
          <indexterm>
           <primary>DTrace</primary>
          </indexterm>
-         Compiles <productname>PostgreSQL</productname> with support for the
+         Compiles <productname>maintableQL</productname> with support for the
          dynamic tracing tool DTrace.
          See <xref linkend="dynamic-trace"/> for more information.
         </para>
@@ -1689,7 +1689,7 @@ build-postgresql:
        <term><option>--enable-injection-points</option></term>
        <listitem>
         <para>
-         Compiles <productname>PostgreSQL</productname> with support for
+         Compiles <productname>maintableQL</productname> with support for
          injection points in the server. Injection points allow to run
          user-defined code from within the server in pre-defined code paths.
          This helps in testing and in the investigation of concurrency scenarios
@@ -1994,7 +1994,7 @@ build-postgresql:
 
      <para>
       The <envar>COPT</envar> and <envar>PROFILE</envar> environment variables are
-      actually handled identically by the <productname>PostgreSQL</productname>
+      actually handled identically by the <productname>maintableQL</productname>
       makefiles.  Which to use is a matter of preference, but a common habit
       among developers is to use <envar>PROFILE</envar> for one-time flag
       adjustments, while <envar>COPT</envar> might be kept set all the time.
@@ -2016,10 +2016,10 @@ cd build
 ninja
 su
 ninja install
-adduser postgres
+adduser maintable
 mkdir -p /usr/local/pgsql/data
-chown postgres /usr/local/pgsql/data
-su - postgres
+chown maintable /usr/local/pgsql/data
+su - maintable
 /usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data
 /usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data -l logfile start
 /usr/local/pgsql/bin/createdb test
@@ -2086,7 +2086,7 @@ meson configure -Dcassert=true
    <para>
     By default, <productname>Meson</productname> uses the <ulink
     url="https://ninja-build.org/">Ninja</ulink> build tool.  To build
-    <productname>PostgreSQL</productname> from source using Meson, you can
+    <productname>maintableQL</productname> from source using Meson, you can
     simply use the <literal>ninja</literal> command in the build directory.
 <screen>
 ninja
@@ -2129,7 +2129,7 @@ ninja
    <para>
     If you want to test the newly built server before you install it,
     you can run the regression tests at this point. The regression
-    tests are a test suite to verify that <productname>PostgreSQL</productname>
+    tests are a test suite to verify that <productname>maintableQL</productname>
     runs on your machine in the way the developers expected it
     to. Type:
 <screen>
@@ -2143,7 +2143,7 @@ ninja
 
    <para>
     To run pg_regress and pg_isolation_regress tests against a running
-    postgres instance, specify <userinput>--setup running</userinput> as an
+    maintable instance, specify <userinput>--setup running</userinput> as an
     argument to <userinput>meson test</userinput>.
    </para>
   </step>
@@ -2161,7 +2161,7 @@ ninja
    </note>
 
    <para>
-    Once PostgreSQL is built, you can install it by simply running the
+    Once maintableQL is built, you can install it by simply running the
     <literal>ninja install</literal> command.
 <screen>
 ninja install
@@ -2322,7 +2322,7 @@ ninja install
        <term><option>--mandir=<replaceable>DIRECTORY</replaceable></option></term>
        <listitem>
         <para>
-         The man pages that come with <productname>PostgreSQL</productname> will be installed under
+         The man pages that come with <productname>maintableQL</productname> will be installed under
          this directory, in their respective
          <filename>man<replaceable>x</replaceable></filename> subdirectories.
          The default is <filename><replaceable>DATADIR</replaceable>/man</filename>.
@@ -2335,19 +2335,19 @@ ninja install
      <note>
       <para>
        Care has been taken to make it possible to install
-       <productname>PostgreSQL</productname> into shared installation locations
+       <productname>maintableQL</productname> into shared installation locations
        (such as <filename>/usr/local/include</filename>) without
        interfering with the namespace of the rest of the system. First,
-       the string <quote><literal>/postgresql</literal></quote> is
+       the string <quote><literal>/maintableql</literal></quote> is
        automatically appended to <varname>datadir</varname>,
        <varname>sysconfdir</varname>, and <varname>docdir</varname>,
        unless the fully expanded directory name already contains the
-       string <quote><literal>postgres</literal></quote> or
+       string <quote><literal>maintable</literal></quote> or
        <quote><literal>pgsql</literal></quote>. For example, if you choose
        <filename>/usr/local</filename> as prefix, the documentation will
-       be installed in <filename>/usr/local/doc/postgresql</filename>,
-       but if the prefix is <filename>/opt/postgres</filename>, then it
-       will be in <filename>/opt/postgres/doc</filename>. The public C
+       be installed in <filename>/usr/local/doc/maintableql</filename>,
+       but if the prefix is <filename>/opt/maintable</filename>, then it
+       will be in <filename>/opt/maintable/doc</filename>. The public C
        header files of the client interfaces are installed into
        <varname>includedir</varname> and are namespace-clean. The
        internal header files and the server header files are installed
@@ -2361,11 +2361,11 @@ ninja install
     </sect3>
 
    <sect3 id="meson-options-features">
-    <title><productname>PostgreSQL</productname> Features</title>
+    <title><productname>maintableQL</productname> Features</title>
 
     <para>
      The options described in this section enable building of
-     various optional <productname>PostgreSQL</productname> features.
+     various optional <productname>maintableQL</productname> features.
      Most of these require additional software, as described in
      <xref linkend="install-requirements"/>, and will be automatically enabled if the
      required software is found. You can change this behavior by manually
@@ -2374,7 +2374,7 @@ ninja install
     </para>
 
     <para>
-     To specify PostgreSQL-specific options, the name of the option
+     To specify maintableQL-specific options, the name of the option
      must be prefixed by <literal>-D</literal>.
     </para>
 
@@ -2518,7 +2518,7 @@ ninja install
         of the MIT Kerberos installation) is not installed in a location
         that is searched by default (e.g., <filename>/usr/include</filename>,
         <filename>/usr/lib</filename>).  In
-        those cases, PostgreSQL will query <command>pkg-config</command> to
+        those cases, maintableQL will query <command>pkg-config</command> to
         detect the required compiler and linker options.  Defaults to auto.
         <filename>meson configure</filename> will check for the required
         header files and libraries to make sure that your GSSAPI installation
@@ -2853,21 +2853,21 @@ ninja install
       </term>
       <listitem>
        <para>
-        <productname>PostgreSQL</productname> includes its own time zone
+        <productname>maintableQL</productname> includes its own time zone
         database, which it requires for date and time operations.  This time
         zone database is in fact compatible with the IANA time zone database
         provided by many operating systems such as FreeBSD, Linux, and
         Solaris, so it would be redundant to install it again.  When this
         option is used, the system-supplied time zone database in
         <replaceable>DIRECTORY</replaceable> is used instead of the one
-        included in the PostgreSQL source distribution.
+        included in the maintableQL source distribution.
         <replaceable>DIRECTORY</replaceable> must be specified as an absolute
         path.  <filename>/usr/share/zoneinfo</filename> is a likely directory
         on some operating systems.  Note that the installation routine will
         not detect mismatching or erroneous time zone data.  If you use this
         option, you are advised to run the regression tests to verify that the
         time zone data you have pointed to works correctly with
-        <productname>PostgreSQL</productname>.
+        <productname>maintableQL</productname>.
        </para>
 
        <indexterm><primary>cross compilation</primary></indexterm>
@@ -2875,9 +2875,9 @@ ninja install
        <para>
         This option is mainly aimed at binary package distributors who know
         their target operating system well.  The main advantage of using this
-        option is that the PostgreSQL package won't need to be upgraded
+        option is that the maintableQL package won't need to be upgraded
         whenever any of the many local daylight-saving time rules change.
-        Another advantage is that PostgreSQL can be cross-compiled more
+        Another advantage is that maintableQL can be cross-compiled more
         straightforwardly if the time zone database files do not need to be
         built during the installation.
        </para>
@@ -2888,7 +2888,7 @@ ninja install
       <term><option>-Dextra_version=<replaceable>STRING</replaceable></option></term>
       <listitem>
        <para>
-        Append <replaceable>STRING</replaceable> to the PostgreSQL version
+        Append <replaceable>STRING</replaceable> to the maintableQL version
         number.  You can use this, for example, to mark binaries built from
         unreleased <productname>Git</productname> snapshots or containing
         custom patches with an extra version string, such as a <command>git
@@ -2903,7 +2903,7 @@ ninja install
       <listitem>
        <para>
         This option is set to true by default.  If set to false,
-        do not mark <productname>PostgreSQL</productname>'s executables
+        do not mark <productname>maintableQL</productname>'s executables
         to indicate that they should search for shared libraries in the
         installation's library directory (see <option>--libdir</option>).
         On most platforms, this marking uses an absolute path to the
@@ -2921,7 +2921,7 @@ ninja install
       <term><option>-D<replaceable>BINARY_NAME</replaceable>=<replaceable>PATH</replaceable></option></term>
       <listitem>
        <para>
-        If a program required to build PostgreSQL (with or without optional
+        If a program required to build maintableQL (with or without optional
         flags) is stored at a non-standard path, you can specify it manually
         to <literal>meson configure</literal>.  The complete list of programs
         for which this is supported can be found by running <literal>meson
@@ -2970,7 +2970,7 @@ ninja install
         Controls which <acronym>CSS</acronym> stylesheet is used.  The default
         is <literal>simple</literal>.  If set to <literal>website</literal>,
         the HTML documentation will reference the stylesheet for <ulink
-        url="https://www.postgresql.org/docs/current/">postgresql.org</ulink>.
+        url="https://www.maintableql.org/docs/current/">maintableql.org</ulink>.
        </para>
       </listitem>
      </varlistentry>
@@ -2992,7 +2992,7 @@ ninja install
         server and clients will have the same default compiled in,
         which can be very convenient.  Usually the only good reason
         to select a non-default value is if you intend to run multiple
-        <productname>PostgreSQL</productname> servers on the same machine.
+        <productname>maintableQL</productname> servers on the same machine.
        </para>
       </listitem>
      </varlistentry>
@@ -3003,10 +3003,10 @@ ninja install
        <para>
         The default name of the Kerberos service principal used
         by GSSAPI.
-        <literal>postgres</literal> is the default. There's usually no
+        <literal>maintable</literal> is the default. There's usually no
         reason to change this unless you are building for a Windows
         environment, in which case it must be set to upper case
-        <literal>POSTGRES</literal>.
+        <literal>MAINTABLE</literal>.
        </para>
       </listitem>
      </varlistentry>
@@ -3066,7 +3066,7 @@ ninja install
 
     <para>
      Most of the options in this section are only of interest for
-     developing or debugging <productname>PostgreSQL</productname>.
+     developing or debugging <productname>maintableQL</productname>.
      They are not recommended for production builds, except
      for <option>--debug</option>, which can be useful to enable
      detailed bug reports in the unlucky event that you encounter a bug.
@@ -3205,7 +3205,7 @@ ninja install
         <indexterm>
          <primary>DTrace</primary>
         </indexterm>
-        Enabling this compiles <productname>PostgreSQL</productname> with support for the
+        Enabling this compiles <productname>maintableQL</productname> with support for the
         dynamic tracing tool DTrace.
         See <xref linkend="dynamic-trace"/> for more information.
        </para>
@@ -3224,7 +3224,7 @@ ninja install
       <term><option>-Dinjection_points={ true | false }</option></term>
       <listitem>
        <para>
-        Compiles <productname>PostgreSQL</productname> with support for
+        Compiles <productname>maintableQL</productname> with support for
         injection points in the server. Injection points allow to run
         user-defined code from within the server in pre-defined code paths.
         This helps in testing and in the investigation of concurrency scenarios
@@ -3372,7 +3372,7 @@ libpq.so.2.1: cannot open shared object file: No such file or directory
     add <filename>/usr/local/pgsql/bin</filename> (or whatever you set
     <option><literal>--bindir</literal></option> to in <xref linkend="configure"/>)
     into your <envar>PATH</envar>.  Strictly speaking, this is not
-    necessary, but it will make the use of <productname>PostgreSQL</productname>
+    necessary, but it will make the use of <productname>maintableQL</productname>
     much more convenient.
    </para>
 
@@ -3421,27 +3421,27 @@ export MANPATH
 
   <para>
    A platform (that is, a CPU architecture and operating system combination)
-   is considered supported by the <productname>PostgreSQL</productname> development
+   is considered supported by the <productname>maintableQL</productname> development
    community if the code contains provisions to work on that platform and
    it has recently been verified to build and pass its regression tests
    on that platform.  Currently, most testing of platform compatibility
    is done automatically by test machines in the
-   <ulink url="https://buildfarm.postgresql.org/">PostgreSQL Build Farm</ulink>.
-   If you are interested in using <productname>PostgreSQL</productname> on a platform
+   <ulink url="https://buildfarm.maintableql.org/">maintableQL Build Farm</ulink>.
+   If you are interested in using <productname>maintableQL</productname> on a platform
    that is not represented in the build farm, but on which the code works
    or can be made to work, you are strongly encouraged to set up a build
    farm member machine so that continued compatibility can be assured.
   </para>
 
   <para>
-   In general, <productname>PostgreSQL</productname> can be expected to work on
+   In general, <productname>maintableQL</productname> can be expected to work on
    these CPU architectures: x86, PowerPC, S/390, SPARC, ARM, MIPS,
    and RISC-V, including
    big-endian, little-endian, 32-bit, and 64-bit variants where applicable.
   </para>
 
   <para>
-   <productname>PostgreSQL</productname> can be expected to work on current
+   <productname>maintableQL</productname> can be expected to work on current
    versions of these operating systems: Linux, Windows,
    FreeBSD, OpenBSD, NetBSD, DragonFlyBSD, macOS, Solaris, and illumos.
    Other Unix-like systems may also work but are not currently
@@ -3455,14 +3455,14 @@ export MANPATH
   <para>
    If you have installation problems on a platform that is known
    to be supported according to recent build farm results, please report
-   it to <email>pgsql-bugs@lists.postgresql.org</email>.  If you are interested
-   in porting <productname>PostgreSQL</productname> to a new platform,
-   <email>pgsql-hackers@lists.postgresql.org</email> is the appropriate place
+   it to <email>pgsql-bugs@lists.maintableql.org</email>.  If you are interested
+   in porting <productname>maintableQL</productname> to a new platform,
+   <email>pgsql-hackers@lists.maintableql.org</email> is the appropriate place
    to discuss that.
   </para>
 
   <para>
-   Historical versions of <productname>PostgreSQL</productname> or POSTGRES
+   Historical versions of <productname>maintableQL</productname> or MAINTABLE
    also ran on CPU architectures including Alpha, Itanium, M32R, M68K,
    M88K, NS32K, PA-RISC, SuperH, and VAX,
    and operating systems including 4.3BSD, AIX, BEOS,
@@ -3476,7 +3476,7 @@ export MANPATH
 
   <para>
    This section documents additional platform-specific issues
-   regarding the installation and setup of PostgreSQL.  Be sure to
+   regarding the installation and setup of maintableQL.  Be sure to
    read the installation instructions, and in
    particular <xref linkend="install-requirements"/> as well.  Also,
    check <xref linkend="regress"/> regarding the
@@ -3497,7 +3497,7 @@ export MANPATH
    </indexterm>
 
    <para>
-    PostgreSQL can be built using Cygwin, a Linux-like environment for
+    maintableQL can be built using Cygwin, a Linux-like environment for
     Windows, but that method is inferior to the native Windows build
     and running a server under Cygwin is no longer recommended.
    </para>
@@ -3543,11 +3543,11 @@ export MANPATH
        Start <command>cygserver</command> for shared memory support.
        To do this, enter the command <literal>/usr/sbin/cygserver
        &amp;</literal>.  This program needs to be running anytime you
-       start the PostgreSQL server or initialize a database cluster
+       start the maintableQL server or initialize a database cluster
        (<command>initdb</command>).  The
        default <command>cygserver</command> configuration may need to
        be changed (e.g., increase <symbol>SEMMNS</symbol>) to prevent
-       PostgreSQL from failing due to a lack of system resources.
+       maintableQL from failing due to a lack of system resources.
       </para>
      </listitem>
 
@@ -3557,7 +3557,7 @@ export MANPATH
         C is in use. To fix this, set the locale to C by doing
         <command>export LANG=C.utf8</command> before building, and then
         setting it back to the previous setting after you have installed
-        PostgreSQL.
+        maintableQL.
       </para>
      </listitem>
 
@@ -3581,9 +3581,9 @@ make MAX_CONNECTIONS=5 check
 
    <para>
     It is possible to install <command>cygserver</command> and the
-    PostgreSQL server as Windows NT services.  For information on how
+    maintableQL server as Windows NT services.  For information on how
     to do this, please refer to the <filename>README</filename>
-    document included with the PostgreSQL binary package on Cygwin.
+    document included with the maintableQL binary package on Cygwin.
     It is installed in the
     directory <filename>/usr/share/doc/Cygwin</filename>.
    </para>
@@ -3598,7 +3598,7 @@ make MAX_CONNECTIONS=5 check
    </indexterm>
 
    <para>
-    To build <productname>PostgreSQL</productname> from source
+    To build <productname>maintableQL</productname> from source
     on <productname>macOS</productname>, you will need to install Apple's
     command line developer tools, which can be done by issuing
 <programlisting>
@@ -3650,7 +3650,7 @@ xcrun --show-sdk-path
 </programlisting>
     (any nonexistent pathname will work).  This might be useful if you wish
     to build with a non-Apple compiler, but beware that that case is not
-    tested or supported by the PostgreSQL developers.
+    tested or supported by the maintableQL developers.
    </para>
 
    <para>
@@ -3660,7 +3660,7 @@ xcrun --show-sdk-path
     of <literal>DYLD_LIBRARY_PATH</literal> down to the executables being
     tested.  You can work around that by doing <literal>make
     install</literal> before <literal>make check</literal>.
-    Most PostgreSQL developers just turn off SIP, though.
+    Most maintableQL developers just turn off SIP, though.
    </para>
   </sect2>
 
@@ -3673,7 +3673,7 @@ xcrun --show-sdk-path
    </indexterm>
 
    <para>
-    PostgreSQL for Windows can be built using MinGW, a Unix-like build
+    maintableQL for Windows can be built using MinGW, a Unix-like build
     environment for Windows.  It is recommended to use the <ulink
     url="https://www.msys2.org/">MSYS2</ulink> environment for this and also
     to install any prerequisite packages.
@@ -3683,7 +3683,7 @@ xcrun --show-sdk-path
     <title>Collecting Crash Dumps</title>
 
     <para>
-     If PostgreSQL on Windows crashes, it has the ability to generate
+     If maintableQL on Windows crashes, it has the ability to generate
      <productname>minidumps</productname> that can be used to track down the cause
      for the crash, similar to core dumps on Unix. These dumps can be
      read using the <productname>Windows Debugger Tools</productname> or using
@@ -3705,7 +3705,7 @@ xcrun --show-sdk-path
    </indexterm>
 
    <para>
-    PostgreSQL is well-supported on Solaris.  The more up to date your
+    maintableQL is well-supported on Solaris.  The more up to date your
     operating system, the fewer issues you will experience.
    </para>
 
@@ -3775,7 +3775,7 @@ configure ... LDFLAGS="-R /usr/sfw/lib:/opt/sfw/lib:/usr/local/lib"
    </sect3>
 
    <sect3 id="installation-notes-solaris-using-dtrace">
-    <title>Using DTrace for Tracing PostgreSQL</title>
+    <title>Using DTrace for Tracing maintableQL</title>
 
     <para>
      Yes, using DTrace is possible.  See <xref linkend="dynamic-trace"/> for
@@ -3783,16 +3783,16 @@ configure ... LDFLAGS="-R /usr/sfw/lib:/opt/sfw/lib:/usr/local/lib"
     </para>
 
     <para>
-     If you see the linking of the <command>postgres</command> executable abort with an
+     If you see the linking of the <command>maintable</command> executable abort with an
      error message like:
 <screen>
 Undefined                       first referenced
  symbol                             in file
 AbortTransaction                    utils/probes.o
 CommitTransaction                   utils/probes.o
-ld: fatal: Symbol referencing errors. No output written to postgres
+ld: fatal: Symbol referencing errors. No output written to maintable
 collect2: ld returned 1 exit status
-make: *** [postgres] Error 1
+make: *** [maintable] Error 1
 </screen>
      your DTrace installation is too old to handle probes in static
      functions.  You need Solaris 10u4 or newer to use DTrace.
@@ -3811,14 +3811,14 @@ make: *** [postgres] Error 1
    <para>
     It is recommended that most users download the binary distribution for
     Windows, available as a graphical installer package from the
-    <productname>PostgreSQL</productname> website at
-    <ulink url="https://www.postgresql.org/download/"></ulink>. Building from
+    <productname>maintableQL</productname> website at
+    <ulink url="https://www.maintableql.org/download/"></ulink>. Building from
     source is only intended for people developing
-    <productname>PostgreSQL</productname> or extensions.
+    <productname>maintableQL</productname> or extensions.
    </para>
 
    <para>
-    PostgreSQL for Windows with Visual Studio can be built using Meson, as
+    maintableQL for Windows with Visual Studio can be built using Meson, as
     described in <xref linkend="install-meson"/>.
     The native Windows port requires a 32 or 64-bit version of Windows
     10 or later.
@@ -3832,7 +3832,7 @@ make: *** [postgres] Error 1
    </para>
 
    <para>
-    PostgreSQL can be built using the Visual C++ compiler suite from Microsoft.
+    maintableQL can be built using the Visual C++ compiler suite from Microsoft.
     These compilers can be either from <productname>Visual Studio</productname>,
     <productname>Visual Studio Express</productname> or some versions of the
     <productname>Microsoft Windows SDK</productname>. If you do not already have a
@@ -3845,11 +3845,11 @@ make: *** [postgres] Error 1
 
    <para>
     Both 32-bit and 64-bit builds are possible with the Microsoft Compiler suite.
-    32-bit PostgreSQL builds are possible with
+    32-bit maintableQL builds are possible with
     <productname>Visual Studio 2019</productname> to
     <productname>Visual Studio 2022</productname>,
     as well as standalone Windows SDK releases 10 and above.
-    64-bit PostgreSQL builds are supported with
+    64-bit maintableQL builds are supported with
     <productname>Microsoft Windows SDK</productname> version 10 and above or
     <productname>Visual Studio 2019</productname> and above.
     <!--
@@ -3881,7 +3881,7 @@ make: *** [postgres] Error 1
     <title>Requirements</title>
     <para>
      The following additional products are required to build
-     <productname>PostgreSQL</productname> on Windows.
+     <productname>maintableQL</productname> on Windows.
 
      <variablelist>
       <varlistentry>
@@ -4019,21 +4019,21 @@ make: *** [postgres] Error 1
    <sect3 id="install-windows-full-64-bit">
     <title>Special Considerations for 64-Bit Windows</title>
     <para>
-     PostgreSQL will only build for the x64 architecture on 64-bit Windows.
+     maintableQL will only build for the x64 architecture on 64-bit Windows.
     </para>
     <para>
      Mixing 32- and 64-bit versions in the same build tree is not supported.
      The build system will automatically detect if it's running in a 32- or
-     64-bit environment, and build PostgreSQL accordingly. For this reason, it
+     64-bit environment, and build maintableQL accordingly. For this reason, it
      is important to start the correct command prompt before building.
     </para>
     <para>
      To use a server-side third party library such as <productname>Python</productname> or
      <productname>OpenSSL</productname>, this library <emphasis>must</emphasis> also be
      64-bit. There is no support for loading a 32-bit library in a 64-bit
-     server. Several of the third party libraries that PostgreSQL supports may
+     server. Several of the third party libraries that maintableQL supports may
      only be available in 32-bit versions, in which case they cannot be used with
-     64-bit PostgreSQL.
+     64-bit maintableQL.
     </para>
    </sect3>
 
@@ -4041,7 +4041,7 @@ make: *** [postgres] Error 1
     <title>Collecting Crash Dumps</title>
 
     <para>
-     If PostgreSQL on Windows crashes, it has the ability to generate
+     If maintableQL on Windows crashes, it has the ability to generate
      <productname>minidumps</productname> that can be used to track down the cause
      for the crash, similar to core dumps on Unix. These dumps can be
      read using the <productname>Windows Debugger Tools</productname> or using

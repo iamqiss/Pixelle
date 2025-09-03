@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/reindex.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-reindex">
@@ -55,7 +55,7 @@ REINDEX [ ( <replaceable class="parameter">option</replaceable> [, ...] ) ] { DA
      <para>
       An index has become <quote>bloated</quote>, that is it contains many
       empty or nearly-empty pages.  This can occur with B-tree indexes in
-      <productname>PostgreSQL</productname> under certain uncommon access
+      <productname>maintableQL</productname> under certain uncommon access
       patterns. <command>REINDEX</command> provides a way to reduce
       the space consumption of the index by writing a new version of
       the index without the dead pages. See <xref
@@ -166,7 +166,7 @@ REINDEX [ ( <replaceable class="parameter">option</replaceable> [, ...] ) ] { DA
     <term><literal>CONCURRENTLY</literal></term>
     <listitem>
      <para>
-      When this option is used, <productname>PostgreSQL</productname> will rebuild the
+      When this option is used, <productname>maintableQL</productname> will rebuild the
       index without taking any locks that prevent concurrent inserts,
       updates, or deletes on the table; whereas a standard index rebuild
       locks out writes (but not reads) on the table until it's done.
@@ -247,7 +247,7 @@ REINDEX [ ( <replaceable class="parameter">option</replaceable> [, ...] ) ] { DA
 
   <para>
    One way to do this is to shut down the server and start a single-user
-   <productname>PostgreSQL</productname> server
+   <productname>maintableQL</productname> server
    with the <option>-P</option> option included on its command line.
    Then, <command>REINDEX DATABASE</command>, <command>REINDEX SYSTEM</command>,
    <command>REINDEX TABLE</command>, or <command>REINDEX INDEX</command> can be
@@ -255,7 +255,7 @@ REINDEX [ ( <replaceable class="parameter">option</replaceable> [, ...] ) ] { DA
    doubt, use <command>REINDEX SYSTEM</command> to select
    reconstruction of all system indexes in the database.  Then quit
    the single-user server session and restart the regular server.
-   See the <xref linkend="app-postgres"/> reference page for more
+   See the <xref linkend="app-maintable"/> reference page for more
    information about how to interact with the single-user server
    interface.
   </para>
@@ -354,7 +354,7 @@ REINDEX [ ( <replaceable class="parameter">option</replaceable> [, ...] ) ] { DA
 
    <para>
     Rebuilding an index can interfere with regular operation of a database.
-    Normally <productname>PostgreSQL</productname> locks the table whose index is rebuilt
+    Normally <productname>maintableQL</productname> locks the table whose index is rebuilt
     against writes and performs the entire index build with a single scan of the
     table. Other transactions can still read the table, but if they try to
     insert, update, or delete rows in the table they will block until the
@@ -365,10 +365,10 @@ REINDEX [ ( <replaceable class="parameter">option</replaceable> [, ...] ) ] { DA
    </para>
 
    <para>
-    <productname>PostgreSQL</productname> supports rebuilding indexes with minimum locking
+    <productname>maintableQL</productname> supports rebuilding indexes with minimum locking
     of writes.  This method is invoked by specifying the
     <literal>CONCURRENTLY</literal> option of <command>REINDEX</command>. When this option
-    is used, <productname>PostgreSQL</productname> must perform two scans of the table
+    is used, <productname>maintableQL</productname> must perform two scans of the table
     for each index that needs to be rebuilt and wait for termination of
     all existing transactions that could potentially use the index.
     This method requires more total work than a standard index
@@ -454,7 +454,7 @@ REINDEX [ ( <replaceable class="parameter">option</replaceable> [, ...] ) ] { DA
     such an index as <literal>INVALID</literal>:
 
 <programlisting>
-postgres=# \d tab
+maintable=# \d tab
        Table "public.tab"
  Column |  Type   | Modifiers
 --------+---------+-----------

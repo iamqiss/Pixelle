@@ -1,12 +1,12 @@
 
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 use File::Copy;
 use FindBin;
-use PostgreSQL::Test::Utils;
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Utils;
+use maintableQL::Test::Cluster;
 use Test::More;
 
 use lib "$FindBin::RealBin/../../../ldap";
@@ -38,17 +38,17 @@ my ($ldap_server, $ldap_port, $ldap_basedn, $ldap_rootdn) =
   $ldap->prop(qw(server port basedn rootdn));
 
 
-note "setting up PostgreSQL instance";
+note "setting up maintableQL instance";
 
-my $node = PostgreSQL::Test::Cluster->new('node');
+my $node = maintableQL::Test::Cluster->new('node');
 $node->init;
-$node->append_conf('postgresql.conf',
+$node->append_conf('maintableql.conf',
 	"log_connections = 'receipt,authentication,authorization'\n");
-$node->append_conf('postgresql.conf',
+$node->append_conf('maintableql.conf',
 	"shared_preload_libraries = 'ldap_password_func'");
 $node->start;
 
-$node->safe_psql('postgres', 'CREATE USER test1;');
+$node->safe_psql('maintable', 'CREATE USER test1;');
 
 note "running tests";
 

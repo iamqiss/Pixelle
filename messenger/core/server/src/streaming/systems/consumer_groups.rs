@@ -21,9 +21,9 @@ use crate::streaming::systems::COMPONENT;
 use crate::streaming::systems::system::System;
 use crate::streaming::topics::consumer_group::ConsumerGroup;
 use error_set::ErrContext;
-use iggy_common::Identifier;
-use iggy_common::IggyError;
-use iggy_common::locking::IggySharedMutFn;
+use messenger_common::Identifier;
+use messenger_common::MessengerError;
+use messenger_common::locking::MessengerSharedMutFn;
 use tokio::sync::RwLock;
 
 impl System {
@@ -33,7 +33,7 @@ impl System {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<Option<&RwLock<ConsumerGroup>>, IggyError> {
+    ) -> Result<Option<&RwLock<ConsumerGroup>>, MessengerError> {
         self.ensure_authenticated(session)?;
         let Some(topic) = self.try_find_topic(session, stream_id, topic_id)? else {
             return Ok(None);
@@ -56,7 +56,7 @@ impl System {
         session: &Session,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<Vec<&RwLock<ConsumerGroup>>, IggyError> {
+    ) -> Result<Vec<&RwLock<ConsumerGroup>>, MessengerError> {
         self.ensure_authenticated(session)?;
         let topic = self.find_topic(session, stream_id, topic_id)
             .with_error_context(|error| format!("{COMPONENT} (error: {error}) - topic with ID: {topic_id} was not found in stream with ID: {stream_id}"))?;
@@ -80,7 +80,7 @@ impl System {
         topic_id: &Identifier,
         group_id: Option<u32>,
         name: &str,
-    ) -> Result<&RwLock<ConsumerGroup>, IggyError> {
+    ) -> Result<&RwLock<ConsumerGroup>, MessengerError> {
         self.ensure_authenticated(session)?;
         {
             let topic = self.find_topic(session, stream_id, topic_id)
@@ -111,7 +111,7 @@ impl System {
         stream_id: &Identifier,
         topic_id: &Identifier,
         consumer_group_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.ensure_authenticated(session)?;
         let stream_id_value;
         let topic_id_value;
@@ -167,7 +167,7 @@ impl System {
         stream_id: &Identifier,
         topic_id: &Identifier,
         consumer_group_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.ensure_authenticated(session)?;
         let stream_id_value;
         let topic_id_value;
@@ -237,7 +237,7 @@ impl System {
         stream_id: &Identifier,
         topic_id: &Identifier,
         consumer_group_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.ensure_authenticated(session)?;
         {
             let topic = self
@@ -276,7 +276,7 @@ impl System {
         topic_id: &Identifier,
         consumer_group_id: &Identifier,
         client_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let stream_id_value;
         let topic_id_value;
         let group_id;

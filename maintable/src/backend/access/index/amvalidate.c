@@ -4,7 +4,7 @@
  *	  Support routines for index access methods' amvalidate and
  *	  amadjustmembers functions.
  *
- * Copyright (c) 2016-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2016-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/amvalidate.h"
 #include "access/htup_details.h"

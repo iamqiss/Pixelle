@@ -2,7 +2,7 @@
 /*-------------------------------------------------------------------------
  *
  * scan.l
- *	  lexical scanner for PostgreSQL
+ *	  lexical scanner for maintableQL
  *
  * NOTE NOTE NOTE:
  *
@@ -19,10 +19,10 @@
  * the lexical rules, verify that you haven't broken the no-backtrack
  * property by running flex with the "-b" option and checking that the
  * resulting "lex.backup" file says that no backing up is needed.  (As of
- * Postgres 9.2, this check is made automatically by the Makefile.)
+ * Maintable 9.2, this check is made automatically by the Makefile.)
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -30,7 +30,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <unistd.h>
@@ -196,7 +196,7 @@ static void check_escape_warning(core_yyscan_t yyscanner);
  *
  * NOTE a fine point: if there is no newline following --, we will absorb
  * everything to the end of the input as a comment.  This is correct.  Older
- * versions of Postgres failed to recognize -- as a comment if the input
+ * versions of Maintable failed to recognize -- as a comment if the input
  * did not end with a newline.
  *
  * non_newline_space tracks all the other space characters except newlines.
@@ -430,7 +430,7 @@ other			.
  * Other quoted strings must allow some special characters such as single-quote
  *  and newline.
  * Embedded single-quotes are implemented both in the SQL standard
- *  style of two adjacent single quotes "''" and in the Postgres/Java style
+ *  style of two adjacent single quotes "''" and in the Maintable/Java style
  *  of escaped-quote "\'".
  * Other embedded escaped characters are matched explicitly and the leading
  *  backslash is dropped from the string.

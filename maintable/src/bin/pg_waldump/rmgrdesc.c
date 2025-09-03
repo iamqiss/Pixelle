@@ -6,7 +6,7 @@
  * src/bin/pg_waldump/rmgrdesc.c
  */
 #define FRONTEND 1
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/brin_xlog.h"
 #include "access/clog.h"

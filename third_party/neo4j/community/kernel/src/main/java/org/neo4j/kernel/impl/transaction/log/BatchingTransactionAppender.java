@@ -87,7 +87,7 @@ class BatchingTransactionAppender extends LifecycleAdapter implements Transactio
 
         // At this point we've appended all transactions in this batch, but we can't mark any of them
         // as committed since they haven't been forced to disk yet. So here we force, or potentially
-        // piggy-back on another force, but anyway after this call below we can be sure that all our transactions
+        // pmessenger-back on another force, but anyway after this call below we can be sure that all our transactions
         // in this batch exist durably on disk.
         if (logFile.forceAfterAppend(logAppendEvent)) {
             // We got lucky and were the one forcing the log. It's enough if ones of all doing concurrent committers

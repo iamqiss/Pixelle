@@ -15,11 +15,11 @@
 // specific language governing permissions and limitations
 // under the License.
 #define CATCH_CONFIG_MAIN
-#include "../../sdk/net/iggy.h"
+#include "../../sdk/net/messenger.h"
 #include "unit_testutils.h"
 
-TEST_CASE("Iggy protocols", UT_TAG) {
-    icp::net::IggyProtocolProvider provider;
+TEST_CASE("Messenger protocols", UT_TAG) {
+    icp::net::MessengerProtocolProvider provider;
 
     SECTION("enumerate supported protocols") {
         REQUIRE(provider.getSupportedProtocols().size() == 5);

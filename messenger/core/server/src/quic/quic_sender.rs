@@ -19,7 +19,7 @@
 use crate::quic::COMPONENT;
 use crate::{binary::sender::Sender, server_error::ServerError};
 use error_set::ErrContext;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use quinn::{RecvStream, SendStream};
 use std::io::IoSlice;
 use tracing::{debug, error};
@@ -33,26 +33,26 @@ pub struct QuicSender {
 }
 
 impl Sender for QuicSender {
-    async fn read(&mut self, buffer: &mut [u8]) -> Result<usize, IggyError> {
+    async fn read(&mut self, buffer: &mut [u8]) -> Result<usize, MessengerError> {
         // Not-so-nice code because quinn recv stream has different API for read_exact
         let read_bytes = buffer.len();
         self.recv.read_exact(buffer).await.map_err(|error| {
             error!("Failed to read from the stream: {:?}", error);
-            IggyError::QuicError
+            MessengerError::QuicError
         })?;
 
         Ok(read_bytes)
     }
 
-    async fn send_empty_ok_response(&mut self) -> Result<(), IggyError> {
+    async fn send_empty_ok_response(&mut self) -> Result<(), MessengerError> {
         self.send_ok_response(&[]).await
     }
 
-    async fn send_ok_response(&mut self, payload: &[u8]) -> Result<(), IggyError> {
+    async fn send_ok_response(&mut self, payload: &[u8]) -> Result<(), MessengerError> {
         self.send_response(STATUS_OK, payload).await
     }
 
-    async fn send_error_response(&mut self, error: IggyError) -> Result<(), IggyError> {
+    async fn send_error_response(&mut self, error: MessengerError) -> Result<(), MessengerError> {
         self.send_response(&error.as_code().to_le_bytes(), &[])
             .await
     }
@@ -65,7 +65,7 @@ impl Sender for QuicSender {
         &mut self,
         length: &[u8],
         slices: Vec<IoSlice<'_>>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("Sending vectored response with status: {:?}...", STATUS_OK);
 
         let headers = [STATUS_OK, length].concat();
@@ -75,7 +75,7 @@ impl Sender for QuicSender {
             .with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to write headers to stream")
             })
-            .map_err(|_| IggyError::QuicError)?;
+            .map_err(|_| MessengerError::QuicError)?;
 
         let mut total_bytes_written = 0;
 
@@ -88,7 +88,7 @@ impl Sender for QuicSender {
                     .with_error_context(|error| {
                         format!("{COMPONENT} (error: {error}) - failed to write slice to stream")
                     })
-                    .map_err(|_| IggyError::QuicError)?;
+                    .map_err(|_| MessengerError::QuicError)?;
 
                 total_bytes_written += slice_data.len();
             }
@@ -104,7 +104,7 @@ impl Sender for QuicSender {
             .with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to finish send stream")
             })
-            .map_err(|_| IggyError::QuicError)?;
+            .map_err(|_| MessengerError::QuicError)?;
 
         debug!("Sent vectored response with status: {:?}", STATUS_OK);
         Ok(())
@@ -112,7 +112,7 @@ impl Sender for QuicSender {
 }
 
 impl QuicSender {
-    async fn send_response(&mut self, status: &[u8], payload: &[u8]) -> Result<(), IggyError> {
+    async fn send_response(&mut self, status: &[u8], payload: &[u8]) -> Result<(), MessengerError> {
         debug!(
             "Sending response of len: {} with status: {:?}...",
             payload.len(),
@@ -125,13 +125,13 @@ impl QuicSender {
             .with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to write buffer to the stream")
             })
-            .map_err(|_| IggyError::QuicError)?;
+            .map_err(|_| MessengerError::QuicError)?;
         self.send
             .finish()
             .with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to finish send stream")
             })
-            .map_err(|_| IggyError::QuicError)?;
+            .map_err(|_| MessengerError::QuicError)?;
         debug!("Sent response with status: {:?}", status);
         Ok(())
     }

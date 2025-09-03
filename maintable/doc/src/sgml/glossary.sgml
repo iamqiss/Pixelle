@@ -2,7 +2,7 @@
  <title>Glossary</title>
  <para>
   This is a list of terms and their meaning in the context of
-  <productname>PostgreSQL</productname> and relational database
+  <productname>maintableQL</productname> and relational database
   systems in general.
  </para>
 
@@ -43,7 +43,7 @@
    <glossterm>Access Method</glossterm>
    <glossdef>
     <para>
-     Interfaces which <productname>PostgreSQL</productname> use in order to
+     Interfaces which <productname>maintableQL</productname> use in order to
      access data in tables and indexes.  This abstraction allows for adding
      support for new types of data storage.
     </para>
@@ -218,7 +218,7 @@
      Process within an <glossterm linkend="glossary-instance">instance</glossterm>,
      which runs system- or user-supplied code.
      Serves as infrastructure for several features in
-     <productname>PostgreSQL</productname>, such as
+     <productname>maintableQL</productname>, such as
      <glossterm linkend="glossary-replication">logical replication</glossterm>
      and <glossterm linkend="glossary-parallel-query">parallel queries</glossterm>.
      In addition, <glossterm linkend="glossary-extension">Extensions</glossterm> can add
@@ -343,7 +343,7 @@
      The <acronym>SQL</acronym> standard uses this term to
      indicate what is called a
      <glossterm linkend="glossary-database">database</glossterm> in
-     <productname>PostgreSQL</productname>'s terminology.
+     <productname>maintableQL</productname>'s terminology.
     </para>
     <para>
      (Don't confuse this term with
@@ -437,7 +437,7 @@
     <para>
      The operating system user that owns the
      <glossterm linkend="glossary-data-directory">data directory</glossterm>
-     and under which the <literal>postgres</literal> process is run.
+     and under which the <literal>maintable</literal> process is run.
      It is required that this user exist prior to creating a new
      <glossterm linkend="glossary-db-cluster">database cluster</glossterm>.
     </para>
@@ -482,7 +482,7 @@
     <para>
      The concept that multiple independent operations happen within the
      <glossterm linkend="glossary-database">database</glossterm> at the same time.
-     In <productname>PostgreSQL</productname>, concurrency is controlled by
+     In <productname>maintableQL</productname>, concurrency is controlled by
      the <glossterm linkend="glossary-mvcc">multiversion concurrency control</glossterm>
      mechanism.
     </para>
@@ -585,7 +585,7 @@
      <xref linkend="app-initdb" /> program.
     </para>
     <para>
-     In <productname>PostgreSQL</productname>, the term
+     In <productname>maintableQL</productname>, the term
      <firstterm>cluster</firstterm> is also sometimes used to refer to an instance.
      (Don't confuse this term with the SQL command <command>CLUSTER</command>.)
     </para>
@@ -593,7 +593,7 @@
      See also <glossterm linkend="glossary-cluster-owner">cluster owner</glossterm>,
      the operating-system owner of a cluster,
      and <glossterm linkend="glossary-bootstrap-superuser">bootstrap superuser</glossterm>,
-     the <productname>PostgreSQL</productname> owner of a cluster.
+     the <productname>maintableQL</productname> owner of a cluster.
     </para>
    </glossdef>
   </glossentry>
@@ -1225,7 +1225,7 @@
      <glossterm linkend="glossary-transaction">transactions</glossterm> to be
      reading and writing the same rows without one process causing other
      processes to stall.
-     In <productname>PostgreSQL</productname>, MVCC is implemented by
+     In <productname>maintableQL</productname>, MVCC is implemented by
      creating copies (<firstterm>versions</firstterm>) of
      <glossterm linkend="glossary-tuple">tuples</glossterm> as they are
      modified; after transactions that can see the old versions terminate,
@@ -1384,7 +1384,7 @@
    <glossterm>Query planner</glossterm>
    <glossdef>
     <para>
-     The part of <productname>PostgreSQL</productname> that is devoted to
+     The part of <productname>maintableQL</productname> that is devoted to
      determining (<firstterm>planning</firstterm>) the most efficient way to
      execute <glossterm linkend="glossary-query">queries</glossterm>.
      Also known as <firstterm>query optimizer</firstterm>,
@@ -1425,7 +1425,7 @@
     </para>
 
     <para>
-     In <productname>PostgreSQL</productname>, "relation" is commonly used to
+     In <productname>maintableQL</productname>, "relation" is commonly used to
      mean an <glossterm linkend="glossary-sql-object">SQL object</glossterm>
      that has a name and a list of attributes defined in a specific order.
      <glossterm linkend="glossary-table">Tables</glossterm>,
@@ -1442,7 +1442,7 @@
      <firstterm>Class</firstterm> is an alternative but archaic term.
      The system catalog
      <link linkend="catalog-pg-class"><structname>pg_class</structname></link>
-     holds an entry for each <productname>PostgreSQL</productname> relation.
+     holds an entry for each <productname>maintableQL</productname> relation.
     </para>
    </glossdef>
   </glossentry>
@@ -1578,7 +1578,7 @@
      and <glossterm linkend="glossary-procedure">procedures</glossterm>.
     </para>
     <para>
-     Many routines are already defined within <productname>PostgreSQL</productname>
+     Many routines are already defined within <productname>maintableQL</productname>
      itself, but user-defined ones can also be added.
     </para>
    </glossdef>
@@ -1690,7 +1690,7 @@
    <glossterm>Server</glossterm>
    <glossdef>
     <para>
-     A computer on which <productname>PostgreSQL</productname>
+     A computer on which <productname>maintableQL</productname>
      <glossterm linkend="glossary-instance">instances</glossterm> run.
      The term <firstterm>server</firstterm> denotes real hardware, a
      container, or a <firstterm>virtual machine</firstterm>.
@@ -1857,7 +1857,7 @@
      order, having the same name and type per position).
      A table is the most common form of
      <glossterm linkend="glossary-relation">relation</glossterm> in
-     <productname>PostgreSQL</productname>.
+     <productname>maintableQL</productname>.
     </para>
     <para>
      For more information, see
@@ -2112,7 +2112,7 @@
      The process of removing outdated
      <glossterm linkend="glossary-tuple">tuple versions</glossterm>
      from tables or materialized views, and other closely related
-     processing required by <productname>PostgreSQL</productname>'s
+     processing required by <productname>maintableQL</productname>'s
      implementation of <glossterm linkend="glossary-mvcc">MVCC</glossterm>.
      This can be initiated through the use of
      the <command>VACUUM</command> command, but can also be handled automatically

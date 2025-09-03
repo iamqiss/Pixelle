@@ -1,13 +1,13 @@
 /*-------------------------------------------------------------------------
  *
  * lockdefs.h
- *	   Frontend exposed parts of postgres' low level lock mechanism
+ *	   Frontend exposed parts of maintable' low level lock mechanism
  *
  * The split between lockdefs.h and lock.h is not very principled. This file
  * contains definition that have to (indirectly) be available when included by
  * FRONTEND code.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/storage/lockdefs.h

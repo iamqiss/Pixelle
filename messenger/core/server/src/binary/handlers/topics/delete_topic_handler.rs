@@ -24,23 +24,23 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::delete_topic::DeleteTopic;
+use messenger_common::MessengerError;
+use messenger_common::delete_topic::DeleteTopic;
 use tracing::{debug, instrument};
 
 impl ServerCommandHandler for DeleteTopic {
     fn code(&self) -> u32 {
-        iggy_common::DELETE_TOPIC_CODE
+        messenger_common::DELETE_TOPIC_CODE
     }
 
-    #[instrument(skip_all, name = "trace_delete_topic", fields(iggy_user_id = session.get_user_id(), iggy_client_id = session.client_id, iggy_stream_id = self.stream_id.as_string(), iggy_topic_id = self.topic_id.as_string()))]
+    #[instrument(skip_all, name = "trace_delete_topic", fields(messenger_user_id = session.get_user_id(), messenger_client_id = session.client_id, messenger_stream_id = self.stream_id.as_string(), messenger_topic_id = self.topic_id.as_string()))]
     async fn handle(
         self,
         sender: &mut SenderKind,
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
         let stream_id = self.stream_id.clone();
         let topic_id = self.topic_id.clone();
@@ -67,13 +67,13 @@ impl ServerCommandHandler for DeleteTopic {
 }
 
 impl BinaryServerCommand for DeleteTopic {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::DeleteTopic(delete_topic) => Ok(delete_topic),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

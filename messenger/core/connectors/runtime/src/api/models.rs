@@ -20,7 +20,7 @@ use crate::{
     configs::{ConfigFormat, StreamConsumerConfig, StreamProducerConfig},
     manager::{sink::SinkInfo, source::SourceInfo},
 };
-use iggy_connector_sdk::transforms::TransformType;
+use messenger_connector_sdk::transforms::TransformType;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]

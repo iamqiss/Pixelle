@@ -1,12 +1,12 @@
 # Czech message translation file for pg_resetxlog
-# Copyright (C) 2012 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2012 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Tomas Vondra <tv@fuzzy.cz>, 2012, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_resetxlog-cs (PostgreSQL 9.3)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_resetxlog-cs (maintableQL 9.3)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2020-10-31 16:15+0000\n"
 "PO-Revision-Date: 2020-10-31 21:25+0100\n"
 "Last-Translator: Tomas Vondra <tv@fuzzy.cz>\n"
@@ -150,8 +150,8 @@ msgstr "nelze spouštět jako \"root\""
 
 #: pg_resetwal.c:345
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "Musíte spustit %s jako PostgreSQL superuživatel."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "Musíte spustit %s jako maintableQL superuživatel."
 
 #: pg_resetwal.c:356
 #, c-format
@@ -543,10 +543,10 @@ msgstr "fsync error:  %m"
 #: pg_resetwal.c:1208
 #, c-format
 msgid ""
-"%s resets the PostgreSQL write-ahead log.\n"
+"%s resets the maintableQL write-ahead log.\n"
 "\n"
 msgstr ""
-"%s resetuje PostgreSQL transakční log.\n"
+"%s resetuje maintableQL transakční log.\n"
 "\n"
 
 #: pg_resetwal.c:1209
@@ -712,10 +712,10 @@ msgstr "%s domácí stránka: <%s>\n"
 
 #~ msgid ""
 #~ "\n"
-#~ "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Chyby hlaste na adresu <pgsql-bugs@postgresql.org>.\n"
+#~ "Chyby hlaste na adresu <pgsql-bugs@maintableql.org>.\n"
 
 #~ msgid "Float4 argument passing:              %s\n"
 #~ msgstr "Způsob předávání float4 hodnot:            %s\n"

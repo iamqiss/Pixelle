@@ -482,7 +482,7 @@ public interface ClusteringPrefix<V> extends IMeasurableMemory, Clusterable<V>
             {
                 // we micro-batch the headers, so that we can incur fewer method calls,
                 // and generate no garbage on deserialization;
-                // we piggyback on vint encoding so that, typically, only 1 byte is used per 32 clustering values,
+                // we pmessengerback on vint encoding so that, typically, only 1 byte is used per 32 clustering values,
                 // i.e. more than we ever expect to see
                 int limit = Math.min(clusteringSize, offset + 32);
                 out.writeUnsignedVInt(makeHeader(clustering, offset, limit));

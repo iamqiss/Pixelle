@@ -17,10 +17,10 @@
  */
 
 use crate::shared::args::Args;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use tracing::info;
 
-type MessageHandler = dyn Fn(&IggyMessage) -> Result<(), Box<dyn std::error::Error>>;
+type MessageHandler = dyn Fn(&MessengerMessage) -> Result<(), Box<dyn std::error::Error>>;
 
 pub async fn init_by_consumer(args: &Args, client: &dyn Client) {
     let (stream_id, topic_id, partition_id) = (
@@ -73,7 +73,7 @@ pub async fn init_by_consumer(args: &Args, client: &dyn Client) {
     }
 }
 
-pub async fn init_by_producer(args: &Args, client: &dyn Client) -> Result<(), IggyError> {
+pub async fn init_by_producer(args: &Args, client: &dyn Client) -> Result<(), MessengerError> {
     let stream_id = args.stream_id.clone().try_into()?;
     let topic_name = args.topic_id.clone();
     let stream = client.get_stream(&stream_id).await?;
@@ -91,7 +91,7 @@ pub async fn init_by_producer(args: &Args, client: &dyn Client) -> Result<(), Ig
             CompressionAlgorithm::from_code(args.compression_algorithm)?,
             None,
             None,
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await?;

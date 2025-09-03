@@ -17,10 +17,10 @@
  */
 
 use crate::streaming::users::permissioner::Permissioner;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 
 impl Permissioner {
-    pub fn get_topic(&self, user_id: u32, stream_id: u32, topic_id: u32) -> Result<(), IggyError> {
+    pub fn get_topic(&self, user_id: u32, stream_id: u32, topic_id: u32) -> Result<(), MessengerError> {
         if let Some(global_permissions) = self.users_permissions.get(&user_id)
             && (global_permissions.read_streams
                 || global_permissions.manage_streams
@@ -44,10 +44,10 @@ impl Permissioner {
             }
         }
 
-        Err(IggyError::Unauthorized)
+        Err(MessengerError::Unauthorized)
     }
 
-    pub fn get_topics(&self, user_id: u32, stream_id: u32) -> Result<(), IggyError> {
+    pub fn get_topics(&self, user_id: u32, stream_id: u32) -> Result<(), MessengerError> {
         if let Some(global_permissions) = self.users_permissions.get(&user_id)
             && (global_permissions.read_streams
                 || global_permissions.manage_streams
@@ -71,10 +71,10 @@ impl Permissioner {
             }
         }
 
-        Err(IggyError::Unauthorized)
+        Err(MessengerError::Unauthorized)
     }
 
-    pub fn create_topic(&self, user_id: u32, stream_id: u32) -> Result<(), IggyError> {
+    pub fn create_topic(&self, user_id: u32, stream_id: u32) -> Result<(), MessengerError> {
         if let Some(global_permissions) = self.users_permissions.get(&user_id)
             && (global_permissions.manage_streams || global_permissions.manage_topics)
         {
@@ -87,7 +87,7 @@ impl Permissioner {
             return Ok(());
         }
 
-        Err(IggyError::Unauthorized)
+        Err(MessengerError::Unauthorized)
     }
 
     pub fn update_topic(
@@ -95,7 +95,7 @@ impl Permissioner {
         user_id: u32,
         stream_id: u32,
         topic_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.manage_topic(user_id, stream_id, topic_id)
     }
 
@@ -104,7 +104,7 @@ impl Permissioner {
         user_id: u32,
         stream_id: u32,
         topic_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.manage_topic(user_id, stream_id, topic_id)
     }
 
@@ -113,11 +113,11 @@ impl Permissioner {
         user_id: u32,
         stream_id: u32,
         topic_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.manage_topic(user_id, stream_id, topic_id)
     }
 
-    fn manage_topic(&self, user_id: u32, stream_id: u32, topic_id: u32) -> Result<(), IggyError> {
+    fn manage_topic(&self, user_id: u32, stream_id: u32, topic_id: u32) -> Result<(), MessengerError> {
         if let Some(global_permissions) = self.users_permissions.get(&user_id)
             && (global_permissions.manage_streams || global_permissions.manage_topics)
         {
@@ -138,6 +138,6 @@ impl Permissioner {
             }
         }
 
-        Err(IggyError::Unauthorized)
+        Err(MessengerError::Unauthorized)
     }
 }

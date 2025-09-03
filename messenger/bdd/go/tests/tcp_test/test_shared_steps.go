@@ -18,7 +18,7 @@
 package tcp_test
 
 import (
-	ierror "github.com/apache/iggy/foreign/go/errors"
+	ierror "github.com/apache/messenger/foreign/go/errors"
 	"github.com/onsi/ginkgo/v2"
 	"github.com/onsi/gomega"
 )
@@ -29,9 +29,9 @@ func itShouldReturnSpecificError(err error, errorMessage string) {
 	})
 }
 
-func itShouldReturnSpecificIggyError(err error, iggyError *ierror.IggyError) {
-	ginkgo.It("Should return error: "+iggyError.Error(), func() {
-		gomega.Expect(err).To(gomega.MatchError(iggyError))
+func itShouldReturnSpecificMessengerError(err error, messengerError *ierror.MessengerError) {
+	ginkgo.It("Should return error: "+messengerError.Error(), func() {
+		gomega.Expect(err).To(gomega.MatchError(messengerError))
 	})
 }
 

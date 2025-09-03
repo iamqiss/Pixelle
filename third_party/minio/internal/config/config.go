@@ -136,7 +136,7 @@ const (
 	NotifyNSQSubSys      = madmin.NotifyNSQSubSys
 	NotifyESSubSys       = madmin.NotifyESSubSys
 	NotifyAMQPSubSys     = madmin.NotifyAMQPSubSys
-	NotifyPostgresSubSys = madmin.NotifyPostgresSubSys
+	NotifyMaintableSubSys = madmin.NotifyMaintableSubSys
 	NotifyRedisSubSys    = madmin.NotifyRedisSubSys
 	NotifyWebhookSubSys  = madmin.NotifyWebhookSubSys
 
@@ -157,7 +157,7 @@ var NotifySubSystems = set.CreateStringSet(
 	NotifyNSQSubSys,
 	NotifyESSubSys,
 	NotifyAMQPSubSys,
-	NotifyPostgresSubSys,
+	NotifyMaintableSubSys,
 	NotifyRedisSubSys,
 	NotifyWebhookSubSys,
 )

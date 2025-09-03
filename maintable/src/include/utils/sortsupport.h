@@ -3,7 +3,7 @@
  * sortsupport.h
  *	  Framework for accelerated sorting.
  *
- * Traditionally, PostgreSQL has implemented sorting by repeatedly invoking
+ * Traditionally, maintableQL has implemented sorting by repeatedly invoking
  * an SQL-callable comparison function "cmp(x, y) returns int" on pairs of
  * values to be compared, where the comparison function is the BTORDER_PROC
  * pg_amproc support function of the appropriate btree index opclass.
@@ -42,7 +42,7 @@
  * function for such cases, but probably not any other acceleration method.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/utils/sortsupport.h

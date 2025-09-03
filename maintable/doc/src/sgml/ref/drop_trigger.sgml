@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_trigger.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-droptrigger">
@@ -109,7 +109,7 @@ DROP TRIGGER if_dist_exists ON films;
 
   <para>
    The <command>DROP TRIGGER</command> statement in
-   <productname>PostgreSQL</productname> is incompatible with the SQL
+   <productname>maintableQL</productname> is incompatible with the SQL
    standard.  In the SQL standard, trigger names are not local to
    tables, so the command is simply <literal>DROP TRIGGER
    <replaceable>name</replaceable></literal>.

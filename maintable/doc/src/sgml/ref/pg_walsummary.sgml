@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pg_walsummary.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-pgwalsummary">

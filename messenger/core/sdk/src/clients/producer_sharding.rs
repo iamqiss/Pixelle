@@ -18,7 +18,7 @@
 use crate::clients::producer::ProducerCoreBackend;
 use crate::clients::producer_config::BackgroundConfig;
 use crate::clients::producer_error_callback::ErrorCtx;
-use iggy_common::{Identifier, IggyByteSize, IggyError, IggyMessage, Partitioning, Sizeable};
+use messenger_common::{Identifier, MessengerByteSize, MessengerError, MessengerMessage, Partitioning, Sizeable};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
 use tokio::sync::{OwnedSemaphorePermit, broadcast};
@@ -34,7 +34,7 @@ pub trait Sharding: Send + Sync + std::fmt::Debug + 'static {
     fn pick_shard(
         &self,
         num_shards: usize,
-        messages: &[IggyMessage],
+        messages: &[MessengerMessage],
         stream: &Identifier,
         topic: &Identifier,
     ) -> usize;
@@ -52,7 +52,7 @@ impl Sharding for BalancedSharding {
     fn pick_shard(
         &self,
         num_shards: usize,
-        _: &[IggyMessage],
+        _: &[MessengerMessage],
         _: &Identifier,
         _: &Identifier,
     ) -> usize {
@@ -64,13 +64,13 @@ impl Sharding for BalancedSharding {
 pub struct ShardMessage {
     pub stream: Arc<Identifier>,
     pub topic: Arc<Identifier>,
-    pub messages: Vec<IggyMessage>,
+    pub messages: Vec<MessengerMessage>,
     pub partitioning: Option<Arc<Partitioning>>,
 }
 
 impl Sizeable for ShardMessage {
-    fn get_size_bytes(&self) -> IggyByteSize {
-        let mut total = IggyByteSize::new(0);
+    fn get_size_bytes(&self) -> MessengerByteSize {
+        let mut total = MessengerByteSize::new(0);
         total += self.stream.get_size_bytes();
         total += self.topic.get_size_bytes();
         for msg in &self.messages {
@@ -202,7 +202,7 @@ impl Shard {
                 .await;
 
             if let Err(err) = result {
-                if let IggyError::ProducerSendFailed {
+                if let MessengerError::ProducerSendFailed {
                     failed,
                     cause,
                     stream_name,
@@ -227,14 +227,14 @@ impl Shard {
         *buffer_bytes = 0;
     }
 
-    pub(crate) async fn send(&self, message: ShardMessageWithPermits) -> Result<(), IggyError> {
+    pub(crate) async fn send(&self, message: ShardMessageWithPermits) -> Result<(), MessengerError> {
         if self.closed.load(Ordering::Acquire) {
-            return Err(IggyError::ProducerClosed);
+            return Err(MessengerError::ProducerClosed);
         }
 
         self.tx.send_async(message).await.map_err(|e| {
             error!("Failed to send_async: {e}");
-            IggyError::BackgroundSendError
+            MessengerError::BackgroundSendError
         })
     }
 }
@@ -244,7 +244,7 @@ mod tests {
     use super::*;
     use crate::clients::producer::MockProducerCoreBackend;
     use bytes::Bytes;
-    use iggy_common::IggyDuration;
+    use messenger_common::MessengerDuration;
     use std::time::Duration;
     use tokio::{sync::Semaphore, time::sleep};
 
@@ -252,8 +252,8 @@ mod tests {
         Arc::new(Identifier::numeric(1).unwrap())
     }
 
-    fn dummy_message(size: usize) -> IggyMessage {
-        IggyMessage::builder()
+    fn dummy_message(size: usize) -> MessengerMessage {
+        MessengerMessage::builder()
             .payload(Bytes::from(vec![0u8; size]))
             .build()
             .unwrap()
@@ -268,7 +268,7 @@ mod tests {
 
         let bb = BackgroundConfig::builder()
             .batch_length(10)
-            .linger_time(IggyDuration::new_from_secs(1))
+            .linger_time(MessengerDuration::new_from_secs(1))
             .batch_size(10_000);
         let config = Arc::new(bb.build());
 
@@ -307,7 +307,7 @@ mod tests {
 
         let bb = BackgroundConfig::builder()
             .batch_length(1000)
-            .linger_time(IggyDuration::new_from_secs(1))
+            .linger_time(MessengerDuration::new_from_secs(1))
             .batch_size(10_000);
         let config = Arc::new(bb.build());
 
@@ -348,7 +348,7 @@ mod tests {
 
         let bb = BackgroundConfig::builder()
             .batch_length(10)
-            .linger_time(IggyDuration::new(Duration::from_millis(50)))
+            .linger_time(MessengerDuration::new(Duration::from_millis(50)))
             .batch_size(10_000);
         let config = Arc::new(bb.build());
 
@@ -379,9 +379,9 @@ mod tests {
     #[tokio::test]
     async fn test_shard_forwards_error() {
         let mut mock = MockProducerCoreBackend::new();
-        let error = IggyError::ProducerSendFailed {
+        let error = MessengerError::ProducerSendFailed {
             failed: Arc::new(vec![dummy_message(1)]),
-            cause: Box::new(IggyError::Error),
+            cause: Box::new(MessengerError::Error),
             stream_name: "1".to_string(),
             topic_name: "1".to_string(),
         };
@@ -417,7 +417,7 @@ mod tests {
         shard.send(wrapped).await.unwrap();
 
         let err_ctx = err_rx.recv_async().await.unwrap();
-        assert_eq!(err_ctx.cause, Box::new(IggyError::Error));
+        assert_eq!(err_ctx.cause, Box::new(MessengerError::Error));
         assert_eq!(err_ctx.messages.len(), 1);
     }
 
@@ -450,6 +450,6 @@ mod tests {
         );
 
         let result = shard.send(wrapped).await;
-        assert!(matches!(result, Err(IggyError::BackgroundSendError)));
+        assert!(matches!(result, Err(MessengerError::BackgroundSendError)));
     }
 }

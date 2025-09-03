@@ -57,7 +57,7 @@ fi
 
 # Start server in background
 echo "Starting server..."
-cargo run --bin iggy-bench-dashboard-server &
+cargo run --bin messenger-bench-dashboard-server &
 
 # Wait a bit for server to start
 sleep 1

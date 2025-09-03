@@ -16,17 +16,17 @@
  * under the License.
  */
 
-use crate::prelude::IggyClient;
+use crate::prelude::MessengerClient;
 use async_trait::async_trait;
 use bytes::Bytes;
-use iggy_binary_protocol::MessageClient;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{
-    Consumer, Identifier, IggyError, IggyMessage, Partitioning, PolledMessages, PollingStrategy,
+use messenger_binary_protocol::MessageClient;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{
+    Consumer, Identifier, MessengerError, MessengerMessage, Partitioning, PolledMessages, PollingStrategy,
 };
 
 #[async_trait]
-impl MessageClient for IggyClient {
+impl MessageClient for MessengerClient {
     async fn poll_messages(
         &self,
         stream_id: &Identifier,
@@ -36,9 +36,9 @@ impl MessageClient for IggyClient {
         strategy: &PollingStrategy,
         count: u32,
         auto_commit: bool,
-    ) -> Result<PolledMessages, IggyError> {
+    ) -> Result<PolledMessages, MessengerError> {
         if count == 0 {
-            return Err(IggyError::InvalidMessagesCount);
+            return Err(MessengerError::InvalidMessagesCount);
         }
 
         let mut polled_messages = self
@@ -72,10 +72,10 @@ impl MessageClient for IggyClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitioning: &Partitioning,
-        messages: &mut [IggyMessage],
-    ) -> Result<(), IggyError> {
+        messages: &mut [MessengerMessage],
+    ) -> Result<(), MessengerError> {
         if messages.is_empty() {
-            return Err(IggyError::InvalidMessagesCount);
+            return Err(MessengerError::InvalidMessagesCount);
         }
 
         if let Some(encryptor) = &self.encryptor {
@@ -98,7 +98,7 @@ impl MessageClient for IggyClient {
         topic_id: &Identifier,
         partition_id: u32,
         fsync: bool,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.client
             .read()
             .await

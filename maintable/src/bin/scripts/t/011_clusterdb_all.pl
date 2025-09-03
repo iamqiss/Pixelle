@@ -1,26 +1,26 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init;
 $node->start;
 
 # clusterdb -a is not compatible with -d.  This relies on PGDATABASE to be
-# set, something PostgreSQL::Test::Cluster does.
+# set, something maintableQL::Test::Cluster does.
 $node->issues_sql_like(
 	[ 'clusterdb', '--all' ],
 	qr/statement: CLUSTER.*statement: CLUSTER/s,
 	'cluster all databases');
 
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 	CREATE DATABASE regression_invalid;
 	UPDATE pg_database SET datconnlimit = -2 WHERE datname = 'regression_invalid';
 ));
@@ -34,7 +34,7 @@ $node->command_fails_like(
 	qr/FATAL:  cannot connect to invalid database "regression_invalid"/,
 	'clusterdb cannot target invalid database');
 
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	'CREATE TABLE test1 (a int); CREATE INDEX test1x ON test1 (a); CLUSTER test1 USING test1x'
 );
 $node->safe_psql('template1',

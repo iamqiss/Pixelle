@@ -36,7 +36,7 @@ use crate::streaming::systems::system::SharedSystem;
 /// Starts the QUIC server.
 /// Returns the address the server is listening on.
 pub fn start(config: QuicConfig, system: SharedSystem) -> SocketAddr {
-    info!("Initializing Iggy QUIC server...");
+    info!("Initializing Messenger QUIC server...");
     let address = config.address.parse().unwrap();
     let quic_config = configure_quic(config);
     if let Err(error) = quic_config {
@@ -46,7 +46,7 @@ pub fn start(config: QuicConfig, system: SharedSystem) -> SocketAddr {
     let endpoint = Endpoint::server(quic_config.unwrap(), address).unwrap();
     let addr = endpoint.local_addr().unwrap();
     listener::start(endpoint, system);
-    info!("Iggy QUIC server has started on: {:?}", addr);
+    info!("Messenger QUIC server has started on: {:?}", addr);
     addr
 }
 
@@ -97,7 +97,7 @@ fn configure_quic(config: QuicConfig) -> Result<quinn::ServerConfig, QuicError> 
 
 fn generate_self_signed_cert<'a>() -> Result<(Vec<CertificateDer<'a>>, PrivateKeyDer<'a>), QuicError>
 {
-    iggy_common::generate_self_signed_certificate("localhost")
+    messenger_common::generate_self_signed_certificate("localhost")
         .with_error_context(|error| {
             format!("{COMPONENT} (error: {error}) - failed to generate self-signed certificate")
         })

@@ -6,11 +6,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pgscripts-tr\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2019-04-26 13:47+0000\n"
 "PO-Revision-Date: 2021-09-16 09:36+0200\n"
 "Last-Translator: Abdullah G. GüLNER\n"
-"Language-Team: Turkish <ceviri@postgresql.org.tr>\n"
+"Language-Team: Turkish <ceviri@maintableql.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -254,10 +254,10 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 msgstr ""
 "\n"
-"Hataları <pgsql-bugs@lists.postgresql.org> adresine bildirebilirsiniz.\n"
+"Hataları <pgsql-bugs@lists.maintableql.org> adresine bildirebilirsiniz.\n"
 
 #: common.c:84 common.c:130
 msgid "Password: "
@@ -350,10 +350,10 @@ msgstr "yorum yaratma işlemi başarısız oldu (veritabanı yaratıldı): %s"
 #: createdb.c:249
 #, c-format
 msgid ""
-"%s creates a PostgreSQL database.\n"
+"%s creates a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s bir PostgreSQL veritabanı yaratır.\n"
+"%s bir maintableQL veritabanı yaratır.\n"
 "\n"
 
 #: createdb.c:251
@@ -492,10 +492,10 @@ msgstr "yeni rol oluşturma işlemi başarısız oldu: %s"
 #: createuser.c:343
 #, c-format
 msgid ""
-"%s creates a new PostgreSQL role.\n"
+"%s creates a new maintableQL role.\n"
 "\n"
 msgstr ""
-"%s yeni bir PostgreSQL rol oluşturur.\n"
+"%s yeni bir maintableQL rol oluşturur.\n"
 "\n"
 
 #: createuser.c:345 dropuser.c:164
@@ -618,10 +618,10 @@ msgstr "veritabanı silme işlemi başarısız oldu: %s"
 #: dropdb.c:156
 #, c-format
 msgid ""
-"%s removes a PostgreSQL database.\n"
+"%s removes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL veritabanını siler.\n"
+"%s maintableQL veritabanını siler.\n"
 "\n"
 
 #: dropdb.c:158
@@ -661,10 +661,10 @@ msgstr "\"%s\" rolünün silinmesi başarısız oldu: %s"
 #: dropuser.c:162
 #, c-format
 msgid ""
-"%s removes a PostgreSQL role.\n"
+"%s removes a maintableQL role.\n"
 "\n"
 msgstr ""
-"%s bir PostgreSQL rolünü siler.\n"
+"%s bir maintableQL rolünü siler.\n"
 "\n"
 
 #: dropuser.c:167
@@ -724,10 +724,10 @@ msgstr "bilinmeyen\n"
 #: pg_isready.c:223
 #, c-format
 msgid ""
-"%s issues a connection check to a PostgreSQL database.\n"
+"%s issues a connection check to a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s bir PostgreSQL veritabanına bağlantı kontrolü sağlar.\n"
+"%s bir maintableQL veritabanına bağlantı kontrolü sağlar.\n"
 "\n"
 
 #: pg_isready.c:225
@@ -817,8 +817,8 @@ msgstr "aynı anda belirli indeks(ler) ve sistem katalogları tekrar indekslenem
 
 #: reindexdb.c:298
 #, c-format
-msgid "cannot use the \"%s\" option on server versions older than PostgreSQL %s"
-msgstr "PostgreSQL %2$s den eski sunucu sürümlerinde \"%1$s\" seçeneği kullanılamaz"
+msgid "cannot use the \"%s\" option on server versions older than maintableQL %s"
+msgstr "maintableQL %2$s den eski sunucu sürümlerinde \"%1$s\" seçeneği kullanılamaz"
 
 #: reindexdb.c:326
 #, c-format
@@ -853,10 +853,10 @@ msgstr "sistem kataloglarının yeniden indekslemesi başarısız: %s"
 #: reindexdb.c:424
 #, c-format
 msgid ""
-"%s reindexes a PostgreSQL database.\n"
+"%s reindexes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL veritabanını yeniden indeksler.\n"
+"%s maintableQL veritabanını yeniden indeksler.\n"
 "\n"
 
 #: reindexdb.c:428
@@ -952,13 +952,13 @@ msgstr "Varsayılan (tam) optimizer istatistikleri oluşturuluyor"
 
 #: vacuumdb.c:412 vacuumdb.c:427 vacuumdb.c:434
 #, c-format
-msgid "cannot use the \"%s\" option on server versions older than PostgreSQL 9.6"
-msgstr "PostgreSQL 9,6'dan eski sunucu sürümlerinde \"%s\" seçeneği kullanılamaz"
+msgid "cannot use the \"%s\" option on server versions older than maintableQL 9.6"
+msgstr "maintableQL 9,6'dan eski sunucu sürümlerinde \"%s\" seçeneği kullanılamaz"
 
 #: vacuumdb.c:420
 #, c-format
-msgid "cannot use the \"%s\" option on server versions older than PostgreSQL 12"
-msgstr "PostgreSQL 12'den eski sunucu sürümlerinde \"%s\" seçeneği kullanılamaz"
+msgid "cannot use the \"%s\" option on server versions older than maintableQL 12"
+msgstr "maintableQL 12'den eski sunucu sürümlerinde \"%s\" seçeneği kullanılamaz"
 
 #: vacuumdb.c:442
 #, c-format
@@ -983,10 +983,10 @@ msgstr "\"%s\" veritabanının vakumlanması başarısız oldu: %s"
 #: vacuumdb.c:1212
 #, c-format
 msgid ""
-"%s cleans and analyzes a PostgreSQL database.\n"
+"%s cleans and analyzes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s bir PostgreSQL veritabanını temizler ve analiz eder.\n"
+"%s bir maintableQL veritabanını temizler ve analiz eder.\n"
 "\n"
 
 #: vacuumdb.c:1216
@@ -1172,10 +1172,10 @@ msgstr ""
 #~ msgstr "  %s [SEÇENEK]... DİL_ADI [VERİTABANI_ADI]\n"
 
 #~ msgid ""
-#~ "%s installs a procedural language into a PostgreSQL database.\n"
+#~ "%s installs a procedural language into a maintableQL database.\n"
 #~ "\n"
 #~ msgstr ""
-#~ "%s Bir PostgreSQL veritabanına yordamsal bir dil kurar.\n"
+#~ "%s Bir maintableQL veritabanına yordamsal bir dil kurar.\n"
 #~ "\n"
 
 #~ msgid "%s: language installation failed: %s"

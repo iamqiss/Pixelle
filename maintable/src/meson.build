@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 # libraries that other subsystems might depend upon first, in their respective
 # dependency order
@@ -19,7 +19,7 @@ subdir('tools/pg_bsd_indent')
 ### Generate a Makefile.global that's complete enough for PGXS to work.
 #
 # This is somewhat ugly, but allows extensions to use a single buildsystem
-# across all the supported postgres versions. Once all supported PG versions
+# across all the supported maintable versions. Once all supported PG versions
 # support meson, we can remove all of this.
 #
 # XXX: Should we make this optional?

@@ -25,7 +25,7 @@ use crate::actors::{
 };
 
 use futures_util::StreamExt;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::{ClientFactory, login_root};
 use std::{sync::Arc, time::Duration};
 use tokio::time::{Instant, timeout};
@@ -34,7 +34,7 @@ use tracing::{error, warn};
 pub struct HighLevelConsumerClient {
     client_factory: Arc<dyn ClientFactory>,
     config: BenchmarkConsumerConfig,
-    consumer: Option<IggyConsumer>,
+    consumer: Option<MessengerConsumer>,
 }
 
 impl HighLevelConsumerClient {
@@ -48,7 +48,7 @@ impl HighLevelConsumerClient {
 }
 
 impl ConsumerClient for HighLevelConsumerClient {
-    async fn consume_batch(&mut self) -> Result<Option<BatchMetrics>, IggyError> {
+    async fn consume_batch(&mut self) -> Result<Option<BatchMetrics>, MessengerError> {
         let consumer = self.consumer.as_mut().expect("Consumer not initialized");
 
         let batch_start = Instant::now();
@@ -100,10 +100,10 @@ impl ConsumerClient for HighLevelConsumerClient {
 }
 
 impl BenchmarkInit for HighLevelConsumerClient {
-    async fn setup(&mut self) -> Result<(), IggyError> {
+    async fn setup(&mut self) -> Result<(), MessengerError> {
         let topic_id = 1;
         let client = self.client_factory.create_client().await;
-        let client = IggyClient::create(client, None, None);
+        let client = MessengerClient::create(client, None, None);
         login_root(&client).await;
 
         let stream_id_str = self.config.stream_id.to_string();

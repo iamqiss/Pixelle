@@ -21,15 +21,15 @@ use yew::prelude::*;
 pub fn logo() -> Html {
     let (is_dark, _) = use_context::<(bool, Callback<()>)>().expect("Theme context not found");
     let logo_src = if !is_dark {
-        "/assets/iggy-dark.png"
+        "/assets/messenger-dark.png"
     } else {
-        "/assets/iggy-light.png"
+        "/assets/messenger-light.png"
     };
 
     html! {
         <div class="logo">
-            <img src={logo_src} alt="Apache Iggy Logo" />
-            <h1>{"Apache Iggy Benchmarks"}</h1>
+            <img src={logo_src} alt="Apache Messenger Logo" />
+            <h1>{"Apache Messenger Benchmarks"}</h1>
         </div>
     }
 }

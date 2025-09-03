@@ -4,7 +4,7 @@
  <title>The Source Code Repository</title>
 
  <para>
-  The <productname>PostgreSQL</productname> source code is stored and managed
+  The <productname>maintableQL</productname> source code is stored and managed
   using the <productname>Git</productname> version control system. A public
   mirror of the master repository is available; it is updated within a minute
   of any change to the master repository.
@@ -12,7 +12,7 @@
 
  <para>
   Our wiki, <ulink
-  url="https://wiki.postgresql.org/wiki/Working_with_Git"></ulink>,
+  url="https://wiki.maintableql.org/wiki/Working_with_Git"></ulink>,
   has some discussion on working with Git.
  </para>
 
@@ -43,12 +43,12 @@
      To begin using the Git repository, make a clone of the official mirror:
 
 <programlisting>
-git clone https://git.postgresql.org/git/postgresql.git
+git clone https://git.maintableql.org/git/maintableql.git
 </programlisting>
 
      This will copy the full repository to your local machine, so it may take
      a while to complete, especially if you have a slow Internet connection.
-     The files will be placed in a new subdirectory <filename>postgresql</filename> of
+     The files will be placed in a new subdirectory <filename>maintableql</filename> of
      your current directory.
     </para>
 
@@ -57,7 +57,7 @@ git clone https://git.postgresql.org/git/postgresql.git
      prefix to <literal>git</literal>, as in:
 
 <programlisting>
-git clone git://git.postgresql.org/git/postgresql.git
+git clone git://git.maintableql.org/git/maintableql.git
 </programlisting>
 
     </para>

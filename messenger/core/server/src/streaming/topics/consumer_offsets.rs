@@ -20,9 +20,9 @@ use crate::streaming::polling_consumer::PollingConsumer;
 use crate::streaming::topics::COMPONENT;
 use crate::streaming::topics::topic::Topic;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{Consumer, ConsumerOffsetInfo};
+use messenger_common::MessengerError;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{Consumer, ConsumerOffsetInfo};
 
 impl Topic {
     pub async fn store_consumer_offset(
@@ -31,12 +31,12 @@ impl Topic {
         offset: u64,
         partition_id: Option<u32>,
         client_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let Some((polling_consumer, partition_id)) = self
             .resolve_consumer_with_partition_id(&consumer, client_id, partition_id, false)
             .await
             .with_error_context(|error| format!("{COMPONENT} (error: {error}) - failed to resolve consumer with partition id, consumer ID: {}, client ID: {}, partition ID: {:?}", consumer.id, client_id, partition_id))? else {
-            return Err(IggyError::ConsumerOffsetNotFound(client_id));
+            return Err(MessengerError::ConsumerOffsetNotFound(client_id));
         };
 
         let partition = self
@@ -58,7 +58,7 @@ impl Topic {
         consumer: PollingConsumer,
         offset: u64,
         partition_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let partition = self
             .get_partition(partition_id)
             .with_error_context(|error| {
@@ -75,7 +75,7 @@ impl Topic {
         consumer: &Consumer,
         partition_id: Option<u32>,
         client_id: u32,
-    ) -> Result<Option<ConsumerOffsetInfo>, IggyError> {
+    ) -> Result<Option<ConsumerOffsetInfo>, MessengerError> {
         let Some((polling_consumer, partition_id)) = self
             .resolve_consumer_with_partition_id(consumer, client_id, partition_id, false)
             .await
@@ -115,12 +115,12 @@ impl Topic {
         consumer: Consumer,
         partition_id: Option<u32>,
         client_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let Some((polling_consumer, partition_id)) = self
             .resolve_consumer_with_partition_id(&consumer, client_id, partition_id, false)
             .await
             .with_error_context(|error| format!("{COMPONENT} (error: {error}) - failed to resolve consumer with partition id, consumer ID: {}, client ID: {}, partition ID: {:?}", consumer.id, client_id, partition_id))? else {
-            return Err(IggyError::ConsumerOffsetNotFound(client_id));
+            return Err(MessengerError::ConsumerOffsetNotFound(client_id));
         };
 
         let partition = self

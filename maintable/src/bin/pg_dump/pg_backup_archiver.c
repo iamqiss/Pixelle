@@ -19,7 +19,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <ctype.h>
 #include <fcntl.h>
@@ -45,8 +45,8 @@
 #include "pg_backup_db.h"
 #include "pg_backup_utils.h"
 
-#define TEXT_DUMP_HEADER "--\n-- PostgreSQL database dump\n--\n\n"
-#define TEXT_DUMPALL_HEADER "--\n-- PostgreSQL database cluster dump\n--\n\n"
+#define TEXT_DUMP_HEADER "--\n-- maintableQL database dump\n--\n\n"
+#define TEXT_DUMPALL_HEADER "--\n-- maintableQL database cluster dump\n--\n\n"
 
 #define TOC_PREFIX_NONE		""
 #define TOC_PREFIX_DATA		"Data for "
@@ -460,7 +460,7 @@ RestoreArchive(Archive *AHX)
 	if (ropt->filename || ropt->compression_spec.algorithm != PG_COMPRESSION_NONE)
 		SetOutput(AH, ropt->filename, ropt->compression_spec);
 
-	ahprintf(AH, "--\n-- PostgreSQL database dump\n--\n\n");
+	ahprintf(AH, "--\n-- maintableQL database dump\n--\n\n");
 
 	/*
 	 * If generating plain-text output, enter restricted mode to block any
@@ -811,7 +811,7 @@ RestoreArchive(Archive *AHX)
 	if (AH->public.verbose)
 		dumpTimestamp(AH, "Completed on", time(NULL));
 
-	ahprintf(AH, "--\n-- PostgreSQL database dump complete\n--\n\n");
+	ahprintf(AH, "--\n-- maintableQL database dump complete\n--\n\n");
 
 	/*
 	 * If generating plain-text output, exit restricted mode at the very end

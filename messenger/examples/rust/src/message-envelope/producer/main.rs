@@ -17,10 +17,10 @@
  */
 
 use anyhow::Result;
-use iggy::prelude::*;
-use iggy_examples::shared::args::Args;
-use iggy_examples::shared::messages_generator::MessagesGenerator;
-use iggy_examples::shared::system;
+use messenger::prelude::*;
+use messenger_examples::shared::args::Args;
+use messenger_examples::shared::messages_generator::MessagesGenerator;
+use messenger_examples::shared::system;
 use std::error::Error;
 use std::str::FromStr;
 use std::sync::Arc;
@@ -42,13 +42,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
     );
     let client_provider_config = Arc::new(ClientProviderConfig::from_args(args.to_sdk_args())?);
     let client = client_provider::get_raw_client(client_provider_config, false).await?;
-    let client = IggyClient::new(client);
+    let client = MessengerClient::new(client);
     client.connect().await?;
     system::init_by_producer(&args, &client).await?;
     produce_messages(&args, &client).await
 }
 
-async fn produce_messages(args: &Args, client: &IggyClient) -> Result<(), Box<dyn Error>> {
+async fn produce_messages(args: &Args, client: &MessengerClient) -> Result<(), Box<dyn Error>> {
     let interval = args.get_interval();
     info!(
         "Messages will be sent to stream: {}, topic: {}, partition: {} with interval {}.",
@@ -79,7 +79,7 @@ async fn produce_messages(args: &Args, client: &IggyClient) -> Result<(), Box<dy
             let serializable_message = message_generator.generate();
             // You can send the different message types to the same partition, or stick to the single type.
             let json_envelope = serializable_message.to_json_envelope();
-            let message = IggyMessage::from_str(&json_envelope)?;
+            let message = MessengerMessage::from_str(&json_envelope)?;
             messages.push(message);
             // This is used for the logging purposes only.
             serializable_messages.push(serializable_message);

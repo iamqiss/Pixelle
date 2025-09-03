@@ -3,14 +3,14 @@
  * pg_prewarm.c
  *		  prewarming utilities
  *
- * Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  contrib/pg_prewarm/pg_prewarm.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/stat.h>
 #include <unistd.h>

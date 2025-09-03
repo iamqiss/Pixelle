@@ -21,13 +21,13 @@ use crate::cli::cli_command::{CliCommand, PRINT_TARGET};
 use anyhow::Context;
 use async_trait::async_trait;
 use core::fmt;
-use iggy_common::update_topic::UpdateTopic;
-use iggy_common::{CompressionAlgorithm, Identifier, IggyExpiry, MaxTopicSize};
+use messenger_common::update_topic::UpdateTopic;
+use messenger_common::{CompressionAlgorithm, Identifier, MessengerExpiry, MaxTopicSize};
 use tracing::{Level, event};
 
 pub struct UpdateTopicCmd {
     update_topic: UpdateTopic,
-    message_expiry: IggyExpiry,
+    message_expiry: MessengerExpiry,
     max_topic_size: MaxTopicSize,
     replication_factor: u8,
 }
@@ -38,7 +38,7 @@ impl UpdateTopicCmd {
         topic_id: Identifier,
         compression_algorithm: CompressionAlgorithm,
         name: String,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         max_topic_size: MaxTopicSize,
         replication_factor: u8,
     ) -> Self {

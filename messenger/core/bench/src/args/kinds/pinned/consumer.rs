@@ -17,11 +17,11 @@
  */
 
 use crate::args::{
-    common::IggyBenchArgs, defaults::DEFAULT_NUMBER_OF_PRODUCERS, props::BenchmarkKindProps,
+    common::MessengerBenchArgs, defaults::DEFAULT_NUMBER_OF_PRODUCERS, props::BenchmarkKindProps,
     transport::BenchmarkTransportCommand,
 };
 use clap::{CommandFactory, Parser, error::ErrorKind};
-use iggy::prelude::IggyByteSize;
+use messenger::prelude::MessengerByteSize;
 use std::num::NonZeroU32;
 
 #[derive(Parser, Debug, Clone)]
@@ -64,12 +64,12 @@ impl BenchmarkKindProps for PinnedConsumerArgs {
         0
     }
 
-    fn max_topic_size(&self) -> Option<IggyByteSize> {
+    fn max_topic_size(&self) -> Option<MessengerByteSize> {
         None
     }
 
     fn validate(&self) {
-        let mut cmd = IggyBenchArgs::command();
+        let mut cmd = MessengerBenchArgs::command();
         let streams = self.streams();
         let consumers = self.consumers();
         if streams > consumers {

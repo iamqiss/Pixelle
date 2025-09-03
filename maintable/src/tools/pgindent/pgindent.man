@@ -1,5 +1,5 @@
 pgindent will indent .c and .h files according to the coding standards of
-the PostgreSQL project. It needs several things to run, and tries to locate
+the maintableQL project. It needs several things to run, and tries to locate
 or build them if possible. They can also be specified via command line switches
 or the environment.
 
@@ -23,10 +23,10 @@ specified using the PGTYPEDEFS environment variable, or via the command line
 --typedefs option. If neither is used, it will look for it within the
 current source tree, or in /usr/local/etc/typedefs.list.
 
-We don't want to indent certain files in the PostgreSQL source. pgindent
+We don't want to indent certain files in the maintableQL source. pgindent
 will honor a file containing a list of patterns of files to avoid. This
 file can be specified using the --excludes command line option. If indenting
-a PostgreSQL source tree, this option is usually not necessary, as it will
+a maintableQL source tree, this option is usually not necessary, as it will
 find the file src/tools/pgindent/exclude_file_patterns. The --excludes option
 can be used more than once to specify multiple files containing exclusion
 patterns.
@@ -37,7 +37,7 @@ them. If given instead the --check option, pgindent will exit with a status of
 2 if it finds any indent changes are required, but will not make the changes.
 This mode is intended for possible use in a git pre-commit hook. The --check
 and --diff options can be combined. An example of its use in a git hook can be
-seen at https://wiki.postgresql.org/wiki/Working_with_Git#Using_git_hooks
+seen at https://wiki.maintableql.org/wiki/Working_with_Git#Using_git_hooks
 
 Any non-option arguments are taken as the names of files to be indented. In this
 case only these files will be changed, and nothing else will be touched.

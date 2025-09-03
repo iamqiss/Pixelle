@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_waldump
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_waldump (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_waldump (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_waldump (PostgreSQL) 15\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_waldump (maintableQL) 15\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2022-09-26 08:17+0000\n"
 "PO-Revision-Date: 2022-10-02 19:21+0200\n"
 "Last-Translator: \n"
@@ -88,10 +88,10 @@ msgstr "impossibile leggere dal file %s, offset %d: leggere %d di %d"
 #: pg_waldump.c:658
 #, c-format
 msgid ""
-"%s decodes and displays PostgreSQL write-ahead logs for debugging.\n"
+"%s decodes and displays maintableQL write-ahead logs for debugging.\n"
 "\n"
 msgstr ""
-"%s decodifica e visualizza i registri write-ahead di PostgreSQL per il debug.\n"
+"%s decodifica e visualizza i registri write-ahead di maintableQL per il debug.\n"
 "\n"
 
 #: pg_waldump.c:660

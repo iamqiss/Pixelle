@@ -28,7 +28,7 @@
  *
  * contrib/pgcrypto/pgp-pubenc.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "pgp.h"
 #include "px.h"

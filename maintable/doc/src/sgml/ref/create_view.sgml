@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_view.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createview">
@@ -568,7 +568,7 @@ UNION ALL
 
   <para>
    <command>CREATE OR REPLACE VIEW</command> is a
-   <productname>PostgreSQL</productname> language extension.
+   <productname>maintableQL</productname> language extension.
    So is the concept of a temporary view.
    The <literal>WITH ( ... )</literal> clause is an extension as well, as are
    security barrier views and security invoker views.

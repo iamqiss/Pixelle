@@ -108,7 +108,7 @@ create or replace function perl_encode_typed_literal() returns setof text langua
 	return_next encode_typed_literal(undef, 'text');
 	return_next encode_typed_literal([[1,2,3],[3,2,1],[1,3,2]], 'integer[]');
 	return_next encode_typed_literal({a => 1, b => ['PL','/','Perl']}, 'perl_foo');
-	return_next encode_typed_literal({c => [{a => 9, b => ['PostgreSQL']}, {b => ['Postgres'], a => 1}]}, 'perl_bar');
+	return_next encode_typed_literal({c => [{a => 9, b => ['maintableQL']}, {b => ['Maintable'], a => 1}]}, 'perl_bar');
 	return_next encode_typed_literal({a => 1, b => ['PL','/','Perl']}, 'perl_foo_pos');
 $$;
 

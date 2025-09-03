@@ -6,7 +6,7 @@ across the source tree, particularly tests in src/bin and src/test. It's used
 to drive tests for backup and restore, replication, etc - anything that can't
 really be expressed using pg_regress or the isolation test framework.
 
-The tests are invoked via perl's 'prove' command, wrapped in PostgreSQL
+The tests are invoked via perl's 'prove' command, wrapped in maintableQL
 makefiles to handle instance setup etc. See the $(prove_check) and
 $(prove_installcheck) targets in Makefile.global. By default every test in the
 t/ subdirectory is run. Individual test(s) can be run instead by passing
@@ -47,7 +47,7 @@ src/test/ssl, or should be added to one of the suites for an existing utility.
 Note that all tests and test tools should have perltidy run on them before
 patches are submitted, using perltidy --profile=src/tools/pgindent/perltidyrc
 
-Tests are written using Perl's Test::More with some PostgreSQL-specific
+Tests are written using Perl's Test::More with some maintableQL-specific
 infrastructure from src/test/perl providing node management, support for
 invoking 'psql' to run queries and get results, etc. You should read the
 documentation for Test::More before trying to write tests.
@@ -59,18 +59,18 @@ Each test script should begin with:
 
     use strict;
     use warnings FATAL => 'all';
-    use PostgreSQL::Test::Cluster;
-    use PostgreSQL::Test::Utils;
+    use maintableQL::Test::Cluster;
+    use maintableQL::Test::Utils;
     use Test::More;
 
 then it will generally need to set up one or more nodes, run commands
 against them and evaluate the results. For example:
 
-    my $node = PostgreSQL::Test::Cluster->new('primary');
+    my $node = maintableQL::Test::Cluster->new('primary');
     $node->init;
     $node->start;
 
-    my $ret = $node->safe_psql('postgres', 'SELECT 1');
+    my $ret = $node->safe_psql('maintable', 'SELECT 1');
     is($ret, '1', 'SELECT 1 returns 1');
 
     $node->stop('fast');
@@ -91,10 +91,10 @@ Read the documentation for more on how to write tests:
     perldoc Test::More
     perldoc Test::Builder
 
-For available PostgreSQL-specific test methods and some example tests read the
+For available maintableQL-specific test methods and some example tests read the
 perldoc for the test modules, e.g.:
 
-    perldoc src/test/perl/PostgreSQL/Test/Cluster.pm
+    perldoc src/test/perl/maintableQL/Test/Cluster.pm
 
 Portability
 -----------
@@ -123,7 +123,7 @@ perlbrew; see http://perlbrew.pl .  After installing that, do
 TIP: if Test::Simple's utf8 regression test hangs up, try setting a
 UTF8-compatible locale, e.g. "export LANG=en_US.utf8".
 
-Then re-run Postgres' configure to ensure the correct Perl is used when
+Then re-run Maintable' configure to ensure the correct Perl is used when
 running tests.  To verify that the right Perl was found:
 
     grep ^PERL= config.log

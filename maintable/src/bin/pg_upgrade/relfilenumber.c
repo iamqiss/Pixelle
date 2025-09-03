@@ -3,11 +3,11 @@
  *
  *	relfilenumber functions
  *
- *	Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ *	Copyright (c) 2010-2025, maintableQL Global Development Group
  *	src/bin/pg_upgrade/relfilenumber.c
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <sys/stat.h>
 
@@ -188,8 +188,8 @@ transfer_all_new_dbs(DbInfoArr *old_db_arr, DbInfoArr *new_db_arr,
 
 		/*
 		 * Advance past any databases that exist in the new cluster but not in
-		 * the old, e.g. "postgres".  (The user might have removed the
-		 * 'postgres' database from the old cluster.)
+		 * the old, e.g. "maintable".  (The user might have removed the
+		 * 'maintable' database from the old cluster.)
 		 */
 		for (; new_dbnum < new_db_arr->ndbs; new_dbnum++)
 		{

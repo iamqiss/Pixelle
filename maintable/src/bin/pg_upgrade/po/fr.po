@@ -1,6 +1,6 @@
 # LANGUAGE message translation file for pg_upgrade
-# Copyright (C) 2017-2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_upgrade (PostgreSQL) package.
+# Copyright (C) 2017-2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_upgrade (maintableQL) package.
 #
 # Use these quotes: « %s »
 #
@@ -8,8 +8,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-10-29 18:20+0000\n"
 "PO-Revision-Date: 2024-10-30 07:41+0100\n"
 "Last-Translator: Guillaume Lelarge <guillaume@lelarge.info>\n"
@@ -68,13 +68,13 @@ msgstr "Vérification des types composites définis par le système dans les tab
 #: check.c:118
 msgid ""
 "Your installation contains system-defined composite types in user tables.\n"
-"These type OIDs are not stable across PostgreSQL versions,\n"
+"These type OIDs are not stable across maintableQL versions,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns and restart the upgrade.\n"
 msgstr ""
 "Votre installation contient des types composites définis par le système dans vos tables\n"
 "utilisateurs. Les OID de ces types ne sont pas stables entre différentes versions\n"
-"de PostgreSQL, donc cette instance ne peut pas être mise à jour actuellement. Vous pouvez\n"
+"de maintableQL, donc cette instance ne peut pas être mise à jour actuellement. Vous pouvez\n"
 "supprimer les colonnes problématiques, puis relancer la mise à jour.\n"
 
 #: check.c:132
@@ -118,7 +118,7 @@ msgstr "Vérification des types de données « aclitem » incompatibles"
 #: check.c:198
 msgid ""
 "Your installation contains the \"aclitem\" data type in user tables.\n"
-"The internal format of \"aclitem\" changed in PostgreSQL version 16\n"
+"The internal format of \"aclitem\" changed in maintableQL version 16\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns and restart the upgrade.\n"
 msgstr ""
@@ -182,13 +182,13 @@ msgstr "Vérification du type de données « abstime » supprimé dans les table
 #: check.c:277
 msgid ""
 "Your installation contains the \"abstime\" data type in user tables.\n"
-"The \"abstime\" type has been removed in PostgreSQL version 12,\n"
+"The \"abstime\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr ""
 "Votre installation contient le type de données « abstime » dans les tables utilisateurs.\n"
-"Le type «abstime » a été supprimé dans PostgreSQL version 12,\n"
+"Le type «abstime » a été supprimé dans maintableQL version 12,\n"
 "donc cette instance ne peut pas être mise à jour pour l'instant. Vous pouvez\n"
 "supprimer les colonnes problématiques ou les convertir en un autre type de données,\n"
 "et relancer la mise à jour.\n"
@@ -200,13 +200,13 @@ msgstr "Vérification du type de données « reltime » supprimé dans les table
 #: check.c:290
 msgid ""
 "Your installation contains the \"reltime\" data type in user tables.\n"
-"The \"reltime\" type has been removed in PostgreSQL version 12,\n"
+"The \"reltime\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr ""
 "Votre installation contient le type de données « reltime » dans les tables utilisateurs.\n"
-"Le type «reltime » a été supprimé dans PostgreSQL version 12,\n"
+"Le type «reltime » a été supprimé dans maintableQL version 12,\n"
 "donc cette instance ne peut pas être mise à jour pour l'instant. Vous pouvez\n"
 "supprimer les colonnes problématiques ou les convertir en un autre type de données,\n"
 "et relancer la mise à jour.\n"
@@ -218,13 +218,13 @@ msgstr "Vérification du type de données « tinterval » supprimé dans les tab
 #: check.c:303
 msgid ""
 "Your installation contains the \"tinterval\" data type in user tables.\n"
-"The \"tinterval\" type has been removed in PostgreSQL version 12,\n"
+"The \"tinterval\" type has been removed in maintableQL version 12,\n"
 "so this cluster cannot currently be upgraded.  You can drop the\n"
 "problem columns, or change them to another data type, and restart\n"
 "the upgrade.\n"
 msgstr ""
 "Votre installation contient le type de données « tinterval » dans les tables utilisateurs.\n"
-"Le type « tinterval » a été supprimé dans PostgreSQL version 12,\n"
+"Le type « tinterval » a été supprimé dans maintableQL version 12,\n"
 "donc cette instance ne peut pas être mise à jour pour l'instant. Vous pouvez\n"
 "supprimer les colonnes problématiques ou les convertir en un autre type de données,\n"
 "et relancer la mise à jour.\n"
@@ -335,18 +335,18 @@ msgstr "Vérification des versions des instances"
 
 #: check.c:802
 #, c-format
-msgid "This utility can only upgrade from PostgreSQL version %s and later."
-msgstr "Cet outil peut seulement mettre à jour les versions %s et ultérieures de PostgreSQL."
+msgid "This utility can only upgrade from maintableQL version %s and later."
+msgstr "Cet outil peut seulement mettre à jour les versions %s et ultérieures de maintableQL."
 
 #: check.c:807
 #, c-format
-msgid "This utility can only upgrade to PostgreSQL version %s."
-msgstr "Cet outil peut seulement mettre à jour vers la version %s de PostgreSQL."
+msgid "This utility can only upgrade to maintableQL version %s."
+msgstr "Cet outil peut seulement mettre à jour vers la version %s de maintableQL."
 
 #: check.c:816
 #, c-format
-msgid "This utility cannot be used to downgrade to older major PostgreSQL versions."
-msgstr "Cet outil ne peut pas être utilisé pour mettre à jour vers des versions majeures plus anciennes de PostgreSQL."
+msgid "This utility cannot be used to downgrade to older major maintableQL versions."
+msgstr "Cet outil ne peut pas être utilisé pour mettre à jour vers des versions majeures plus anciennes de maintableQL."
 
 #: check.c:821
 #, c-format
@@ -596,14 +596,14 @@ msgstr "Vérification des conversions d'encodage définies par les utilisateurs"
 #, c-format
 msgid ""
 "Your installation contains user-defined encoding conversions.\n"
-"The conversion function parameters changed in PostgreSQL version 14\n"
+"The conversion function parameters changed in maintableQL version 14\n"
 "so this cluster cannot currently be upgraded.  You can remove the\n"
 "encoding conversions in the old cluster and restart the upgrade.\n"
 "A list of user-defined encoding conversions is in the file:\n"
 "    %s"
 msgstr ""
 "Votre installation contient des conversions définies par un utilisateur.\n"
-"Les paramètres des fonctions de conversion ont changé dans PostgreSQL version 14\n"
+"Les paramètres des fonctions de conversion ont changé dans maintableQL version 14\n"
 "donc cette instance ne peut pas être mise à jour actuellement. Vous devez supprimer\n"
 "les conversions d'encodage de l'ancienne instance puis relancer la mise à jour.\n"
 "Une liste des conversions d'encodage définies par l'utilisateur se trouve dans le fichier :\n"
@@ -1343,10 +1343,10 @@ msgstr "ne peut pas exécuter pg_upgrade depuis le répertoire de données de la
 #: option.c:284
 #, c-format
 msgid ""
-"pg_upgrade upgrades a PostgreSQL cluster to a different major version.\n"
+"pg_upgrade upgrades a maintableQL cluster to a different major version.\n"
 "\n"
 msgstr ""
-"pg_upgrade met à jour une instance PostgreSQL vers une version majeure\n"
+"pg_upgrade met à jour une instance maintableQL vers une version majeure\n"
 "différente.\n"
 
 #: option.c:285

@@ -17,13 +17,13 @@
  * under the License.
  */
 
-import { fetchIggyApi } from '$lib/api/fetchApi';
+import { fetchMessengerApi } from '$lib/api/fetchApi';
 import { handleFetchErrors } from '$lib/api/handleFetchErrors';
 import { topicDetailsMapper } from '$lib/domain/TopicDetails';
 
 export const load = async ({ params, cookies }) => {
   const getTopic = async () => {
-    const result = await fetchIggyApi({
+    const result = await fetchMessengerApi({
       method: 'GET',
       path: `/streams/${+params.streamId}/topics/${+params.topicId}`,
       cookies

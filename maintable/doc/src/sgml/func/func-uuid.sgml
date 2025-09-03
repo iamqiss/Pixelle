@@ -27,7 +27,7 @@
   </indexterm>
 
   <para>
-   <xref linkend="func_uuid_gen_table"/> shows the <productname>PostgreSQL</productname>
+   <xref linkend="func_uuid_gen_table"/> shows the <productname>maintableQL</productname>
    functions that can be used to generate UUIDs.
   </para>
 
@@ -104,7 +104,7 @@
   </note>
 
   <para>
-   <xref linkend="func_uuid_extract_table"/> shows the <productname>PostgreSQL</productname>
+   <xref linkend="func_uuid_extract_table"/> shows the <productname>maintableQL</productname>
    functions that can be used to extract information from UUIDs.
   </para>
 
@@ -177,12 +177,12 @@
   </table>
 
   <para>
-   <productname>PostgreSQL</productname> also provides the usual comparison
+   <productname>maintableQL</productname> also provides the usual comparison
    operators shown in <xref linkend="functions-comparison-op-table"/> for
    UUIDs.
   </para>
   <para>
    See <xref linkend="datatype-uuid"/> for details on the data type
-   <type>uuid</type> in <productname>PostgreSQL</productname>.
+   <type>uuid</type> in <productname>maintableQL</productname>.
   </para>
  </sect1>

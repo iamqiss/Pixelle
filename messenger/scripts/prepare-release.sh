@@ -19,7 +19,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-# This script is used to prepare the release artifacts for the Apache Iggy project.
+# This script is used to prepare the release artifacts for the Apache Messenger project.
 
 set -euo pipefail
 
@@ -41,8 +41,8 @@ if [ "$(basename "$PWD")" == "scripts" ]; then
 fi
 
 SRC_DIR="./"
-RELEASE_DIR="iggy_release"
-TEMP_DIR="iggy_release_tmp"
+RELEASE_DIR="messenger_release"
+TEMP_DIR="messenger_release_tmp"
 
 rm -rf "$TEMP_DIR"
 rm -rf "$RELEASE_DIR"
@@ -167,7 +167,7 @@ VERSION=$(grep '^version' "$TEMP_DIR/core/server/Cargo.toml" | head -n 1 | cut -
 
 echo "Preparing release for version: $VERSION"
 
-ARCHIVE_NAME="iggy-${VERSION}-incubating-src.tar.gz"
+ARCHIVE_NAME="messenger-${VERSION}-incubating-src.tar.gz"
 
 GZIP=-n "$TAR_CMD" --sort=name \
              --mtime='UTC 2020-01-01' \

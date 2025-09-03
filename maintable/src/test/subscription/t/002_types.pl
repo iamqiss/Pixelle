@@ -1,21 +1,21 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # This tests that more complex datatypes are replicated correctly
 # by logical replication
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Initialize publisher node
-my $node_publisher = PostgreSQL::Test::Cluster->new('publisher');
+my $node_publisher = maintableQL::Test::Cluster->new('publisher');
 $node_publisher->init(allows_streaming => 'logical');
 $node_publisher->start;
 
 # Create subscriber node
-my $node_subscriber = PostgreSQL::Test::Cluster->new('subscriber');
+my $node_subscriber = maintableQL::Test::Cluster->new('subscriber');
 $node_subscriber->init;
 $node_subscriber->start;
 
@@ -102,15 +102,15 @@ my $ddl = qq(
 	CREATE TABLE public.tst_dom_constr (a monot_int););
 
 # Setup structure on both nodes
-$node_publisher->safe_psql('postgres', $ddl);
-$node_subscriber->safe_psql('postgres', $ddl);
+$node_publisher->safe_psql('maintable', $ddl);
+$node_subscriber->safe_psql('maintable', $ddl);
 
 # Setup logical replication
-my $publisher_connstr = $node_publisher->connstr . ' dbname=postgres';
-$node_publisher->safe_psql('postgres',
+my $publisher_connstr = $node_publisher->connstr . ' dbname=maintable';
+$node_publisher->safe_psql('maintable',
 	"CREATE PUBLICATION tap_pub FOR ALL TABLES");
 
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	"CREATE SUBSCRIPTION tap_sub CONNECTION '$publisher_connstr' PUBLICATION tap_pub WITH (slot_name = tap_sub_slot)"
 );
 
@@ -119,7 +119,7 @@ $node_subscriber->wait_for_subscription_sync($node_publisher, 'tap_sub');
 
 # Insert initial test data
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	-- test_tbl_one_array_col
 	INSERT INTO tst_one_array (a, b) VALUES
 		(1, '{1, 2, 3}'),
@@ -252,7 +252,7 @@ $node_publisher->wait_for_catchup('tap_sub');
 
 # Check the data on subscriber
 my $result = $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	SET timezone = '+2';
 	SELECT a, b FROM tst_one_array ORDER BY a;
 	SELECT a, b, c, d FROM tst_arrays ORDER BY a;
@@ -339,7 +339,7 @@ e|{d,NULL}
 
 # Run batch of updates
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	UPDATE tst_one_array SET b = '{4, 5, 6}' WHERE a = 1;
 	UPDATE tst_one_array SET b = '{4, 5, 6, 1}' WHERE a > 3;
 	UPDATE tst_arrays SET b = '{"1a", "2b", "3c"}', c = '{1.0, 2.0, 3.0}', d = '{"1 day 1 second", "2 days 2 seconds", "3 days 3 second"}' WHERE a = '{1, 2, 3}';
@@ -373,7 +373,7 @@ $node_publisher->wait_for_catchup('tap_sub');
 
 # Check the data on subscriber
 $result = $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	SET timezone = '+2';
 	SELECT a, b FROM tst_one_array ORDER BY a;
 	SELECT a, b, c, d FROM tst_arrays ORDER BY a;
@@ -460,7 +460,7 @@ e|{e,d}
 
 # Run batch of deletes
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	DELETE FROM tst_one_array WHERE a = 1;
 	DELETE FROM tst_one_array WHERE b = '{2, 3, 1}';
 	DELETE FROM tst_arrays WHERE a = '{1, 2, 3}';
@@ -493,7 +493,7 @@ $node_publisher->wait_for_catchup('tap_sub');
 
 # Check the data on subscriber
 $result = $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	SET timezone = '+2';
 	SELECT a, b FROM tst_one_array ORDER BY a;
 	SELECT a, b, c, d FROM tst_arrays ORDER BY a;
@@ -549,13 +549,13 @@ e|{e,d}
 
 # Test a domain with a constraint backed by a SQL-language function,
 # which needs an active snapshot in order to operate.
-$node_publisher->safe_psql('postgres',
+$node_publisher->safe_psql('maintable',
 	"INSERT INTO tst_dom_constr VALUES (11)");
 
 $node_publisher->wait_for_catchup('tap_sub');
 
 $result =
-  $node_subscriber->safe_psql('postgres',
+  $node_subscriber->safe_psql('maintable',
 	"SELECT sum(a) FROM tst_dom_constr");
 is($result, '21', 'sql-function constraint on domain');
 

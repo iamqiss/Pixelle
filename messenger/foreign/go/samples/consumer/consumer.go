@@ -23,10 +23,10 @@ import (
 	"fmt"
 	"time"
 
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	"github.com/apache/iggy/foreign/go/iggycli"
-	sharedDemoContracts "github.com/apache/iggy/foreign/go/samples/shared"
-	"github.com/apache/iggy/foreign/go/tcp"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	"github.com/apache/messenger/foreign/go/messengercli"
+	sharedDemoContracts "github.com/apache/messenger/foreign/go/samples/shared"
+	"github.com/apache/messenger/foreign/go/tcp"
 )
 
 // config
@@ -39,15 +39,15 @@ const (
 )
 
 func main() {
-	cli, err := iggycli.NewIggyClient(
-		iggycli.WithTcp(
+	cli, err := messengercli.NewMessengerClient(
+		messengercli.WithTcp(
 			tcp.WithServerAddress("127.0.0.1:8090"),
 		),
 	)
 	if err != nil {
 		panic(err)
 	}
-	_, err = cli.LoginUser("iggy", "iggy")
+	_, err = cli.LoginUser("messenger", "messenger")
 	if err != nil {
 		panic("COULD NOT LOG IN")
 	}
@@ -61,7 +61,7 @@ func main() {
 	}
 }
 
-func EnsureInfrastructureIsInitialized(cli iggycli.Client) error {
+func EnsureInfrastructureIsInitialized(cli messengercli.Client) error {
 	streamIdentifier, _ := iggcon.NewIdentifier(DefaultStreamId)
 	if _, streamErr := cli.GetStream(streamIdentifier); streamErr != nil {
 		uint32DefaultStreamId := DefaultStreamId
@@ -101,7 +101,7 @@ func EnsureInfrastructureIsInitialized(cli iggycli.Client) error {
 	return nil
 }
 
-func ConsumeMessages(cli iggycli.Client) error {
+func ConsumeMessages(cli messengercli.Client) error {
 	fmt.Printf("Messages will be polled from stream '%d', topic '%d', partition '%d' with interval %d ms.\n", DefaultStreamId, TopicId, Partition, Interval)
 
 	for {
@@ -138,11 +138,11 @@ func ConsumeMessages(cli iggycli.Client) error {
 	}
 }
 
-func HandleMessage(iggyMessage iggcon.IggyMessage) error {
-	length := (len(iggyMessage.Payload) * 3) / 4
+func HandleMessage(messengerMessage iggcon.MessengerMessage) error {
+	length := (len(messengerMessage.Payload) * 3) / 4
 	bytes := make([]byte, length)
 
-	str := string(iggyMessage.Payload)
+	str := string(messengerMessage.Payload)
 	isBase64 := false
 
 	if _, err := base64.StdEncoding.Decode(bytes, []byte(str)); err == nil {
@@ -162,12 +162,12 @@ func HandleMessage(iggyMessage iggcon.IggyMessage) error {
 			return err
 		}
 	} else {
-		if err := json.Unmarshal(iggyMessage.Payload, &envelope); err != nil {
+		if err := json.Unmarshal(messengerMessage.Payload, &envelope); err != nil {
 			return err
 		}
 	}
 
-	fmt.Printf("Handling message type: %s at offset: %d with message Id: %s ", envelope.MessageType, iggyMessage.Header.Offset, iggyMessage.Header.Id)
+	fmt.Printf("Handling message type: %s at offset: %d with message Id: %s ", envelope.MessageType, messengerMessage.Header.Offset, messengerMessage.Header.Id)
 
 	switch envelope.MessageType {
 	case "order_created":

@@ -20,7 +20,7 @@ use crate::BytesSerializable;
 use crate::Identifier;
 use crate::Sizeable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, GET_TOPIC_CODE};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -46,8 +46,8 @@ impl Command for GetTopic {
     }
 }
 
-impl Validatable<IggyError> for GetTopic {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for GetTopic {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -62,9 +62,9 @@ impl BytesSerializable for GetTopic {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> std::result::Result<GetTopic, IggyError> {
+    fn from_bytes(bytes: Bytes) -> std::result::Result<GetTopic, MessengerError> {
         if bytes.len() < 6 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let mut position = 0;

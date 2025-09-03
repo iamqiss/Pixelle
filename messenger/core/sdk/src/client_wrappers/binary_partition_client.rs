@@ -18,8 +18,8 @@
 
 use crate::client_wrappers::client_wrapper::ClientWrapper;
 use async_trait::async_trait;
-use iggy_binary_protocol::PartitionClient;
-use iggy_common::{Identifier, IggyError};
+use messenger_binary_protocol::PartitionClient;
+use messenger_common::{Identifier, MessengerError};
 
 #[async_trait]
 impl PartitionClient for ClientWrapper {
@@ -28,9 +28,9 @@ impl PartitionClient for ClientWrapper {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitions_count: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .create_partitions(stream_id, topic_id, partitions_count)
                     .await
@@ -58,9 +58,9 @@ impl PartitionClient for ClientWrapper {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitions_count: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .delete_partitions(stream_id, topic_id, partitions_count)
                     .await

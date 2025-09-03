@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_combinebackup
-# Copyright (C) 2024 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_combinebackup (PostgreSQL) package.
+# Copyright (C) 2024 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_combinebackup (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_combinebackup (PostgreSQL) 18\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_combinebackup (maintableQL) 18\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-05-02 22:22+0000\n"
 "PO-Revision-Date: 2025-05-03 01:27+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -71,11 +71,11 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "ბაიტების მიმდევრობის შესაძლო შეუსაბამობა pg_control ფაილის შესანახად გამოყენებული \n"
 "ბაიტების მიმდევრობა შესაძლოა არ ემთხვეოდეს ამ პროგრამის მიერ გამოყენებულს. ამ შემთხვევაში  ქვემოთ \n"
-"მოცემული შედეგები არასწორი იქნება და PostgreSQL ეს აგება ამ მონაცემთა საქაღალდესთან შეუთავსებელი იქნება."
+"მოცემული შედეგები არასწორი იქნება და maintableQL ეს აგება ამ მონაცემთა საქაღალდესთან შეუთავსებელი იქნება."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:69
 #: ../../common/file_utils.c:370 ../../common/file_utils.c:428

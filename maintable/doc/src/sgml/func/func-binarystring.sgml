@@ -18,7 +18,7 @@
     key words, rather than commas, to separate
     arguments.  Details are in
     <xref linkend="functions-binarystring-sql"/>.
-    <productname>PostgreSQL</productname> also provides versions of these functions
+    <productname>maintableQL</productname> also provides versions of these functions
     that use the regular function invocation syntax
     (see <xref linkend="functions-binarystring-other"/>).
    </para>

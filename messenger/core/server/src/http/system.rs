@@ -32,14 +32,14 @@ use axum::{Extension, Json, Router};
 use bytes::Bytes;
 use chrono::Local;
 use error_set::ErrContext;
-use iggy_common::Stats;
-use iggy_common::Validatable;
-use iggy_common::get_snapshot::GetSnapshot;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{ClientInfo, ClientInfoDetails};
+use messenger_common::Stats;
+use messenger_common::Validatable;
+use messenger_common::get_snapshot::GetSnapshot;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{ClientInfo, ClientInfoDetails};
 use std::sync::Arc;
 
-const NAME: &str = "Iggy API";
+const NAME: &str = "Messenger API";
 const PONG: &str = "pong";
 
 pub fn router(state: Arc<AppState>, metrics_config: &HttpMetricsConfig) -> Router {
@@ -133,7 +133,7 @@ async fn get_snapshot(
         .await?;
 
     let zip_data = Bytes::from(snapshot.0);
-    let filename = format!("iggy_snapshot_{}.zip", Local::now().format("%Y%m%d_%H%M%S"));
+    let filename = format!("messenger_snapshot_{}.zip", Local::now().format("%Y%m%d_%H%M%S"));
 
     let mut headers = HeaderMap::new();
     headers.insert(

@@ -2,13 +2,13 @@
  * libpq_testclient.c
  *		A test program for the libpq public API
  *
- * Copyright (c) 2022-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2022-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/interfaces/libpq/test/libpq_testclient.c
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "libpq-fe.h"
 

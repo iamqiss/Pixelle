@@ -13,9 +13,9 @@
 
   <para>
    The regression tests are a comprehensive set of tests for the SQL
-   implementation in <productname>PostgreSQL</productname>.  They test
+   implementation in <productname>maintableQL</productname>.  They test
    standard SQL operations as well as the extended capabilities of
-   <productname>PostgreSQL</productname>.
+   <productname>maintableQL</productname>.
   </para>
 
   <sect1 id="regress-run">
@@ -66,8 +66,8 @@ make check
    </para>
 
    <para>
-    If you have configured <productname>PostgreSQL</productname> to install
-    into a location where an older <productname>PostgreSQL</productname>
+    If you have configured <productname>maintableQL</productname> to install
+    into a location where an older <productname>maintableQL</productname>
     installation already exists, and you perform <literal>make check</literal>
     before installing the new version, you might find that the tests fail
     because the new programs try to use the already-installed shared
@@ -131,7 +131,7 @@ make installcheck-parallel
   <para>
    The <literal>make check</literal> and <literal>make installcheck</literal> commands
    run only the <quote>core</quote> regression tests, which test built-in
-   functionality of the <productname>PostgreSQL</productname> server.  The source
+   functionality of the <productname>maintableQL</productname> server.  The source
    distribution contains many additional test suites, most of them having
    to do with add-on functionality such as optional procedural languages.
   </para>
@@ -156,7 +156,7 @@ make installcheck-world
   <para>
    On a modern machine with multiple CPU cores and no tight operating-system
    limits, you can make things go substantially faster with parallelism.
-   The recipe that most PostgreSQL developers actually use for running all
+   The recipe that most maintableQL developers actually use for running all
    tests is something like
 <screen>
 make check-world -j8 >/dev/null
@@ -246,7 +246,7 @@ make check-world -j8 >/dev/null
   <para>
    Some of these auxiliary test suites use the TAP infrastructure explained
    in <xref linkend="regress-tap"/>.
-   The TAP-based tests are run only when PostgreSQL was configured with the
+   The TAP-based tests are run only when maintableQL was configured with the
    option <option>--enable-tap-tests</option>.  This is recommended for
    development, but can be omitted if there is no suitable Perl installation.
   </para>
@@ -468,11 +468,11 @@ make check PGOPTIONS="-c debug_parallel_query=regress -c work_mem=50MB"
 
    <para>
     When running against a temporary installation, custom settings can also be
-    set by supplying a pre-written <filename>postgresql.conf</filename>:
+    set by supplying a pre-written <filename>maintableql.conf</filename>:
 <screen>
-echo 'log_checkpoints = on' > test_postgresql.conf
-echo 'work_mem = 50MB' >> test_postgresql.conf
-make check EXTRA_REGRESS_OPTS="--temp-config=test_postgresql.conf"
+echo 'log_checkpoints = on' > test_maintableql.conf
+echo 'work_mem = 50MB' >> test_maintableql.conf
+make check EXTRA_REGRESS_OPTS="--temp-config=test_maintableql.conf"
 </screen>
    </para>
 
@@ -499,7 +499,7 @@ make check EXTRA_TESTS=numeric_big
 
    <para>
     Some properly installed and fully functional
-    <productname>PostgreSQL</productname> installations can
+    <productname>maintableQL</productname> installations can
     <quote>fail</quote> some of these regression tests due to
     platform-specific artifacts such as varying floating-point representation
     and message wording. The tests are currently evaluated using a simple
@@ -548,7 +548,7 @@ make check EXTRA_TESTS=numeric_big
     <para>
      Some of the regression tests involve intentional invalid input
      values.  Error messages can come from either the
-     <productname>PostgreSQL</productname> code or from the host
+     <productname>maintableQL</productname> code or from the host
      platform system routines. In the latter case, the messages can
      vary between platforms, but should reflect similar
      information. These differences in messages will result in a
@@ -641,7 +641,7 @@ make check NO_LOCALE=1
     <para>
      Some systems signal errors from <function>pow()</function> and
      <function>exp()</function> differently from the mechanism
-     expected by the current <productname>PostgreSQL</productname>
+     expected by the current <productname>maintableQL</productname>
      code.
     </para>
    </sect2>
@@ -858,7 +858,7 @@ make check PROVE_TESTS='t/001_test1.pl t/003_test3.pl'
     This module is available from
     <ulink url="https://metacpan.org/dist/IPC-Run">CPAN</ulink>
     or an operating system package.
-    They also require <productname>PostgreSQL</productname> to be
+    They also require <productname>maintableQL</productname> to be
     configured with the option <option>--enable-tap-tests</option>.
    </para>
 
@@ -876,7 +876,7 @@ make check PROVE_TESTS='t/001_test1.pl t/003_test3.pl'
     It's important to realize that the TAP tests will start test server(s)
     even when you say <literal>make installcheck</literal>; this is unlike
     the traditional non-TAP testing infrastructure, which expects to use an
-    already-running test server in that case.  Some PostgreSQL
+    already-running test server in that case.  Some maintableQL
     subdirectories contain both traditional-style and TAP-style tests,
     meaning that <literal>make installcheck</literal> will produce a mix of
     results from temporary servers and the already-running test server.
@@ -913,7 +913,7 @@ PG_TEST_NOCLEAN=1 make -C src/bin/pg_dump check
    <title>Test Coverage Examination</title>
 
    <para>
-    The PostgreSQL source code can be compiled with coverage testing
+    The maintableQL source code can be compiled with coverage testing
     instrumentation, so that it becomes possible to examine which
     parts of the code are covered by the regression tests or any other
     test suite that is run with the code.  This is currently supported

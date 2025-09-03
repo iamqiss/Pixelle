@@ -12,8 +12,8 @@ from pathlib import Path
 
 # === Configuration ===
 RENAMES = {
-    "iggy": "messenger",
-    "postgres": "maintable"
+    "messenger": "messenger",
+    "maintable": "maintable"
 }
 
 ROOT_DIR = Path(".").resolve()  # Change to your project root if needed

@@ -3,13 +3,13 @@
 SHOW datestyle;
    DateStyle   
 ---------------
- Postgres, MDY
+ Maintable, MDY
 (1 row)
 
 -- Check output style of CamelCase enum options
 SET intervalstyle to 'asd';
 ERROR:  invalid value for parameter "IntervalStyle": "asd"
-HINT:  Available values: postgres, postgres_verbose, sql_standard, iso_8601.
+HINT:  Available values: maintable, maintable_verbose, sql_standard, iso_8601.
 -- SET to some nondefault value
 SET vacuum_cost_delay TO 40;
 SET datestyle = 'ISO, YMD';
@@ -209,11 +209,11 @@ SHOW vacuum_cost_delay;
  100ms
 (1 row)
 
-SET datestyle = 'Postgres, MDY';
+SET datestyle = 'Maintable, MDY';
 SHOW datestyle;
    DateStyle   
 ---------------
- Postgres, MDY
+ Maintable, MDY
 (1 row)
 
 SELECT '2006-08-13 12:34:56'::timestamptz;
@@ -307,11 +307,11 @@ SHOW vacuum_cost_delay;
  30ms
 (1 row)
 
-SET LOCAL datestyle = 'Postgres, MDY';
+SET LOCAL datestyle = 'Maintable, MDY';
 SHOW datestyle;
    DateStyle   
 ---------------
- Postgres, MDY
+ Maintable, MDY
 (1 row)
 
 SELECT '2006-08-13 12:34:56'::timestamptz;
@@ -386,11 +386,11 @@ SHOW vacuum_cost_delay;
  30ms
 (1 row)
 
-SET LOCAL datestyle = 'Postgres, MDY';
+SET LOCAL datestyle = 'Maintable, MDY';
 SHOW datestyle;
    DateStyle   
 ---------------
- Postgres, MDY
+ Maintable, MDY
 (1 row)
 
 SELECT '2006-08-13 12:34:56'::timestamptz;
@@ -409,7 +409,7 @@ SHOW vacuum_cost_delay;
 SHOW datestyle;
    DateStyle   
 ---------------
- Postgres, MDY
+ Maintable, MDY
 (1 row)
 
 SELECT '2006-08-13 12:34:56'::timestamptz;
@@ -448,11 +448,11 @@ SHOW vacuum_cost_delay;
 (1 row)
 
 SET datestyle = 'ISO, DMY';
-SET LOCAL datestyle = 'Postgres, MDY';
+SET LOCAL datestyle = 'Maintable, MDY';
 SHOW datestyle;
    DateStyle   
 ---------------
- Postgres, MDY
+ Maintable, MDY
 (1 row)
 
 SELECT '2006-08-13 12:34:56'::timestamptz;
@@ -501,7 +501,7 @@ RESET datestyle;
 SHOW datestyle;
    DateStyle   
 ---------------
- Postgres, MDY
+ Maintable, MDY
 (1 row)
 
 SELECT '2006-08-13 12:34:56'::timestamptz;

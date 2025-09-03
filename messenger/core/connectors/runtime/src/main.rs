@@ -22,8 +22,8 @@ use dlopen2::wrapper::{Container, WrapperApi};
 use dotenvy::dotenv;
 use error::RuntimeError;
 use figlet_rs::FIGfont;
-use iggy::prelude::{Client, IggyConsumer, IggyProducer};
-use iggy_connector_sdk::{
+use messenger::prelude::{Client, MessengerConsumer, MessengerProducer};
+use messenger_connector_sdk::{
     StreamDecoder, StreamEncoder,
     sink::ConsumeCallback,
     source::{HandleCallback, SendCallback},
@@ -89,10 +89,10 @@ struct SinkApi {
 #[tokio::main]
 async fn main() -> Result<(), RuntimeError> {
     let standard_font = FIGfont::standard().unwrap();
-    let figure = standard_font.convert("Iggy Connectors");
+    let figure = standard_font.convert("Messenger Connectors");
     println!("{}", figure.unwrap());
 
-    if let Ok(env_path) = std::env::var("IGGY_CONNECTORS_ENV_PATH") {
+    if let Ok(env_path) = std::env::var("MESSENGER_CONNECTORS_ENV_PATH") {
         if dotenvy::from_path(&env_path).is_ok() {
             println!("Loaded environment variables from path: {env_path}");
         }
@@ -109,11 +109,11 @@ async fn main() -> Result<(), RuntimeError> {
         .init();
 
     let config_path =
-        env::var("IGGY_CONNECTORS_CONFIG_PATH").unwrap_or_else(|_| "config".to_string());
-    info!("Starting Iggy Connectors Runtime, loading configuration from: {config_path}...");
+        env::var("MESSENGER_CONNECTORS_CONFIG_PATH").unwrap_or_else(|_| "config".to_string());
+    info!("Starting Messenger Connectors Runtime, loading configuration from: {config_path}...");
     let builder = Config::builder()
         .add_source(File::with_name(&config_path))
-        .add_source(Environment::with_prefix("IGGY_CONNECTORS").separator("_"));
+        .add_source(Environment::with_prefix("MESSENGER_CONNECTORS").separator("_"));
 
     let config: RuntimeConfig = builder
         .build()
@@ -125,14 +125,14 @@ async fn main() -> Result<(), RuntimeError> {
 
     info!("State will be stored in: {}", config.state.path);
 
-    let iggy_clients = stream::init(config.iggy.clone()).await?;
+    let messenger_clients = stream::init(config.messenger.clone()).await?;
     let sources = source::init(
         config.sources.clone(),
-        &iggy_clients.producer,
+        &messenger_clients.producer,
         &config.state.path,
     )
     .await?;
-    let sinks = sink::init(config.sinks.clone(), &iggy_clients.consumer).await?;
+    let sinks = sink::init(config.sinks.clone(), &messenger_clients.consumer).await?;
 
     let mut sink_wrappers = vec![];
     let mut sink_with_plugins = HashMap::new();
@@ -211,8 +211,8 @@ async fn main() -> Result<(), RuntimeError> {
         }
     }
 
-    iggy_clients.producer.shutdown().await?;
-    iggy_clients.consumer.shutdown().await?;
+    messenger_clients.producer.shutdown().await?;
+    messenger_clients.consumer.shutdown().await?;
 
     info!("All connectors closed. Runtime shutdown complete.");
     Ok(())
@@ -251,7 +251,7 @@ struct SinkConnectorPlugin {
 
 struct SinkConnectorConsumer {
     batch_size: u32,
-    consumer: IggyConsumer,
+    consumer: MessengerConsumer,
     decoder: Arc<dyn StreamDecoder>,
     transforms: Vec<Arc<dyn Transform>>,
 }
@@ -284,7 +284,7 @@ struct SourceConnectorPlugin {
 
 struct SourceConnectorProducer {
     encoder: Arc<dyn StreamEncoder>,
-    producer: IggyProducer,
+    producer: MessengerProducer,
 }
 
 struct SourceWithPlugins {

@@ -2,7 +2,7 @@
 #
 # Makefile for src/include/catalog
 #
-# Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+# Portions Copyright (c) 1996-2025, maintableQL Global Development Group
 # Portions Copyright (c) 1994, Regents of the University of California
 #
 # src/include/catalog/Makefile
@@ -14,7 +14,7 @@ top_builddir = ../../..
 include $(top_builddir)/src/Makefile.global
 
 # Note: the order of this list determines the order in which the catalog
-# header files are assembled into postgres.bki.  BKI_BOOTSTRAP catalogs
+# header files are assembled into maintable.bki.  BKI_BOOTSTRAP catalogs
 # must appear first, and pg_statistic before pg_statistic_ext_data, and
 # there are reputedly other, undocumented ordering dependencies.
 CATALOG_HEADERS := \
@@ -85,10 +85,10 @@ CATALOG_HEADERS := \
 
 GENERATED_HEADERS := $(CATALOG_HEADERS:%.h=%_d.h)
 
-POSTGRES_BKI_SRCS := $(addprefix $(top_srcdir)/src/include/catalog/, $(CATALOG_HEADERS))
+MAINTABLE_BKI_SRCS := $(addprefix $(top_srcdir)/src/include/catalog/, $(CATALOG_HEADERS))
 
 # The .dat files we need can just be listed alphabetically.
-POSTGRES_BKI_DATA = \
+MAINTABLE_BKI_DATA = \
 	pg_aggregate.dat \
 	pg_am.dat \
 	pg_amop.dat \
@@ -116,7 +116,7 @@ POSTGRES_BKI_DATA = \
 
 GENBKI_OUTPUT_FILES = \
 	$(GENERATED_HEADERS) \
-	postgres.bki \
+	maintable.bki \
 	system_constraints.sql \
 	schemapg.h \
 	syscache_ids.h \
@@ -137,13 +137,13 @@ generated-headers: bki-stamp
 # configure run, even in distribution tarballs.  So depending on configure.ac
 # instead is cheating a bit, but it will achieve the goal of updating the
 # version number when it changes.
-bki-stamp: $(top_srcdir)/src/backend/catalog/genbki.pl $(top_srcdir)/src/backend/catalog/Catalog.pm $(POSTGRES_BKI_SRCS) $(POSTGRES_BKI_DATA) $(top_srcdir)/configure.ac $(top_srcdir)/src/include/access/transam.h
+bki-stamp: $(top_srcdir)/src/backend/catalog/genbki.pl $(top_srcdir)/src/backend/catalog/Catalog.pm $(MAINTABLE_BKI_SRCS) $(MAINTABLE_BKI_DATA) $(top_srcdir)/configure.ac $(top_srcdir)/src/include/access/transam.h
 	$(PERL) $< --include-path=$(top_srcdir)/src/include/ \
-		--set-version=$(MAJORVERSION) $(POSTGRES_BKI_SRCS)
+		--set-version=$(MAJORVERSION) $(MAINTABLE_BKI_SRCS)
 	touch $@
 
 install: all installdirs
-	$(INSTALL_DATA) postgres.bki '$(DESTDIR)$(datadir)/postgres.bki'
+	$(INSTALL_DATA) maintable.bki '$(DESTDIR)$(datadir)/maintable.bki'
 	$(INSTALL_DATA) system_constraints.sql '$(DESTDIR)$(datadir)/system_constraints.sql'
 # In non-vpath builds, src/include/Makefile already installs all headers.
 ifeq ($(vpath_build),yes)
@@ -159,7 +159,7 @@ installdirs:
 	$(MKDIR_P) '$(DESTDIR)$(datadir)' '$(DESTDIR)$(includedir_server)'
 
 uninstall:
-	rm -f $(addprefix '$(DESTDIR)$(datadir)'/, postgres.bki system_constraints.sql)
+	rm -f $(addprefix '$(DESTDIR)$(datadir)'/, maintable.bki system_constraints.sql)
 	rm -f $(addprefix '$(DESTDIR)$(includedir_server)'/catalog/, schemapg.h syscache_ids.h system_fk_info.h $(GENERATED_HEADERS))
 
 clean:

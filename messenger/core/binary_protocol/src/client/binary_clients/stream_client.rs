@@ -17,7 +17,7 @@
  */
 
 use async_trait::async_trait;
-use iggy_common::{Identifier, IggyError, Stream, StreamDetails};
+use messenger_common::{Identifier, MessengerError, Stream, StreamDetails};
 
 /// This trait defines the methods to interact with the stream module.
 #[async_trait]
@@ -25,11 +25,11 @@ pub trait StreamClient {
     /// Get the info about a specific stream by unique ID or name.
     ///
     /// Authentication is required, and the permission to read the streams.
-    async fn get_stream(&self, stream_id: &Identifier) -> Result<Option<StreamDetails>, IggyError>;
+    async fn get_stream(&self, stream_id: &Identifier) -> Result<Option<StreamDetails>, MessengerError>;
     /// Get the info about all the streams.
     ///
     /// Authentication is required, and the permission to read the streams.
-    async fn get_streams(&self) -> Result<Vec<Stream>, IggyError>;
+    async fn get_streams(&self) -> Result<Vec<Stream>, MessengerError>;
     /// Create a new stream.
     ///
     /// Authentication is required, and the permission to manage the streams.
@@ -37,17 +37,17 @@ pub trait StreamClient {
         &self,
         name: &str,
         stream_id: Option<u32>,
-    ) -> Result<StreamDetails, IggyError>;
+    ) -> Result<StreamDetails, MessengerError>;
     /// Update a stream by unique ID or name.
     ///
     /// Authentication is required, and the permission to manage the streams.
-    async fn update_stream(&self, stream_id: &Identifier, name: &str) -> Result<(), IggyError>;
+    async fn update_stream(&self, stream_id: &Identifier, name: &str) -> Result<(), MessengerError>;
     /// Delete a stream by unique ID or name.
     ///
     /// Authentication is required, and the permission to manage the streams.
-    async fn delete_stream(&self, stream_id: &Identifier) -> Result<(), IggyError>;
+    async fn delete_stream(&self, stream_id: &Identifier) -> Result<(), MessengerError>;
     /// Purge a stream by unique ID or name.
     ///
     /// Authentication is required, and the permission to manage the streams.
-    async fn purge_stream(&self, stream_id: &Identifier) -> Result<(), IggyError>;
+    async fn purge_stream(&self, stream_id: &Identifier) -> Result<(), MessengerError>;
 }

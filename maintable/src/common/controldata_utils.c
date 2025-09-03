@@ -4,7 +4,7 @@
  *		Common code for control data file output.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -15,9 +15,9 @@
  */
 
 #ifndef FRONTEND
-#include "postgres.h"
+#include "maintable.h"
 #else
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #endif
 
 #include <unistd.h>
@@ -170,7 +170,7 @@ retry:
 		pg_log_warning("possible byte ordering mismatch\n"
 					   "The byte ordering used to store the pg_control file might not match the one\n"
 					   "used by this program.  In that case the results below would be incorrect, and\n"
-					   "the PostgreSQL installation would be incompatible with this data directory.");
+					   "the maintableQL installation would be incompatible with this data directory.");
 #endif
 
 	return ControlFile;

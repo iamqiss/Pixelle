@@ -3,7 +3,7 @@
  * rewriteSearchCycle.c
  *		Support for rewriting SEARCH and CYCLE clauses.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -11,7 +11,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_operator_d.h"
 #include "catalog/pg_type_d.h"
@@ -99,7 +99,7 @@
  *
  * CASE WHEN ROW(col1, col2) IN (SELECT p.* FROM TABLE(cpa) p) THEN cmv ELSE cmd END
  *
- * in the SQL standard, but in PostgreSQL we can use the scalar-array operator
+ * in the SQL standard, but in maintableQL we can use the scalar-array operator
  * expression shown above.
  *
  * Also, in some of the cases where operators are shown above we actually

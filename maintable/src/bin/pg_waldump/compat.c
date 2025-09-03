@@ -3,7 +3,7 @@
  * compat.c
  *		Reimplementations of various backend functions.
  *
- * Portions Copyright (c) 2013-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2013-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/bin/pg_waldump/compat.c
@@ -16,7 +16,7 @@
 
 /* ugly hack, same as in e.g pg_controldata */
 #define FRONTEND 1
-#include "postgres.h"
+#include "maintable.h"
 
 #include <time.h>
 
@@ -29,7 +29,7 @@ timestamptz_to_time_t(TimestampTz t)
 	pg_time_t	result;
 
 	result = (pg_time_t) (t / USECS_PER_SEC +
-						  ((POSTGRES_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY));
+						  ((MAINTABLE_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY));
 	return result;
 }
 

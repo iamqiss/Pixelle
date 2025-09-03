@@ -17,7 +17,7 @@
  */
 
 use bytes::Bytes;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::{ClientFactory, assert_clean_system, login_root};
 use std::collections::HashMap;
 use std::str::FromStr;
@@ -32,7 +32,7 @@ const PARTITION_ID: u32 = 1;
 
 pub async fn run(client_factory: &dyn ClientFactory) {
     let client = client_factory.create_client().await;
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
 
     login_root(&client).await;
     init_system(&client).await;
@@ -43,7 +43,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
         let id = (offset + 1) as u128;
         let payload = create_message_payload(offset as u64);
         let headers = create_message_headers();
-        let message = IggyMessage::builder()
+        let message = MessengerMessage::builder()
             .id(id)
             .payload(payload)
             .user_headers(headers)
@@ -110,7 +110,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
     assert_clean_system(&client).await;
 }
 
-async fn init_system(client: &IggyClient) {
+async fn init_system(client: &MessengerClient) {
     // 1. Create the stream
     client
         .create_stream(STREAM_NAME, Some(STREAM_ID))
@@ -126,14 +126,14 @@ async fn init_system(client: &IggyClient) {
             Default::default(),
             None,
             None,
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await
         .unwrap();
 }
 
-async fn cleanup_system(client: &IggyClient) {
+async fn cleanup_system(client: &MessengerClient) {
     client
         .delete_stream(&STREAM_ID.try_into().unwrap())
         .await

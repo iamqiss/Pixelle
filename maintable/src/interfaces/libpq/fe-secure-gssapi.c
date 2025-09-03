@@ -3,7 +3,7 @@
  * fe-secure-gssapi.c
  *   The front-end (client) encryption support for GSSAPI
  *
- * Portions Copyright (c) 2016-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2016-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *  src/interfaces/libpq/fe-secure-gssapi.c
@@ -11,7 +11,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "fe-gssapi-common.h"
 #include "libpq-fe.h"
@@ -431,7 +431,7 @@ cleanup:
  * to return the number of bytes read.  This handles if blocking would occur and
  * if we detect EOF on the connection.
  */
-static PostgresPollingStatusType
+static MaintablePollingStatusType
 gss_read(PGconn *conn, void *recv_buffer, size_t length, ssize_t *ret)
 {
 	*ret = pqsecure_raw_read(conn, recv_buffer, length);
@@ -475,7 +475,7 @@ gss_read(PGconn *conn, void *recv_buffer, size_t length, ssize_t *ret)
  * PGRES_POLLING_WRITING as appropriate whenever it would block, and
  * PGRES_POLLING_FAILED if transport could not be negotiated.
  */
-PostgresPollingStatusType
+MaintablePollingStatusType
 pqsecure_open_gss(PGconn *conn)
 {
 	ssize_t		ret;
@@ -483,7 +483,7 @@ pqsecure_open_gss(PGconn *conn)
 				minor,
 				gss_flags = GSS_REQUIRED_FLAGS;
 	uint32		netlen;
-	PostgresPollingStatusType result;
+	MaintablePollingStatusType result;
 	gss_buffer_desc input = GSS_C_EMPTY_BUFFER,
 				output = GSS_C_EMPTY_BUFFER;
 

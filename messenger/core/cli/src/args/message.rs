@@ -18,7 +18,7 @@
 
 use clap::builder::NonEmptyStringValueParser;
 use clap::{ArgGroup, Args, Subcommand};
-use iggy::prelude::*;
+use messenger::prelude::*;
 use std::str::FromStr;
 
 #[derive(Debug, Clone, Subcommand)]
@@ -29,10 +29,10 @@ pub(crate) enum MessageAction {
     /// Topic ID can be specified as a topic name or ID
     ///
     /// Examples
-    ///  iggy message send 1 2 message
-    ///  iggy message send stream 2 "long message"
-    ///  iggy message send 1 topic message1 message2 message3
-    ///  iggy message send stream topic "long message with spaces"
+    ///  messenger message send 1 2 message
+    ///  messenger message send stream 2 "long message"
+    ///  messenger message send 1 topic message1 message2 message3
+    ///  messenger message send stream topic "long message with spaces"
     #[clap(verbatim_doc_comment, visible_alias = "s")]
     Send(SendMessagesArgs),
     /// Poll messages from given topic ID and given stream ID
@@ -41,10 +41,10 @@ pub(crate) enum MessageAction {
     /// Topic ID can be specified as a topic name or ID
     ///
     /// Examples:
-    ///  iggy message poll --offset 0 1 2 1
-    ///  iggy message poll --offset 0 stream 2 1
-    ///  iggy message poll --offset 0 1 topic 1
-    ///  iggy message poll --offset 0 stream topic 1
+    ///  messenger message poll --offset 0 1 2 1
+    ///  messenger message poll --offset 0 stream 2 1
+    ///  messenger message poll --offset 0 1 topic 1
+    ///  messenger message poll --offset 0 stream topic 1
     #[clap(verbatim_doc_comment, visible_alias = "p")]
     Poll(PollMessagesArgs),
     /// Flush messages from given topic ID and given stream ID
@@ -58,10 +58,10 @@ pub(crate) enum MessageAction {
     /// Topic ID can be specified as a topic name or ID
     ///
     /// Examples:
-    ///  iggy message flush 1 2 1
-    ///  iggy message flush stream 2 1
-    ///  iggy message flush 1 topic 1
-    ///  iggy message flush stream topic 1
+    ///  messenger message flush 1 2 1
+    ///  messenger message flush stream 2 1
+    ///  messenger message flush 1 topic 1
+    ///  messenger message flush stream topic 1
     #[clap(verbatim_doc_comment, visible_alias = "f")]
     Flush(FlushMessagesArgs),
 }
@@ -119,12 +119,12 @@ pub(crate) struct SendMessagesArgs {
 }
 
 /// Parse Header Key, Kind and Value from the string separated by a ':'
-fn parse_key_val(s: &str) -> Result<(HeaderKey, HeaderValue), IggyError> {
+fn parse_key_val(s: &str) -> Result<(HeaderKey, HeaderValue), MessengerError> {
     let lower = s.to_lowercase();
     let parts = lower.split(':').collect::<Vec<_>>();
 
     if parts.len() != 3 {
-        return Err(IggyError::InvalidFormat);
+        return Err(MessengerError::InvalidFormat);
     }
 
     let key = HeaderKey::from_str(parts[0])?;

@@ -18,9 +18,9 @@
 
 use crate::CompressionAlgorithm;
 use crate::Partition;
-use crate::utils::byte_size::IggyByteSize;
-use crate::utils::expiry::IggyExpiry;
-use crate::utils::timestamp::IggyTimestamp;
+use crate::utils::byte_size::MessengerByteSize;
+use crate::utils::expiry::MessengerExpiry;
+use crate::utils::timestamp::MessengerTimestamp;
 use crate::utils::topic_size::MaxTopicSize;
 use serde::{Deserialize, Serialize};
 
@@ -40,13 +40,13 @@ pub struct Topic {
     /// The unique identifier (numeric) of the topic.
     pub id: u32,
     /// The timestamp when the topic was created.
-    pub created_at: IggyTimestamp,
+    pub created_at: MessengerTimestamp,
     /// The unique name of the topic.
     pub name: String,
     /// The total size of the topic in bytes.
-    pub size: IggyByteSize,
+    pub size: MessengerByteSize,
     /// The expiry of the messages in the topic.
-    pub message_expiry: IggyExpiry,
+    pub message_expiry: MessengerExpiry,
     /// Compression algorithm for the topic.
     pub compression_algorithm: CompressionAlgorithm,
     /// The optional maximum size of the topic.
@@ -77,13 +77,13 @@ pub struct TopicDetails {
     /// The unique identifier (numeric) of the topic.
     pub id: u32,
     /// The timestamp when the topic was created.
-    pub created_at: IggyTimestamp,
+    pub created_at: MessengerTimestamp,
     /// The unique name of the topic.
     pub name: String,
     /// The total size of the topic.
-    pub size: IggyByteSize,
+    pub size: MessengerByteSize,
     /// The expiry of the messages in the topic.
-    pub message_expiry: IggyExpiry,
+    pub message_expiry: MessengerExpiry,
     /// Compression algorithm for the topic.
     pub compression_algorithm: CompressionAlgorithm,
     /// The optional maximum size of the topic.

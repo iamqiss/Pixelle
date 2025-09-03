@@ -3,7 +3,7 @@
  * cmdtag.c
  *	  Data and routines for commandtag names and enumeration.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -11,7 +11,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "tcop/cmdtag.h"
 #include "utils/builtins.h"
@@ -137,7 +137,7 @@ BuildQueryCompletionString(char *buff, const QueryCompletion *qc,
 	Assert(taglen <= COMPLETION_TAG_BUFSIZE - MAXINT8LEN - 4);
 
 	/*
-	 * In PostgreSQL versions 11 and earlier, it was possible to create a
+	 * In maintableQL versions 11 and earlier, it was possible to create a
 	 * table WITH OIDS.  When inserting into such a table, INSERT used to
 	 * include the Oid of the inserted record in the completion tag.  To
 	 * maintain compatibility in the wire protocol, we now write a "0" (for

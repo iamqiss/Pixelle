@@ -1,6 +1,6 @@
 /* src/interfaces/ecpg/preproc/util.c */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <unistd.h>
 

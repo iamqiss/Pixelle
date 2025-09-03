@@ -6,7 +6,7 @@
  * These functions update both the process environment and caches in
  * (potentially multiple) C run-time library (CRT) versions.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -111,7 +111,7 @@ pgwin32_putenv(const char *envval)
 
 	/*
 	 * Finally, update our "own" cache.  This is redundant with the loop
-	 * above, except when PostgreSQL itself links to a CRT not listed above.
+	 * above, except when maintableQL itself links to a CRT not listed above.
 	 * Ideally, the loop does visit all possible CRTs, making this redundant.
 	 */
 	return _putenv(envval);

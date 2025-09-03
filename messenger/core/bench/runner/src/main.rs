@@ -19,8 +19,8 @@ mod app;
 mod args;
 
 use anyhow::Result;
-use app::IggyBenchRunnerApp;
-use args::IggyBenchRunnerArgs;
+use app::MessengerBenchRunnerApp;
+use args::MessengerBenchRunnerArgs;
 use clap::Parser;
 use tracing::{error, info};
 use tracing_subscriber::{
@@ -32,7 +32,7 @@ use tracing_subscriber::{
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let args = IggyBenchRunnerArgs::parse();
+    let args = MessengerBenchRunnerArgs::parse();
 
     let env_filter =
         EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new(&args.log_level));
@@ -43,7 +43,7 @@ async fn main() -> Result<()> {
         .try_init()
         .unwrap();
 
-    info!("Starting IggyBenchRunner with args: {:?}", args);
+    info!("Starting MessengerBenchRunner with args: {:?}", args);
 
     if let Err(e) = args.validate() {
         error!("Configuration error: {}", e);
@@ -53,7 +53,7 @@ async fn main() -> Result<()> {
     info!("Output directory: {}", args.output_dir);
     info!("Log level: {}", args.log_level);
 
-    let app = IggyBenchRunnerApp::new(args)?;
+    let app = MessengerBenchRunnerApp::new(args)?;
     let res = app.run().await;
     info!("Benchmark run result: {:?}", res);
     res

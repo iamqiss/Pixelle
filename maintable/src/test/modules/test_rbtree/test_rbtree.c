@@ -3,7 +3,7 @@
  * test_rbtree.c
  *		Test correctness of red-black tree operations.
  *
- * Copyright (c) 2009-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2009-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/test/modules/test_rbtree/test_rbtree.c
@@ -11,7 +11,7 @@
  * -------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "common/pg_prng.h"
 #include "fmgr.h"

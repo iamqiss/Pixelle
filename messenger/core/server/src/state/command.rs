@@ -21,24 +21,24 @@ use crate::state::models::{
     CreateTopicWithId, CreateUserWithId,
 };
 use bytes::{Buf, BufMut, Bytes, BytesMut};
-use iggy_common::BytesSerializable;
-use iggy_common::IggyError;
-use iggy_common::change_password::ChangePassword;
-use iggy_common::create_partitions::CreatePartitions;
-use iggy_common::delete_consumer_group::DeleteConsumerGroup;
-use iggy_common::delete_partitions::DeletePartitions;
-use iggy_common::delete_personal_access_token::DeletePersonalAccessToken;
-use iggy_common::delete_segments::DeleteSegments;
-use iggy_common::delete_stream::DeleteStream;
-use iggy_common::delete_topic::DeleteTopic;
-use iggy_common::delete_user::DeleteUser;
-use iggy_common::purge_stream::PurgeStream;
-use iggy_common::purge_topic::PurgeTopic;
-use iggy_common::update_permissions::UpdatePermissions;
-use iggy_common::update_stream::UpdateStream;
-use iggy_common::update_topic::UpdateTopic;
-use iggy_common::update_user::UpdateUser;
-use iggy_common::{
+use messenger_common::BytesSerializable;
+use messenger_common::MessengerError;
+use messenger_common::change_password::ChangePassword;
+use messenger_common::create_partitions::CreatePartitions;
+use messenger_common::delete_consumer_group::DeleteConsumerGroup;
+use messenger_common::delete_partitions::DeletePartitions;
+use messenger_common::delete_personal_access_token::DeletePersonalAccessToken;
+use messenger_common::delete_segments::DeleteSegments;
+use messenger_common::delete_stream::DeleteStream;
+use messenger_common::delete_topic::DeleteTopic;
+use messenger_common::delete_user::DeleteUser;
+use messenger_common::purge_stream::PurgeStream;
+use messenger_common::purge_topic::PurgeTopic;
+use messenger_common::update_permissions::UpdatePermissions;
+use messenger_common::update_stream::UpdateStream;
+use messenger_common::update_topic::UpdateTopic;
+use messenger_common::update_user::UpdateUser;
+use messenger_common::{
     CHANGE_PASSWORD_CODE, CREATE_CONSUMER_GROUP_CODE, CREATE_PARTITIONS_CODE,
     CREATE_PERSONAL_ACCESS_TOKEN_CODE, CREATE_STREAM_CODE, CREATE_TOPIC_CODE, CREATE_USER_CODE,
     Command, DELETE_CONSUMER_GROUP_CODE, DELETE_PARTITIONS_CODE, DELETE_PERSONAL_ACCESS_TOKEN_CODE,
@@ -107,7 +107,7 @@ impl BytesSerializable for EntryCommand {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError>
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
@@ -160,7 +160,7 @@ impl BytesSerializable for EntryCommand {
             DELETE_PERSONAL_ACCESS_TOKEN_CODE => Ok(EntryCommand::DeletePersonalAccessToken(
                 DeletePersonalAccessToken::from_bytes(payload)?,
             )),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

@@ -21,7 +21,7 @@ use crate::server::scenarios::{
     STREAM_NAME, TOPIC_ID, TOPIC_NAME, cleanup, create_client, get_consumer_group,
     join_consumer_group,
 };
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::{
     ClientFactory, assert_clean_system, create_user, login_root, login_user,
 };
@@ -43,10 +43,10 @@ pub async fn run(client_factory: &dyn ClientFactory) {
 }
 
 async fn init_system(
-    system_client: &IggyClient,
-    client1: &IggyClient,
-    client2: &IggyClient,
-    client3: &IggyClient,
+    system_client: &MessengerClient,
+    client1: &MessengerClient,
+    client2: &MessengerClient,
+    client3: &MessengerClient,
     create_users: bool,
 ) {
     // 1. Create the stream
@@ -64,7 +64,7 @@ async fn init_system(
             CompressionAlgorithm::default(),
             None,
             Some(TOPIC_ID),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await
@@ -106,14 +106,14 @@ async fn init_system(
 }
 
 async fn execute_using_messages_key_key(
-    system_client: &IggyClient,
-    client1: &IggyClient,
-    client2: &IggyClient,
-    client3: &IggyClient,
+    system_client: &MessengerClient,
+    client1: &MessengerClient,
+    client2: &MessengerClient,
+    client3: &MessengerClient,
 ) {
     // 1. Send messages to the calculated partition ID on the server side by using entity ID as a key
     for entity_id in 1..=MESSAGES_COUNT {
-        let message = IggyMessage::from_str(&create_message_payload(entity_id)).unwrap();
+        let message = MessengerMessage::from_str(&create_message_payload(entity_id)).unwrap();
         let mut messages = vec![message];
         system_client
             .send_messages(
@@ -135,7 +135,7 @@ async fn execute_using_messages_key_key(
     assert_eq!(total_read_messages_count, MESSAGES_COUNT);
 }
 
-async fn poll_messages(client: &IggyClient) -> u32 {
+async fn poll_messages(client: &MessengerClient) -> u32 {
     let consumer = Consumer::group(Identifier::numeric(CONSUMER_GROUP_ID).unwrap());
     let mut total_read_messages_count = 0;
     for _ in 1..=PARTITIONS_COUNT * MESSAGES_COUNT {
@@ -163,10 +163,10 @@ fn create_message_payload(entity_id: u32) -> String {
 }
 
 async fn execute_using_none_key(
-    system_client: &IggyClient,
-    client1: &IggyClient,
-    client2: &IggyClient,
-    client3: &IggyClient,
+    system_client: &MessengerClient,
+    client1: &MessengerClient,
+    client2: &MessengerClient,
+    client3: &MessengerClient,
 ) {
     // 1. Send messages to the calculated partition ID on the server side (round-robin) by using none key
     for entity_id in 1..=MESSAGES_COUNT * PARTITIONS_COUNT {
@@ -176,7 +176,7 @@ async fn execute_using_none_key(
         }
 
         let message =
-            IggyMessage::from_str(&create_extended_message_payload(partition_id, entity_id))
+            MessengerMessage::from_str(&create_extended_message_payload(partition_id, entity_id))
                 .unwrap();
         let mut messages = vec![message];
         system_client
@@ -201,7 +201,7 @@ async fn execute_using_none_key(
     validate_message_polling(client3, &consumer_group_info).await;
 }
 
-async fn validate_message_polling(client: &IggyClient, consumer_group: &ConsumerGroupDetails) {
+async fn validate_message_polling(client: &MessengerClient, consumer_group: &ConsumerGroupDetails) {
     let consumer = Consumer::group(Identifier::numeric(CONSUMER_GROUP_ID).unwrap());
     let client_info = client.get_me().await.unwrap();
     let consumer_group_member = consumer_group

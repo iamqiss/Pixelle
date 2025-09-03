@@ -18,7 +18,7 @@
 package tcp_test
 
 import (
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
 	"github.com/onsi/ginkgo/v2"
 	"github.com/onsi/gomega"
 )

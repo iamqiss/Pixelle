@@ -1,17 +1,17 @@
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 use strict;
 use warnings FATAL => 'all';
 use Config;
-use PostgreSQL::Test::Utils;
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Utils;
+use maintableQL::Test::Cluster;
 use Test::More;
 
-my $node = PostgreSQL::Test::Cluster->new('node');
+my $node = maintableQL::Test::Cluster->new('node');
 
 $node->init();
 $node->start();
 
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	q(CREATE DATABASE db_sql_ascii ENCODING "sql_ascii" TEMPLATE template0;));
 
 my $cmd =

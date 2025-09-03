@@ -3,14 +3,14 @@
  * findtimezone.c
  *	  Functions for determining the default timezone to use.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/bin/initdb/findtimezone.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <fcntl.h>
 #include <sys/stat.h>

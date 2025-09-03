@@ -234,7 +234,7 @@ runs:
         VCS_REF=${{ github.sha }}
         RUST_VERSION=${{ env.RUST_VERSION }}
         LIBC=${{ inputs.libc }}
-        IGGY_CI_BUILD=true"
+        MESSENGER_CI_BUILD=true"
         {
           echo "all<<__EOF__"
           echo "$args"

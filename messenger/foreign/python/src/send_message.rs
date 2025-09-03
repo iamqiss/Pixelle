@@ -17,7 +17,7 @@
  */
 
 use bytes::Bytes;
-use iggy::prelude::{IggyMessage as RustIggyMessage, IggyMessageHeader};
+use messenger::prelude::{MessengerMessage as RustMessengerMessage, MessengerMessageHeader};
 use pyo3::{prelude::*, types::PyBytes};
 use pyo3_stub_gen::{
     derive::{gen_stub_pyclass, gen_stub_pymethods},
@@ -32,14 +32,14 @@ use std::str::FromStr;
 #[pyclass]
 #[gen_stub_pyclass]
 pub struct SendMessage {
-    pub(crate) inner: RustIggyMessage,
+    pub(crate) inner: RustMessengerMessage,
 }
 
 impl Clone for SendMessage {
     fn clone(&self) -> Self {
         Self {
-            inner: RustIggyMessage {
-                header: IggyMessageHeader {
+            inner: RustMessengerMessage {
+                header: MessengerMessageHeader {
                     checksum: self.inner.header.checksum,
                     id: self.inner.header.id,
                     offset: self.inner.header.offset,
@@ -66,10 +66,10 @@ impl SendMessage {
     pub fn new(py: Python, data: PyMessagePayload) -> Self {
         // TODO: handle errors
         let inner = match data {
-            PyMessagePayload::String(data) => RustIggyMessage::from_str(&data).unwrap(),
+            PyMessagePayload::String(data) => RustMessengerMessage::from_str(&data).unwrap(),
             PyMessagePayload::Bytes(data) => {
                 let bytes = Bytes::from(data.extract::<Vec<u8>>(py).unwrap());
-                RustIggyMessage::builder().payload(bytes).build().unwrap()
+                RustMessengerMessage::builder().payload(bytes).build().unwrap()
             }
         };
         Self { inner }

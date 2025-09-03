@@ -16,15 +16,15 @@
  * under the License.
  */
 
-use iggy::clients::consumer::ReceivedMessage;
-use iggy::consumer_ext::MessageConsumer;
-use iggy::prelude::IggyError;
+use messenger::clients::consumer::ReceivedMessage;
+use messenger::consumer_ext::MessageConsumer;
+use messenger::prelude::MessengerError;
 
 #[derive(Debug)]
 pub struct PrintEventConsumer {}
 
 impl MessageConsumer for PrintEventConsumer {
-    async fn consume(&self, message: ReceivedMessage) -> Result<(), IggyError> {
+    async fn consume(&self, message: ReceivedMessage) -> Result<(), MessengerError> {
         // Extract message payload as raw bytes
         let raw_message = message.message.payload.as_ref();
         // Convert raw bytes into string

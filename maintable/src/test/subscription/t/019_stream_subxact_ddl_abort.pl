@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test streaming of transaction with subtransactions, DDLs, DMLs, and
 # rollbacks
@@ -8,40 +8,40 @@
 # so we didn't add a parallel apply version for the tests in this file.
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Create publisher node
-my $node_publisher = PostgreSQL::Test::Cluster->new('publisher');
+my $node_publisher = maintableQL::Test::Cluster->new('publisher');
 $node_publisher->init(allows_streaming => 'logical');
-$node_publisher->append_conf('postgresql.conf',
+$node_publisher->append_conf('maintableql.conf',
 	'debug_logical_replication_streaming = immediate');
 $node_publisher->start;
 
 # Create subscriber node
-my $node_subscriber = PostgreSQL::Test::Cluster->new('subscriber');
+my $node_subscriber = maintableQL::Test::Cluster->new('subscriber');
 $node_subscriber->init;
 $node_subscriber->start;
 
 # Create some preexisting content on publisher
-$node_publisher->safe_psql('postgres',
+$node_publisher->safe_psql('maintable',
 	"CREATE TABLE test_tab (a int primary key, b bytea)");
-$node_publisher->safe_psql('postgres',
+$node_publisher->safe_psql('maintable',
 	"INSERT INTO test_tab VALUES (1, 'foo'), (2, 'bar')");
 
 # Setup structure on subscriber
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	"CREATE TABLE test_tab (a int primary key, b bytea, c INT, d INT, e INT)"
 );
 
 # Setup logical replication
-my $publisher_connstr = $node_publisher->connstr . ' dbname=postgres';
-$node_publisher->safe_psql('postgres',
+my $publisher_connstr = $node_publisher->connstr . ' dbname=maintable';
+$node_publisher->safe_psql('maintable',
 	"CREATE PUBLICATION tap_pub FOR TABLE test_tab");
 
 my $appname = 'tap_sub';
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	"CREATE SUBSCRIPTION tap_sub CONNECTION '$publisher_connstr application_name=$appname' PUBLICATION tap_pub WITH (streaming = on)"
 );
 
@@ -49,13 +49,13 @@ $node_subscriber->safe_psql('postgres',
 $node_subscriber->wait_for_subscription_sync($node_publisher, $appname);
 
 my $result =
-  $node_subscriber->safe_psql('postgres',
+  $node_subscriber->safe_psql('maintable',
 	"SELECT count(*), count(c) FROM test_tab");
 is($result, qq(2|0), 'check initial data was copied to subscriber');
 
 # streamed transaction with DDL, DML and ROLLBACKs
 $node_publisher->safe_psql(
-	'postgres', q{
+	'maintable', q{
 BEGIN;
 INSERT INTO test_tab VALUES (3, sha256(3::text::bytea));
 ALTER TABLE test_tab ADD COLUMN c INT;
@@ -76,7 +76,7 @@ COMMIT;
 $node_publisher->wait_for_catchup($appname);
 
 $result =
-  $node_subscriber->safe_psql('postgres',
+  $node_subscriber->safe_psql('maintable',
 	"SELECT count(*), count(c) FROM test_tab");
 is($result, qq(4|1),
 	'check rollback to savepoint was reflected on subscriber and extra columns contain local defaults'

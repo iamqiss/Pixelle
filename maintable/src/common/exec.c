@@ -4,7 +4,7 @@
  *		Functions for finding and validating executable files
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -24,9 +24,9 @@
 #define _DARWIN_BETTER_REALPATH
 
 #ifndef FRONTEND
-#include "postgres.h"
+#include "maintable.h"
 #else
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #endif
 
 #include <signal.h>
@@ -432,7 +432,7 @@ set_pglocale_pgservice(const char *argv0, const char *app)
 	char		my_exec_path[MAXPGPATH];
 
 	/* don't set LC_ALL in the backend */
-	if (strcmp(app, PG_TEXTDOMAIN("postgres")) != 0)
+	if (strcmp(app, PG_TEXTDOMAIN("maintable")) != 0)
 	{
 		setlocale(LC_ALL, "");
 
@@ -468,7 +468,7 @@ set_pglocale_pgservice(const char *argv0, const char *app)
 
 #ifdef EXEC_BACKEND
 /*
- * For the benefit of PostgreSQL developers testing EXEC_BACKEND on Unix
+ * For the benefit of maintableQL developers testing EXEC_BACKEND on Unix
  * systems (code paths normally exercised only on Windows), provide a way to
  * disable address space layout randomization, if we know how on this platform.
  * Otherwise, backends may fail to attach to shared memory at the fixed address

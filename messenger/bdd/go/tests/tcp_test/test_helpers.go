@@ -18,32 +18,32 @@
 package tcp_test
 
 import (
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
 	"math/rand"
 	"os"
 	"strings"
 	"time"
 
-	"github.com/apache/iggy/foreign/go/iggycli"
-	"github.com/apache/iggy/foreign/go/tcp"
+	"github.com/apache/messenger/foreign/go/messengercli"
+	"github.com/apache/messenger/foreign/go/tcp"
 )
 
-func createAuthorizedConnection() iggycli.Client {
+func createAuthorizedConnection() messengercli.Client {
 	cli := createClient()
-	_, err := cli.LoginUser("iggy", "iggy")
+	_, err := cli.LoginUser("messenger", "messenger")
 	if err != nil {
 		panic(err)
 	}
 	return cli
 }
 
-func createClient() iggycli.Client {
-	addr := os.Getenv("IGGY_TCP_ADDRESS")
+func createClient() messengercli.Client {
+	addr := os.Getenv("MESSENGER_TCP_ADDRESS")
 	if addr == "" {
 		addr = "127.0.0.1:8090"
 	}
-	cli, err := iggycli.NewIggyClient(
-		iggycli.WithTcp(
+	cli, err := messengercli.NewMessengerClient(
+		messengercli.WithTcp(
 			tcp.WithServerAddress(addr),
 		),
 	)

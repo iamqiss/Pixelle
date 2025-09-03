@@ -16,7 +16,7 @@
 # under the License.
 
 name: go-post-merge
-description: Go post-merge tag preparation github iggy actions
+description: Go post-merge tag preparation github messenger actions
 
 inputs:
   version:

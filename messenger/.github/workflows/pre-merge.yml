@@ -22,7 +22,7 @@ on:
   workflow_dispatch:
 
 env:
-  IGGY_CI_BUILD: true
+  MESSENGER_CI_BUILD: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

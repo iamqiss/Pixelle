@@ -16,7 +16,7 @@
 // under the License.
 
 use crate::config::get_api_base_url;
-use crate::error::{IggyBenchDashboardError, Result};
+use crate::error::{MessengerBenchDashboardError, Result};
 use bench_dashboard_shared::BenchmarkReportLight;
 use bench_report::hardware::BenchmarkHardware;
 use bench_report::report::BenchmarkReport;
@@ -39,10 +39,10 @@ async fn check_server_health() -> Result<()> {
     let resp = Request::get(&url)
         .send()
         .await
-        .map_err(|e| IggyBenchDashboardError::HealthCheck(format!("Network error: {e}")))?;
+        .map_err(|e| MessengerBenchDashboardError::HealthCheck(format!("Network error: {e}")))?;
 
     if !resp.ok() {
-        return Err(IggyBenchDashboardError::HealthCheck(format!(
+        return Err(MessengerBenchDashboardError::HealthCheck(format!(
             "Server returned {}",
             resp.status()
         )));
@@ -60,10 +60,10 @@ pub async fn fetch_hardware_configurations() -> Result<Vec<BenchmarkHardware>> {
     let resp = Request::get(&url)
         .send()
         .await
-        .map_err(|e| IggyBenchDashboardError::Network(e.to_string()))?;
+        .map_err(|e| MessengerBenchDashboardError::Network(e.to_string()))?;
 
     if !resp.ok() {
-        return Err(IggyBenchDashboardError::Server(format!(
+        return Err(MessengerBenchDashboardError::Server(format!(
             "Failed to fetch hardware configurations: {}",
             resp.status()
         )));
@@ -71,7 +71,7 @@ pub async fn fetch_hardware_configurations() -> Result<Vec<BenchmarkHardware>> {
 
     resp.json()
         .await
-        .map_err(|e| IggyBenchDashboardError::Parse(e.to_string()))
+        .map_err(|e| MessengerBenchDashboardError::Parse(e.to_string()))
 }
 
 pub async fn fetch_gitrefs_for_hardware(hardware: &str) -> Result<Vec<String>> {
@@ -82,10 +82,10 @@ pub async fn fetch_gitrefs_for_hardware(hardware: &str) -> Result<Vec<String>> {
     let resp = Request::get(&url)
         .send()
         .await
-        .map_err(|e| IggyBenchDashboardError::Network(e.to_string()))?;
+        .map_err(|e| MessengerBenchDashboardError::Network(e.to_string()))?;
 
     if !resp.ok() {
-        return Err(IggyBenchDashboardError::Server(format!(
+        return Err(MessengerBenchDashboardError::Server(format!(
             "Failed to fetch git refs: {}",
             resp.status()
         )));
@@ -93,7 +93,7 @@ pub async fn fetch_gitrefs_for_hardware(hardware: &str) -> Result<Vec<String>> {
 
     resp.json()
         .await
-        .map_err(|e| IggyBenchDashboardError::Parse(e.to_string()))
+        .map_err(|e| MessengerBenchDashboardError::Parse(e.to_string()))
 }
 
 pub async fn fetch_benchmarks_for_hardware_and_gitref(
@@ -112,10 +112,10 @@ pub async fn fetch_benchmarks_for_hardware_and_gitref(
     let resp = Request::get(&url)
         .send()
         .await
-        .map_err(|e| IggyBenchDashboardError::Network(e.to_string()))?;
+        .map_err(|e| MessengerBenchDashboardError::Network(e.to_string()))?;
 
     if !resp.ok() {
-        return Err(IggyBenchDashboardError::Server(format!(
+        return Err(MessengerBenchDashboardError::Server(format!(
             "Failed to fetch benchmarks: {}",
             resp.status()
         )));
@@ -123,7 +123,7 @@ pub async fn fetch_benchmarks_for_hardware_and_gitref(
 
     resp.json()
         .await
-        .map_err(|e| IggyBenchDashboardError::Parse(e.to_string()))
+        .map_err(|e| MessengerBenchDashboardError::Parse(e.to_string()))
 }
 
 pub async fn fetch_benchmark_by_uuid(uuid: &str) -> Result<BenchmarkReportLight> {
@@ -134,11 +134,11 @@ pub async fn fetch_benchmark_by_uuid(uuid: &str) -> Result<BenchmarkReportLight>
     let url = format!("{base_url}/api/benchmark/light/{uuid}");
     let response = Request::get(&url).send().await.map_err(|e| {
         log!(format!("Network error fetching benchmark: {}", e));
-        IggyBenchDashboardError::Network(e.to_string())
+        MessengerBenchDashboardError::Network(e.to_string())
     })?;
 
     if response.status() != 200 {
-        return Err(IggyBenchDashboardError::Server(format!(
+        return Err(MessengerBenchDashboardError::Server(format!(
             "Failed to fetch benchmark: {}",
             response.status()
         )));
@@ -146,19 +146,19 @@ pub async fn fetch_benchmark_by_uuid(uuid: &str) -> Result<BenchmarkReportLight>
 
     let text = response.text().await.map_err(|e| {
         log!(format!("Error getting response text: {}", e));
-        IggyBenchDashboardError::Parse(e.to_string())
+        MessengerBenchDashboardError::Parse(e.to_string())
     })?;
 
     if text.is_empty() {
         log!("Got empty response body despite 200 status code");
-        return Err(IggyBenchDashboardError::Parse(
+        return Err(MessengerBenchDashboardError::Parse(
             "Empty response body".to_string(),
         ));
     }
 
     serde_json::from_str::<BenchmarkReportLight>(&text).map_err(|e| {
         log!(format!("JSON parse error: {}", e));
-        IggyBenchDashboardError::Parse(e.to_string())
+        MessengerBenchDashboardError::Parse(e.to_string())
     })
 }
 
@@ -170,10 +170,10 @@ pub async fn fetch_benchmark_report_full(uuid: &Uuid) -> Result<BenchmarkReport>
     let resp = Request::get(&url)
         .send()
         .await
-        .map_err(|e| IggyBenchDashboardError::Network(e.to_string()))?;
+        .map_err(|e| MessengerBenchDashboardError::Network(e.to_string()))?;
 
     if !resp.ok() {
-        return Err(IggyBenchDashboardError::Server(format!(
+        return Err(MessengerBenchDashboardError::Server(format!(
             "Failed to fetch benchmark report: {}",
             resp.status()
         )));
@@ -181,7 +181,7 @@ pub async fn fetch_benchmark_report_full(uuid: &Uuid) -> Result<BenchmarkReport>
 
     resp.json()
         .await
-        .map_err(|e| IggyBenchDashboardError::Parse(e.to_string()))
+        .map_err(|e| MessengerBenchDashboardError::Parse(e.to_string()))
 }
 
 #[allow(dead_code)]
@@ -201,10 +201,10 @@ pub async fn fetch_benchmark_trend(
     let resp = Request::get(&url)
         .send()
         .await
-        .map_err(|e| IggyBenchDashboardError::Network(e.to_string()))?;
+        .map_err(|e| MessengerBenchDashboardError::Network(e.to_string()))?;
 
     if !resp.ok() {
-        return Err(IggyBenchDashboardError::Server(format!(
+        return Err(MessengerBenchDashboardError::Server(format!(
             "Failed to fetch benchmark trend: {}",
             resp.status()
         )));
@@ -212,7 +212,7 @@ pub async fn fetch_benchmark_trend(
 
     resp.json()
         .await
-        .map_err(|e| IggyBenchDashboardError::Parse(e.to_string()))
+        .map_err(|e| MessengerBenchDashboardError::Parse(e.to_string()))
 }
 
 pub fn download_test_artifacts(uuid: &Uuid) {
@@ -235,10 +235,10 @@ pub async fn fetch_recent_benchmarks(limit: Option<u32>) -> Result<Vec<Benchmark
     let resp = Request::get(&url)
         .send()
         .await
-        .map_err(|e| IggyBenchDashboardError::Network(e.to_string()))?;
+        .map_err(|e| MessengerBenchDashboardError::Network(e.to_string()))?;
 
     if !resp.ok() {
-        return Err(IggyBenchDashboardError::Server(format!(
+        return Err(MessengerBenchDashboardError::Server(format!(
             "Failed to fetch recent benchmarks: {}",
             resp.status()
         )));
@@ -246,5 +246,5 @@ pub async fn fetch_recent_benchmarks(limit: Option<u32>) -> Result<Vec<Benchmark
 
     resp.json()
         .await
-        .map_err(|e| IggyBenchDashboardError::Parse(e.to_string()))
+        .map_err(|e| MessengerBenchDashboardError::Parse(e.to_string()))
 }

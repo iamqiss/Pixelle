@@ -23,10 +23,10 @@ use crate::streaming::storage::SystemStorage;
 use crate::streaming::topics::consumer_group::ConsumerGroup;
 use ahash::AHashMap;
 use core::fmt;
-use iggy_common::locking::IggySharedMut;
-use iggy_common::{
-    CompressionAlgorithm, Consumer, ConsumerKind, IggyByteSize, IggyError, IggyExpiry,
-    IggyTimestamp, MaxTopicSize, Sizeable,
+use messenger_common::locking::MessengerSharedMut;
+use messenger_common::{
+    CompressionAlgorithm, Consumer, ConsumerKind, MessengerByteSize, MessengerError, MessengerExpiry,
+    MessengerTimestamp, MaxTopicSize, Sizeable,
 };
 
 use std::sync::Arc;
@@ -49,17 +49,17 @@ pub struct Topic {
     pub(crate) messages_count: Arc<AtomicU64>,
     pub(crate) segments_count_of_parent_stream: Arc<AtomicU32>,
     pub(crate) config: Arc<SystemConfig>,
-    pub(crate) partitions: AHashMap<u32, IggySharedMut<Partition>>,
+    pub(crate) partitions: AHashMap<u32, MessengerSharedMut<Partition>>,
     pub(crate) storage: Arc<SystemStorage>,
     pub(crate) consumer_groups: AHashMap<u32, RwLock<ConsumerGroup>>,
     pub(crate) consumer_groups_ids: AHashMap<String, u32>,
     pub(crate) current_consumer_group_id: AtomicU32,
     pub(crate) current_partition_id: AtomicU32,
-    pub message_expiry: IggyExpiry,
+    pub message_expiry: MessengerExpiry,
     pub compression_algorithm: CompressionAlgorithm,
     pub max_topic_size: MaxTopicSize,
     pub replication_factor: u8,
-    pub created_at: IggyTimestamp,
+    pub created_at: MessengerTimestamp,
 }
 
 impl Topic {
@@ -84,7 +84,7 @@ impl Topic {
             size_of_parent_stream,
             messages_count_of_parent_stream,
             segments_count_of_parent_stream,
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             Default::default(),
             MaxTopicSize::ServerDefault,
             1,
@@ -104,11 +104,11 @@ impl Topic {
         size_of_parent_stream: Arc<AtomicU64>,
         messages_count_of_parent_stream: Arc<AtomicU64>,
         segments_count_of_parent_stream: Arc<AtomicU32>,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         compression_algorithm: CompressionAlgorithm,
         max_topic_size: MaxTopicSize,
         replication_factor: u8,
-    ) -> Result<Topic, IggyError> {
+    ) -> Result<Topic, MessengerError> {
         let path = config.get_topic_path(stream_id, topic_id);
         let partitions_path = config.get_partitions_path(stream_id, topic_id);
         let mut topic = Topic {
@@ -133,7 +133,7 @@ impl Topic {
             compression_algorithm,
             replication_factor,
             config,
-            created_at: IggyTimestamp::now(),
+            created_at: MessengerTimestamp::now(),
         };
 
         info!(
@@ -170,14 +170,14 @@ impl Topic {
         matches!(self.max_topic_size, MaxTopicSize::Unlimited)
     }
 
-    pub fn get_partitions(&self) -> Vec<IggySharedMut<Partition>> {
+    pub fn get_partitions(&self) -> Vec<MessengerSharedMut<Partition>> {
         self.partitions.values().cloned().collect()
     }
 
-    pub fn get_partition(&self, partition_id: u32) -> Result<IggySharedMut<Partition>, IggyError> {
+    pub fn get_partition(&self, partition_id: u32) -> Result<MessengerSharedMut<Partition>, MessengerError> {
         match self.partitions.get(&partition_id) {
             Some(partition_arc) => Ok(partition_arc.clone()),
-            None => Err(IggyError::PartitionNotFound(
+            None => Err(MessengerError::PartitionNotFound(
                 partition_id,
                 self.topic_id,
                 self.stream_id,
@@ -191,7 +191,7 @@ impl Topic {
         client_id: u32,
         partition_id: Option<u32>,
         calculate_partition_id: bool,
-    ) -> Result<Option<(PollingConsumer, u32)>, IggyError> {
+    ) -> Result<Option<(PollingConsumer, u32)>, MessengerError> {
         match consumer.kind {
             ConsumerKind::Consumer => {
                 let partition_id = partition_id.unwrap_or(1);
@@ -229,12 +229,12 @@ impl Topic {
     pub fn get_max_topic_size(
         max_topic_size: MaxTopicSize,
         config: &SystemConfig,
-    ) -> Result<MaxTopicSize, IggyError> {
+    ) -> Result<MaxTopicSize, MessengerError> {
         match max_topic_size {
             MaxTopicSize::ServerDefault => Ok(config.topic.max_size),
             _ => {
                 if max_topic_size.as_bytes_u64() < config.segment.size.as_bytes_u64() {
-                    Err(IggyError::InvalidTopicSize(
+                    Err(MessengerError::InvalidTopicSize(
                         max_topic_size,
                         config.segment.size,
                     ))
@@ -245,17 +245,17 @@ impl Topic {
         }
     }
 
-    pub fn get_message_expiry(message_expiry: IggyExpiry, config: &SystemConfig) -> IggyExpiry {
+    pub fn get_message_expiry(message_expiry: MessengerExpiry, config: &SystemConfig) -> MessengerExpiry {
         match message_expiry {
-            IggyExpiry::ServerDefault => config.segment.message_expiry,
+            MessengerExpiry::ServerDefault => config.segment.message_expiry,
             _ => message_expiry,
         }
     }
 }
 
 impl Sizeable for Topic {
-    fn get_size_bytes(&self) -> IggyByteSize {
-        IggyByteSize::from(self.size_bytes.load(Ordering::SeqCst))
+    fn get_size_bytes(&self) -> MessengerByteSize {
+        MessengerByteSize::from(self.size_bytes.load(Ordering::SeqCst))
     }
 }
 
@@ -283,7 +283,7 @@ mod tests {
         persistence::persister::{FileWithSyncPersister, PersisterKind},
         utils::MemoryPool,
     };
-    use iggy_common::locking::IggySharedMutFn;
+    use messenger_common::locking::MessengerSharedMutFn;
     use std::str::FromStr;
 
     #[tokio::test]
@@ -303,9 +303,9 @@ mod tests {
         let topic_id = 2;
         let name = "test";
         let partitions_count = 3;
-        let message_expiry = IggyExpiry::NeverExpire;
+        let message_expiry = MessengerExpiry::NeverExpire;
         let compression_algorithm = CompressionAlgorithm::None;
-        let max_topic_size = MaxTopicSize::Custom(IggyByteSize::from_str("2 GiB").unwrap());
+        let max_topic_size = MaxTopicSize::Custom(MessengerByteSize::from_str("2 GiB").unwrap());
         let replication_factor = 1;
         let path = config.get_topic_path(stream_id, topic_id);
         let size_of_parent_stream = Arc::new(AtomicU64::new(0));

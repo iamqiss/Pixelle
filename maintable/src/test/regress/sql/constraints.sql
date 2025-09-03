@@ -137,7 +137,7 @@ INSERT INTO INSERT_TBL(y) VALUES ('Y');
 SELECT 'eight' AS one, currval('insert_seq');
 
 -- According to SQL, it is OK to insert a record that gives rise to NULL
--- constraint-condition results.  Postgres used to reject this, but it
+-- constraint-condition results.  Maintable used to reject this, but it
 -- was wrong:
 INSERT INTO INSERT_TBL VALUES (null, null, null);
 

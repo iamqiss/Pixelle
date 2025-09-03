@@ -14,7 +14,7 @@
  *
  * Currently, the supported keywords are "level", "long", and "workers".
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  src/common/compression.c
@@ -22,9 +22,9 @@
  */
 
 #ifndef FRONTEND
-#include "postgres.h"
+#include "maintable.h"
 #else
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #endif
 
 #ifdef USE_ZSTD
@@ -337,7 +337,7 @@ expect_boolean_value(char *keyword, char *value, pg_compress_specification *resu
  * Returns NULL if the compression specification string was syntactically
  * valid and semantically sensible.  Otherwise, returns an error message.
  *
- * Does not test whether this build of PostgreSQL supports the requested
+ * Does not test whether this build of maintableQL supports the requested
  * compression method.
  */
 char *

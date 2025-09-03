@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_procedure.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-alterprocedure">
@@ -273,7 +273,7 @@ ALTER PROCEDURE check_password(text) RESET search_path;
    attach configuration parameter values to a procedure,
    or change the owner, schema, or volatility of a procedure. The standard also
    requires the <literal>RESTRICT</literal> key word, which is optional in
-   <productname>PostgreSQL</productname>.
+   <productname>maintableQL</productname>.
   </para>
  </refsect1>
 

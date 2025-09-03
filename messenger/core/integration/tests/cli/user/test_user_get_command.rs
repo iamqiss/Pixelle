@@ -17,13 +17,13 @@
  */
 
 use crate::cli::common::{
-    CLAP_INDENT, IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, TestUserId,
+    CLAP_INDENT, MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, TestUserId,
     USAGE_PREFIX,
 };
 use ahash::AHashMap;
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::{Client, Permissions, StreamPermissions, TopicPermissions, UserId, UserStatus};
+use messenger::prelude::{Client, Permissions, StreamPermissions, TopicPermissions, UserId, UserStatus};
 use predicates::str::{is_match, starts_with};
 use serial_test::parallel;
 
@@ -103,7 +103,7 @@ impl TestUserGetCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestUserGetCmd {
+impl MessengerCmdTestCase for TestUserGetCmd {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         if self.create_user {
             let create_user = client
@@ -124,8 +124,8 @@ impl IggyCmdTestCase for TestUserGetCmd {
         self.user_id = Some(user.id);
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("user")
             .arg("get")
             .arg(self.get_user_id())
@@ -180,54 +180,54 @@ impl IggyCmdTestCase for TestUserGetCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestUserGetCmd::new(
             TestUser::New("producer"),
             UserStatus::Active,
             TestUserId::Named,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserGetCmd::new(
             TestUser::New("testing"),
             UserStatus::Inactive,
             TestUserId::Named,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserGetCmd::new(
             TestUser::NewWithGlobalPerms("misc"),
             UserStatus::Active,
             TestUserId::Numeric,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserGetCmd::new(
             TestUser::NewWithStreamPerms("tools", 3),
             UserStatus::Active,
             TestUserId::Named,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserGetCmd::new(
             TestUser::NewWithStreamAndTopicPerms("limited", 1, 3),
             UserStatus::Active,
             TestUserId::Named,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserGetCmd::new(
-            TestUser::Existing("iggy"),
+            TestUser::Existing("messenger"),
             UserStatus::Active,
             TestUserId::Numeric,
         ))
         .await;
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test(TestUserGetCmd::new(
-            TestUser::Existing("iggy"),
+            TestUser::Existing("messenger"),
             UserStatus::Active,
             TestUserId::Named,
         ))
@@ -237,9 +237,9 @@ pub async fn should_be_successful() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["user", "get", "--help"],
             format!(
@@ -248,8 +248,8 @@ pub async fn should_help_match() {
 The user ID can be specified as either a username or an ID
 
 Examples:
- iggy user get 2
- iggy user get testuser
+ messenger user get 2
+ messenger user get testuser
 
 {USAGE_PREFIX} user get <USER_ID>
 
@@ -271,9 +271,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["user", "get", "-h"],
             format!(

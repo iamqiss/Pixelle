@@ -2,14 +2,14 @@
  *
  * Facilities for frontend code to connect to and disconnect from databases.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/fe_utils/connect_utils.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "common/connect.h"
 #include "common/logging.h"
@@ -140,8 +140,8 @@ connectMaintenanceDatabase(ConnParams *cparams,
 	if (cparams->dbname)
 		return connectDatabase(cparams, progname, echo, false, false);
 
-	/* Otherwise, try postgres first and then template1. */
-	cparams->dbname = "postgres";
+	/* Otherwise, try maintable first and then template1. */
+	cparams->dbname = "maintable";
 	conn = connectDatabase(cparams, progname, echo, true, false);
 	if (!conn)
 	{

@@ -24,7 +24,7 @@ import os
 import socket
 import time
 
-from apache_iggy import IggyClient
+from apache_messenger import MessengerClient
 
 
 def get_server_config() -> tuple[str, int]:
@@ -32,10 +32,10 @@ def get_server_config() -> tuple[str, int]:
     Get server configuration from environment variables or defaults.
 
     Returns:
-        tuple: (host, port) for the Iggy server
+        tuple: (host, port) for the Messenger server
     """
-    host = os.environ.get("IGGY_SERVER_HOST", "127.0.0.1")
-    port = int(os.environ.get("IGGY_SERVER_TCP_PORT", "8090"))
+    host = os.environ.get("MESSENGER_SERVER_HOST", "127.0.0.1")
+    port = int(os.environ.get("MESSENGER_SERVER_TCP_PORT", "8090"))
 
     # Convert hostname to IP address for the Rust client
     if host not in ("127.0.0.1", "localhost"):
@@ -81,13 +81,13 @@ def wait_for_server(host: str, port: int, timeout: int = 60, interval: int = 2) 
 
 
 async def wait_for_ping(
-    client: IggyClient, timeout: int = 30, interval: int = 2
+    client: MessengerClient, timeout: int = 30, interval: int = 2
 ) -> None:
     """
     Wait for the server to respond to ping requests.
 
     Args:
-        client: Iggy client instance
+        client: Messenger client instance
         timeout: Maximum time to wait in seconds
         interval: Time between ping attempts in seconds
 

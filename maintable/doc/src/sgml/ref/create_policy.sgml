@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_policy.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createpolicy">
@@ -637,7 +637,7 @@ AND
   <title>Compatibility</title>
 
   <para>
-   <command>CREATE POLICY</command> is a <productname>PostgreSQL</productname>
+   <command>CREATE POLICY</command> is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

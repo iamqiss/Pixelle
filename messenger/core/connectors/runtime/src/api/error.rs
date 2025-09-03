@@ -42,7 +42,7 @@ impl IntoResponse for ApiError {
             ApiError::Error(error) => {
                 error!("There was an error: {error}");
                 let status_code = match error {
-                    RuntimeError::MissingIggyCredentials => StatusCode::BAD_REQUEST,
+                    RuntimeError::MissingMessengerCredentials => StatusCode::BAD_REQUEST,
                     RuntimeError::InvalidConfiguration(_) => StatusCode::BAD_REQUEST,
                     RuntimeError::CannotConvertConfiguration => StatusCode::BAD_REQUEST,
                     RuntimeError::SinkNotFound(_) => StatusCode::NOT_FOUND,

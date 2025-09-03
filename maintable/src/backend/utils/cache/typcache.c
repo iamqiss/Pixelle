@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * typcache.c
- *	  POSTGRES type cache code
+ *	  MAINTABLE type cache code
  *
  * The type cache exists to speed lookup of certain information about data
  * types that is not directly available from a type's pg_type row.  For
@@ -31,7 +31,7 @@
  * constraint changes are also tracked properly.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -39,7 +39,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 

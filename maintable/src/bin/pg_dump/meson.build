@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 pg_dump_common_sources = files(
   'compress_gzip.c',
@@ -21,7 +21,7 @@ pg_dump_common_sources = files(
 
 pg_dump_common = static_library('libpgdump_common',
   pg_dump_common_sources,
-  c_pch: pch_postgres_fe_h,
+  c_pch: pch_maintable_fe_h,
   dependencies: [frontend_code, libpq, lz4, zlib, zstd],
   kwargs: internal_lib_args,
 )
@@ -36,7 +36,7 @@ pg_dump_sources = files(
 if host_system == 'windows'
   pg_dump_sources += rc_bin_gen.process(win32ver_rc, extra_args: [
     '--NAME', 'pg_dump',
-    '--FILEDESC', 'pg_dump - backup one PostgreSQL database',])
+    '--FILEDESC', 'pg_dump - backup one maintableQL database',])
 endif
 
 pg_dump = executable('pg_dump',
@@ -55,7 +55,7 @@ pg_dumpall_sources = files(
 if host_system == 'windows'
   pg_dumpall_sources += rc_bin_gen.process(win32ver_rc, extra_args: [
     '--NAME', 'pg_dumpall',
-    '--FILEDESC', 'pg_dumpall - backup PostgreSQL databases'])
+    '--FILEDESC', 'pg_dumpall - backup maintableQL databases'])
 endif
 
 pg_dumpall = executable('pg_dumpall',
@@ -74,7 +74,7 @@ pg_restore_sources = files(
 if host_system == 'windows'
   pg_restore_sources += rc_bin_gen.process(win32ver_rc, extra_args: [
     '--NAME', 'pg_restore',
-    '--FILEDESC', 'pg_restore - restore PostgreSQL databases'])
+    '--FILEDESC', 'pg_restore - restore maintableQL databases'])
 endif
 
 pg_restore = executable('pg_restore',

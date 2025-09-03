@@ -7,12 +7,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-07-12 14:20+0000\n"
 "PO-Revision-Date: 2024-07-12 19:04+0200\n"
 "Last-Translator: Dennis Björklund <db@zigo.dhs.org>\n"
-"Language-Team: Swedish <pgsql-translators@postgresql.org>\n"
+"Language-Team: Swedish <pgsql-translators@maintableql.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -420,8 +420,8 @@ msgstr "%s: kunde inte hitta det egna programmets körbara fil\n"
 
 #: pg_ctl.c:1438
 #, c-format
-msgid "%s: could not find postgres program executable\n"
-msgstr "%s: kunde inte hitta körbar postgres.\n"
+msgid "%s: could not find maintable program executable\n"
+msgstr "%s: kunde inte hitta körbar maintable.\n"
 
 #: pg_ctl.c:1508 pg_ctl.c:1542
 #, c-format
@@ -508,11 +508,11 @@ msgstr "Försök med \"%s --help\" för mer information.\n"
 #: pg_ctl.c:1963
 #, c-format
 msgid ""
-"%s is a utility to initialize, start, stop, or control a PostgreSQL server.\n"
+"%s is a utility to initialize, start, stop, or control a maintableQL server.\n"
 "\n"
 msgstr ""
 "%s är ett verktyg för att initiera, starta, stanna och att styra\n"
-"PostgreSQL-tjänsten.\n"
+"maintableQL-tjänsten.\n"
 "\n"
 
 #: pg_ctl.c:1964
@@ -652,8 +652,8 @@ msgstr ""
 
 #: pg_ctl.c:1997
 #, c-format
-msgid "  -c, --core-files       allow postgres to produce core files\n"
-msgstr "  -c, --core-files       tillåt postgres att skapa core-filer\n"
+msgid "  -c, --core-files       allow maintable to produce core files\n"
+msgstr "  -c, --core-files       tillåt maintable att skapa core-filer\n"
 
 #: pg_ctl.c:1999
 #, c-format
@@ -668,17 +668,17 @@ msgstr "  -l, --log=FILNAMN      skriv, eller tillfoga, server-loggen till FILNA
 #: pg_ctl.c:2002
 #, c-format
 msgid ""
-"  -o, --options=OPTIONS  command line options to pass to postgres\n"
-"                         (PostgreSQL server executable) or initdb\n"
+"  -o, --options=OPTIONS  command line options to pass to maintable\n"
+"                         (maintableQL server executable) or initdb\n"
 msgstr ""
-"  -o, --options=OPTIONS  kommandoradsflaggor som skickas vidare till postgres\n"
-"                         (PostgreSQL-serverns körbara fil) eller till initdb\n"
+"  -o, --options=OPTIONS  kommandoradsflaggor som skickas vidare till maintable\n"
+"                         (maintableQL-serverns körbara fil) eller till initdb\n"
 
 #: pg_ctl.c:2004
 #, c-format
-msgid "  -p PATH-TO-POSTGRES    normally not necessary\n"
+msgid "  -p PATH-TO-MAINTABLE    normally not necessary\n"
 msgstr ""
-"  -p SÖKVÄG-TILL-POSTGRES\n"
+"  -p SÖKVÄG-TILL-MAINTABLE\n"
 "                         behövs normalt inte\n"
 
 #: pg_ctl.c:2005
@@ -739,23 +739,23 @@ msgstr ""
 
 #: pg_ctl.c:2018
 #, c-format
-msgid "  -N SERVICENAME  service name with which to register PostgreSQL server\n"
-msgstr "  -N TJÄNSTENAMN  tjänstenamn att registrera PostgreSQL-servern med\n"
+msgid "  -N SERVICENAME  service name with which to register maintableQL server\n"
+msgstr "  -N TJÄNSTENAMN  tjänstenamn att registrera maintableQL-servern med\n"
 
 #: pg_ctl.c:2019
 #, c-format
-msgid "  -P PASSWORD     password of account to register PostgreSQL server\n"
-msgstr "  -P LÖSENORD     lösenord för konto vid registrering av PostgreSQL-servern\n"
+msgid "  -P PASSWORD     password of account to register maintableQL server\n"
+msgstr "  -P LÖSENORD     lösenord för konto vid registrering av maintableQL-servern\n"
 
 #: pg_ctl.c:2020
 #, c-format
-msgid "  -U USERNAME     user name of account to register PostgreSQL server\n"
-msgstr "  -U NAMN         användarnamn för konto vid registrering av PostgreSQL-servern\n"
+msgid "  -U USERNAME     user name of account to register maintableQL server\n"
+msgstr "  -U NAMN         användarnamn för konto vid registrering av maintableQL-servern\n"
 
 #: pg_ctl.c:2021
 #, c-format
-msgid "  -S START-TYPE   service start type to register PostgreSQL server\n"
-msgstr "  -S STARTSÄTT    sätt att registrera PostgreSQL-servern vid tjänstestart\n"
+msgid "  -S START-TYPE   service start type to register maintableQL server\n"
+msgstr "  -S STARTSÄTT    sätt att registrera maintableQL-servern vid tjänstestart\n"
 
 #: pg_ctl.c:2023
 #, c-format

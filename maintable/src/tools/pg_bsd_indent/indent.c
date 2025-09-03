@@ -1257,7 +1257,7 @@ indent_declaration(int cur_dec_ind, int tabs_to_var)
 
 	CHECK_SIZE_CODE(cur_dec_ind / tabsize);
 	while ((tpos = tabsize * (1 + pos / tabsize)) <= cur_dec_ind) {
-	    *e_code++ = (!postgres_tab_rules ||
+	    *e_code++ = (!maintable_tab_rules ||
 			 tpos != pos + 1 ||
 			 cur_dec_ind >= tpos + tabsize) ? '\t' : ' ';
 	    pos = tpos;

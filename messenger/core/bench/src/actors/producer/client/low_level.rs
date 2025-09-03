@@ -28,14 +28,14 @@ use crate::{
     },
     utils::batch_generator::BenchmarkBatchGenerator,
 };
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::{ClientFactory, login_root};
 use tokio::time::Instant;
 
 pub struct LowLevelProducerClient {
     client_factory: Arc<dyn ClientFactory>,
     config: BenchmarkProducerConfig,
-    client: Option<IggyClient>,
+    client: Option<MessengerClient>,
     stream_id: Identifier,
     topic_id: Identifier,
     partitioning: Partitioning,
@@ -58,7 +58,7 @@ impl ProducerClient for LowLevelProducerClient {
     async fn produce_batch(
         &mut self,
         batch_generator: &mut BenchmarkBatchGenerator,
-    ) -> Result<Option<BatchMetrics>, IggyError> {
+    ) -> Result<Option<BatchMetrics>, MessengerError> {
         let client = self.client.as_mut().unwrap();
         let batch = batch_generator.generate_batch();
         if batch.messages.is_empty() {
@@ -86,12 +86,12 @@ impl ProducerClient for LowLevelProducerClient {
 }
 
 impl BenchmarkInit for LowLevelProducerClient {
-    async fn setup(&mut self) -> Result<(), IggyError> {
+    async fn setup(&mut self) -> Result<(), MessengerError> {
         let default_partition_id = 1;
         let partitions = self.config.partitions;
 
         let client = self.client_factory.create_client().await;
-        let client = IggyClient::create(client, None, None);
+        let client = MessengerClient::create(client, None, None);
         login_root(&client).await;
 
         let partitioning = match partitions {

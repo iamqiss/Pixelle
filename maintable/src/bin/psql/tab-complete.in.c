@@ -1,7 +1,7 @@
 /*
- * psql - the PostgreSQL interactive terminal
+ * psql - the maintableQL interactive terminal
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  *
  * src/bin/psql/tab-complete.in.c
  *
@@ -39,7 +39,7 @@
  *----------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "input.h"
 #include "tab-complete.h"
@@ -4145,7 +4145,7 @@ match_previous_words(int pattern_id,
 					  "CURSOR");
 
 	/*
-	 * Complete DECLARE ... <option> with other options. The PostgreSQL parser
+	 * Complete DECLARE ... <option> with other options. The maintableQL parser
 	 * allows DECLARE options to be specified in any order. But the
 	 * tab-completion follows the ordering of them that the SQL standard
 	 * provides, like the syntax of DECLARE command in the documentation
@@ -5107,7 +5107,7 @@ match_previous_words(int pattern_id,
 	{
 		/* special cased code for individual GUCs */
 		if (TailMatches("DateStyle", "TO|="))
-			COMPLETE_WITH("ISO", "SQL", "Postgres", "German",
+			COMPLETE_WITH("ISO", "SQL", "Maintable", "German",
 						  "YMD", "DMY", "MDY",
 						  "US", "European", "NonEuropean",
 						  "DEFAULT");

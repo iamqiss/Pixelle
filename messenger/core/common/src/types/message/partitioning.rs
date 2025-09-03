@@ -17,7 +17,7 @@
  */
 
 use super::PartitioningKind;
-use crate::{BytesSerializable, IggyByteSize, Sizeable, error::IggyError};
+use crate::{BytesSerializable, MessengerByteSize, Sizeable, error::MessengerError};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
 use serde_with::base64::Base64;
@@ -82,10 +82,10 @@ impl Partitioning {
     }
 
     /// Partition the messages using the provided messages key.
-    pub fn messages_key(value: &[u8]) -> Result<Self, IggyError> {
+    pub fn messages_key(value: &[u8]) -> Result<Self, MessengerError> {
         let length = value.len();
         if length == 0 || length > 255 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         Ok(Partitioning {
@@ -97,7 +97,7 @@ impl Partitioning {
     }
 
     /// Partition the messages using the provided messages key as str.
-    pub fn messages_key_str(value: &str) -> Result<Self, IggyError> {
+    pub fn messages_key_str(value: &str) -> Result<Self, MessengerError> {
         Self::messages_key(value.as_bytes())
     }
 
@@ -138,12 +138,12 @@ impl Partitioning {
     }
 
     /// Create the partitioning from BytesMut.
-    pub fn from_raw_bytes(bytes: &[u8]) -> Result<Self, IggyError> {
+    pub fn from_raw_bytes(bytes: &[u8]) -> Result<Self, MessengerError> {
         let kind = PartitioningKind::from_code(bytes[0])?;
         let length = bytes[1];
         let value = bytes[2..2 + length as usize].to_vec();
         if value.len() != length as usize {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         Ok(Partitioning {
@@ -174,8 +174,8 @@ impl Default for Partitioning {
 }
 
 impl Sizeable for Partitioning {
-    fn get_size_bytes(&self) -> IggyByteSize {
-        IggyByteSize::from(u64::from(self.length) + 2)
+    fn get_size_bytes(&self) -> MessengerByteSize {
+        MessengerByteSize::from(u64::from(self.length) + 2)
     }
 }
 
@@ -188,19 +188,19 @@ impl BytesSerializable for Partitioning {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError>
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         if bytes.len() < 2 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let kind = PartitioningKind::from_code(bytes[0])?;
         let length = bytes[1];
         let value = bytes[2..2 + length as usize].to_vec();
         if value.len() != length as usize {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         Ok(Partitioning {

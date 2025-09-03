@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 contrib_mod_args = pg_mod_args
 
@@ -56,7 +56,7 @@ subdir('pg_surgery')
 subdir('pg_trgm')
 subdir('pg_visibility')
 subdir('pg_walinspect')
-subdir('postgres_fdw')
+subdir('maintable_fdw')
 subdir('seg')
 subdir('sepgsql')
 subdir('spi')

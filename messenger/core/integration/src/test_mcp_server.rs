@@ -49,12 +49,12 @@ pub struct TestMcpServer {
 }
 
 impl TestMcpServer {
-    pub fn with_iggy_address(iggy_tcp_server_address: &str) -> Self {
-        Self::new(iggy_tcp_server_address, None, None)
+    pub fn with_messenger_address(messenger_tcp_server_address: &str) -> Self {
+        Self::new(messenger_tcp_server_address, None, None)
     }
 
     pub fn new(
-        iggy_tcp_server_address: &str,
+        messenger_tcp_server_address: &str,
         extra_envs: Option<HashMap<String, String>>,
         server_executable_path: Option<String>,
     ) -> Self {
@@ -65,16 +65,16 @@ impl TestMcpServer {
             }
         }
 
-        envs.insert("IGGY_MCP_HTTP_PATH".to_string(), MCP_PATH.to_string());
+        envs.insert("MESSENGER_MCP_HTTP_PATH".to_string(), MCP_PATH.to_string());
         envs.insert(
-            "IGGY_MCP_IGGY_ADDRESS".to_string(),
-            iggy_tcp_server_address.to_string(),
+            "MESSENGER_MCP_MESSENGER_ADDRESS".to_string(),
+            messenger_tcp_server_address.to_string(),
         );
         envs.insert(
-            "IGGY_MCP_IGGY_CONSUMER".to_string(),
+            "MESSENGER_MCP_MESSENGER_CONSUMER".to_string(),
             CONSUMER_NAME.to_string(),
         );
-        envs.insert("IGGY_MCP_TRANSPORT".to_string(), "http".to_string());
+        envs.insert("MESSENGER_MCP_TRANSPORT".to_string(), "http".to_string());
         Self::create(envs, server_executable_path)
     }
 
@@ -93,12 +93,12 @@ impl TestMcpServer {
 
     pub fn start(&mut self) {
         self.envs
-            .entry("IGGY_MCP_HTTP_ADDRESS".to_string())
+            .entry("MESSENGER_MCP_HTTP_ADDRESS".to_string())
             .or_insert(self.server_address.to_string());
         let mut command = if let Some(server_executable_path) = &self.server_executable_path {
             Command::new(server_executable_path)
         } else {
-            Command::cargo_bin("iggy-mcp").unwrap()
+            Command::cargo_bin("messenger-mcp").unwrap()
         };
         command.envs(self.envs.clone());
         let child = command.spawn().unwrap();

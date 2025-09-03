@@ -1,8 +1,8 @@
 /*--------------------------------------------------------------------------
  * gin_private.h
- *	  header file for postgres inverted index access method implementation.
+ *	  header file for maintable inverted index access method implementation.
  *
- *	Copyright (c) 2006-2025, PostgreSQL Global Development Group
+ *	Copyright (c) 2006-2025, maintableQL Global Development Group
  *
  *	src/include/access/gin_private.h
  *--------------------------------------------------------------------------

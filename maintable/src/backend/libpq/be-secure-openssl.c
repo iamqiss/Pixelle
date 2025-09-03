@@ -4,7 +4,7 @@
  *	  functions for OpenSSL support in the backend.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -14,7 +14,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <sys/stat.h>
 #include <signal.h>
@@ -992,7 +992,7 @@ port_bio_method(void)
 		if (my_bio_index == -1)
 			return NULL;
 		my_bio_index |= BIO_TYPE_SOURCE_SINK;
-		port_bio_method_ptr = BIO_meth_new(my_bio_index, "PostgreSQL backend socket");
+		port_bio_method_ptr = BIO_meth_new(my_bio_index, "maintableQL backend socket");
 		if (!port_bio_method_ptr)
 			return NULL;
 		if (!BIO_meth_set_write(port_bio_method_ptr, port_bio_write) ||
@@ -1278,7 +1278,7 @@ verify_cb(int ok, X509_STORE_CTX *ctx)
 
 /*
  *	This callback is used to copy SSL information messages
- *	into the PostgreSQL log.
+ *	into the maintableQL log.
  */
 static void
 info_cb(const SSL *ssl, int type, int args)

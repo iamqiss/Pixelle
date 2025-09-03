@@ -16,10 +16,10 @@
  * under the License.
  */
 
-use crate::cli::common::{IggyCmdCommand, IggyCmdTest, IggyCmdTestCase, TestHelpCmd, USAGE_PREFIX};
+use crate::cli::common::{MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase, TestHelpCmd, USAGE_PREFIX};
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
-use iggy::prelude::Client;
+use messenger::prelude::Client;
 use integration::test_server::TestServer;
 use predicates::str::{contains, diff, starts_with};
 use serial_test::parallel;
@@ -72,11 +72,11 @@ impl TestMeCmd {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestMeCmd {
+impl MessengerCmdTestCase for TestMeCmd {
     async fn prepare_server_state(&mut self, _client: &dyn Client) {}
 
-    fn get_command(&self) -> IggyCmdCommand {
-        let command = IggyCmdCommand::new().opts(self.protocol.as_arg()).arg("me");
+    fn get_command(&self) -> MessengerCmdCommand {
+        let command = MessengerCmdCommand::new().opts(self.protocol.as_arg()).arg("me");
 
         match &self.scenario {
             Scenario::SuccessWithCredentials => command.with_env_credentials(),
@@ -97,10 +97,10 @@ impl IggyCmdTestCase for TestMeCmd {
             Scenario::FailureWithoutCredentials => {
                 command_state
                     .failure()
-                    .stderr(diff("Error: CommandError(Iggy command line tool error\n\nCaused by:\n    Missing iggy server credentials)\n"));
+                    .stderr(diff("Error: CommandError(Messenger command line tool error\n\nCaused by:\n    Missing messenger server credentials)\n"));
             }
             Scenario::FailureDueToSessionTimeout(server_address) => {
-                command_state.failure().stderr(diff(format!("Error: CommandError(Login session expired for Iggy server: {server_address}, please login again or use other authentication method)\n")));
+                command_state.failure().stderr(diff(format!("Error: CommandError(Login session expired for Messenger server: {server_address}, please login again or use other authentication method)\n")));
             }
         }
     }
@@ -124,19 +124,19 @@ impl IggyCmdTestCase for TestMeCmd {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test.execute_test(TestMeCmd::default()).await;
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test.execute_test(TestMeCmd::default()).await;
 }
 
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful_using_transport_tcp() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestMeCmd::new(
             Protocol::Tcp,
             Scenario::SuccessWithCredentials,
@@ -147,10 +147,10 @@ pub async fn should_be_successful_using_transport_tcp() {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful_using_transport_quic() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestMeCmd::new(
             Protocol::Quic,
             Scenario::SuccessWithCredentials,
@@ -161,10 +161,10 @@ pub async fn should_be_successful_using_transport_quic() {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_unsuccessful_using_transport_tcp() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
-    iggy_cmd_test.setup().await;
-    iggy_cmd_test
+    messenger_cmd_test.setup().await;
+    messenger_cmd_test
         .execute_test(TestMeCmd::new(
             Protocol::Tcp,
             Scenario::FailureWithoutCredentials,
@@ -175,15 +175,15 @@ pub async fn should_be_unsuccessful_using_transport_tcp() {
 #[tokio::test]
 #[parallel]
 pub async fn should_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["me", "--help"],
             format!(
                 r#"get current client info
 
-Command connects to Iggy server and collects client info like client ID, user ID
+Command connects to Messenger server and collects client info like client ID, user ID
 server address and protocol type.
 
 {USAGE_PREFIX} me
@@ -200,9 +200,9 @@ Options:
 #[tokio::test]
 #[parallel]
 pub async fn should_short_help_match() {
-    let mut iggy_cmd_test = IggyCmdTest::help_message();
+    let mut messenger_cmd_test = MessengerCmdTest::help_message();
 
-    iggy_cmd_test
+    messenger_cmd_test
         .execute_test_for_help_command(TestHelpCmd::new(
             vec!["me", "-h"],
             format!(

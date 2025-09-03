@@ -1,12 +1,12 @@
 # pg_resetxlog message translation file for pg_resetxlog
-# Copyright (C) 2011 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2011 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Begina Felicysym <begina.felicysym@wp.eu>, 2011, 2012, 2013.
 # grzegorz <begina.felicysym@wp.eu>, 2014, 2015, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_resetxlog (PostgreSQL 9.1)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pg_resetxlog (maintableQL 9.1)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2016-07-03 03:14+0000\n"
 "PO-Revision-Date: 2016-07-03 17:54+0200\n"
 "Last-Translator: grzegorz <begina.felicysym@wp.eu>\n"
@@ -121,8 +121,8 @@ msgstr "%s: nie może być wykonywane pod \"rootem\"\n"
 
 #: pg_resetxlog.c:308
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser.\n"
-msgstr "Musisz uruchomić %s jako superużytkownik PostgreSQL.\n"
+msgid "You must run %s as the maintableQL superuser.\n"
+msgstr "Musisz uruchomić %s jako superużytkownik maintableQL.\n"
 
 #: pg_resetxlog.c:318
 #, c-format
@@ -508,10 +508,10 @@ msgstr "%s: nie można zapisać pliku \"%s\": %s\n"
 #: pg_resetxlog.c:1167
 #, c-format
 msgid ""
-"%s resets the PostgreSQL transaction log.\n"
+"%s resets the maintableQL transaction log.\n"
 "\n"
 msgstr ""
-"%s resetuje log transakcji PostgreSQL.\n"
+"%s resetuje log transakcji maintableQL.\n"
 "\n"
 
 #: pg_resetxlog.c:1168
@@ -599,10 +599,10 @@ msgstr "  -?, --help       pokazuje ten ekran pomocy i kończy\n"
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@maintableql.org>.\n"
 msgstr ""
 "\n"
-"Błędy proszę przesyłać na adres <pgsql-bugs@postgresql.org>.\n"
+"Błędy proszę przesyłać na adres <pgsql-bugs@maintableql.org>.\n"
 
 #~ msgid "%s: invalid argument for option -x\n"
 #~ msgstr "%s: niepoprawny argument dla opcji -x\n"

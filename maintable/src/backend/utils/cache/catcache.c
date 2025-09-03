@@ -3,7 +3,7 @@
  * catcache.c
  *	  System catalog cache for tuples matching a key.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/genam.h"
 #include "access/heaptoast.h"
@@ -1072,7 +1072,7 @@ ConditionalCatalogCacheInitializeCache(CatCache *cache)
 	 * requires OOM at an unlucky moment.
 	 *
 	 * InvalidateAttoptCacheCallback() runs outside transactions and likewise
-	 * relies on ATTNUM.  InitPostgres() initializes ATTNUM, so it's reliable.
+	 * relies on ATTNUM.  InitMaintable() initializes ATTNUM, so it's reliable.
 	 */
 	if (!(cache->id == TYPEOID || cache->id == ATTNUM) ||
 		IsTransactionState())

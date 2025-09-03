@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::{INDEX_SIZE, IggyIndexView};
+use crate::{INDEX_SIZE, MessengerIndexView};
 use bytes::Bytes;
 use serde::{Deserialize, Serialize};
 use serde_with::base64::Base64;
@@ -27,14 +27,14 @@ use std::ops::{Deref, Index as StdIndex};
 /// Optimized for efficient storage and I/O operations.
 #[serde_as]
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct IggyIndexes {
+pub struct MessengerIndexes {
     #[serde(skip)]
     base_position: u32,
     #[serde_as(as = "Base64")]
     buffer: Bytes,
 }
 
-impl IggyIndexes {
+impl MessengerIndexes {
     /// Creates a new empty container
     pub fn new(indexes: Bytes, base_position: u32) -> Self {
         Self {
@@ -67,7 +67,7 @@ impl IggyIndexes {
     }
 
     /// Gets a view of the index at the specified position
-    pub fn get(&self, position: u32) -> Option<IggyIndexView<'_>> {
+    pub fn get(&self, position: u32) -> Option<MessengerIndexView<'_>> {
         if position >= self.count() {
             return None;
         }
@@ -76,14 +76,14 @@ impl IggyIndexes {
         let end = start + INDEX_SIZE;
 
         if end <= self.buffer.len() {
-            Some(IggyIndexView::new(&self.buffer[start..end]))
+            Some(MessengerIndexView::new(&self.buffer[start..end]))
         } else {
             None
         }
     }
 
     /// Gets a slice of the container
-    pub fn slice_by_offset(&self, relative_start_offset: u32, count: u32) -> Option<IggyIndexes> {
+    pub fn slice_by_offset(&self, relative_start_offset: u32, count: u32) -> Option<MessengerIndexes> {
         if self.count() == 0 || relative_start_offset >= self.count() {
             return None;
         }
@@ -114,13 +114,13 @@ impl IggyIndexes {
             self.base_position
         };
 
-        Some(IggyIndexes::new(slice, base_position))
+        Some(MessengerIndexes::new(slice, base_position))
     }
 
     /// Finds an index by timestamp using binary search
     /// If an exact match isn't found, returns the index with the nearest timestamp
     /// that is greater than or equal to the requested timestamp
-    pub fn find_by_timestamp(&self, timestamp: u64) -> Option<IggyIndexView<'_>> {
+    pub fn find_by_timestamp(&self, timestamp: u64) -> Option<MessengerIndexView<'_>> {
         if self.count() == 0 {
             return None;
         }
@@ -141,7 +141,7 @@ impl IggyIndexes {
 
         let mut left = 0;
         let mut right = self.count() as isize - 1;
-        let mut result: Option<IggyIndexView<'_>> = None;
+        let mut result: Option<MessengerIndexView<'_>> = None;
 
         while left <= right {
             let mid = left + (right - left) / 2;
@@ -184,7 +184,7 @@ impl IggyIndexes {
     }
 }
 
-impl StdIndex<usize> for IggyIndexes {
+impl StdIndex<usize> for MessengerIndexes {
     type Output = [u8];
 
     fn index(&self, index: usize) -> &Self::Output {
@@ -194,7 +194,7 @@ impl StdIndex<usize> for IggyIndexes {
     }
 }
 
-impl Deref for IggyIndexes {
+impl Deref for MessengerIndexes {
     type Target = [u8];
 
     fn deref(&self) -> &Self::Target {

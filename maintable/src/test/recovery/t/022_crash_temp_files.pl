@@ -1,11 +1,11 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test remove of temporary files after a crash.
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 use Config;
 
@@ -15,16 +15,16 @@ if ($Config{osname} eq 'MSWin32')
 	exit;
 }
 
-my $psql_timeout = IPC::Run::timer($PostgreSQL::Test::Utils::timeout_default);
+my $psql_timeout = IPC::Run::timer($maintableQL::Test::Utils::timeout_default);
 
-my $node = PostgreSQL::Test::Cluster->new('node_crash');
+my $node = maintableQL::Test::Cluster->new('node_crash');
 $node->init();
 $node->start();
 
-# By default, PostgreSQL::Test::Cluster doesn't restart after crash
+# By default, maintableQL::Test::Cluster doesn't restart after crash
 # Reduce work_mem to generate temporary file with a few number of rows
 $node->safe_psql(
-	'postgres',
+	'maintable',
 	q[ALTER SYSTEM SET remove_temp_files_after_crash = on;
 				   ALTER SYSTEM SET log_connections = receipt;
 				   ALTER SYSTEM SET work_mem = '64kB';
@@ -32,7 +32,7 @@ $node->safe_psql(
 				   SELECT pg_reload_conf();]);
 
 # create table, insert rows
-$node->safe_psql('postgres', q[CREATE TABLE tab_crash (a integer UNIQUE);]);
+$node->safe_psql('maintable', q[CREATE TABLE tab_crash (a integer UNIQUE);]);
 
 # Run psql, keeping session alive, so we have an alive backend to kill.
 my ($killme_stdin, $killme_stdout, $killme_stderr) = ('', '', '');
@@ -41,7 +41,7 @@ my $killme = IPC::Run::start(
 		'psql', '--no-psqlrc', '--quiet', '--no-align', '--tuples-only',
 		'--set' => 'ON_ERROR_STOP=1',
 		'--file' => '-',
-		'--dbname' => $node->connstr('postgres')
+		'--dbname' => $node->connstr('maintable')
 	],
 	'<' => \$killme_stdin,
 	'>' => \$killme_stdout,
@@ -68,7 +68,7 @@ my $killme2 = IPC::Run::start(
 		'psql', '--no-psqlrc', '--quiet', '--no-align', '--tuples-only',
 		'--set' => 'ON_ERROR_STOP=1',
 		'--file' => '-',
-		'--dbname' => $node->connstr('postgres')
+		'--dbname' => $node->connstr('maintable')
 	],
 	'<' => \$killme_stdin2,
 	'>' => \$killme_stdout2,
@@ -125,7 +125,7 @@ $killme_stdout2 = '';
 $killme_stderr2 = '';
 
 # Kill with SIGKILL
-my $ret = PostgreSQL::Test::Utils::system_log('pg_ctl', 'kill', 'KILL', $pid);
+my $ret = maintableQL::Test::Utils::system_log('pg_ctl', 'kill', 'KILL', $pid);
 is($ret, 0, 'killed process with KILL');
 
 # Close that psql session
@@ -134,7 +134,7 @@ $killme->finish;
 # Wait till the other session reports failure, ensuring that the postmaster
 # has noticed its dead child and begun a restart cycle.
 $killme_stdin2 .= qq[
-SELECT pg_sleep($PostgreSQL::Test::Utils::timeout_default);
+SELECT pg_sleep($maintableQL::Test::Utils::timeout_default);
 ];
 ok( pump_until(
 		$killme2,
@@ -146,11 +146,11 @@ ok( pump_until(
 $killme2->finish;
 
 # Wait till server finishes restarting
-$node->poll_query_until('postgres', undef, '');
+$node->poll_query_until('maintable', undef, '');
 
 # Check for temporary files
 is( $node->safe_psql(
-		'postgres', 'SELECT COUNT(1) FROM pg_ls_dir($$base/pgsql_tmp$$)'),
+		'maintable', 'SELECT COUNT(1) FROM pg_ls_dir($$base/pgsql_tmp$$)'),
 	qq(0),
 	'no temporary files');
 
@@ -158,7 +158,7 @@ is( $node->safe_psql(
 # Test old behavior (don't remove temporary files after crash)
 #
 $node->safe_psql(
-	'postgres',
+	'maintable',
 	q[ALTER SYSTEM SET remove_temp_files_after_crash = off;
 				   SELECT pg_reload_conf();]);
 
@@ -232,7 +232,7 @@ $killme_stdout2 = '';
 $killme_stderr2 = '';
 
 # Kill with SIGKILL
-$ret = PostgreSQL::Test::Utils::system_log('pg_ctl', 'kill', 'KILL', $pid);
+$ret = maintableQL::Test::Utils::system_log('pg_ctl', 'kill', 'KILL', $pid);
 is($ret, 0, 'killed process with KILL');
 
 # Close that psql session
@@ -241,7 +241,7 @@ $killme->finish;
 # Wait till the other session reports failure, ensuring that the postmaster
 # has noticed its dead child and begun a restart cycle.
 $killme_stdin2 .= qq[
-SELECT pg_sleep($PostgreSQL::Test::Utils::timeout_default);
+SELECT pg_sleep($maintableQL::Test::Utils::timeout_default);
 ];
 ok( pump_until(
 		$killme2,
@@ -253,11 +253,11 @@ ok( pump_until(
 $killme2->finish;
 
 # Wait till server finishes restarting
-$node->poll_query_until('postgres', undef, '');
+$node->poll_query_until('maintable', undef, '');
 
 # Check for temporary files -- should be there
 is( $node->safe_psql(
-		'postgres', 'SELECT COUNT(1) FROM pg_ls_dir($$base/pgsql_tmp$$)'),
+		'maintable', 'SELECT COUNT(1) FROM pg_ls_dir($$base/pgsql_tmp$$)'),
 	qq(1),
 	'one temporary file');
 
@@ -266,7 +266,7 @@ $node->restart();
 
 # Check the temporary files -- should be gone
 is( $node->safe_psql(
-		'postgres', 'SELECT COUNT(1) FROM pg_ls_dir($$base/pgsql_tmp$$)'),
+		'maintable', 'SELECT COUNT(1) FROM pg_ls_dir($$base/pgsql_tmp$$)'),
 	qq(0),
 	'temporary file was removed');
 

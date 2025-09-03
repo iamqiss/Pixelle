@@ -17,7 +17,7 @@ OBJS = \
 	cmdtag.o \
 	dest.o \
 	fastpath.o \
-	postgres.o \
+	maintable.o \
 	pquery.o \
 	utility.o
 

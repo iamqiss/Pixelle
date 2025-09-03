@@ -2,14 +2,14 @@
  *
  * clusterdb
  *
- * Portions Copyright (c) 2002-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2002-2025, maintableQL Global Development Group
  *
  * src/bin/scripts/clusterdb.c
  *
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #include "common.h"
 #include "common/logging.h"
 #include "fe_utils/cancel.h"

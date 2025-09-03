@@ -1,12 +1,12 @@
-# Copyright (c) 2025, PostgreSQL Global Development Group
+# Copyright (c) 2025, maintableQL Global Development Group
 
 # Tests for file transfer modes
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 sub test_mode
@@ -14,8 +14,8 @@ sub test_mode
 	my ($mode) = @_;
 
 	my $old =
-	  PostgreSQL::Test::Cluster->new('old', install_path => $ENV{oldinstall});
-	my $new = PostgreSQL::Test::Cluster->new('new');
+	  maintableQL::Test::Cluster->new('old', install_path => $ENV{oldinstall});
+	my $new = maintableQL::Test::Cluster->new('new');
 
 	# --swap can't be used to upgrade from versions older than 10, so just skip
 	# the test if the old cluster version is too old.
@@ -41,16 +41,16 @@ sub test_mode
 	# allow_in_place_tablespaces is available as far back as v10.
 	if ($old->pg_version >= 10)
 	{
-		$new->append_conf('postgresql.conf', "allow_in_place_tablespaces = true");
-		$old->append_conf('postgresql.conf', "allow_in_place_tablespaces = true");
+		$new->append_conf('maintableql.conf', "allow_in_place_tablespaces = true");
+		$old->append_conf('maintableql.conf', "allow_in_place_tablespaces = true");
 	}
 
 	# Create a small variety of simple test objects on the old cluster.  We'll
 	# check that these reach the new version after upgrading.
 	$old->start;
-	$old->safe_psql('postgres',
+	$old->safe_psql('maintable',
 		"CREATE TABLE test1 AS SELECT generate_series(1, 100)");
-	$old->safe_psql('postgres', "CREATE DATABASE testdb1");
+	$old->safe_psql('maintable', "CREATE DATABASE testdb1");
 	$old->safe_psql('testdb1',
 		"CREATE TABLE test2 AS SELECT generate_series(200, 300)");
 	$old->safe_psql('testdb1', "VACUUM FULL test2");
@@ -59,12 +59,12 @@ sub test_mode
 	# If an old installation is provided, we can test non-in-place tablespaces.
 	if (defined($ENV{oldinstall}))
 	{
-		my $tblspc = PostgreSQL::Test::Utils::tempdir_short();
-		$old->safe_psql('postgres',
+		my $tblspc = maintableQL::Test::Utils::tempdir_short();
+		$old->safe_psql('maintable',
 			"CREATE TABLESPACE test_tblspc LOCATION '$tblspc'");
-		$old->safe_psql('postgres',
+		$old->safe_psql('maintable',
 			"CREATE DATABASE testdb2 TABLESPACE test_tblspc");
-		$old->safe_psql('postgres',
+		$old->safe_psql('maintable',
 			"CREATE TABLE test3 TABLESPACE test_tblspc AS SELECT generate_series(300, 401)"
 		);
 		$old->safe_psql('testdb2',
@@ -74,11 +74,11 @@ sub test_mode
 	# If the old cluster is >= v10, we can test in-place tablespaces.
 	if ($old->pg_version >= 10)
 	{
-		$old->safe_psql('postgres',
+		$old->safe_psql('maintable',
 			"CREATE TABLESPACE inplc_tblspc LOCATION ''");
-		$old->safe_psql('postgres',
+		$old->safe_psql('maintable',
 			"CREATE DATABASE testdb3 TABLESPACE inplc_tblspc");
-		$old->safe_psql('postgres',
+		$old->safe_psql('maintable',
 			"CREATE TABLE test5 TABLESPACE inplc_tblspc AS SELECT generate_series(503, 606)");
 		$old->safe_psql('testdb3',
 			"CREATE TABLE test6 AS SELECT generate_series(607, 711)");
@@ -106,7 +106,7 @@ sub test_mode
 	if ($result)
 	{
 		$new->start;
-		$result = $new->safe_psql('postgres', "SELECT COUNT(*) FROM test1");
+		$result = $new->safe_psql('maintable', "SELECT COUNT(*) FROM test1");
 		is($result, '100', "test1 data after pg_upgrade $mode");
 		$result = $new->safe_psql('testdb1', "SELECT COUNT(*) FROM test2");
 		is($result, '101', "test2 data after pg_upgrade $mode");
@@ -117,7 +117,7 @@ sub test_mode
 		if (defined($ENV{oldinstall}))
 		{
 			$result =
-			  $new->safe_psql('postgres', "SELECT COUNT(*) FROM test3");
+			  $new->safe_psql('maintable', "SELECT COUNT(*) FROM test3");
 			is($result, '102', "test3 data after pg_upgrade $mode");
 			$result =
 			  $new->safe_psql('testdb2', "SELECT COUNT(*) FROM test4");
@@ -127,7 +127,7 @@ sub test_mode
 		# Tests for in-place tablespaces.
 		if ($old->pg_version >= 10)
 		{
-			$result = $new->safe_psql('postgres', "SELECT COUNT(*) FROM test5");
+			$result = $new->safe_psql('maintable', "SELECT COUNT(*) FROM test5");
 			is($result, '104', "test5 data after pg_upgrade $mode");
 			$result = $new->safe_psql('testdb3', "SELECT COUNT(*) FROM test6");
 			is($result, '105', "test6 data after pg_upgrade $mode");
@@ -142,7 +142,7 @@ sub test_mode
 # Run pg_upgrade in tmp_check to avoid leaving files like
 # delete_old_cluster.{sh,bat} in the source directory for VPATH and meson
 # builds.
-chdir ${PostgreSQL::Test::Utils::tmp_check};
+chdir ${maintableQL::Test::Utils::tmp_check};
 
 test_mode('--clone');
 test_mode('--copy');

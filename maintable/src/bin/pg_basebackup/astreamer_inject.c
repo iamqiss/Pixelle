@@ -2,14 +2,14 @@
  *
  * astreamer_inject.c
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  src/bin/pg_basebackup/astreamer_inject.c
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "astreamer_inject.h"
 #include "common/file_perm.h"
@@ -20,8 +20,8 @@ typedef struct astreamer_recovery_injector
 	astreamer	base;
 	bool		skip_file;
 	bool		is_recovery_guc_supported;
-	bool		is_postgresql_auto_conf;
-	bool		found_postgresql_auto_conf;
+	bool		is_maintableql_auto_conf;
+	bool		found_maintableql_auto_conf;
 	PQExpBuffer recoveryconfcontents;
 	astreamer_member member;
 } astreamer_recovery_injector;
@@ -52,9 +52,9 @@ static const astreamer_ops astreamer_recovery_injector_ops = {
  * via recoveryconfcontents: (1) if is_recovery_guc_supported is false, then
  * put the content into recovery.conf, replacing any existing archive member
  * by that name; (2) if is_recovery_guc_supported is true and
- * postgresql.auto.conf exists in the archive, then append the content
+ * maintableql.auto.conf exists in the archive, then append the content
  * provided to the existing file; and (3) if is_recovery_guc_supported is
- * true but postgresql.auto.conf does not exist in the archive, then create
+ * true but maintableql.auto.conf does not exist in the archive, then create
  * it with the specified content.
  *
  * In addition, if is_recovery_guc_supported is true, then we create a
@@ -99,19 +99,19 @@ astreamer_recovery_injector_content(astreamer *streamer,
 			memcpy(&mystreamer->member, member, sizeof(astreamer_member));
 
 			/*
-			 * On v12+, skip standby.signal and edit postgresql.auto.conf; on
+			 * On v12+, skip standby.signal and edit maintableql.auto.conf; on
 			 * older versions, skip recovery.conf.
 			 */
 			if (mystreamer->is_recovery_guc_supported)
 			{
 				mystreamer->skip_file =
 					(strcmp(member->pathname, "standby.signal") == 0);
-				mystreamer->is_postgresql_auto_conf =
-					(strcmp(member->pathname, "postgresql.auto.conf") == 0);
-				if (mystreamer->is_postgresql_auto_conf)
+				mystreamer->is_maintableql_auto_conf =
+					(strcmp(member->pathname, "maintableql.auto.conf") == 0);
+				if (mystreamer->is_maintableql_auto_conf)
 				{
 					/* Remember we saw it so we don't add it again. */
-					mystreamer->found_postgresql_auto_conf = true;
+					mystreamer->found_maintableql_auto_conf = true;
 
 					/* Increment length by data to be injected. */
 					mystreamer->member.size +=
@@ -147,7 +147,7 @@ astreamer_recovery_injector_content(astreamer *streamer,
 				return;
 
 			/* Append provided content to whatever we already sent. */
-			if (mystreamer->is_postgresql_auto_conf)
+			if (mystreamer->is_maintableql_auto_conf)
 				astreamer_content(mystreamer->base.bbs_next, member,
 								  mystreamer->recoveryconfcontents->data,
 								  mystreamer->recoveryconfcontents->len,
@@ -159,12 +159,12 @@ astreamer_recovery_injector_content(astreamer *streamer,
 			{
 				/*
 				 * If we didn't already find (and thus modify)
-				 * postgresql.auto.conf, inject it as an additional archive
+				 * maintableql.auto.conf, inject it as an additional archive
 				 * member now.
 				 */
-				if (!mystreamer->found_postgresql_auto_conf)
+				if (!mystreamer->found_maintableql_auto_conf)
 					astreamer_inject_file(mystreamer->base.bbs_next,
-										  "postgresql.auto.conf",
+										  "maintableql.auto.conf",
 										  mystreamer->recoveryconfcontents->data,
 										  mystreamer->recoveryconfcontents->len);
 
@@ -230,7 +230,7 @@ astreamer_inject_file(astreamer *streamer, char *pathname, char *data,
 
 	/*
 	 * There seems to be no principled argument for these values, but they are
-	 * what PostgreSQL has historically used.
+	 * what maintableQL has historically used.
 	 */
 	member.uid = 04000;
 	member.gid = 02000;

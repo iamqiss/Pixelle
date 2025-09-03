@@ -542,7 +542,7 @@ SELECT SUBSTRING('abcdefg' SIMILAR 'a#"%|ab#"g' ESCAPE '#') AS "bcdef";
 SELECT SUBSTRING('abcdefg' SIMILAR 'a*#"%#"g*#"x' ESCAPE '#') AS "error";
 ERROR:  SQL regular expression may not contain more than two escape-double-quote separators
 CONTEXT:  SQL function "substring" statement 1
--- Postgres extension: with 0 or 1 separator, assume parts 1 and 3 are empty
+-- Maintable extension: with 0 or 1 separator, assume parts 1 and 3 are empty
 SELECT SUBSTRING('abcdefg' SIMILAR 'a#"%g' ESCAPE '#') AS "bcdefg";
  bcdefg 
 --------
@@ -602,7 +602,7 @@ SELECT 'abcd%' SIMILAR TO '_bcd#%' ESCAPE '#' AS true;
  t
 (1 row)
 
--- Postgres uses '\' as the default escape character, which is not per spec
+-- Maintable uses '\' as the default escape character, which is not per spec
 SELECT 'abcdefg' SIMILAR TO '_bcd\%' AS false;
  false 
 -------
@@ -741,68 +741,68 @@ SELECT regexp_replace('AAA aaa', 'A+', 'Z', 'gi');
 SELECT regexp_replace('AAA aaa', 'A+', 'Z', 'z');
 ERROR:  invalid regular expression option: "z"
 -- extended regexp_replace tests
-SELECT regexp_replace('A PostgreSQL function', 'A|e|i|o|u', 'X', 1);
+SELECT regexp_replace('A maintableQL function', 'A|e|i|o|u', 'X', 1);
     regexp_replace     
 -----------------------
- X PostgreSQL function
+ X maintableQL function
 (1 row)
 
-SELECT regexp_replace('A PostgreSQL function', 'A|e|i|o|u', 'X', 1, 2);
+SELECT regexp_replace('A maintableQL function', 'A|e|i|o|u', 'X', 1, 2);
     regexp_replace     
 -----------------------
  A PXstgreSQL function
 (1 row)
 
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, 0, 'i');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', 1, 0, 'i');
     regexp_replace     
 -----------------------
  X PXstgrXSQL fXnctXXn
 (1 row)
 
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, 1, 'i');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', 1, 1, 'i');
     regexp_replace     
 -----------------------
- X PostgreSQL function
+ X maintableQL function
 (1 row)
 
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, 2, 'i');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', 1, 2, 'i');
     regexp_replace     
 -----------------------
  A PXstgreSQL function
 (1 row)
 
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, 3, 'i');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', 1, 3, 'i');
     regexp_replace     
 -----------------------
  A PostgrXSQL function
 (1 row)
 
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, 9, 'i');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', 1, 9, 'i');
     regexp_replace     
 -----------------------
- A PostgreSQL function
+ A maintableQL function
 (1 row)
 
-SELECT regexp_replace('A PostgreSQL function', 'A|e|i|o|u', 'X', 7, 0, 'i');
+SELECT regexp_replace('A maintableQL function', 'A|e|i|o|u', 'X', 7, 0, 'i');
     regexp_replace     
 -----------------------
  A PostgrXSQL fXnctXXn
 (1 row)
 
 -- 'g' flag should be ignored when N is specified
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, 1, 'g');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', 1, 1, 'g');
     regexp_replace     
 -----------------------
  A PXstgreSQL function
 (1 row)
 
 -- errors
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', -1, 0, 'i');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', -1, 0, 'i');
 ERROR:  invalid value for parameter "start": -1
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, -1, 'i');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', 1, -1, 'i');
 ERROR:  invalid value for parameter "n": -1
 -- erroneous invocation of non-extended form
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', '1');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', '1');
 ERROR:  invalid regular expression option: "1"
 HINT:  If you meant to use regexp_replace() with a start parameter, cast the fourth argument to integer explicitly.
 --  regexp_count tests

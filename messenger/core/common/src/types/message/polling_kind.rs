@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 use std::str::FromStr;
@@ -51,20 +51,20 @@ impl PollingKind {
     }
 
     /// Returns polling kind from the specified code.
-    pub fn from_code(code: u8) -> Result<Self, IggyError> {
+    pub fn from_code(code: u8) -> Result<Self, MessengerError> {
         match code {
             1 => Ok(PollingKind::Offset),
             2 => Ok(PollingKind::Timestamp),
             3 => Ok(PollingKind::First),
             4 => Ok(PollingKind::Last),
             5 => Ok(PollingKind::Next),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }
 
 impl FromStr for PollingKind {
-    type Err = IggyError;
+    type Err = MessengerError;
     fn from_str(input: &str) -> Result<Self, Self::Err> {
         match input {
             "o" | "offset" => Ok(PollingKind::Offset),
@@ -72,7 +72,7 @@ impl FromStr for PollingKind {
             "f" | "first" => Ok(PollingKind::First),
             "l" | "last" => Ok(PollingKind::Last),
             "n" | "next" => Ok(PollingKind::Next),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

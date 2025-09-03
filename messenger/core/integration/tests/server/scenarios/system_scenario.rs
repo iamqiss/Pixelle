@@ -22,13 +22,13 @@ use crate::server::scenarios::{
     get_consumer_group, leave_consumer_group,
 };
 use bytes::Bytes;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::{ClientFactory, assert_clean_system};
 use std::str::FromStr;
 
 pub async fn run(client_factory: &dyn ClientFactory) {
     let client = client_factory.create_client().await;
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
 
     let consumer = Consumer {
         kind: CONSUMER_KIND,
@@ -110,7 +110,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
             Default::default(),
             None,
             Some(TOPIC_ID),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await
@@ -132,7 +132,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
     assert_eq!(topic.compression_algorithm, CompressionAlgorithm::default());
     assert_eq!(topic.size, 0);
     assert_eq!(topic.messages_count, 0);
-    assert_eq!(topic.message_expiry, IggyExpiry::NeverExpire);
+    assert_eq!(topic.message_expiry, MessengerExpiry::NeverExpire);
     assert_eq!(topic.max_topic_size, MaxTopicSize::Unlimited);
     assert_eq!(topic.replication_factor, 1);
 
@@ -200,7 +200,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
             Default::default(),
             None,
             Some(TOPIC_ID),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await;
@@ -215,7 +215,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
             Default::default(),
             None,
             Some(TOPIC_ID + 1),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await;
@@ -521,7 +521,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
             assert_eq!(me.consumer_groups_count, 0);
             assert!(me.consumer_groups.is_empty());
         }
-        Err(e) => assert_eq!(e.as_code(), IggyError::FeatureUnavailable.as_code()),
+        Err(e) => assert_eq!(e.as_code(), MessengerError::FeatureUnavailable.as_code()),
     }
 
     // 34. Get the stats and validate that there is one stream
@@ -535,10 +535,10 @@ pub async fn run(client_factory: &dyn ClientFactory) {
     assert_eq!(stats.partitions_count, PARTITIONS_COUNT);
     assert_eq!(stats.segments_count, PARTITIONS_COUNT);
     assert_eq!(stats.messages_count, MESSAGES_COUNT as u64);
-    assert!(!stats.iggy_server_version.is_empty());
-    assert!(stats.iggy_server_semver.is_some());
-    let iggy_server_semver = stats.iggy_server_semver.unwrap();
-    assert!(iggy_server_semver > 0);
+    assert!(!stats.messenger_server_version.is_empty());
+    assert!(stats.messenger_server_semver.is_some());
+    let messenger_server_semver = stats.messenger_server_semver.unwrap();
+    assert!(messenger_server_semver > 0);
 
     // 35. Delete the consumer group
     client
@@ -596,7 +596,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
     let updated_topic_name = format!("{TOPIC_NAME}-updated");
     let updated_message_expiry = 1000;
     let message_expiry_duration = updated_message_expiry.into();
-    let updated_max_topic_size = MaxTopicSize::Custom(IggyByteSize::from_str("2 GB").unwrap());
+    let updated_max_topic_size = MaxTopicSize::Custom(MessengerByteSize::from_str("2 GB").unwrap());
     let updated_replication_factor = 5;
 
     client
@@ -606,7 +606,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
             &updated_topic_name,
             CompressionAlgorithm::Gzip,
             Some(updated_replication_factor),
-            IggyExpiry::ExpireDuration(message_expiry_duration),
+            MessengerExpiry::ExpireDuration(message_expiry_duration),
             updated_max_topic_size,
         )
         .await
@@ -624,7 +624,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
     assert_eq!(updated_topic.name, updated_topic_name);
     assert_eq!(
         updated_topic.message_expiry,
-        IggyExpiry::ExpireDuration(message_expiry_duration)
+        MessengerExpiry::ExpireDuration(message_expiry_duration)
     );
     assert_eq!(
         updated_topic.compression_algorithm,
@@ -747,7 +747,7 @@ pub async fn run(client_factory: &dyn ClientFactory) {
             CompressionAlgorithm::default(),
             None,
             None,
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await
@@ -787,20 +787,20 @@ pub async fn run(client_factory: &dyn ClientFactory) {
     assert_clean_system(&client).await;
 }
 
-fn assert_message(message: &IggyMessage, offset: u64) {
+fn assert_message(message: &MessengerMessage, offset: u64) {
     let expected_payload = create_message_payload(offset);
     assert!(message.header.timestamp > 0);
     assert_eq!(message.header.offset, offset);
     assert_eq!(message.payload, expected_payload);
 }
 
-fn create_messages() -> Vec<IggyMessage> {
+fn create_messages() -> Vec<MessengerMessage> {
     let mut messages = Vec::new();
     for offset in 0..MESSAGES_COUNT {
         let id = (offset + 1) as u128;
         let payload = create_message_payload(offset as u64);
         messages.push(
-            IggyMessage::builder()
+            MessengerMessage::builder()
                 .id(id)
                 .payload(payload)
                 .build()

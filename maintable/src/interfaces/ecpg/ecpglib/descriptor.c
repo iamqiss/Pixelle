@@ -3,8 +3,8 @@
  * src/interfaces/ecpg/ecpglib/descriptor.c
  */
 
-#define POSTGRES_ECPG_INTERNAL
-#include "postgres_fe.h"
+#define MAINTABLE_ECPG_INTERNAL
+#include "maintable_fe.h"
 
 #include "catalog/pg_type_d.h"
 #include "ecpg-pthread-win32.h"

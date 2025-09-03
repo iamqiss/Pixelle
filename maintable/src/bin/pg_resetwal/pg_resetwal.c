@@ -19,7 +19,7 @@
  * step 2 ...
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/bin/pg_resetwal/pg_resetwal.c
@@ -28,13 +28,13 @@
  */
 
 /*
- * We have to use postgres.h not postgres_fe.h here, because there's so much
+ * We have to use maintable.h not maintable_fe.h here, because there's so much
  * backend-only stuff in the XLOG include files we need.  But we need a
  * frontend-ish environment otherwise.  Hence this ugly hack.
  */
 #define FRONTEND 1
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <dirent.h>
 #include <fcntl.h>
@@ -134,7 +134,7 @@ main(int argc, char *argv[])
 		}
 		if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			puts("pg_resetwal (PostgreSQL) " PG_VERSION);
+			puts("pg_resetwal (maintableQL) " PG_VERSION);
 			exit(0);
 		}
 	}
@@ -357,7 +357,7 @@ main(int argc, char *argv[])
 	if (geteuid() == 0)
 	{
 		pg_log_error("cannot be executed by \"root\"");
-		pg_log_error_hint("You must run %s as the PostgreSQL superuser.",
+		pg_log_error_hint("You must run %s as the maintableQL superuser.",
 						  progname);
 		exit(1);
 	}
@@ -1189,7 +1189,7 @@ WriteEmptyXLOG(void)
 static void
 usage(void)
 {
-	printf(_("%s resets the PostgreSQL write-ahead log.\n\n"), progname);
+	printf(_("%s resets the maintableQL write-ahead log.\n\n"), progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]... DATADIR\n"), progname);
 

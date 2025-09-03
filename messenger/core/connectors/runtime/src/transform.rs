@@ -20,7 +20,7 @@ use crate::{
     RuntimeError,
     configs::{SharedTransformConfig, TransformsConfig},
 };
-use iggy_connector_sdk::transforms::Transform;
+use messenger_connector_sdk::transforms::Transform;
 use serde::Deserialize;
 use std::sync::Arc;
 
@@ -41,7 +41,7 @@ pub fn load(config: &TransformsConfig) -> Result<Vec<Arc<dyn Transform>>, Runtim
             continue;
         }
 
-        let transform = iggy_connector_sdk::transforms::from_config(*r#type, transform_config)?;
+        let transform = messenger_connector_sdk::transforms::from_config(*r#type, transform_config)?;
         transforms.push(transform);
     }
 

@@ -4,7 +4,7 @@
  *	  Functions to convert stored expressions/querytrees back to
  *	  source text
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <unistd.h>
@@ -1749,7 +1749,7 @@ pg_get_statisticsobj_worker(Oid statextid, bool columns_only, bool missing_ok)
 		 * If any option is disabled, then we'll need to append the types
 		 * clause to show which options are enabled.  We omit the types clause
 		 * on purpose when all options are enabled, so a pg_dump/pg_restore
-		 * will create all statistics types on a newer postgres version, if
+		 * will create all statistics types on a newer maintable version, if
 		 * the statistics had all options enabled on the original version.
 		 *
 		 * But if the statistics is defined on just a single column, it has to

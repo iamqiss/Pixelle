@@ -17,7 +17,7 @@
  */
 
 use async_trait::async_trait;
-use iggy_common::{Identifier, IggyError};
+use messenger_common::{Identifier, MessengerError};
 
 /// This trait defines the methods to interact with the partition module.
 #[async_trait]
@@ -33,5 +33,5 @@ pub trait SegmentClient {
         topic_id: &Identifier,
         partition_id: u32,
         segments_count: u32,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
 }

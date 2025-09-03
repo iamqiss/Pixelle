@@ -3,14 +3,14 @@
  * dict_int.c
  *	  Text search dictionary for integers
  *
- * Copyright (c) 2007-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2007-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  contrib/dict_int/dict_int.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "commands/defrem.h"
 #include "tsearch/ts_public.h"

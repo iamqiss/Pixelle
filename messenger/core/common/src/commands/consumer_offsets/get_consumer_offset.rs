@@ -20,7 +20,7 @@ use crate::BytesSerializable;
 use crate::Identifier;
 use crate::Sizeable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, GET_CONSUMER_OFFSET_CODE};
 use crate::{Consumer, ConsumerKind};
 use bytes::{BufMut, Bytes, BytesMut};
@@ -70,8 +70,8 @@ fn default_partition_id() -> Option<u32> {
     Some(1)
 }
 
-impl Validatable<IggyError> for GetConsumerOffset {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for GetConsumerOffset {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -95,9 +95,9 @@ impl BytesSerializable for GetConsumerOffset {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<GetConsumerOffset, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<GetConsumerOffset, MessengerError> {
         if bytes.len() < 15 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let mut position = 0;
@@ -115,7 +115,7 @@ impl BytesSerializable for GetConsumerOffset {
         let partition_id = u32::from_le_bytes(
             bytes[position..position + 4]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let partition_id = if partition_id == 0 {
             None

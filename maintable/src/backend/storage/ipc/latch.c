@@ -8,7 +8,7 @@
  * signal handler sets a flag variable.  See latch.h for more information
  * on how to use them.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -16,7 +16,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "miscadmin.h"
 #include "port/atomics.h"
@@ -326,7 +326,7 @@ SetLatch(Latch *latch)
 	 * in a 32 bit integer, and so should be atomic. In the worst case, we
 	 * might end up signaling the wrong process. Even then, you're very
 	 * unlucky if a process with that bogus pid exists and belongs to
-	 * Postgres; and PG database processes should handle excess SIGUSR1
+	 * Maintable; and PG database processes should handle excess SIGUSR1
 	 * interrupts without a problem anyhow.
 	 *
 	 * Another sort of race condition that's possible here is for a new

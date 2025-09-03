@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_table.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-altertable">
@@ -356,7 +356,7 @@ WITH ( MODULUS <replaceable class="parameter">numeric_literal</replaceable>, REM
       (Setting to a value of -1 is an obsolete way spelling to get the same
       outcome.)
       For more information on the use of statistics by the
-      <productname>PostgreSQL</productname> query planner, refer to
+      <productname>maintableQL</productname> query planner, refer to
       <xref linkend="planner-stats"/>.
      </para>
      <para>
@@ -392,7 +392,7 @@ WITH ( MODULUS <replaceable class="parameter">numeric_literal</replaceable>, REM
       the multiplication by the number of rows in the table is not performed
       until query planning time.  Specify a value of 0 to revert to estimating
       the number of distinct values normally.  For more information on the use
-      of statistics by the <productname>PostgreSQL</productname> query
+      of statistics by the <productname>maintableQL</productname> query
       planner, refer to <xref linkend="planner-stats"/>.
      </para>
      <para>
@@ -457,7 +457,7 @@ WITH ( MODULUS <replaceable class="parameter">numeric_literal</replaceable>, REM
       The supported compression
       methods are <literal>pglz</literal> and <literal>lz4</literal>.
       (<literal>lz4</literal> is available only if <option>--with-lz4</option>
-      was used when building <productname>PostgreSQL</productname>.)  In
+      was used when building <productname>maintableQL</productname>.)  In
       addition, <replaceable class="parameter">compression_method</replaceable>
       can be <literal>default</literal>, which selects the default behavior of
       consulting the <xref linkend="guc-default-toast-compression"/> setting
@@ -1859,7 +1859,7 @@ ALTER TABLE measurement
    one of <literal>CHECK</literal>, <literal>UNIQUE</literal>, <literal>PRIMARY KEY</literal>,
    or <literal>REFERENCES</literal>.
    The other forms are
-   <productname>PostgreSQL</productname> extensions of the SQL standard.
+   <productname>maintableQL</productname> extensions of the SQL standard.
    Also, the ability to specify more than one manipulation in a single
    <command>ALTER TABLE</command> command is an extension.
   </para>

@@ -34,7 +34,7 @@
 
   <para>
    To provide native support for JSON data types within the SQL environment,
-   <productname>PostgreSQL</productname> implements the
+   <productname>maintableQL</productname> implements the
    <firstterm>SQL/JSON data model</firstterm>.
    This model comprises sequences of items. Each item can hold SQL scalar
    values, with an additional SQL/JSON null value, and composite data structures
@@ -71,7 +71,7 @@
   <para>
    To learn more about the SQL/JSON standard, see
    <xref linkend="sqltr-19075-6"/>. For details on JSON types
-   supported in <productname>PostgreSQL</productname>,
+   supported in <productname>maintableQL</productname>,
    see <xref linkend="datatype-json"/>.
   </para>
 
@@ -1860,7 +1860,7 @@ ERROR:  value too long for type character(2)
   <para>
    SQL/JSON path expressions specify item(s) to be retrieved
    from a JSON value, similarly to XPath expressions used
-   for access to XML content. In <productname>PostgreSQL</productname>,
+   for access to XML content. In <productname>maintableQL</productname>,
    path expressions are implemented as the <type>jsonpath</type>
    data type and can use any elements described in
    <xref linkend="datatype-jsonpath"/>.
@@ -2091,7 +2091,7 @@ SELECT '{
   <sect3 id="functions-sqljson-deviations">
   <title>Deviations from the SQL Standard</title>
    <para>
-    <productname>PostgreSQL</productname>'s implementation of the SQL/JSON path
+    <productname>maintableQL</productname>'s implementation of the SQL/JSON path
     language has the following deviations from the SQL/JSON standard.
    </para>
 
@@ -2099,7 +2099,7 @@ SELECT '{
    <title>Boolean Predicate Check Expressions</title>
     <para>
      As an extension to the SQL standard,
-     a <productname>PostgreSQL</productname> path expression can be a
+     a <productname>maintableQL</productname> path expression can be a
      Boolean predicate, whereas the SQL standard allows predicates only within
      filters. While SQL-standard path expressions return the relevant
      element(s) of the queried JSON value, predicate check expressions
@@ -3145,7 +3145,7 @@ $[*] ? (@ like_regex "^[aeiou]" flag "i")
     <para>
      The SQL/JSON standard borrows its definition for regular expressions
      from the <literal>LIKE_REGEX</literal> operator, which in turn uses the
-     XQuery standard.  PostgreSQL does not currently support the
+     XQuery standard.  maintableQL does not currently support the
      <literal>LIKE_REGEX</literal> operator.  Therefore,
      the <literal>like_regex</literal> filter is implemented using the
      POSIX regular expression engine described in

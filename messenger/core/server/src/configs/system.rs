@@ -17,11 +17,11 @@
  */
 
 use super::cache_indexes::CacheIndexesConfig;
-use iggy_common::Confirmation;
-use iggy_common::IggyByteSize;
-use iggy_common::IggyExpiry;
-use iggy_common::MaxTopicSize;
-use iggy_common::{CompressionAlgorithm, IggyDuration};
+use messenger_common::Confirmation;
+use messenger_common::MessengerByteSize;
+use messenger_common::MessengerExpiry;
+use messenger_common::MaxTopicSize;
+use messenger_common::{CompressionAlgorithm, MessengerDuration};
 use serde::{Deserialize, Serialize};
 use serde_with::DisplayFromStr;
 use serde_with::serde_as;
@@ -76,11 +76,11 @@ pub struct CompressionConfig {
 pub struct LoggingConfig {
     pub path: String,
     pub level: String,
-    pub max_size: IggyByteSize,
+    pub max_size: MessengerByteSize,
     #[serde_as(as = "DisplayFromStr")]
-    pub retention: IggyDuration,
+    pub retention: MessengerDuration,
     #[serde_as(as = "DisplayFromStr")]
-    pub sysinfo_print_interval: IggyDuration,
+    pub sysinfo_print_interval: MessengerDuration,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -107,7 +107,7 @@ pub struct TopicConfig {
 pub struct PartitionConfig {
     pub path: String,
     pub messages_required_to_save: u32,
-    pub size_of_messages_required_to_save: IggyByteSize,
+    pub size_of_messages_required_to_save: MessengerByteSize,
     pub enforce_fsync: bool,
     pub validate_checksum: bool,
 }
@@ -118,7 +118,7 @@ pub struct MessageDeduplicationConfig {
     pub enabled: bool,
     pub max_entries: u64,
     #[serde_as(as = "DisplayFromStr")]
-    pub expiry: IggyDuration,
+    pub expiry: MessengerDuration,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -129,17 +129,17 @@ pub struct RecoveryConfig {
 #[derive(Debug, Deserialize, Serialize)]
 pub struct MemoryPoolConfig {
     pub enabled: bool,
-    pub size: IggyByteSize,
+    pub size: MessengerByteSize,
     pub bucket_capacity: u32,
 }
 
 #[serde_as]
 #[derive(Debug, Deserialize, Serialize)]
 pub struct SegmentConfig {
-    pub size: IggyByteSize,
+    pub size: MessengerByteSize,
     pub cache_indexes: CacheIndexesConfig,
     #[serde_as(as = "DisplayFromStr")]
-    pub message_expiry: IggyExpiry,
+    pub message_expiry: MessengerExpiry,
     pub archive_expired: bool,
     #[serde_as(as = "DisplayFromStr")]
     pub server_confirmation: Confirmation,
@@ -151,7 +151,7 @@ pub struct StateConfig {
     pub enforce_fsync: bool,
     pub max_file_operation_retries: u32,
     #[serde_as(as = "DisplayFromStr")]
-    pub retry_delay: IggyDuration,
+    pub retry_delay: MessengerDuration,
 }
 
 impl SystemConfig {

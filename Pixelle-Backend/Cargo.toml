@@ -68,9 +68,9 @@ serde_yaml = "0.9"
 bincode = "1.3"
 
 # Database drivers
-sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "mysql", "sqlite"] }
-diesel = { version = "2.1", features = ["postgres", "mysql", "r2d2", "chrono"] }
-sea-orm = { version = "0.12", features = ["sqlx-postgres", "runtime-tokio-rustls"] }
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "maintable", "mysql", "sqlite"] }
+diesel = { version = "2.1", features = ["maintable", "mysql", "r2d2", "chrono"] }
+sea-orm = { version = "0.12", features = ["sqlx-maintable", "runtime-tokio-rustls"] }
 redis = { version = "0.24", features = ["tokio-comp"] }
 mongodb = "2.8"
 

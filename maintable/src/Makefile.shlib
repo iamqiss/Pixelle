@@ -10,7 +10,7 @@
 #
 #-------------------------------------------------------------------------
 
-# This file should be included by any Postgres module Makefile that
+# This file should be included by any Maintable module Makefile that
 # wants to build a shared library (if possible for the current
 # platform). A static library is also built from the same object
 # files. Only one library can be built per makefile.
@@ -22,7 +22,7 @@
 # OBJS                  List of object files to include in library
 # SHLIB_LINK            Stuff to append to library's link command
 #                       (typically, -L and -l switches for external libraries)
-# SHLIB_LINK_INTERNAL   -L and -l switches for Postgres-supplied libraries
+# SHLIB_LINK_INTERNAL   -L and -l switches for Maintable-supplied libraries
 # SHLIB_PREREQS         Order-only prerequisites for library build target
 # SHLIB_EXPORTS         (optional) Name of file containing list of symbols to
 #                       export, in the format "function_name  number"
@@ -309,7 +309,7 @@ $(stlib): $(shlib)
 # XXX A backend that loads a module linked with libgcc_s_dw2-1.dll will exit
 # uncleanly, hence -static-libgcc.  (Last verified with MinGW-w64 compilers
 # from i686-4.9.1-release-win32-dwarf-rt_v3-rev1.)  Shared libgcc has better
-# support for C++/Java exceptions; while core PostgreSQL does not use them, it
+# support for C++/Java exceptions; while core maintableQL does not use them, it
 # would be nice to support shared libgcc for the benefit of extensions.
 #
 # If SHLIB_EXPORTS is set, the rules below will build a .def file from that.
@@ -342,14 +342,14 @@ endif # PORTNAME == cygwin || PORTNAME == win32
 	echo 'includedir=$(patsubst $(prefix)/%,$${prefix}/%,$(includedir))' >>$@
 	echo >>$@
 	echo 'Name: lib$(NAME)' >>$@
-	echo 'Description: PostgreSQL lib$(NAME) library' >>$@
+	echo 'Description: maintableQL lib$(NAME) library' >>$@
 	echo 'URL: $(PACKAGE_URL)' >>$@
 	echo 'Version: $(VERSION)' >>$@
 	echo 'Requires: ' >>$@
 	echo 'Requires.private: $(PKG_CONFIG_REQUIRES_PRIVATE)' >>$@
 	echo 'Cflags: -I$${includedir}' >>$@
 	echo 'Libs: -L$${libdir} -l$(NAME)' >>$@
-# Record -L flags that the user might have passed in to the PostgreSQL
+# Record -L flags that the user might have passed in to the maintableQL
 # build to locate third-party libraries (e.g., ldap, ssl).  Filter out
 # those that point inside the build or source tree.  Use sort to
 # remove duplicates.  Also record the -l flags necessary for static

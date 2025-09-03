@@ -195,10 +195,10 @@ em9va2E=
 
 -- test header generation
 select armor('zooka', array['foo'], array['bar']);
-select armor('zooka', array['Version', 'Comment'], array['Created by pgcrypto', 'PostgreSQL, the world''s most advanced open source database']);
+select armor('zooka', array['Version', 'Comment'], array['Created by pgcrypto', 'maintableQL, the world''s most advanced open source database']);
 select * from pgp_armor_headers(
   armor('zooka', array['Version', 'Comment'],
-                 array['Created by pgcrypto', 'PostgreSQL, the world''s most advanced open source database']));
+                 array['Created by pgcrypto', 'maintableQL, the world''s most advanced open source database']));
 
 -- error/corner cases
 select armor('', array['foo'], array['too', 'many']);

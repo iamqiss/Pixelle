@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::utils::duration::IggyDuration;
+use crate::utils::duration::MessengerDuration;
 use humantime::Duration as HumanDuration;
 use humantime::format_duration;
 use serde::de::Visitor;
@@ -30,33 +30,33 @@ use std::time::Duration;
 
 /// Helper enum for various time-based expiry related functionalities
 #[derive(Debug, Copy, Default, Clone, Eq, PartialEq)]
-pub enum IggyExpiry {
+pub enum MessengerExpiry {
     #[default]
     /// Use the default expiry time from the server
     ServerDefault,
     /// Set expiry time to given value
-    ExpireDuration(IggyDuration),
+    ExpireDuration(MessengerDuration),
     /// Never expire
     NeverExpire,
 }
 
-impl IggyExpiry {
-    pub fn new(values: Option<Vec<IggyExpiry>>) -> Option<Self> {
+impl MessengerExpiry {
+    pub fn new(values: Option<Vec<MessengerExpiry>>) -> Option<Self> {
         values.map(|items| items.iter().cloned().sum())
     }
 }
 
-impl From<&IggyExpiry> for Option<u64> {
-    fn from(value: &IggyExpiry) -> Self {
+impl From<&MessengerExpiry> for Option<u64> {
+    fn from(value: &MessengerExpiry) -> Self {
         match value {
-            IggyExpiry::ExpireDuration(value) => Some(value.as_micros()),
-            IggyExpiry::NeverExpire => Some(u64::MAX),
-            IggyExpiry::ServerDefault => None,
+            MessengerExpiry::ExpireDuration(value) => Some(value.as_micros()),
+            MessengerExpiry::NeverExpire => Some(u64::MAX),
+            MessengerExpiry::ServerDefault => None,
         }
     }
 }
 
-impl Display for IggyExpiry {
+impl Display for MessengerExpiry {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::NeverExpire => write!(f, "never_expire"),
@@ -66,40 +66,40 @@ impl Display for IggyExpiry {
     }
 }
 
-impl Sum for IggyExpiry {
+impl Sum for MessengerExpiry {
     fn sum<I: Iterator<Item = Self>>(iter: I) -> Self {
         iter.into_iter()
-            .fold(IggyExpiry::NeverExpire, |acc, x| acc + x)
+            .fold(MessengerExpiry::NeverExpire, |acc, x| acc + x)
     }
 }
 
-impl Add for IggyExpiry {
-    type Output = IggyExpiry;
+impl Add for MessengerExpiry {
+    type Output = MessengerExpiry;
 
     fn add(self, rhs: Self) -> Self::Output {
         match (self, rhs) {
-            (IggyExpiry::NeverExpire, IggyExpiry::NeverExpire) => IggyExpiry::NeverExpire,
-            (IggyExpiry::NeverExpire, expiry) => expiry,
-            (expiry, IggyExpiry::NeverExpire) => expiry,
+            (MessengerExpiry::NeverExpire, MessengerExpiry::NeverExpire) => MessengerExpiry::NeverExpire,
+            (MessengerExpiry::NeverExpire, expiry) => expiry,
+            (expiry, MessengerExpiry::NeverExpire) => expiry,
             (
-                IggyExpiry::ExpireDuration(lhs_duration),
-                IggyExpiry::ExpireDuration(rhs_duration),
-            ) => IggyExpiry::ExpireDuration(lhs_duration + rhs_duration),
-            (IggyExpiry::ServerDefault, IggyExpiry::ExpireDuration(_)) => IggyExpiry::ServerDefault,
-            (IggyExpiry::ServerDefault, IggyExpiry::ServerDefault) => IggyExpiry::ServerDefault,
-            (IggyExpiry::ExpireDuration(_), IggyExpiry::ServerDefault) => IggyExpiry::ServerDefault,
+                MessengerExpiry::ExpireDuration(lhs_duration),
+                MessengerExpiry::ExpireDuration(rhs_duration),
+            ) => MessengerExpiry::ExpireDuration(lhs_duration + rhs_duration),
+            (MessengerExpiry::ServerDefault, MessengerExpiry::ExpireDuration(_)) => MessengerExpiry::ServerDefault,
+            (MessengerExpiry::ServerDefault, MessengerExpiry::ServerDefault) => MessengerExpiry::ServerDefault,
+            (MessengerExpiry::ExpireDuration(_), MessengerExpiry::ServerDefault) => MessengerExpiry::ServerDefault,
         }
     }
 }
 
-impl FromStr for IggyExpiry {
+impl FromStr for MessengerExpiry {
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let result = match s {
-            "unlimited" | "none" | "None" | "Unlimited" | "never_expire" => IggyExpiry::NeverExpire,
+            "unlimited" | "none" | "None" | "Unlimited" | "never_expire" => MessengerExpiry::NeverExpire,
             "default" | "server_default" | "Default" | "Server_default" => {
-                IggyExpiry::ServerDefault
+                MessengerExpiry::ServerDefault
             }
             value => {
                 let duration = value.parse::<HumanDuration>().map_err(|e| format!("{e}"))?;
@@ -110,7 +110,7 @@ impl FromStr for IggyExpiry {
                     ));
                 }
 
-                IggyExpiry::ExpireDuration(IggyDuration::from(duration))
+                MessengerExpiry::ExpireDuration(MessengerDuration::from(duration))
             }
         };
 
@@ -118,29 +118,29 @@ impl FromStr for IggyExpiry {
     }
 }
 
-impl From<IggyExpiry> for Option<u64> {
-    fn from(val: IggyExpiry) -> Self {
+impl From<MessengerExpiry> for Option<u64> {
+    fn from(val: MessengerExpiry) -> Self {
         match val {
-            IggyExpiry::ExpireDuration(value) => Some(value.as_micros()),
-            IggyExpiry::ServerDefault => None,
-            IggyExpiry::NeverExpire => Some(u64::MAX),
+            MessengerExpiry::ExpireDuration(value) => Some(value.as_micros()),
+            MessengerExpiry::ServerDefault => None,
+            MessengerExpiry::NeverExpire => Some(u64::MAX),
         }
     }
 }
 
-impl From<IggyExpiry> for u64 {
-    fn from(val: IggyExpiry) -> Self {
+impl From<MessengerExpiry> for u64 {
+    fn from(val: MessengerExpiry) -> Self {
         match val {
-            IggyExpiry::ExpireDuration(value) => value.as_micros(),
-            IggyExpiry::ServerDefault => 0,
-            IggyExpiry::NeverExpire => u64::MAX,
+            MessengerExpiry::ExpireDuration(value) => value.as_micros(),
+            MessengerExpiry::ServerDefault => 0,
+            MessengerExpiry::NeverExpire => u64::MAX,
         }
     }
 }
 
-impl From<Vec<IggyExpiry>> for IggyExpiry {
-    fn from(values: Vec<IggyExpiry>) -> Self {
-        let mut result = IggyExpiry::NeverExpire;
+impl From<Vec<MessengerExpiry>> for MessengerExpiry {
+    fn from(values: Vec<MessengerExpiry>) -> Self {
+        let mut result = MessengerExpiry::NeverExpire;
         for value in values {
             result = result + value;
         }
@@ -148,56 +148,56 @@ impl From<Vec<IggyExpiry>> for IggyExpiry {
     }
 }
 
-impl From<u64> for IggyExpiry {
+impl From<u64> for MessengerExpiry {
     fn from(value: u64) -> Self {
         match value {
-            u64::MAX => IggyExpiry::NeverExpire,
-            0 => IggyExpiry::ServerDefault,
-            value => IggyExpiry::ExpireDuration(IggyDuration::from(value)),
+            u64::MAX => MessengerExpiry::NeverExpire,
+            0 => MessengerExpiry::ServerDefault,
+            value => MessengerExpiry::ExpireDuration(MessengerDuration::from(value)),
         }
     }
 }
 
-impl From<Option<u64>> for IggyExpiry {
+impl From<Option<u64>> for MessengerExpiry {
     fn from(value: Option<u64>) -> Self {
         match value {
             Some(value) => match value {
-                u64::MAX => IggyExpiry::NeverExpire,
-                0 => IggyExpiry::ServerDefault,
-                value => IggyExpiry::ExpireDuration(IggyDuration::from(value)),
+                u64::MAX => MessengerExpiry::NeverExpire,
+                0 => MessengerExpiry::ServerDefault,
+                value => MessengerExpiry::ExpireDuration(MessengerDuration::from(value)),
             },
-            None => IggyExpiry::NeverExpire,
+            None => MessengerExpiry::NeverExpire,
         }
     }
 }
 
-impl Serialize for IggyExpiry {
+impl Serialize for MessengerExpiry {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
         let expiry = match self {
-            IggyExpiry::ExpireDuration(value) => value.as_micros(),
-            IggyExpiry::ServerDefault => 0,
-            IggyExpiry::NeverExpire => u64::MAX,
+            MessengerExpiry::ExpireDuration(value) => value.as_micros(),
+            MessengerExpiry::ServerDefault => 0,
+            MessengerExpiry::NeverExpire => u64::MAX,
         };
         serializer.serialize_u64(expiry)
     }
 }
 
-impl<'de> Deserialize<'de> for IggyExpiry {
+impl<'de> Deserialize<'de> for MessengerExpiry {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        deserializer.deserialize_u64(IggyExpiryVisitor)
+        deserializer.deserialize_u64(MessengerExpiryVisitor)
     }
 }
 
-struct IggyExpiryVisitor;
+struct MessengerExpiryVisitor;
 
-impl Visitor<'_> for IggyExpiryVisitor {
-    type Value = IggyExpiry;
+impl Visitor<'_> for MessengerExpiryVisitor {
+    type Value = MessengerExpiry;
 
     fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
         formatter.write_str("a microsecond expiry as a u64")
@@ -207,7 +207,7 @@ impl Visitor<'_> for IggyExpiryVisitor {
     where
         E: de::Error,
     {
-        Ok(IggyExpiry::from(value))
+        Ok(MessengerExpiry::from(value))
     }
 }
 
@@ -219,28 +219,28 @@ mod tests {
     #[test]
     fn should_parse_expiry() {
         assert_eq!(
-            IggyExpiry::from_str("none").unwrap(),
-            IggyExpiry::NeverExpire
+            MessengerExpiry::from_str("none").unwrap(),
+            MessengerExpiry::NeverExpire
         );
         assert_eq!(
-            IggyExpiry::from_str("15days").unwrap(),
-            IggyExpiry::ExpireDuration(IggyDuration::from(SEC_IN_MICRO * 60 * 60 * 24 * 15))
+            MessengerExpiry::from_str("15days").unwrap(),
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(SEC_IN_MICRO * 60 * 60 * 24 * 15))
         );
         assert_eq!(
-            IggyExpiry::from_str("2min").unwrap(),
-            IggyExpiry::ExpireDuration(IggyDuration::from(SEC_IN_MICRO * 60 * 2))
+            MessengerExpiry::from_str("2min").unwrap(),
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(SEC_IN_MICRO * 60 * 2))
         );
         assert_eq!(
-            IggyExpiry::from_str("1ms").unwrap(),
-            IggyExpiry::ExpireDuration(IggyDuration::from(1000))
+            MessengerExpiry::from_str("1ms").unwrap(),
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(1000))
         );
         assert_eq!(
-            IggyExpiry::from_str("1s").unwrap(),
-            IggyExpiry::ExpireDuration(IggyDuration::ONE_SECOND)
+            MessengerExpiry::from_str("1s").unwrap(),
+            MessengerExpiry::ExpireDuration(MessengerDuration::ONE_SECOND)
         );
         assert_eq!(
-            IggyExpiry::from_str("15days 2min 2s").unwrap(),
-            IggyExpiry::ExpireDuration(IggyDuration::from(
+            MessengerExpiry::from_str("15days 2min 2s").unwrap(),
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(
                 SEC_IN_MICRO * (60 * 60 * 24 * 15 + 60 * 2 + 2)
             ))
         );
@@ -248,7 +248,7 @@ mod tests {
 
     #[test]
     fn should_fail_parsing_expiry() {
-        let x = IggyExpiry::from_str("15se");
+        let x = MessengerExpiry::from_str("15se");
         assert!(x.is_err());
         assert_eq!(
             x.unwrap_err(),
@@ -259,71 +259,71 @@ mod tests {
     #[test]
     fn should_sum_expiry() {
         assert_eq!(
-            IggyExpiry::NeverExpire + IggyExpiry::NeverExpire,
-            IggyExpiry::NeverExpire
+            MessengerExpiry::NeverExpire + MessengerExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire
         );
         assert_eq!(
-            IggyExpiry::NeverExpire + IggyExpiry::ExpireDuration(IggyDuration::from(3)),
-            IggyExpiry::ExpireDuration(IggyDuration::from(3))
+            MessengerExpiry::NeverExpire + MessengerExpiry::ExpireDuration(MessengerDuration::from(3)),
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(3))
         );
         assert_eq!(
-            IggyExpiry::ExpireDuration(IggyDuration::from(5)) + IggyExpiry::NeverExpire,
-            IggyExpiry::ExpireDuration(IggyDuration::from(5))
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(5)) + MessengerExpiry::NeverExpire,
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(5))
         );
         assert_eq!(
-            IggyExpiry::ExpireDuration(IggyDuration::from(5))
-                + IggyExpiry::ExpireDuration(IggyDuration::from(3)),
-            IggyExpiry::ExpireDuration(IggyDuration::from(8))
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(5))
+                + MessengerExpiry::ExpireDuration(MessengerDuration::from(3)),
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(8))
         );
     }
 
     #[test]
     fn should_sum_expiry_from_vec() {
         assert_eq!(
-            vec![IggyExpiry::NeverExpire]
+            vec![MessengerExpiry::NeverExpire]
                 .into_iter()
-                .sum::<IggyExpiry>(),
-            IggyExpiry::NeverExpire
+                .sum::<MessengerExpiry>(),
+            MessengerExpiry::NeverExpire
         );
         let x = vec![
-            IggyExpiry::NeverExpire,
-            IggyExpiry::ExpireDuration(IggyDuration::from(333)),
-            IggyExpiry::NeverExpire,
-            IggyExpiry::ExpireDuration(IggyDuration::from(123)),
+            MessengerExpiry::NeverExpire,
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(333)),
+            MessengerExpiry::NeverExpire,
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(123)),
         ];
         assert_eq!(
-            x.into_iter().sum::<IggyExpiry>(),
-            IggyExpiry::ExpireDuration(IggyDuration::from(456))
+            x.into_iter().sum::<MessengerExpiry>(),
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(456))
         );
     }
 
     #[test]
     fn should_check_display_expiry() {
-        assert_eq!(IggyExpiry::NeverExpire.to_string(), "never_expire");
+        assert_eq!(MessengerExpiry::NeverExpire.to_string(), "never_expire");
         assert_eq!(
-            IggyExpiry::ExpireDuration(IggyDuration::from(333333000000)).to_string(),
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(333333000000)).to_string(),
             "3days 20h 35m 33s"
         );
     }
 
     #[test]
     fn should_calculate_none_from_server_default() {
-        let expiry = IggyExpiry::ServerDefault;
+        let expiry = MessengerExpiry::ServerDefault;
         let result: Option<u64> = From::from(&expiry);
         assert_eq!(result, None);
     }
 
     #[test]
     fn should_calculate_u64_max_from_never_expiry() {
-        let expiry = IggyExpiry::NeverExpire;
+        let expiry = MessengerExpiry::NeverExpire;
         let result: Option<u64> = From::from(&expiry);
         assert_eq!(result, Some(u64::MAX));
     }
 
     #[test]
     fn should_calculate_some_seconds_from_message_expire() {
-        let duration = IggyDuration::new(Duration::new(42, 0));
-        let expiry = IggyExpiry::ExpireDuration(duration);
+        let duration = MessengerDuration::new(Duration::new(42, 0));
+        let expiry = MessengerExpiry::ExpireDuration(duration);
         let result: Option<u64> = From::from(&expiry);
         assert_eq!(result, Some(42000000));
     }
@@ -331,21 +331,21 @@ mod tests {
     #[test]
     fn should_create_new_expiry_from_vec() {
         let some_values = vec![
-            IggyExpiry::NeverExpire,
-            IggyExpiry::ExpireDuration(IggyDuration::from(3)),
-            IggyExpiry::ExpireDuration(IggyDuration::from(2)),
-            IggyExpiry::ExpireDuration(IggyDuration::from(1)),
+            MessengerExpiry::NeverExpire,
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(3)),
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(2)),
+            MessengerExpiry::ExpireDuration(MessengerDuration::from(1)),
         ];
         assert_eq!(
-            IggyExpiry::new(Some(some_values)),
-            Some(IggyExpiry::ExpireDuration(IggyDuration::from(6)))
+            MessengerExpiry::new(Some(some_values)),
+            Some(MessengerExpiry::ExpireDuration(MessengerDuration::from(6)))
         );
-        assert_eq!(IggyExpiry::new(None), None);
-        let none_values = vec![IggyExpiry::ServerDefault; 10];
+        assert_eq!(MessengerExpiry::new(None), None);
+        let none_values = vec![MessengerExpiry::ServerDefault; 10];
 
         assert_eq!(
-            IggyExpiry::new(Some(none_values)),
-            Some(IggyExpiry::ServerDefault)
+            MessengerExpiry::new(Some(none_values)),
+            Some(MessengerExpiry::ServerDefault)
         );
     }
 }

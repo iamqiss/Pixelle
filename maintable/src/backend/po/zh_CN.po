@@ -1,10 +1,10 @@
-# simplified Chinese translation file for PostgreSQL server
+# simplified Chinese translation file for maintableQL server
 # Weiping He <laser@zhengmai.com.cn>, 2001.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: postgres (PostgreSQL) 12\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintable (maintableQL) 12\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2019-05-22 17:56+0800\n"
 "PO-Revision-Date: 2019-06-05 18:00+0800\n"
 "Last-Translator: Jie Zhang <zhangjie2@cn.fujitsu.com>\n"
@@ -496,7 +496,7 @@ msgid "index row requires %zu bytes, maximum size is %zu"
 msgstr "索引行需要 %zu 字节, 最大值为 %zu"
 
 #: access/common/printtup.c:369 tcop/fastpath.c:180 tcop/fastpath.c:530
-#: tcop/postgres.c:1834
+#: tcop/maintable.c:1834
 #, c-format
 msgid "unsupported format code: %d"
 msgstr "不支持的格式代码: %d"
@@ -647,8 +647,8 @@ msgstr "索引\"%s\"包含无效的内部元组"
 
 #: access/gist/gist.c:753 access/gist/gistvacuum.c:426
 #, c-format
-msgid "This is caused by an incomplete page split at crash recovery before upgrading to PostgreSQL 9.1."
-msgstr "这是在升级到PostgreSQL 9.1之前执行灾难恢复时不完全的页分裂引起的."
+msgid "This is caused by an incomplete page split at crash recovery before upgrading to maintableQL 9.1."
+msgstr "这是在升级到maintableQL 9.1之前执行灾难恢复时不完全的页分裂引起的."
 
 #: access/gist/gist.c:754 access/gist/gistutil.c:787
 #: access/gist/gistutil.c:798 access/gist/gistvacuum.c:427
@@ -2641,7 +2641,7 @@ msgstr "从归档中恢复日志文件 \"%s\""
 msgid "could not restore file \"%s\" from archive: %s"
 msgstr "无法从归档文件%2$s中恢复文件 \"%1$s\""
 
-#. translator: First %s represents a postgresql.conf parameter name like
+#. translator: First %s represents a maintableql.conf parameter name like
 #. "recovery_end_command", the 2nd is the value of that parameter, the
 #. third an already translated error message.
 #: access/transam/xlogarchive.c:406
@@ -2918,12 +2918,12 @@ msgstr "无法在日志段%s，偏移量为%u, 长度为%lu的位置上进行读
 msgid "-X requires a power of two value between 1 MB and 1 GB"
 msgstr "-X需要两个介于1 MB和1 GB之间的2的幂次方"
 
-#: bootstrap/bootstrap.c:288 postmaster/postmaster.c:821 tcop/postgres.c:3648
+#: bootstrap/bootstrap.c:288 postmaster/postmaster.c:821 tcop/maintable.c:3648
 #, c-format
 msgid "--%s requires a value"
 msgstr "--%s 需要一个值"
 
-#: bootstrap/bootstrap.c:293 postmaster/postmaster.c:826 tcop/postgres.c:3653
+#: bootstrap/bootstrap.c:293 postmaster/postmaster.c:826 tcop/maintable.c:3653
 #, c-format
 msgid "-c %s requires a value"
 msgstr "-c %s 需要一个值"
@@ -5659,7 +5659,7 @@ msgid "could not read from COPY file: %m"
 msgstr "无法从COPY命令中文件进行读操作: %m"
 
 #: commands/copy.c:642 commands/copy.c:663 commands/copy.c:667
-#: tcop/postgres.c:348 tcop/postgres.c:384 tcop/postgres.c:411
+#: tcop/maintable.c:348 tcop/maintable.c:384 tcop/maintable.c:411
 #, c-format
 msgid "unexpected EOF on client connection with an open transaction"
 msgstr "在客户端连接上的已打开事务中出现意外 EOF"
@@ -5933,8 +5933,8 @@ msgstr "为了写入, 无法打开文件 \"%s\": %m"
 
 #: commands/copy.c:1938
 #, c-format
-msgid "COPY TO instructs the PostgreSQL server process to write a file. You may want a client-side facility such as psql's \\copy."
-msgstr "COPY TO指示PostgreSQL服务器进程写入文件。您可能需要客户端工具，如psql的\\copy。"
+msgid "COPY TO instructs the maintableQL server process to write a file. You may want a client-side facility such as psql's \\copy."
+msgstr "COPY TO指示maintableQL服务器进程写入文件。您可能需要客户端工具，如psql的\\copy。"
 
 #: commands/copy.c:1951 commands/copy.c:3560
 #, c-format
@@ -6008,8 +6008,8 @@ msgstr "当前子事务中，因为表未建或被截短，无法执行COPY FREE
 
 #: commands/copy.c:3547
 #, c-format
-msgid "COPY FROM instructs the PostgreSQL server process to read a file. You may want a client-side facility such as psql's \\copy."
-msgstr "COPY FROM指示PostgreSQL服务器进程读取文件。您可能需要客户端工具，如psql的\\copy"
+msgid "COPY FROM instructs the maintableQL server process to read a file. You may want a client-side facility such as psql's \\copy."
+msgstr "COPY FROM指示maintableQL服务器进程读取文件。您可能需要客户端工具，如psql的\\copy"
 
 #: commands/copy.c:3575
 #, c-format
@@ -7958,7 +7958,7 @@ msgstr "游标 \"%s\" 不存在"
 msgid "invalid statement name: must not be empty"
 msgstr "无效的语句名称: 不能为空"
 
-#: commands/prepare.c:141 parser/parse_param.c:304 tcop/postgres.c:1468
+#: commands/prepare.c:141 parser/parse_param.c:304 tcop/maintable.c:1468
 #, c-format
 msgid "could not determine data type of parameter $%d"
 msgstr "无法确定参数 $%d 的数据类型"
@@ -10841,8 +10841,8 @@ msgstr "时区 \"%s\" 看上去使用了闰秒"
 
 #: commands/variable.c:345 commands/variable.c:427
 #, c-format
-msgid "PostgreSQL does not support leap seconds."
-msgstr "PostgreSQL 不支持闰秒"
+msgid "maintableQL does not support leap seconds."
+msgstr "maintableQL 不支持闰秒"
 
 #: commands/variable.c:354
 #, c-format
@@ -13363,8 +13363,8 @@ msgstr "hotssl记录无法匹配，因为已禁用SSL"
 
 #: libpq/hba.c:1012
 #, c-format
-msgid "Set ssl = on in postgresql.conf."
-msgstr "在postgresql.conf配置文件中设置 ssl 开关为 on."
+msgid "Set ssl = on in maintableql.conf."
+msgstr "在maintableql.conf配置文件中设置 ssl 开关为 on."
 
 #: libpq/hba.c:1020
 #, c-format
@@ -13776,7 +13776,7 @@ msgstr "没有客户端连接"
 msgid "could not receive data from client: %m"
 msgstr "无法从客户端获得数据: %m"
 
-#: libpq/pqcomm.c:1220 tcop/postgres.c:4087
+#: libpq/pqcomm.c:1220 tcop/maintable.c:4087
 #, c-format
 msgid "terminating connection because protocol synchronization was lost"
 msgstr "由于协议同步丢失而中断连接"
@@ -13830,10 +13830,10 @@ msgstr "%s: WSAStartup 失败: %d\n"
 #: main/main.c:328
 #, c-format
 msgid ""
-"%s is the PostgreSQL server.\n"
+"%s is the maintableQL server.\n"
 "\n"
 msgstr ""
-"%s 是 PostgreSQL 服务器.\n"
+"%s 是 maintableQL 服务器.\n"
 "\n"
 
 #: main/main.c:329
@@ -14067,23 +14067,23 @@ msgid ""
 "configuration settings and how to set them on the command line or in\n"
 "the configuration file.\n"
 "\n"
-"Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 msgstr ""
 "\n"
 "请阅读文档获取运行时配置设置的完整列表\n"
 "以及如何在命令行或者在配置文件里设置它们的详细信息.\n"
 "\n"
-"请向 <pgsql-bugs@lists.postgresql.org> 报告臭虫.\n"
+"请向 <pgsql-bugs@lists.maintableql.org> 报告臭虫.\n"
 
 #: main/main.c:391
 #, c-format
 msgid ""
-"\"root\" execution of the PostgreSQL server is not permitted.\n"
+"\"root\" execution of the maintableQL server is not permitted.\n"
 "The server must be started under an unprivileged user ID to prevent\n"
 "possible system security compromise.  See the documentation for\n"
 "more information on how to properly start the server.\n"
 msgstr ""
-"不允许 \"root\" 执行 PostgreSQL 服务器.\n"
+"不允许 \"root\" 执行 maintableQL 服务器.\n"
 "服务器必须以一个非特权的用户身份启动以避免\n"
 "可能的系统安全性问题. 参阅文档获取更多\n"
 "有关如何正确启动服务器的信息.\n"
@@ -14096,13 +14096,13 @@ msgstr "%s: 真实和有效用户标识必须相互匹配\n"
 #: main/main.c:415
 #, c-format
 msgid ""
-"Execution of PostgreSQL by a user with administrative permissions is not\n"
+"Execution of maintableQL by a user with administrative permissions is not\n"
 "permitted.\n"
 "The server must be started under an unprivileged user ID to prevent\n"
 "possible system security compromises.  See the documentation for\n"
 "more information on how to properly start the server.\n"
 msgstr ""
-"不允许管理员权限的用户运行 PostgreSQL 服务器.\n"
+"不允许管理员权限的用户运行 maintableQL 服务器.\n"
 "服务器必须以一个非特权的用户身份启动以避免\n"
 "可能的系统安全性问题. 参阅文档获取更多\n"
 "有关如何正确启动服务器的信息.\n"
@@ -16454,29 +16454,29 @@ msgstr "系统调用shmget(key=%lu, size=%zu, 0%o) 执行失败."
 #: port/pg_shmem.c:221 port/sysv_shmem.c:221
 #, c-format
 msgid ""
-"This error usually means that PostgreSQL's request for a shared memory segment exceeded your kernel's SHMMAX parameter, or possibly that it is less than your kernel's SHMMIN parameter.\n"
-"The PostgreSQL documentation contains more information about shared memory configuration."
+"This error usually means that maintableQL's request for a shared memory segment exceeded your kernel's SHMMAX parameter, or possibly that it is less than your kernel's SHMMIN parameter.\n"
+"The maintableQL documentation contains more information about shared memory configuration."
 msgstr ""
-"这个错误通常表示PostgreSQL所请求的共享内存段超过了内核中的SHMMAX参数值，或者小于内核中的SHMMIN参数值。\n"
-"PostgreSQL文档包含了关于如何配置共享内存的更多信息."
+"这个错误通常表示maintableQL所请求的共享内存段超过了内核中的SHMMAX参数值，或者小于内核中的SHMMIN参数值。\n"
+"maintableQL文档包含了关于如何配置共享内存的更多信息."
 
 #: port/pg_shmem.c:228 port/sysv_shmem.c:228
 #, c-format
 msgid ""
-"This error usually means that PostgreSQL's request for a shared memory segment exceeded your kernel's SHMALL parameter.  You might need to reconfigure the kernel with larger SHMALL.\n"
-"The PostgreSQL documentation contains more information about shared memory configuration."
+"This error usually means that maintableQL's request for a shared memory segment exceeded your kernel's SHMALL parameter.  You might need to reconfigure the kernel with larger SHMALL.\n"
+"The maintableQL documentation contains more information about shared memory configuration."
 msgstr ""
-"这个错误通常表示PostgreSQL所请求的共享内存段超过了内核中设定的SHMALL参数值。您可以重新配置内核, 使用更大的SHMALL参数值.\n"
-"PostgreSQL文档包含了关于如何配置共享内存的更多信息."
+"这个错误通常表示maintableQL所请求的共享内存段超过了内核中设定的SHMALL参数值。您可以重新配置内核, 使用更大的SHMALL参数值.\n"
+"maintableQL文档包含了关于如何配置共享内存的更多信息."
 
 #: port/pg_shmem.c:234 port/sysv_shmem.c:234
 #, c-format
 msgid ""
 "This error does *not* mean that you have run out of disk space.  It occurs either if all available shared memory IDs have been taken, in which case you need to raise the SHMMNI parameter in your kernel, or because the system's overall limit for shared memory has been reached.\n"
-"The PostgreSQL documentation contains more information about shared memory configuration."
+"The maintableQL documentation contains more information about shared memory configuration."
 msgstr ""
 "这个错误不表示您系统上磁盘空间已经用尽.原因既有可能是系统上所有的有效共享内存ID不存在了，这样需要在内核中升高SHMMNI参数的值，或者是因为已到达系统最大的共享内存限制.如果无法增加共享内存的上限值.\n"
-"在PostgreSQL文档中包含了关于如何配置共享内存的更多信息."
+"在maintableQL文档中包含了关于如何配置共享内存的更多信息."
 
 #: port/pg_shmem.c:577 port/sysv_shmem.c:577
 #, c-format
@@ -16485,8 +16485,8 @@ msgstr "无法映射匿名共享内存: %m"
 
 #: port/pg_shmem.c:579 port/sysv_shmem.c:579
 #, c-format
-msgid "This error usually means that PostgreSQL's request for a shared memory segment exceeded available memory, swap space, or huge pages. To reduce the request size (currently %zu bytes), reduce PostgreSQL's shared memory usage, perhaps by reducing shared_buffers or max_connections."
-msgstr "这个错误通常表示PostgreSQL所请求的共享内存段超过了可用内存总量或者交换空间或者巨型页大小。为减少所请求空间的大小(当前是%zu字节),减少PostgreSQL文档包含了关于如何配置共享内存的更多信息."
+msgid "This error usually means that maintableQL's request for a shared memory segment exceeded available memory, swap space, or huge pages. To reduce the request size (currently %zu bytes), reduce maintableQL's shared memory usage, perhaps by reducing shared_buffers or max_connections."
+msgstr "这个错误通常表示maintableQL所请求的共享内存段超过了可用内存总量或者交换空间或者巨型页大小。为减少所请求空间的大小(当前是%zu字节),减少maintableQL文档包含了关于如何配置共享内存的更多信息."
 
 #: port/pg_shmem.c:639 port/sysv_shmem.c:639
 #, c-format
@@ -16521,16 +16521,16 @@ msgstr "semget(%lu, %d, 0%o) 系统调用失败."
 #: port/sysv_sema.c:128
 #, c-format
 msgid ""
-"This error does *not* mean that you have run out of disk space.  It occurs when either the system limit for the maximum number of semaphore sets (SEMMNI), or the system wide maximum number of semaphores (SEMMNS), would be exceeded.  You need to raise the respective kernel parameter.  Alternatively, reduce PostgreSQL's consumption of semaphores by reducing its max_connections parameter.\n"
-"The PostgreSQL documentation contains more information about configuring your system for PostgreSQL."
+"This error does *not* mean that you have run out of disk space.  It occurs when either the system limit for the maximum number of semaphore sets (SEMMNI), or the system wide maximum number of semaphores (SEMMNS), would be exceeded.  You need to raise the respective kernel parameter.  Alternatively, reduce maintableQL's consumption of semaphores by reducing its max_connections parameter.\n"
+"The maintableQL documentation contains more information about configuring your system for maintableQL."
 msgstr ""
-"这个错误不表示磁盘空间已经用完. 发生的原因有可能超过系统对于最大数量信号灯集合(由参数SEMMNI表示)，或者是对系统范围内最大可使用信号灯(由参数SEMMNS表示)的限制.您需要增加这两个系统核心参数的值。另外也可以通过i减小PostgreSQL参数max_connections来减少它所消耗的信号灯总数.\n"
-"在PostgreSQL文档中包含了更多关于如何配置PostgreSQL的信息。"
+"这个错误不表示磁盘空间已经用完. 发生的原因有可能超过系统对于最大数量信号灯集合(由参数SEMMNI表示)，或者是对系统范围内最大可使用信号灯(由参数SEMMNS表示)的限制.您需要增加这两个系统核心参数的值。另外也可以通过i减小maintableQL参数max_connections来减少它所消耗的信号灯总数.\n"
+"在maintableQL文档中包含了更多关于如何配置maintableQL的信息。"
 
 #: port/sysv_sema.c:158
 #, c-format
-msgid "You possibly need to raise your kernel's SEMVMX value to be at least %d.  Look into the PostgreSQL documentation for details."
-msgstr "你可能需要增加内核的 SEMVMX 值至少为 %d. 详细信息请查找 PostgreSQL 文档."
+msgid "You possibly need to raise your kernel's SEMVMX value to be at least %d.  Look into the maintableQL documentation for details."
+msgstr "你可能需要增加内核的 SEMVMX 值至少为 %d. 详细信息请查找 maintableQL 文档."
 
 #: port/win32/crashdump.c:121
 #, c-format
@@ -16611,8 +16611,8 @@ msgstr "无法在内存中启用锁定页用户权限"
 
 #: port/win32_shmem.c:176
 #, c-format
-msgid "Assign Lock Pages in Memory user right to the Windows user account which runs PostgreSQL."
-msgstr "为运行PostgreSQL的Windows用户帐户分配内存中的锁定页用户权限."
+msgid "Assign Lock Pages in Memory user right to the Windows user account which runs maintableQL."
+msgstr "为运行maintableQL的Windows用户帐户分配内存中的锁定页用户权限."
 
 #: port/win32_shmem.c:233
 #, c-format
@@ -17095,13 +17095,13 @@ msgstr "设定LC_ALL环境变量为一个合法的区域。"
 
 #: postmaster/postmaster.c:1453
 #, c-format
-msgid "%s: could not locate matching postgres executable"
-msgstr "%s: 无法找到匹配的 postgres 执行文件"
+msgid "%s: could not locate matching maintable executable"
+msgstr "%s: 无法找到匹配的 maintable 执行文件"
 
 #: postmaster/postmaster.c:1476 utils/misc/tzparser.c:341
 #, c-format
-msgid "This may indicate an incomplete PostgreSQL installation, or that the file \"%s\" has been moved away from its proper location."
-msgstr "这可能表示PostgreSQL安装未完成，或者文件\"%s\"已经从正确的位置移动到另外的位置了."
+msgid "This may indicate an incomplete maintableQL installation, or that the file \"%s\" has been moved away from its proper location."
+msgstr "这可能表示maintableQL安装未完成，或者文件\"%s\"已经从正确的位置移动到另外的位置了."
 
 #: postmaster/postmaster.c:1503
 #, c-format
@@ -17168,8 +17168,8 @@ msgstr "无效的启动包格式: 预计结束符为最后一个字节"
 
 #: postmaster/postmaster.c:2206
 #, c-format
-msgid "no PostgreSQL user name specified in startup packet"
-msgstr "在启动包中没有指定 PostgreSQL 用户名"
+msgid "no maintableQL user name specified in startup packet"
+msgstr "在启动包中没有指定 maintableQL 用户名"
 
 #: postmaster/postmaster.c:2265
 #, c-format
@@ -17395,8 +17395,8 @@ msgstr "无法在子进程中加载SSL配置"
 
 #: postmaster/postmaster.c:5060
 #, c-format
-msgid "Please report this to <pgsql-bugs@lists.postgresql.org>."
-msgstr "请向 <pgsql-bugs@lists.postgresql.org>发送报告."
+msgid "Please report this to <pgsql-bugs@lists.maintableql.org>."
+msgstr "请向 <pgsql-bugs@lists.maintableql.org>发送报告."
 
 #: postmaster/postmaster.c:5147
 #, c-format
@@ -18592,9 +18592,9 @@ msgstr "当WAL sender处于停止模式时，无法执行新命令"
 msgid "received replication command: %s"
 msgstr "收到的复制命令：%s"
 
-#: replication/walsender.c:1502 tcop/fastpath.c:279 tcop/postgres.c:1103
-#: tcop/postgres.c:1426 tcop/postgres.c:1684 tcop/postgres.c:2077
-#: tcop/postgres.c:2463 tcop/postgres.c:2542
+#: replication/walsender.c:1502 tcop/fastpath.c:279 tcop/maintable.c:1103
+#: tcop/maintable.c:1426 tcop/maintable.c:1684 tcop/maintable.c:2077
+#: tcop/maintable.c:2463 tcop/maintable.c:2542
 #, c-format
 msgid "current transaction is aborted, commands ignored until end of transaction block"
 msgstr "当前事务被终止, 事务块结束之前的查询被忽略"
@@ -19509,8 +19509,8 @@ msgstr "所要求的共享内存大小超过size_t"
 
 #: storage/ipc/signalfuncs.c:67
 #, c-format
-msgid "PID %d is not a PostgreSQL server process"
-msgstr "PID %d 不是 PostgreSQL 服务器进程"
+msgid "PID %d is not a maintableQL server process"
+msgstr "PID %d 不是 maintableQL 服务器进程"
 
 #: storage/ipc/signalfuncs.c:98 storage/lmgr/proc.c:1364
 #, c-format
@@ -19553,12 +19553,12 @@ msgstr "考虑使用%s，它是核心的一部分."
 msgid "rotation not possible because log collection not active"
 msgstr "日志切换无法进行，因为没有激活日志收集功能"
 
-#: storage/ipc/standby.c:558 tcop/postgres.c:3123
+#: storage/ipc/standby.c:558 tcop/maintable.c:3123
 #, c-format
 msgid "canceling statement due to conflict with recovery"
 msgstr "由于与恢复操作冲突，正在取消语句命令"
 
-#: storage/ipc/standby.c:559 tcop/postgres.c:2397
+#: storage/ipc/standby.c:559 tcop/maintable.c:2397
 #, c-format
 msgid "User transaction caused buffer deadlock with recovery."
 msgstr "用户事务造成了恢复操作期间缓冲区的死锁"
@@ -19947,8 +19947,8 @@ msgstr "在函数调用信息中, 参数大小 %d 是无效的"
 msgid "fastpath function call: \"%s\" (OID %u)"
 msgstr "快捷路径函数调用: \"%s\" (OID %u)"
 
-#: tcop/fastpath.c:389 tcop/postgres.c:1288 tcop/postgres.c:1551
-#: tcop/postgres.c:1918 tcop/postgres.c:2139
+#: tcop/fastpath.c:389 tcop/maintable.c:1288 tcop/maintable.c:1551
+#: tcop/maintable.c:1918 tcop/maintable.c:2139
 #, c-format
 msgid "duration: %s ms"
 msgstr "执行时间: %s ms"
@@ -19973,281 +19973,281 @@ msgstr "函数调用信息为包含 %d 个参数的格式, 但给定了 %d 个�
 msgid "incorrect binary data format in function argument %d"
 msgstr "函数参数 %d 为不正确的二进制数据格式"
 
-#: tcop/postgres.c:359 tcop/postgres.c:395 tcop/postgres.c:422
+#: tcop/maintable.c:359 tcop/maintable.c:395 tcop/maintable.c:422
 #, c-format
 msgid "unexpected EOF on client connection"
 msgstr "在客户端联接上的意外 EOF"
 
-#: tcop/postgres.c:445 tcop/postgres.c:457 tcop/postgres.c:468
-#: tcop/postgres.c:480 tcop/postgres.c:4473
+#: tcop/maintable.c:445 tcop/maintable.c:457 tcop/maintable.c:468
+#: tcop/maintable.c:480 tcop/maintable.c:4473
 #, c-format
 msgid "invalid frontend message type %d"
 msgstr "无效前端信息类型 %d"
 
-#: tcop/postgres.c:1043
+#: tcop/maintable.c:1043
 #, c-format
 msgid "statement: %s"
 msgstr "语句: %s"
 
-#: tcop/postgres.c:1293
+#: tcop/maintable.c:1293
 #, c-format
 msgid "duration: %s ms  statement: %s"
 msgstr "执行时间: %s ms 语句: %s"
 
-#: tcop/postgres.c:1343
+#: tcop/maintable.c:1343
 #, c-format
 msgid "parse %s: %s"
 msgstr "解析 %s: %s"
 
-#: tcop/postgres.c:1400
+#: tcop/maintable.c:1400
 #, c-format
 msgid "cannot insert multiple commands into a prepared statement"
 msgstr "无法插入多条命令到一个准备好的语句中"
 
-#: tcop/postgres.c:1556
+#: tcop/maintable.c:1556
 #, c-format
 msgid "duration: %s ms  parse %s: %s"
 msgstr "执行时间: %s ms  解析 %s: %s"
 
-#: tcop/postgres.c:1601
+#: tcop/maintable.c:1601
 #, c-format
 msgid "bind %s to %s"
 msgstr "将%s绑定到%s"
 
-#: tcop/postgres.c:1620 tcop/postgres.c:2444
+#: tcop/maintable.c:1620 tcop/maintable.c:2444
 #, c-format
 msgid "unnamed prepared statement does not exist"
 msgstr "未命名的准备语句不存在"
 
-#: tcop/postgres.c:1661
+#: tcop/maintable.c:1661
 #, c-format
 msgid "bind message has %d parameter formats but %d parameters"
 msgstr "绑定信息有%d个参数格式，但是实际上有%d个参数"
 
-#: tcop/postgres.c:1667
+#: tcop/maintable.c:1667
 #, c-format
 msgid "bind message supplies %d parameters, but prepared statement \"%s\" requires %d"
 msgstr "绑定消息提供了%d个参数,但是已准备好语句\"%s\" 要求%d个参数"
 
-#: tcop/postgres.c:1827
+#: tcop/maintable.c:1827
 #, c-format
 msgid "incorrect binary data format in bind parameter %d"
 msgstr "在绑定参数%d中出现不正确的二进制数据"
 
-#: tcop/postgres.c:1923
+#: tcop/maintable.c:1923
 #, c-format
 msgid "duration: %s ms  bind %s%s%s: %s"
 msgstr "执行时间: %s ms 绑定%s%s%s: %s"
 
-#: tcop/postgres.c:1971 tcop/postgres.c:2528
+#: tcop/maintable.c:1971 tcop/maintable.c:2528
 #, c-format
 msgid "portal \"%s\" does not exist"
 msgstr "入口 \"%s\" 不存在"
 
-#: tcop/postgres.c:2056
+#: tcop/maintable.c:2056
 #, c-format
 msgid "%s %s%s%s: %s"
 msgstr "%s %s%s%s: %s"
 
-#: tcop/postgres.c:2058 tcop/postgres.c:2147
+#: tcop/maintable.c:2058 tcop/maintable.c:2147
 msgid "execute fetch from"
 msgstr "执行FETCH操作"
 
-#: tcop/postgres.c:2059 tcop/postgres.c:2148
+#: tcop/maintable.c:2059 tcop/maintable.c:2148
 msgid "execute"
 msgstr "执行"
 
-#: tcop/postgres.c:2144
+#: tcop/maintable.c:2144
 #, c-format
 msgid "duration: %s ms  %s %s%s%s: %s"
 msgstr "执行时间: %s ms %s%s%s%s: %s"
 
-#: tcop/postgres.c:2285
+#: tcop/maintable.c:2285
 #, c-format
 msgid "prepare: %s"
 msgstr "准备: %s"
 
-#: tcop/postgres.c:2350
+#: tcop/maintable.c:2350
 #, c-format
 msgid "parameters: %s"
 msgstr "参数: %s"
 
-#: tcop/postgres.c:2369
+#: tcop/maintable.c:2369
 #, c-format
 msgid "abort reason: recovery conflict"
 msgstr "中断原因：与恢复操作相冲突"
 
-#: tcop/postgres.c:2385
+#: tcop/maintable.c:2385
 #, c-format
 msgid "User was holding shared buffer pin for too long."
 msgstr "用户所持有共享缓存锁的时间太长了."
 
-#: tcop/postgres.c:2388
+#: tcop/maintable.c:2388
 #, c-format
 msgid "User was holding a relation lock for too long."
 msgstr "用户对一个关系正在持有的锁的时间太长了."
 
-#: tcop/postgres.c:2391
+#: tcop/maintable.c:2391
 #, c-format
 msgid "User was or might have been using tablespace that must be dropped."
 msgstr "用户正在使用一个必须被删除的表空间"
 
-#: tcop/postgres.c:2394
+#: tcop/maintable.c:2394
 #, c-format
 msgid "User query might have needed to see row versions that must be removed."
 msgstr "用户查询可能需要看到而必须被删除的行版本号"
 
-#: tcop/postgres.c:2400
+#: tcop/maintable.c:2400
 #, c-format
 msgid "User was connected to a database that must be dropped."
 msgstr "用户连接到必须被删除的数据库"
 
-#: tcop/postgres.c:2724
+#: tcop/maintable.c:2724
 #, c-format
 msgid "terminating connection because of crash of another server process"
 msgstr "中断联接, 因为其它服务器进程崩溃"
 
-#: tcop/postgres.c:2725
+#: tcop/maintable.c:2725
 #, c-format
 msgid "The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory."
 msgstr "Postmaster 命令此服务器进程回滚当前事物并退出, 因为其它服务器进程不正常的退出可能毁坏了共享内存."
 
-#: tcop/postgres.c:2729 tcop/postgres.c:3053
+#: tcop/maintable.c:2729 tcop/maintable.c:3053
 #, c-format
 msgid "In a moment you should be able to reconnect to the database and repeat your command."
 msgstr "一会儿你将可以重联接数据库并且重复你的命令."
 
-#: tcop/postgres.c:2811
+#: tcop/maintable.c:2811
 #, c-format
 msgid "floating-point exception"
 msgstr "浮点异常"
 
-#: tcop/postgres.c:2812
+#: tcop/maintable.c:2812
 #, c-format
 msgid "An invalid floating-point operation was signaled. This probably means an out-of-range result or an invalid operation, such as division by zero."
 msgstr "无效的浮点数操作.这表示结果越界或者进行了无效的操作,例如除零."
 
-#: tcop/postgres.c:2983
+#: tcop/maintable.c:2983
 #, c-format
 msgid "canceling authentication due to timeout"
 msgstr "由于超时，正在取消认证鉴权命令"
 
-#: tcop/postgres.c:2987
+#: tcop/maintable.c:2987
 #, c-format
 msgid "terminating autovacuum process due to administrator command"
 msgstr "由于管理员命令中断autovacuum进程"
 
-#: tcop/postgres.c:2991
+#: tcop/maintable.c:2991
 #, c-format
 msgid "terminating logical replication worker due to administrator command"
 msgstr "由于管理员命令而终止逻辑复制工作线程"
 
-#: tcop/postgres.c:2995
+#: tcop/maintable.c:2995
 #, c-format
 msgid "logical replication launcher shutting down"
 msgstr "逻辑复制启动程序正在关闭"
 
-#: tcop/postgres.c:3008 tcop/postgres.c:3018 tcop/postgres.c:3051
+#: tcop/maintable.c:3008 tcop/maintable.c:3018 tcop/maintable.c:3051
 #, c-format
 msgid "terminating connection due to conflict with recovery"
 msgstr "由于与恢复操作相冲突而中断连接"
 
-#: tcop/postgres.c:3024
+#: tcop/maintable.c:3024
 #, c-format
 msgid "terminating connection due to administrator command"
 msgstr "由于管理员命令中断联接"
 
-#: tcop/postgres.c:3034
+#: tcop/maintable.c:3034
 #, c-format
 msgid "connection to client lost"
 msgstr "丢失了到客户端的连接"
 
-#: tcop/postgres.c:3100
+#: tcop/maintable.c:3100
 #, c-format
 msgid "canceling statement due to lock timeout"
 msgstr "由于锁超时，取消语句操作"
 
-#: tcop/postgres.c:3107
+#: tcop/maintable.c:3107
 #, c-format
 msgid "canceling statement due to statement timeout"
 msgstr "由于语句执行超时，正在取消查询命令"
 
-#: tcop/postgres.c:3114
+#: tcop/maintable.c:3114
 #, c-format
 msgid "canceling autovacuum task"
 msgstr "正在取消自动清理任务"
 
-#: tcop/postgres.c:3137
+#: tcop/maintable.c:3137
 #, c-format
 msgid "canceling statement due to user request"
 msgstr "由于用户请求而正在取消查询"
 
-#: tcop/postgres.c:3147
+#: tcop/maintable.c:3147
 #, c-format
 msgid "terminating connection due to idle-in-transaction timeout"
 msgstr "由于空载事务超时而终止连接"
 
-#: tcop/postgres.c:3261
+#: tcop/maintable.c:3261
 #, c-format
 msgid "stack depth limit exceeded"
 msgstr "堆栈深度超过限制"
 
-#: tcop/postgres.c:3262
+#: tcop/maintable.c:3262
 #, c-format
 msgid "Increase the configuration parameter \"max_stack_depth\" (currently %dkB), after ensuring the platform's stack depth limit is adequate."
 msgstr "在确定了平台的堆栈深度限制是足够大后，增加配置参数 \"max_stack_depth\"的值(当前值为%dkB)."
 
-#: tcop/postgres.c:3325
+#: tcop/maintable.c:3325
 #, c-format
 msgid "\"max_stack_depth\" must not exceed %ldkB."
 msgstr "\"max_stack_depth\"不能超过%ldkB."
 
-#: tcop/postgres.c:3327
+#: tcop/maintable.c:3327
 #, c-format
 msgid "Increase the platform's stack depth limit via \"ulimit -s\" or local equivalent."
 msgstr "通过命令\"ulimit -s\"或本地相同的命令来增加平台的堆栈深度限制."
 
-#: tcop/postgres.c:3687
+#: tcop/maintable.c:3687
 #, c-format
 msgid "invalid command-line argument for server process: %s"
 msgstr "服务器进程:%s的无效命令行参数"
 
-#: tcop/postgres.c:3688 tcop/postgres.c:3694
+#: tcop/maintable.c:3688 tcop/maintable.c:3694
 #, c-format
 msgid "Try \"%s --help\" for more information."
 msgstr "请用 \"%s --help\" 获取更多的信息."
 
-#: tcop/postgres.c:3692
+#: tcop/maintable.c:3692
 #, c-format
 msgid "%s: invalid command-line argument: %s"
 msgstr "%s: 无效的命令行参数:%s"
 
-#: tcop/postgres.c:3754
+#: tcop/maintable.c:3754
 #, c-format
 msgid "%s: no database nor user name specified"
 msgstr "%s: 没有指定数据库, 也没有指定用户名"
 
-#: tcop/postgres.c:4381
+#: tcop/maintable.c:4381
 #, c-format
 msgid "invalid CLOSE message subtype %d"
 msgstr "无效的 CLOSE 信息子类型 %d"
 
-#: tcop/postgres.c:4416
+#: tcop/maintable.c:4416
 #, c-format
 msgid "invalid DESCRIBE message subtype %d"
 msgstr "无效的 DESCRIBE 信息子类型 %d"
 
-#: tcop/postgres.c:4494
+#: tcop/maintable.c:4494
 #, c-format
 msgid "fastpath function calls not supported in a replication connection"
 msgstr "复制连接不能使用fastpath函数调用"
 
-#: tcop/postgres.c:4498
+#: tcop/maintable.c:4498
 #, c-format
 msgid "extended query protocol not supported in a replication connection"
 msgstr "扩展的查询协议在复制连接里不支持"
 
-#: tcop/postgres.c:4675
+#: tcop/maintable.c:4675
 #, c-format
 msgid "disconnection: session time: %d:%02d:%02d.%03d user=%s database=%s host=%s%s%s"
 msgstr "断开连接: 会话时间: %d:%02d:%02d.%03d user=%s database=%s host=%s%s%s"
@@ -22574,8 +22574,8 @@ msgstr "这个版本的安装不支持使用ICU"
 
 #: utils/adt/pg_locale.c:1459
 #, c-format
-msgid "You need to rebuild PostgreSQL using --with-icu."
-msgstr "您需要使用--with-icu选项重新生成PostgreSQL"
+msgid "You need to rebuild maintableQL using --with-icu."
+msgstr "您需要使用--with-icu选项重新生成maintableQL"
 
 #: utils/adt/pg_locale.c:1479
 #, c-format
@@ -22594,8 +22594,8 @@ msgstr "数据库中的排序规则是使用版本%s创建的，但操作系统�
 
 #: utils/adt/pg_locale.c:1491
 #, c-format
-msgid "Rebuild all objects affected by this collation and run ALTER COLLATION %s REFRESH VERSION, or build PostgreSQL with the right library version."
-msgstr "重新生成受此排序规则影响的所有对象，并运行ALTER COLLATION %s REFRESH VERSION,，或使用正确的库版本生成PostgreSQL."
+msgid "Rebuild all objects affected by this collation and run ALTER COLLATION %s REFRESH VERSION, or build maintableQL with the right library version."
+msgstr "重新生成受此排序规则影响的所有对象，并运行ALTER COLLATION %s REFRESH VERSION,，或使用正确的库版本生成maintableQL."
 
 #: utils/adt/pg_locale.c:1575
 #, c-format
@@ -23448,8 +23448,8 @@ msgstr "这个功能是需要在创建服务器时带有对libxml的支持才能
 
 #: utils/adt/xml.c:224
 #, c-format
-msgid "You need to rebuild PostgreSQL using --with-libxml."
-msgstr "您需要使用--with-libxml选项重新生成PostgreSQL"
+msgid "You need to rebuild maintableQL using --with-libxml."
+msgstr "您需要使用--with-libxml选项重新生成maintableQL"
 
 #: utils/adt/xml.c:243 utils/mb/mbutils.c:512
 #, c-format
@@ -23503,8 +23503,8 @@ msgstr "无法设置XML错误处理函数"
 
 #: utils/adt/xml.c:1049
 #, c-format
-msgid "This probably indicates that the version of libxml2 being used is not compatible with the libxml2 header files that PostgreSQL was built with."
-msgstr "这可能意味着正使用的libxml2版本与PostgreSQL编译 时使用的libxml2头文件不兼容"
+msgid "This probably indicates that the version of libxml2 being used is not compatible with the libxml2 header files that maintableQL was built with."
+msgstr "这可能意味着正使用的libxml2版本与maintableQL编译 时使用的libxml2头文件不兼容"
 
 #: utils/adt/xml.c:1936
 msgid "Invalid character value."
@@ -23988,8 +23988,8 @@ msgstr "锁文件 \"%s\" 已经存在"
 
 #: utils/init/miscinit.c:1026
 #, c-format
-msgid "Is another postgres (PID %d) running in data directory \"%s\"?"
-msgstr "是否其它 postgres (PID %d) 运行在数据目录 \"%s\"?"
+msgid "Is another maintable (PID %d) running in data directory \"%s\"?"
+msgstr "是否其它 maintable (PID %d) 运行在数据目录 \"%s\"?"
 
 #: utils/init/miscinit.c:1028
 #, c-format
@@ -23998,8 +23998,8 @@ msgstr "是否其它 postmaster (PID %d) 运行在数据目录 \"%s\"?"
 
 #: utils/init/miscinit.c:1031
 #, c-format
-msgid "Is another postgres (PID %d) using socket file \"%s\"?"
-msgstr "是否其它 postgres (PID %d) 使用套接字文件 \"%s\"?"
+msgid "Is another maintable (PID %d) using socket file \"%s\"?"
+msgstr "是否其它 maintable (PID %d) 使用套接字文件 \"%s\"?"
 
 #: utils/init/miscinit.c:1033
 #, c-format
@@ -24059,8 +24059,8 @@ msgstr "您需要初始化数据库 (initdb)."
 
 #: utils/init/miscinit.c:1503
 #, c-format
-msgid "The data directory was initialized by PostgreSQL version %s, which is not compatible with this version %s."
-msgstr "数据目录是以 PostgreSQL 版本 %s 初始化的, 它于当前版本 %s 不兼容."
+msgid "The data directory was initialized by maintableQL version %s, which is not compatible with this version %s."
+msgstr "数据目录是以 maintableQL 版本 %s 初始化的, 它于当前版本 %s 不兼容."
 
 #: utils/init/miscinit.c:1570
 #, c-format
@@ -24475,8 +24475,8 @@ msgid "Version and Platform Compatibility"
 msgstr "版本和平台兼容性"
 
 #: utils/misc/guc.c:726
-msgid "Version and Platform Compatibility / Previous PostgreSQL Versions"
-msgstr "版本和平台兼容性 / 上一个 PostgreSQL 版本"
+msgid "Version and Platform Compatibility / Previous maintableQL Versions"
+msgstr "版本和平台兼容性 / 上一个 maintableQL 版本"
 
 #: utils/misc/guc.c:728
 msgid "Version and Platform Compatibility / Other Platforms and Clients"
@@ -24623,16 +24623,16 @@ msgid "Continues processing after a checksum failure."
 msgstr "校验失败后继续处理."
 
 #: utils/misc/guc.c:1139
-msgid "Detection of a checksum failure normally causes PostgreSQL to report an error, aborting the current transaction. Setting ignore_checksum_failure to true causes the system to ignore the failure (but still report a warning), and continue processing. This behavior could cause crashes or other serious problems. Only has an effect if checksums are enabled."
-msgstr "发现校验失败通常会使PostgreSQL报告一个错误, 并中止当前事务.将参数zero_damaged_pages设置为true可以使系统忽略失败(只报告一个警告信息)，并且能够继续处理当前事务.这种情况将导致系统崩溃或者其它严重问题，这也只有在启用校验时才有效."
+msgid "Detection of a checksum failure normally causes maintableQL to report an error, aborting the current transaction. Setting ignore_checksum_failure to true causes the system to ignore the failure (but still report a warning), and continue processing. This behavior could cause crashes or other serious problems. Only has an effect if checksums are enabled."
+msgstr "发现校验失败通常会使maintableQL报告一个错误, 并中止当前事务.将参数zero_damaged_pages设置为true可以使系统忽略失败(只报告一个警告信息)，并且能够继续处理当前事务.这种情况将导致系统崩溃或者其它严重问题，这也只有在启用校验时才有效."
 
 #: utils/misc/guc.c:1153
 msgid "Continues processing past damaged page headers."
 msgstr "继续处理已损坏的页头."
 
 #: utils/misc/guc.c:1154
-msgid "Detection of a damaged page header normally causes PostgreSQL to report an error, aborting the current transaction. Setting zero_damaged_pages to true causes the system to instead report a warning, zero out the damaged page, and continue processing. This behavior will destroy data, namely all the rows on the damaged page."
-msgstr "对已损坏页头的检测通常会使PostgreSQL报告一个错误, 并中止当前事务.将参数zero_damaged_pages设置为true可以使系统只报告一个警告信息，不输出已损坏的页，并且能够继续处理当前事务.这种情况将使毁坏数据，因为这样通常会使所有的记录在已损坏的页上存放."
+msgid "Detection of a damaged page header normally causes maintableQL to report an error, aborting the current transaction. Setting zero_damaged_pages to true causes the system to instead report a warning, zero out the damaged page, and continue processing. This behavior will destroy data, namely all the rows on the damaged page."
+msgstr "对已损坏页头的检测通常会使maintableQL报告一个错误, 并中止当前事务.将参数zero_damaged_pages设置为true可以使系统只报告一个警告信息，不输出已损坏的页，并且能够继续处理当前事务.这种情况将使毁坏数据，因为这样通常会使所有的记录在已损坏的页上存放."
 
 #: utils/misc/guc.c:1167
 msgid "Writes full pages to WAL when first modified after a checkpoint."
@@ -24911,12 +24911,12 @@ msgid "Enables backward compatibility mode for privilege checks on large objects
 msgstr "为在大对象上的权限检查启用向后兼容模式."
 
 #: utils/misc/guc.c:1799
-msgid "Skips privilege checks when reading or modifying large objects, for compatibility with PostgreSQL releases prior to 9.0."
-msgstr "为了与9.0版本之前的PostgreSQL相兼容，在读取或修改大对象时候不进行权限检查"
+msgid "Skips privilege checks when reading or modifying large objects, for compatibility with maintableQL releases prior to 9.0."
+msgstr "为了与9.0版本之前的maintableQL相兼容，在读取或修改大对象时候不进行权限检查"
 
 #: utils/misc/guc.c:1809
-msgid "Emit a warning for constructs that changed meaning since PostgreSQL 9.4."
-msgstr "为从PostgreSQL 9.4以来改变了含义的结构发出一个警告。"
+msgid "Emit a warning for constructs that changed meaning since maintableQL 9.4."
+msgstr "为从maintableQL 9.4以来改变了含义的结构发出一个警告。"
 
 #: utils/misc/guc.c:1819
 msgid "When generating SQL fragments, quote all identifiers."
@@ -25471,8 +25471,8 @@ msgid "Sets the planner's assumption about the total size of the data caches."
 msgstr "设置查询计划器对数据缓存总大小的假设."
 
 #: utils/misc/guc.c:3112
-msgid "That is, the total size of the caches (kernel cache and shared buffers) used for PostgreSQL data files. This is measured in disk pages, which are normally 8 kB each."
-msgstr "PostgreSQL数据文件使用的缓存（内核缓存和共享缓冲区）的总大小，这是以磁盘页为单位测量的，通常每个磁盘页为8KB."
+msgid "That is, the total size of the caches (kernel cache and shared buffers) used for maintableQL data files. This is measured in disk pages, which are normally 8 kB each."
+msgstr "maintableQL数据文件使用的缓存（内核缓存和共享缓冲区）的总大小，这是以磁盘页为单位测量的，通常每个磁盘页为8KB."
 
 #: utils/misc/guc.c:3123
 msgid "Sets the minimum amount of table data for a parallel scan."
@@ -25811,12 +25811,12 @@ msgid "Sets the file name pattern for log files."
 msgstr "设置日志文件的文件名字模式."
 
 #: utils/misc/guc.c:3897
-msgid "Sets the program name used to identify PostgreSQL messages in syslog."
-msgstr "设置在系统日志 (syslog) 中确认 PostgreSQL 信息的程序名."
+msgid "Sets the program name used to identify maintableQL messages in syslog."
+msgstr "设置在系统日志 (syslog) 中确认 maintableQL 信息的程序名."
 
 #: utils/misc/guc.c:3908
-msgid "Sets the application name used to identify PostgreSQL messages in the event log."
-msgstr "设置在事件日志 (syslog) 中用于标识 PostgreSQL 消息的程序名."
+msgid "Sets the application name used to identify maintableQL messages in the event log."
+msgstr "设置在事件日志 (syslog) 中用于标识 maintableQL 消息的程序名."
 
 #: utils/misc/guc.c:3919
 msgid "Sets the time zone for displaying and interpreting time stamps."
@@ -26078,8 +26078,8 @@ msgstr "%s: 无法访问目录 \"%s\": %s\n"
 
 #: utils/misc/guc.c:5371
 #, c-format
-msgid "Run initdb or pg_basebackup to initialize a PostgreSQL data directory.\n"
-msgstr "运行 initdb 或者 pg_basebackup 以初始化一个 PostgreSQL 数据目录.\n"
+msgid "Run initdb or pg_basebackup to initialize a maintableQL data directory.\n"
+msgstr "运行 initdb 或者 pg_basebackup 以初始化一个 maintableQL 数据目录.\n"
 
 #: utils/misc/guc.c:5391
 #, c-format
@@ -26942,11 +26942,11 @@ msgstr "无法导入来自不同数据库的快照"
 #~ "WARNING: possible byte ordering mismatch\n"
 #~ "The byte ordering used to store the pg_control file might not match the one\n"
 #~ "used by this program.  In that case the results below would be incorrect, and\n"
-#~ "the PostgreSQL installation would be incompatible with this data directory.\n"
+#~ "the maintableQL installation would be incompatible with this data directory.\n"
 #~ msgstr ""
 #~ "警告: 可能字节顺序不匹配\n"
 #~ "用于存储文件pg_control的字节顺序可能与程序使用的不匹配\n"
-#~ "在那种情况下结果将会是不正确的,并且所安装的PostgreSQL\n"
+#~ "在那种情况下结果将会是不正确的,并且所安装的maintableQL\n"
 #~ "将会与这个数据目录不兼容\n"
 
 #~ msgid "%s: could not read file \"%s\": read %d of %d\n"

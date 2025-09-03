@@ -16,21 +16,21 @@
  * under the License.
  */
 
-use crate::prelude::IggyClient;
+use crate::prelude::MessengerClient;
 use async_dropper::AsyncDrop;
 use async_trait::async_trait;
-use iggy_binary_protocol::{ConsumerGroupClient, UserClient};
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{ConsumerGroup, ConsumerGroupDetails, Identifier, IggyError};
+use messenger_binary_protocol::{ConsumerGroupClient, UserClient};
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{ConsumerGroup, ConsumerGroupDetails, Identifier, MessengerError};
 
 #[async_trait]
-impl ConsumerGroupClient for IggyClient {
+impl ConsumerGroupClient for MessengerClient {
     async fn get_consumer_group(
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<Option<ConsumerGroupDetails>, IggyError> {
+    ) -> Result<Option<ConsumerGroupDetails>, MessengerError> {
         self.client
             .read()
             .await
@@ -42,7 +42,7 @@ impl ConsumerGroupClient for IggyClient {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<Vec<ConsumerGroup>, IggyError> {
+    ) -> Result<Vec<ConsumerGroup>, MessengerError> {
         self.client
             .read()
             .await
@@ -56,7 +56,7 @@ impl ConsumerGroupClient for IggyClient {
         topic_id: &Identifier,
         name: &str,
         group_id: Option<u32>,
-    ) -> Result<ConsumerGroupDetails, IggyError> {
+    ) -> Result<ConsumerGroupDetails, MessengerError> {
         self.client
             .read()
             .await
@@ -69,7 +69,7 @@ impl ConsumerGroupClient for IggyClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.client
             .read()
             .await
@@ -82,7 +82,7 @@ impl ConsumerGroupClient for IggyClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.client
             .read()
             .await
@@ -95,7 +95,7 @@ impl ConsumerGroupClient for IggyClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         group_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.client
             .read()
             .await
@@ -105,7 +105,7 @@ impl ConsumerGroupClient for IggyClient {
 }
 
 #[async_trait]
-impl AsyncDrop for IggyClient {
+impl AsyncDrop for MessengerClient {
     async fn async_drop(&mut self) {
         let _ = self.client.read().await.logout_user().await;
     }

@@ -16,25 +16,25 @@
  * under the License.
  */
 
-use crate::args::common::IggyBenchArgs;
+use crate::args::common::MessengerBenchArgs;
 use crate::benchmarks::benchmark::Benchmarkable;
 use crate::benchmarks::common::build_producer_futures;
 use async_trait::async_trait;
 use bench_report::benchmark_kind::BenchmarkKind;
 use bench_report::individual_metrics::BenchmarkIndividualMetrics;
-use iggy::prelude::{IggyError, MaxTopicSize};
+use messenger::prelude::{MessengerError, MaxTopicSize};
 use integration::test_server::ClientFactory;
 use std::sync::Arc;
 use tokio::task::JoinSet;
 use tracing::info;
 
 pub struct PinnedProducerBenchmark {
-    args: Arc<IggyBenchArgs>,
+    args: Arc<MessengerBenchArgs>,
     client_factory: Arc<dyn ClientFactory>,
 }
 
 impl PinnedProducerBenchmark {
-    pub fn new(args: Arc<IggyBenchArgs>, client_factory: Arc<dyn ClientFactory>) -> Self {
+    pub fn new(args: Arc<MessengerBenchArgs>, client_factory: Arc<dyn ClientFactory>) -> Self {
         Self {
             args,
             client_factory,
@@ -46,7 +46,7 @@ impl PinnedProducerBenchmark {
 impl Benchmarkable for PinnedProducerBenchmark {
     async fn run(
         &mut self,
-    ) -> Result<JoinSet<Result<BenchmarkIndividualMetrics, IggyError>>, IggyError> {
+    ) -> Result<JoinSet<Result<BenchmarkIndividualMetrics, MessengerError>>, MessengerError> {
         self.init_streams().await?;
         let client_factory = &self.client_factory;
         let args = self.args.clone();
@@ -65,7 +65,7 @@ impl Benchmarkable for PinnedProducerBenchmark {
         self.args.kind()
     }
 
-    fn args(&self) -> &IggyBenchArgs {
+    fn args(&self) -> &MessengerBenchArgs {
         &self.args
     }
 

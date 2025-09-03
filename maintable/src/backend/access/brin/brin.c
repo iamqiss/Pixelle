@@ -1,10 +1,10 @@
 /*
  * brin.c
- *		Implementation of BRIN indexes for Postgres
+ *		Implementation of BRIN indexes for Maintable
  *
  * See src/backend/access/brin/README for details.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -13,7 +13,7 @@
  * TODO
  *		* ScalarArrayOpExpr (amsearcharray -> SK_SEARCHARRAY)
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/brin.h"
 #include "access/brin_page.h"
@@ -2386,7 +2386,7 @@ _brin_begin_parallel(BrinBuildState *buildstate, Relation heap, Relation index,
 	 */
 	EnterParallelMode();
 	Assert(request > 0);
-	pcxt = CreateParallelContext("postgres", "_brin_parallel_build_main",
+	pcxt = CreateParallelContext("maintable", "_brin_parallel_build_main",
 								 request);
 
 	scantuplesortstates = leaderparticipates ? request + 1 : request;

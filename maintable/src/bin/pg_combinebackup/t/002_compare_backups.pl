@@ -1,13 +1,13 @@
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 use File::Compare qw(compare_text);
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $tempdir = PostgreSQL::Test::Utils::tempdir_short();
+my $tempdir = maintableQL::Test::Utils::tempdir_short();
 
 # Can be changed to test the other modes.
 my $mode = $ENV{PG_TEST_PG_COMBINEBACKUP_MODE} || '--copy';
@@ -15,16 +15,16 @@ my $mode = $ENV{PG_TEST_PG_COMBINEBACKUP_MODE} || '--copy';
 note "testing using mode $mode";
 
 # Set up a new database instance.
-my $primary = PostgreSQL::Test::Cluster->new('primary');
+my $primary = maintableQL::Test::Cluster->new('primary');
 $primary->init(has_archiving => 1, allows_streaming => 1);
-$primary->append_conf('postgresql.conf', 'summarize_wal = on');
+$primary->append_conf('maintableql.conf', 'summarize_wal = on');
 $primary->start;
 my $tsprimary = $tempdir . '/ts';
 mkdir($tsprimary) || die "mkdir $tsprimary: $!";
 
 # Create some test tables, each containing one row of data, plus a whole
 # extra database.
-$primary->safe_psql('postgres', <<EOM);
+$primary->safe_psql('maintable', <<EOM);
 CREATE TABLE will_change (a int, b text);
 INSERT INTO will_change VALUES (1, 'initial test row');
 CREATE TABLE will_grow (a int, b text);
@@ -67,7 +67,7 @@ $primary->command_ok(
 	"full backup");
 
 # Now make some database changes.
-$primary->safe_psql('postgres', <<EOM);
+$primary->safe_psql('maintable', <<EOM);
 UPDATE will_change SET b = 'modified value' WHERE a = 1;
 UPDATE will_change_in_ts SET b = 'modified value' WHERE a = 1;
 INSERT INTO will_grow
@@ -101,33 +101,33 @@ $primary->command_ok(
 	"incremental backup");
 
 # Find an LSN to which either backup can be recovered.
-my $lsn = $primary->safe_psql('postgres', "SELECT pg_current_wal_lsn();");
+my $lsn = $primary->safe_psql('maintable', "SELECT pg_current_wal_lsn();");
 
 # Make sure that the WAL segment containing that LSN has been archived.
-# PostgreSQL won't issue two consecutive XLOG_SWITCH records, and the backup
+# maintableQL won't issue two consecutive XLOG_SWITCH records, and the backup
 # just issued one, so call txid_current() to generate some WAL activity
 # before calling pg_switch_wal().
-$primary->safe_psql('postgres', 'SELECT txid_current();');
-$primary->safe_psql('postgres', 'SELECT pg_switch_wal()');
+$primary->safe_psql('maintable', 'SELECT txid_current();');
+$primary->safe_psql('maintable', 'SELECT pg_switch_wal()');
 
 # Now wait for the LSN we chose above to be archived.
 my $archive_wait_query =
   "SELECT pg_walfile_name('$lsn') <= last_archived_wal FROM pg_stat_archiver;";
-$primary->poll_query_until('postgres', $archive_wait_query)
+$primary->poll_query_until('maintable', $archive_wait_query)
   or die "Timed out while waiting for WAL segment to be archived";
 
 # Perform PITR from the full backup. Disable archive_mode so that the archive
 # doesn't find out about the new timeline; that way, the later PITR below will
 # choose the same timeline.
 my $tspitr1path = $tempdir . '/tspitr1';
-my $pitr1 = PostgreSQL::Test::Cluster->new('pitr1');
+my $pitr1 = maintableQL::Test::Cluster->new('pitr1');
 $pitr1->init_from_backup(
 	$primary, 'backup1',
 	standby => 1,
 	has_restoring => 1,
 	tablespace_map => { $tsoid => $tspitr1path });
 $pitr1->append_conf(
-	'postgresql.conf', qq{
+	'maintableql.conf', qq{
 recovery_target_lsn = '$lsn'
 recovery_target_action = 'promote'
 archive_mode = 'off'
@@ -137,7 +137,7 @@ $pitr1->start();
 # Perform PITR to the same LSN from the incremental backup. Use the same
 # basic configuration as before.
 my $tspitr2path = $tempdir . '/tspitr2';
-my $pitr2 = PostgreSQL::Test::Cluster->new('pitr2');
+my $pitr2 = maintableQL::Test::Cluster->new('pitr2');
 $pitr2->init_from_backup(
 	$primary, 'backup2',
 	standby => 1,
@@ -146,7 +146,7 @@ $pitr2->init_from_backup(
 	tablespace_map => { $tsbackup2path => $tspitr2path },
 	combine_mode => $mode);
 $pitr2->append_conf(
-	'postgresql.conf', qq{
+	'maintableql.conf', qq{
 recovery_target_lsn = '$lsn'
 recovery_target_action = 'promote'
 archive_mode = 'off'
@@ -154,9 +154,9 @@ archive_mode = 'off'
 $pitr2->start();
 
 # Wait until both servers exit recovery.
-$pitr1->poll_query_until('postgres', "SELECT NOT pg_is_in_recovery();")
+$pitr1->poll_query_until('maintable', "SELECT NOT pg_is_in_recovery();")
   or die "Timed out while waiting apply to reach LSN $lsn";
-$pitr2->poll_query_until('postgres', "SELECT NOT pg_is_in_recovery();")
+$pitr2->poll_query_until('maintable', "SELECT NOT pg_is_in_recovery();")
   or die "Timed out while waiting apply to reach LSN $lsn";
 
 # Perform a logical dump of each server, and check that they match.
@@ -178,7 +178,7 @@ $pitr1->command_ok(
 		'--no-sync',
 		'--no-unlogged-table-data',
 		'--file' => $dump1,
-		'--dbname' => $pitr1->connstr('postgres'),
+		'--dbname' => $pitr1->connstr('maintable'),
 	],
 	'dump from PITR 1');
 $pitr2->command_ok(
@@ -188,7 +188,7 @@ $pitr2->command_ok(
 		'--no-sync',
 		'--no-unlogged-table-data',
 		'--file' => $dump2,
-		'--dbname' => $pitr2->connstr('postgres'),
+		'--dbname' => $pitr2->connstr('maintable'),
 	],
 	'dump from PITR 2');
 

@@ -18,9 +18,9 @@
 
 use crate::client_wrappers::client_wrapper::ClientWrapper;
 use async_trait::async_trait;
-use iggy_binary_protocol::TopicClient;
-use iggy_common::{
-    CompressionAlgorithm, Identifier, IggyError, IggyExpiry, MaxTopicSize, Topic, TopicDetails,
+use messenger_binary_protocol::TopicClient;
+use messenger_common::{
+    CompressionAlgorithm, Identifier, MessengerError, MessengerExpiry, MaxTopicSize, Topic, TopicDetails,
 };
 
 #[async_trait]
@@ -29,18 +29,18 @@ impl TopicClient for ClientWrapper {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<Option<TopicDetails>, IggyError> {
+    ) -> Result<Option<TopicDetails>, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.get_topic(stream_id, topic_id).await,
+            ClientWrapper::Messenger(client) => client.get_topic(stream_id, topic_id).await,
             ClientWrapper::Http(client) => client.get_topic(stream_id, topic_id).await,
             ClientWrapper::Tcp(client) => client.get_topic(stream_id, topic_id).await,
             ClientWrapper::Quic(client) => client.get_topic(stream_id, topic_id).await,
         }
     }
 
-    async fn get_topics(&self, stream_id: &Identifier) -> Result<Vec<Topic>, IggyError> {
+    async fn get_topics(&self, stream_id: &Identifier) -> Result<Vec<Topic>, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.get_topics(stream_id).await,
+            ClientWrapper::Messenger(client) => client.get_topics(stream_id).await,
             ClientWrapper::Http(client) => client.get_topics(stream_id).await,
             ClientWrapper::Tcp(client) => client.get_topics(stream_id).await,
             ClientWrapper::Quic(client) => client.get_topics(stream_id).await,
@@ -55,11 +55,11 @@ impl TopicClient for ClientWrapper {
         compression_algorithm: CompressionAlgorithm,
         replication_factor: Option<u8>,
         topic_id: Option<u32>,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         max_topic_size: MaxTopicSize,
-    ) -> Result<TopicDetails, IggyError> {
+    ) -> Result<TopicDetails, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .create_topic(
                         stream_id,
@@ -125,11 +125,11 @@ impl TopicClient for ClientWrapper {
         name: &str,
         compression_algorithm: CompressionAlgorithm,
         replication_factor: Option<u8>,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         max_topic_size: MaxTopicSize,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .update_topic(
                         stream_id,
@@ -188,9 +188,9 @@ impl TopicClient for ClientWrapper {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.delete_topic(stream_id, topic_id).await,
+            ClientWrapper::Messenger(client) => client.delete_topic(stream_id, topic_id).await,
             ClientWrapper::Http(client) => client.delete_topic(stream_id, topic_id).await,
             ClientWrapper::Tcp(client) => client.delete_topic(stream_id, topic_id).await,
             ClientWrapper::Quic(client) => client.delete_topic(stream_id, topic_id).await,
@@ -201,9 +201,9 @@ impl TopicClient for ClientWrapper {
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.purge_topic(stream_id, topic_id).await,
+            ClientWrapper::Messenger(client) => client.purge_topic(stream_id, topic_id).await,
             ClientWrapper::Http(client) => client.purge_topic(stream_id, topic_id).await,
             ClientWrapper::Tcp(client) => client.purge_topic(stream_id, topic_id).await,
             ClientWrapper::Quic(client) => client.purge_topic(stream_id, topic_id).await,

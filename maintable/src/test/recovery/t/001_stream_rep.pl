@@ -1,15 +1,15 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Minimal test testing streaming replication
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Initialize primary node
-my $node_primary = PostgreSQL::Test::Cluster->new('primary');
+my $node_primary = maintableQL::Test::Cluster->new('primary');
 # A specific role is created to perform some tests related to replication,
 # and it needs proper authentication configuration.
 $node_primary->init(
@@ -22,7 +22,7 @@ my $backup_name = 'my_backup';
 $node_primary->backup($backup_name);
 
 # Create streaming standby linking to primary
-my $node_standby_1 = PostgreSQL::Test::Cluster->new('standby_1');
+my $node_standby_1 = maintableQL::Test::Cluster->new('standby_1');
 $node_standby_1->init_from_backup($node_primary, $backup_name,
 	has_streaming => 1);
 $node_standby_1->start;
@@ -37,20 +37,20 @@ $node_standby_1->backup('my_backup_2');
 $node_primary->start;
 
 # Create second standby node linking to standby 1
-my $node_standby_2 = PostgreSQL::Test::Cluster->new('standby_2');
+my $node_standby_2 = maintableQL::Test::Cluster->new('standby_2');
 $node_standby_2->init_from_backup($node_standby_1, $backup_name,
 	has_streaming => 1);
 $node_standby_2->start;
 
 # Reset IO statistics, for the WAL sender check with pg_stat_io.
-$node_primary->safe_psql('postgres', "SELECT pg_stat_reset_shared('io')");
+$node_primary->safe_psql('maintable', "SELECT pg_stat_reset_shared('io')");
 
 # Create some content on primary and check its presence in standby nodes
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"CREATE TABLE tab_int AS SELECT generate_series(1,1002) AS a");
 
 $node_primary->safe_psql(
-	'postgres', q{
+	'maintable', q{
 CREATE TABLE user_logins(id serial, who text);
 
 CREATE FUNCTION on_login_proc() RETURNS EVENT_TRIGGER AS $$
@@ -73,45 +73,45 @@ $node_primary->wait_for_replay_catchup($node_standby_1);
 $node_standby_1->wait_for_replay_catchup($node_standby_2, $node_primary);
 
 my $result =
-  $node_standby_1->safe_psql('postgres', "SELECT count(*) FROM tab_int");
+  $node_standby_1->safe_psql('maintable', "SELECT count(*) FROM tab_int");
 print "standby 1: $result\n";
 is($result, qq(1002), 'check streamed content on standby 1');
 
 $result =
-  $node_standby_2->safe_psql('postgres', "SELECT count(*) FROM tab_int");
+  $node_standby_2->safe_psql('maintable', "SELECT count(*) FROM tab_int");
 print "standby 2: $result\n";
 is($result, qq(1002), 'check streamed content on standby 2');
 
 # Likewise, but for a sequence
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"CREATE SEQUENCE seq1; SELECT nextval('seq1')");
 
 # Wait for standbys to catch up
 $node_primary->wait_for_replay_catchup($node_standby_1);
 $node_standby_1->wait_for_replay_catchup($node_standby_2, $node_primary);
 
-$result = $node_standby_1->safe_psql('postgres', "SELECT * FROM seq1");
+$result = $node_standby_1->safe_psql('maintable', "SELECT * FROM seq1");
 print "standby 1: $result\n";
 is($result, qq(33|0|t), 'check streamed sequence content on standby 1');
 
-$result = $node_standby_2->safe_psql('postgres', "SELECT * FROM seq1");
+$result = $node_standby_2->safe_psql('maintable', "SELECT * FROM seq1");
 print "standby 2: $result\n";
 is($result, qq(33|0|t), 'check streamed sequence content on standby 2');
 
 # Check pg_sequence_last_value() returns NULL for unlogged sequence on standby
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"CREATE UNLOGGED SEQUENCE ulseq; SELECT nextval('ulseq')");
 $node_primary->wait_for_replay_catchup($node_standby_1);
 is( $node_standby_1->safe_psql(
-		'postgres',
+		'maintable',
 		"SELECT pg_sequence_last_value('ulseq'::regclass) IS NULL"),
 	't',
 	'pg_sequence_last_value() on unlogged sequence on standby 1');
 
 # Check that only READ-only queries can run on standbys
-is($node_standby_1->psql('postgres', 'INSERT INTO tab_int VALUES (1)'),
+is($node_standby_1->psql('maintable', 'INSERT INTO tab_int VALUES (1)'),
 	3, 'read-only queries on standby 1');
-is($node_standby_2->psql('postgres', 'INSERT INTO tab_int VALUES (1)'),
+is($node_standby_2->psql('maintable', 'INSERT INTO tab_int VALUES (1)'),
 	3, 'read-only queries on standby 2');
 
 # Tests for connection parameter target_session_attrs
@@ -150,7 +150,7 @@ sub test_target_session_attrs
 	# line not stdin, else Perl may spit up trying to write to stdin of
 	# an already-failed psql process.
 	my ($ret, $stdout, $stderr) = $node1->psql(
-		'postgres',
+		'maintable',
 		undef,
 		extra_params => [
 			'--dbname' => $connstr,
@@ -251,37 +251,37 @@ test_target_session_attrs($node_primary, $node_primary, undef, "standby", 2);
 note "testing SHOW commands for replication connection";
 
 $node_primary->psql(
-	'postgres', "
+	'maintable', "
 CREATE ROLE repl_role REPLICATION LOGIN;
 GRANT pg_read_all_settings TO repl_role;");
 my $primary_host = $node_primary->host;
 my $primary_port = $node_primary->port;
 my $connstr_common = "host=$primary_host port=$primary_port user=repl_role";
 my $connstr_rep = "$connstr_common replication=1";
-my $connstr_db = "$connstr_common replication=database dbname=postgres";
+my $connstr_db = "$connstr_common replication=database dbname=maintable";
 
 # Test SHOW ALL
 my ($ret, $stdout, $stderr) = $node_primary->psql(
-	'postgres', 'SHOW ALL;',
+	'maintable', 'SHOW ALL;',
 	on_error_die => 1,
 	extra_params => [ '--dbname' => $connstr_rep ]);
 ok($ret == 0, "SHOW ALL with replication role and physical replication");
 ($ret, $stdout, $stderr) = $node_primary->psql(
-	'postgres', 'SHOW ALL;',
+	'maintable', 'SHOW ALL;',
 	on_error_die => 1,
 	extra_params => [ '--dbname' => $connstr_db ]);
 ok($ret == 0, "SHOW ALL with replication role and logical replication");
 
 # Test SHOW with a user-settable parameter
 ($ret, $stdout, $stderr) = $node_primary->psql(
-	'postgres', 'SHOW work_mem;',
+	'maintable', 'SHOW work_mem;',
 	on_error_die => 1,
 	extra_params => [ '--dbname' => $connstr_rep ]);
 ok( $ret == 0,
 	"SHOW with user-settable parameter, replication role and physical replication"
 );
 ($ret, $stdout, $stderr) = $node_primary->psql(
-	'postgres', 'SHOW work_mem;',
+	'maintable', 'SHOW work_mem;',
 	on_error_die => 1,
 	extra_params => [ '--dbname' => $connstr_db ]);
 ok( $ret == 0,
@@ -290,14 +290,14 @@ ok( $ret == 0,
 
 # Test SHOW with a superuser-settable parameter
 ($ret, $stdout, $stderr) = $node_primary->psql(
-	'postgres', 'SHOW primary_conninfo;',
+	'maintable', 'SHOW primary_conninfo;',
 	on_error_die => 1,
 	extra_params => [ '--dbname' => $connstr_rep ]);
 ok( $ret == 0,
 	"SHOW with superuser-settable parameter, replication role and physical replication"
 );
 ($ret, $stdout, $stderr) = $node_primary->psql(
-	'postgres', 'SHOW primary_conninfo;',
+	'maintable', 'SHOW primary_conninfo;',
 	on_error_die => 1,
 	extra_params => [ '--dbname' => $connstr_db ]);
 ok( $ret == 0,
@@ -309,7 +309,7 @@ note "testing READ_REPLICATION_SLOT command for replication connection";
 my $slotname = 'test_read_replication_slot_physical';
 
 ($ret, $stdout, $stderr) = $node_primary->psql(
-	'postgres',
+	'maintable',
 	'READ_REPLICATION_SLOT non_existent_slot;',
 	extra_params => [ '--dbname' => $connstr_rep ]);
 ok($ret == 0, "READ_REPLICATION_SLOT exit code 0 on success");
@@ -317,12 +317,12 @@ like($stdout, qr/^\|\|$/,
 	"READ_REPLICATION_SLOT returns NULL values if slot does not exist");
 
 $node_primary->psql(
-	'postgres',
+	'maintable',
 	"CREATE_REPLICATION_SLOT $slotname PHYSICAL RESERVE_WAL;",
 	extra_params => [ '--dbname' => $connstr_rep ]);
 
 ($ret, $stdout, $stderr) = $node_primary->psql(
-	'postgres',
+	'maintable',
 	"READ_REPLICATION_SLOT $slotname;",
 	extra_params => [ '--dbname' => $connstr_rep ]);
 ok($ret == 0, "READ_REPLICATION_SLOT success with existing slot");
@@ -330,7 +330,7 @@ like($stdout, qr/^physical\|[^|]*\|1$/,
 	"READ_REPLICATION_SLOT returns tuple with slot information");
 
 $node_primary->psql(
-	'postgres',
+	'maintable',
 	"DROP_REPLICATION_SLOT $slotname;",
 	extra_params => [ '--dbname' => $connstr_rep ]);
 
@@ -340,7 +340,7 @@ note "switching to physical replication slot";
 # done before the next restart, which would force a flush of its stats, and
 # far enough from the reset done above to not impact the run time.
 $node_primary->poll_query_until(
-	'postgres',
+	'maintable',
 	qq[SELECT sum(reads) > 0
        FROM pg_catalog.pg_stat_io
        WHERE backend_type = 'walsender'
@@ -354,27 +354,27 @@ $node_primary->poll_query_until(
 # standbys. Since we're going to be testing things that affect the slot state,
 # also increase the standby feedback interval to ensure timely updates.
 my ($slotname_1, $slotname_2) = ('standby_1', 'standby_2');
-$node_primary->append_conf('postgresql.conf', "max_replication_slots = 4");
+$node_primary->append_conf('maintableql.conf', "max_replication_slots = 4");
 $node_primary->restart;
 is( $node_primary->psql(
-		'postgres',
+		'maintable',
 		qq[SELECT pg_create_physical_replication_slot('$slotname_1');]),
 	0,
 	'physical slot created on primary');
-$node_standby_1->append_conf('postgresql.conf',
+$node_standby_1->append_conf('maintableql.conf',
 	"primary_slot_name = $slotname_1");
-$node_standby_1->append_conf('postgresql.conf',
+$node_standby_1->append_conf('maintableql.conf',
 	"wal_receiver_status_interval = 1");
-$node_standby_1->append_conf('postgresql.conf', "max_replication_slots = 4");
+$node_standby_1->append_conf('maintableql.conf', "max_replication_slots = 4");
 $node_standby_1->restart;
 is( $node_standby_1->psql(
-		'postgres',
+		'maintable',
 		qq[SELECT pg_create_physical_replication_slot('$slotname_2');]),
 	0,
 	'physical slot created on intermediate replica');
-$node_standby_2->append_conf('postgresql.conf',
+$node_standby_2->append_conf('maintableql.conf',
 	"primary_slot_name = $slotname_2");
-$node_standby_2->append_conf('postgresql.conf',
+$node_standby_2->append_conf('maintableql.conf',
 	"wal_receiver_status_interval = 1");
 # should be able change primary_slot_name without restart
 # will wait effect in get_slot_xmins above
@@ -387,7 +387,7 @@ sub get_slot_xmins
 	my ($node, $slotname, $check_expr) = @_;
 
 	$node->poll_query_until(
-		'postgres', qq[
+		'maintable', qq[
 		SELECT $check_expr
 		FROM pg_catalog.pg_replication_slots
 		WHERE slot_name = '$slotname';
@@ -412,20 +412,20 @@ is($catalog_xmin, '',
 	'catalog xmin of cascaded slot null with no hs_feedback');
 
 # Replication still works?
-$node_primary->safe_psql('postgres', 'CREATE TABLE replayed(val integer);');
+$node_primary->safe_psql('maintable', 'CREATE TABLE replayed(val integer);');
 
 sub replay_check
 {
-	my $newval = $node_primary->safe_psql('postgres',
+	my $newval = $node_primary->safe_psql('maintable',
 		'INSERT INTO replayed(val) SELECT coalesce(max(val),0) + 1 AS newval FROM replayed RETURNING val'
 	);
 	$node_primary->wait_for_replay_catchup($node_standby_1);
 	$node_standby_1->wait_for_replay_catchup($node_standby_2, $node_primary);
 
-	$node_standby_1->safe_psql('postgres',
+	$node_standby_1->safe_psql('maintable',
 		qq[SELECT 1 FROM replayed WHERE val = $newval])
 	  or die "standby_1 didn't replay primary value $newval";
-	$node_standby_2->safe_psql('postgres',
+	$node_standby_2->safe_psql('maintable',
 		qq[SELECT 1 FROM replayed WHERE val = $newval])
 	  or die "standby_2 didn't replay standby_1 value $newval";
 	return;
@@ -433,10 +433,10 @@ sub replay_check
 
 replay_check();
 
-my $evttrig = $node_standby_1->safe_psql('postgres',
+my $evttrig = $node_standby_1->safe_psql('maintable',
 	"SELECT evtname FROM pg_event_trigger WHERE evtevent = 'login'");
 is($evttrig, 'on_login_trigger', 'Name of login trigger');
-$evttrig = $node_standby_2->safe_psql('postgres',
+$evttrig = $node_standby_2->safe_psql('maintable',
 	"SELECT evtname FROM pg_event_trigger WHERE evtevent = 'login'");
 is($evttrig, 'on_login_trigger', 'Name of login trigger');
 
@@ -444,10 +444,10 @@ note "enabling hot_standby_feedback";
 
 # Enable hs_feedback. The slot should gain an xmin. We set the status interval
 # so we'll see the results promptly.
-$node_standby_1->safe_psql('postgres',
+$node_standby_1->safe_psql('maintable',
 	'ALTER SYSTEM SET hot_standby_feedback = on;');
 $node_standby_1->reload;
-$node_standby_2->safe_psql('postgres',
+$node_standby_2->safe_psql('maintable',
 	'ALTER SYSTEM SET hot_standby_feedback = on;');
 $node_standby_2->reload;
 replay_check();
@@ -466,7 +466,7 @@ is($catalog_xmin1, '',
 
 note "doing some work to advance xmin";
 $node_primary->safe_psql(
-	'postgres', q{
+	'maintable', q{
 do $$
 begin
   for i in 10000..11000 loop
@@ -480,8 +480,8 @@ begin
 end$$;
 });
 
-$node_primary->safe_psql('postgres', 'VACUUM;');
-$node_primary->safe_psql('postgres', 'CHECKPOINT;');
+$node_primary->safe_psql('maintable', 'VACUUM;');
+$node_primary->safe_psql('maintable', 'CHECKPOINT;');
 
 my ($xmin2, $catalog_xmin2) =
   get_slot_xmins($node_primary, $slotname_1, "xmin <> '$xmin'");
@@ -501,10 +501,10 @@ is($catalog_xmin2, '',
 note "disabling hot_standby_feedback";
 
 # Disable hs_feedback. Xmin should be cleared.
-$node_standby_1->safe_psql('postgres',
+$node_standby_1->safe_psql('maintable',
 	'ALTER SYSTEM SET hot_standby_feedback = off;');
 $node_standby_1->reload;
-$node_standby_2->safe_psql('postgres',
+$node_standby_2->safe_psql('maintable',
 	'ALTER SYSTEM SET hot_standby_feedback = off;');
 $node_standby_2->reload;
 replay_check();
@@ -522,13 +522,13 @@ is($catalog_xmin, '',
 	'catalog xmin of cascaded slot still null with hs_feedback reset');
 
 note "check change primary_conninfo without restart";
-$node_standby_2->append_conf('postgresql.conf', "primary_slot_name = ''");
+$node_standby_2->append_conf('maintableql.conf', "primary_slot_name = ''");
 $node_standby_2->enable_streaming($node_primary);
 $node_standby_2->reload;
 
 # The WAL receiver should have generated some IO statistics.
 my $stats_reads = $node_standby_1->safe_psql(
-	'postgres',
+	'maintable',
 	qq{SELECT sum(writes) > 0 FROM pg_stat_io
    WHERE backend_type = 'walreceiver' AND object = 'wal'});
 is($stats_reads, 't', "WAL receiver generates statistics for WAL writes");
@@ -536,44 +536,44 @@ is($stats_reads, 't', "WAL receiver generates statistics for WAL writes");
 # be sure do not streaming from cascade
 $node_standby_1->stop;
 
-my $newval = $node_primary->safe_psql('postgres',
+my $newval = $node_primary->safe_psql('maintable',
 	'INSERT INTO replayed(val) SELECT coalesce(max(val),0) + 1 AS newval FROM replayed RETURNING val'
 );
 $node_primary->wait_for_catchup($node_standby_2);
-my $is_replayed = $node_standby_2->safe_psql('postgres',
+my $is_replayed = $node_standby_2->safe_psql('maintable',
 	qq[SELECT 1 FROM replayed WHERE val = $newval]);
 is($is_replayed, qq(1), "standby_2 didn't replay primary value $newval");
 
 # Drop any existing slots on the primary, for the follow-up tests.
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"SELECT pg_drop_replication_slot(slot_name) FROM pg_replication_slots;");
 
 # Test physical slot advancing and its durability.  Create a new slot on
 # the primary, not used by any of the standbys. This reserves WAL at creation.
 my $phys_slot = 'phys_slot';
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"SELECT pg_create_physical_replication_slot('$phys_slot', true);");
 # Generate some WAL, and switch to a new segment, used to check that
 # the previous segment is correctly getting recycled as the slot advancing
 # would recompute the minimum LSN calculated across all slots.
-my $segment_removed = $node_primary->safe_psql('postgres',
+my $segment_removed = $node_primary->safe_psql('maintable',
 	'SELECT pg_walfile_name(pg_current_wal_lsn())');
 chomp($segment_removed);
 $node_primary->advance_wal(1);
 my $current_lsn =
-  $node_primary->safe_psql('postgres', "SELECT pg_current_wal_lsn();");
+  $node_primary->safe_psql('maintable', "SELECT pg_current_wal_lsn();");
 chomp($current_lsn);
-my $psql_rc = $node_primary->psql('postgres',
+my $psql_rc = $node_primary->psql('maintable',
 	"SELECT pg_replication_slot_advance('$phys_slot', '$current_lsn'::pg_lsn);"
 );
 is($psql_rc, '0', 'slot advancing with physical slot');
-my $phys_restart_lsn_pre = $node_primary->safe_psql('postgres',
+my $phys_restart_lsn_pre = $node_primary->safe_psql('maintable',
 	"SELECT restart_lsn from pg_replication_slots WHERE slot_name = '$phys_slot';"
 );
 chomp($phys_restart_lsn_pre);
 # Slot advance should persist across clean restarts.
 $node_primary->restart;
-my $phys_restart_lsn_post = $node_primary->safe_psql('postgres',
+my $phys_restart_lsn_post = $node_primary->safe_psql('maintable',
 	"SELECT restart_lsn from pg_replication_slots WHERE slot_name = '$phys_slot';"
 );
 chomp($phys_restart_lsn_post);
@@ -587,7 +587,7 @@ ok(!-f "$primary_data/pg_wal/$segment_removed",
 	"WAL segment $segment_removed recycled after physical slot advancing");
 
 note "testing pg_backup_start() followed by BASE_BACKUP";
-my $connstr = $node_primary->connstr('postgres') . " replication=database";
+my $connstr = $node_primary->connstr('maintable') . " replication=database";
 
 # This test requires a replication connection with a database, as it mixes
 # a replication command and a SQL command.
@@ -605,7 +605,7 @@ $node_primary->command_fails_like(
 note "testing BASE_BACKUP cancellation";
 
 my $sigchld_bb_timeout =
-  IPC::Run::timer($PostgreSQL::Test::Utils::timeout_default);
+  IPC::Run::timer($maintableQL::Test::Utils::timeout_default);
 
 # This test requires a replication connection with a database, as it mixes
 # a replication command and a SQL command.  The first BASE_BACKUP is throttled
@@ -627,7 +627,7 @@ my $sigchld_bb = IPC::Run::start(
 # The cancellation is issued once the database files are streamed and
 # the checkpoint issued at backup start completes.
 is( $node_primary->poll_query_until(
-		'postgres',
+		'maintable',
 		"SELECT pg_cancel_backend(a.pid) FROM "
 		  . "pg_stat_activity a, pg_stat_progress_basebackup b WHERE "
 		  . "a.pid = b.pid AND a.query ~ 'BASE_BACKUP' AND "

@@ -24,4 +24,4 @@ set -euo pipefail
 trunk build --release --config core/bench/dashboard/frontend/Trunk.toml
 
 # Build server
-cargo build --release --bin iggy-bench-dashboard-server
+cargo build --release --bin messenger-bench-dashboard-server

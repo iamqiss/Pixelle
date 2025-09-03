@@ -30,7 +30,7 @@ use bench_report::{
     benchmark_kind::BenchmarkKind, individual_metrics::BenchmarkIndividualMetrics,
     numeric_parameter::BenchmarkNumericParameter,
 };
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::ClientFactory;
 use std::sync::Arc;
 
@@ -51,10 +51,10 @@ impl TypedBenchmarkProducer {
         messages_per_batch: BenchmarkNumericParameter,
         message_size: BenchmarkNumericParameter,
         finish_condition: Arc<BenchmarkFinishCondition>,
-        warmup_time: IggyDuration,
-        sampling_time: IggyDuration,
+        warmup_time: MessengerDuration,
+        sampling_time: MessengerDuration,
         moving_average_window: u32,
-        limit_bytes_per_second: Option<IggyByteSize>,
+        limit_bytes_per_second: Option<MessengerByteSize>,
     ) -> Self {
         let config = BenchmarkProducerConfig {
             producer_id,
@@ -90,7 +90,7 @@ impl TypedBenchmarkProducer {
         }
     }
 
-    pub async fn run(self) -> Result<BenchmarkIndividualMetrics, IggyError> {
+    pub async fn run(self) -> Result<BenchmarkIndividualMetrics, MessengerError> {
         match self {
             Self::High(producer) => producer.run().await,
             Self::Low(producer) => producer.run().await,

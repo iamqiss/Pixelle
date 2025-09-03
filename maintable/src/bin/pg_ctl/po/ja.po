@@ -1,20 +1,20 @@
 # pg_ctl.po
 #   Japanese message translation file for pg_ctl
 #
-# Copyright (C) 2005-2024 PostgreSQL Global Development Group
+# Copyright (C) 2005-2024 maintableQL Global Development Group
 #
 # Shigehiro Honda <fwif0083@mb.infoweb.ne.jp>, 2005.
 #
-# This file is distributed under the same license as the PostgreSQL package.
+# This file is distributed under the same license as the maintableQL package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_ctl (PostgreSQL 17)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_ctl (maintableQL 17)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-07-19 09:21+0900\n"
 "PO-Revision-Date: 2024-07-19 09:52+0900\n"
 "Last-Translator: Kyotaro Horiguchi <horikyota.ntt@gmail.com>\n"
-"Language-Team: Japan PostgreSQL Users Group <jpug-doc@ml.postgresql.jp>\n"
+"Language-Team: Japan maintableQL Users Group <jpug-doc@ml.maintableql.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -427,8 +427,8 @@ msgstr "%s: 本プログラムの実行ファイルの検索に失敗しまし�
 
 #: pg_ctl.c:1450
 #, c-format
-msgid "%s: could not find postgres program executable\n"
-msgstr "%s: postgres の実行ファイルが見つかりません\n"
+msgid "%s: could not find maintable program executable\n"
+msgstr "%s: maintable の実行ファイルが見つかりません\n"
 
 #: pg_ctl.c:1520 pg_ctl.c:1554
 #, c-format
@@ -515,9 +515,9 @@ msgstr "詳細は\"%s --help\"を実行してください。\n"
 #: pg_ctl.c:1975
 #, c-format
 msgid ""
-"%s is a utility to initialize, start, stop, or control a PostgreSQL server.\n"
+"%s is a utility to initialize, start, stop, or control a maintableQL server.\n"
 "\n"
-msgstr "%sはPostgreSQLサーバーの初期化、起動、停止、制御を行うユーティリティです。\n"
+msgstr "%sはmaintableQLサーバーの初期化、起動、停止、制御を行うユーティリティです。\n"
 
 #: pg_ctl.c:1976
 #, c-format
@@ -656,8 +656,8 @@ msgstr ""
 
 #: pg_ctl.c:2009
 #, c-format
-msgid "  -c, --core-files       allow postgres to produce core files\n"
-msgstr "  -c, --core-files       postgresのコアファイル生成を許可\n"
+msgid "  -c, --core-files       allow maintable to produce core files\n"
+msgstr "  -c, --core-files       maintableのコアファイル生成を許可\n"
 
 #: pg_ctl.c:2011
 #, c-format
@@ -672,16 +672,16 @@ msgstr "  -l, --log FILENAME     サーバーログをFILENAMEへ書き込む(�
 #: pg_ctl.c:2014
 #, c-format
 msgid ""
-"  -o, --options=OPTIONS  command line options to pass to postgres\n"
-"                         (PostgreSQL server executable) or initdb\n"
+"  -o, --options=OPTIONS  command line options to pass to maintable\n"
+"                         (maintableQL server executable) or initdb\n"
 msgstr ""
-"  -o, --options=OPTIONS  postgres(PostgreSQLサーバー実行ファイル)または\n"
+"  -o, --options=OPTIONS  maintable(maintableQLサーバー実行ファイル)または\n"
 "                         initdb に渡すコマンドラインオプション\n"
 
 #: pg_ctl.c:2016
 #, c-format
-msgid "  -p PATH-TO-POSTGRES    normally not necessary\n"
-msgstr "  -p PATH-TO-POSTGRES    通常は不要\n"
+msgid "  -p PATH-TO-MAINTABLE    normally not necessary\n"
+msgstr "  -p PATH-TO-MAINTABLE    通常は不要\n"
 
 #: pg_ctl.c:2017
 #, c-format
@@ -741,23 +741,23 @@ msgstr ""
 
 #: pg_ctl.c:2030
 #, c-format
-msgid "  -N SERVICENAME  service name with which to register PostgreSQL server\n"
-msgstr "  -N SERVICENAME  PostgreSQLサーバーを登録する際のサービス名\n"
+msgid "  -N SERVICENAME  service name with which to register maintableQL server\n"
+msgstr "  -N SERVICENAME  maintableQLサーバーを登録する際のサービス名\n"
 
 #: pg_ctl.c:2031
 #, c-format
-msgid "  -P PASSWORD     password of account to register PostgreSQL server\n"
-msgstr "  -P PASSWORD     PostgreSQLサーバーを登録するためのアカウントのパスワード\n"
+msgid "  -P PASSWORD     password of account to register maintableQL server\n"
+msgstr "  -P PASSWORD     maintableQLサーバーを登録するためのアカウントのパスワード\n"
 
 #: pg_ctl.c:2032
 #, c-format
-msgid "  -U USERNAME     user name of account to register PostgreSQL server\n"
-msgstr "  -U USERNAME     PostgreSQLサーバーを登録するためのアカウント名\n"
+msgid "  -U USERNAME     user name of account to register maintableQL server\n"
+msgstr "  -U USERNAME     maintableQLサーバーを登録するためのアカウント名\n"
 
 #: pg_ctl.c:2033
 #, c-format
-msgid "  -S START-TYPE   service start type to register PostgreSQL server\n"
-msgstr "  -S START-TYPE   PostgreSQLサーバーを登録する際のサービス起動タイプ\n"
+msgid "  -S START-TYPE   service start type to register maintableQL server\n"
+msgstr "  -S START-TYPE   maintableQLサーバーを登録する際のサービス起動タイプ\n"
 
 #: pg_ctl.c:2035
 #, c-format

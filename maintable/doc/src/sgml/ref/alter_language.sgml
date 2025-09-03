@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_language.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-alterlanguage">

@@ -11,7 +11,7 @@
  */
 
 /* can be used in either frontend or backend */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "mb/pg_wchar.h"
 

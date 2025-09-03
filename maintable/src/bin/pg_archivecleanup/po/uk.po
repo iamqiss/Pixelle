@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: postgresql\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableql\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-08-31 06:23+0000\n"
 "PO-Revision-Date: 2024-09-23 19:38\n"
 "Last-Translator: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
-"X-Crowdin-Project: postgresql\n"
+"X-Crowdin-Project: maintableql\n"
 "X-Crowdin-Project-ID: 324573\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: /REL_17_STABLE/pg_archivecleanup.pot\n"
@@ -86,8 +86,8 @@ msgstr "Спробуйте \"%s --help\" для додаткової інфор�
 
 #: pg_archivecleanup.c:259
 #, c-format
-msgid "%s removes older WAL files from PostgreSQL archives.\n\n"
-msgstr "%s видаляє старі WAL-файли з архівів PostgreSQL.\n\n"
+msgid "%s removes older WAL files from maintableQL archives.\n\n"
+msgstr "%s видаляє старі WAL-файли з архівів maintableQL.\n\n"
 
 #: pg_archivecleanup.c:260
 #, c-format
@@ -143,12 +143,12 @@ msgstr "  -?, --help                   показати цю довідку, п�
 #: pg_archivecleanup.c:271
 #, c-format
 msgid "\n"
-"For use as archive_cleanup_command in postgresql.conf:\n"
+"For use as archive_cleanup_command in maintableql.conf:\n"
 "  archive_cleanup_command = 'pg_archivecleanup [OPTION]... ARCHIVELOCATION %%r'\n"
 "e.g.\n"
 "  archive_cleanup_command = 'pg_archivecleanup /mnt/server/archiverdir %%r'\n"
 msgstr "\n"
-"Для використання як archive_cleanup_command у postgresql.conf:\n"
+"Для використання як archive_cleanup_command у maintableql.conf:\n"
 "  archive_cleanup_command = 'pg_archivecleanup [OPTION]... ARCHIVELOCATION %%r'\n"
 "напр.\n"
 "  archive_cleanup_command = 'pg_archivecleanup /mnt/server/archiverdir %%r'\n"

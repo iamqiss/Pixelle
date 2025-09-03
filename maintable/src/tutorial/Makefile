@@ -3,7 +3,7 @@
 # Makefile--
 #    Makefile for tutorial
 #
-# By default, this builds against an existing PostgreSQL installation
+# By default, this builds against an existing maintableQL installation
 # (the one identified by whichever pg_config is first in your path).
 # Within a configured source tree, you can say "make NO_PGXS=1 all"
 # to build using the surrounding source tree.

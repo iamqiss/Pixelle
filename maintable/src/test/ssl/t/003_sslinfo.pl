@@ -1,10 +1,10 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 use File::Copy;
@@ -39,7 +39,7 @@ sub switch_server_cert
 
 # This is the hostname used to connect to the server. This cannot be a
 # hostname, because the server certificate is always for the domain
-# postgresql-ssl-regression.test.
+# maintableql-ssl-regression.test.
 my $SERVERHOSTADDR = '127.0.0.1';
 # This is the pattern to use in pg_hba.conf to match incoming connections.
 my $SERVERHOSTCIDR = '127.0.0.1/32';
@@ -54,7 +54,7 @@ my $common_connstr;
 #### Set up the server.
 
 note "setting up data directory";
-my $node = PostgreSQL::Test::Cluster->new('primary');
+my $node = maintableQL::Test::Cluster->new('primary');
 $node->init;
 
 # PGHOST is enforced here to set up the node, subsequent connections
@@ -73,7 +73,7 @@ switch_server_cert($node, certfile => 'server-revoked');
 
 # Set of default settings for SSL parameters in connection string.  This
 # makes the tests protected against any defaults the environment may have
-# in ~/.postgresql/.
+# in ~/.maintableql/.
 my $default_ssl_connstr =
   "sslkey=invalid sslcert=invalid sslrootcert=invalid sslcrl=invalid sslcrldir=invalid";
 

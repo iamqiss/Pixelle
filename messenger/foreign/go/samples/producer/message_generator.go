@@ -21,7 +21,7 @@ import (
 	"math/rand"
 	"time"
 
-	sharedDemoContracts "github.com/apache/iggy/foreign/go/samples/shared"
+	sharedDemoContracts "github.com/apache/messenger/foreign/go/samples/shared"
 )
 
 type MessageGenerator struct {

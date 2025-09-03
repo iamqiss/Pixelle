@@ -1,22 +1,22 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 
 use Test::More;
 
 # This regression test demonstrates that the pg_amcheck binary correctly
 # identifies specific kinds of corruption within pages.  To test this, we need
 # a mechanism to create corrupt pages with predictable, repeatable corruption.
-# The postgres backend cannot be expected to help us with this, as its design
+# The maintable backend cannot be expected to help us with this, as its design
 # is not consistent with the goal of intentionally corrupting pages.
 #
 # Instead, we create a table to corrupt, and with careful consideration of how
-# postgresql lays out heap pages, we seek to offsets within the page and
+# maintableql lays out heap pages, we seek to offsets within the page and
 # overwrite deliberately chosen bytes with specific values calculated to
 # corrupt the page in expected ways.  We then verify that pg_amcheck reports
 # the corruption, and that it runs without crashing.  Note that the backend
@@ -26,7 +26,7 @@ use Test::More;
 # Autovacuum potentially touching the table in the background makes the exact
 # behavior of this test harder to reason about.  We turn it off to keep things
 # simpler.  We use a "belt and suspenders" approach, turning it off for the
-# system generally in postgresql.conf, and turning it off specifically for the
+# system generally in maintableql.conf, and turning it off specifically for the
 # test table.
 #
 # This test depends on the table being written to the heap file exactly as we
@@ -180,26 +180,26 @@ my $aborted_xid;
 # Set up the node.  Once we create and corrupt the table,
 # autovacuum workers visiting the table could crash the backend.
 # Disable autovacuum so that won't happen.
-my $node = PostgreSQL::Test::Cluster->new('test');
+my $node = maintableQL::Test::Cluster->new('test');
 $node->init(no_data_checksums => 1);
-$node->append_conf('postgresql.conf', 'autovacuum=off');
-$node->append_conf('postgresql.conf', 'max_prepared_transactions=10');
+$node->append_conf('maintableql.conf', 'autovacuum=off');
+$node->append_conf('maintableql.conf', 'max_prepared_transactions=10');
 
 # Start the node and load the extensions.  We depend on both
 # amcheck and pageinspect for this test.
 $node->start;
 my $port = $node->port;
 my $pgdata = $node->data_dir;
-$node->safe_psql('postgres', "CREATE EXTENSION amcheck");
-$node->safe_psql('postgres', "CREATE EXTENSION pageinspect");
+$node->safe_psql('maintable', "CREATE EXTENSION amcheck");
+$node->safe_psql('maintable', "CREATE EXTENSION pageinspect");
 
 # Get a non-zero datfrozenxid
-$node->safe_psql('postgres', qq(VACUUM FREEZE));
+$node->safe_psql('maintable', qq(VACUUM FREEZE));
 
 # Create the test table with precisely the schema that our corruption function
 # expects.
 $node->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		CREATE TABLE public.test (a BIGINT, b TEXT, c TEXT);
 		ALTER TABLE public.test SET (autovacuum_enabled=false);
 		ALTER TABLE public.test ALTER COLUMN c SET STORAGE EXTERNAL;
@@ -210,13 +210,13 @@ $node->safe_psql(
 # an otherwise unused table, public.junk, prior to inserting data and freezing
 # public.test
 $node->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		CREATE TABLE public.junk AS SELECT 'junk'::TEXT AS junk_column;
 		ALTER TABLE public.junk SET (autovacuum_enabled=false);
 		VACUUM FREEZE public.junk
 	));
 
-my $rel = $node->safe_psql('postgres',
+my $rel = $node->safe_psql('maintable',
 	qq(SELECT pg_relation_filepath('public.test')));
 my $relpath = "$pgdata/$rel";
 
@@ -230,7 +230,7 @@ my $ROWCOUNT_BASIC = 16;
 # First insert data needed for tests unrelated to update chain validation.
 # Then freeze the page. These tuples are at offset numbers 1 to 16.
 $node->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	INSERT INTO public.test (a, b, c)
 		SELECT
 			x'DEADF9F9DEADF9F9'::bigint,
@@ -245,7 +245,7 @@ $node->safe_psql(
 # to a tuple. We'll then change the second redirect to point to the same
 # tuple as the first one and verify that we can detect corruption.
 $node->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		INSERT INTO public.test (a, b, c)
 			VALUES ( x'DEADF9F9DEADF9F9'::bigint, 'abcdefg',
 					 generate_series(1,2)); -- offset numbers 17 and 18
@@ -255,7 +255,7 @@ $node->safe_psql(
 
 # Create some more HOT update chains.
 $node->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		INSERT INTO public.test (a, b, c)
 			VALUES ( x'DEADF9F9DEADF9F9'::bigint, 'abcdefg',
 					 generate_series(3,6)); -- offset numbers 21 through 24
@@ -265,7 +265,7 @@ $node->safe_psql(
 
 # Negative test case of HOT-pruning with aborted tuple.
 $node->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		BEGIN;
 		UPDATE public.test SET c = 'a' WHERE c = '5'; -- offset number 27
 		ABORT;
@@ -275,14 +275,14 @@ $node->safe_psql(
 # Next update on any tuple will be stored at the same place of tuple inserted
 # by aborted transaction. This should not cause the table to appear corrupt.
 $node->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		UPDATE public.test SET c = 'a' WHERE c = '6'; -- offset number 27 again
 		VACUUM FREEZE public.test;
 	));
 
 # Data for HOT chain validation, so not calling VACUUM FREEZE.
 $node->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		INSERT INTO public.test (a, b, c)
 			VALUES ( x'DEADF9F9DEADF9F9'::bigint, 'abcdefg',
 					 generate_series(7,15)); -- offset numbers 28 to 36
@@ -297,7 +297,7 @@ $node->safe_psql(
 
 # Need one aborted transaction to test corruption in HOT chains.
 $node->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		BEGIN;
 		UPDATE public.test SET c = 'a' WHERE c = '9'; -- offset number 44
 		ABORT;
@@ -307,19 +307,19 @@ $node->safe_psql(
 # We are creating PREPARE TRANSACTION here as these will not be aborted
 # even if we stop the node.
 $node->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		BEGIN;
 		PREPARE TRANSACTION 'in_progress_tx';
 	));
 my $in_progress_xid = $node->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 		SELECT transaction FROM pg_prepared_xacts;
 	));
 
-my $relfrozenxid = $node->safe_psql('postgres',
+my $relfrozenxid = $node->safe_psql('maintable',
 	q(select relfrozenxid from pg_class where relname = 'test'));
-my $datfrozenxid = $node->safe_psql('postgres',
-	q(select datfrozenxid from pg_database where datname = 'postgres'));
+my $datfrozenxid = $node->safe_psql('maintable',
+	q(select datfrozenxid from pg_database where datname = 'maintable'));
 
 # Sanity check that our 'test' table has a relfrozenxid newer than the
 # datfrozenxid for the database, and that the datfrozenxid is greater than the
@@ -335,7 +335,7 @@ if ($datfrozenxid <= 3 || $datfrozenxid >= $relfrozenxid)
 # Find where each of the tuples is located on the page. If a particular
 # line pointer is a redirect rather than a tuple, we record the offset as -1.
 my @lp_off = split '\n', $node->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	    SELECT CASE WHEN lp_flags = 2 THEN -1 ELSE lp_off END
 	    FROM heap_page_items(get_raw_page('test', 'main', 0))
     )
@@ -386,12 +386,12 @@ $node->start;
 
 # Check that pg_amcheck runs against the uncorrupted table without error.
 $node->command_ok(
-	[ 'pg_amcheck', '--port' => $port, 'postgres' ],
+	[ 'pg_amcheck', '--port' => $port, 'maintable' ],
 	'pg_amcheck test table, prior to corruption');
 
 # Check that pg_amcheck runs against the uncorrupted table and index without error.
 $node->command_ok(
-	[ 'pg_amcheck', '--port' => $port, 'postgres' ],
+	[ 'pg_amcheck', '--port' => $port, 'maintable' ],
 	'pg_amcheck test table and index, prior to corruption');
 
 $node->stop;
@@ -416,14 +416,14 @@ sub header
 {
 	my ($blkno, $offnum, $attnum) = @_;
 	return
-	  qr/heap table "postgres\.public\.test", block $blkno, offset $offnum, attribute $attnum:\s+/ms
+	  qr/heap table "maintable\.public\.test", block $blkno, offset $offnum, attribute $attnum:\s+/ms
 	  if (defined $attnum);
 	return
-	  qr/heap table "postgres\.public\.test", block $blkno, offset $offnum:\s+/ms
+	  qr/heap table "maintable\.public\.test", block $blkno, offset $offnum:\s+/ms
 	  if (defined $offnum);
-	return qr/heap table "postgres\.public\.test", block $blkno:\s+/ms
+	return qr/heap table "maintable\.public\.test", block $blkno:\s+/ms
 	  if (defined $blkno);
-	return qr/heap table "postgres\.public\.test":\s+/ms;
+	return qr/heap table "maintable\.public\.test":\s+/ms;
 }
 
 # Corrupt the tuples, one type of corruption per tuple.  Some types of
@@ -755,10 +755,10 @@ $node->start;
 # Run pg_amcheck against the corrupt table with epoch=0, comparing actual
 # corruption messages against the expected messages
 $node->command_checks_all(
-	[ 'pg_amcheck', '--no-dependent-indexes', '--port' => $port, 'postgres' ],
+	[ 'pg_amcheck', '--no-dependent-indexes', '--port' => $port, 'maintable' ],
 	2, [@expected], [], 'Expected corruption message output');
 $node->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
                         COMMIT PREPARED 'in_progress_tx';
         ));
 

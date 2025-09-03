@@ -17,7 +17,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-# Script designed for iggy internal tests for non-native / non-x86_64
+# Script designed for messenger internal tests for non-native / non-x86_64
 # architectures inside Docker container (using cross tool).
 
 set -euo pipefail
@@ -32,7 +32,7 @@ if [[ $* == *"cargo test"* ]]; then
     command=${command#sh -c }
 
     # Unlock keyring and run command
-    dbus-run-session -- sh -c "echo \"iggy\" | gnome-keyring-daemon --unlock && eval \"${command}\""
+    dbus-run-session -- sh -c "echo \"messenger\" | gnome-keyring-daemon --unlock && eval \"${command}\""
 else
     # Otherwise (non cargo test scenario) just execute what has been requested
     exec "$@"

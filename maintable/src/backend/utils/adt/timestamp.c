@@ -3,7 +3,7 @@
  * timestamp.c
  *	  Functions for the built-in SQL types "timestamp" and "interval".
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <math.h>
@@ -341,7 +341,7 @@ timestamp_support(PG_FUNCTION_ARGS)
 
 /* timestamp_scale()
  * Adjust time type for specified scale factor.
- * Used by PostgreSQL type system to stuff columns.
+ * Used by maintableQL type system to stuff columns.
  */
 Datum
 timestamp_scale(PG_FUNCTION_ARGS)
@@ -606,7 +606,7 @@ make_timestamp_internal(int year, int month, int day,
 				 errmsg("date out of range: %d-%02d-%02d",
 						year, month, day)));
 
-	date = date2j(tm.tm_year, tm.tm_mon, tm.tm_mday) - POSTGRES_EPOCH_JDATE;
+	date = date2j(tm.tm_year, tm.tm_mon, tm.tm_mday) - MAINTABLE_EPOCH_JDATE;
 
 	/* Check for time overflow */
 	if (float_time_overflows(hour, min, sec))
@@ -752,8 +752,8 @@ float8_timestamptz(PG_FUNCTION_ARGS)
 					(errcode(ERRCODE_DATETIME_VALUE_OUT_OF_RANGE),
 					 errmsg("timestamp out of range: \"%g\"", seconds)));
 
-		/* Convert UNIX epoch to Postgres epoch */
-		seconds -= ((POSTGRES_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY);
+		/* Convert UNIX epoch to Maintable epoch */
+		seconds -= ((MAINTABLE_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY);
 
 		seconds = rint(seconds * USECS_PER_SEC);
 		result = (int64) seconds;
@@ -864,7 +864,7 @@ timestamptztypmodout(PG_FUNCTION_ARGS)
 
 /* timestamptz_scale()
  * Adjust time type for specified scale factor.
- * Used by PostgreSQL type system to stuff columns.
+ * Used by maintableQL type system to stuff columns.
  */
 Datum
 timestamptz_scale(PG_FUNCTION_ARGS)
@@ -1322,7 +1322,7 @@ interval_support(PG_FUNCTION_ARGS)
 
 /* interval_scale()
  * Adjust interval type for specified fields.
- * Used by PostgreSQL type system to stuff columns.
+ * Used by maintableQL type system to stuff columns.
  */
 Datum
 interval_scale(PG_FUNCTION_ARGS)
@@ -1650,7 +1650,7 @@ GetCurrentTimestamp(void)
 	gettimeofday(&tp, NULL);
 
 	result = (TimestampTz) tp.tv_sec -
-		((POSTGRES_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY);
+		((MAINTABLE_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY);
 	result = (result * USECS_PER_SEC) + tp.tv_usec;
 
 	return result;
@@ -1808,7 +1808,7 @@ TimestampDifferenceExceedsSeconds(TimestampTz start_time,
 /*
  * Convert a time_t to TimestampTz.
  *
- * We do not use time_t internally in Postgres, but this is provided for use
+ * We do not use time_t internally in Maintable, but this is provided for use
  * by functions that need to interpret, say, a stat(2) result.
  *
  * To avoid having the function's ABI vary depending on the width of time_t,
@@ -1822,7 +1822,7 @@ time_t_to_timestamptz(pg_time_t tm)
 	TimestampTz result;
 
 	result = (TimestampTz) tm -
-		((POSTGRES_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY);
+		((MAINTABLE_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY);
 	result *= USECS_PER_SEC;
 
 	return result;
@@ -1844,7 +1844,7 @@ timestamptz_to_time_t(TimestampTz t)
 	pg_time_t	result;
 
 	result = (pg_time_t) (t / USECS_PER_SEC +
-						  ((POSTGRES_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY));
+						  ((MAINTABLE_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY));
 
 	return result;
 }
@@ -1927,7 +1927,7 @@ timestamp2tm(Timestamp dt, int *tzp, struct pg_tm *tm, fsec_t *fsec, const char 
 	}
 
 	/* add offset to go from J2000 back to standard Julian date */
-	date += POSTGRES_EPOCH_JDATE;
+	date += MAINTABLE_EPOCH_JDATE;
 
 	/* Julian day routine does not work for negative Julian days */
 	if (date < 0 || date > (Timestamp) INT_MAX)
@@ -1958,7 +1958,7 @@ timestamp2tm(Timestamp dt, int *tzp, struct pg_tm *tm, fsec_t *fsec, const char 
 	 * so it should behave sanely on machines without int64.
 	 */
 	dt = (dt - *fsec) / USECS_PER_SEC +
-		(POSTGRES_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY;
+		(MAINTABLE_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY;
 	utime = (pg_time_t) dt;
 	if ((Timestamp) utime == dt)
 	{
@@ -2015,7 +2015,7 @@ tm2timestamp(struct pg_tm *tm, fsec_t fsec, int *tzp, Timestamp *result)
 		return -1;
 	}
 
-	date = date2j(tm->tm_year, tm->tm_mon, tm->tm_mday) - POSTGRES_EPOCH_JDATE;
+	date = date2j(tm->tm_year, tm->tm_mon, tm->tm_mday) - MAINTABLE_EPOCH_JDATE;
 	time = time2t(tm->tm_hour, tm->tm_min, tm->tm_sec, fsec);
 
 	if (unlikely(pg_mul_s64_overflow(date, USECS_PER_DAY, result) ||
@@ -3597,8 +3597,8 @@ interval_mi(PG_FUNCTION_ARGS)
 
 /*
  *	There is no interval_abs():  it is unclear what value to return:
- *	  http://archives.postgresql.org/pgsql-general/2009-10/msg01031.php
- *	  http://archives.postgresql.org/pgsql-general/2009-11/msg00041.php
+ *	  http://archives.maintableql.org/pgsql-general/2009-10/msg01031.php
+ *	  http://archives.maintableql.org/pgsql-general/2009-11/msg00041.php
  */
 
 Datum

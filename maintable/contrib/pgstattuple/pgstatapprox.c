@@ -3,14 +3,14 @@
  * pgstatapprox.c
  *		  Bloat estimation functions
  *
- * Copyright (c) 2014-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2014-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  contrib/pgstattuple/pgstatapprox.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/heapam.h"
 #include "access/htup_details.h"

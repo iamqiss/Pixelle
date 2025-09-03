@@ -17,7 +17,7 @@
  */
 
 use crate::VERSION;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use std::fmt::Display;
 use std::str::FromStr;
 
@@ -29,24 +29,24 @@ pub struct SemanticVersion {
 }
 
 impl FromStr for SemanticVersion {
-    type Err = IggyError;
+    type Err = MessengerError;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut version = s.split('.');
         let major = version
             .next()
             .unwrap()
             .parse::<u32>()
-            .map_err(|_| IggyError::InvalidNumberValue)?;
+            .map_err(|_| MessengerError::InvalidNumberValue)?;
         let minor = version
             .next()
             .unwrap()
             .parse::<u32>()
-            .map_err(|_| IggyError::InvalidNumberValue)?;
+            .map_err(|_| MessengerError::InvalidNumberValue)?;
         let patch = version
             .next()
             .unwrap()
             .parse::<u32>()
-            .map_err(|_| IggyError::InvalidNumberValue)?;
+            .map_err(|_| MessengerError::InvalidNumberValue)?;
         Ok(SemanticVersion {
             major,
             minor,
@@ -56,12 +56,12 @@ impl FromStr for SemanticVersion {
 }
 
 impl SemanticVersion {
-    pub fn current() -> Result<Self, IggyError> {
+    pub fn current() -> Result<Self, MessengerError> {
         if let Ok(version) = VERSION.parse::<SemanticVersion>() {
             return Ok(version);
         }
 
-        Err(IggyError::InvalidVersion(VERSION.into()))
+        Err(MessengerError::InvalidVersion(VERSION.into()))
     }
 
     #[must_use]
@@ -94,7 +94,7 @@ impl SemanticVersion {
         false
     }
 
-    pub fn get_numeric_version(&self) -> Result<u32, IggyError> {
+    pub fn get_numeric_version(&self) -> Result<u32, MessengerError> {
         let major = self.major;
         let minor = format!("{:03}", self.minor);
         let patch = format!("{:03}", self.patch);
@@ -102,7 +102,7 @@ impl SemanticVersion {
             return Ok(version);
         }
 
-        Err(IggyError::InvalidVersion(self.to_string()))
+        Err(MessengerError::InvalidVersion(self.to_string()))
     }
 }
 

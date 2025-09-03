@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Do basic sanity checks supported by pg_checksums using
 # an initialized cluster.
@@ -7,8 +7,8 @@
 use strict;
 use warnings FATAL => 'all';
 use Config;
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 
 use Test::More;
 
@@ -26,16 +26,16 @@ sub check_relation_corruption
 
 	# Create table and discover its filesystem location.
 	$node->safe_psql(
-		'postgres',
+		'maintable',
 		"CREATE TABLE $table AS SELECT a FROM generate_series(1,10000) AS a;
 		ALTER TABLE $table SET (autovacuum_enabled=false);");
 
-	$node->safe_psql('postgres',
+	$node->safe_psql('maintable',
 		"ALTER TABLE " . $table . " SET TABLESPACE " . $tablespace . ";");
 
 	my $file_corrupted =
-	  $node->safe_psql('postgres', "SELECT pg_relation_filepath('$table');");
-	my $relfilenode_corrupted = $node->safe_psql('postgres',
+	  $node->safe_psql('maintable', "SELECT pg_relation_filepath('$table');");
+	my $relfilenode_corrupted = $node->safe_psql('maintable',
 		"SELECT relfilenode FROM pg_class WHERE relname = '$table';");
 
 	$node->stop;
@@ -79,7 +79,7 @@ sub check_relation_corruption
 
 	# Drop corrupted table again and make sure there is no more corruption.
 	$node->start;
-	$node->safe_psql('postgres', "DROP TABLE $table;");
+	$node->safe_psql('maintable', "DROP TABLE $table;");
 	$node->stop;
 	$node->command_ok(
 		[ 'pg_checksums', '--check', '--pgdata' => $pgdata ],
@@ -90,7 +90,7 @@ sub check_relation_corruption
 }
 
 # Initialize node with checksums disabled.
-my $node = PostgreSQL::Test::Cluster->new('node_checksum');
+my $node = maintableQL::Test::Cluster->new('node_checksum');
 $node->init(no_data_checksums => 1);
 my $pgdata = $node->data_dir;
 
@@ -118,7 +118,7 @@ append_to_file "$pgdata/global/pgsql_tmp/1.1", "foo";
 append_to_file "$pgdata/global/pg_internal.init", "foo";
 append_to_file "$pgdata/global/pg_internal.init.123", "foo";
 
-# These are non-postgres macOS files, which should be ignored by the scan.
+# These are non-maintable macOS files, which should be ignored by the scan.
 # Only perform this test on non-macOS systems though as creating incorrect
 # system files may have side effects on macOS.
 append_to_file "$pgdata/global/.DS_Store", "foo"
@@ -193,7 +193,7 @@ command_fails(
 	],
 	"fails when relfilenodes are requested and action is --enable");
 
-# Test postgres -C for an offline cluster.
+# Test maintable -C for an offline cluster.
 # Run-time GUCs are safe to query here.  Note that a lock file is created,
 # then removed, leading to an extra LOG entry showing in stderr.  This uses
 # log_min_messages=fatal to remove any noise.  This test uses a startup
@@ -223,7 +223,7 @@ check_relation_corruption($node, 'corrupt1', 'pg_default');
 my $basedir = $node->basedir;
 my $tablespace_dir = "$basedir/ts_corrupt_dir";
 mkdir($tablespace_dir);
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"CREATE TABLESPACE ts_corrupt LOCATION '$tablespace_dir';");
 check_relation_corruption($node, 'corrupt2', 'ts_corrupt');
 

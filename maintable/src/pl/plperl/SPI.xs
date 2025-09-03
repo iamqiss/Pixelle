@@ -1,5 +1,5 @@
 /**********************************************************************
- * PostgreSQL::InServer::SPI
+ * maintableQL::InServer::SPI
  *
  * SPI interface for plperl.
  *
@@ -8,14 +8,14 @@
  **********************************************************************/
 
 /* this must be first: */
-#include "postgres.h"
+#include "maintable.h"
 
 /* perl stuff */
 #define PG_NEED_PERL_XSUB_H
 #include "plperl.h"
 
 
-MODULE = PostgreSQL::InServer::SPI PREFIX = spi_
+MODULE = maintableQL::InServer::SPI PREFIX = spi_
 
 PROTOTYPES: ENABLE
 VERSIONCHECK: DISABLE

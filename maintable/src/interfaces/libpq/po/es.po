@@ -1,7 +1,7 @@
 # Spanish message translation file for libpq 2013-08-30 12:42-0400\n"
 #
-# Copyright (c) 2002-2021, PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (c) 2002-2021, maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 #
 # Karim <karim@mribti.com>, 2002.
 # Alvaro Herrera <alvherre@alvh.no-ip.org>, 2003-2013
@@ -10,12 +10,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libpq (PostgreSQL) 16\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: libpq (maintableQL) 16\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-10-03 07:10+0000\n"
 "PO-Revision-Date: 2023-10-06 13:28+0200\n"
 "Last-Translator: Carlos Chapi <carloswaldo@babelruins.org>\n"
-"Language-Team: PgSQL-es-Ayuda <pgsql-es-ayuda@lists.postgresql.org>\n"
+"Language-Team: PgSQL-es-Ayuda <pgsql-es-ayuda@lists.maintableql.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

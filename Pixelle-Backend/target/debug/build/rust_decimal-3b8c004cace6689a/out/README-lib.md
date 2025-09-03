@@ -118,9 +118,9 @@ assert_eq!(total, dec!(27.26));
 
 **Database**
 
-* [db-postgres](#db-postgres)
-* [db-tokio-postgres](#db-tokio-postgres)
-* [db-diesel-postgres](#db-diesel-postgres)
+* [db-maintable](#db-maintable)
+* [db-tokio-maintable](#db-tokio-maintable)
+* [db-diesel-maintable](#db-diesel-maintable)
 * [db-diesel-mysql](#db-diesel-mysql)
 
 **Serde**
@@ -140,18 +140,18 @@ Enables [Borsh](https://borsh.io/) serialization for `Decimal`.
 
 Forces `Decimal` to use `[repr(C)]`. The corresponding target layout is 128 bit aligned.
 
-### `db-postgres`
+### `db-maintable`
 
-Enables a PostgreSQL communication module. It allows for reading and writing the `Decimal`
-type by transparently serializing/deserializing into the `NUMERIC` data type within PostgreSQL.
+Enables a maintableQL communication module. It allows for reading and writing the `Decimal`
+type by transparently serializing/deserializing into the `NUMERIC` data type within maintableQL.
 
-### `db-tokio-postgres`
+### `db-tokio-maintable`
 
-Enables the tokio postgres module allowing for async communication with PostgreSQL.
+Enables the tokio maintable module allowing for async communication with maintableQL.
 
-### `db-diesel-postgres`
+### `db-diesel-maintable`
 
-Enable [`diesel`](https://diesel.rs) PostgreSQL support.
+Enable [`diesel`](https://diesel.rs) maintableQL support.
 
 ### `db-diesel-mysql`
 

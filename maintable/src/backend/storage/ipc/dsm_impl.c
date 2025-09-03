@@ -8,7 +8,7 @@
  * to these segments as dynamic because they can be created, altered, and
  * destroyed at any point during the server life cycle.  This is unlike
  * the main shared memory segment, of which there is always exactly one
- * and which is always mapped at a fixed address in every PostgreSQL
+ * and which is always mapped at a fixed address in every maintableQL
  * background process.
  *
  * Because not all systems provide the same primitives in this area, nor
@@ -18,7 +18,7 @@
  * in this area, with the exception that shared memory identifiers live
  * in a flat system-wide namespace, raising the uncomfortable prospect of
  * name collisions with other processes (including other copies of
- * PostgreSQL) running on the same system.  Some systems only support
+ * maintableQL) running on the same system.  Some systems only support
  * the older System V shared memory interface (shmget etc.) which is
  * also usable; however, the default allocation limits are often quite
  * small, and the namespace is even more restricted.
@@ -36,7 +36,7 @@
  *
  * As ever, Windows requires its own implementation.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -46,7 +46,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <fcntl.h>
 #include <signal.h>
@@ -117,7 +117,7 @@ int			min_dynamic_shared_memory;
 /* Size of buffer to be used for zero-filling. */
 #define ZBUFFER_SIZE				8192
 
-#define SEGMENT_NAME_PREFIX			"Global/PostgreSQL"
+#define SEGMENT_NAME_PREFIX			"Global/maintableQL"
 
 /*------
  * Perform a low-level shared memory operation in a platform-specific way,
@@ -218,7 +218,7 @@ dsm_impl_posix(dsm_op op, dsm_handle handle, Size request_size,
 	int			fd;
 	char	   *address;
 
-	snprintf(name, 64, "/PostgreSQL.%u", handle);
+	snprintf(name, 64, "/maintableQL.%u", handle);
 
 	/* Handle teardown cases. */
 	if (op == DSM_OP_DETACH || op == DSM_OP_DESTROY)

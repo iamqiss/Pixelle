@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * trigger.c
- *	  PostgreSQL TRIGGERs support code.
+ *	  maintableQL TRIGGERs support code.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -11,7 +11,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/genam.h"
 #include "access/htup_details.h"
@@ -4312,7 +4312,7 @@ afterTriggerDeleteHeadEventChunk(AfterTriggersQueryData *qs)
  *	Frequently, this will be fired many times in a row for triggers of
  *	a single relation.  Therefore, we cache the open relation and provide
  *	fmgr lookup cache space at the caller level.  (For triggers fired at
- *	the end of a query, we can even piggyback on the executor's state.)
+ *	the end of a query, we can even pmessengerback on the executor's state.)
  *
  *	When fired for a cross-partition update of a partitioned table, the old
  *	tuple is fetched using 'src_relInfo' (the source leaf partition) and

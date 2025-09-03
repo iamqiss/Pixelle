@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use iggy::prelude::IggyTimestamp;
+use messenger::prelude::MessengerTimestamp;
 use serde::{Deserialize, Serialize};
 use std::fmt::{self, Debug};
 
@@ -60,7 +60,7 @@ pub struct OrderCreated {
     pub price: f64,
     pub quantity: f64,
     pub side: String,
-    pub timestamp: IggyTimestamp,
+    pub timestamp: MessengerTimestamp,
 }
 
 impl Debug for OrderCreated {
@@ -80,7 +80,7 @@ impl Debug for OrderCreated {
 pub struct OrderConfirmed {
     pub order_id: u64,
     pub price: f64,
-    pub timestamp: IggyTimestamp,
+    pub timestamp: MessengerTimestamp,
 }
 
 impl Debug for OrderConfirmed {
@@ -96,7 +96,7 @@ impl Debug for OrderConfirmed {
 #[derive(Deserialize, Serialize)]
 pub struct OrderRejected {
     pub order_id: u64,
-    pub timestamp: IggyTimestamp,
+    pub timestamp: MessengerTimestamp,
     pub reason: String,
 }
 

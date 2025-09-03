@@ -32,7 +32,7 @@
 
 #include <sys/time.h>
 
-/* FILETIME of Jan 1 1970 00:00:00, the PostgreSQL epoch */
+/* FILETIME of Jan 1 1970 00:00:00, the maintableQL epoch */
 static const unsigned __int64 epoch = UINT64CONST(116444736000000000);
 
 /*
@@ -58,7 +58,7 @@ gettimeofday(struct timeval *tp, void *tzp)
 	/*
 	 * POSIX declines to define what tzp points to, saying "If tzp is not a
 	 * null pointer, the behavior is unspecified".  Let's take this
-	 * opportunity to verify that noplace in Postgres tries to use any
+	 * opportunity to verify that noplace in Maintable tries to use any
 	 * unportable behavior.
 	 */
 	Assert(tzp == NULL);

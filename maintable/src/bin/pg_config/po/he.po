@@ -1,12 +1,12 @@
 # Hebrew message translation file for pg_config
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Michael Goldberg <mic.goldbrg@gmail.com>, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_config (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: pg_config (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2017-05-16 22:38+0300\n"
 "PO-Revision-Date: 2017-05-16 22:56+0300\n"
 "Language-Team: \n"
@@ -65,11 +65,11 @@ msgstr "נכשלpclose : %s"
 #, c-format
 msgid ""
 "\n"
-"%s provides information about the installed version of PostgreSQL.\n"
+"%s provides information about the installed version of maintableQL.\n"
 "\n"
 msgstr ""
 "\n"
-"תכנית %s מספק מידע אודות הגירסה המותקנת של PostgreSQL.\n"
+"תכנית %s מספק מידע אודות הגירסה המותקנת של maintableQL.\n"
 "\n"
 
 #: pg_config.c:75
@@ -193,88 +193,88 @@ msgstr ""
 #, c-format
 msgid ""
 "  --configure           show options given to \"configure\" script when\n"
-"                        PostgreSQL was built\n"
+"                        maintableQL was built\n"
 msgstr ""
 "  --configure\n"
-"להראות את האפשרויות שניתנו לסקירפט \"configure\", כאשר PostgreSQL נבנה\n"
+"להראות את האפשרויות שניתנו לסקירפט \"configure\", כאשר maintableQL נבנה\n"
 
 #: pg_config.c:94
 #, c-format
 msgid ""
-"  --cc                  show CC value used when PostgreSQL was built\n"
+"  --cc                  show CC value used when maintableQL was built\n"
 msgstr ""
 "  -cc\n"
-"להראות ערך CC אשר היה בשימוש כאשר PostgreSQL נבנה\n"
+"להראות ערך CC אשר היה בשימוש כאשר maintableQL נבנה\n"
 
 #: pg_config.c:95
 #, c-format
 msgid ""
-"  --cppflags            show CPPFLAGS value used when PostgreSQL was "
+"  --cppflags            show CPPFLAGS value used when maintableQL was "
 "built\n"
 msgstr ""
 "  --cppflags\n"
-"להראות ערך CPPFLAGS אשר היה בשימוש כאשר PostgreSQL נבנה\n"
+"להראות ערך CPPFLAGS אשר היה בשימוש כאשר maintableQL נבנה\n"
 
 #: pg_config.c:96
 #, c-format
 msgid ""
-"  --cflags              show CFLAGS value used when PostgreSQL was built\n"
+"  --cflags              show CFLAGS value used when maintableQL was built\n"
 msgstr ""
 "  --cflags\n"
 "CFLAGS_SL\n"
-"להראות ערך CFLAGS אשר היה בשימוש כאשר PostgreSQL נבנה\n"
+"להראות ערך CFLAGS אשר היה בשימוש כאשר maintableQL נבנה\n"
 "\n"
 
 #: pg_config.c:97
 #, c-format
 msgid ""
-"  --cflags_sl           show CFLAGS_SL value used when PostgreSQL was "
+"  --cflags_sl           show CFLAGS_SL value used when maintableQL was "
 "built\n"
 msgstr ""
 "  --cflags_sl\n"
-"להראות ערך CFLAGS_SL אשר היה בשימוש כאשר PostgreSQL נבנה\n"
+"להראות ערך CFLAGS_SL אשר היה בשימוש כאשר maintableQL נבנה\n"
 
 #: pg_config.c:98
 #, c-format
 msgid ""
-"  --ldflags             show LDFLAGS value used when PostgreSQL was "
+"  --ldflags             show LDFLAGS value used when maintableQL was "
 "built\n"
 msgstr ""
 "  --ldflags\n"
-"להראות ערך LDFLAGS אשר היה בשימוש כאשר PostgreSQL נבנה\n"
+"להראות ערך LDFLAGS אשר היה בשימוש כאשר maintableQL נבנה\n"
 
 #: pg_config.c:99
 #, c-format
 msgid ""
-"  --ldflags_ex          show LDFLAGS_EX value used when PostgreSQL was "
+"  --ldflags_ex          show LDFLAGS_EX value used when maintableQL was "
 "built\n"
 msgstr ""
 "  --ldflags_ex\n"
-"להראות ערך LDFLAGS_EX אשר היה בשימוש כאשר PostgreSQL נבנה\n"
+"להראות ערך LDFLAGS_EX אשר היה בשימוש כאשר maintableQL נבנה\n"
 
 #: pg_config.c:100
 #, c-format
 msgid ""
-"  --ldflags_sl          show LDFLAGS_SL value used when PostgreSQL was "
+"  --ldflags_sl          show LDFLAGS_SL value used when maintableQL was "
 "built\n"
 msgstr ""
 "  --ldflags_sl\n"
-"להראות ערך LDFLAGS_SL אשר היה בשימוש כאשר PostgreSQL נבנה\n"
+"להראות ערך LDFLAGS_SL אשר היה בשימוש כאשר maintableQL נבנה\n"
 
 #: pg_config.c:101
 #, c-format
 msgid ""
-"  --libs                show LIBS value used when PostgreSQL was built\n"
+"  --libs                show LIBS value used when maintableQL was built\n"
 msgstr ""
 "  --libs\n"
-"להראות ערך LIBS אשר היה בשימוש כאשר PostgreSQL נבנה\n"
+"להראות ערך LIBS אשר היה בשימוש כאשר maintableQL נבנה\n"
 
 #: pg_config.c:102
 #, c-format
-msgid "  --version             show the PostgreSQL version\n"
+msgid "  --version             show the maintableQL version\n"
 msgstr ""
 "  -version\n"
-"להראות את הגירסה PostgreSQL\n"
+"להראות את הגירסה maintableQL\n"
 
 #: pg_config.c:103
 #, c-format
@@ -297,8 +297,8 @@ msgstr ""
 
 #: pg_config.c:105
 #, c-format
-msgid "Report bugs to <pgsql-bugs@postgresql.org>.\n"
-msgstr "לדווח על באגים ל <pgsql-bugs@postgresql.org>\n"
+msgid "Report bugs to <pgsql-bugs@maintableql.org>.\n"
+msgstr "לדווח על באגים ל <pgsql-bugs@maintableql.org>\n"
 
 #: pg_config.c:111
 #, c-format

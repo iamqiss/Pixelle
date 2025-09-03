@@ -26,9 +26,9 @@ use ahash::AHashSet;
 use anyhow::Context;
 use error_set::ErrContext;
 use futures::future::join_all;
-use iggy_common::IggyError;
-use iggy_common::locking::IggySharedMut;
-use iggy_common::locking::IggySharedMutFn;
+use messenger_common::MessengerError;
+use messenger_common::locking::MessengerSharedMut;
+use messenger_common::locking::MessengerSharedMutFn;
 use serde::{Deserialize, Serialize};
 use std::path::Path;
 use std::sync::Arc;
@@ -47,10 +47,10 @@ struct ConsumerGroupData {
 }
 
 impl TopicStorage for FileTopicStorage {
-    async fn load(&self, topic: &mut Topic, mut state: TopicState) -> Result<(), IggyError> {
+    async fn load(&self, topic: &mut Topic, mut state: TopicState) -> Result<(), MessengerError> {
         info!("Loading topic {} from disk...", topic);
         if !Path::new(&topic.path).exists() {
-            return Err(IggyError::TopicIdNotFound(topic.topic_id, topic.stream_id));
+            return Err(MessengerError::TopicIdNotFound(topic.topic_id, topic.stream_id));
         }
 
         let message_expiry = Topic::get_message_expiry(state.message_expiry, &topic.config);
@@ -64,7 +64,7 @@ impl TopicStorage for FileTopicStorage {
         let mut dir_entries = fs::read_dir(&topic.partitions_path).await
             .with_context(|| format!("Failed to read partition with ID: {} for stream with ID: {} for topic with ID: {} and path: {}",
                                      topic.topic_id, topic.stream_id, topic.topic_id, &topic.partitions_path))
-            .map_err(|_| IggyError::CannotReadPartitions)?;
+            .map_err(|_| MessengerError::CannotReadPartitions)?;
 
         let mut unloaded_partitions = Vec::new();
         while let Some(dir_entry) = dir_entries.next_entry().await.unwrap_or(None) {
@@ -209,7 +209,7 @@ impl TopicStorage for FileTopicStorage {
         for partition in loaded_partitions.lock().await.drain(..) {
             topic
                 .partitions
-                .insert(partition.partition_id, IggySharedMut::new(partition));
+                .insert(partition.partition_id, MessengerSharedMut::new(partition));
         }
 
         for consumer_group in state.consumer_groups.into_values() {
@@ -232,9 +232,9 @@ impl TopicStorage for FileTopicStorage {
         Ok(())
     }
 
-    async fn save(&self, topic: &Topic) -> Result<(), IggyError> {
+    async fn save(&self, topic: &Topic) -> Result<(), MessengerError> {
         if !Path::new(&topic.path).exists() && create_dir_all(&topic.path).await.is_err() {
-            return Err(IggyError::CannotCreateTopicDirectory(
+            return Err(MessengerError::CannotCreateTopicDirectory(
                 topic.topic_id,
                 topic.stream_id,
                 topic.path.clone(),
@@ -244,7 +244,7 @@ impl TopicStorage for FileTopicStorage {
         if !Path::new(&topic.partitions_path).exists()
             && create_dir_all(&topic.partitions_path).await.is_err()
         {
-            return Err(IggyError::CannotCreatePartitionsDirectory(
+            return Err(MessengerError::CannotCreatePartitionsDirectory(
                 topic.stream_id,
                 topic.topic_id,
             ));
@@ -268,10 +268,10 @@ impl TopicStorage for FileTopicStorage {
         Ok(())
     }
 
-    async fn delete(&self, topic: &Topic) -> Result<(), IggyError> {
+    async fn delete(&self, topic: &Topic) -> Result<(), MessengerError> {
         info!("Deleting topic {topic}...");
         if fs::remove_dir_all(&topic.path).await.is_err() {
-            return Err(IggyError::CannotDeleteTopicDirectory(
+            return Err(MessengerError::CannotDeleteTopicDirectory(
                 topic.topic_id,
                 topic.stream_id,
                 topic.path.clone(),

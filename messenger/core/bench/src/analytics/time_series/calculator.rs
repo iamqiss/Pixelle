@@ -24,7 +24,7 @@ use super::calculators::{
 };
 use crate::analytics::record::BenchmarkRecord;
 use bench_report::time_series::{TimePoint, TimeSeries, TimeSeriesKind};
-use iggy::prelude::IggyDuration;
+use messenger::prelude::MessengerDuration;
 use rayon::prelude::*;
 use tracing::warn;
 
@@ -32,17 +32,17 @@ use tracing::warn;
 pub struct TimeSeriesCalculator;
 
 impl TimeSeriesCalculator {
-    pub fn throughput_mb(records: &[BenchmarkRecord], bucket_size: IggyDuration) -> TimeSeries {
+    pub fn throughput_mb(records: &[BenchmarkRecord], bucket_size: MessengerDuration) -> TimeSeries {
         let calculator = ThroughputTimeSeriesCalculator::new(MBThroughputCalculator);
         calculator.calculate(records, bucket_size)
     }
 
-    pub fn throughput_msg(records: &[BenchmarkRecord], bucket_size: IggyDuration) -> TimeSeries {
+    pub fn throughput_msg(records: &[BenchmarkRecord], bucket_size: MessengerDuration) -> TimeSeries {
         let calculator = ThroughputTimeSeriesCalculator::new(MessageThroughputCalculator);
         calculator.calculate(records, bucket_size)
     }
 
-    pub fn latency(records: &[BenchmarkRecord], bucket_size: IggyDuration) -> TimeSeries {
+    pub fn latency(records: &[BenchmarkRecord], bucket_size: MessengerDuration) -> TimeSeries {
         let calculator = LatencyTimeSeriesCalculator;
         calculator.calculate(records, bucket_size)
     }

@@ -23,16 +23,16 @@ use crate::streaming::streams::stream::Stream;
 use crate::streaming::topics::consumer_group::ConsumerGroup;
 use crate::streaming::topics::topic::Topic;
 use crate::streaming::users::user::User;
-use iggy_common::ConsumerGroupInfo;
-use iggy_common::PersonalAccessTokenInfo;
-use iggy_common::Sizeable;
-use iggy_common::StreamDetails;
-use iggy_common::TopicDetails;
-use iggy_common::locking::IggySharedMut;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{ConsumerGroupDetails, ConsumerGroupMember};
-use iggy_common::{IdentityInfo, TokenInfo};
-use iggy_common::{UserInfo, UserInfoDetails};
+use messenger_common::ConsumerGroupInfo;
+use messenger_common::PersonalAccessTokenInfo;
+use messenger_common::Sizeable;
+use messenger_common::StreamDetails;
+use messenger_common::TopicDetails;
+use messenger_common::locking::MessengerSharedMut;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{ConsumerGroupDetails, ConsumerGroupMember};
+use messenger_common::{IdentityInfo, TokenInfo};
+use messenger_common::{UserInfo, UserInfoDetails};
 use tokio::sync::RwLock;
 
 pub fn map_stream(stream: &Stream) -> StreamDetails {
@@ -50,10 +50,10 @@ pub fn map_stream(stream: &Stream) -> StreamDetails {
     stream_details
 }
 
-pub fn map_streams(streams: &[&Stream]) -> Vec<iggy_common::Stream> {
+pub fn map_streams(streams: &[&Stream]) -> Vec<messenger_common::Stream> {
     let mut streams_data = Vec::with_capacity(streams.len());
     for stream in streams {
-        let stream = iggy_common::Stream {
+        let stream = messenger_common::Stream {
             id: stream.stream_id,
             created_at: stream.created_at,
             name: stream.name.clone(),
@@ -68,10 +68,10 @@ pub fn map_streams(streams: &[&Stream]) -> Vec<iggy_common::Stream> {
     streams_data
 }
 
-pub fn map_topics(topics: &[&Topic]) -> Vec<iggy_common::Topic> {
+pub fn map_topics(topics: &[&Topic]) -> Vec<messenger_common::Topic> {
     let mut topics_data = Vec::with_capacity(topics.len());
     for topic in topics {
-        let topic = iggy_common::Topic {
+        let topic = messenger_common::Topic {
             id: topic.topic_id,
             created_at: topic.created_at,
             name: topic.name.clone(),
@@ -105,7 +105,7 @@ pub async fn map_topic(topic: &Topic) -> TopicDetails {
     };
     for partition in topic.get_partitions() {
         let partition = partition.read().await;
-        topic_details.partitions.push(iggy_common::Partition {
+        topic_details.partitions.push(messenger_common::Partition {
             id: partition.partition_id,
             created_at: partition.created_at,
             segments_count: partition.get_segments().len() as u32,
@@ -158,8 +158,8 @@ pub fn map_personal_access_tokens(
     personal_access_tokens_data
 }
 
-pub fn map_client(client: &Client) -> iggy_common::ClientInfoDetails {
-    iggy_common::ClientInfoDetails {
+pub fn map_client(client: &Client) -> messenger_common::ClientInfoDetails {
+    messenger_common::ClientInfoDetails {
         client_id: client.session.client_id,
         user_id: client.user_id,
         transport: client.transport.to_string(),
@@ -177,11 +177,11 @@ pub fn map_client(client: &Client) -> iggy_common::ClientInfoDetails {
     }
 }
 
-pub async fn map_clients(clients: &[IggySharedMut<Client>]) -> Vec<iggy_common::ClientInfo> {
+pub async fn map_clients(clients: &[MessengerSharedMut<Client>]) -> Vec<messenger_common::ClientInfo> {
     let mut all_clients = Vec::new();
     for client in clients {
         let client = client.read().await;
-        let client = iggy_common::ClientInfo {
+        let client = messenger_common::ClientInfo {
             client_id: client.session.client_id,
             user_id: client.user_id,
             transport: client.transport.to_string(),
@@ -197,11 +197,11 @@ pub async fn map_clients(clients: &[IggySharedMut<Client>]) -> Vec<iggy_common::
 
 pub async fn map_consumer_groups(
     consumer_groups: &[&RwLock<ConsumerGroup>],
-) -> Vec<iggy_common::ConsumerGroup> {
+) -> Vec<messenger_common::ConsumerGroup> {
     let mut groups = Vec::new();
     for consumer_group in consumer_groups {
         let consumer_group = consumer_group.read().await;
-        let consumer_group = iggy_common::ConsumerGroup {
+        let consumer_group = messenger_common::ConsumerGroup {
             id: consumer_group.group_id,
             name: consumer_group.name.clone(),
             partitions_count: consumer_group.partitions_count,

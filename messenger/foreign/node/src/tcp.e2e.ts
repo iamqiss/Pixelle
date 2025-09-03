@@ -39,12 +39,12 @@ try {
       host: '127.0.0.1',
       port: 8090
     },
-    credentials: { username: 'iggy', password: 'iggy' }
+    credentials: { username: 'messenger', password: 'messenger' }
   });
   const s = () => Promise.resolve(cli);
 
   // LOGIN
-  const r = await login(s)({ username: 'iggy', password: 'iggy' });
+  const r = await login(s)({ username: 'messenger', password: 'messenger' });
   console.log('RESPONSE_login', r);
 
   const stream = {

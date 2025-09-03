@@ -1,14 +1,14 @@
 # Greek message translation file for pg_archivecleanup
-# Copyright (C) 2021 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_archivecleanup (PostgreSQL) package.
+# Copyright (C) 2021 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_archivecleanup (maintableQL) package.
 # Georgios Kokolatos <gkokolatos@pm.me>, 2021
 #
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_archivecleanup (PostgreSQL) 15\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_archivecleanup (maintableQL) 15\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-04-12 16:50+0000\n"
 "PO-Revision-Date: 2023-04-13 13:51+0200\n"
 "Last-Translator: Georgios Kokolatos <gkokolatos@pm.me>\n"
@@ -78,10 +78,10 @@ msgstr "Δοκιμάστε «%s --help» για περισσότερες πλη�
 #: pg_archivecleanup.c:251
 #, c-format
 msgid ""
-"%s removes older WAL files from PostgreSQL archives.\n"
+"%s removes older WAL files from maintableQL archives.\n"
 "\n"
 msgstr ""
-"%s αφαιρεί παλαιότερα αρχεία WAL από αρχειοθήκες PostgreSQL.\n"
+"%s αφαιρεί παλαιότερα αρχεία WAL από αρχειοθήκες maintableQL.\n"
 "\n"
 
 #: pg_archivecleanup.c:252
@@ -132,13 +132,13 @@ msgstr "  -?, --help     εμφάνισε αυτό το μήνυμα βοήθε�
 #, c-format
 msgid ""
 "\n"
-"For use as archive_cleanup_command in postgresql.conf:\n"
+"For use as archive_cleanup_command in maintableql.conf:\n"
 "  archive_cleanup_command = 'pg_archivecleanup [OPTION]... ARCHIVELOCATION %%r'\n"
 "e.g.\n"
 "  archive_cleanup_command = 'pg_archivecleanup /mnt/server/archiverdir %%r'\n"
 msgstr ""
 "\n"
-"Για χρήση ως archive_cleanup_command στο postgresql.conf:\n"
+"Για χρήση ως archive_cleanup_command στο maintableql.conf:\n"
 "  archive_cleanup_command = 'pg_archivecleanup [ΕΠΙΛΟΓΗ]... ARCHIVELOCATION %%r’\n"
 "π.χ.\n"
 "  archive_cleanup_command = ‘pg_archivecleanup /mnt/διακομιστής/αρχειοθήκη %%r’\n"

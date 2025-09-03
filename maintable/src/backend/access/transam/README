@@ -3,12 +3,12 @@ src/backend/access/transam/README
 The Transaction System
 ======================
 
-PostgreSQL's transaction system is a three-layer system.  The bottom layer
+maintableQL's transaction system is a three-layer system.  The bottom layer
 implements low-level transactions and subtransactions, on top of which rests
 the mainloop's control code, which in turn implements user-visible
 transactions and savepoints.
 
-The middle layer of code is called by postgres.c before and after the
+The middle layer of code is called by maintable.c before and after the
 processing of each query, or after detecting an error:
 
 		StartTransactionCommand
@@ -777,7 +777,7 @@ to skip WAL, but that won't affect its indexes.
 Asynchronous Commit
 -------------------
 
-As of PostgreSQL 8.3 it is possible to perform asynchronous commits - i.e.,
+As of maintableQL 8.3 it is possible to perform asynchronous commits - i.e.,
 we don't wait while the WAL record for the commit is fsync'ed.
 We perform an asynchronous commit when synchronous_commit = off.  Instead
 of performing an XLogFlush() up to the LSN of the commit, we merely note

@@ -25,23 +25,23 @@ use crate::streaming::systems::system::SharedSystem;
 use crate::streaming::utils::crypto;
 use anyhow::Result;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::change_password::ChangePassword;
+use messenger_common::MessengerError;
+use messenger_common::change_password::ChangePassword;
 use tracing::{debug, instrument};
 
 impl ServerCommandHandler for ChangePassword {
     fn code(&self) -> u32 {
-        iggy_common::CHANGE_PASSWORD_CODE
+        messenger_common::CHANGE_PASSWORD_CODE
     }
 
-    #[instrument(skip_all, name = "trace_change_password", fields(iggy_user_id = session.get_user_id(), iggy_client_id = session.client_id))]
+    #[instrument(skip_all, name = "trace_change_password", fields(messenger_user_id = session.get_user_id(), messenger_client_id = session.client_id))]
     async fn handle(
         self,
         sender: &mut SenderKind,
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
 
         let mut system = system.write().await;
@@ -85,13 +85,13 @@ impl ServerCommandHandler for ChangePassword {
 }
 
 impl BinaryServerCommand for ChangePassword {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::ChangePassword(change_password) => Ok(change_password),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

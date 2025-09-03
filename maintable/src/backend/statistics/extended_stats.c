@@ -1,12 +1,12 @@
 /*-------------------------------------------------------------------------
  *
  * extended_stats.c
- *	  POSTGRES extended statistics
+ *	  MAINTABLE extended statistics
  *
  * Generic code supporting statistics objects created via CREATE STATISTICS.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -14,7 +14,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/detoast.h"
 #include "access/genam.h"

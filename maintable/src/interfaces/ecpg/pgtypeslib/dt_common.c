@@ -1,6 +1,6 @@
 /* src/interfaces/ecpg/pgtypeslib/dt_common.c */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <time.h>
 #include <ctype.h>
@@ -420,7 +420,7 @@ static const datetkn datetktbl[] = {
 
 static const datetkn deltatktbl[] = {
 	/* text, token, lexval */
-	{"@", IGNORE_DTF, 0},		/* postgres relative prefix */
+	{"@", IGNORE_DTF, 0},		/* maintable relative prefix */
 	{DAGO, AGO, 0},				/* "ago" indicates negative time offset */
 	{"c", UNITS, DTK_CENTURY},	/* "century" relative */
 	{"cent", UNITS, DTK_CENTURY},	/* "century" relative */
@@ -703,9 +703,9 @@ EncodeDateOnly(struct tm *tm, int style, char *str, bool EuroDates)
 				sprintf(str + 5, ".%04d %s", -(tm->tm_year - 1), "BC");
 			break;
 
-		case USE_POSTGRES_DATES:
+		case USE_MAINTABLE_DATES:
 		default:
-			/* traditional date-only style for Postgres */
+			/* traditional date-only style for Maintable */
 			if (EuroDates)
 				sprintf(str, "%02d-%02d", tm->tm_mday, tm->tm_mon);
 			else
@@ -741,11 +741,11 @@ TrimTrailingZeros(char *str)
  * style, str is where to write the output.
  *
  * Supported date styles:
- *	Postgres - day mon hh:mm:ss yyyy tz
+ *	Maintable - day mon hh:mm:ss yyyy tz
  *	SQL - mm/dd/yyyy hh:mm:ss.ss tz
  *	ISO - yyyy-mm-dd hh:mm:ss+/-tz
  *	German - dd.mm.yyyy hh:mm:ss tz
- * Variants (affects order of month and day for Postgres and SQL styles):
+ * Variants (affects order of month and day for Maintable and SQL styles):
  *	US - mm/dd/yyyy
  *	European - dd/mm/yyyy
  */
@@ -887,9 +887,9 @@ EncodeDateTime(struct tm *tm, fsec_t fsec, bool print_tz, int tz, const char *tz
 			}
 			break;
 
-		case USE_POSTGRES_DATES:
+		case USE_MAINTABLE_DATES:
 		default:
-			/* Backward-compatible with traditional Postgres abstime dates */
+			/* Backward-compatible with traditional Maintable abstime dates */
 
 			day = date2j(tm->tm_year, tm->tm_mon, tm->tm_mday);
 			tm->tm_wday = (int) ((day + date2j(2000, 1, 1) + 1) % 7);

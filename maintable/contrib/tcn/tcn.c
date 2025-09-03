@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * tcn.c
- *	  triggered change notification support for PostgreSQL
+ *	  triggered change notification support for maintableQL
  *
- * Portions Copyright (c) 2011-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2011-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "commands/async.h"

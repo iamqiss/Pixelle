@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 if not oauth_flow_supported
   subdir_done()
@@ -23,8 +23,8 @@ libpq_oauth_inc = include_directories('.', '../libpq', '../../port')
 
 libpq_oauth_st = static_library('libpq-oauth',
   libpq_oauth_sources,
-  include_directories: [libpq_oauth_inc, postgres_inc],
-  c_pch: pch_postgres_fe_h,
+  include_directories: [libpq_oauth_inc, maintable_inc],
+  c_pch: pch_maintable_fe_h,
   dependencies: [
     frontend_stlib_code,
     libpq_oauth_deps,
@@ -39,9 +39,9 @@ libpq_oauth_name = 'libpq-oauth-@0@'.format(pg_version_major)
 
 libpq_oauth_so = shared_module(libpq_oauth_name,
   libpq_oauth_sources + libpq_oauth_so_sources,
-  include_directories: [libpq_oauth_inc, postgres_inc],
+  include_directories: [libpq_oauth_inc, maintable_inc],
   c_args: libpq_so_c_args,
-  c_pch: pch_postgres_fe_h,
+  c_pch: pch_maintable_fe_h,
   dependencies: [frontend_shlib_code, libpq, libpq_oauth_deps],
   link_depends: export_file,
   link_args: export_fmt.format(export_file.full_path()),
@@ -63,8 +63,8 @@ libpq_oauth_test_deps += executable('oauth_tests',
   dependencies: [frontend_shlib_code, libpq, libpq_oauth_deps],
   kwargs: default_bin_args + {
     'c_args': default_bin_args.get('c_args', []) + libpq_oauth_so_c_args,
-    'c_pch': pch_postgres_fe_h,
-    'include_directories': [libpq_inc, postgres_inc],
+    'c_pch': pch_maintable_fe_h,
+    'include_directories': [libpq_inc, maintable_inc],
     'install': false,
   }
 )

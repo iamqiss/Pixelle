@@ -26,13 +26,13 @@ use axum::http::StatusCode;
 use axum::routing::{delete, get};
 use axum::{Extension, Json, Router};
 use error_set::ErrContext;
-use iggy_common::Consumer;
-use iggy_common::ConsumerOffsetInfo;
-use iggy_common::Identifier;
-use iggy_common::Validatable;
-use iggy_common::delete_consumer_offset::DeleteConsumerOffset;
-use iggy_common::get_consumer_offset::GetConsumerOffset;
-use iggy_common::store_consumer_offset::StoreConsumerOffset;
+use messenger_common::Consumer;
+use messenger_common::ConsumerOffsetInfo;
+use messenger_common::Identifier;
+use messenger_common::Validatable;
+use messenger_common::delete_consumer_offset::DeleteConsumerOffset;
+use messenger_common::get_consumer_offset::GetConsumerOffset;
+use messenger_common::store_consumer_offset::StoreConsumerOffset;
 use std::sync::Arc;
 
 pub fn router(state: Arc<AppState>) -> Router {

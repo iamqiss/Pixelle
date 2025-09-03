@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 dict_snowball_sources = files(
   'libstemmer/api.c',
@@ -68,7 +68,7 @@ endif
 
 dict_snowball = shared_module('dict_snowball',
   dict_snowball_sources,
-  c_pch: pch_postgres_h,
+  c_pch: pch_maintable_h,
   kwargs: pg_mod_args + {
     'include_directories': [stemmer_inc],
   }

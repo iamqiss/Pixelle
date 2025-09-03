@@ -11,7 +11,7 @@
  * PG_TRY if necessary.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -20,7 +20,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 
@@ -339,7 +339,7 @@ ParseTzFile(const char *filename, int depth,
 		{
 			GUC_check_errmsg("could not open directory \"%s\": %m",
 							 file_path);
-			GUC_check_errhint("This may indicate an incomplete PostgreSQL installation, or that the file \"%s\" has been moved away from its proper location.",
+			GUC_check_errhint("This may indicate an incomplete maintableQL installation, or that the file \"%s\" has been moved away from its proper location.",
 							  my_exec_path);
 			return -1;
 		}

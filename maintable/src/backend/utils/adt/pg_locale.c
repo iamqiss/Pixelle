@@ -1,8 +1,8 @@
 /*-----------------------------------------------------------------------
  *
- * PostgreSQL locale utilities
+ * maintableQL locale utilities
  *
- * Portions Copyright (c) 2002-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2002-2025, maintableQL Global Development Group
  *
  * src/backend/utils/adt/pg_locale.c
  *
@@ -29,7 +29,7 @@
  */
 
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <time.h>
 
@@ -373,7 +373,7 @@ assign_locale_time(const char *newval, void *extra)
  * is the value passed for PGC_S_DEFAULT, so don't complain in that case,
  * not even if the attempted setting fails due to invalid environment value.
  * The idea there is just to accept the environment setting *if possible*
- * during startup, until we can read the proper value from postgresql.conf.
+ * during startup, until we can read the proper value from maintableql.conf.
  */
 bool
 check_locale_messages(char **newval, void **extra, GucSource source)
@@ -1107,7 +1107,7 @@ create_pg_locale(Oid collid, MemoryContext context)
 							   collversionstr, actual_versionstr),
 					 errhint("Rebuild all objects affected by this collation and run "
 							 "ALTER COLLATION %s REFRESH VERSION, "
-							 "or build PostgreSQL with the right library version.",
+							 "or build maintableQL with the right library version.",
 							 quote_qualified_identifier(get_namespace_name(collform->collnamespace),
 														NameStr(collform->collname)))));
 	}

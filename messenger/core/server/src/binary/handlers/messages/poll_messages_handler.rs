@@ -25,17 +25,17 @@ use crate::streaming::systems::messages::PollingArgs;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
 use error_set::ErrContext;
-use iggy_common::{IggyError, PollMessages};
+use messenger_common::{MessengerError, PollMessages};
 use std::io::IoSlice;
 use tracing::{debug, trace};
 
 #[derive(Debug)]
-pub struct IggyPollMetadata {
+pub struct MessengerPollMetadata {
     pub partition_id: u32,
     pub current_offset: u64,
 }
 
-impl IggyPollMetadata {
+impl MessengerPollMetadata {
     pub fn new(partition_id: u32, current_offset: u64) -> Self {
         Self {
             partition_id,
@@ -46,7 +46,7 @@ impl IggyPollMetadata {
 
 impl ServerCommandHandler for PollMessages {
     fn code(&self) -> u32 {
-        iggy_common::POLL_MESSAGES_CODE
+        messenger_common::POLL_MESSAGES_CODE
     }
 
     async fn handle(
@@ -55,7 +55,7 @@ impl ServerCommandHandler for PollMessages {
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
 
         let system = system.read().await;
@@ -76,7 +76,7 @@ impl ServerCommandHandler for PollMessages {
         drop(system);
 
         // Collect all chunks first into a Vec to extend their lifetimes.
-        // This ensures the Bytes (in reality Arc<[u8]>) references from each IggyMessagesBatch stay alive
+        // This ensures the Bytes (in reality Arc<[u8]>) references from each MessengerMessagesBatch stay alive
         // throughout the async vectored I/O operation, preventing "borrowed value does not live
         // long enough" errors while optimizing transmission by using larger chunks.
 
@@ -113,10 +113,10 @@ impl BinaryServerCommand for PollMessages {
         sender: &mut SenderKind,
         code: u32,
         length: u32,
-    ) -> Result<Self, IggyError> {
+    ) -> Result<Self, MessengerError> {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::PollMessages(poll_messages) => Ok(poll_messages),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

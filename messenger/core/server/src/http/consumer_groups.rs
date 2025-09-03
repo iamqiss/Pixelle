@@ -29,11 +29,11 @@ use axum::http::StatusCode;
 use axum::routing::get;
 use axum::{Extension, Json, Router};
 use error_set::ErrContext;
-use iggy_common::Identifier;
-use iggy_common::Validatable;
-use iggy_common::create_consumer_group::CreateConsumerGroup;
-use iggy_common::delete_consumer_group::DeleteConsumerGroup;
-use iggy_common::{ConsumerGroup, ConsumerGroupDetails};
+use messenger_common::Identifier;
+use messenger_common::Validatable;
+use messenger_common::create_consumer_group::CreateConsumerGroup;
+use messenger_common::delete_consumer_group::DeleteConsumerGroup;
+use messenger_common::{ConsumerGroup, ConsumerGroupDetails};
 use std::sync::Arc;
 use tracing::instrument;
 
@@ -93,7 +93,7 @@ async fn get_consumer_groups(
     Ok(Json(consumer_groups))
 }
 
-#[instrument(skip_all, name = "trace_create_consumer_group", fields(iggy_user_id = identity.user_id, iggy_stream_id = stream_id, iggy_topic_id = topic_id))]
+#[instrument(skip_all, name = "trace_create_consumer_group", fields(messenger_user_id = identity.user_id, messenger_stream_id = stream_id, messenger_topic_id = topic_id))]
 async fn create_consumer_group(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,
@@ -131,7 +131,7 @@ async fn create_consumer_group(
     Ok((StatusCode::CREATED, Json(consumer_group_details)))
 }
 
-#[instrument(skip_all, name = "trace_delete_consumer_group", fields(iggy_user_id = identity.user_id, iggy_stream_id = stream_id, iggy_topic_id = topic_id, iggy_group_id = group_id))]
+#[instrument(skip_all, name = "trace_delete_consumer_group", fields(messenger_user_id = identity.user_id, messenger_stream_id = stream_id, messenger_topic_id = topic_id, messenger_group_id = group_id))]
 async fn delete_consumer_group(
     State(state): State<Arc<AppState>>,
     Extension(identity): Extension<Identity>,

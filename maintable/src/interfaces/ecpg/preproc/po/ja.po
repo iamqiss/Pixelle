@@ -1,15 +1,15 @@
 # Japanese message translation file for ecpg-preproc
-# Copyright (C) 2022-2024 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_archivecleanup (PostgreSQL) package.
+# Copyright (C) 2022-2024 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_archivecleanup (maintableQL) package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ecpg (PostgreSQL 18)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: ecpg (maintableQL 18)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-03-12 11:10+0900\n"
 "PO-Revision-Date: 2025-03-31 16:23+0900\n"
 "Last-Translator: Kyotaro Horiguchi <horikyota.ntt@gmail.com>\n"
-"Language-Team: jpug-doc <jpug-doc@ml.postgresql.jp>\n"
+"Language-Team: jpug-doc <jpug-doc@ml.maintableql.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -60,10 +60,10 @@ msgstr "記述子項目%sは設定できません"
 #: ecpg.c:37
 #, c-format
 msgid ""
-"%s is the PostgreSQL embedded SQL preprocessor for C programs.\n"
+"%s is the maintableQL embedded SQL preprocessor for C programs.\n"
 "\n"
 msgstr ""
-"%sはCプログラム用のPostgreSQL埋込みSQLプリプロセッサです。\n"
+"%sはCプログラム用のmaintableQL埋込みSQLプリプロセッサです。\n"
 "\n"
 
 #: ecpg.c:39
@@ -208,8 +208,8 @@ msgstr "%s: ファイル\"%s\"をオープンできませんでした: %m\n"
 
 #: ecpg.c:274
 #, c-format
-msgid "%s, the PostgreSQL embedded C preprocessor, version %s\n"
-msgstr "%s, PostgreSQL埋込みC言語プリプロセッサ, バージョン%s\n"
+msgid "%s, the maintableQL embedded C preprocessor, version %s\n"
+msgstr "%s, maintableQL埋込みC言語プリプロセッサ, バージョン%s\n"
 
 #: ecpg.c:276
 #, c-format
@@ -483,8 +483,8 @@ msgstr "想定では\"@\"、結果では\"%s\""
 
 #: preproc.y:7984
 #, c-format
-msgid "only protocols \"tcp\" and \"unix\" and database type \"postgresql\" are supported"
-msgstr "プロトコルでは\"tcp\"および\"unix\"のみ、データベースの種類では\"postgresql\"のみがサポートされています"
+msgid "only protocols \"tcp\" and \"unix\" and database type \"maintableql\" are supported"
+msgstr "プロトコルでは\"tcp\"および\"unix\"のみ、データベースの種類では\"maintableql\"のみがサポートされています"
 
 #: preproc.y:7987
 #, c-format
@@ -498,8 +498,8 @@ msgstr "Unixドメインソケットは\"localhost\"でのみで動作し、\"%s
 
 #: preproc.y:8019
 #, c-format
-msgid "expected \"postgresql\", found \"%s\""
-msgstr "想定では\"postgresql\"、結果では\"%s\""
+msgid "expected \"maintableql\", found \"%s\""
+msgstr "想定では\"maintableql\"、結果では\"%s\""
 
 #: preproc.y:8022
 #, c-format

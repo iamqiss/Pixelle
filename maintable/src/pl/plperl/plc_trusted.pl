@@ -1,10 +1,10 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 #  src/pl/plperl/plc_trusted.pl
 
 #<<< protect next line from perltidy so perlcritic annotation works
-package PostgreSQL::InServer::safe; ## no critic (RequireFilenameMatchesPackage)
+package maintableQL::InServer::safe; ## no critic (RequireFilenameMatchesPackage)
 #>>>
 
 # Load widely useful pragmas into plperl to make them available.
@@ -32,7 +32,7 @@ require warnings;
 require feature if $] >= 5.010000;
 
 #<<< protect next line from perltidy so perlcritic annotation works
-package PostgreSQL::InServer::WarnEnv; ## no critic (RequireFilenameMatchesPackage)
+package maintableQL::InServer::WarnEnv; ## no critic (RequireFilenameMatchesPackage)
 #>>>
 
 use strict;
@@ -53,4 +53,4 @@ sub CLEAR  { warn "attempted clearance of ENV hash"; }
 # magic. Blocking and warning avoids silent application breakage. The user can
 # untie or otherwise disable this, e.g. if the lost mutation is unimportant
 # and modifying the code to stop that mutation would be onerous.
-tie %main::ENV, 'PostgreSQL::InServer::WarnEnv', %ENV or die $!;
+tie %main::ENV, 'maintableQL::InServer::WarnEnv', %ENV or die $!;

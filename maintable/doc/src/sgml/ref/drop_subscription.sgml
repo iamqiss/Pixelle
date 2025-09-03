@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_subscription.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-dropsubscription">
@@ -120,7 +120,7 @@ DROP SUBSCRIPTION mysub;
   <title>Compatibility</title>
 
   <para>
-   <command>DROP SUBSCRIPTION</command> is a <productname>PostgreSQL</productname>
+   <command>DROP SUBSCRIPTION</command> is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

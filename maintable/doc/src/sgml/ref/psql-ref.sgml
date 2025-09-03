@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/psql-ref.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-psql">
@@ -17,7 +17,7 @@ PostgreSQL documentation
   <refnamediv>
     <refname><application>psql</application></refname>
     <refpurpose>
-      <productname>PostgreSQL</productname> interactive terminal
+      <productname>maintableQL</productname> interactive terminal
     </refpurpose>
   </refnamediv>
 
@@ -35,9 +35,9 @@ PostgreSQL documentation
 
     <para>
      <application>psql</application> is a terminal-based front-end to
-     <productname>PostgreSQL</productname>. It enables you to type in
+     <productname>maintableQL</productname>. It enables you to type in
      queries interactively, issue them to
-     <productname>PostgreSQL</productname>, and see the query results.
+     <productname>maintableQL</productname>, and see the query results.
      Alternatively, input can be from a file or from command line
      arguments. In addition, <application>psql</application> provides a
      number of meta-commands and various shell-like features to
@@ -286,7 +286,7 @@ EOF
 
       <para>
       When this option is used, <application>psql</application> will connect
-      to the database <literal>postgres</literal>, unless a different database
+      to the database <literal>maintable</literal>, unless a different database
       is named on the command line (option <option>-d</option> or non-option
       argument, possibly via a service entry, but not via an environment
       variable).
@@ -644,7 +644,7 @@ EOF
 
     <para>
     <application>psql</application> is a regular
-    <productname>PostgreSQL</productname> client application. In order
+    <productname>maintableQL</productname> client application. In order
     to connect to a database you need to know the name of your target
     database, the host name and port number of the server, and what
     database user name you want to connect as. <application>psql</application>
@@ -686,7 +686,7 @@ EOF
      connection. For example:
 <programlisting>
 $ <userinput>psql "service=myservice sslmode=require"</userinput>
-$ <userinput>psql postgresql://dbmaster:5433/mydb?sslmode=require</userinput>
+$ <userinput>psql maintableql://dbmaster:5433/mydb?sslmode=require</userinput>
 </programlisting>
      This way you can also use <acronym>LDAP</acronym> for connection
      parameter lookup as described in <xref linkend="libpq-ldap"/>.
@@ -958,7 +958,7 @@ INSERT INTO tbls1 VALUES ($1, $2) \parse stmt1
         <term><literal>\c</literal> or <literal>\connect [ -reuse-previous=<replaceable class="parameter">on|off</replaceable> ] [ <replaceable class="parameter">dbname</replaceable> [ <replaceable class="parameter">username</replaceable> ] [ <replaceable class="parameter">host</replaceable> ] [ <replaceable class="parameter">port</replaceable> ] | <replaceable class="parameter">conninfo</replaceable> ]</literal></term>
         <listitem>
         <para>
-        Establishes a new connection to a <productname>PostgreSQL</productname>
+        Establishes a new connection to a <productname>maintableQL</productname>
         server.  The connection parameters to use can be specified either
         using a positional syntax (one or more of database name, user,
         host, and port), or using a <replaceable>conninfo</replaceable>
@@ -1029,7 +1029,7 @@ INSERT INTO tbls1 VALUES ($1, $2) \parse stmt1
 =&gt; \c service=foo
 =&gt; \c "host=localhost port=5432 dbname=mydb connect_timeout=10 sslmode=disable"
 =&gt; \c -reuse-previous=on sslmode=require    -- changes only sslmode
-=&gt; \c postgresql://tom@localhost/mydb?application_name=myapp
+=&gt; \c maintableql://tom@localhost/mydb?application_name=myapp
 </programlisting>
         </listitem>
       </varlistentry>
@@ -1209,7 +1209,7 @@ SELECT $1 \parse stmt1
         <listitem>
         <para>
         Shows the copyright and distribution terms of
-        <productname>PostgreSQL</productname>.
+        <productname>maintableQL</productname>.
         </para>
         </listitem>
       </varlistentry>
@@ -2515,7 +2515,7 @@ Tue Oct 26 21:40:57 CEST 1999
 <programlisting>
 =&gt; <userinput>\getenv home HOME</userinput>
 =&gt; <userinput>\echo :home</userinput>
-/home/postgres
+/home/maintable
 </programlisting></para>
         </listitem>
       </varlistentry>
@@ -2849,7 +2849,7 @@ SELECT
 
         <listitem>
         <para>
-        Stores the file into a <productname>PostgreSQL</productname>
+        Stores the file into a <productname>maintableQL</productname>
         large object. Optionally, it associates the given
         comment with the object. Example:
 <programlisting>
@@ -2877,7 +2877,7 @@ lo_import 152801
         <term><literal>\lo_list[x+]</literal></term>
         <listitem>
         <para>
-        Shows a list of all <productname>PostgreSQL</productname>
+        Shows a list of all <productname>maintableQL</productname>
         large objects currently stored in the database,
         along with any comments provided for them.
         If <literal>x</literal> is appended to the command name, the results
@@ -3261,7 +3261,7 @@ SELECT $1 \parse stmt1
 
           <para><literal>old-ascii</literal> style uses plain <acronym>ASCII</acronym>
           characters, using the formatting style used
-          in <productname>PostgreSQL</productname> 8.4 and earlier.
+          in <productname>maintableQL</productname> 8.4 and earlier.
           Newlines in data are shown using a <literal>:</literal>
           symbol in place of the left-hand column separator.
           When the data is wrapped from one line
@@ -4247,7 +4247,7 @@ bar
 
         <note>
         <para>
-         The autocommit-on mode is <productname>PostgreSQL</productname>'s traditional
+         The autocommit-on mode is <productname>maintableQL</productname>'s traditional
          behavior, but autocommit-off is closer to the SQL spec.  If you
          prefer autocommit-off, you might wish to set it in the system-wide
          <filename>psqlrc</filename> file or your
@@ -4310,7 +4310,7 @@ bar
         When this variable is set to <literal>on</literal> and a backslash command
         queries the database, the query is first shown.
         This feature helps you to study
-        <productname>PostgreSQL</productname> internals and provide
+        <productname>maintableQL</productname> internals and provide
         similar functionality in your own programs. (To select this behavior
         on program start-up, use the switch <option>-E</option>.)  If you set
         this variable to the value <literal>noexec</literal>, the queries are
@@ -4421,7 +4421,7 @@ bar
         the file name is taken from the <envar>PSQL_HISTORY</envar>
         environment variable.  If that is not set either, the default
         is <filename>~/.psql_history</filename>,
-        or <filename>%APPDATA%\postgresql\psql_history</filename> on Windows.
+        or <filename>%APPDATA%\maintableql\psql_history</filename> on Windows.
         For example, putting:
 <programlisting>
 \set HISTFILE ~/.psql_history-:DBNAME
@@ -4496,7 +4496,7 @@ bar
         command. This variable is only guaranteed to be valid until
         after the result of the next <acronym>SQL</acronym> command has
         been displayed.
-        <productname>PostgreSQL</productname> servers since version 12 do not
+        <productname>maintableQL</productname> servers since version 12 do not
         support OID system columns anymore, thus LASTOID will always be 0
         following <command>INSERT</command> when targeting such servers.
         </para>
@@ -4899,7 +4899,7 @@ testdb=&gt; <userinput>INSERT INTO my_table VALUES (:'content');</userinput>
     The colon syntax for variables is standard <acronym>SQL</acronym> for
     embedded query languages, such as <application>ECPG</application>.
     The colon syntaxes for array slices and type casts are
-    <productname>PostgreSQL</productname> extensions, which can sometimes
+    <productname>maintableQL</productname> extensions, which can sometimes
     conflict with the standard usage.  The colon-quote syntax for escaping a
     variable's value as an SQL literal or identifier is a
     <application>psql</application> extension.
@@ -5341,7 +5341,7 @@ PSQL_EDITOR_LINENUMBER_ARG='--line '
       command, a pager is not used by default.  This behavior can be changed
       by setting <envar>PSQL_WATCH_PAGER</envar> to a pager command, on Unix
       systems.  The <literal>pspg</literal> pager (not part of
-      <productname>PostgreSQL</productname> but available in many open source
+      <productname>maintableQL</productname> but available in many open source
       software distributions) can display the output of
       <command>\watch</command> if started with the option
       <literal>--stream</literal>.
@@ -5383,7 +5383,7 @@ PSQL_EDITOR_LINENUMBER_ARG='--line '
   </variablelist>
 
   <para>
-   This utility, like most other <productname>PostgreSQL</productname> utilities,
+   This utility, like most other <productname>maintableQL</productname> utilities,
    also uses the environment variables supported by <application>libpq</application>
    (see <xref linkend="libpq-envars"/>).
   </para>
@@ -5416,7 +5416,7 @@ PSQL_EDITOR_LINENUMBER_ARG='--line '
      --sysconfdir</literal>.
      Typically this directory will be <filename>../etc/</filename>
      relative to the directory containing
-     the <productname>PostgreSQL</productname> executables.
+     the <productname>maintableQL</productname> executables.
      The directory to look in can be set explicitly via
      the <envar>PGSYSCONFDIR</envar> environment variable.
     </para>
@@ -5424,14 +5424,14 @@ PSQL_EDITOR_LINENUMBER_ARG='--line '
      The user's personal startup file is named <filename>.psqlrc</filename>
      and is sought in the invoking user's home directory.
      On Windows the personal startup file is instead named
-     <filename>%APPDATA%\postgresql\psqlrc.conf</filename>.
+     <filename>%APPDATA%\maintableql\psqlrc.conf</filename>.
      In either case, this default file path can be overridden by setting
      the <envar>PSQLRC</envar> environment variable.
     </para>
     <para>
      Both the system-wide startup file and the user's personal startup file
      can be made <application>psql</application>-version-specific
-     by appending a dash and the <productname>PostgreSQL</productname>
+     by appending a dash and the <productname>maintableQL</productname>
      major or minor release identifier to the file name,
      for example <filename>~/.psqlrc-&majorversion;</filename> or
      <filename>~/.psqlrc-&version;</filename>.
@@ -5449,7 +5449,7 @@ PSQL_EDITOR_LINENUMBER_ARG='--line '
     <para>
      The command-line history is stored in the file
      <filename>~/.psql_history</filename>, or
-     <filename>%APPDATA%\postgresql\psql_history</filename> on Windows.
+     <filename>%APPDATA%\maintableql\psql_history</filename> on Windows.
     </para>
     <para>
      The location of the history file can be set explicitly via
@@ -5490,7 +5490,7 @@ PSQL_EDITOR_LINENUMBER_ARG='--line '
 
       <listitem>
       <para>
-       Before <productname>PostgreSQL</productname> 9.6,
+       Before <productname>maintableQL</productname> 9.6,
        the <option>-c</option> option implied <option>-X</option>
        (<option>--no-psqlrc</option>); this is no longer the case.
       </para>
@@ -5498,7 +5498,7 @@ PSQL_EDITOR_LINENUMBER_ARG='--line '
 
       <listitem>
       <para>
-       Before <productname>PostgreSQL</productname> 8.4,
+       Before <productname>maintableQL</productname> 8.4,
        <application>psql</application> allowed the
        first argument of a single-letter backslash command to start
        directly after the command, without intervening whitespace.
@@ -5703,7 +5703,7 @@ Argument data types | integer, bigint
 Type                | func
 Volatility          | immutable
 Parallel            | safe
-Owner               | postgres
+Owner               | maintable
 Security            | invoker
 Leakproof?          | no
 Access privileges   |

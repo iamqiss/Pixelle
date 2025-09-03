@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * tidbitmap.c
- *	  PostgreSQL tuple-id (TID) bitmap package
+ *	  maintableQL tuple-id (TID) bitmap package
  *
  * This module provides bitmap data structures that are spiritually
  * similar to Bitmapsets, but are specially adapted to store sets of
@@ -29,14 +29,14 @@
  * and a non-lossy page.
  *
  *
- * Copyright (c) 2003-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2003-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/nodes/tidbitmap.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 

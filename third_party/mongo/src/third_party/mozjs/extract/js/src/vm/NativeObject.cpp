@@ -1097,7 +1097,7 @@ void NativeObject::shrinkCapacityToInitializedLength(JSContext* cx) {
   // When an array's length becomes non-writable, writes to indexes greater
   // greater than or equal to the length don't change the array.  We handle this
   // with a check for non-writable length in most places. But in JIT code every
-  // check counts -- so we piggyback the check on the already-required range
+  // check counts -- so we pmessengerback the check on the already-required range
   // check for |index < capacity| by making capacity of arrays with non-writable
   // length never exceed the length. This mechanism is also used when an object
   // becomes non-extensible.

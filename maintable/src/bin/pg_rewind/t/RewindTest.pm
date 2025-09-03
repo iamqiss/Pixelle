@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 package RewindTest;
 
@@ -12,7 +12,7 @@ package RewindTest;
 # To run a test, the test script (in t/ subdirectory) calls the functions
 # in this module. These functions should be called in this sequence:
 #
-# 1. setup_cluster - creates a PostgreSQL cluster that runs as the primary
+# 1. setup_cluster - creates a maintableQL cluster that runs as the primary
 #
 # 2. start_primary - starts the primary server
 #
@@ -39,9 +39,9 @@ use Exporter 'import';
 use File::Copy;
 use File::Path qw(rmtree);
 use IPC::Run   qw(run);
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::RecursiveCopy;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::RecursiveCopy;
+use maintableQL::Test::Utils;
 use Test::More;
 
 our @EXPORT = qw(
@@ -67,7 +67,7 @@ our $node_standby;
 sub primary_psql
 {
 	my $cmd = shift;
-	my $dbname = shift || 'postgres';
+	my $dbname = shift || 'maintable';
 
 	system_or_bail 'psql', '--quiet', '--no-psqlrc',
 	  '--dbname' => $node_primary->connstr($dbname),
@@ -78,7 +78,7 @@ sub primary_psql
 sub standby_psql
 {
 	my $cmd = shift;
-	my $dbname = shift || 'postgres';
+	my $dbname = shift || 'maintable';
 
 	system_or_bail 'psql', '--quiet', '--no-psqlrc',
 	  '--dbname' => $node_standby->connstr($dbname),
@@ -98,7 +98,7 @@ sub check_query
 	# we want just the output, no formatting
 	my $result = run [
 		'psql', '--quiet', '--no-align', '--tuples-only', '--no-psqlrc',
-		'--dbname' => $node_primary->connstr('postgres'),
+		'--dbname' => $node_primary->connstr('maintable'),
 		'--command' => $query
 	  ],
 	  '>' => \$stdout,
@@ -118,7 +118,7 @@ sub setup_cluster
 
 	# Initialize primary, data checksums are mandatory
 	$node_primary =
-	  PostgreSQL::Test::Cluster->new(
+	  maintableQL::Test::Cluster->new(
 		'primary' . ($extra_name ? "_${extra_name}" : ''));
 
 	# Set up pg_hba.conf and pg_ident.conf for the role running
@@ -132,7 +132,7 @@ sub setup_cluster
 	# Set wal_keep_size to prevent WAL segment recycling after enforced
 	# checkpoints in the tests.
 	$node_primary->append_conf(
-		'postgresql.conf', qq(
+		'maintableql.conf', qq(
 wal_keep_size = 320MB
 allow_in_place_tablespaces = on
 ));
@@ -146,7 +146,7 @@ sub start_primary
 	# Create custom role which is used to run pg_rewind, and adjust its
 	# permissions to the minimum necessary.
 	$node_primary->safe_psql(
-		'postgres', "
+		'maintable', "
 		CREATE ROLE rewind_user LOGIN;
 		GRANT EXECUTE ON function pg_catalog.pg_ls_dir(text, boolean, boolean)
 		  TO rewind_user;
@@ -168,14 +168,14 @@ sub create_standby
 	my $extra_name = shift;
 
 	$node_standby =
-	  PostgreSQL::Test::Cluster->new(
+	  maintableQL::Test::Cluster->new(
 		'standby' . ($extra_name ? "_${extra_name}" : ''));
 	$node_primary->backup('my_backup');
 	$node_standby->init_from_backup($node_primary, 'my_backup');
 	my $connstr_primary = $node_primary->connstr();
 
 	$node_standby->append_conf(
-		"postgresql.conf", qq(
+		"maintableql.conf", qq(
 primary_conninfo='$connstr_primary'
 ));
 
@@ -210,8 +210,8 @@ sub run_pg_rewind
 	my $test_mode = shift;
 	my $primary_pgdata = $node_primary->data_dir;
 	my $standby_pgdata = $node_standby->data_dir;
-	my $standby_connstr = $node_standby->connstr('postgres');
-	my $tmp_folder = PostgreSQL::Test::Utils::tempdir;
+	my $standby_connstr = $node_standby->connstr('maintable');
+	my $tmp_folder = maintableQL::Test::Utils::tempdir;
 
 	# Append the rewind-specific role to the connection string.
 	$standby_connstr = "$standby_connstr user=rewind_user";
@@ -242,11 +242,11 @@ sub run_pg_rewind
 	# The real testing begins really now with a bifurcation of the possible
 	# scenarios that pg_rewind supports.
 
-	# Keep a temporary postgresql.conf for primary node or it would be
+	# Keep a temporary maintableql.conf for primary node or it would be
 	# overwritten during the rewind.
 	copy(
-		"$primary_pgdata/postgresql.conf",
-		"$tmp_folder/primary-postgresql.conf.tmp");
+		"$primary_pgdata/maintableql.conf",
+		"$tmp_folder/primary-maintableql.conf.tmp");
 
 	# Now run pg_rewind
 	if ($test_mode eq "local")
@@ -262,7 +262,7 @@ sub run_pg_rewind
 				'--source-pgdata' => $standby_pgdata,
 				'--target-pgdata' => $primary_pgdata,
 				'--no-sync',
-				'--config-file' => "$tmp_folder/primary-postgresql.conf.tmp",
+				'--config-file' => "$tmp_folder/primary-maintableql.conf.tmp",
 			],
 			'pg_rewind local');
 	}
@@ -278,14 +278,14 @@ sub run_pg_rewind
 				'--target-pgdata' => $primary_pgdata,
 				'--no-sync',
 				'--write-recovery-conf',
-				'--config-file' => "$tmp_folder/primary-postgresql.conf.tmp",
+				'--config-file' => "$tmp_folder/primary-maintableql.conf.tmp",
 			],
 			'pg_rewind remote');
 
 		# Check that pg_rewind with dbname and --write-recovery-conf
 		# wrote the dbname in the generated primary_conninfo value.
-		like(slurp_file("$primary_pgdata/postgresql.auto.conf"),
-			qr/dbname=postgres/m, 'recovery conf file sets dbname');
+		like(slurp_file("$primary_pgdata/maintableql.auto.conf"),
+			qr/dbname=maintable/m, 'recovery conf file sets dbname');
 
 		# Check that standby.signal is here as recovery configuration
 		# was requested.
@@ -295,7 +295,7 @@ sub run_pg_rewind
 		# Now, when pg_rewind apparently succeeded with minimal permissions,
 		# add REPLICATION privilege.  So we could test that new standby
 		# is able to connect to the new primary with generated config.
-		$node_standby->safe_psql('postgres',
+		$node_standby->safe_psql('maintable',
 			"ALTER ROLE rewind_user WITH REPLICATION;");
 	}
 	elsif ($test_mode eq "archive")
@@ -309,7 +309,7 @@ sub run_pg_rewind
 		# segments from the old primary to the archives.  These
 		# will be used by pg_rewind.
 		rmtree($node_primary->archive_dir);
-		PostgreSQL::Test::RecursiveCopy::copypath(
+		maintableQL::Test::RecursiveCopy::copypath(
 			$node_primary->data_dir . "/pg_wal",
 			$node_primary->archive_dir);
 
@@ -332,7 +332,7 @@ sub run_pg_rewind
 		# Note the use of --no-ensure-shutdown here.  WAL files are
 		# gone in this mode and the primary has been stopped
 		# gracefully already.  --config-file reuses the original
-		# postgresql.conf as restore_command has been enabled above.
+		# maintableql.conf as restore_command has been enabled above.
 		command_ok(
 			[
 				'pg_rewind',
@@ -342,7 +342,7 @@ sub run_pg_rewind
 				'--no-sync',
 				'--no-ensure-shutdown',
 				'--restore-target-wal',
-				'--config-file' => "$primary_pgdata/postgresql.conf",
+				'--config-file' => "$primary_pgdata/maintableql.conf",
 			],
 			'pg_rewind archive');
 	}
@@ -353,23 +353,23 @@ sub run_pg_rewind
 		croak("Incorrect test mode specified");
 	}
 
-	# Now move back postgresql.conf with old settings
+	# Now move back maintableql.conf with old settings
 	move(
-		"$tmp_folder/primary-postgresql.conf.tmp",
-		"$primary_pgdata/postgresql.conf");
+		"$tmp_folder/primary-maintableql.conf.tmp",
+		"$primary_pgdata/maintableql.conf");
 
 	chmod(
 		$node_primary->group_access() ? 0640 : 0600,
-		"$primary_pgdata/postgresql.conf")
+		"$primary_pgdata/maintableql.conf")
 	  or BAIL_OUT(
-		"unable to set permissions for $primary_pgdata/postgresql.conf");
+		"unable to set permissions for $primary_pgdata/maintableql.conf");
 
 	# Plug-in rewound node to the now-promoted standby node
 	if ($test_mode ne "remote")
 	{
 		my $port_standby = $node_standby->port;
 		$node_primary->append_conf(
-			'postgresql.conf', qq(
+			'maintableql.conf', qq(
 primary_conninfo='port=$port_standby'));
 
 		$node_primary->set_standby_mode();

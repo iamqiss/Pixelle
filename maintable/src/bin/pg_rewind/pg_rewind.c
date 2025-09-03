@@ -1,13 +1,13 @@
 /*-------------------------------------------------------------------------
  *
  * pg_rewind.c
- *	  Synchronizes a PostgreSQL data directory to a new timeline
+ *	  Synchronizes a maintableQL data directory to a new timeline
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -91,7 +91,7 @@ static rewind_source *source;
 static void
 usage(const char *progname)
 {
-	printf(_("%s resynchronizes a PostgreSQL cluster with another copy of the cluster.\n\n"), progname);
+	printf(_("%s resynchronizes a maintableQL cluster with another copy of the cluster.\n\n"), progname);
 	printf(_("Usage:\n  %s [OPTION]...\n\n"), progname);
 	printf(_("Options:\n"));
 	printf(_("  -c, --restore-target-wal       use \"restore_command\" in target configuration to\n"
@@ -168,7 +168,7 @@ main(int argc, char **argv)
 		}
 		if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			puts("pg_rewind (PostgreSQL) " PG_VERSION);
+			puts("pg_rewind (maintableQL) " PG_VERSION);
 			exit(0);
 		}
 	}
@@ -280,7 +280,7 @@ main(int argc, char **argv)
 	if (geteuid() == 0)
 	{
 		pg_log_error("cannot be executed by \"root\"");
-		pg_log_error_hint("You must run %s as the PostgreSQL superuser.",
+		pg_log_error_hint("You must run %s as the maintableQL superuser.",
 						  progname);
 		exit(1);
 	}
@@ -1051,23 +1051,23 @@ digestControlFile(ControlFileData *ControlFile, const char *content,
 /*
  * Get value of GUC parameter restore_command from the target cluster.
  *
- * This uses a logic based on "postgres -C" to get the value from the
+ * This uses a logic based on "maintable -C" to get the value from the
  * cluster.
  */
 static void
 getRestoreCommand(const char *argv0)
 {
 	int			rc;
-	char		postgres_exec_path[MAXPGPATH];
-	PQExpBuffer postgres_cmd;
+	char		maintable_exec_path[MAXPGPATH];
+	PQExpBuffer maintable_cmd;
 
 	if (!restore_wal)
 		return;
 
-	/* find postgres executable */
-	rc = find_other_exec(argv0, "postgres",
+	/* find maintable executable */
+	rc = find_other_exec(argv0, "maintable",
 						 PG_BACKEND_VERSIONSTR,
-						 postgres_exec_path);
+						 maintable_exec_path);
 
 	if (rc < 0)
 	{
@@ -1078,36 +1078,36 @@ getRestoreCommand(const char *argv0)
 
 		if (rc == -1)
 			pg_fatal("program \"%s\" is needed by %s but was not found in the same directory as \"%s\"",
-					 "postgres", progname, full_path);
+					 "maintable", progname, full_path);
 		else
 			pg_fatal("program \"%s\" was found by \"%s\" but was not the same version as %s",
-					 "postgres", full_path, progname);
+					 "maintable", full_path, progname);
 	}
 
 	/*
 	 * Build a command able to retrieve the value of GUC parameter
 	 * restore_command, if set.
 	 */
-	postgres_cmd = createPQExpBuffer();
+	maintable_cmd = createPQExpBuffer();
 
-	/* path to postgres, properly quoted */
-	appendShellString(postgres_cmd, postgres_exec_path);
+	/* path to maintable, properly quoted */
+	appendShellString(maintable_cmd, maintable_exec_path);
 
 	/* add -D switch, with properly quoted data directory */
-	appendPQExpBufferStr(postgres_cmd, " -D ");
-	appendShellString(postgres_cmd, datadir_target);
+	appendPQExpBufferStr(maintable_cmd, " -D ");
+	appendShellString(maintable_cmd, datadir_target);
 
 	/* add custom configuration file only if requested */
 	if (config_file != NULL)
 	{
-		appendPQExpBufferStr(postgres_cmd, " -c config_file=");
-		appendShellString(postgres_cmd, config_file);
+		appendPQExpBufferStr(maintable_cmd, " -c config_file=");
+		appendShellString(maintable_cmd, config_file);
 	}
 
 	/* add -C switch, for restore_command */
-	appendPQExpBufferStr(postgres_cmd, " -C restore_command");
+	appendPQExpBufferStr(maintable_cmd, " -C restore_command");
 
-	restore_command = pipe_read_line(postgres_cmd->data);
+	restore_command = pipe_read_line(maintable_cmd->data);
 	if (restore_command == NULL)
 		pg_fatal("could not read \"restore_command\" from target cluster");
 
@@ -1119,23 +1119,23 @@ getRestoreCommand(const char *argv0)
 	pg_log_debug("using for rewind \"restore_command = \'%s\'\"",
 				 restore_command);
 
-	destroyPQExpBuffer(postgres_cmd);
+	destroyPQExpBuffer(maintable_cmd);
 }
 
 
 /*
  * Ensure clean shutdown of target instance by launching single-user mode
- * postgres to do crash recovery.
+ * maintable to do crash recovery.
  */
 static void
 ensureCleanShutdown(const char *argv0)
 {
 	int			ret;
 	char		exec_path[MAXPGPATH];
-	PQExpBuffer postgres_cmd;
+	PQExpBuffer maintable_cmd;
 
-	/* locate postgres binary */
-	if ((ret = find_other_exec(argv0, "postgres",
+	/* locate maintable binary */
+	if ((ret = find_other_exec(argv0, "maintable",
 							   PG_BACKEND_VERSIONSTR,
 							   exec_path)) < 0)
 	{
@@ -1146,10 +1146,10 @@ ensureCleanShutdown(const char *argv0)
 
 		if (ret == -1)
 			pg_fatal("program \"%s\" is needed by %s but was not found in the same directory as \"%s\"",
-					 "postgres", progname, full_path);
+					 "maintable", progname, full_path);
 		else
 			pg_fatal("program \"%s\" was found by \"%s\" but was not the same version as %s",
-					 "postgres", full_path, progname);
+					 "maintable", full_path, progname);
 	}
 
 	pg_log_info("executing \"%s\" for target server to complete crash recovery",
@@ -1157,45 +1157,45 @@ ensureCleanShutdown(const char *argv0)
 
 	/*
 	 * Skip processing if requested, but only after ensuring presence of
-	 * postgres.
+	 * maintable.
 	 */
 	if (dry_run)
 		return;
 
 	/*
-	 * Finally run postgres in single-user mode.  There is no need to use
+	 * Finally run maintable in single-user mode.  There is no need to use
 	 * fsync here.  This makes the recovery faster, and the target data folder
 	 * is synced at the end anyway.
 	 */
-	postgres_cmd = createPQExpBuffer();
+	maintable_cmd = createPQExpBuffer();
 
-	/* path to postgres, properly quoted */
-	appendShellString(postgres_cmd, exec_path);
+	/* path to maintable, properly quoted */
+	appendShellString(maintable_cmd, exec_path);
 
 	/* add set of options with properly quoted data directory */
-	appendPQExpBufferStr(postgres_cmd, " --single -F -D ");
-	appendShellString(postgres_cmd, datadir_target);
+	appendPQExpBufferStr(maintable_cmd, " --single -F -D ");
+	appendShellString(maintable_cmd, datadir_target);
 
 	/* add custom configuration file only if requested */
 	if (config_file != NULL)
 	{
-		appendPQExpBufferStr(postgres_cmd, " -c config_file=");
-		appendShellString(postgres_cmd, config_file);
+		appendPQExpBufferStr(maintable_cmd, " -c config_file=");
+		appendShellString(maintable_cmd, config_file);
 	}
 
 	/* finish with the database name, and a properly quoted redirection */
-	appendPQExpBufferStr(postgres_cmd, " template1 < ");
-	appendShellString(postgres_cmd, DEVNULL);
+	appendPQExpBufferStr(maintable_cmd, " template1 < ");
+	appendShellString(maintable_cmd, DEVNULL);
 
 	fflush(NULL);
-	if (system(postgres_cmd->data) != 0)
+	if (system(maintable_cmd->data) != 0)
 	{
-		pg_log_error("postgres single-user mode in target cluster failed");
-		pg_log_error_detail("Command was: %s", postgres_cmd->data);
+		pg_log_error("maintable single-user mode in target cluster failed");
+		pg_log_error_detail("Command was: %s", maintable_cmd->data);
 		exit(1);
 	}
 
-	destroyPQExpBuffer(postgres_cmd);
+	destroyPQExpBuffer(maintable_cmd);
 }
 
 static void

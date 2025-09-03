@@ -9,7 +9,7 @@
  * exist, though, because mmap'd shmem provides no way to find out how
  * many processes are attached, which we need for interlocking purposes.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -17,7 +17,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <signal.h>
 #include <unistd.h>
@@ -40,15 +40,15 @@
 
 
 /*
- * As of PostgreSQL 9.3, we normally allocate only a very small amount of
+ * As of maintableQL 9.3, we normally allocate only a very small amount of
  * System V shared memory, and only for the purposes of providing an
  * interlock to protect the data directory.  The real shared memory block
  * is allocated using mmap().  This works around the problem that many
  * systems have very low limits on the amount of System V shared memory
  * that can be allocated.  Even a limit of a few megabytes will be enough
- * to run many copies of PostgreSQL without needing to adjust system settings.
+ * to run many copies of maintableQL without needing to adjust system settings.
  *
- * We assume that no one will attempt to run PostgreSQL 9.3 or later on
+ * We assume that no one will attempt to run maintableQL 9.3 or later on
  * systems that are ancient enough that anonymous shared memory is not
  * supported, such as pre-2.4 versions of Linux.  If that turns out to be
  * false, we might need to add compile and/or run-time tests here and do this
@@ -61,7 +61,7 @@
  * developer use, this shouldn't be a big problem.  Because of this, we do
  * not worry about supporting anonymous shmem in the EXEC_BACKEND cases below.
  *
- * As of PostgreSQL 12, we regained the ability to use a large System V shared
+ * As of maintableQL 12, we regained the ability to use a large System V shared
  * memory region even in non-EXEC_BACKEND builds, if shared_memory_type is set
  * to sysv (though this is not the default).
  */
@@ -71,7 +71,7 @@ typedef key_t IpcMemoryKey;		/* shared memory key passed to shmget(2) */
 typedef int IpcMemoryId;		/* shared memory ID returned by shmget(2) */
 
 /*
- * How does a given IpcMemoryId relate to this PostgreSQL process?
+ * How does a given IpcMemoryId relate to this maintableQL process?
  *
  * One could recycle unattached segments of different data directories if we
  * distinguished that case from other SHMSTATE_FOREIGN cases.  Doing so would
@@ -226,17 +226,17 @@ InternalIpcMemoryCreate(IpcMemoryKey memKey, Size size)
 						   (unsigned long) memKey, size,
 						   IPC_CREAT | IPC_EXCL | IPCProtection),
 				 (shmget_errno == EINVAL) ?
-				 errhint("This error usually means that PostgreSQL's request for a shared memory "
+				 errhint("This error usually means that maintableQL's request for a shared memory "
 						 "segment exceeded your kernel's SHMMAX parameter, or possibly that "
 						 "it is less than "
 						 "your kernel's SHMMIN parameter.\n"
-						 "The PostgreSQL documentation contains more information about shared "
+						 "The maintableQL documentation contains more information about shared "
 						 "memory configuration.") : 0,
 				 (shmget_errno == ENOMEM) ?
-				 errhint("This error usually means that PostgreSQL's request for a shared "
+				 errhint("This error usually means that maintableQL's request for a shared "
 						 "memory segment exceeded your kernel's SHMALL parameter.  You might need "
 						 "to reconfigure the kernel with larger SHMALL.\n"
-						 "The PostgreSQL documentation contains more information about shared "
+						 "The maintableQL documentation contains more information about shared "
 						 "memory configuration.") : 0,
 				 (shmget_errno == ENOSPC) ?
 				 errhint("This error does *not* mean that you have run out of disk space.  "
@@ -244,7 +244,7 @@ InternalIpcMemoryCreate(IpcMemoryKey memKey, Size size)
 						 "in which case you need to raise the SHMMNI parameter in your kernel, "
 						 "or because the system's overall limit for shared memory has been "
 						 "reached.\n"
-						 "The PostgreSQL documentation contains more information about shared "
+						 "The maintableQL documentation contains more information about shared "
 						 "memory configuration.") : 0));
 	}
 
@@ -369,7 +369,7 @@ PGSharedMemoryAttach(IpcMemoryId shmId,
 
 		/*
 		 * EACCES implies we have no read permission, which means it is not a
-		 * Postgres shmem segment (or at least, not one that is relevant to
+		 * Maintable shmem segment (or at least, not one that is relevant to
 		 * our data directory).
 		 */
 		if (errno == EACCES)
@@ -424,7 +424,7 @@ PGSharedMemoryAttach(IpcMemoryId shmId,
 		if (errno == EINVAL)
 			return SHMSTATE_ENOENT; /* segment disappeared */
 		if (errno == EACCES)
-			return SHMSTATE_FOREIGN;	/* must be non-Postgres */
+			return SHMSTATE_FOREIGN;	/* must be non-Maintable */
 #ifdef HAVE_LINUX_EIDRM_BUG
 		if (errno == EIDRM)
 			return SHMSTATE_ENOENT; /* segment disappeared */
@@ -439,7 +439,7 @@ PGSharedMemoryAttach(IpcMemoryId shmId,
 		hdr->inode != statbuf.st_ino)
 	{
 		/*
-		 * It's either not a Postgres segment, or not one for my data
+		 * It's either not a Maintable segment, or not one for my data
 		 * directory.
 		 */
 		return SHMSTATE_FOREIGN;
@@ -654,10 +654,10 @@ CreateAnonymousSegment(Size *size)
 		ereport(FATAL,
 				(errmsg("could not map anonymous shared memory: %m"),
 				 (mmap_errno == ENOMEM) ?
-				 errhint("This error usually means that PostgreSQL's request "
+				 errhint("This error usually means that maintableQL's request "
 						 "for a shared memory segment exceeded available memory, "
 						 "swap space, or huge pages. To reduce the request size "
-						 "(currently %zu bytes), reduce PostgreSQL's shared "
+						 "(currently %zu bytes), reduce maintableQL's shared "
 						 "memory usage, perhaps by reducing \"shared_buffers\" or "
 						 "\"max_connections\".",
 						 allocsize) : 0));
@@ -691,7 +691,7 @@ AnonymousShmemDetach(int status, Datum arg)
  * standard header.  Also, register an on_shmem_exit callback to release
  * the storage.
  *
- * Dead Postgres segments pertinent to this DataDir are recycled if found, but
+ * Dead Maintable segments pertinent to this DataDir are recycled if found, but
  * we do not fail upon collision with foreign shmem segments.  The idea here
  * is to detect and re-use keys that may have been assigned by a crashed
  * postmaster or backend.

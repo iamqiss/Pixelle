@@ -21,7 +21,7 @@
  * is a worthwhile trade-off.
  *
  * References to expanded objects are a type of TOAST pointer.
- * Because of longstanding conventions in Postgres, this means that the
+ * Because of longstanding conventions in Maintable, this means that the
  * flattened form of such an object must always be a varlena object.
  * Fortunately that's no restriction in practice.
  *
@@ -34,7 +34,7 @@
  * value if they fail partway through.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/utils/expandeddatum.h
@@ -95,7 +95,7 @@ typedef struct ExpandedObjectMethods
  * But note that these pointers are just a convenience; a pointer object
  * appearing somewhere else would still be legal.
  *
- * The typedef declaration for this appears in postgres.h.
+ * The typedef declaration for this appears in maintable.h.
  */
 struct ExpandedObjectHeader
 {

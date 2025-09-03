@@ -21,8 +21,8 @@ use crate::streaming::systems::COMPONENT;
 use crate::streaming::systems::system::System;
 use crate::streaming::topics::topic::Topic;
 use error_set::ErrContext;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{CompressionAlgorithm, Identifier, IggyError, IggyExpiry, MaxTopicSize};
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{CompressionAlgorithm, Identifier, MessengerError, MessengerExpiry, MaxTopicSize};
 
 impl System {
     pub fn find_topic(
@@ -30,7 +30,7 @@ impl System {
         session: &Session,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<&Topic, IggyError> {
+    ) -> Result<&Topic, MessengerError> {
         self.ensure_authenticated(session)?;
         let stream = self
             .find_stream(session, stream_id)
@@ -57,7 +57,7 @@ impl System {
         &self,
         session: &Session,
         stream_id: &Identifier,
-    ) -> Result<Vec<&Topic>, IggyError> {
+    ) -> Result<Vec<&Topic>, MessengerError> {
         self.ensure_authenticated(session)?;
         let stream = self.get_stream(stream_id).with_error_context(|error| {
             format!("{COMPONENT} (error: {error}) - failed to get stream with ID: {stream_id}")
@@ -78,7 +78,7 @@ impl System {
         session: &Session,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<Option<&Topic>, IggyError> {
+    ) -> Result<Option<&Topic>, MessengerError> {
         self.ensure_authenticated(session)?;
         let Some(stream) = self
             .try_find_stream(session, stream_id)
@@ -112,11 +112,11 @@ impl System {
         topic_id: Option<u32>,
         name: &str,
         partitions_count: u32,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         compression_algorithm: CompressionAlgorithm,
         max_topic_size: MaxTopicSize,
         replication_factor: Option<u8>,
-    ) -> Result<&Topic, IggyError> {
+    ) -> Result<&Topic, MessengerError> {
         self.ensure_authenticated(session)?;
         {
             let stream = self.get_stream(stream_id).with_error_context(|error| {
@@ -171,11 +171,11 @@ impl System {
         stream_id: &Identifier,
         topic_id: &Identifier,
         name: &str,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         compression_algorithm: CompressionAlgorithm,
         max_topic_size: MaxTopicSize,
         replication_factor: Option<u8>,
-    ) -> Result<&Topic, IggyError> {
+    ) -> Result<&Topic, MessengerError> {
         self.ensure_authenticated(session)?;
         let topic_numeric_id;
         {
@@ -235,7 +235,7 @@ impl System {
         session: &Session,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.ensure_authenticated(session)?;
         let stream_id_value;
         {
@@ -281,7 +281,7 @@ impl System {
         session: &Session,
         stream_id: &Identifier,
         topic_id: &Identifier,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let topic = self
             .find_topic(session, stream_id, topic_id)
             .with_error_context(|error| {

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use crate::IGGY_ROOT_PASSWORD_ENV;
+use crate::MESSENGER_ROOT_PASSWORD_ENV;
 use crate::configs::server::ServerConfig;
 use crate::server_error::ConfigError;
 use figment::{
@@ -31,12 +31,12 @@ use tracing::debug;
 const DEFAULT_CONFIG_PROVIDER: &str = "file";
 const DEFAULT_CONFIG_PATH: &str = "configs/server.toml";
 const SECRET_KEYS: [&str; 6] = [
-    IGGY_ROOT_PASSWORD_ENV,
-    "IGGY_DATA_MAINTENANCE_ARCHIVER_S3_KEY_SECRET",
-    "IGGY_HTTP_JWT_ENCODING_SECRET",
-    "IGGY_HTTP_JWT_DECODING_SECRET",
-    "IGGY_TCP_TLS_PASSWORD",
-    "IGGY_SYSTEM_ENCRYPTION_KEY",
+    MESSENGER_ROOT_PASSWORD_ENV,
+    "MESSENGER_DATA_MAINTENANCE_ARCHIVER_S3_KEY_SECRET",
+    "MESSENGER_HTTP_JWT_ENCODING_SECRET",
+    "MESSENGER_HTTP_JWT_DECODING_SECRET",
+    "MESSENGER_TCP_TLS_PASSWORD",
+    "MESSENGER_SYSTEM_ENCRYPTION_KEY",
 ];
 
 pub enum ConfigProviderKind {
@@ -202,7 +202,7 @@ impl CustomEnvProvider {
 
 impl Provider for CustomEnvProvider {
     fn metadata(&self) -> Metadata {
-        Metadata::named("iggy-server config")
+        Metadata::named("messenger-server config")
     }
 
     fn data(&self) -> Result<FigmentMap<Profile, Dict>, Error> {
@@ -248,7 +248,7 @@ pub fn resolve(config_provider_type: &str) -> Result<ConfigProviderKind, ConfigE
     match config_provider_type {
         DEFAULT_CONFIG_PROVIDER => {
             let path =
-                env::var("IGGY_CONFIG_PATH").unwrap_or_else(|_| DEFAULT_CONFIG_PATH.to_string());
+                env::var("MESSENGER_CONFIG_PATH").unwrap_or_else(|_| DEFAULT_CONFIG_PATH.to_string());
             Ok(ConfigProviderKind::File(FileConfigProvider::new(path)))
         }
         _ => Err(ConfigError::InvalidConfigurationProvider {
@@ -306,7 +306,7 @@ impl ConfigProvider for FileConfigProvider {
         }
 
         // Merge environment variables into the configuration
-        config_builder = config_builder.merge(CustomEnvProvider::new("IGGY_"));
+        config_builder = config_builder.merge(CustomEnvProvider::new("MESSENGER_"));
 
         // Finally, attempt to extract the final configuration
         let config_result: Result<ServerConfig, figment::Error> = config_builder.extract();

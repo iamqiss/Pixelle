@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pg_createsubscriber.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-pgcreatesubscriber">
@@ -96,7 +96,7 @@ PostgreSQL documentation
        are template databases and databases that don't allow connections.
        To discover the list of all databases, connect to the source server
        using the database name specified in the <option>--publisher-server</option>
-       connection string, or if not specified, the <literal>postgres</literal>
+       connection string, or if not specified, the <literal>maintable</literal>
        database will be used, or if that does not exist, <literal>template1</literal>
        will be used.
        Automatically generated names for subscriptions, publications, and
@@ -266,7 +266,7 @@ PostgreSQL documentation
        directory.  <application>pg_createsubscriber</application> internally uses
        the <application>pg_ctl</application> command to start and
        stop the target server.  It allows you to specify the actual
-       <filename>postgresql.conf</filename> configuration file if it is stored
+       <filename>maintableql.conf</filename> configuration file if it is stored
        outside the data directory.
       </para>
      </listitem>

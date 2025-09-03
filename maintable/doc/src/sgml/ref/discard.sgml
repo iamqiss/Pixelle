@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/discard.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-discard">
@@ -112,7 +112,7 @@ DISCARD SEQUENCES;
   <title>Compatibility</title>
 
   <para>
-   <command>DISCARD</command> is a <productname>PostgreSQL</productname> extension.
+   <command>DISCARD</command> is a <productname>maintableQL</productname> extension.
   </para>
  </refsect1>
 </refentry>

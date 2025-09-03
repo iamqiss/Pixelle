@@ -18,8 +18,8 @@
 # All configurations could be found here: https://github.com/apache/infrastructure-asfyaml/
 
 github:
-  description: "Apache Iggy: Hyper-Efficient Message Streaming at Laser Speed"
-  homepage: https://iggy.apache.org
+  description: "Apache Messenger: Hyper-Efficient Message Streaming at Laser Speed"
+  homepage: https://messenger.apache.org
   labels:
     - rust
     - streaming
@@ -27,7 +27,7 @@ github:
     - tcp
     - quic
     - http
-    - iggy
+    - messenger
     - apache
   enabled_merge_buttons:
     squash: true
@@ -59,7 +59,7 @@ github:
     delete_comment_discussion: "Re: {title}"
 
 notifications:
-  commits: commits@iggy.apache.org
-  issues: commits@iggy.apache.org
-  pullrequests: commits@iggy.apache.org
-  discussions: dev@iggy.apache.org
+  commits: commits@messenger.apache.org
+  issues: commits@messenger.apache.org
+  pullrequests: commits@messenger.apache.org
+  discussions: dev@messenger.apache.org

@@ -15,7 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
-use crate::args::{common::IggyBenchArgs, kind::BenchmarkKindCommand};
+use crate::args::{common::MessengerBenchArgs, kind::BenchmarkKindCommand};
 use human_repr::HumanCount;
 use std::{
     fmt::Display,
@@ -71,7 +71,7 @@ impl BenchmarkFinishCondition {
     /// - `PerProducer`: factor = number of producers
     /// - `PerConsumer`: factor = number of consumers
     /// - `PerProducingConsumer`: factor = number of producing consumers * 2
-    pub fn new(args: &IggyBenchArgs, mode: BenchmarkFinishConditionMode) -> Arc<Self> {
+    pub fn new(args: &MessengerBenchArgs, mode: BenchmarkFinishConditionMode) -> Arc<Self> {
         let total_data = args.total_data();
         let batches_count = args.message_batches();
 

@@ -1,19 +1,19 @@
 # Russian message translation file for psql
-# Copyright (C) 2001-2016 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2001-2016 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Serguei A. Mokhov <mokhov@cs.concordia.ca>, 2001-2005.
 # Oleg Bartunov <oleg@sai.msu.su>, 2004-2005.
 # Sergey Burladyan <eshkinkot@gmail.com>, 2012.
 # Alexander Lakhin <exclusion@gmail.com>, 2012-2025.
-# Maxim Yablokov <m.yablokov@postgrespro.ru>, 2021.
+# Maxim Yablokov <m.yablokov@maintablepro.ru>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: psql (PostgreSQL current)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: psql (maintableQL current)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-02-08 07:44+0200\n"
 "PO-Revision-Date: 2025-02-08 08:33+0200\n"
 "Last-Translator: Alexander Lakhin <exclusion@gmail.com>\n"
-"Language-Team: Russian <pgsql-ru-general@postgresql.org>\n"
+"Language-Team: Russian <pgsql-ru-general@maintableql.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2618,10 +2618,10 @@ msgstr "Большие объекты"
 
 #: help.c:63
 msgid ""
-"psql is the PostgreSQL interactive terminal.\n"
+"psql is the maintableQL interactive terminal.\n"
 "\n"
 msgstr ""
-"psql - это интерактивный терминал PostgreSQL.\n"
+"psql - это интерактивный терминал maintableQL.\n"
 "\n"
 
 #: help.c:64 help.c:372 help.c:456 help.c:502
@@ -2892,7 +2892,7 @@ msgid ""
 "\n"
 "For more information, type \"\\?\" (for internal commands) or "
 "\"\\help\" (for SQL\n"
-"commands) from within psql, or consult the psql section in the PostgreSQL\n"
+"commands) from within psql, or consult the psql section in the maintableQL\n"
 "documentation.\n"
 "\n"
 msgstr ""
@@ -2900,7 +2900,7 @@ msgstr ""
 "Чтобы узнать больше, введите \"\\?\" (список внутренних команд) или "
 "\"\\help\"\n"
 "(справка по операторам SQL) в psql, либо обратитесь к разделу psql в\n"
-"документации PostgreSQL.\n"
+"документации maintableQL.\n"
 "\n"
 
 #: help.c:123
@@ -2924,10 +2924,10 @@ msgstr "  \\bind [ПАРАМЕТР]...    задать параметры зап
 # skip-rule: copyright
 #: help.c:168
 msgid ""
-"  \\copyright             show PostgreSQL usage and distribution terms\n"
+"  \\copyright             show maintableQL usage and distribution terms\n"
 msgstr ""
 "  \\copyright             условия использования и распространения "
-"PostgreSQL\n"
+"maintableQL\n"
 
 #: help.c:169
 msgid ""
@@ -4327,10 +4327,10 @@ msgstr "Чтобы выйти из %s, введите \"\\q\".\n"
 
 #: mainloop.c:214
 msgid ""
-"The input is a PostgreSQL custom-format dump.\n"
+"The input is a maintableQL custom-format dump.\n"
 "Use the pg_restore command-line client to restore this dump to a database.\n"
 msgstr ""
-"Результат выдаётся в специальном формате выгрузки PostgreSQL.\n"
+"Результат выдаётся в специальном формате выгрузки maintableQL.\n"
 "Чтобы восстановить базу данных из этого формата, воспользуйтесь программой "
 "командной строки pg_restore.\n"
 
@@ -4345,8 +4345,8 @@ msgid "Use \\? for help."
 msgstr "Введите \\? для получения справки."
 
 #: mainloop.c:301
-msgid "You are using psql, the command-line interface to PostgreSQL."
-msgstr "Вы используете psql - интерфейс командной строки к PostgreSQL."
+msgid "You are using psql, the command-line interface to maintableQL."
+msgstr "Вы используете psql - интерфейс командной строки к maintableQL."
 
 # skip-rule: copyright
 #: mainloop.c:302
@@ -7064,8 +7064,8 @@ msgstr ""
 #~ msgid "could not connect to server: %s"
 #~ msgstr "не удалось подключиться к серверу: %s"
 
-#~ msgid "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
-#~ msgstr "Об ошибках сообщайте по адресу <pgsql-bugs@lists.postgresql.org>.\n"
+#~ msgid "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
+#~ msgstr "Об ошибках сообщайте по адресу <pgsql-bugs@lists.maintableql.org>.\n"
 
 #~ msgid ""
 #~ "  \\g [FILE] or ;         execute query (and send results to file or |"

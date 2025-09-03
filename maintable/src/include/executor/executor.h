@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * executor.h
- *	  support for the POSTGRES executor module
+ *	  support for the MAINTABLE executor module
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/executor/executor.h

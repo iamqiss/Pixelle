@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for plpython
-# Copyright (C) 2010 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2010 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Dianjin Wang <wangdianjin@gmail.com>, 2024
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: plpython (PostgreSQL) 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: plpython (maintableQL) 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-09-13 22:40+0000\n"
 "PO-Revision-Date: 2024-09-14 14:12+0800\n"
 "Last-Translator: Dianjin Wang <wangdianjin@gmail.com>\n"
@@ -441,7 +441,7 @@ msgstr "为了在一列中返回空值, 需要让返回的对象在带有值 Non
 #: plpy_util.c:31
 #, c-format
 msgid "could not convert Python Unicode object to bytes"
-msgstr "无法将 Python 中的 Unicode 编码对象转换为 PostgreSQL 服务器字节码"
+msgstr "无法将 Python 中的 Unicode 编码对象转换为 maintableQL 服务器字节码"
 
 #: plpy_util.c:37
 #, c-format

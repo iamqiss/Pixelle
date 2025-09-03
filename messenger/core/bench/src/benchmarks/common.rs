@@ -23,17 +23,17 @@ use crate::{
         producer::typed_benchmark_producer::TypedBenchmarkProducer,
         producing_consumer::typed_banchmark_producing_consumer::TypedBenchmarkProducingConsumer,
     },
-    args::common::IggyBenchArgs,
+    args::common::MessengerBenchArgs,
     utils::finish_condition::{BenchmarkFinishCondition, BenchmarkFinishConditionMode},
 };
 use bench_report::{benchmark_kind::BenchmarkKind, individual_metrics::BenchmarkIndividualMetrics};
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::{ClientFactory, login_root};
 use std::{future::Future, sync::Arc};
 use tracing::{error, info};
 
 pub async fn create_consumer(
-    client: &IggyClient,
+    client: &MessengerClient,
     consumer_group_id: Option<&u32>,
     stream_id: &Identifier,
     topic_id: &Identifier,
@@ -56,7 +56,7 @@ pub async fn create_consumer(
     }
 }
 
-pub fn rate_limit_per_actor(total_rate: Option<IggyByteSize>, actors: u32) -> Option<IggyByteSize> {
+pub fn rate_limit_per_actor(total_rate: Option<MessengerByteSize>, actors: u32) -> Option<MessengerByteSize> {
     total_rate.and_then(|rl| {
         let per_actor = rl.as_bytes_u64() / u64::from(actors);
         if per_actor > 0 {
@@ -70,12 +70,12 @@ pub fn rate_limit_per_actor(total_rate: Option<IggyByteSize>, actors: u32) -> Op
 #[allow(clippy::cognitive_complexity)]
 pub async fn init_consumer_groups(
     client_factory: &Arc<dyn ClientFactory>,
-    args: &IggyBenchArgs,
-) -> Result<(), IggyError> {
+    args: &MessengerBenchArgs,
+) -> Result<(), MessengerError> {
     let start_stream_id = args.start_stream_id();
     let topic_id: u32 = 1;
     let client = client_factory.create_client().await;
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
     let cg_count = args.number_of_consumer_groups();
 
     login_root(&client).await;
@@ -96,7 +96,7 @@ pub async fn init_consumer_groups(
             )
             .await
         {
-            Err(IggyError::ConsumerGroupIdAlreadyExists(_, _)) => {
+            Err(MessengerError::ConsumerGroupIdAlreadyExists(_, _)) => {
                 info!(
                     "Consumer group with id {} already exists",
                     consumer_group_id
@@ -113,8 +113,8 @@ pub async fn init_consumer_groups(
 
 pub fn build_producer_futures(
     client_factory: &Arc<dyn ClientFactory>,
-    args: &IggyBenchArgs,
-) -> Vec<impl Future<Output = Result<BenchmarkIndividualMetrics, IggyError>> + Send + use<>> {
+    args: &MessengerBenchArgs,
+) -> Vec<impl Future<Output = Result<BenchmarkIndividualMetrics, MessengerError>> + Send + use<>> {
     let streams = args.streams();
     let partitions = args.number_of_partitions();
     let start_stream_id = args.start_stream_id();
@@ -167,8 +167,8 @@ pub fn build_producer_futures(
 
 pub fn build_consumer_futures(
     client_factory: &Arc<dyn ClientFactory>,
-    args: &IggyBenchArgs,
-) -> Vec<impl Future<Output = Result<BenchmarkIndividualMetrics, IggyError>> + Send + use<>> {
+    args: &MessengerBenchArgs,
+) -> Vec<impl Future<Output = Result<BenchmarkIndividualMetrics, MessengerError>> + Send + use<>> {
     let start_stream_id = args.start_stream_id();
     let cg_count = args.number_of_consumer_groups();
     let consumers = args.consumers();
@@ -241,8 +241,8 @@ pub fn build_consumer_futures(
 #[allow(clippy::needless_pass_by_value)]
 pub fn build_producing_consumers_futures(
     client_factory: Arc<dyn ClientFactory>,
-    args: Arc<IggyBenchArgs>,
-) -> Vec<impl Future<Output = Result<BenchmarkIndividualMetrics, IggyError>> + Send> {
+    args: Arc<MessengerBenchArgs>,
+) -> Vec<impl Future<Output = Result<BenchmarkIndividualMetrics, MessengerError>> + Send> {
     let producing_consumers = args.producers();
     let streams = args.streams();
     let partitions = args.number_of_partitions();
@@ -310,8 +310,8 @@ pub fn build_producing_consumers_futures(
 #[allow(clippy::needless_pass_by_value)]
 pub fn build_producing_consumer_groups_futures(
     client_factory: Arc<dyn ClientFactory>,
-    args: Arc<IggyBenchArgs>,
-) -> Vec<impl Future<Output = Result<BenchmarkIndividualMetrics, IggyError>> + Send> {
+    args: Arc<MessengerBenchArgs>,
+) -> Vec<impl Future<Output = Result<BenchmarkIndividualMetrics, MessengerError>> + Send> {
     let producers = args.producers();
     let consumers = args.consumers();
     let total_actors = producers.max(consumers);

@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/load.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-load">
@@ -29,7 +29,7 @@ LOAD '<replaceable class="parameter">filename</replaceable>'
   <title>Description</title>
 
   <para>
-   This command loads a shared library file into the <productname>PostgreSQL</productname>
+   This command loads a shared library file into the <productname>maintableQL</productname>
    server's address space.  If the file has been loaded already,
    the command does nothing.  Shared library files that contain C functions
    are automatically loaded whenever one of their functions is called.
@@ -65,7 +65,7 @@ LOAD '<replaceable class="parameter">filename</replaceable>'
   <title>Compatibility</title>
 
   <para>
-   <command>LOAD</command> is a <productname>PostgreSQL</productname>
+   <command>LOAD</command> is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

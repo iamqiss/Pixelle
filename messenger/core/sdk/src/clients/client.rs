@@ -16,21 +16,21 @@
  * under the License.
  */
 
-use crate::clients::client_builder::IggyClientBuilder;
-use iggy_common::locking::{IggySharedMut, IggySharedMutFn};
+use crate::clients::client_builder::MessengerClientBuilder;
+use messenger_common::locking::{MessengerSharedMut, MessengerSharedMutFn};
 
 use crate::client_wrappers::client_wrapper::ClientWrapper;
 use crate::http::http_client::HttpClient;
 use crate::prelude::EncryptorKind;
-use crate::prelude::IggyConsumerBuilder;
-use crate::prelude::IggyError;
-use crate::prelude::IggyProducerBuilder;
+use crate::prelude::MessengerConsumerBuilder;
+use crate::prelude::MessengerError;
+use crate::prelude::MessengerProducerBuilder;
 use crate::quic::quic_client::QuicClient;
 use crate::tcp::tcp_client::TcpClient;
 use async_broadcast::Receiver;
 use async_trait::async_trait;
-use iggy_binary_protocol::{Client, SystemClient};
-use iggy_common::{
+use messenger_binary_protocol::{Client, SystemClient};
+use messenger_common::{
     ConnectionStringUtils, Consumer, DiagnosticEvent, Partitioner, TransportProtocol,
 };
 use std::fmt::Debug;
@@ -45,57 +45,57 @@ use tracing::{debug, error, info};
 /// It also provides the additional builders for the standalone consumer, consumer group, and producer.
 #[derive(Debug)]
 #[allow(dead_code)]
-pub struct IggyClient {
-    pub(crate) client: IggySharedMut<ClientWrapper>,
+pub struct MessengerClient {
+    pub(crate) client: MessengerSharedMut<ClientWrapper>,
     partitioner: Option<Arc<dyn Partitioner>>,
     pub(crate) encryptor: Option<Arc<EncryptorKind>>,
 }
 
-impl Default for IggyClient {
+impl Default for MessengerClient {
     fn default() -> Self {
-        IggyClient::new(ClientWrapper::Tcp(TcpClient::default()))
+        MessengerClient::new(ClientWrapper::Tcp(TcpClient::default()))
     }
 }
 
-impl IggyClient {
-    /// Creates a new `IggyClientBuilder`.
-    pub fn builder() -> IggyClientBuilder {
-        IggyClientBuilder::new()
+impl MessengerClient {
+    /// Creates a new `MessengerClientBuilder`.
+    pub fn builder() -> MessengerClientBuilder {
+        MessengerClientBuilder::new()
     }
 
-    /// Creates a new `IggyClientBuilder` from the provided connection string.
+    /// Creates a new `MessengerClientBuilder` from the provided connection string.
     pub fn builder_from_connection_string(
         connection_string: &str,
-    ) -> Result<IggyClientBuilder, IggyError> {
-        IggyClientBuilder::from_connection_string(connection_string)
+    ) -> Result<MessengerClientBuilder, MessengerError> {
+        MessengerClientBuilder::from_connection_string(connection_string)
     }
 
-    /// Creates a new `IggyClient` with the provided client implementation for the specific transport.
+    /// Creates a new `MessengerClient` with the provided client implementation for the specific transport.
     pub fn new(client: ClientWrapper) -> Self {
-        let client = IggySharedMut::new(client);
-        IggyClient {
+        let client = MessengerSharedMut::new(client);
+        MessengerClient {
             client,
             partitioner: None,
             encryptor: None,
         }
     }
 
-    /// Creates a new `IggyClient` from the provided connection string.
-    pub fn from_connection_string(connection_string: &str) -> Result<Self, IggyError> {
+    /// Creates a new `MessengerClient` from the provided connection string.
+    pub fn from_connection_string(connection_string: &str) -> Result<Self, MessengerError> {
         match ConnectionStringUtils::parse_protocol(connection_string)? {
-            TransportProtocol::Tcp => Ok(IggyClient::new(ClientWrapper::Tcp(
+            TransportProtocol::Tcp => Ok(MessengerClient::new(ClientWrapper::Tcp(
                 TcpClient::from_connection_string(connection_string)?,
             ))),
-            TransportProtocol::Quic => Ok(IggyClient::new(ClientWrapper::Quic(
+            TransportProtocol::Quic => Ok(MessengerClient::new(ClientWrapper::Quic(
                 QuicClient::from_connection_string(connection_string)?,
             ))),
-            TransportProtocol::Http => Ok(IggyClient::new(ClientWrapper::Http(
+            TransportProtocol::Http => Ok(MessengerClient::new(ClientWrapper::Http(
                 HttpClient::from_connection_string(connection_string)?,
             ))),
         }
     }
 
-    /// Creates a new `IggyClient` with the provided client implementation for the specific transport and the optional implementations for the `partitioner` and `encryptor`.
+    /// Creates a new `MessengerClient` with the provided client implementation for the specific transport and the optional implementations for the `partitioner` and `encryptor`.
     pub fn create(
         client: ClientWrapper,
         partitioner: Option<Arc<dyn Partitioner>>,
@@ -108,8 +108,8 @@ impl IggyClient {
             info!("Client-side encryption is enabled.");
         }
 
-        let client = IggySharedMut::new(client);
-        IggyClient {
+        let client = MessengerSharedMut::new(client);
+        MessengerClient {
             client,
             partitioner,
             encryptor,
@@ -117,7 +117,7 @@ impl IggyClient {
     }
 
     /// Returns the underlying client implementation for the specific transport.
-    pub fn client(&self) -> IggySharedMut<ClientWrapper> {
+    pub fn client(&self) -> MessengerSharedMut<ClientWrapper> {
         self.client.clone()
     }
 
@@ -128,8 +128,8 @@ impl IggyClient {
         stream: &str,
         topic: &str,
         partition: u32,
-    ) -> Result<IggyConsumerBuilder, IggyError> {
-        Ok(IggyConsumerBuilder::new(
+    ) -> Result<MessengerConsumerBuilder, MessengerError> {
+        Ok(MessengerConsumerBuilder::new(
             self.client.clone(),
             name.to_owned(),
             Consumer::new(name.try_into()?),
@@ -147,8 +147,8 @@ impl IggyClient {
         name: &str,
         stream: &str,
         topic: &str,
-    ) -> Result<IggyConsumerBuilder, IggyError> {
-        Ok(IggyConsumerBuilder::new(
+    ) -> Result<MessengerConsumerBuilder, MessengerError> {
+        Ok(MessengerConsumerBuilder::new(
             self.client.clone(),
             name.to_owned(),
             Consumer::group(name.try_into()?),
@@ -161,8 +161,8 @@ impl IggyClient {
     }
 
     /// Returns the builder for the producer.
-    pub fn producer(&self, stream: &str, topic: &str) -> Result<IggyProducerBuilder, IggyError> {
-        Ok(IggyProducerBuilder::new(
+    pub fn producer(&self, stream: &str, topic: &str) -> Result<MessengerProducerBuilder, MessengerError> {
+        Ok(MessengerProducerBuilder::new(
             self.client.clone(),
             stream.try_into()?,
             stream.to_owned(),
@@ -175,8 +175,8 @@ impl IggyClient {
 }
 
 #[async_trait]
-impl Client for IggyClient {
-    async fn connect(&self) -> Result<(), IggyError> {
+impl Client for MessengerClient {
+    async fn connect(&self) -> Result<(), MessengerError> {
         let heartbeat_interval;
         {
             let client = self.client.read().await;
@@ -190,7 +190,7 @@ impl Client for IggyClient {
                 debug!("Sending the heartbeat...");
                 if let Err(error) = client.read().await.ping().await {
                     error!("There was an error when sending a heartbeat. {error}");
-                    if error == IggyError::ClientShutdown {
+                    if error == MessengerError::ClientShutdown {
                         warn!("The client has been shut down - stopping the heartbeat.");
                         return;
                     }
@@ -203,11 +203,11 @@ impl Client for IggyClient {
         Ok(())
     }
 
-    async fn disconnect(&self) -> Result<(), IggyError> {
+    async fn disconnect(&self) -> Result<(), MessengerError> {
         self.client.read().await.disconnect().await
     }
 
-    async fn shutdown(&self) -> Result<(), IggyError> {
+    async fn shutdown(&self) -> Result<(), MessengerError> {
         self.client.read().await.shutdown().await
     }
 
@@ -223,13 +223,13 @@ mod tests {
     #[test]
     fn should_fail_with_empty_connection_string() {
         let value = "";
-        let client = IggyClient::from_connection_string(value);
+        let client = MessengerClient::from_connection_string(value);
         assert!(client.is_err());
     }
 
     #[test]
     fn should_fail_without_username() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -238,13 +238,13 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client = IggyClient::from_connection_string(&value);
+        let client = MessengerClient::from_connection_string(&value);
         assert!(client.is_err());
     }
 
     #[test]
     fn should_fail_without_password() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -253,13 +253,13 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client = IggyClient::from_connection_string(&value);
+        let client = MessengerClient::from_connection_string(&value);
         assert!(client.is_err());
     }
 
     #[test]
     fn should_fail_without_server_address() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "";
         let port = "1234";
@@ -268,13 +268,13 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client = IggyClient::from_connection_string(&value);
+        let client = MessengerClient::from_connection_string(&value);
         assert!(client.is_err());
     }
 
     #[test]
     fn should_fail_without_port() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "";
@@ -283,7 +283,7 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client = IggyClient::from_connection_string(&value);
+        let client = MessengerClient::from_connection_string(&value);
         assert!(client.is_err());
     }
 
@@ -298,13 +298,13 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client = IggyClient::from_connection_string(&value);
+        let client = MessengerClient::from_connection_string(&value);
         assert!(client.is_err());
     }
 
     #[test]
     fn should_succeed_with_default_prefix() {
-        let default_connection_string_prefix = "iggy://";
+        let default_connection_string_prefix = "messenger://";
         let server_address = "127.0.0.1";
         let port = "1234";
         let username = "user";
@@ -312,13 +312,13 @@ mod tests {
         let value = format!(
             "{default_connection_string_prefix}{username}:{password}@{server_address}:{port}"
         );
-        let client = IggyClient::from_connection_string(&value);
+        let client = MessengerClient::from_connection_string(&value);
         assert!(client.is_ok());
     }
 
     #[test]
     fn should_succeed_with_tcp_protocol() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -327,25 +327,25 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client = IggyClient::from_connection_string(&value);
+        let client = MessengerClient::from_connection_string(&value);
         assert!(client.is_ok());
     }
 
     #[test]
     fn should_succeed_with_tcp_protocol_using_pat() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Tcp;
         let server_address = "127.0.0.1";
         let port = "1234";
-        let pat = "iggypat-1234567890abcdef";
+        let pat = "messengerpat-1234567890abcdef";
         let value = format!("{connection_string_prefix}{protocol}://{pat}@{server_address}:{port}");
-        let client = IggyClient::from_connection_string(&value);
+        let client = MessengerClient::from_connection_string(&value);
         assert!(client.is_ok());
     }
 
     #[tokio::test]
     async fn should_succeed_with_quic_protocol() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Quic;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -354,25 +354,25 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client = IggyClient::from_connection_string(&value);
+        let client = MessengerClient::from_connection_string(&value);
         assert!(client.is_ok());
     }
 
     #[tokio::test]
     async fn should_succeed_with_quic_protocol_using_pat() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Quic;
         let server_address = "127.0.0.1";
         let port = "1234";
-        let pat = "iggypat-1234567890abcdef";
+        let pat = "messengerpat-1234567890abcdef";
         let value = format!("{connection_string_prefix}{protocol}://{pat}@{server_address}:{port}");
-        let client = IggyClient::from_connection_string(&value);
+        let client = MessengerClient::from_connection_string(&value);
         assert!(client.is_ok());
     }
 
     #[test]
     fn should_succeed_with_http_protocol() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Http;
         let server_address = "127.0.0.1";
         let port = "1234";
@@ -381,19 +381,19 @@ mod tests {
         let value = format!(
             "{connection_string_prefix}{protocol}://{username}:{password}@{server_address}:{port}"
         );
-        let client = IggyClient::from_connection_string(&value);
+        let client = MessengerClient::from_connection_string(&value);
         assert!(client.is_ok());
     }
 
     #[test]
     fn should_succeed_with_http_protocol_with_pat() {
-        let connection_string_prefix = "iggy+";
+        let connection_string_prefix = "messenger+";
         let protocol = TransportProtocol::Http;
         let server_address = "127.0.0.1";
         let port = "1234";
-        let pat = "iggypat-1234567890abcdef";
+        let pat = "messengerpat-1234567890abcdef";
         let value = format!("{connection_string_prefix}{protocol}://{pat}@{server_address}:{port}");
-        let client = IggyClient::from_connection_string(&value);
+        let client = MessengerClient::from_connection_string(&value);
         assert!(client.is_ok());
     }
 }

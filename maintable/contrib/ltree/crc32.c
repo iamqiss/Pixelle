@@ -7,7 +7,7 @@
  * must stay backwards-compatible!
  */
 
-#include "postgres.h"
+#include "maintable.h"
 #include "ltree.h"
 
 #ifdef LOWER_NODE

@@ -1,5 +1,5 @@
 # -----------------------------
-# PostgreSQL configuration file
+# maintableQL configuration file
 # -----------------------------
 #
 # This file consists of lines of the form:
@@ -8,7 +8,7 @@
 #
 # (The "=" is optional.)  Whitespace may be used.  Comments are introduced with
 # "#" anywhere on a line.  The complete list of parameter names and allowed
-# values can be found in the PostgreSQL documentation.
+# values can be found in the maintableQL documentation.
 #
 # The commented-out settings shown in this file represent the default values.
 # Re-commenting a setting is NOT sufficient to revert it to the default value;
@@ -21,7 +21,7 @@
 # require a server shutdown and restart to take effect.
 #
 # Any parameter can also be given as a command-line option to the server, e.g.,
-# "postgres -c log_connections=all".  Some parameters can be changed at run time
+# "maintable -c log_connections=all".  Some parameters can be changed at run time
 # with the "SET" SQL command.
 #
 # Memory units:  B  = bytes            Time units:  us  = microseconds
@@ -496,7 +496,7 @@
 # These are only used if logging_collector is on:
 #log_directory = 'log'			# directory where log files are written,
 					# can be absolute or relative to PGDATA
-#log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'	# log file name pattern,
+#log_filename = 'maintableql-%Y-%m-%d_%H%M%S.log'	# log file name pattern,
 							# can include strftime() escapes
 #log_file_mode = 0600			# creation mode for log files,
 					# begin with 0 to use octal notation
@@ -516,13 +516,13 @@
 
 # These are relevant when logging to syslog:
 #syslog_facility = 'LOCAL0'
-#syslog_ident = 'postgres'
+#syslog_ident = 'maintable'
 #syslog_sequence_numbers = on
 #syslog_split_messages = on
 
 # This is only relevant when logging to eventlog (Windows):
 # (change requires restart)
-#event_source = 'PostgreSQL'
+#event_source = 'maintableQL'
 
 # - When to Log -
 
@@ -775,7 +775,7 @@ autovacuum_worker_slots = 16	# autovacuum worker slots to allocate
 # - Locale and Formatting -
 
 #datestyle = 'iso, mdy'
-#intervalstyle = 'postgres'
+#intervalstyle = 'maintable'
 #timezone = 'GMT'
 #timezone_abbreviations = 'Default'	# Select the set of available time zone
 					# abbreviations.  Currently, there are
@@ -835,7 +835,7 @@ autovacuum_worker_slots = 16	# autovacuum worker slots to allocate
 # VERSION AND PLATFORM COMPATIBILITY
 #------------------------------------------------------------------------------
 
-# - Previous PostgreSQL Versions -
+# - Previous maintableQL Versions -
 
 #array_nulls = on
 #backslash_quote = safe_encoding	# on, off, or safe_encoding
@@ -868,7 +868,7 @@ autovacuum_worker_slots = 16	# autovacuum worker slots to allocate
 #------------------------------------------------------------------------------
 
 # These options allow settings to be loaded from files other than the
-# default postgresql.conf.  Note that these are directives, not variable
+# default maintableql.conf.  Note that these are directives, not variable
 # assignments, so they can usefully be given more than once.
 
 #include_dir = '...'			# include files ending in '.conf' from

@@ -18,7 +18,7 @@
 use crate::tcp::tcp_connection_stream::TcpConnectionStream;
 use crate::tcp::tcp_stream::ConnectionStream;
 use crate::tcp::tcp_tls_connection_stream::TcpTlsConnectionStream;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 
 #[derive(Debug)]
 #[allow(clippy::large_enum_variant)] // TODO(hubcio): consider `Box`ing
@@ -28,28 +28,28 @@ pub(crate) enum ConnectionStreamKind {
 }
 
 impl ConnectionStreamKind {
-    pub async fn read(&mut self, buf: &mut [u8]) -> Result<usize, IggyError> {
+    pub async fn read(&mut self, buf: &mut [u8]) -> Result<usize, MessengerError> {
         match self {
             Self::Tcp(c) => c.read(buf).await,
             Self::TcpTls(c) => c.read(buf).await,
         }
     }
 
-    pub async fn write(&mut self, buf: &[u8]) -> Result<(), IggyError> {
+    pub async fn write(&mut self, buf: &[u8]) -> Result<(), MessengerError> {
         match self {
             Self::Tcp(c) => c.write(buf).await,
             Self::TcpTls(c) => c.write(buf).await,
         }
     }
 
-    pub async fn flush(&mut self) -> Result<(), IggyError> {
+    pub async fn flush(&mut self) -> Result<(), MessengerError> {
         match self {
             Self::Tcp(c) => c.flush().await,
             Self::TcpTls(c) => c.flush().await,
         }
     }
 
-    pub async fn shutdown(&mut self) -> Result<(), IggyError> {
+    pub async fn shutdown(&mut self) -> Result<(), MessengerError> {
         match self {
             Self::Tcp(c) => c.shutdown().await,
             Self::TcpTls(c) => c.shutdown().await,

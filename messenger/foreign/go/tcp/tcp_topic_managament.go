@@ -18,12 +18,12 @@
 package tcp
 
 import (
-	binaryserialization "github.com/apache/iggy/foreign/go/binary_serialization"
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	ierror "github.com/apache/iggy/foreign/go/errors"
+	binaryserialization "github.com/apache/messenger/foreign/go/binary_serialization"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	ierror "github.com/apache/messenger/foreign/go/errors"
 )
 
-func (tms *IggyTcpClient) GetTopics(streamId iggcon.Identifier) ([]iggcon.Topic, error) {
+func (tms *MessengerTcpClient) GetTopics(streamId iggcon.Identifier) ([]iggcon.Topic, error) {
 	message := binaryserialization.SerializeIdentifier(streamId)
 	buffer, err := tms.sendAndFetchResponse(message, iggcon.GetTopicsCode)
 	if err != nil {
@@ -33,7 +33,7 @@ func (tms *IggyTcpClient) GetTopics(streamId iggcon.Identifier) ([]iggcon.Topic,
 	return binaryserialization.DeserializeTopics(buffer)
 }
 
-func (tms *IggyTcpClient) GetTopic(streamId iggcon.Identifier, topicId iggcon.Identifier) (*iggcon.TopicDetails, error) {
+func (tms *MessengerTcpClient) GetTopic(streamId iggcon.Identifier, topicId iggcon.Identifier) (*iggcon.TopicDetails, error) {
 	message := binaryserialization.SerializeIdentifiers(streamId, topicId)
 	buffer, err := tms.sendAndFetchResponse(message, iggcon.GetTopicCode)
 	if err != nil {
@@ -51,7 +51,7 @@ func (tms *IggyTcpClient) GetTopic(streamId iggcon.Identifier, topicId iggcon.Id
 	return topic, nil
 }
 
-func (tms *IggyTcpClient) CreateTopic(
+func (tms *MessengerTcpClient) CreateTopic(
 	streamId iggcon.Identifier,
 	name string,
 	partitionsCount uint32,
@@ -82,7 +82,7 @@ func (tms *IggyTcpClient) CreateTopic(
 	return topic, err
 }
 
-func (tms *IggyTcpClient) UpdateTopic(
+func (tms *MessengerTcpClient) UpdateTopic(
 	streamId iggcon.Identifier,
 	topicId iggcon.Identifier,
 	name string,
@@ -106,7 +106,7 @@ func (tms *IggyTcpClient) UpdateTopic(
 	return err
 }
 
-func (tms *IggyTcpClient) DeleteTopic(streamId, topicId iggcon.Identifier) error {
+func (tms *MessengerTcpClient) DeleteTopic(streamId, topicId iggcon.Identifier) error {
 	message := binaryserialization.SerializeIdentifiers(streamId, topicId)
 	_, err := tms.sendAndFetchResponse(message, iggcon.DeleteTopicCode)
 	return err

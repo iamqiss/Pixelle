@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * vacuum.c
- *	  The postgres vacuum cleaner.
+ *	  The maintable vacuum cleaner.
  *
  * This file includes (a) control and dispatch code for VACUUM and ANALYZE
  * commands, (b) code to compute various vacuum thresholds, and (c) index
@@ -12,7 +12,7 @@
  * CLUSTER, handled in cluster.c.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -21,7 +21,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 
@@ -595,9 +595,9 @@ vacuum(List *relations, const VacuumParams params, BufferAccessStrategy bstrateg
 	 * vacuum_rel expects to be entered with no transaction active; it will
 	 * start and commit its own transaction.  But we are called by an SQL
 	 * command, and so we are executing inside a transaction already. We
-	 * commit the transaction started in PostgresMain() here, and start
+	 * commit the transaction started in MaintableMain() here, and start
 	 * another one before exiting to match the commit waiting for us back in
-	 * PostgresMain().
+	 * MaintableMain().
 	 */
 	if (use_own_xacts)
 	{
@@ -607,7 +607,7 @@ vacuum(List *relations, const VacuumParams params, BufferAccessStrategy bstrateg
 		if (ActiveSnapshotSet())
 			PopActiveSnapshot();
 
-		/* matches the StartTransaction in PostgresMain() */
+		/* matches the StartTransaction in MaintableMain() */
 		CommitTransactionCommand();
 	}
 
@@ -696,7 +696,7 @@ vacuum(List *relations, const VacuumParams params, BufferAccessStrategy bstrateg
 
 		/*
 		 * This matches the CommitTransaction waiting for us in
-		 * PostgresMain().
+		 * MaintableMain().
 		 */
 		StartTransactionCommand();
 	}

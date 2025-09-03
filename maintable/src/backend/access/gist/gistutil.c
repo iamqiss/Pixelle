@@ -1,17 +1,17 @@
 /*-------------------------------------------------------------------------
  *
  * gistutil.c
- *	  utilities routines for the postgres GiST index access method.
+ *	  utilities routines for the maintable GiST index access method.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
  *			src/backend/access/gist/gistutil.c
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 

@@ -19,7 +19,7 @@ package iggcon
 
 import (
 	"encoding/binary"
-	ierror "github.com/apache/iggy/foreign/go/errors"
+	ierror "github.com/apache/messenger/foreign/go/errors"
 )
 
 type Identifier struct {

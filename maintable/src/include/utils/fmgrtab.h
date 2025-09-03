@@ -3,7 +3,7 @@
  * fmgrtab.h
  *	  The function manager's table of internal functions.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/utils/fmgrtab.h
@@ -19,7 +19,7 @@
 
 /*
  * This table stores info about all the built-in functions (ie, functions
- * that are compiled into the Postgres executable).
+ * that are compiled into the Maintable executable).
  */
 
 typedef struct

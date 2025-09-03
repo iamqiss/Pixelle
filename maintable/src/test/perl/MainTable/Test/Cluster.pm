@@ -1,30 +1,30 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 =pod
 
 =head1 NAME
 
-PostgreSQL::Test::Cluster - class representing PostgreSQL server instance
+maintableQL::Test::Cluster - class representing maintableQL server instance
 
 =head1 SYNOPSIS
 
-  use PostgreSQL::Test::Cluster;
+  use maintableQL::Test::Cluster;
 
-  my $node = PostgreSQL::Test::Cluster->new('mynode');
+  my $node = maintableQL::Test::Cluster->new('mynode');
 
   # Create a data directory with initdb
   $node->init();
 
-  # Start the PostgreSQL server
+  # Start the maintableQL server
   $node->start();
 
   # Add a setting and restart
-  $node->append_conf('postgresql.conf', 'hot_standby = on');
+  $node->append_conf('maintableql.conf', 'hot_standby = on');
   $node->restart();
 
   # Modify or delete an existing setting
-  $node->adjust_conf('postgresql.conf', 'max_wal_senders', '10');
+  $node->adjust_conf('maintableql.conf', 'max_wal_senders', '10');
 
   # get pg_config settings
   # all the settings in one string
@@ -35,16 +35,16 @@ PostgreSQL::Test::Cluster - class representing PostgreSQL server instance
   ($incdir, $sharedir) = $node->config_data(qw(--includedir --sharedir));
 
   # run a query with psql, like:
-  #   echo 'SELECT 1' | psql -qAXt postgres -v ON_ERROR_STOP=1
-  $psql_stdout = $node->safe_psql('postgres', 'SELECT 1');
+  #   echo 'SELECT 1' | psql -qAXt maintable -v ON_ERROR_STOP=1
+  $psql_stdout = $node->safe_psql('maintable', 'SELECT 1');
 
   # Run psql with a timeout, capturing stdout and stderr
   # as well as the psql exit code. Pass some extra psql
   # options. If there's an error from psql raise an exception.
   my ($stdout, $stderr, $timed_out);
-  my $cmdret = $node->psql('postgres', 'SELECT pg_sleep(600)',
+  my $cmdret = $node->psql('maintable', 'SELECT pg_sleep(600)',
 	  stdout => \$stdout, stderr => \$stderr,
-	  timeout => $PostgreSQL::Test::Utils::timeout_default,
+	  timeout => $maintableQL::Test::Utils::timeout_default,
 	  timed_out => \$timed_out,
 	  extra_params => ['--single-transaction'],
 	  on_error_die => 1)
@@ -52,11 +52,11 @@ PostgreSQL::Test::Cluster - class representing PostgreSQL server instance
 
   # Similar thing, more convenient in common cases
   my ($cmdret, $stdout, $stderr) =
-      $node->psql('postgres', 'SELECT 1');
+      $node->psql('maintable', 'SELECT 1');
 
   # run query every second until it returns 't'
   # or times out
-  $node->poll_query_until('postgres', q|SELECT random() < 0.1;|')
+  $node->poll_query_until('maintable', q|SELECT random() < 0.1;|')
     or die "timed out";
 
   # Do an online pg_basebackup
@@ -67,7 +67,7 @@ PostgreSQL::Test::Cluster - class representing PostgreSQL server instance
   my $ret = $node->backup_fs_cold('testbackup3')
 
   # Restore it to create a new independent node (not a replica)
-  my $other_node = PostgreSQL::Test::Cluster->new('mycopy');
+  my $other_node = maintableQL::Test::Cluster->new('mycopy');
   $other_node->init_from_backup($node, 'testbackup');
   $other_node->start;
 
@@ -75,15 +75,15 @@ PostgreSQL::Test::Cluster - class representing PostgreSQL server instance
   $node->stop('fast');
 
   # Find a free, unprivileged TCP port to bind some other service to
-  my $port = PostgreSQL::Test::Cluster::get_free_port();
+  my $port = maintableQL::Test::Cluster::get_free_port();
 
 =head1 DESCRIPTION
 
-PostgreSQL::Test::Cluster contains a set of routines able to work on a PostgreSQL node,
+maintableQL::Test::Cluster contains a set of routines able to work on a maintableQL node,
 allowing to start, stop, backup and initialize it with various options.
 The set of nodes managed by a given test is also managed by this module.
 
-In addition to node management, PostgreSQL::Test::Cluster instances have some wrappers
+In addition to node management, maintableQL::Test::Cluster instances have some wrappers
 around Test::More functions to run commands with an environment set up to
 point to the instance.
 
@@ -91,7 +91,7 @@ The IPC::Run module is required.
 
 =cut
 
-package PostgreSQL::Test::Cluster;
+package maintableQL::Test::Cluster;
 
 use strict;
 use warnings FATAL => 'all';
@@ -106,12 +106,12 @@ use File::stat qw(stat);
 use File::Temp ();
 use IO::Socket::INET;
 use IPC::Run;
-use PostgreSQL::Version;
-use PostgreSQL::Test::RecursiveCopy;
+use maintableQL::Version;
+use maintableQL::Test::RecursiveCopy;
 use Socket;
 use Test::More;
-use PostgreSQL::Test::Utils          ();
-use PostgreSQL::Test::BackgroundPsql ();
+use maintableQL::Test::Utils          ();
+use maintableQL::Test::BackgroundPsql ();
 use Text::ParseWords                 qw(shellwords);
 use Time::HiRes                      qw(usleep);
 use Scalar::Util                     qw(blessed);
@@ -139,7 +139,7 @@ INIT
 
 	# Set PGHOST for backward compatibility.  This doesn't work for own_host
 	# nodes, so prefer to not rely on this when writing new tests.
-	$use_tcp = !$PostgreSQL::Test::Utils::use_unix_sockets;
+	$use_tcp = !$maintableQL::Test::Utils::use_unix_sockets;
 	$test_localhost = "127.0.0.1";
 	$last_host_assigned = 1;
 	if ($use_tcp)
@@ -149,13 +149,13 @@ INIT
 	else
 	{
 		# On windows, replace windows-style \ path separators with / when
-		# putting socket directories either in postgresql.conf or libpq
+		# putting socket directories either in maintableql.conf or libpq
 		# connection strings, otherwise they are interpreted as escapes.
-		$test_pghost = PostgreSQL::Test::Utils::tempdir_short;
-		$test_pghost =~ s!\\!/!g if $PostgreSQL::Test::Utils::windows_os;
+		$test_pghost = maintableQL::Test::Utils::tempdir_short;
+		$test_pghost =~ s!\\!/!g if $maintableQL::Test::Utils::windows_os;
 	}
 	$ENV{PGHOST} = $test_pghost;
-	$ENV{PGDATABASE} = 'postgres';
+	$ENV{PGDATABASE} = 'maintable';
 
 	# Tracking of last port value assigned to accelerate free port lookup.
 	my $num_ports = $port_upper_bound - $port_lower_bound;
@@ -169,7 +169,7 @@ INIT
 	# Otherwise, try to use a directory at the top of the build tree
 	# or as a last resort use the tmp_check directory
 	my $build_dir = $ENV{top_builddir}
-	  || $PostgreSQL::Test::Utils::tmp_check;
+	  || $maintableQL::Test::Utils::tmp_check;
 	$portdir ||= "$build_dir/portlock";
 	$portdir =~ s!\\!/!g;
 	# Make sure the directory exists
@@ -251,7 +251,7 @@ sub name
 
 =item $node->logfile()
 
-Path to the PostgreSQL log file for this instance.
+Path to the maintableQL log file for this instance.
 
 =cut
 
@@ -302,9 +302,9 @@ sub is_alive
 	my ($self) = @_;
 	local %ENV = $self->_get_env();
 
-	my $ret = PostgreSQL::Test::Utils::system_log(
+	my $ret = maintableQL::Test::Utils::system_log(
 		'pg_isready',
-		'--timeout' => $PostgreSQL::Test::Utils::timeout_default,
+		'--timeout' => $maintableQL::Test::Utils::timeout_default,
 		'--host' => $self->host,
 		'--port' => $self->port);
 
@@ -331,7 +331,7 @@ sub raw_connect
 	my $pghost = $self->host;
 
 	my $socket;
-	if ($PostgreSQL::Test::Utils::use_unix_sockets)
+	if ($maintableQL::Test::Utils::use_unix_sockets)
 	{
 		require IO::Socket::UNIX;
 		my $path = "$pghost/.s.PGSQL.$pgport";
@@ -376,7 +376,7 @@ sub raw_connect_works
 
 	# If we're using Unix domain sockets, we need a working
 	# IO::Socket::UNIX implementation.
-	if ($PostgreSQL::Test::Utils::use_unix_sockets)
+	if ($maintableQL::Test::Utils::use_unix_sockets)
 	{
 		eval {
 			my $sock = $self->raw_connect();
@@ -415,7 +415,7 @@ sub group_access
 
 =item $node->data_dir()
 
-Returns the path to the data directory. postgresql.conf and pg_hba.conf are
+Returns the path to the data directory. maintableql.conf and pg_hba.conf are
 always here.
 
 =cut
@@ -475,7 +475,7 @@ sub install_path
 
 =item $node->pg_version()
 
-The version number for the node, from PostgreSQL::Version.
+The version number for the node, from maintableQL::Version.
 
 =cut
 
@@ -585,9 +585,9 @@ sub set_replication_conf
 
 	open my $hba, '>>', "$pgdata/pg_hba.conf" or die $!;
 	print $hba
-	  "\n# Allow replication (set up by PostgreSQL::Test::Cluster.pm)\n";
-	if ($PostgreSQL::Test::Utils::windows_os
-		&& !$PostgreSQL::Test::Utils::use_unix_sockets)
+	  "\n# Allow replication (set up by maintableQL::Test::Cluster.pm)\n";
+	if ($maintableQL::Test::Utils::windows_os
+		&& !$maintableQL::Test::Utils::use_unix_sockets)
 	{
 		print $hba
 		  "host replication all $test_localhost/32 sspi include_realm=1 map=regress\n";
@@ -613,7 +613,7 @@ has_archiving => 1. This is disabled by default.
 
 Data checksums can be forced off by passing no_data_checksums => 1.
 
-postgresql.conf can be set up for replication by passing the keyword
+maintableql.conf can be set up for replication by passing the keyword
 parameter allows_streaming => 'logical' or 'physical' (passing 1 will also
 suffice for physical replication) depending on type of replication that
 should be enabled. This is disabled by default.
@@ -667,7 +667,7 @@ sub init
 		or !defined $ENV{INITDB_TEMPLATE})
 	{
 		note("initializing database system by running initdb");
-		PostgreSQL::Test::Utils::system_or_bail(
+		maintableQL::Test::Utils::system_or_bail(
 			'initdb', '--no-sync',
 			'--pgdata' => $pgdata,
 			'--auth' => 'trust',
@@ -680,7 +680,7 @@ sub init
 
 		note("initializing database system by copying initdb template");
 
-		if ($PostgreSQL::Test::Utils::windows_os)
+		if ($maintableQL::Test::Utils::windows_os)
 		{
 			@copycmd = qw(robocopy /E /NJS /NJH /NFL /NDL /NP);
 			$expected_exitcode = 1;    # 1 denotes files were copied
@@ -693,7 +693,7 @@ sub init
 
 		@copycmd = (@copycmd, $ENV{INITDB_TEMPLATE}, $pgdata);
 
-		my $ret = PostgreSQL::Test::Utils::system_log(@copycmd);
+		my $ret = maintableQL::Test::Utils::system_log(@copycmd);
 
 		# See http://perldoc.perl.org/perlvar.html#%24CHILD_ERROR
 		if ($ret & 127 or $ret >> 8 != $expected_exitcode)
@@ -704,11 +704,11 @@ sub init
 		}
 	}
 
-	PostgreSQL::Test::Utils::system_or_bail($ENV{PG_REGRESS},
+	maintableQL::Test::Utils::system_or_bail($ENV{PG_REGRESS},
 		'--config-auth', $pgdata, @{ $params{auth_extra} });
 
-	open my $conf, '>>', "$pgdata/postgresql.conf" or die $!;
-	print $conf "\n# Added by PostgreSQL::Test::Cluster.pm\n";
+	open my $conf, '>>', "$pgdata/maintableql.conf" or die $!;
+	print $conf "\n# Added by maintableQL::Test::Cluster.pm\n";
 	print $conf "fsync = off\n";
 	print $conf "restart_after_crash = off\n";
 	print $conf "log_line_prefix = '%m %b[%p] %q%a '\n";
@@ -720,7 +720,7 @@ sub init
 	# TEMP_CONFIG.  Otherwise, print it before TEMP_CONFIG, thereby permitting
 	# overrides.  Settings that merely improve performance or ease debugging
 	# belong before TEMP_CONFIG.
-	print $conf PostgreSQL::Test::Utils::slurp_file($ENV{TEMP_CONFIG})
+	print $conf maintableQL::Test::Utils::slurp_file($ENV{TEMP_CONFIG})
 	  if defined $ENV{TEMP_CONFIG};
 
 	if ($params{allows_streaming})
@@ -763,8 +763,8 @@ sub init
 	}
 	close $conf;
 
-	chmod($self->group_access ? 0640 : 0600, "$pgdata/postgresql.conf")
-	  or die("unable to set permissions for $pgdata/postgresql.conf");
+	chmod($self->group_access ? 0640 : 0600, "$pgdata/maintableql.conf")
+	  or die("unable to set permissions for $pgdata/maintableql.conf");
 
 	$self->set_replication_conf if $params{allows_streaming};
 	$self->enable_archiving if $params{has_archiving};
@@ -775,7 +775,7 @@ sub init
 
 =item $node->append_conf(filename, str)
 
-A shortcut method to append to files like pg_hba.conf and postgresql.conf.
+A shortcut method to append to files like pg_hba.conf and maintableql.conf.
 
 Does no validation or sanity checking. Does not reload the configuration
 after writing.
@@ -790,7 +790,7 @@ sub append_conf
 
 	my $conffile = $self->data_dir . '/' . $filename;
 
-	PostgreSQL::Test::Utils::append_to_file($conffile, $str . "\n");
+	maintableQL::Test::Utils::append_to_file($conffile, $str . "\n");
 
 	chmod($self->group_access() ? 0640 : 0600, $conffile)
 	  or die("unable to set permissions for $conffile");
@@ -818,7 +818,7 @@ sub adjust_conf
 
 	my $conffile = $self->data_dir . '/' . $filename;
 
-	my $contents = PostgreSQL::Test::Utils::slurp_file($conffile);
+	my $contents = maintableQL::Test::Utils::slurp_file($conffile);
 	my @lines = split(/\n/, $contents);
 	my @result;
 	my $eq = $skip_equals ? '' : '= ';
@@ -867,7 +867,7 @@ sub backup
 	local %ENV = $self->_get_env();
 
 	print "# Taking pg_basebackup $backup_name from node \"$name\"\n";
-	PostgreSQL::Test::Utils::system_or_bail(
+	maintableQL::Test::Utils::system_or_bail(
 		'pg_basebackup', '--no-sync',
 		'--pgdata' => $backup_path,
 		'--host' => $self->host,
@@ -892,7 +892,7 @@ sub backup_fs_cold
 {
 	my ($self, $backup_name) = @_;
 
-	PostgreSQL::Test::RecursiveCopy::copypath(
+	maintableQL::Test::RecursiveCopy::copypath(
 		$self->data_dir,
 		$self->backup_dir . '/' . $backup_name,
 		filterfn => sub {
@@ -908,7 +908,7 @@ sub backup_fs_cold
 =item $node->init_from_backup(root_node, backup_name, %params)
 
 Initialize a node from a backup, which may come from this node or a different
-node. root_node must be a PostgreSQL::Test::Cluster reference, backup_name the string name
+node. root_node must be a maintableQL::Test::Cluster reference, backup_name the string name
 of a backup previously created on that node with $node->backup.
 
 Does not start the node after initializing it.
@@ -991,16 +991,16 @@ sub init_from_backup
 		}
 		push @combineargs, @prior_backup_path, $backup_path,
 		  '--output' => $data_path;
-		PostgreSQL::Test::Utils::system_or_bail(@combineargs);
+		maintableQL::Test::Utils::system_or_bail(@combineargs);
 	}
 	elsif (defined $params{tar_program})
 	{
 		mkdir($data_path) || die "mkdir $data_path: $!";
-		PostgreSQL::Test::Utils::system_or_bail(
+		maintableQL::Test::Utils::system_or_bail(
 			$params{tar_program},
 			'xf' => $backup_path . '/base.tar',
 			'-C' => $data_path);
-		PostgreSQL::Test::Utils::system_or_bail(
+		maintableQL::Test::Utils::system_or_bail(
 			$params{tar_program},
 			'xf' => $backup_path . '/pg_wal.tar',
 			'-C' => $data_path . '/pg_wal');
@@ -1011,7 +1011,7 @@ sub init_from_backup
 
 		# Extract tarfiles and add tablespace_map entries
 		my @tstars = grep { /^\d+.tar/ }
-		  PostgreSQL::Test::Utils::slurp_dir($backup_path);
+		  maintableQL::Test::Utils::slurp_dir($backup_path);
 		for my $tstar (@tstars)
 		{
 			my $tsoid = $tstar;
@@ -1023,7 +1023,7 @@ sub init_from_backup
 			my $newdir = $params{tablespace_map}{$tsoid};
 
 			mkdir($newdir) || die "mkdir $newdir: $!";
-			PostgreSQL::Test::Utils::system_or_bail(
+			maintableQL::Test::Utils::system_or_bail(
 				$params{tar_program},
 				'xf' => $backup_path . '/' . $tstar,
 				'-C' => $newdir);
@@ -1043,7 +1043,7 @@ sub init_from_backup
 
 		# Copy the main backup. If we see a tablespace directory for which we
 		# have a tablespace mapping, skip it, but remember that we saw it.
-		PostgreSQL::Test::RecursiveCopy::copypath(
+		maintableQL::Test::RecursiveCopy::copypath(
 			$backup_path,
 			$data_path,
 			filterfn => sub {
@@ -1072,7 +1072,7 @@ sub init_from_backup
 
 				my $olddir = $backup_path . '/pg_tblspc/' . $tsoid;
 				my $newdir = $params{tablespace_map}{$tsoid};
-				PostgreSQL::Test::RecursiveCopy::copypath($olddir, $newdir);
+				maintableQL::Test::RecursiveCopy::copypath($olddir, $newdir);
 
 				my $escaped_newdir = $newdir;
 				$escaped_newdir =~ s/\\/\\\\/g;
@@ -1087,17 +1087,17 @@ sub init_from_backup
 
 	# Base configuration for this node
 	$self->append_conf(
-		'postgresql.conf',
+		'maintableql.conf',
 		qq(
 port = $port
 ));
 	if ($use_tcp)
 	{
-		$self->append_conf('postgresql.conf', "listen_addresses = '$host'");
+		$self->append_conf('maintableql.conf', "listen_addresses = '$host'");
 	}
 	else
 	{
-		$self->append_conf('postgresql.conf',
+		$self->append_conf('maintableql.conf',
 			"unix_socket_directories = '$host'");
 	}
 	$self->enable_streaming($root_node) if $params{has_streaming};
@@ -1110,8 +1110,8 @@ port = $port
 
 =item $node->rotate_logfile()
 
-Switch to a new PostgreSQL log file.  This does not alter any running
-PostgreSQL process.  Subsequent method calls, including pg_ctl invocations,
+Switch to a new maintableQL log file.  This does not alter any running
+maintableQL process.  Subsequent method calls, including pg_ctl invocations,
 will use the new name.  Return the new name.
 
 =cut
@@ -1161,11 +1161,11 @@ sub start
 	# connections in confusing ways.
 	local %ENV = $self->_get_env(PGAPPNAME => undef);
 
-	# Note: We set the cluster_name here, not in postgresql.conf (in
+	# Note: We set the cluster_name here, not in maintableql.conf (in
 	# sub init) so that it does not get copied to standbys.
 	# -w is now the default but having it here does no harm and helps
 	# compatibility with older versions.
-	$ret = PostgreSQL::Test::Utils::system_log(
+	$ret = maintableQL::Test::Utils::system_log(
 		'pg_ctl', '--wait',
 		'--pgdata' => $self->data_dir,
 		'--log' => $self->logfile,
@@ -1251,7 +1251,7 @@ sub stop
 	{
 		push(@cmd, ('--timeout' => $params{timeout}));
 	}
-	$ret = PostgreSQL::Test::Utils::system_log(@cmd);
+	$ret = maintableQL::Test::Utils::system_log(@cmd);
 
 	if ($ret != 0)
 	{
@@ -1286,7 +1286,7 @@ sub reload
 	local %ENV = $self->_get_env();
 
 	print "### Reloading node \"$name\"\n";
-	PostgreSQL::Test::Utils::system_or_bail(
+	maintableQL::Test::Utils::system_or_bail(
 		'pg_ctl',
 		'--pgdata' => $pgdata,
 		'reload');
@@ -1316,7 +1316,7 @@ sub restart
 
 	# -w is now the default but having it here does no harm and helps
 	# compatibility with older versions.
-	$ret = PostgreSQL::Test::Utils::system_log(
+	$ret = maintableQL::Test::Utils::system_log(
 		'pg_ctl', '--wait',
 		'--pgdata' => $self->data_dir,
 		'--log' => $self->logfile,
@@ -1358,7 +1358,7 @@ sub promote
 	local %ENV = $self->_get_env();
 
 	print "### Promoting node \"$name\"\n";
-	PostgreSQL::Test::Utils::system_or_bail(
+	maintableQL::Test::Utils::system_or_bail(
 		'pg_ctl',
 		'--pgdata' => $pgdata,
 		'--log' => $logfile,
@@ -1385,7 +1385,7 @@ sub logrotate
 	local %ENV = $self->_get_env();
 
 	print "### Rotating log in node \"$name\"\n";
-	PostgreSQL::Test::Utils::system_or_bail(
+	maintableQL::Test::Utils::system_or_bail(
 		'pg_ctl',
 		'--pgdata' => $pgdata,
 		'--log' => $logfile,
@@ -1424,9 +1424,9 @@ sub enable_restoring
 	# in this routine, using only one back-slash, need to be properly changed
 	# first. Paths also need to be double-quoted to prevent failures where
 	# the path contains spaces.
-	$path =~ s{\\}{\\\\}g if ($PostgreSQL::Test::Utils::windows_os);
+	$path =~ s{\\}{\\\\}g if ($maintableQL::Test::Utils::windows_os);
 	my $copy_command =
-	  $PostgreSQL::Test::Utils::windows_os
+	  $maintableQL::Test::Utils::windows_os
 	  ? qq{copy "$path\\\\%f" "%p"}
 	  : qq{cp "$path/%f" "%p"};
 
@@ -1445,7 +1445,7 @@ restore_command = '$copy_command'
 	return;
 }
 
-sub _recovery_file { return "postgresql.conf"; }
+sub _recovery_file { return "maintableql.conf"; }
 
 =pod
 
@@ -1494,15 +1494,15 @@ sub enable_archiving
 	# in this routine, using only one back-slash, need to be properly changed
 	# first. Paths also need to be double-quoted to prevent failures where
 	# the path contains spaces.
-	$path =~ s{\\}{\\\\}g if ($PostgreSQL::Test::Utils::windows_os);
+	$path =~ s{\\}{\\\\}g if ($maintableQL::Test::Utils::windows_os);
 	my $copy_command =
-	  $PostgreSQL::Test::Utils::windows_os
+	  $maintableQL::Test::Utils::windows_os
 	  ? qq{copy "%p" "$path\\\\%f"}
 	  : qq{cp "%p" "$path/%f"};
 
 	# Enable archive_mode and archive_command on node
 	$self->append_conf(
-		'postgresql.conf', qq(
+		'maintableql.conf', qq(
 archive_mode = on
 archive_command = '$copy_command'
 ));
@@ -1552,9 +1552,9 @@ sub _update_pid
 
 =pod
 
-=item PostgreSQL::Test::Cluster->new(node_name, %params)
+=item maintableQL::Test::Cluster->new(node_name, %params)
 
-Build a new object of class C<PostgreSQL::Test::Cluster> (or of a subclass, if you have
+Build a new object of class C<maintableQL::Test::Cluster> (or of a subclass, if you have
 one), assigning a free port number.  Remembers the node, to prevent its port
 number from being reused for another node, and to ensure that it gets
 shut down when the test script exits.
@@ -1573,13 +1573,13 @@ By default, all nodes use the same PGHOST value.  If specified, generate a
 PGHOST specific to this node.  This allows multiple nodes to use the same
 port.
 
-=item install_path => '/path/to/postgres/installation'
+=item install_path => '/path/to/maintable/installation'
 
 Using this parameter is it possible to have nodes pointing to different
 installations, for testing different versions together or the same version
 with different build parameters. The provided path must be the parent of the
 installation's 'bin' and 'lib' directories. In the common case where this is
-not provided, Postgres binaries will be found in the caller's PATH.
+not provided, Maintable binaries will be found in the caller's PATH.
 
 =back
 
@@ -1628,13 +1628,13 @@ sub new
 		_port => $port,
 		_host => $host,
 		_basedir =>
-		  "$PostgreSQL::Test::Utils::tmp_check/t_${testname}_${name}_data",
+		  "$maintableQL::Test::Utils::tmp_check/t_${testname}_${name}_data",
 		_name => $name,
 		_logfile_generation => 0,
 		_logfile_base =>
-		  "$PostgreSQL::Test::Utils::log_path/${testname}_${name}",
+		  "$maintableQL::Test::Utils::log_path/${testname}_${name}",
 		_logfile =>
-		  "$PostgreSQL::Test::Utils::log_path/${testname}_${name}.log"
+		  "$maintableQL::Test::Utils::log_path/${testname}_${name}.log"
 	};
 
 	if ($params{install_path})
@@ -1667,7 +1667,7 @@ sub new
 		else
 		{
 			carp
-			  "PostgreSQL::Test::Cluster isn't fully compatible with version $ver";
+			  "maintableQL::Test::Cluster isn't fully compatible with version $ver";
 		}
 	}
 
@@ -1694,16 +1694,16 @@ sub _set_pg_version
 		BAIL_OUT("directory not found: $inst")
 		  unless -d $inst;
 
-		# If the directory exists but is not the root of a postgresql
+		# If the directory exists but is not the root of a maintableql
 		# installation, or if the user configured using
 		# --bindir=$SOMEWHERE_ELSE, we're not going to find pg_config, so
 		# complain about that, too.
 		$pg_config = "$inst/bin/pg_config";
 		BAIL_OUT("pg_config not found: $pg_config")
 		  unless -e $pg_config
-		  or ($PostgreSQL::Test::Utils::windows_os and -e "$pg_config.exe");
+		  or ($maintableQL::Test::Utils::windows_os and -e "$pg_config.exe");
 		BAIL_OUT("pg_config not executable: $pg_config")
-		  unless $PostgreSQL::Test::Utils::windows_os or -x $pg_config;
+		  unless $maintableQL::Test::Utils::windows_os or -x $pg_config;
 
 		# Leave $pg_config install_path qualified, to be sure we get the right
 		# version information, below, or die trying
@@ -1715,7 +1715,7 @@ sub _set_pg_version
 	my $version_line = qx{$pg_config --version};
 	BAIL_OUT("$pg_config failed: $!") if $?;
 
-	$self->{_pg_version} = PostgreSQL::Version->new($version_line);
+	$self->{_pg_version} = maintableQL::Version->new($version_line);
 
 	BAIL_OUT("could not parse pg_config --version output: $version_line")
 	  unless defined $self->{_pg_version};
@@ -1725,7 +1725,7 @@ sub _set_pg_version
 # (DY)LD_LIBRARY_PATH correctly set when there is an install path set for
 # the node.
 #
-# Routines that call Postgres binaries need to call this routine like this:
+# Routines that call Maintable binaries need to call this routine like this:
 #
 #    local %ENV = $self->_get_env([%extra_settings]);
 #
@@ -1736,7 +1736,7 @@ sub _set_pg_version
 # if the node's install path is set, and the copy environment is returned.
 #
 # The install path set in new() needs to be a directory containing
-# bin and lib subdirectories as in a standard PostgreSQL installation, so this
+# bin and lib subdirectories as in a standard maintableQL installation, so this
 # can't be used with installations where the bin and lib directories don't have
 # a common parent directory.
 sub _get_env
@@ -1760,7 +1760,7 @@ sub _get_env
 	my $inst = $self->{_install_path};
 	if ($inst)
 	{
-		if ($PostgreSQL::Test::Utils::windows_os)
+		if ($maintableQL::Test::Utils::windows_os)
 		{
 			# Windows picks up DLLs from the PATH rather than *LD_LIBRARY_PATH
 			# choose the right path separator
@@ -1796,7 +1796,7 @@ sub _get_env
 # Private routine to get an installation path qualified command.
 #
 # IPC::Run maintains a cache, %cmd_cache, mapping commands to paths.  Tests
-# which use nodes spanning more than one postgres installation path need to
+# which use nodes spanning more than one maintable installation path need to
 # avoid confusing which installation's binaries get run.  Setting $ENV{PATH} is
 # insufficient, as IPC::Run does not check to see if the path has changed since
 # caching a command.
@@ -1821,16 +1821,16 @@ sub installed_command
 
 Locate an unprivileged (high) TCP port that's not currently bound to
 anything.  This is used by C<new()>, and also by some test cases that need to
-start other, non-Postgres servers.
+start other, non-Maintable servers.
 
-Ports assigned to existing PostgreSQL::Test::Cluster objects are automatically
+Ports assigned to existing maintableQL::Test::Cluster objects are automatically
 excluded, even if those servers are not currently running.
 
 The port number is reserved so that other concurrent test programs will not
 try to use the same port.
 
 Note: this is not an instance method. As it's not exported it should be
-called from outside the module as C<PostgreSQL::Test::Cluster::get_free_port()>.
+called from outside the module as C<maintableQL::Test::Cluster::get_free_port()>.
 
 =cut
 
@@ -1869,7 +1869,7 @@ sub get_free_port
 		if ($found == 1)
 		{
 			foreach my $addr (qw(127.0.0.1),
-				($use_tcp && $PostgreSQL::Test::Utils::windows_os)
+				($use_tcp && $maintableQL::Test::Utils::windows_os)
 				  ? qw(127.0.0.2 127.0.0.3 0.0.0.0)
 				  : ())
 			{
@@ -1903,7 +1903,7 @@ sub can_bind
 
 	# As in postmaster, don't use SO_REUSEADDR on Windows
 	setsockopt(SOCK, SOL_SOCKET, SO_REUSEADDR, pack("l", 1))
-	  unless $PostgreSQL::Test::Utils::windows_os;
+	  unless $maintableQL::Test::Utils::windows_os;
 	my $ret = bind(SOCK, $paddr) && listen(SOCK, SOMAXCONN);
 	close(SOCK);
 	return $ret;
@@ -1967,7 +1967,7 @@ END
 
 		# clean basedir on clean test invocation
 		$node->clean_node
-		  if $exit_code == 0 && PostgreSQL::Test::Utils::all_tests_passing();
+		  if $exit_code == 0 && maintableQL::Test::Utils::all_tests_passing();
 	}
 
 	unlink @port_reservation_files;
@@ -2126,15 +2126,15 @@ If given, it must be an array reference containing additional parameters to B<ps
 e.g.
 
 	my ($stdout, $stderr, $timed_out);
-	my $cmdret = $node->psql('postgres', 'SELECT pg_sleep(600)',
+	my $cmdret = $node->psql('maintable', 'SELECT pg_sleep(600)',
 		stdout => \$stdout, stderr => \$stderr,
-		timeout => $PostgreSQL::Test::Utils::timeout_default,
+		timeout => $maintableQL::Test::Utils::timeout_default,
 		timed_out => \$timed_out,
 		extra_params => ['--single-transaction'])
 
 will set $cmdret to undef and $timed_out to a true value.
 
-	$node->psql('postgres', $sql, on_error_die => 1);
+	$node->psql('maintable', $sql, on_error_die => 1);
 
 dies with an informative message if $sql fails.
 
@@ -2308,7 +2308,7 @@ sub psql
 
 =pod
 
-=item $node->background_psql($dbname, %params) => PostgreSQL::Test::BackgroundPsql instance
+=item $node->background_psql($dbname, %params) => maintableQL::Test::BackgroundPsql instance
 
 Invoke B<psql> on B<$dbname> and return a BackgroundPsql object.
 
@@ -2332,7 +2332,7 @@ returned.  Set B<on_error_stop> to 0 to ignore errors instead.
 =item timeout => 'interval'
 
 Set a timeout for a background psql session. By default, timeout of
-$PostgreSQL::Test::Utils::timeout_default is set up.
+$maintableQL::Test::Utils::timeout_default is set up.
 
 =item connstr => B<value>
 
@@ -2395,7 +2395,7 @@ sub background_psql
 	push @psql_params, @{ $params{extra_params} }
 	  if defined $params{extra_params};
 
-	return PostgreSQL::Test::BackgroundPsql->new(0, \@psql_params, $timeout,
+	return maintableQL::Test::BackgroundPsql->new(0, \@psql_params, $timeout,
 		$params{wait});
 }
 
@@ -2406,7 +2406,7 @@ sub background_psql
 Invoke B<psql> on B<$dbname> and return a BackgroundPsql object, which the
 caller may use to send interactive input to B<psql>.
 
-A timeout of $PostgreSQL::Test::Utils::timeout_default is set up.
+A timeout of $maintableQL::Test::Utils::timeout_default is set up.
 
 psql is invoked in tuples-only unaligned mode with reading of B<.psqlrc>
 disabled.  That may be overridden by passing extra psql parameters.
@@ -2468,7 +2468,7 @@ sub interactive_psql
 	push @psql_params, @{ $params{extra_params} }
 	  if defined $params{extra_params};
 
-	return PostgreSQL::Test::BackgroundPsql->new(1, \@psql_params);
+	return maintableQL::Test::BackgroundPsql->new(1, \@psql_params);
 }
 
 # Common sub of pgbench-invoking interfaces.  Makes any requested script files
@@ -2496,7 +2496,7 @@ sub _pgbench_make_files
 				ok(0, "$filename must not already exist");
 				unlink $filename or die "cannot unlink $filename: $!";
 			}
-			PostgreSQL::Test::Utils::append_to_file($filename, $$files{$fn});
+			maintableQL::Test::Utils::append_to_file($filename, $$files{$fn});
 		}
 	}
 
@@ -2609,7 +2609,7 @@ sub connect_ok
 	# Never prompt for a password, any callers of this routine should
 	# have set up things properly, and this should not block.
 	my ($ret, $stdout, $stderr) = $self->psql(
-		'postgres',
+		'maintable',
 		$sql,
 		extra_params => ['-w'],
 		connstr => "$connstr",
@@ -2681,7 +2681,7 @@ sub connect_fails
 	# Never prompt for a password, any callers of this routine should
 	# have set up things properly, and this should not block.
 	my ($ret, $stdout, $stderr) = $self->psql(
-		'postgres',
+		'maintable',
 		undef,
 		extra_params => ['-w'],
 		connstr => "$connstr");
@@ -2710,7 +2710,7 @@ sub connect_fails
 Run B<$query> repeatedly, until it returns the B<$expected> result
 ('t', or SQL boolean true, by default).
 Continues polling if B<psql> returns an error result.
-Times out after $PostgreSQL::Test::Utils::timeout_default seconds.
+Times out after $maintableQL::Test::Utils::timeout_default seconds.
 Returns 1 if successful, 0 if timed out.
 
 =cut
@@ -2729,7 +2729,7 @@ sub poll_query_until
 		'--dbname' => $self->connstr($dbname)
 	];
 	my ($stdout, $stderr);
-	my $max_attempts = 10 * $PostgreSQL::Test::Utils::timeout_default;
+	my $max_attempts = 10 * $maintableQL::Test::Utils::timeout_default;
 	my $attempts = 0;
 
 	while ($attempts < $max_attempts)
@@ -2770,8 +2770,8 @@ $stderr);
 
 =item $node->command_ok(...)
 
-Runs a shell command like PostgreSQL::Test::Utils::command_ok, but with PGHOST and PGPORT set
-so that the command will default to connecting to this PostgreSQL::Test::Cluster.
+Runs a shell command like maintableQL::Test::Utils::command_ok, but with PGHOST and PGPORT set
+so that the command will default to connecting to this maintableQL::Test::Cluster.
 
 =cut
 
@@ -2783,7 +2783,7 @@ sub command_ok
 
 	local %ENV = $self->_get_env();
 
-	PostgreSQL::Test::Utils::command_ok(@_);
+	maintableQL::Test::Utils::command_ok(@_);
 	return;
 }
 
@@ -2791,7 +2791,7 @@ sub command_ok
 
 =item $node->command_fails(...)
 
-PostgreSQL::Test::Utils::command_fails with our connection parameters. See command_ok(...)
+maintableQL::Test::Utils::command_fails with our connection parameters. See command_ok(...)
 
 =cut
 
@@ -2803,7 +2803,7 @@ sub command_fails
 
 	local %ENV = $self->_get_env();
 
-	PostgreSQL::Test::Utils::command_fails(@_);
+	maintableQL::Test::Utils::command_fails(@_);
 	return;
 }
 
@@ -2811,7 +2811,7 @@ sub command_fails
 
 =item $node->command_like(...)
 
-PostgreSQL::Test::Utils::command_like with our connection parameters. See command_ok(...)
+maintableQL::Test::Utils::command_like with our connection parameters. See command_ok(...)
 
 =cut
 
@@ -2823,7 +2823,7 @@ sub command_like
 
 	local %ENV = $self->_get_env();
 
-	PostgreSQL::Test::Utils::command_like(@_);
+	maintableQL::Test::Utils::command_like(@_);
 	return;
 }
 
@@ -2831,7 +2831,7 @@ sub command_like
 
 =item $node->command_fails_like(...)
 
-PostgreSQL::Test::Utils::command_fails_like with our connection parameters. See command_ok(...)
+maintableQL::Test::Utils::command_fails_like with our connection parameters. See command_ok(...)
 
 =cut
 
@@ -2843,7 +2843,7 @@ sub command_fails_like
 
 	local %ENV = $self->_get_env();
 
-	PostgreSQL::Test::Utils::command_fails_like(@_);
+	maintableQL::Test::Utils::command_fails_like(@_);
 	return;
 }
 
@@ -2851,7 +2851,7 @@ sub command_fails_like
 
 =item $node->command_ok_or_fails_like(...)
 
-PostgreSQL::Test::Utils::command_ok_or_fails_like with our connection parameters. See command_ok(...)
+maintableQL::Test::Utils::command_ok_or_fails_like with our connection parameters. See command_ok(...)
 
 =cut
 
@@ -2863,14 +2863,14 @@ sub command_ok_or_fails_like
 
 	local %ENV = $self->_get_env();
 
-	return PostgreSQL::Test::Utils::command_ok_or_fails_like(@_);
+	return maintableQL::Test::Utils::command_ok_or_fails_like(@_);
 }
 
 =pod
 
 =item $node->command_checks_all(...)
 
-PostgreSQL::Test::Utils::command_checks_all with our connection parameters. See
+maintableQL::Test::Utils::command_checks_all with our connection parameters. See
 command_ok(...)
 
 =cut
@@ -2883,7 +2883,7 @@ sub command_checks_all
 
 	local %ENV = $self->_get_env();
 
-	PostgreSQL::Test::Utils::command_checks_all(@_);
+	maintableQL::Test::Utils::command_checks_all(@_);
 	return;
 }
 
@@ -2906,10 +2906,10 @@ sub issues_sql_like
 
 	my $log_location = -s $self->logfile;
 
-	my $result = PostgreSQL::Test::Utils::run_log($cmd);
+	my $result = maintableQL::Test::Utils::run_log($cmd);
 	ok($result, "@$cmd exit code 0");
 	my $log =
-	  PostgreSQL::Test::Utils::slurp_file($self->logfile, $log_location);
+	  maintableQL::Test::Utils::slurp_file($self->logfile, $log_location);
 	like($log, $expected_sql, "$test_name: SQL found in server log");
 	return;
 }
@@ -2933,10 +2933,10 @@ sub issues_sql_unlike
 
 	my $log_location = -s $self->logfile;
 
-	my $result = PostgreSQL::Test::Utils::run_log($cmd);
+	my $result = maintableQL::Test::Utils::run_log($cmd);
 	ok($result, "@$cmd exit code 0");
 	my $log =
-	  PostgreSQL::Test::Utils::slurp_file($self->logfile, $log_location);
+	  maintableQL::Test::Utils::slurp_file($self->logfile, $log_location);
 	unlike($log, $unexpected_sql, "$test_name: SQL not found in server log");
 	return;
 }
@@ -2952,7 +2952,7 @@ Returns the contents of log of the node
 sub log_content
 {
 	my ($self) = @_;
-	return PostgreSQL::Test::Utils::slurp_file($self->logfile);
+	return maintableQL::Test::Utils::slurp_file($self->logfile);
 }
 
 =pod
@@ -3004,7 +3004,7 @@ sub log_check
 	if (@log_like or @log_unlike)
 	{
 		my $log_contents =
-		  PostgreSQL::Test::Utils::slurp_file($self->logfile, $offset);
+		  maintableQL::Test::Utils::slurp_file($self->logfile, $offset);
 
 		while (my $regex = shift @log_like)
 		{
@@ -3029,7 +3029,7 @@ sub log_contains
 {
 	my ($self, $pattern, $offset) = @_;
 
-	return PostgreSQL::Test::Utils::slurp_file($self->logfile, $offset) =~
+	return maintableQL::Test::Utils::slurp_file($self->logfile, $offset) =~
 	  m/$pattern/;
 }
 
@@ -3037,8 +3037,8 @@ sub log_contains
 
 =item $node->run_log(...)
 
-Runs a shell command like PostgreSQL::Test::Utils::run_log, but with connection parameters set
-so that the command will default to connecting to this PostgreSQL::Test::Cluster.
+Runs a shell command like maintableQL::Test::Utils::run_log, but with connection parameters set
+so that the command will default to connecting to this maintableQL::Test::Cluster.
 
 =cut
 
@@ -3048,7 +3048,7 @@ sub run_log
 
 	local %ENV = $self->_get_env();
 
-	return PostgreSQL::Test::Utils::run_log(@_);
+	return maintableQL::Test::Utils::run_log(@_);
 }
 
 =pod
@@ -3082,7 +3082,7 @@ sub lsn
 	  . join(', ', keys %modes)
 	  if !defined($modes{$mode});
 
-	my $result = $self->safe_psql('postgres', "SELECT $modes{$mode}");
+	my $result = $self->safe_psql('maintable', "SELECT $modes{$mode}");
 	chomp($result);
 	if ($result eq '')
 	{
@@ -3140,7 +3140,7 @@ sub emit_wal
 
 	return int(
 		$self->safe_psql(
-			'postgres',
+			'maintable',
 			"SELECT pg_logical_emit_message(true, '', repeat('a', $size)) - '0/0'"
 		));
 }
@@ -3154,7 +3154,7 @@ sub _get_insert_lsn
 	my ($self) = @_;
 	return int(
 		$self->safe_psql(
-			'postgres', "SELECT pg_current_wal_insert_lsn() - '0/0'"));
+			'maintable', "SELECT pg_current_wal_insert_lsn() - '0/0'"));
 }
 
 =pod
@@ -3257,7 +3257,7 @@ sub check_extension
 {
 	my ($self, $extension_name) = @_;
 
-	my $result = $self->safe_psql('postgres',
+	my $result = $self->safe_psql('maintable',
 		"SELECT count(*) > 0 FROM pg_available_extensions WHERE name = '$extension_name';"
 	);
 
@@ -3277,7 +3277,7 @@ sub wait_for_event
 	my ($self, $backend_type, $wait_event_name) = @_;
 
 	$self->poll_query_until(
-		'postgres', qq[
+		'maintable', qq[
 		SELECT count(*) > 0 FROM pg_stat_activity
 		WHERE backend_type = '$backend_type' AND wait_event = '$wait_event_name'
 	])
@@ -3298,7 +3298,7 @@ but 'mode' may be specified to wait for any of sent|write|flush|replay.
 The replication connection must be in a streaming state.
 
 When doing physical replication, the standby is usually identified by
-passing its PostgreSQL::Test::Cluster instance.  When doing logical
+passing its maintableQL::Test::Cluster instance.  When doing logical
 replication, standby_name identifies a subscription.
 
 When not in recovery, the default value of target_lsn is $node->lsn('write'),
@@ -3316,7 +3316,7 @@ querying some intermediate replication node rather than the primary.
 If there is no active replication connection from this peer, waits until
 poll_query_until timeout.
 
-Requires that the 'postgres' db exists and is accessible.
+Requires that the 'maintable' db exists and is accessible.
 
 This is not a test. It die()s on failure.
 
@@ -3332,16 +3332,16 @@ sub wait_for_catchup
 	  . join(', ', keys(%valid_modes))
 	  unless exists($valid_modes{$mode});
 
-	# Allow passing of a PostgreSQL::Test::Cluster instance as shorthand
+	# Allow passing of a maintableQL::Test::Cluster instance as shorthand
 	if (blessed($standby_name)
-		&& $standby_name->isa("PostgreSQL::Test::Cluster"))
+		&& $standby_name->isa("maintableQL::Test::Cluster"))
 	{
 		$standby_name = $standby_name->name;
 	}
 	if (!defined($target_lsn))
 	{
 		my $isrecovery =
-		  $self->safe_psql('postgres', "SELECT pg_is_in_recovery()");
+		  $self->safe_psql('maintable', "SELECT pg_is_in_recovery()");
 		chomp($isrecovery);
 		if ($isrecovery eq 't')
 		{
@@ -3363,9 +3363,9 @@ sub wait_for_catchup
 	my $query = qq[SELECT '$target_lsn' <= ${mode}_lsn AND state = 'streaming'
          FROM pg_catalog.pg_stat_replication
          WHERE application_name IN ('$standby_name', 'walreceiver')];
-	if (!$self->poll_query_until('postgres', $query))
+	if (!$self->poll_query_until('maintable', $query))
 	{
-		if (PostgreSQL::Test::Utils::has_wal_read_bug)
+		if (maintableQL::Test::Utils::has_wal_read_bug)
 		{
 			# Mimic having skipped the test file.  If >0 tests have run, the
 			# harness won't accept a skip; otherwise, it won't accept
@@ -3379,7 +3379,7 @@ sub wait_for_catchup
 		{
 			# Fetch additional detail for debugging purposes
 			$query = qq[SELECT * FROM pg_catalog.pg_stat_replication];
-			my $details = $self->safe_psql('postgres', $query);
+			my $details = $self->safe_psql('maintable', $query);
 			diag qq(Last pg_stat_replication contents:
 ${details});
 			croak "timed out waiting for catchup";
@@ -3400,7 +3400,7 @@ omitted, the LSN to wait for is obtained from I<$node>.
 
 The replication connection must be in a streaming state.
 
-Requires that the 'postgres' db exists and is accessible.
+Requires that the 'maintable' db exists and is accessible.
 
 This is not a test. It die()s on failure.
 
@@ -3420,7 +3420,7 @@ Wait for the named replication slot to equal or pass the supplied target_lsn.
 The location used is the restart_lsn unless mode is given, in which case it may
 be 'restart' or 'confirmed_flush'.
 
-Requires that the 'postgres' db exists and is accessible.
+Requires that the 'maintable' db exists and is accessible.
 
 This is not a test. It die()s on failure.
 
@@ -3449,11 +3449,11 @@ sub wait_for_slot_catchup
 	  . $self->name . "\n";
 	my $query =
 	  qq[SELECT '$target_lsn' <= ${mode}_lsn FROM pg_catalog.pg_replication_slots WHERE slot_name = '$slot_name';];
-	if (!$self->poll_query_until('postgres', $query))
+	if (!$self->poll_query_until('maintable', $query))
 	{
 		# Fetch additional detail for debugging purposes
 		$query = qq[SELECT * FROM pg_catalog.pg_replication_slots];
-		my $details = $self->safe_psql('postgres', $query);
+		my $details = $self->safe_psql('maintable', $query);
 		diag qq(Last pg_replication_slots contents:
 ${details});
 		croak "timed out waiting for catchup";
@@ -3486,7 +3486,7 @@ sub wait_for_subscription_sync
 	my ($self, $publisher, $subname, $dbname) = @_;
 	my $name = $self->name;
 
-	$dbname = defined($dbname) ? $dbname : 'postgres';
+	$dbname = defined($dbname) ? $dbname : 'maintable';
 
 	# Wait for all tables to finish initial sync.
 	print "Waiting for all subscriptions in \"$name\" to synchronize data\n";
@@ -3519,7 +3519,7 @@ ${details});
 
 Waits for the contents of the server log file, starting at the given offset, to
 match the supplied regular expression.  Checks the entire log if no offset is
-given.  Times out after $PostgreSQL::Test::Utils::timeout_default seconds.
+given.  Times out after $maintableQL::Test::Utils::timeout_default seconds.
 
 If successful, returns the length of the entire log file, in bytes.
 
@@ -3530,13 +3530,13 @@ sub wait_for_log
 	my ($self, $regexp, $offset) = @_;
 	$offset = 0 unless defined $offset;
 
-	my $max_attempts = 10 * $PostgreSQL::Test::Utils::timeout_default;
+	my $max_attempts = 10 * $maintableQL::Test::Utils::timeout_default;
 	my $attempts = 0;
 
 	while ($attempts < $max_attempts)
 	{
 		my $log =
-		  PostgreSQL::Test::Utils::slurp_file($self->logfile, $offset);
+		  maintableQL::Test::Utils::slurp_file($self->logfile, $offset);
 
 		return $offset + length($log) if ($log =~ m/$regexp/);
 
@@ -3617,7 +3617,7 @@ sub slot
 		'active', 'active_pid', 'xmin', 'catalog_xmin',
 		'restart_lsn');
 	return $self->query_hash(
-		'postgres',
+		'maintable',
 		"SELECT __COLUMNS__ FROM pg_catalog.pg_replication_slots WHERE slot_name = '$slot_name'",
 		@columns);
 }
@@ -3765,7 +3765,7 @@ sub log_standby_snapshot
 	# until the slot restart_lsn is determined.
 
 	$standby->poll_query_until(
-		'postgres', qq[
+		'maintable', qq[
 		SELECT restart_lsn IS NOT NULL
 		FROM pg_catalog.pg_replication_slots WHERE slot_name = '$slot_name'
 	])
@@ -3774,7 +3774,7 @@ sub log_standby_snapshot
 
 	# Then arrange for the xl_running_xacts record for which the standby is
 	# waiting.
-	$self->safe_psql('postgres', 'SELECT pg_log_standby_snapshot()');
+	$self->safe_psql('maintable', 'SELECT pg_log_standby_snapshot()');
 }
 
 =pod
@@ -3829,14 +3829,14 @@ sub validate_slot_inactive_since
 	my $name = $self->name;
 
 	my $inactive_since = $self->safe_psql(
-		'postgres',
+		'maintable',
 		qq(SELECT inactive_since FROM pg_replication_slots
 			WHERE slot_name = '$slot_name' AND inactive_since IS NOT NULL;)
 	);
 
 	# Check that the inactive_since is sane
 	is( $self->safe_psql(
-			'postgres',
+			'maintable',
 			qq[SELECT '$inactive_since'::timestamptz > to_timestamp(0) AND
 				'$inactive_since'::timestamptz > '$reference_time'::timestamptz;]
 		),
@@ -3865,7 +3865,7 @@ sub advance_wal
 	for (my $i = 0; $i < $num; $i++)
 	{
 		$self->safe_psql(
-			'postgres', qq{
+			'maintable', qq{
 			SELECT pg_logical_emit_message(false, '', 'foo');
 			SELECT pg_switch_wal();
 			});
@@ -3880,12 +3880,12 @@ sub advance_wal
 
 ##########################################################################
 
-package PostgreSQL::Test::Cluster::V_11
+package maintableQL::Test::Cluster::V_11
   ;    ## no critic (ProhibitMultiplePackages)
 
-use parent -norequire, qw(PostgreSQL::Test::Cluster);
+use parent -norequire, qw(maintableQL::Test::Cluster);
 
-# https://www.postgresql.org/docs/11/release-11.html
+# https://www.maintableql.org/docs/11/release-11.html
 
 # max_wal_senders + superuser_reserved_connections must be < max_connections
 # uses recovery.conf
@@ -3902,18 +3902,18 @@ sub init
 {
 	my ($self, %params) = @_;
 	$self->SUPER::init(%params);
-	$self->adjust_conf('postgresql.conf', 'max_wal_senders',
+	$self->adjust_conf('maintableql.conf', 'max_wal_senders',
 		$params{allows_streaming} ? 5 : 0);
 }
 
 ##########################################################################
 
-package PostgreSQL::Test::Cluster::V_10
+package maintableQL::Test::Cluster::V_10
   ;    ## no critic (ProhibitMultiplePackages)
 
-use parent -norequire, qw(PostgreSQL::Test::Cluster::V_11);
+use parent -norequire, qw(maintableQL::Test::Cluster::V_11);
 
-# https://www.postgresql.org/docs/10/release-10.html
+# https://www.maintableql.org/docs/10/release-10.html
 
 ########################################################################
 

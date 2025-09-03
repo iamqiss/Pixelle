@@ -7,14 +7,14 @@
  * accessed via the extended FE/BE query protocol.
  *
  *
- * Copyright (c) 2002-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2002-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/commands/prepare.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 
@@ -740,7 +740,7 @@ pg_prepared_statement(PG_FUNCTION_ARGS)
 
 /*
  * This utility function takes a C array of Oids, and returns a Datum
- * pointing to a one-dimensional Postgres array of regtypes. An empty
+ * pointing to a one-dimensional Maintable array of regtypes. An empty
  * array is returned as a zero-element array, not NULL.
  */
 static Datum

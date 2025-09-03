@@ -16,20 +16,20 @@
  * under the License.
  */
 
-use crate::prelude::IggyClient;
+use crate::prelude::MessengerClient;
 use async_trait::async_trait;
-use iggy_binary_protocol::PartitionClient;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{Identifier, IggyError};
+use messenger_binary_protocol::PartitionClient;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{Identifier, MessengerError};
 
 #[async_trait]
-impl PartitionClient for IggyClient {
+impl PartitionClient for MessengerClient {
     async fn create_partitions(
         &self,
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitions_count: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.client
             .read()
             .await
@@ -42,7 +42,7 @@ impl PartitionClient for IggyClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitions_count: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.client
             .read()
             .await

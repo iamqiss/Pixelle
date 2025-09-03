@@ -1,6 +1,6 @@
 /*
  * pgp-pgsql.c
- *		PostgreSQL wrappers for pgp.
+ *		maintableQL wrappers for pgp.
  *
  * Copyright (c) 2005 Marko Kreen
  * All rights reserved.
@@ -29,7 +29,7 @@
  * contrib/pgcrypto/pgp-pgsql.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_type.h"
 #include "common/string.h"

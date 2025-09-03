@@ -1,11 +1,11 @@
 /*-------------------------------------------------------------------------
  * stat_utils.c
  *
- *	  PostgreSQL statistics manipulation utilities.
+ *	  maintableQL statistics manipulation utilities.
  *
  * Code supporting the direct manipulation of statistics.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -14,7 +14,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/relation.h"
 #include "catalog/index.h"

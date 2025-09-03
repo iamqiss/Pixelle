@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
  * bgworker.h
- *		POSTGRES pluggable background workers interface
+ *		MAINTABLE pluggable background workers interface
  *
  * A background worker is a process able to run arbitrary, user-supplied code,
  * including normal transactions.
@@ -31,7 +31,7 @@
  * different) code.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION

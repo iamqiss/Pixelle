@@ -19,7 +19,7 @@
 use crate::BytesSerializable;
 use crate::Identifier;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use bytes::{BufMut, Bytes, BytesMut};
 use clap::ValueEnum;
 use serde::{Deserialize, Serialize};
@@ -60,8 +60,8 @@ fn default_id() -> Identifier {
     Identifier::numeric(1).unwrap()
 }
 
-impl Validatable<IggyError> for Consumer {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for Consumer {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -101,12 +101,12 @@ impl BytesSerializable for Consumer {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<Self, IggyError>
+    fn from_bytes(bytes: Bytes) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         if bytes.len() < 4 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let kind = ConsumerKind::from_code(bytes[0])?;
@@ -128,11 +128,11 @@ impl ConsumerKind {
     }
 
     /// Creates a new `ConsumerKind` from the code.
-    pub fn from_code(code: u8) -> Result<Self, IggyError> {
+    pub fn from_code(code: u8) -> Result<Self, MessengerError> {
         match code {
             1 => Ok(ConsumerKind::Consumer),
             2 => Ok(ConsumerKind::ConsumerGroup),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

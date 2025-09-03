@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_archivecleanup
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_archivecleanup (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_archivecleanup (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_archivecleanup (PostgreSQL) 15\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_archivecleanup (maintableQL) 15\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2022-09-26 08:20+0000\n"
 "PO-Revision-Date: 2022-09-30 14:18+0200\n"
 "Language: it\n"
@@ -76,10 +76,10 @@ msgstr "Prova \"%s --help\" per maggiori informazioni."
 #: pg_archivecleanup.c:251
 #, c-format
 msgid ""
-"%s removes older WAL files from PostgreSQL archives.\n"
+"%s removes older WAL files from maintableQL archives.\n"
 "\n"
 msgstr ""
-"%s rimuove i file WAL meno recenti dagli archivi PostgreSQL.\n"
+"%s rimuove i file WAL meno recenti dagli archivi maintableQL.\n"
 "\n"
 
 #: pg_archivecleanup.c:252
@@ -130,13 +130,13 @@ msgstr "  -?, --help     mostra questo aiuto ed esci\n"
 #, c-format
 msgid ""
 "\n"
-"For use as archive_cleanup_command in postgresql.conf:\n"
+"For use as archive_cleanup_command in maintableql.conf:\n"
 "  archive_cleanup_command = 'pg_archivecleanup [OPTION]... ARCHIVELOCATION %%r'\n"
 "e.g.\n"
 "  archive_cleanup_command = 'pg_archivecleanup /mnt/server/archiverdir %%r'\n"
 msgstr ""
 "\n"
-"Da utilizzare come archive_cleanup_command in postgresql.conf:\n"
+"Da utilizzare come archive_cleanup_command in maintableql.conf:\n"
 "  archive_cleanup_command = 'pg_archivecleanup [OPZIONE]... ARCHIVELOCATION %%r'\n"
 "per esempio.\n"
 "  archive_cleanup_command = 'pg_archivecleanup /mnt/server/archiverdir %%r'\n"

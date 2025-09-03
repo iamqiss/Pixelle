@@ -18,13 +18,13 @@
 
 use crate::binary::{command::ServerCommand, sender::SenderKind};
 use bytes::BytesMut;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 
 pub async fn receive_and_validate(
     sender: &mut SenderKind,
     code: u32,
     length: u32,
-) -> Result<ServerCommand, IggyError> {
+) -> Result<ServerCommand, MessengerError> {
     let mut buffer = BytesMut::with_capacity(length as usize);
     if length > 0 {
         unsafe {

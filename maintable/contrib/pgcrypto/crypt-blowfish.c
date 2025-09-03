@@ -32,7 +32,7 @@
  * hadn't seen his code).
  */
 
-#include "postgres.h"
+#include "maintable.h"
 #include "miscadmin.h"
 
 #include "px-crypt.h"

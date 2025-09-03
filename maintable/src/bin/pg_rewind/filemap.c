@@ -16,12 +16,12 @@
  * for each file.  Finally, it sorts the array to the final order that the
  * actions should be executed in.
  *
- * Copyright (c) 2013-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2013-2025, maintableQL Global Development Group
  *
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <sys/stat.h>
 #include <unistd.h>
@@ -158,7 +158,7 @@ static const char *const excludeDirContents[] =
 static const struct exclude_list_item excludeFiles[] =
 {
 	/* Skip auto conf temporary file. */
-	{"postgresql.auto.conf.tmp", false},	/* defined as PG_AUTOCONF_FILENAME */
+	{"maintableql.auto.conf.tmp", false},	/* defined as PG_AUTOCONF_FILENAME */
 
 	/* Skip current log file temporary file */
 	{"current_logfiles.tmp", false},	/* defined as

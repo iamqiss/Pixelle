@@ -20,12 +20,12 @@ use crate::streaming::streams::COMPONENT;
 use crate::streaming::streams::stream::Stream;
 use crate::streaming::topics::topic::Topic;
 use error_set::ErrContext;
-use iggy_common::CompressionAlgorithm;
-use iggy_common::IggyError;
-use iggy_common::IggyExpiry;
-use iggy_common::MaxTopicSize;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{IdKind, Identifier};
+use messenger_common::CompressionAlgorithm;
+use messenger_common::MessengerError;
+use messenger_common::MessengerExpiry;
+use messenger_common::MaxTopicSize;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{IdKind, Identifier};
 use std::sync::atomic::Ordering;
 use tracing::info;
 
@@ -40,14 +40,14 @@ impl Stream {
         topic_id: Option<u32>,
         name: &str,
         partitions_count: u32,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         compression_algorithm: CompressionAlgorithm,
         max_topic_size: MaxTopicSize,
         replication_factor: u8,
-    ) -> Result<u32, IggyError> {
+    ) -> Result<u32, MessengerError> {
         let max_topic_size = Topic::get_max_topic_size(max_topic_size, &self.config)?;
         if self.topics_ids.contains_key(name) {
-            return Err(IggyError::TopicNameAlreadyExists(
+            return Err(MessengerError::TopicNameAlreadyExists(
                 name.to_owned(),
                 self.stream_id,
             ));
@@ -61,7 +61,7 @@ impl Stream {
             loop {
                 if self.topics.contains_key(&id) {
                     if id == u32::MAX {
-                        return Err(IggyError::TopicIdAlreadyExists(id, self.stream_id));
+                        return Err(MessengerError::TopicIdAlreadyExists(id, self.stream_id));
                     }
                     id = self.current_topic_id.fetch_add(1, Ordering::SeqCst);
                 } else {
@@ -71,7 +71,7 @@ impl Stream {
         }
 
         if self.topics.contains_key(&id) {
-            return Err(IggyError::TopicIdAlreadyExists(id, self.stream_id));
+            return Err(MessengerError::TopicIdAlreadyExists(id, self.stream_id));
         }
 
         let topic = Topic::create(
@@ -103,11 +103,11 @@ impl Stream {
         &mut self,
         id: &Identifier,
         name: &str,
-        message_expiry: IggyExpiry,
+        message_expiry: MessengerExpiry,
         compression_algorithm: CompressionAlgorithm,
         max_topic_size: MaxTopicSize,
         replication_factor: u8,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let message_expiry = Topic::get_message_expiry(message_expiry, &self.config);
         let max_topic_size = Topic::get_max_topic_size(max_topic_size, &self.config)?;
         let topic_id;
@@ -122,7 +122,7 @@ impl Stream {
             if let Some(topic_id_by_name) = self.topics_ids.get(name)
                 && *topic_id_by_name != topic_id
             {
-                return Err(IggyError::TopicNameAlreadyExists(
+                return Err(MessengerError::TopicNameAlreadyExists(
                     name.to_owned(),
                     self.stream_id,
                 ));
@@ -167,7 +167,7 @@ impl Stream {
         Ok(())
     }
 
-    pub fn remove_topic(&mut self, identifier: &Identifier) -> Result<Topic, IggyError> {
+    pub fn remove_topic(&mut self, identifier: &Identifier) -> Result<Topic, MessengerError> {
         match identifier.kind {
             IdKind::Numeric => self.remove_topic_by_id(identifier.get_u32_value()?),
             IdKind::String => self.remove_topic_by_name(&identifier.get_cow_str_value()?),
@@ -178,7 +178,7 @@ impl Stream {
         self.topics.values().collect()
     }
 
-    pub fn try_get_topic(&self, identifier: &Identifier) -> Result<Option<&Topic>, IggyError> {
+    pub fn try_get_topic(&self, identifier: &Identifier) -> Result<Option<&Topic>, MessengerError> {
         match identifier.kind {
             IdKind::Numeric => Ok(self.topics.get(&identifier.get_u32_value()?)),
             IdKind::String => Ok(self.try_get_topic_by_name(&identifier.get_cow_str_value()?)),
@@ -189,70 +189,70 @@ impl Stream {
         self.topics_ids.get(name).and_then(|id| self.topics.get(id))
     }
 
-    pub fn get_topic(&self, identifier: &Identifier) -> Result<&Topic, IggyError> {
+    pub fn get_topic(&self, identifier: &Identifier) -> Result<&Topic, MessengerError> {
         match identifier.kind {
             IdKind::Numeric => self.get_topic_by_id(identifier.get_u32_value()?),
             IdKind::String => self.get_topic_by_name(&identifier.get_cow_str_value()?),
         }
     }
 
-    pub fn get_topic_mut(&mut self, identifier: &Identifier) -> Result<&mut Topic, IggyError> {
+    pub fn get_topic_mut(&mut self, identifier: &Identifier) -> Result<&mut Topic, MessengerError> {
         match identifier.kind {
             IdKind::Numeric => self.get_topic_by_id_mut(identifier.get_u32_value()?),
             IdKind::String => self.get_topic_by_name_mut(&identifier.get_cow_str_value()?),
         }
     }
 
-    fn get_topic_by_id(&self, id: u32) -> Result<&Topic, IggyError> {
+    fn get_topic_by_id(&self, id: u32) -> Result<&Topic, MessengerError> {
         self.topics
             .get(&id)
-            .ok_or(IggyError::TopicIdNotFound(id, self.stream_id))
+            .ok_or(MessengerError::TopicIdNotFound(id, self.stream_id))
     }
 
-    fn get_topic_by_name(&self, name: &str) -> Result<&Topic, IggyError> {
+    fn get_topic_by_name(&self, name: &str) -> Result<&Topic, MessengerError> {
         self.topics_ids
             .get(name)
             .map(|topic_id| self.get_topic_by_id(*topic_id))
-            .ok_or_else(|| IggyError::TopicNameNotFound(name.to_string(), self.name.to_owned()))?
+            .ok_or_else(|| MessengerError::TopicNameNotFound(name.to_string(), self.name.to_owned()))?
     }
 
-    fn get_topic_by_id_mut(&mut self, id: u32) -> Result<&mut Topic, IggyError> {
+    fn get_topic_by_id_mut(&mut self, id: u32) -> Result<&mut Topic, MessengerError> {
         self.topics
             .get_mut(&id)
-            .ok_or(IggyError::TopicIdNotFound(id, self.stream_id))
+            .ok_or(MessengerError::TopicIdNotFound(id, self.stream_id))
     }
 
-    fn get_topic_by_name_mut(&mut self, name: &str) -> Result<&mut Topic, IggyError> {
+    fn get_topic_by_name_mut(&mut self, name: &str) -> Result<&mut Topic, MessengerError> {
         self.topics_ids
             .get(name)
             .and_then(|topic_id| self.topics.get_mut(topic_id))
-            .ok_or_else(|| IggyError::TopicNameNotFound(name.to_string(), self.name.to_owned()))
+            .ok_or_else(|| MessengerError::TopicNameNotFound(name.to_string(), self.name.to_owned()))
     }
 
-    fn remove_topic_by_id(&mut self, id: u32) -> Result<Topic, IggyError> {
+    fn remove_topic_by_id(&mut self, id: u32) -> Result<Topic, MessengerError> {
         let topic = self
             .topics
             .remove(&id)
-            .ok_or(IggyError::TopicIdNotFound(id, self.stream_id))?;
+            .ok_or(MessengerError::TopicIdNotFound(id, self.stream_id))?;
 
         self.topics_ids
             .remove(&topic.name)
-            .ok_or_else(|| IggyError::TopicNameNotFound(topic.name.clone(), self.name.clone()))?;
+            .ok_or_else(|| MessengerError::TopicNameNotFound(topic.name.clone(), self.name.clone()))?;
         Ok(topic)
     }
 
-    fn remove_topic_by_name(&mut self, name: &str) -> Result<Topic, IggyError> {
+    fn remove_topic_by_name(&mut self, name: &str) -> Result<Topic, MessengerError> {
         let topic_id = self
             .topics_ids
             .remove(name)
-            .ok_or_else(|| IggyError::TopicNameNotFound(name.to_owned(), self.name.clone()))?;
+            .ok_or_else(|| MessengerError::TopicNameNotFound(name.to_owned(), self.name.clone()))?;
 
         self.topics
             .remove(&topic_id)
-            .ok_or(IggyError::TopicIdNotFound(topic_id, self.stream_id))
+            .ok_or(MessengerError::TopicIdNotFound(topic_id, self.stream_id))
     }
 
-    pub async fn delete_topic(&mut self, id: &Identifier) -> Result<Topic, IggyError> {
+    pub async fn delete_topic(&mut self, id: &Identifier) -> Result<Topic, MessengerError> {
         let topic = self.remove_topic(id).with_error_context(|error| {
             format!("{COMPONENT} (error: {error}) - failed to remove topic with id: {id}")
         })?;
@@ -268,7 +268,7 @@ impl Stream {
             .with_error_context(|error| {
                 format!("{COMPONENT} (error: {error}) - failed to delete topic: {topic}")
             })
-            .map_err(|_| IggyError::CannotDeleteTopic(topic.topic_id, self.stream_id))?;
+            .map_err(|_| MessengerError::CannotDeleteTopic(topic.topic_id, self.stream_id))?;
         Ok(topic)
     }
 }
@@ -284,7 +284,7 @@ mod tests {
             utils::MemoryPool,
         },
     };
-    use iggy_common::IggyByteSize;
+    use messenger_common::MessengerByteSize;
     use std::sync::Arc;
 
     #[tokio::test]
@@ -303,10 +303,10 @@ mod tests {
         let stream_name = "test_stream";
         let topic_id = 2;
         let topic_name = "test_topic";
-        let message_expiry = IggyExpiry::NeverExpire;
+        let message_expiry = MessengerExpiry::NeverExpire;
         let compression_algorithm = CompressionAlgorithm::None;
         let max_topic_size = 2 * config.segment.size.as_bytes_u64();
-        let max_topic_size = MaxTopicSize::Custom(IggyByteSize::from(max_topic_size));
+        let max_topic_size = MaxTopicSize::Custom(MessengerByteSize::from(max_topic_size));
         let mut stream = Stream::create(stream_id, stream_name, config, storage);
         stream
             .create_topic(

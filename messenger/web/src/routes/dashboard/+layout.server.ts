@@ -17,7 +17,7 @@
  * under the License.
  */
 
-import { fetchIggyApi } from '$lib/api/fetchApi';
+import { fetchMessengerApi } from '$lib/api/fetchApi';
 import { handleFetchErrors } from '$lib/api/handleFetchErrors';
 import { userDetailsMapper } from '$lib/domain/UserDetails';
 import type { LayoutServerLoad } from './$types';
@@ -29,7 +29,7 @@ export const load: LayoutServerLoad = async ({ cookies }) => {
     const accessToken = cookies.get('access_token')!;
     const userId = jwtDecode(accessToken).sub!;
 
-    const userResult = await fetchIggyApi({ method: 'GET', path: `/users/${+userId}`, cookies });
+    const userResult = await fetchMessengerApi({ method: 'GET', path: `/users/${+userId}`, cookies });
     const { data } = await handleFetchErrors(userResult, cookies);
 
     return userDetailsMapper(data);

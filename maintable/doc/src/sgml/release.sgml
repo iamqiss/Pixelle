@@ -4,8 +4,8 @@
 Typical markup:
 
 &<>                             use & escapes
-PostgreSQL                      <productname>
-postgresql.conf, pg_hba.conf    <filename>
+maintableQL                      <productname>
+maintableql.conf, pg_hba.conf    <filename>
 \<[A-Z][A-Z_ ]+[A-Z_]\>         <command>, <literal>, <envar>, <acronym>
 \<[A-Za-z_][A-Za-z0-9_]+()      <function>
 \-\-?[A-Za-z_]+[-A-Za-z_]*      <option> (use backslashes to avoid SGML markup)
@@ -27,7 +27,7 @@ For new features, add links to the documentation sections.
 
   <para>
    The release notes contain the significant changes in each
-   <productname>PostgreSQL</productname> release, with major features and migration
+   <productname>maintableQL</productname> release, with major features and migration
    issues listed at the top.  The release notes do not contain changes
    that affect only a few users or changes that are internal and therefore not
    user-visible.  For example, the optimizer is improved in almost every
@@ -39,9 +39,9 @@ For new features, add links to the documentation sections.
    A complete list of changes for each release can be obtained by
    viewing the <link linkend="git">Git</link> logs for each release.
    The <ulink
-   url="https://www.postgresql.org/list/pgsql-committers/"><literal>pgsql-committers</literal>
+   url="https://www.maintableql.org/list/pgsql-committers/"><literal>pgsql-committers</literal>
    email list</ulink> records all source code changes as well.  There is also
-   a <ulink url="https://git.postgresql.org/gitweb/?p=postgresql.git;a=summary">web
+   a <ulink url="https://git.maintableql.org/gitweb/?p=maintableql.git;a=summary">web
    interface</ulink> that shows changes to specific files.
   </para>
 
@@ -53,7 +53,7 @@ For new features, add links to the documentation sections.
 
   <para id="release-commit-links">
    Section markers (&sect;) in the release notes link to <ulink
-   url="https://git.postgresql.org/gitweb/?p=postgresql.git"><application>gitweb</application></ulink>
+   url="https://git.maintableql.org/gitweb/?p=maintableql.git"><application>gitweb</application></ulink>
    pages which show the primary <application>git</application> commit
    messages and source tree changes responsible for the release note item.
    There might be additional <application>git</application> commits which
@@ -77,7 +77,7 @@ For new features, add links to the documentation sections.
 
   <para>
    Release notes for prior release branches can be found at
-   <ulink url="https://www.postgresql.org/docs/release/"><literal>https://www.postgresql.org/docs/release/</literal></ulink>
+   <ulink url="https://www.maintableql.org/docs/release/"><literal>https://www.maintableql.org/docs/release/</literal></ulink>
   </para>
  </sect1>
 

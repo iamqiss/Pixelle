@@ -10,7 +10,7 @@
  * It doesn't matter whether the bits are on spinning rust or some other
  * storage technology.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -19,7 +19,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <unistd.h>
 #include <fcntl.h>
@@ -874,14 +874,14 @@ mdreadv(SMgrRelation reln, ForkNumber forknum, BlockNumber blocknum,
 		 */
 		for (;;)
 		{
-			TRACE_POSTGRESQL_SMGR_MD_READ_START(forknum, blocknum,
+			TRACE_MAINTABLEQL_SMGR_MD_READ_START(forknum, blocknum,
 												reln->smgr_rlocator.locator.spcOid,
 												reln->smgr_rlocator.locator.dbOid,
 												reln->smgr_rlocator.locator.relNumber,
 												reln->smgr_rlocator.backend);
 			nbytes = FileReadV(v->mdfd_vfd, iov, iovcnt, seekpos,
 							   WAIT_EVENT_DATA_FILE_READ);
-			TRACE_POSTGRESQL_SMGR_MD_READ_DONE(forknum, blocknum,
+			TRACE_MAINTABLEQL_SMGR_MD_READ_DONE(forknum, blocknum,
 											   reln->smgr_rlocator.locator.spcOid,
 											   reln->smgr_rlocator.locator.dbOid,
 											   reln->smgr_rlocator.locator.relNumber,
@@ -1091,14 +1091,14 @@ mdwritev(SMgrRelation reln, ForkNumber forknum, BlockNumber blocknum,
 		 */
 		for (;;)
 		{
-			TRACE_POSTGRESQL_SMGR_MD_WRITE_START(forknum, blocknum,
+			TRACE_MAINTABLEQL_SMGR_MD_WRITE_START(forknum, blocknum,
 												 reln->smgr_rlocator.locator.spcOid,
 												 reln->smgr_rlocator.locator.dbOid,
 												 reln->smgr_rlocator.locator.relNumber,
 												 reln->smgr_rlocator.backend);
 			nbytes = FileWriteV(v->mdfd_vfd, iov, iovcnt, seekpos,
 								WAIT_EVENT_DATA_FILE_WRITE);
-			TRACE_POSTGRESQL_SMGR_MD_WRITE_DONE(forknum, blocknum,
+			TRACE_MAINTABLEQL_SMGR_MD_WRITE_DONE(forknum, blocknum,
 												reln->smgr_rlocator.locator.spcOid,
 												reln->smgr_rlocator.locator.dbOid,
 												reln->smgr_rlocator.locator.relNumber,

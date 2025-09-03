@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 pgbench_sources = files(
   'pgbench.c',
@@ -29,7 +29,7 @@ pgbench = executable('pgbench',
   pgbench_sources,
   dependencies: [frontend_code, libpq, thread_dep],
   include_directories: include_directories('.'),
-  c_pch: pch_postgres_fe_h,
+  c_pch: pch_maintable_fe_h,
   c_args: host_system == 'windows' ? ['-DFD_SETSIZE=1024'] : [],
   kwargs: default_bin_args,
 )

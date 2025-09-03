@@ -3,7 +3,7 @@
  * date.c
  *	  implements DATE and TIME data types specified in SQL standard
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994-5, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <limits.h>
@@ -167,7 +167,7 @@ date_in(PG_FUNCTION_ARGS)
 				(errcode(ERRCODE_DATETIME_VALUE_OUT_OF_RANGE),
 				 errmsg("date out of range: \"%s\"", str)));
 
-	date = date2j(tm->tm_year, tm->tm_mon, tm->tm_mday) - POSTGRES_EPOCH_JDATE;
+	date = date2j(tm->tm_year, tm->tm_mon, tm->tm_mday) - MAINTABLE_EPOCH_JDATE;
 
 	/* Now check for just-out-of-range dates */
 	if (!IS_VALID_DATE(date))
@@ -194,7 +194,7 @@ date_out(PG_FUNCTION_ARGS)
 		EncodeSpecialDate(date, buf);
 	else
 	{
-		j2date(date + POSTGRES_EPOCH_JDATE,
+		j2date(date + MAINTABLE_EPOCH_JDATE,
 			   &(tm->tm_year), &(tm->tm_mon), &(tm->tm_mday));
 		EncodeDateOnly(tm, DateStyle, buf);
 	}
@@ -283,7 +283,7 @@ make_date(PG_FUNCTION_ARGS)
 				 errmsg("date out of range: %d-%02d-%02d",
 						tm.tm_year, tm.tm_mon, tm.tm_mday)));
 
-	date = date2j(tm.tm_year, tm.tm_mon, tm.tm_mday) - POSTGRES_EPOCH_JDATE;
+	date = date2j(tm.tm_year, tm.tm_mon, tm.tm_mday) - MAINTABLE_EPOCH_JDATE;
 
 	/* Now check for just-out-of-range dates */
 	if (!IS_VALID_DATE(date))
@@ -334,7 +334,7 @@ GetSQLCurrentDate(void)
 		tm.tm_mon != cache_mon ||
 		tm.tm_mday != cache_mday)
 	{
-		cache_date = date2j(tm.tm_year, tm.tm_mon, tm.tm_mday) - POSTGRES_EPOCH_JDATE;
+		cache_date = date2j(tm.tm_year, tm.tm_mon, tm.tm_mday) - MAINTABLE_EPOCH_JDATE;
 		cache_year = tm.tm_year;
 		cache_mon = tm.tm_mon;
 		cache_mday = tm.tm_mday;
@@ -643,7 +643,7 @@ date2timestamp_opt_overflow(DateADT dateVal, int *overflow)
 		 * Since dates have the same minimum values as timestamps, only upper
 		 * boundary need be checked for overflow.
 		 */
-		if (dateVal >= (TIMESTAMP_END_JULIAN - POSTGRES_EPOCH_JDATE))
+		if (dateVal >= (TIMESTAMP_END_JULIAN - MAINTABLE_EPOCH_JDATE))
 		{
 			if (overflow)
 			{
@@ -706,7 +706,7 @@ date2timestamptz_opt_overflow(DateADT dateVal, int *overflow)
 		 * Since dates have the same minimum values as timestamps, only upper
 		 * boundary need be checked for overflow.
 		 */
-		if (dateVal >= (TIMESTAMP_END_JULIAN - POSTGRES_EPOCH_JDATE))
+		if (dateVal >= (TIMESTAMP_END_JULIAN - MAINTABLE_EPOCH_JDATE))
 		{
 			if (overflow)
 			{
@@ -722,7 +722,7 @@ date2timestamptz_opt_overflow(DateADT dateVal, int *overflow)
 			}
 		}
 
-		j2date(dateVal + POSTGRES_EPOCH_JDATE,
+		j2date(dateVal + MAINTABLE_EPOCH_JDATE,
 			   &(tm->tm_year), &(tm->tm_mon), &(tm->tm_mday));
 		tm->tm_hour = 0;
 		tm->tm_min = 0;
@@ -1190,7 +1190,7 @@ extract_date(PG_FUNCTION_ARGS)
 	}
 	else if (type == UNITS)
 	{
-		j2date(date + POSTGRES_EPOCH_JDATE, &year, &mon, &mday);
+		j2date(date + MAINTABLE_EPOCH_JDATE, &year, &mon, &mday);
 
 		switch (val)
 		{
@@ -1243,7 +1243,7 @@ extract_date(PG_FUNCTION_ARGS)
 				break;
 
 			case DTK_JULIAN:
-				intresult = date + POSTGRES_EPOCH_JDATE;
+				intresult = date + MAINTABLE_EPOCH_JDATE;
 				break;
 
 			case DTK_ISOYEAR:
@@ -1255,7 +1255,7 @@ extract_date(PG_FUNCTION_ARGS)
 
 			case DTK_DOW:
 			case DTK_ISODOW:
-				intresult = j2day(date + POSTGRES_EPOCH_JDATE);
+				intresult = j2day(date + MAINTABLE_EPOCH_JDATE);
 				if (val == DTK_ISODOW && intresult == 0)
 					intresult = 7;
 				break;
@@ -1277,7 +1277,7 @@ extract_date(PG_FUNCTION_ARGS)
 		switch (val)
 		{
 			case DTK_EPOCH:
-				intresult = ((int64) date + POSTGRES_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY;
+				intresult = ((int64) date + MAINTABLE_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY;
 				break;
 
 			default:
@@ -1419,7 +1419,7 @@ timestamp2date_opt_overflow(Timestamp timestamp, int *overflow)
 					 errmsg("timestamp out of range")));
 		}
 
-		result = date2j(tm->tm_year, tm->tm_mon, tm->tm_mday) - POSTGRES_EPOCH_JDATE;
+		result = date2j(tm->tm_year, tm->tm_mon, tm->tm_mday) - MAINTABLE_EPOCH_JDATE;
 	}
 
 	return result;
@@ -1506,7 +1506,7 @@ timestamptz2date_opt_overflow(TimestampTz timestamp, int *overflow)
 					 errmsg("timestamp out of range")));
 		}
 
-		result = date2j(tm->tm_year, tm->tm_mon, tm->tm_mday) - POSTGRES_EPOCH_JDATE;
+		result = date2j(tm->tm_year, tm->tm_mon, tm->tm_mday) - MAINTABLE_EPOCH_JDATE;
 	}
 
 	return result;
@@ -1766,7 +1766,7 @@ time_support(PG_FUNCTION_ARGS)
 
 /* time_scale()
  * Adjust time type for specified scale factor.
- * Used by PostgreSQL type system to stuff columns.
+ * Used by maintableQL type system to stuff columns.
  */
 Datum
 time_scale(PG_FUNCTION_ARGS)
@@ -2566,7 +2566,7 @@ timetz2tm(TimeTzADT *time, struct pg_tm *tm, fsec_t *fsec, int *tzp)
 
 /* timetz_scale()
  * Adjust time type for specified scale factor.
- * Used by PostgreSQL type system to stuff columns.
+ * Used by maintableQL type system to stuff columns.
  */
 Datum
 timetz_scale(PG_FUNCTION_ARGS)
@@ -3047,7 +3047,7 @@ datetimetz_timestamptz(PG_FUNCTION_ARGS)
 		 * Since dates have the same minimum values as timestamps, only upper
 		 * boundary need be checked for overflow.
 		 */
-		if (date >= (TIMESTAMP_END_JULIAN - POSTGRES_EPOCH_JDATE))
+		if (date >= (TIMESTAMP_END_JULIAN - MAINTABLE_EPOCH_JDATE))
 			ereport(ERROR,
 					(errcode(ERRCODE_DATETIME_VALUE_OUT_OF_RANGE),
 					 errmsg("date out of range for timestamp")));

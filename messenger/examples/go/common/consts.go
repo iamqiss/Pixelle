@@ -18,6 +18,6 @@
 package common
 
 const (
-	DefaultRootUsername = "iggy"
-	DefaultRootPassword = "iggy"
+	DefaultRootUsername = "messenger"
+	DefaultRootPassword = "messenger"
 )

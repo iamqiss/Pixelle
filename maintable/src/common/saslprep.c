@@ -12,7 +12,7 @@
  *	  http://www.ietf.org/rfc/rfc4013.txt
  *
  *
- * Portions Copyright (c) 2017-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2017-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/common/saslprep.c
@@ -20,10 +20,10 @@
  *-------------------------------------------------------------------------
  */
 #ifndef FRONTEND
-#include "postgres.h"
+#include "maintable.h"
 #include "utils/memutils.h"
 #else
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #endif
 
 #include "common/saslprep.h"
@@ -1026,7 +1026,7 @@ pg_utf8_string_len(const char *source)
 /*
  * pg_saslprep - Normalize a password with SASLprep.
  *
- * SASLprep requires the input to be in UTF-8 encoding, but PostgreSQL
+ * SASLprep requires the input to be in UTF-8 encoding, but maintableQL
  * supports many encodings, so we don't blindly assume that.  pg_saslprep
  * will check if the input looks like valid UTF-8, and returns
  * SASLPREP_INVALID_UTF8 if not.

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use iggy::prelude::*;
+use messenger::prelude::*;
 use std::env;
 use std::error::Error;
 use std::str::FromStr;
@@ -37,14 +37,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .with(tracing_subscriber::fmt::layer())
         .with(EnvFilter::try_from_default_env().unwrap_or(EnvFilter::new("INFO")))
         .init();
-    let client = IggyClientBuilder::new()
+    let client = MessengerClientBuilder::new()
         .with_tcp()
         .with_server_address(get_tcp_server_addr())
         .build()?;
 
-    // Or, instead of above lines, you can just use below code, which will create a Iggy
+    // Or, instead of above lines, you can just use below code, which will create a Messenger
     // TCP client with default config (default server address for TCP is 127.0.0.1:8090):
-    // let client = IggyClient::default();
+    // let client = MessengerClient::default();
 
     client.connect().await?;
     client
@@ -55,7 +55,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 }
 
 async fn consume_messages(client: &dyn Client) -> Result<(), Box<dyn Error>> {
-    let interval = IggyDuration::from_str("500ms")?;
+    let interval = MessengerDuration::from_str("500ms")?;
     info!(
         "Messages will be consumed from stream: {}, topic: {}, partition: {} with interval {}.",
         STREAM_ID,
@@ -101,7 +101,7 @@ async fn consume_messages(client: &dyn Client) -> Result<(), Box<dyn Error>> {
     }
 }
 
-fn handle_message(message: &IggyMessage) -> Result<(), Box<dyn Error>> {
+fn handle_message(message: &MessengerMessage) -> Result<(), Box<dyn Error>> {
     // The payload can be of any type as it is a raw byte array. In this case it's a simple string.
     let payload = std::str::from_utf8(&message.payload)?;
     info!(

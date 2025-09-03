@@ -18,7 +18,7 @@
 
 use std::{fmt, str::FromStr};
 
-use crate::error::IggyError;
+use crate::error::MessengerError;
 
 use serde::{Deserialize, Serialize};
 
@@ -81,7 +81,7 @@ impl SystemSnapshotType {
         }
     }
 
-    pub fn from_code(code: u8) -> Result<Self, IggyError> {
+    pub fn from_code(code: u8) -> Result<Self, MessengerError> {
         match code {
             1 => Ok(SystemSnapshotType::FilesystemOverview),
             2 => Ok(SystemSnapshotType::ProcessList),
@@ -90,7 +90,7 @@ impl SystemSnapshotType {
             5 => Ok(SystemSnapshotType::ServerLogs),
             6 => Ok(SystemSnapshotType::ServerConfig),
             100 => Ok(SystemSnapshotType::All),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 
@@ -152,7 +152,7 @@ impl SnapshotCompression {
         }
     }
 
-    pub fn from_code(code: u8) -> Result<Self, IggyError> {
+    pub fn from_code(code: u8) -> Result<Self, MessengerError> {
         match code {
             1 => Ok(SnapshotCompression::Stored),
             2 => Ok(SnapshotCompression::Deflated),
@@ -160,7 +160,7 @@ impl SnapshotCompression {
             4 => Ok(SnapshotCompression::Zstd),
             5 => Ok(SnapshotCompression::Lzma),
             6 => Ok(SnapshotCompression::Xz),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

@@ -4,7 +4,7 @@
  * src/pl/plpython/plpy_resultobject.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "plpy_elog.h"
 #include "plpy_resultobject.h"
@@ -22,7 +22,7 @@ static PyObject *PLy_result_str(PyObject *arg);
 static PyObject *PLy_result_subscript(PyObject *arg, PyObject *item);
 static int	PLy_result_ass_subscript(PyObject *arg, PyObject *item, PyObject *value);
 
-static char PLy_result_doc[] = "Results of a PostgreSQL query";
+static char PLy_result_doc[] = "Results of a maintableQL query";
 
 static PyMethodDef PLy_result_methods[] = {
 	{"colnames", PLy_result_colnames, METH_NOARGS, NULL},

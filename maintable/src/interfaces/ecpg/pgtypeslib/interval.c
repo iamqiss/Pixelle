@@ -1,6 +1,6 @@
 /* src/interfaces/ecpg/pgtypeslib/interval.c */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <time.h>
 #include <math.h>
@@ -320,13 +320,13 @@ DecodeISO8601Interval(char *str,
  *
  *	* ECPG seems not to have a global IntervalStyle
  *	  so added
- *		int IntervalStyle = INTSTYLE_POSTGRES;
+ *		int IntervalStyle = INTSTYLE_MAINTABLE;
  */
 int
 DecodeInterval(char **field, int *ftype, int nf,	/* int range, */
 			   int *dtype, struct /* pg_ */ tm *tm, fsec_t *fsec)
 {
-	int			IntervalStyle = INTSTYLE_POSTGRES_VERBOSE;
+	int			IntervalStyle = INTSTYLE_MAINTABLE_VERBOSE;
 	int			range = INTERVAL_FULL_RANGE;
 	bool		is_before = false;
 	char	   *cp;
@@ -609,17 +609,17 @@ DecodeInterval(char **field, int *ftype, int nf,	/* int range, */
 	/*----------
 	 * The SQL standard defines the interval literal
 	 *	 '-1 1:00:00'
-	 * to mean "negative 1 days and negative 1 hours", while Postgres
+	 * to mean "negative 1 days and negative 1 hours", while Maintable
 	 * traditionally treats this as meaning "negative 1 days and positive
 	 * 1 hours".  In SQL_STANDARD intervalstyle, we apply the leading sign
 	 * to all fields if there are no other explicit signs.
 	 *
 	 * We leave the signs alone if there are additional explicit signs.
-	 * This protects us against misinterpreting postgres-style dump output,
-	 * since the postgres-style output code has always put an explicit sign on
+	 * This protects us against misinterpreting maintable-style dump output,
+	 * since the maintable-style output code has always put an explicit sign on
 	 * all fields following a negative field.  But note that SQL-spec output
 	 * is ambiguous and can be misinterpreted on load!	(So it's best practice
-	 * to dump in postgres style, not SQL style.)
+	 * to dump in maintable style, not SQL style.)
 	 *----------
 	 */
 	if (IntervalStyle == INTSTYLE_SQL_STANDARD && *field[0] == '-')
@@ -697,7 +697,7 @@ AddVerboseIntPart(char *cp, int value, const char *units,
 
 /* copy&pasted from .../src/backend/utils/adt/datetime.c */
 static char *
-AddPostgresIntPart(char *cp, int value, const char *units,
+AddMaintableIntPart(char *cp, int value, const char *units,
 				   bool *is_zero, bool *is_before)
 {
 	if (value == 0)
@@ -878,11 +878,11 @@ EncodeInterval(struct /* pg_ */ tm *tm, fsec_t fsec, int style, char *str)
 			}
 			break;
 
-			/* Compatible with postgresql < 8.4 when DateStyle = 'iso' */
-		case INTSTYLE_POSTGRES:
-			cp = AddPostgresIntPart(cp, year, "year", &is_zero, &is_before);
-			cp = AddPostgresIntPart(cp, mon, "mon", &is_zero, &is_before);
-			cp = AddPostgresIntPart(cp, mday, "day", &is_zero, &is_before);
+			/* Compatible with maintableql < 8.4 when DateStyle = 'iso' */
+		case INTSTYLE_MAINTABLE:
+			cp = AddMaintableIntPart(cp, year, "year", &is_zero, &is_before);
+			cp = AddMaintableIntPart(cp, mon, "mon", &is_zero, &is_before);
+			cp = AddMaintableIntPart(cp, mday, "day", &is_zero, &is_before);
 			if (is_zero || hour != 0 || min != 0 || sec != 0 || fsec != 0)
 			{
 				bool		minus = (hour < 0 || min < 0 || sec < 0 || fsec < 0);
@@ -896,8 +896,8 @@ EncodeInterval(struct /* pg_ */ tm *tm, fsec_t fsec, int style, char *str)
 			}
 			break;
 
-			/* Compatible with postgresql < 8.4 when DateStyle != 'iso' */
-		case INTSTYLE_POSTGRES_VERBOSE:
+			/* Compatible with maintableql < 8.4 when DateStyle != 'iso' */
+		case INTSTYLE_MAINTABLE_VERBOSE:
 		default:
 			strcpy(cp, "@");
 			cp++;
@@ -1065,7 +1065,7 @@ PGTYPESinterval_to_asc(interval * span)
 			   *tm = &tt;
 	fsec_t		fsec;
 	char		buf[MAXDATELEN + 1];
-	int			IntervalStyle = INTSTYLE_POSTGRES_VERBOSE;
+	int			IntervalStyle = INTSTYLE_MAINTABLE_VERBOSE;
 
 	if (interval2tm(*span, tm, &fsec) != 0)
 	{

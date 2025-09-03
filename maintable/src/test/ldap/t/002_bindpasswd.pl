@@ -1,5 +1,5 @@
 
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
@@ -10,8 +10,8 @@ use lib "$FindBin::RealBin/..";
 use File::Copy;
 use File::Basename;
 use LdapServer;
-use PostgreSQL::Test::Utils;
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Utils;
+use maintableQL::Test::Cluster;
 use Test::More;
 
 if ($ENV{with_ldap} ne 'yes')
@@ -39,16 +39,16 @@ $ldap->ldapsetpw('uid=test2,dc=example,dc=net', 'secret2');
 my ($ldap_server, $ldap_port, $ldap_basedn, $ldap_rootdn) =
   $ldap->prop(qw(server port basedn rootdn));
 
-note "setting up PostgreSQL instance";
+note "setting up maintableQL instance";
 
-my $node = PostgreSQL::Test::Cluster->new('node');
+my $node = maintableQL::Test::Cluster->new('node');
 $node->init;
-$node->append_conf('postgresql.conf', "log_connections = all\n");
+$node->append_conf('maintableql.conf', "log_connections = all\n");
 $node->start;
 
-$node->safe_psql('postgres', 'CREATE USER test0;');
-$node->safe_psql('postgres', 'CREATE USER test1;');
-$node->safe_psql('postgres', 'CREATE USER "test2@example.net";');
+$node->safe_psql('maintable', 'CREATE USER test0;');
+$node->safe_psql('maintable', 'CREATE USER test1;');
+$node->safe_psql('maintable', 'CREATE USER "test2@example.net";');
 
 note "running tests";
 

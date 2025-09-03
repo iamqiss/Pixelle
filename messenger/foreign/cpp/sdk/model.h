@@ -25,12 +25,12 @@
 namespace icp {
 
 /**
- * @brief Value objects used in the Iggy protocol.
+ * @brief Value objects used in the Messenger protocol.
  */
 namespace model {
 
 /**
- * @brief Base class for all value objects used in the Iggy protocol.
+ * @brief Base class for all value objects used in the Messenger protocol.
  */
 class Model {
 public:
@@ -263,7 +263,7 @@ public:
 };  // namespace stream
 
 /**
- * @brief Models related to messages consumed and sent to the Iggy server.
+ * @brief Models related to messages consumed and sent to the Messenger server.
  */
 namespace message {
 
@@ -539,8 +539,8 @@ public:
  * This class is used to represent the result of the GetStats call,
  * which gets a snapshot of latest server performance statistics.
  *
- * @see [GetStats definition](https://iggy.apache.org/docs/server/schema#get-stats)
- * @see [stats.rs](https://github.com/apache/iggy/blob/master/core/server/src/streaming/systems/stats.rs)
+ * @see [GetStats definition](https://messenger.apache.org/docs/server/schema#get-stats)
+ * @see [stats.rs](https://github.com/apache/messenger/blob/master/core/server/src/streaming/systems/stats.rs)
  */
 class Stats : Model {
 private:

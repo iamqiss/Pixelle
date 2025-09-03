@@ -1,6 +1,6 @@
 # LANGUAGE message translation file for pgscripts
-# Copyright (C) 2004-2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pgscripts (PostgreSQL) package.
+# Copyright (C) 2004-2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pgscripts (maintableQL) package.
 #
 # Use these quotes: « %s »
 #
@@ -10,8 +10,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-08-23 14:21+0000\n"
 "PO-Revision-Date: 2024-09-16 16:28+0200\n"
 "Last-Translator: Guillaume Lelarge <guillaume@lelarge.info>\n"
@@ -442,10 +442,10 @@ msgstr "l'ajout du commentaire a échoué (la base de données a été créée) 
 #: createdb.c:297
 #, c-format
 msgid ""
-"%s creates a PostgreSQL database.\n"
+"%s creates a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s crée une base de données PostgreSQL.\n"
+"%s crée une base de données maintableQL.\n"
 "\n"
 
 #: createdb.c:299
@@ -617,10 +617,10 @@ msgstr "la création du nouveau rôle a échoué : %s"
 #: createuser.c:414
 #, c-format
 msgid ""
-"%s creates a new PostgreSQL role.\n"
+"%s creates a new maintableQL role.\n"
 "\n"
 msgstr ""
-"%s crée un nouvel rôle PostgreSQL.\n"
+"%s crée un nouvel rôle maintableQL.\n"
 "\n"
 
 #: createuser.c:416 dropuser.c:171
@@ -793,10 +793,10 @@ msgstr "la suppression de la base de données a échoué : %s"
 #: dropdb.c:171
 #, c-format
 msgid ""
-"%s removes a PostgreSQL database.\n"
+"%s removes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s supprime une base de données PostgreSQL.\n"
+"%s supprime une base de données maintableQL.\n"
 "\n"
 
 #: dropdb.c:173
@@ -847,10 +847,10 @@ msgstr "la suppression du rôle « %s » a échoué : %s"
 #: dropuser.c:169
 #, c-format
 msgid ""
-"%s removes a PostgreSQL role.\n"
+"%s removes a maintableQL role.\n"
 "\n"
 msgstr ""
-"%s supprime un rôle PostgreSQL.\n"
+"%s supprime un rôle maintableQL.\n"
 "\n"
 
 #: dropuser.c:174
@@ -910,10 +910,10 @@ msgstr "inconnu\n"
 #: pg_isready.c:225
 #, c-format
 msgid ""
-"%s issues a connection check to a PostgreSQL database.\n"
+"%s issues a connection check to a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s réalise un test de connexion à une base de données PostgreSQL.\n"
+"%s réalise un test de connexion à une base de données maintableQL.\n"
 "\n"
 
 #: pg_isready.c:227
@@ -979,8 +979,8 @@ msgstr "ne peut pas réindexer toutes les bases de données et une base spécifi
 #: vacuumdb.c:536 vacuumdb.c:543 vacuumdb.c:550 vacuumdb.c:557 vacuumdb.c:562
 #: vacuumdb.c:566 vacuumdb.c:570 vacuumdb.c:574
 #, c-format
-msgid "cannot use the \"%s\" option on server versions older than PostgreSQL %s"
-msgstr "ne peut utiliser l'option « %s » sur des versions serveurs plus anciennes que PostgreSQL %s"
+msgid "cannot use the \"%s\" option on server versions older than maintableQL %s"
+msgstr "ne peut utiliser l'option « %s » sur des versions serveurs plus anciennes que maintableQL %s"
 
 #: reindexdb.c:584
 #, c-format
@@ -1015,10 +1015,10 @@ msgstr "%s : réindexation de la base de données « %s »\n"
 #: reindexdb.c:867
 #, c-format
 msgid ""
-"%s reindexes a PostgreSQL database.\n"
+"%s reindexes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s réindexe une base de données PostgreSQL.\n"
+"%s réindexe une base de données maintableQL.\n"
 "\n"
 
 #: reindexdb.c:871
@@ -1165,10 +1165,10 @@ msgstr "l'exécution de VACUUM sur la base de données « %s » a échoué : %s"
 #: vacuumdb.c:1146
 #, c-format
 msgid ""
-"%s cleans and analyzes a PostgreSQL database.\n"
+"%s cleans and analyzes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s nettoie et analyse une base de données PostgreSQL.\n"
+"%s nettoie et analyse une base de données maintableQL.\n"
 "\n"
 
 #: vacuumdb.c:1150

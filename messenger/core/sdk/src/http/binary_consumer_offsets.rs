@@ -19,12 +19,12 @@
 use crate::http::http_client::HttpClient;
 use crate::http::http_transport::HttpTransport;
 use crate::prelude::Identifier;
-use crate::prelude::IggyError;
+use crate::prelude::MessengerError;
 use async_trait::async_trait;
-use iggy_binary_protocol::ConsumerOffsetClient;
-use iggy_common::get_consumer_offset::GetConsumerOffset;
-use iggy_common::store_consumer_offset::StoreConsumerOffset;
-use iggy_common::{Consumer, ConsumerOffsetInfo};
+use messenger_binary_protocol::ConsumerOffsetClient;
+use messenger_common::get_consumer_offset::GetConsumerOffset;
+use messenger_common::store_consumer_offset::StoreConsumerOffset;
+use messenger_common::{Consumer, ConsumerOffsetInfo};
 
 #[async_trait]
 impl ConsumerOffsetClient for HttpClient {
@@ -35,7 +35,7 @@ impl ConsumerOffsetClient for HttpClient {
         topic_id: &Identifier,
         partition_id: Option<u32>,
         offset: u64,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.put(
             &get_path(&stream_id.as_cow_str(), &topic_id.as_cow_str()),
             &StoreConsumerOffset {
@@ -56,7 +56,7 @@ impl ConsumerOffsetClient for HttpClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partition_id: Option<u32>,
-    ) -> Result<Option<ConsumerOffsetInfo>, IggyError> {
+    ) -> Result<Option<ConsumerOffsetInfo>, MessengerError> {
         let response = self
             .get_with_query(
                 &get_path(&stream_id.as_cow_str(), &topic_id.as_cow_str()),
@@ -69,7 +69,7 @@ impl ConsumerOffsetClient for HttpClient {
             )
             .await;
         if let Err(error) = response {
-            if matches!(error, IggyError::ResourceNotFound(_)) {
+            if matches!(error, MessengerError::ResourceNotFound(_)) {
                 return Ok(None);
             }
 
@@ -79,7 +79,7 @@ impl ConsumerOffsetClient for HttpClient {
         let offset = response?
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(Some(offset))
     }
 
@@ -89,7 +89,7 @@ impl ConsumerOffsetClient for HttpClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partition_id: Option<u32>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         let partition_id = partition_id
             .map(|id| format!("?partition_id={id}"))
             .unwrap_or_default();

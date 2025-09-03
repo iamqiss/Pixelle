@@ -22,7 +22,7 @@ use crate::cli::cli_command::{CliCommand, PRINT_TARGET};
 use crate::cli::utils::login_session_expiry::LoginSessionExpiry;
 use anyhow::Context;
 use async_trait::async_trait;
-use iggy_common::SEC_IN_MICRO;
+use messenger_common::SEC_IN_MICRO;
 use tracing::{Level, event};
 
 const DEFAULT_LOGIN_SESSION_TIMEOUT: u64 = SEC_IN_MICRO * 15 * 60;
@@ -49,7 +49,7 @@ impl CliCommand for LoginCmd {
 
     async fn execute_cmd(&mut self, client: &dyn Client) -> anyhow::Result<(), anyhow::Error> {
         if self.server_session.is_active() {
-            event!(target: PRINT_TARGET, Level::INFO, "Already logged into Iggy server {}", self.server_session.get_server_address());
+            event!(target: PRINT_TARGET, Level::INFO, "Already logged into Messenger server {}", self.server_session.get_server_address());
             return Ok(());
         }
 
@@ -97,7 +97,7 @@ impl CliCommand for LoginCmd {
         self.server_session.store(&token.token)?;
 
         event!(target: PRINT_TARGET, Level::INFO,
-            "Successfully logged into Iggy server {}",
+            "Successfully logged into Messenger server {}",
             self.server_session.get_server_address(),
         );
 

@@ -866,7 +866,7 @@ version = "0.0.1"
 dependencies = [
  "bytes",
  "cucumber",
- "iggy",
+ "messenger",
  "integration",
  "tokio",
 ]
@@ -3789,7 +3789,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "iggy"
+name = "messenger"
 version = "0.7.0"
 dependencies = [
  "async-broadcast",
@@ -3801,8 +3801,8 @@ dependencies = [
  "flume",
  "futures",
  "futures-util",
- "iggy_binary_protocol",
- "iggy_common",
+ "messenger_binary_protocol",
+ "messenger_common",
  "mockall",
  "num_cpus",
  "quinn",
@@ -3819,7 +3819,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "iggy-bench"
+name = "messenger-bench"
 version = "0.2.4"
 dependencies = [
  "async-trait",
@@ -3833,7 +3833,7 @@ dependencies = [
  "governor",
  "hostname",
  "human-repr",
- "iggy",
+ "messenger",
  "integration",
  "nonzero_lit",
  "rand 0.9.2",
@@ -3849,7 +3849,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "iggy-bench-dashboard-server"
+name = "messenger-bench-dashboard-server"
 version = "0.4.0"
 dependencies = [
  "actix-cors",
@@ -3876,7 +3876,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "iggy-cli"
+name = "messenger-cli"
 version = "0.9.1"
 dependencies = [
  "ahash 0.8.12",
@@ -3884,8 +3884,8 @@ dependencies = [
  "clap",
  "clap_complete",
  "figlet-rs",
- "iggy",
- "iggy_binary_protocol",
+ "messenger",
+ "messenger_binary_protocol",
  "keyring",
  "passterm",
  "thiserror 2.0.16",
@@ -3896,7 +3896,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "iggy-connectors"
+name = "messenger-connectors"
 version = "0.1.0"
 dependencies = [
  "axum 0.8.4",
@@ -3908,8 +3908,8 @@ dependencies = [
  "figlet-rs",
  "flume",
  "futures",
- "iggy",
- "iggy_connector_sdk",
+ "messenger",
+ "messenger_connector_sdk",
  "mimalloc",
  "once_cell",
  "postcard",
@@ -3926,7 +3926,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "iggy-mcp"
+name = "messenger-mcp"
 version = "0.1.0"
 dependencies = [
  "axum 0.8.4",
@@ -3934,7 +3934,7 @@ dependencies = [
  "config",
  "dotenvy",
  "figlet-rs",
- "iggy",
+ "messenger",
  "rmcp",
  "serde",
  "strum",
@@ -3946,7 +3946,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "iggy_binary_protocol"
+name = "messenger_binary_protocol"
 version = "0.7.0"
 dependencies = [
  "anyhow",
@@ -3956,7 +3956,7 @@ dependencies = [
  "chrono",
  "comfy-table",
  "dirs",
- "iggy_common",
+ "messenger_common",
  "keyring",
  "passterm",
  "serde",
@@ -3967,7 +3967,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "iggy_common"
+name = "messenger_common"
 version = "0.7.0"
 dependencies = [
  "aes-gcm",
@@ -3995,14 +3995,14 @@ dependencies = [
 ]
 
 [[package]]
-name = "iggy_connector_postgres_sink"
+name = "messenger_connector_maintable_sink"
 version = "0.1.0"
 dependencies = [
  "async-trait",
  "chrono",
  "dashmap",
  "futures",
- "iggy_connector_sdk",
+ "messenger_connector_sdk",
  "once_cell",
  "serde",
  "simd-json",
@@ -4012,7 +4012,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "iggy_connector_postgres_source"
+name = "messenger_connector_maintable_source"
 version = "0.1.0"
 dependencies = [
  "async-trait",
@@ -4020,7 +4020,7 @@ dependencies = [
  "dashmap",
  "futures",
  "humantime",
- "iggy_connector_sdk",
+ "messenger_connector_sdk",
  "once_cell",
  "serde",
  "serde_json",
@@ -4032,12 +4032,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "iggy_connector_quickwit_sink"
+name = "messenger_connector_quickwit_sink"
 version = "0.1.0"
 dependencies = [
  "async-trait",
  "dashmap",
- "iggy_connector_sdk",
+ "messenger_connector_sdk",
  "once_cell",
  "reqwest",
  "serde",
@@ -4047,13 +4047,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "iggy_connector_random_source"
+name = "messenger_connector_random_source"
 version = "0.1.0"
 dependencies = [
  "async-trait",
  "dashmap",
  "humantime",
- "iggy_connector_sdk",
+ "messenger_connector_sdk",
  "once_cell",
  "rand 0.9.2",
  "serde",
@@ -4064,7 +4064,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "iggy_connector_sdk"
+name = "messenger_connector_sdk"
 version = "0.1.0"
 dependencies = [
  "async-trait",
@@ -4072,7 +4072,7 @@ dependencies = [
  "chrono",
  "dashmap",
  "flatbuffers",
- "iggy",
+ "messenger",
  "once_cell",
  "postcard",
  "prost 0.14.1",
@@ -4092,12 +4092,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "iggy_connector_stdout_sink"
+name = "messenger_connector_stdout_sink"
 version = "0.1.0"
 dependencies = [
  "async-trait",
  "dashmap",
- "iggy_connector_sdk",
+ "messenger_connector_sdk",
  "once_cell",
  "serde",
  "tokio",
@@ -4105,7 +4105,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "iggy_examples"
+name = "messenger_examples"
 version = "0.0.5"
 dependencies = [
  "ahash 0.8.12",
@@ -4114,7 +4114,7 @@ dependencies = [
  "chrono",
  "clap",
  "futures-util",
- "iggy",
+ "messenger",
  "rand 0.9.2",
  "serde",
  "serde_json",
@@ -4261,9 +4261,9 @@ dependencies = [
  "env_logger",
  "futures",
  "humantime",
- "iggy",
- "iggy_binary_protocol",
- "iggy_common",
+ "messenger",
+ "messenger_binary_protocol",
+ "messenger_common",
  "keyring",
  "lazy_static",
  "libc",
@@ -7220,7 +7220,7 @@ dependencies = [
  "flume",
  "futures",
  "human-repr",
- "iggy_common",
+ "messenger_common",
  "jsonwebtoken",
  "lending-iterator",
  "mimalloc",
@@ -7474,7 +7474,7 @@ dependencies = [
  "sqlx-core",
  "sqlx-macros",
  "sqlx-mysql",
- "sqlx-postgres",
+ "sqlx-maintable",
  "sqlx-sqlite",
 ]
 
@@ -7547,7 +7547,7 @@ dependencies = [
  "sha2",
  "sqlx-core",
  "sqlx-mysql",
- "sqlx-postgres",
+ "sqlx-maintable",
  "sqlx-sqlite",
  "syn 2.0.106",
  "tokio",
@@ -7599,7 +7599,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "sqlx-postgres"
+name = "sqlx-maintable"
 version = "0.8.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "db58fcd5a53cf07c184b154801ff91347e4c30d17a3562a635ff028ad5deda46"
@@ -8269,7 +8269,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
- "iggy",
+ "messenger",
  "rand 0.9.2",
  "tokio",
  "tracing",

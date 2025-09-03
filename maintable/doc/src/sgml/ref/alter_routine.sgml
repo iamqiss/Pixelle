@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_routine.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-alterroutine">
@@ -82,7 +82,7 @@ ALTER ROUTINE foo(integer) RENAME TO foobar;
    under <xref linkend="sql-alterfunction"/>
    and <xref linkend="sql-alterprocedure"/> for more details.  Allowing
    routine names to refer to aggregate functions is
-   a <productname>PostgreSQL</productname> extension.
+   a <productname>maintableQL</productname> extension.
   </para>
  </refsect1>
 

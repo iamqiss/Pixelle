@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pg_resetwal.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-pgresetwal">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>pg_resetwal</refname>
-  <refpurpose>reset the write-ahead log and other control information of a <productname>PostgreSQL</productname> database cluster</refpurpose>
+  <refpurpose>reset the write-ahead log and other control information of a <productname>maintableQL</productname> database cluster</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -365,7 +365,7 @@ PostgreSQL documentation
      </para>
      <para>
       For a database cluster that <command>pg_upgrade</command> upgraded from
-      a <productname>PostgreSQL</productname> version before 18, the safe
+      a <productname>maintableQL</productname> version before 18, the safe
       value would be the default <type>char</type> signedness of the platform
       that ran the cluster before that upgrade. For all other
       clusters, <literal>signed</literal> would be the safe value. However,

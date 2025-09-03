@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pgtestfsync.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="pgtestfsync">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>pg_test_fsync</refname>
-  <refpurpose>determine fastest <varname>wal_sync_method</varname> for <productname>PostgreSQL</productname></refpurpose>
+  <refpurpose>determine fastest <varname>wal_sync_method</varname> for <productname>maintableQL</productname></refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -121,7 +121,7 @@ PostgreSQL documentation
   <title>See Also</title>
 
   <simplelist type="inline">
-   <member><xref linkend="app-postgres"/></member>
+   <member><xref linkend="app-maintable"/></member>
   </simplelist>
  </refsect1>
 </refentry>

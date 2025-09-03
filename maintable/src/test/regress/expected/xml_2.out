@@ -1142,13 +1142,13 @@ SELECT xml_is_well_formed('<local:data xmlns:local="http://127.0.0.1"><local:pie
  t
 (1 row)
 
-SELECT xml_is_well_formed('<pg:foo xmlns:pg="http://postgresql.org/stuff">bar</my:foo>');
+SELECT xml_is_well_formed('<pg:foo xmlns:pg="http://maintableql.org/stuff">bar</my:foo>');
  xml_is_well_formed 
 --------------------
  f
 (1 row)
 
-SELECT xml_is_well_formed('<pg:foo xmlns:pg="http://postgresql.org/stuff">bar</pg:foo>');
+SELECT xml_is_well_formed('<pg:foo xmlns:pg="http://maintableql.org/stuff">bar</pg:foo>');
  xml_is_well_formed 
 --------------------
  t

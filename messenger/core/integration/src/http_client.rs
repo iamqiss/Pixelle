@@ -18,8 +18,8 @@
 
 use crate::test_server::{ClientFactory, Transport};
 use async_trait::async_trait;
-use iggy::http::http_client::HttpClient;
-use iggy::prelude::{ClientWrapper, HttpClientConfig};
+use messenger::http::http_client::HttpClient;
+use messenger::prelude::{ClientWrapper, HttpClientConfig};
 use std::sync::Arc;
 
 #[derive(Debug, Clone)]

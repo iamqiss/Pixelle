@@ -20,42 +20,42 @@ use clap::Parser;
 
 #[derive(Parser, Debug)]
 #[command(
-    author = "Apache Iggy (Incubating)",
+    author = "Apache Messenger (Incubating)",
     version,
-    about = "Apache Iggy: Hyper-Efficient Message Streaming at Laser Speed",
-    long_about = r#"Apache Iggy (Incubating) - A persistent message streaming platform written in Rust
+    about = "Apache Messenger: Hyper-Efficient Message Streaming at Laser Speed",
+    long_about = r#"Apache Messenger (Incubating) - A persistent message streaming platform written in Rust
 
-Apache Iggy is a high-performance message streaming platform that supports QUIC, TCP, and HTTP 
+Apache Messenger is a high-performance message streaming platform that supports QUIC, TCP, and HTTP 
 transport protocols, capable of processing millions of messages per second with low latency.
 
 WEBSITE:
-    https://iggy.apache.org
+    https://messenger.apache.org
 
 REPOSITORY:
-    https://github.com/apache/iggy
+    https://github.com/apache/messenger
 
 DOCUMENTATION:
-    https://iggy.apache.org/docs
+    https://messenger.apache.org/docs
 
 CONFIGURATION:
     The server uses a TOML configuration file. By default, it looks for 'configs/server.toml' 
-    in the current working directory. You can override this with the IGGY_CONFIG_PATH environment
+    in the current working directory. You can override this with the MESSENGER_CONFIG_PATH environment
     variable or use the --config-provider flag.
 
     Examples:
-        iggy-server                                    # Uses default file provider (configs/server.toml)
-        iggy-server --config-provider file             # Explicitly use file provider
-        IGGY_CONFIG_PATH=custom.toml iggy-server       # Use custom config file path
+        messenger-server                                    # Uses default file provider (configs/server.toml)
+        messenger-server --config-provider file             # Explicitly use file provider
+        MESSENGER_CONFIG_PATH=custom.toml messenger-server       # Use custom config file path
 
 ENVIRONMENT VARIABLES:
-    Any configuration value can be overridden using environment variables with the IGGY_ prefix.
-    Use underscores to separate nested configuration keys (e.g., IGGY_TCP_ADDRESS=127.0.0.1:8090).
+    Any configuration value can be overridden using environment variables with the MESSENGER_ prefix.
+    Use underscores to separate nested configuration keys (e.g., MESSENGER_TCP_ADDRESS=127.0.0.1:8090).
 
     Common examples:
-        IGGY_TCP_ADDRESS=0.0.0.0:8090                  # Override TCP server address
-        IGGY_HTTP_ENABLED=true                         # Enable HTTP transport
-        IGGY_SYSTEM_PATH=/data/iggy                    # Set data storage path
-        IGGY_SYSTEM_LOGGING_LEVEL=debug                # Set log level to debug
+        MESSENGER_TCP_ADDRESS=0.0.0.0:8090                  # Override TCP server address
+        MESSENGER_HTTP_ENABLED=true                         # Enable HTTP transport
+        MESSENGER_SYSTEM_PATH=/data/messenger                    # Set data storage path
+        MESSENGER_SYSTEM_LOGGING_LEVEL=debug                # Set log level to debug
 
 TRANSPORT PROTOCOLS:
     - TCP (binary protocol): High-performance, low-latency (default: 127.0.0.1:8090)
@@ -63,19 +63,19 @@ TRANSPORT PROTOCOLS:
     - HTTP: RESTful API for web integration (default: 127.0.0.1:3000, disabled by default)
 
 GETTING STARTED:
-    1. Start the server: iggy-server
-    2. Install CLI: cargo install iggy-cli
-    3. Create a stream: iggy stream create my-stream
-    4. Create a topic: iggy topic create my-stream my-topic 1 none
-    5. Send messages: echo "Hello, Iggy!" | iggy message send my-stream my-topic
+    1. Start the server: messenger-server
+    2. Install CLI: cargo install messenger-cli
+    3. Create a stream: messenger stream create my-stream
+    4. Create a topic: messenger topic create my-stream my-topic 1 none
+    5. Send messages: echo "Hello, Messenger!" | messenger message send my-stream my-topic
 
-For more information, visit: https://iggy.apache.org/docs/introduction/getting-started/"#
+For more information, visit: https://messenger.apache.org/docs/introduction/getting-started/"#
 )]
 pub struct Args {
     /// Configuration provider type
     ///
     /// Currently only 'file' provider is supported, which loads configuration from a TOML file.
-    /// The file path can be specified via IGGY_CONFIG_PATH environment variable.
+    /// The file path can be specified via MESSENGER_CONFIG_PATH environment variable.
     #[arg(short, long, default_value = "file", verbatim_doc_comment)]
     pub config_provider: String,
 
@@ -85,8 +85,8 @@ pub struct Args {
     /// before starting the server. Use this for clean development setups or testing.
     ///
     /// Examples:
-    ///   iggy-server --fresh                          # Start with fresh data directory
-    ///   iggy-server -f                               # Short form
+    ///   messenger-server --fresh                          # Start with fresh data directory
+    ///   messenger-server -f                               # Short form
     #[arg(short, long, default_value_t = false, verbatim_doc_comment)]
     pub fresh: bool,
 }

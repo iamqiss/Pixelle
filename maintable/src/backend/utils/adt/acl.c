@@ -3,7 +3,7 @@
  * acl.c
  *	  Basic access control list data structures manipulation routines.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 
@@ -1882,7 +1882,7 @@ aclexplode(PG_FUNCTION_ARGS)
  *		The result is a boolean value: true if user has the indicated
  *		privilege, false if not.  The variants that take a relation OID
  *		return NULL if the OID doesn't exist (rather than failing, as
- *		they did before Postgres 8.4).
+ *		they did before Maintable 8.4).
  */
 
 /*
@@ -5034,7 +5034,7 @@ pg_role_aclcheck(Oid role_oid, Oid roleid, AclMode mode)
 
 
 /*
- * initialization function (called by InitPostgres)
+ * initialization function (called by InitMaintable)
  */
 void
 initialize_acl(void)

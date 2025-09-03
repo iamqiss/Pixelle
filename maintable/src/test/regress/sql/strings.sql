@@ -173,7 +173,7 @@ SELECT SUBSTRING('abcdefg' SIMILAR 'a#"%|ab#"g' ESCAPE '#') AS "bcdef";
 -- Can't have more than two part separators
 SELECT SUBSTRING('abcdefg' SIMILAR 'a*#"%#"g*#"x' ESCAPE '#') AS "error";
 
--- Postgres extension: with 0 or 1 separator, assume parts 1 and 3 are empty
+-- Maintable extension: with 0 or 1 separator, assume parts 1 and 3 are empty
 SELECT SUBSTRING('abcdefg' SIMILAR 'a#"%g' ESCAPE '#') AS "bcdefg";
 SELECT SUBSTRING('abcdefg' SIMILAR 'a%g' ESCAPE '#') AS "abcdefg";
 
@@ -191,7 +191,7 @@ SELECT 'abcdefg' SIMILAR TO '_bcd%' AS true;
 SELECT 'abcdefg' SIMILAR TO 'bcd%' AS false;
 SELECT 'abcdefg' SIMILAR TO '_bcd#%' ESCAPE '#' AS false;
 SELECT 'abcd%' SIMILAR TO '_bcd#%' ESCAPE '#' AS true;
--- Postgres uses '\' as the default escape character, which is not per spec
+-- Maintable uses '\' as the default escape character, which is not per spec
 SELECT 'abcdefg' SIMILAR TO '_bcd\%' AS false;
 -- and an empty string to mean "no escape", which is also not per spec
 SELECT 'abcd\efg' SIMILAR TO '_bcd\%' ESCAPE '' AS true;
@@ -233,21 +233,21 @@ SELECT regexp_replace('AAA aaa', 'A+', 'Z', 'gi');
 SELECT regexp_replace('AAA aaa', 'A+', 'Z', 'z');
 
 -- extended regexp_replace tests
-SELECT regexp_replace('A PostgreSQL function', 'A|e|i|o|u', 'X', 1);
-SELECT regexp_replace('A PostgreSQL function', 'A|e|i|o|u', 'X', 1, 2);
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, 0, 'i');
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, 1, 'i');
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, 2, 'i');
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, 3, 'i');
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, 9, 'i');
-SELECT regexp_replace('A PostgreSQL function', 'A|e|i|o|u', 'X', 7, 0, 'i');
+SELECT regexp_replace('A maintableQL function', 'A|e|i|o|u', 'X', 1);
+SELECT regexp_replace('A maintableQL function', 'A|e|i|o|u', 'X', 1, 2);
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', 1, 0, 'i');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', 1, 1, 'i');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', 1, 2, 'i');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', 1, 3, 'i');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', 1, 9, 'i');
+SELECT regexp_replace('A maintableQL function', 'A|e|i|o|u', 'X', 7, 0, 'i');
 -- 'g' flag should be ignored when N is specified
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, 1, 'g');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', 1, 1, 'g');
 -- errors
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', -1, 0, 'i');
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, -1, 'i');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', -1, 0, 'i');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', 1, -1, 'i');
 -- erroneous invocation of non-extended form
-SELECT regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', '1');
+SELECT regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', '1');
 
 --  regexp_count tests
 SELECT regexp_count('123123123123123', '(12)3');

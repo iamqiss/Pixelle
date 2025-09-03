@@ -204,23 +204,23 @@ class AutoCommitWhen:
 
     ...
 
-class IggyClient:
+class MessengerClient:
     r"""
-    A Python class representing the Iggy client.
-    It wraps the RustIggyClient and provides asynchronous functionality
+    A Python class representing the Messenger client.
+    It wraps the RustMessengerClient and provides asynchronous functionality
     through the contained runtime.
     """
-    def __new__(cls, conn: typing.Optional[builtins.str] = None) -> IggyClient:
+    def __new__(cls, conn: typing.Optional[builtins.str] = None) -> MessengerClient:
         r"""
-        Constructs a new IggyClient from a TCP server address.
+        Constructs a new MessengerClient from a TCP server address.
 
         This initializes a new runtime for asynchronous operations.
         Future versions might utilize asyncio for more Pythonic async.
         """
     @classmethod
-    def from_connection_string(cls, connection_string: builtins.str) -> IggyClient:
+    def from_connection_string(cls, connection_string: builtins.str) -> MessengerClient:
         r"""
-        Constructs a new IggyClient from a connection string.
+        Constructs a new MessengerClient from a connection string.
 
         Returns an error if the connection string provided is invalid.
         """
@@ -241,7 +241,7 @@ class IggyClient:
         """
     def connect(self) -> collections.abc.Awaitable[None]:
         r"""
-        Connects the IggyClient to its service.
+        Connects the MessengerClient to its service.
 
         Returns Ok(()) on successful connection or a PyRuntimeError on failure.
         """
@@ -327,17 +327,17 @@ class IggyClient:
         init_retries: typing.Optional[builtins.int] = None,
         init_retry_interval: typing.Optional[datetime.timedelta] = None,
         allow_replay: builtins.bool = False,
-    ) -> IggyConsumer:
+    ) -> MessengerConsumer:
         r"""
         Creates a new consumer group consumer.
 
         Returns the consumer or a PyRuntimeError on failure.
         """
 
-class IggyConsumer:
+class MessengerConsumer:
     r"""
-    A Python class representing the Iggy consumer.
-    It wraps the RustIggyConsumer and provides asynchronous functionality
+    A Python class representing the Messenger consumer.
+    It wraps the RustMessengerConsumer and provides asynchronous functionality
     through the contained runtime.
     """
     def get_last_consumed_offset(

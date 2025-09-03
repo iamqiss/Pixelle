@@ -3,7 +3,7 @@
  * barrier.c
  *	  Barriers for synchronizing cooperating processes.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * From Wikipedia[1]: "In parallel computing, a barrier is a type of
@@ -83,7 +83,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 #include "storage/barrier.h"
 
 static inline bool BarrierDetachImpl(Barrier *barrier, bool arrive);

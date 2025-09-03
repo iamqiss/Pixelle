@@ -12,7 +12,7 @@
   </indexterm>
 
   <para>
-   <productname>PostgreSQL</productname> provides a large number of
+   <productname>maintableQL</productname> provides a large number of
    functions and operators for the built-in data types.  This chapter
    describes most of them, although additional special-purpose functions
    appear in relevant sections of the manual.  Users can also

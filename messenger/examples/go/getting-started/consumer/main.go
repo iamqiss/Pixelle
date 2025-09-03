@@ -19,10 +19,10 @@ package main
 
 import (
 	"flag"
-	"github.com/apache/iggy/examples/go/common"
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	"github.com/apache/iggy/foreign/go/iggycli"
-	"github.com/apache/iggy/foreign/go/tcp"
+	"github.com/apache/messenger/examples/go/common"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	"github.com/apache/messenger/foreign/go/messengercli"
+	"github.com/apache/messenger/foreign/go/tcp"
 	"log"
 	"net"
 	"time"
@@ -36,8 +36,8 @@ var (
 )
 
 func main() {
-	client, err := iggycli.NewIggyClient(
-		iggycli.WithTcp(
+	client, err := messengercli.NewMessengerClient(
+		messengercli.WithTcp(
 			tcp.WithServerAddress(getTcpServerAddr()),
 		),
 	)
@@ -56,7 +56,7 @@ func main() {
 	}
 }
 
-func consumeMessages(client iggycli.Client) error {
+func consumeMessages(client messengercli.Client) error {
 	interval := 500 * time.Millisecond
 	log.Printf(
 		"Messages will be consumed from stream: %d, topic: %d, partition: %d with interval %s.",
@@ -107,7 +107,7 @@ func consumeMessages(client iggycli.Client) error {
 	}
 }
 
-func handleMessage(message iggcon.IggyMessage) error {
+func handleMessage(message iggcon.MessengerMessage) error {
 	payload := string(message.Payload)
 	log.Printf(
 		"Handling message at offset: %d, payload: %s...",

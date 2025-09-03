@@ -19,32 +19,32 @@
 use crate::client_wrappers::client_wrapper::ClientWrapper;
 use async_broadcast::Receiver;
 use async_trait::async_trait;
-use iggy_binary_protocol::Client;
-use iggy_common::{DiagnosticEvent, IggyError};
+use messenger_binary_protocol::Client;
+use messenger_common::{DiagnosticEvent, MessengerError};
 
 #[async_trait]
 impl Client for ClientWrapper {
-    async fn connect(&self) -> Result<(), IggyError> {
+    async fn connect(&self) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.connect().await,
+            ClientWrapper::Messenger(client) => client.connect().await,
             ClientWrapper::Http(client) => client.connect().await,
             ClientWrapper::Tcp(client) => client.connect().await,
             ClientWrapper::Quic(client) => client.connect().await,
         }
     }
 
-    async fn disconnect(&self) -> Result<(), IggyError> {
+    async fn disconnect(&self) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.disconnect().await,
+            ClientWrapper::Messenger(client) => client.disconnect().await,
             ClientWrapper::Http(client) => client.disconnect().await,
             ClientWrapper::Tcp(client) => client.disconnect().await,
             ClientWrapper::Quic(client) => client.disconnect().await,
         }
     }
 
-    async fn shutdown(&self) -> Result<(), IggyError> {
+    async fn shutdown(&self) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => client.shutdown().await,
+            ClientWrapper::Messenger(client) => client.shutdown().await,
             ClientWrapper::Http(client) => client.shutdown().await,
             ClientWrapper::Tcp(client) => client.shutdown().await,
             ClientWrapper::Quic(client) => client.shutdown().await,
@@ -53,7 +53,7 @@ impl Client for ClientWrapper {
 
     async fn subscribe_events(&self) -> Receiver<DiagnosticEvent> {
         match self {
-            ClientWrapper::Iggy(client) => client.subscribe_events().await,
+            ClientWrapper::Messenger(client) => client.subscribe_events().await,
             ClientWrapper::Http(client) => client.subscribe_events().await,
             ClientWrapper::Tcp(client) => client.subscribe_events().await,
             ClientWrapper::Quic(client) => client.subscribe_events().await,

@@ -7,7 +7,7 @@
 
    <para>
     There are three separate approaches to pattern matching provided
-    by <productname>PostgreSQL</productname>: the traditional
+    by <productname>maintableQL</productname>: the traditional
     <acronym>SQL</acronym> <function>LIKE</function> operator, the
     more recent <function>SIMILAR TO</function> operator (added in
     SQL:1999), and <acronym>POSIX</acronym>-style regular
@@ -171,7 +171,7 @@
     According to the SQL standard, omitting <literal>ESCAPE</literal>
     means there is no escape character (rather than defaulting to a
     backslash), and a zero-length <literal>ESCAPE</literal> value is
-    disallowed.  <productname>PostgreSQL</productname>'s behavior in
+    disallowed.  <productname>maintableQL</productname>'s behavior in
     this regard is therefore slightly nonstandard.
    </para>
 
@@ -180,7 +180,7 @@
     <token>LIKE</token> to make the match case-insensitive according to the
     active locale.  (But this does not support nondeterministic collations.)
     This is not in the <acronym>SQL</acronym> standard but is a
-    <productname>PostgreSQL</productname> extension.
+    <productname>maintableQL</productname> extension.
    </para>
 
    <para>
@@ -190,7 +190,7 @@
     <literal>!~~</literal> and <literal>!~~*</literal> operators that
     represent <function>NOT LIKE</function> and <function>NOT
     ILIKE</function>, respectively.  All of these operators are
-    <productname>PostgreSQL</productname>-specific.  You may see these
+    <productname>maintableQL</productname>-specific.  You may see these
     operator names in <command>EXPLAIN</command> output and similar
     places, since the parser actually translates <function>LIKE</function>
     et al. to these operators.
@@ -200,7 +200,7 @@
     The phrases <function>LIKE</function>, <function>ILIKE</function>,
     <function>NOT LIKE</function>, and <function>NOT ILIKE</function> are
     generally treated as operators
-    in <productname>PostgreSQL</productname> syntax; for example they can
+    in <productname>maintableQL</productname> syntax; for example they can
     be used in <replaceable>expression</replaceable>
     <replaceable>operator</replaceable> ANY
     (<replaceable>subquery</replaceable>) constructs, although
@@ -338,7 +338,7 @@
     According to the SQL standard, omitting <literal>ESCAPE</literal>
     means there is no escape character (rather than defaulting to a
     backslash), and a zero-length <literal>ESCAPE</literal> value is
-    disallowed.  <productname>PostgreSQL</productname>'s behavior in
+    disallowed.  <productname>maintableQL</productname>'s behavior in
     this regard is therefore slightly nonstandard.
    </para>
 
@@ -403,7 +403,7 @@ substring(<replaceable>string</replaceable>, <replaceable>pattern</replaceable>,
    </para>
 
    <para>
-    As an extension to the SQL standard, <productname>PostgreSQL</productname>
+    As an extension to the SQL standard, <productname>maintableQL</productname>
     allows there to be just one escape-double-quote separator, in which case
     the third regular expression is taken as empty; or no separators, in which
     case the first and third regular expressions are taken as empty.
@@ -753,7 +753,7 @@ SELECT regexp_match('foobarbequebaz', '(bar)(beque)');
       or <literal>NULL</literal> for no match, the best solution is to
       use <function>regexp_substr()</function>.
       However, <function>regexp_substr()</function> only exists
-      in <productname>PostgreSQL</productname> version 15 and up.  When
+      in <productname>maintableQL</productname> version 15 and up.  When
       working in older versions, you can extract the first element
       of <function>regexp_match()</function>'s result, for example:
 <programlisting>
@@ -807,7 +807,7 @@ SELECT regexp_matches('foobarbequebazilbarfbonk', '(b[^b]+)(b[^b]+)', 'g');
      the <literal>g</literal> flag, since if you only want the first match, it's
      easier and more efficient to use <function>regexp_match()</function>.
      However, <function>regexp_match()</function> only exists
-     in <productname>PostgreSQL</productname> version 10 and up.  When working in older
+     in <productname>maintableQL</productname> version 10 and up.  When working in older
      versions, a common trick is to place a <function>regexp_matches()</function>
      call in a sub-select, for example:
 <programlisting>
@@ -874,9 +874,9 @@ regexp_replace('foobarbaz', 'b..', 'X', 'g')
                                    <lineannotation>fooXX</lineannotation>
 regexp_replace('foobarbaz', 'b(..)', 'X\1Y', 'g')
                                    <lineannotation>fooXarYXazY</lineannotation>
-regexp_replace('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, 0, 'i')
+regexp_replace('A maintableQL function', 'a|e|i|o|u', 'X', 1, 0, 'i')
                                    <lineannotation>X PXstgrXSQL fXnctXXn</lineannotation>
-regexp_replace(string=>'A PostgreSQL function', pattern=>'a|e|i|o|u', replacement=>'X', start=>1, "N"=>3, flags=>'i')
+regexp_replace(string=>'A maintableQL function', pattern=>'a|e|i|o|u', replacement=>'X', start=>1, "N"=>3, flags=>'i')
                                    <lineannotation>A PostgrXSQL function</lineannotation>
 </programlisting>
    </para>
@@ -1008,7 +1008,7 @@ regexp_substr('ABCDEFGHI', '(c..)(...)', 1, 1, 'i', 2)
     <title>Regular Expression Details</title>
 
    <para>
-    <productname>PostgreSQL</productname>'s regular expressions are implemented
+    <productname>maintableQL</productname>'s regular expressions are implemented
     using a software package written by Henry Spencer.  Much of
     the description of regular expressions below is copied verbatim from his
     manual.
@@ -1021,7 +1021,7 @@ regexp_substr('ABCDEFGHI', '(c..)(...)', 1, 1, 'i', 2)
     (roughly those of <command>egrep</command>), and
     <firstterm>basic</firstterm> <acronym>RE</acronym>s or <acronym>BRE</acronym>s
     (roughly those of <command>ed</command>).
-    <productname>PostgreSQL</productname> supports both forms, and
+    <productname>maintableQL</productname> supports both forms, and
     also implements some extensions
     that are not in the POSIX standard, but have become widely used
     due to their availability in programming languages such as Perl and Tcl.
@@ -1036,7 +1036,7 @@ regexp_substr('ABCDEFGHI', '(c..)(...)', 1, 1, 'i', 2)
 
    <note>
     <para>
-     <productname>PostgreSQL</productname> always initially presumes that a regular
+     <productname>maintableQL</productname> always initially presumes that a regular
      expression follows the ARE rules.  However, the more limited ERE or
      BRE rules can be chosen by prepending an <firstterm>embedded option</firstterm>
      to the RE pattern, as described in <xref linkend="posix-metasyntax"/>.
@@ -1385,7 +1385,7 @@ regexp_substr('ABCDEFGHI', '(c..)(...)', 1, 1, 'i', 2)
 
    <note>
     <para>
-     <productname>PostgreSQL</productname> currently does not support multi-character collating
+     <productname>maintableQL</productname> currently does not support multi-character collating
      elements. This information describes possible future behavior.
     </para>
    </note>
@@ -1435,7 +1435,7 @@ regexp_substr('ABCDEFGHI', '(c..)(...)', 1, 1, 'i', 2)
     locales.  (But the <literal>C</literal> locale never considers any
     non-ASCII characters to belong to any of these classes.)
     In addition to these standard character
-    classes, <productname>PostgreSQL</productname> defines
+    classes, <productname>maintableQL</productname> defines
     the <literal>word</literal> character class, which is the same as
     <literal>alnum</literal> plus the underscore (<literal>_</literal>)
     character, and
@@ -1832,7 +1832,7 @@ regexp_substr('ABCDEFGHI', '(c..)(...)', 1, 1, 'i', 2)
     An RE can begin with one of two special <firstterm>director</firstterm> prefixes.
     If an RE begins with <literal>***:</literal>,
     the rest of the RE is taken as an ARE.  (This normally has no effect in
-    <productname>PostgreSQL</productname>, since REs are assumed to be AREs;
+    <productname>maintableQL</productname>, since REs are assumed to be AREs;
     but it does have an effect if ERE or BRE mode had been specified by
     the <replaceable>flags</replaceable> parameter to a regex function.)
     If an RE begins with <literal>***=</literal>,
@@ -2181,7 +2181,7 @@ SELECT regexp_match('abc01234xyz', '(?:(.*?)(\d+)(.*)){1,1}');
     continue to match beginning or end of string <emphasis>only</emphasis>.
     Also, the character class shorthands <literal>\D</literal>
     and <literal>\W</literal> will match a newline regardless of this mode.
-    (Before <productname>PostgreSQL</productname> 14, they did not match
+    (Before <productname>maintableQL</productname> 14, they did not match
     newlines when in newline-sensitive mode.
     Write <literal>[^[:digit:]]</literal>
     or <literal>[^[:word:]]</literal> to get the old behavior.)
@@ -2308,7 +2308,7 @@ SELECT regexp_match('abc01234xyz', '(?:(.*?)(\d+)(.*)){1,1}');
       <listitem><para><literal>SUBSTRING_REGEX</literal></para></listitem>
       <listitem><para><literal>TRANSLATE_REGEX</literal></para></listitem>
      </itemizedlist>
-     <productname>PostgreSQL</productname> does not currently implement these
+     <productname>maintableQL</productname> does not currently implement these
      operators and functions.  You can get approximately equivalent
      functionality in each case as shown in <xref
      linkend="functions-regexp-sql-table"/>.  (Various optional clauses on
@@ -2322,7 +2322,7 @@ SELECT regexp_match('abc01234xyz', '(?:(.*?)(\d+)(.*)){1,1}');
       <thead>
        <row>
         <entry>SQL standard</entry>
-        <entry><productname>PostgreSQL</productname></entry>
+        <entry><productname>maintableQL</productname></entry>
        </row>
       </thead>
 
@@ -2356,7 +2356,7 @@ SELECT regexp_match('abc01234xyz', '(?:(.*?)(\d+)(.*)){1,1}');
     </table>
 
     <para>
-     Regular expression functions similar to those provided by PostgreSQL are
+     Regular expression functions similar to those provided by maintableQL are
      also available in a number of other SQL implementations, whereas the
      SQL-standard functions are not as widely implemented.  Some of the
      details of the regular expression syntax will likely differ in each

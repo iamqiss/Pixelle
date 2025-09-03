@@ -15,7 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
-use crate::error::IggyBenchDashboardServerError;
+use crate::error::MessengerBenchDashboardServerError;
 use bench_dashboard_shared::BenchmarkReportLight;
 use dashmap::{DashMap, DashSet};
 use std::path::PathBuf;
@@ -34,7 +34,7 @@ mod watcher;
 
 pub use watcher::CacheWatcher;
 
-pub type Result<T> = std::result::Result<T, IggyBenchDashboardServerError>;
+pub type Result<T> = std::result::Result<T, MessengerBenchDashboardServerError>;
 pub type HardwareIdentifier = String;
 pub type Gitref = String;
 

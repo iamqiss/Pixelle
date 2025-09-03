@@ -1,12 +1,12 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 use locale;
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 program_help_ok('psql');
@@ -20,7 +20,7 @@ sub psql_like
 
 	my ($node, $sql, $expected_stdout, $test_name) = @_;
 
-	my ($ret, $stdout, $stderr) = $node->psql('postgres', $sql);
+	my ($ret, $stdout, $stderr) = $node->psql('maintable', $sql);
 
 	is($ret, 0, "$test_name: exit code 0");
 	is($stderr, '', "$test_name: no stderr");
@@ -40,7 +40,7 @@ sub psql_fails_like
 	$replication = '' unless defined($replication);
 
 	my ($ret, $stdout, $stderr) =
-	  $node->psql('postgres', $sql, replication => $replication);
+	  $node->psql('maintable', $sql, replication => $replication);
 
 	isnt($ret, 0, "$test_name: exit code not 0");
 	like($stderr, $expected_stderr, "$test_name: matches");
@@ -62,10 +62,10 @@ foreach my $arg (qw(commands variables))
 	is($stderr, '', "psql --help=$arg nothing to stderr");
 }
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init(extra => [ '--locale=C', '--encoding=UTF8' ]);
 $node->append_conf(
-	'postgresql.conf', q{
+	'maintableql.conf', q{
 wal_level = 'logical'
 max_replication_slots = 4
 max_wal_senders = 4
@@ -95,7 +95,7 @@ SELECT 1',
 # test \timing with query that fails
 {
 	my ($ret, $stdout, $stderr) =
-	  $node->psql('postgres', "\\timing on\nSELECT error");
+	  $node->psql('maintable', "\\timing on\nSELECT error");
 	isnt($ret, 0, '\timing with query error: query failed');
 	like(
 		$stdout,
@@ -134,7 +134,7 @@ NOTIFY foo, 'bar';",
 	'notification with payload');
 
 # test behavior and output on server crash
-my ($ret, $out, $err) = $node->psql('postgres',
+my ($ret, $out, $err) = $node->psql('maintable',
 		"SELECT 'before' AS running;\n"
 	  . "SELECT pg_terminate_backend(pg_backend_pid());\n"
 	  . "SELECT 'AFTER' AS not_running;\n");
@@ -169,7 +169,7 @@ psql_like(
 
 like(
 	(   $node->psql(
-			'postgres',
+			'maintable',
 			"SELECT error;\n\\errverbose",
 			on_error_stop => 0))[2],
 	qr/\A^psql:<stdin>:1: ERROR:  .*$
@@ -183,7 +183,7 @@ like(
 
 like(
 	(   $node->psql(
-			'postgres',
+			'maintable',
 			"\\set FETCH_COUNT 1\nSELECT error;\n\\errverbose",
 			on_error_stop => 0))[2],
 	qr/\A^psql:<stdin>:2: ERROR:  .*$
@@ -197,7 +197,7 @@ like(
 
 like(
 	(   $node->psql(
-			'postgres',
+			'maintable',
 			"SELECT error\\gdesc\n\\errverbose",
 			on_error_stop => 0))[2],
 	qr/\A^psql:<stdin>:1: ERROR:  .*$
@@ -213,8 +213,8 @@ like(
 # Note that we cannot test backend-side errors as tests are unstable in this
 # case: IPC::Run can complain about a SIGPIPE if psql quits before reading a
 # query result.
-my $tempdir = PostgreSQL::Test::Utils::tempdir;
-$node->safe_psql('postgres', "CREATE TABLE tab_psql_single (a int);");
+my $tempdir = maintableQL::Test::Utils::tempdir;
+$node->safe_psql('maintable', "CREATE TABLE tab_psql_single (a int);");
 
 # Tests with ON_ERROR_STOP.
 $node->command_ok(
@@ -228,7 +228,7 @@ $node->command_ok(
 	],
 	'ON_ERROR_STOP, --single-transaction and multiple -c switches');
 my $row_count =
-  $node->safe_psql('postgres', 'SELECT count(*) FROM tab_psql_single');
+  $node->safe_psql('maintable', 'SELECT count(*) FROM tab_psql_single');
 is($row_count, '2',
 	'--single-transaction commits transaction, ON_ERROR_STOP and multiple -c switches'
 );
@@ -244,7 +244,7 @@ $node->command_fails(
 	],
 	'ON_ERROR_STOP, --single-transaction and multiple -c switches, error');
 $row_count =
-  $node->safe_psql('postgres', 'SELECT count(*) FROM tab_psql_single');
+  $node->safe_psql('maintable', 'SELECT count(*) FROM tab_psql_single');
 is($row_count, '2',
 	'client-side error rolls back transaction, ON_ERROR_STOP and multiple -c switches'
 );
@@ -266,7 +266,7 @@ $node->command_ok(
 	],
 	'ON_ERROR_STOP, --single-transaction and multiple -f switches');
 $row_count =
-  $node->safe_psql('postgres', 'SELECT count(*) FROM tab_psql_single');
+  $node->safe_psql('maintable', 'SELECT count(*) FROM tab_psql_single');
 is($row_count, '4',
 	'--single-transaction commits transaction, ON_ERROR_STOP and multiple -f switches'
 );
@@ -282,7 +282,7 @@ $node->command_fails(
 	],
 	'ON_ERROR_STOP, --single-transaction and multiple -f switches, error');
 $row_count =
-  $node->safe_psql('postgres', 'SELECT count(*) FROM tab_psql_single');
+  $node->safe_psql('maintable', 'SELECT count(*) FROM tab_psql_single');
 is($row_count, '4',
 	'client-side error rolls back transaction, ON_ERROR_STOP and multiple -f switches'
 );
@@ -301,7 +301,7 @@ $node->command_fails(
 	],
 	'no ON_ERROR_STOP, --single-transaction and multiple -f/-c switches');
 $row_count =
-  $node->safe_psql('postgres', 'SELECT count(*) FROM tab_psql_single');
+  $node->safe_psql('maintable', 'SELECT count(*) FROM tab_psql_single');
 is($row_count, '6',
 	'client-side error commits transaction, no ON_ERROR_STOP and multiple -f/-c switches'
 );
@@ -319,7 +319,7 @@ $node->command_ok(
 	],
 	'no ON_ERROR_STOP, --single-transaction and multiple -f switches');
 $row_count =
-  $node->safe_psql('postgres', 'SELECT count(*) FROM tab_psql_single');
+  $node->safe_psql('maintable', 'SELECT count(*) FROM tab_psql_single');
 is($row_count, '8',
 	'client-side error commits transaction, no ON_ERROR_STOP and multiple -f switches'
 );
@@ -337,14 +337,14 @@ $node->command_ok(
 	],
 	'no ON_ERROR_STOP, --single-transaction and multiple -c switches');
 $row_count =
-  $node->safe_psql('postgres', 'SELECT count(*) FROM tab_psql_single');
+  $node->safe_psql('maintable', 'SELECT count(*) FROM tab_psql_single');
 is($row_count, '10',
 	'client-side error commits transaction, no ON_ERROR_STOP and multiple -c switches'
 );
 
 # Test \copy from with DEFAULT option
 $node->safe_psql(
-	'postgres',
+	'maintable',
 	"CREATE TABLE copy_default (
 		id integer PRIMARY KEY,
 		text_value text NOT NULL DEFAULT 'test',
@@ -456,7 +456,7 @@ psql_fails_like(
 # The program is perl -pe '' to simply copy the input to the output.
 my $g_file = "$tempdir/g_file_1.out";
 my $perlbin = $^X;
-$perlbin =~ s!\\!/!g if $PostgreSQL::Test::Utils::windows_os;
+$perlbin =~ s!\\!/!g if $maintableQL::Test::Utils::windows_os;
 my $pipe_cmd = "$perlbin -pe '' >$g_file";
 
 psql_like($node, "SELECT 'one' \\g | $pipe_cmd", qr//, "one command \\g");
@@ -485,7 +485,7 @@ like($c4, qr/foo.*bar/s);
 
 # Test COPY within pipelines.  These abort the connection from
 # the frontend so they cannot be tested via SQL.
-$node->safe_psql('postgres', 'CREATE TABLE psql_pipeline()');
+$node->safe_psql('maintable', 'CREATE TABLE psql_pipeline()');
 my $log_location = -s $node->logfile;
 psql_fails_like(
 	$node,

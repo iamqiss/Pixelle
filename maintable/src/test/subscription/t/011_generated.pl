@@ -1,41 +1,41 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test generated columns
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # setup
 
-my $node_publisher = PostgreSQL::Test::Cluster->new('publisher');
+my $node_publisher = maintableQL::Test::Cluster->new('publisher');
 $node_publisher->init(allows_streaming => 'logical');
 $node_publisher->start;
 
-my $node_subscriber = PostgreSQL::Test::Cluster->new('subscriber');
+my $node_subscriber = maintableQL::Test::Cluster->new('subscriber');
 $node_subscriber->init;
 $node_subscriber->start;
 
-my $publisher_connstr = $node_publisher->connstr . ' dbname=postgres';
+my $publisher_connstr = $node_publisher->connstr . ' dbname=maintable';
 
-$node_publisher->safe_psql('postgres',
+$node_publisher->safe_psql('maintable',
 	"CREATE TABLE tab1 (a int PRIMARY KEY, b int GENERATED ALWAYS AS (a * 2) STORED, c int GENERATED ALWAYS AS (a * 3) VIRTUAL)"
 );
 
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	"CREATE TABLE tab1 (a int PRIMARY KEY, b int GENERATED ALWAYS AS (a * 22) STORED, c int GENERATED ALWAYS AS (a * 33) VIRTUAL, d int)"
 );
 
 # data for initial sync
 
-$node_publisher->safe_psql('postgres',
+$node_publisher->safe_psql('maintable',
 	"INSERT INTO tab1 (a) VALUES (1), (2), (3)");
 
-$node_publisher->safe_psql('postgres',
+$node_publisher->safe_psql('maintable',
 	"CREATE PUBLICATION pub1 FOR ALL TABLES");
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	"CREATE SUBSCRIPTION sub1 CONNECTION '$publisher_connstr' PUBLICATION pub1"
 );
 
@@ -43,20 +43,20 @@ $node_subscriber->safe_psql('postgres',
 $node_subscriber->wait_for_subscription_sync;
 
 my $result =
-  $node_subscriber->safe_psql('postgres', "SELECT a, b, c FROM tab1");
+  $node_subscriber->safe_psql('maintable', "SELECT a, b, c FROM tab1");
 is( $result, qq(1|22|33
 2|44|66
 3|66|99), 'generated columns initial sync');
 
 # data to replicate
 
-$node_publisher->safe_psql('postgres', "INSERT INTO tab1 VALUES (4), (5)");
+$node_publisher->safe_psql('maintable', "INSERT INTO tab1 VALUES (4), (5)");
 
-$node_publisher->safe_psql('postgres', "UPDATE tab1 SET a = 6 WHERE a = 5");
+$node_publisher->safe_psql('maintable', "UPDATE tab1 SET a = 6 WHERE a = 5");
 
 $node_publisher->wait_for_catchup('sub1');
 
-$result = $node_subscriber->safe_psql('postgres', "SELECT * FROM tab1");
+$result = $node_subscriber->safe_psql('maintable', "SELECT * FROM tab1");
 is( $result, qq(1|22|33|
 2|44|66|
 3|66|99|
@@ -66,7 +66,7 @@ is( $result, qq(1|22|33|
 # try it with a subscriber-side trigger
 
 $node_subscriber->safe_psql(
-	'postgres', q{
+	'maintable', q{
 CREATE FUNCTION tab1_trigger_func() RETURNS trigger
 LANGUAGE plpgsql AS $$
 BEGIN
@@ -81,14 +81,14 @@ CREATE TRIGGER test1 BEFORE INSERT OR UPDATE ON tab1
 ALTER TABLE tab1 ENABLE REPLICA TRIGGER test1;
 });
 
-$node_publisher->safe_psql('postgres', "INSERT INTO tab1 VALUES (7), (8)");
+$node_publisher->safe_psql('maintable', "INSERT INTO tab1 VALUES (7), (8)");
 
-$node_publisher->safe_psql('postgres', "UPDATE tab1 SET a = 9 WHERE a = 7");
+$node_publisher->safe_psql('maintable', "UPDATE tab1 SET a = 9 WHERE a = 7");
 
 $node_publisher->wait_for_catchup('sub1');
 
 $result =
-  $node_subscriber->safe_psql('postgres', "SELECT * FROM tab1 ORDER BY 1");
+  $node_subscriber->safe_psql('maintable', "SELECT * FROM tab1 ORDER BY 1");
 is( $result, qq(1|22|33|
 2|44|66|
 3|66|99|
@@ -98,8 +98,8 @@ is( $result, qq(1|22|33|
 9|198|297|19), 'generated columns replicated with trigger');
 
 # cleanup
-$node_subscriber->safe_psql('postgres', "DROP SUBSCRIPTION sub1");
-$node_publisher->safe_psql('postgres', "DROP PUBLICATION pub1");
+$node_subscriber->safe_psql('maintable', "DROP SUBSCRIPTION sub1");
+$node_publisher->safe_psql('maintable', "DROP PUBLICATION pub1");
 
 # =============================================================================
 # Exercise logical replication of a generated column to a subscriber side
@@ -109,18 +109,18 @@ $node_publisher->safe_psql('postgres', "DROP PUBLICATION pub1");
 #
 # The test environment is set up as follows:
 #
-# - Publication pub1 on the 'postgres' database.
+# - Publication pub1 on the 'maintable' database.
 #   pub1 has publish_generated_columns as 'none'.
 #
-# - Publication pub2 on the 'postgres' database.
+# - Publication pub2 on the 'maintable' database.
 #   pub2 has publish_generated_columns as 'stored'.
 #
-# - Subscription sub1 on the 'postgres' database for publication pub1.
+# - Subscription sub1 on the 'maintable' database for publication pub1.
 #
 # - Subscription sub2 on the 'test_pgc_true' database for publication pub2.
 # =============================================================================
 
-$node_subscriber->safe_psql('postgres', "CREATE DATABASE test_pgc_true");
+$node_subscriber->safe_psql('maintable', "CREATE DATABASE test_pgc_true");
 
 # --------------------------------------------------
 # Test Case: Generated to regular column replication
@@ -130,16 +130,16 @@ $node_subscriber->safe_psql('postgres', "CREATE DATABASE test_pgc_true");
 
 # Create table and publications. Insert data to verify initial sync.
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	CREATE TABLE tab_gen_to_nogen (a int, b int GENERATED ALWAYS AS (a * 2) STORED);
 	INSERT INTO tab_gen_to_nogen (a) VALUES (1), (2), (3);
 	CREATE PUBLICATION regress_pub1_gen_to_nogen FOR TABLE tab_gen_to_nogen WITH (publish_generated_columns = none);
 	CREATE PUBLICATION regress_pub2_gen_to_nogen FOR TABLE tab_gen_to_nogen WITH (publish_generated_columns = stored);
 ));
 
-# Create the table and subscription in the 'postgres' database.
+# Create the table and subscription in the 'maintable' database.
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	CREATE TABLE tab_gen_to_nogen (a int, b int);
 	CREATE SUBSCRIPTION regress_sub1_gen_to_nogen CONNECTION '$publisher_connstr' PUBLICATION regress_pub1_gen_to_nogen WITH (copy_data = true);
 ));
@@ -153,13 +153,13 @@ $node_subscriber->safe_psql(
 
 # Wait for the initial synchronization of both subscriptions.
 $node_subscriber->wait_for_subscription_sync($node_publisher,
-	'regress_sub1_gen_to_nogen', 'postgres');
+	'regress_sub1_gen_to_nogen', 'maintable');
 $node_subscriber->wait_for_subscription_sync($node_publisher,
 	'regress_sub2_gen_to_nogen', 'test_pgc_true');
 
 # Verify that generated column data is not copied during the initial
 # synchronization when publish_generated_columns is set to 'none'.
-$result = $node_subscriber->safe_psql('postgres',
+$result = $node_subscriber->safe_psql('maintable',
 	"SELECT a, b FROM tab_gen_to_nogen ORDER BY a");
 is( $result, qq(1|
 2|
@@ -175,13 +175,13 @@ is( $result, qq(1|2
 	'tab_gen_to_nogen initial sync, when publish_generated_columns=stored');
 
 # Insert data to verify incremental replication.
-$node_publisher->safe_psql('postgres',
+$node_publisher->safe_psql('maintable',
 	"INSERT INTO tab_gen_to_nogen VALUES (4), (5)");
 
 # Verify that the generated column data is not replicated during incremental
 # replication when publish_generated_columns is set to 'none'.
 $node_publisher->wait_for_catchup('regress_sub1_gen_to_nogen');
-$result = $node_subscriber->safe_psql('postgres',
+$result = $node_subscriber->safe_psql('maintable',
 	"SELECT a, b FROM tab_gen_to_nogen ORDER BY a");
 is( $result, qq(1|
 2|
@@ -205,17 +205,17 @@ is( $result, qq(1|2
 );
 
 # cleanup
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	"DROP SUBSCRIPTION regress_sub1_gen_to_nogen");
 $node_subscriber->safe_psql('test_pgc_true',
 	"DROP SUBSCRIPTION regress_sub2_gen_to_nogen");
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	DROP PUBLICATION regress_pub1_gen_to_nogen;
 	DROP PUBLICATION regress_pub2_gen_to_nogen;
 ));
 $node_subscriber->safe_psql('test_pgc_true', "DROP table tab_gen_to_nogen");
-$node_subscriber->safe_psql('postgres', "DROP DATABASE test_pgc_true");
+$node_subscriber->safe_psql('maintable', "DROP DATABASE test_pgc_true");
 
 # =============================================================================
 # The following test cases demonstrate how publication column lists interact
@@ -236,7 +236,7 @@ $node_subscriber->safe_psql('postgres', "DROP DATABASE test_pgc_true");
 
 # Create table and publication. Insert data to verify initial sync.
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	CREATE TABLE tab2 (a int, gen1 int GENERATED ALWAYS AS (a * 2) STORED);
 	INSERT INTO tab2 (a) VALUES (1), (2);
 	CREATE PUBLICATION pub1 FOR table tab2(gen1) WITH (publish_generated_columns=none);
@@ -244,7 +244,7 @@ $node_publisher->safe_psql(
 
 # Create table and subscription.
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	CREATE TABLE tab2 (a int, gen1 int);
 	CREATE SUBSCRIPTION sub1 CONNECTION '$publisher_connstr' PUBLICATION pub1 WITH (copy_data = true);
 ));
@@ -255,19 +255,19 @@ $node_subscriber->wait_for_subscription_sync($node_publisher, 'sub1');
 # Initial sync test when publish_generated_columns is 'none'.
 # Verify 'gen1' is replicated regardless of the 'none' parameter value.
 $result =
-  $node_subscriber->safe_psql('postgres', "SELECT * FROM tab2 ORDER BY gen1");
+  $node_subscriber->safe_psql('maintable', "SELECT * FROM tab2 ORDER BY gen1");
 is( $result, qq(|2
 |4),
 	'tab2 initial sync, when publish_generated_columns=none');
 
 # Insert data to verify incremental replication.
-$node_publisher->safe_psql('postgres', "INSERT INTO tab2 VALUES (3), (4)");
+$node_publisher->safe_psql('maintable', "INSERT INTO tab2 VALUES (3), (4)");
 
 # Incremental replication test when publish_generated_columns is 'none'.
 # Verify 'gen1' is replicated regardless of the 'none' parameter value.
 $node_publisher->wait_for_catchup('sub1');
 $result =
-  $node_subscriber->safe_psql('postgres', "SELECT * FROM tab2 ORDER BY gen1");
+  $node_subscriber->safe_psql('maintable', "SELECT * FROM tab2 ORDER BY gen1");
 is( $result, qq(|2
 |4
 |6
@@ -275,8 +275,8 @@ is( $result, qq(|2
 	'tab2 incremental replication, when publish_generated_columns=none');
 
 # cleanup
-$node_subscriber->safe_psql('postgres', "DROP SUBSCRIPTION sub1");
-$node_publisher->safe_psql('postgres', "DROP PUBLICATION pub1");
+$node_subscriber->safe_psql('maintable', "DROP SUBSCRIPTION sub1");
+$node_publisher->safe_psql('maintable', "DROP PUBLICATION pub1");
 
 # --------------------------------------------------
 # Test Case: Even when publish_generated_columns is set to 'stored', the
@@ -286,7 +286,7 @@ $node_publisher->safe_psql('postgres', "DROP PUBLICATION pub1");
 
 # Create table and publication. Insert data to verify initial sync.
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	CREATE TABLE tab3 (a int, gen1 int GENERATED ALWAYS AS (a * 2) STORED, gen2 int GENERATED ALWAYS AS (a * 2) STORED);
 	INSERT INTO tab3 (a) VALUES (1), (2);
 	CREATE PUBLICATION pub1 FOR table tab3(gen1) WITH (publish_generated_columns=stored);
@@ -294,7 +294,7 @@ $node_publisher->safe_psql(
 
 # Create table and subscription.
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	CREATE TABLE tab3 (a int, gen1 int, gen2 int);
 	CREATE SUBSCRIPTION sub1 CONNECTION '$publisher_connstr' PUBLICATION pub1 WITH (copy_data = true);
 ));
@@ -305,19 +305,19 @@ $node_subscriber->wait_for_subscription_sync($node_publisher, 'sub1');
 # Initial sync test when publish_generated_columns is 'stored'.
 # Verify only 'gen1' is replicated regardless of the 'stored' parameter value.
 $result =
-  $node_subscriber->safe_psql('postgres', "SELECT * FROM tab3 ORDER BY gen1");
+  $node_subscriber->safe_psql('maintable', "SELECT * FROM tab3 ORDER BY gen1");
 is( $result, qq(|2|
 |4|),
 	'tab3 initial sync, when publish_generated_columns=stored');
 
 # Insert data to verify incremental replication.
-$node_publisher->safe_psql('postgres', "INSERT INTO tab3 VALUES (3), (4)");
+$node_publisher->safe_psql('maintable', "INSERT INTO tab3 VALUES (3), (4)");
 
 # Incremental replication test when publish_generated_columns is 'stored'.
 # Verify only 'gen1' is replicated regardless of the 'stored' parameter value.
 $node_publisher->wait_for_catchup('sub1');
 $result =
-  $node_subscriber->safe_psql('postgres', "SELECT * FROM tab3 ORDER BY gen1");
+  $node_subscriber->safe_psql('maintable', "SELECT * FROM tab3 ORDER BY gen1");
 is( $result, qq(|2|
 |4|
 |6|
@@ -325,8 +325,8 @@ is( $result, qq(|2|
 	'tab3 incremental replication, when publish_generated_columns=stored');
 
 # cleanup
-$node_subscriber->safe_psql('postgres', "DROP SUBSCRIPTION sub1");
-$node_publisher->safe_psql('postgres', "DROP PUBLICATION pub1");
+$node_subscriber->safe_psql('maintable', "DROP SUBSCRIPTION sub1");
+$node_publisher->safe_psql('maintable', "DROP PUBLICATION pub1");
 
 # =============================================================================
 # The following test verifies the expected error when replicating to a
@@ -347,7 +347,7 @@ $node_publisher->safe_psql('postgres', "DROP PUBLICATION pub1");
 
 # Create table and publication. Insert data into the table.
 $node_publisher->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	CREATE TABLE t1(c1 int, c2 int, c3 int GENERATED ALWAYS AS (c1 * 2) STORED);
 	CREATE PUBLICATION pub1 for table t1(c1, c2, c3);
 	INSERT INTO t1 VALUES (1);
@@ -355,7 +355,7 @@ $node_publisher->safe_psql(
 
 # Create table and subscription.
 $node_subscriber->safe_psql(
-	'postgres', qq(
+	'maintable', qq(
 	CREATE TABLE t1(c1 int, c2 int GENERATED ALWAYS AS (c1 + 2) STORED, c3 int GENERATED ALWAYS AS (c1 + 2) STORED);
 	CREATE SUBSCRIPTION sub1 CONNECTION '$publisher_connstr' PUBLICATION pub1;
 ));
@@ -367,7 +367,7 @@ $node_subscriber->wait_for_log(
 	$offset);
 
 # cleanup
-$node_subscriber->safe_psql('postgres', "DROP SUBSCRIPTION sub1");
-$node_publisher->safe_psql('postgres', "DROP PUBLICATION pub1");
+$node_subscriber->safe_psql('maintable', "DROP SUBSCRIPTION sub1");
+$node_publisher->safe_psql('maintable', "DROP PUBLICATION pub1");
 
 done_testing();

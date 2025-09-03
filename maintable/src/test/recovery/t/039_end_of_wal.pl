@@ -1,4 +1,4 @@
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 #
 # Test detecting end-of-WAL conditions.  This test suite generates
 # fake defective page and record headers to trigger various failure
@@ -6,8 +6,8 @@
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 use Fcntl qw(SEEK_SET);
 
@@ -40,7 +40,7 @@ sub get_int_setting
 	my $name = shift;
 	return int(
 		$node->safe_psql(
-			'postgres',
+			'maintable',
 			"SELECT setting FROM pg_settings WHERE name = '$name'"));
 }
 
@@ -111,27 +111,27 @@ sub build_page_header
 # checkpoint_timeout avoids noise with checkpoint activity.  wal_level
 # set to "minimal" avoids random standby snapshot records.  Autovacuum
 # could also trigger randomly, generating random WAL activity of its own.
-my $node = PostgreSQL::Test::Cluster->new("node");
+my $node = maintableQL::Test::Cluster->new("node");
 $node->init;
 $node->append_conf(
-	'postgresql.conf',
+	'maintableql.conf',
 	q[wal_level = minimal
 					 autovacuum = off
 					 checkpoint_timeout = '30min'
 ]);
 $node->start;
-$node->safe_psql('postgres', "CREATE TABLE t AS SELECT 42");
+$node->safe_psql('maintable', "CREATE TABLE t AS SELECT 42");
 
 $WAL_SEGMENT_SIZE = get_int_setting($node, 'wal_segment_size');
 $WAL_BLOCK_SIZE = get_int_setting($node, 'wal_block_size');
-$TLI = $node->safe_psql('postgres',
+$TLI = $node->safe_psql('maintable',
 	"SELECT timeline_id FROM pg_control_checkpoint();");
 
 # Initial LSN may vary across systems due to different catalog contents set up
 # by initdb.  Switch to a new WAL file so all systems start out in the same
 # place.  The first test depends on trailing zeroes on a page with a valid
 # header.
-$node->safe_psql('postgres', "SELECT pg_switch_wal();");
+$node->safe_psql('maintable', "SELECT pg_switch_wal();");
 
 my $end_lsn;
 my $prev_lsn;

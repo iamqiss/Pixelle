@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use iggy::prelude::TopicPermissions;
+use messenger::prelude::TopicPermissions;
 use std::str::FromStr;
 
 use super::constants::{

@@ -17,13 +17,13 @@
  * under the License.
  */
 
-import { fetchIggyApi } from '$lib/api/fetchApi.js';
+import { fetchMessengerApi } from '$lib/api/fetchApi.js';
 import { handleFetchErrors } from '$lib/api/handleFetchErrors';
 import { streamDetailsMapper } from '$lib/domain/StreamDetails';
 
 export const load = async ({ params, cookies }) => {
   const getStreamDetails = async () => {
-    const result = await fetchIggyApi({
+    const result = await fetchMessengerApi({
       method: 'GET',
       path: `/streams/${+params.streamId}`,
       cookies

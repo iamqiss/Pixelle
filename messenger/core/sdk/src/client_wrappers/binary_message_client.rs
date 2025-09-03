@@ -18,9 +18,9 @@
 
 use crate::client_wrappers::client_wrapper::ClientWrapper;
 use async_trait::async_trait;
-use iggy_binary_protocol::MessageClient;
-use iggy_common::{
-    Consumer, Identifier, IggyError, IggyMessage, Partitioning, PolledMessages, PollingStrategy,
+use messenger_binary_protocol::MessageClient;
+use messenger_common::{
+    Consumer, Identifier, MessengerError, MessengerMessage, Partitioning, PolledMessages, PollingStrategy,
 };
 
 #[async_trait]
@@ -34,9 +34,9 @@ impl MessageClient for ClientWrapper {
         strategy: &PollingStrategy,
         count: u32,
         auto_commit: bool,
-    ) -> Result<PolledMessages, IggyError> {
+    ) -> Result<PolledMessages, MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .poll_messages(
                         stream_id,
@@ -96,10 +96,10 @@ impl MessageClient for ClientWrapper {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitioning: &Partitioning,
-        messages: &mut [IggyMessage],
-    ) -> Result<(), IggyError> {
+        messages: &mut [MessengerMessage],
+    ) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .send_messages(stream_id, topic_id, partitioning, messages)
                     .await
@@ -128,9 +128,9 @@ impl MessageClient for ClientWrapper {
         topic_id: &Identifier,
         partitioning_id: u32,
         fsync: bool,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         match self {
-            ClientWrapper::Iggy(client) => {
+            ClientWrapper::Messenger(client) => {
                 client
                     .flush_unsaved_buffer(stream_id, topic_id, partitioning_id, fsync)
                     .await

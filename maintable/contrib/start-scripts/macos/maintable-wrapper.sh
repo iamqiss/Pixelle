@@ -1,17 +1,17 @@
 #!/bin/sh
 
-# PostgreSQL server start script (launched by org.postgresql.postgres.plist)
+# maintableQL server start script (launched by org.maintableql.maintable.plist)
 
 # edit these as needed:
 
-# directory containing postgres executable:
+# directory containing maintable executable:
 PGBINDIR="/usr/local/pgsql/bin"
 # data directory:
 PGDATA="/usr/local/pgsql/data"
 # file to receive postmaster's initial log messages:
 PGLOGFILE="${PGDATA}/pgstart.log"
 
-# (it's recommendable to enable the Postgres logging_collector feature
+# (it's recommendable to enable the Maintable logging_collector feature
 # so that PGLOGFILE doesn't grow without bound)
 
 
@@ -22,4 +22,4 @@ umask 077
 /usr/sbin/ipconfig waitall
 
 # and launch the server
-exec "$PGBINDIR"/postgres -D "$PGDATA" >>"$PGLOGFILE" 2>&1
+exec "$PGBINDIR"/maintable -D "$PGDATA" >>"$PGLOGFILE" 2>&1

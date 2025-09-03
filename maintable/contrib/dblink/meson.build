@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 dblink_sources = files(
   'dblink.c',
@@ -7,7 +7,7 @@ dblink_sources = files(
 if host_system == 'windows'
   dblink_sources += rc_lib_gen.process(win32ver_rc, extra_args: [
     '--NAME', 'dblink',
-    '--FILEDESC', 'dblink - connect to other PostgreSQL databases',])
+    '--FILEDESC', 'dblink - connect to other maintableQL databases',])
 endif
 
 dblink = shared_module('dblink',

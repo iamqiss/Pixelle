@@ -22,8 +22,8 @@ use crate::streaming::partitions::COMPONENT;
 use crate::streaming::partitions::partition::Partition;
 use crate::streaming::segments::*;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::IggyTimestamp;
+use messenger_common::MessengerError;
+use messenger_common::MessengerTimestamp;
 use tracing::info;
 
 pub struct DeletedSegment {
@@ -56,7 +56,7 @@ impl Partition {
             .find(|s| s.start_offset() == start_offset)
     }
 
-    pub async fn get_expired_segments_start_offsets(&self, now: IggyTimestamp) -> Vec<u64> {
+    pub async fn get_expired_segments_start_offsets(&self, now: MessengerTimestamp) -> Vec<u64> {
         let mut expired_segments = Vec::new();
         for segment in &self.segments {
             if segment.is_expired(now).await {
@@ -68,7 +68,7 @@ impl Partition {
         expired_segments
     }
 
-    pub async fn add_persisted_segment(&mut self, start_offset: u64) -> Result<(), IggyError> {
+    pub async fn add_persisted_segment(&mut self, start_offset: u64) -> Result<(), MessengerError> {
         info!(
             "Creating the new segment for partition with ID: {}, stream with ID: {}, topic with ID: {}...",
             self.partition_id, self.stream_id, self.topic_id
@@ -98,12 +98,12 @@ impl Partition {
         Ok(())
     }
 
-    pub async fn delete_segment(&mut self, start_offset: u64) -> Result<DeletedSegment, IggyError> {
+    pub async fn delete_segment(&mut self, start_offset: u64) -> Result<DeletedSegment, MessengerError> {
         let deleted_segment;
         {
             let segment = self.get_segment_mut(start_offset);
             if segment.is_none() {
-                return Err(IggyError::SegmentNotFound);
+                return Err(MessengerError::SegmentNotFound);
             }
 
             let segment = segment.unwrap();

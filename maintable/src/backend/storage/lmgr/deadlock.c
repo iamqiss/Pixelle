@@ -1,13 +1,13 @@
 /*-------------------------------------------------------------------------
  *
  * deadlock.c
- *	  POSTGRES deadlock detection code
+ *	  MAINTABLE deadlock detection code
  *
  * See src/backend/storage/lmgr/README for a description of the deadlock
  * detection and resolution algorithms.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -23,7 +23,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "miscadmin.h"
 #include "pg_trace.h"
@@ -236,7 +236,7 @@ DeadLockCheck(PGPROC *proc)
 		 */
 		int			nSoftEdges;
 
-		TRACE_POSTGRESQL_DEADLOCK_FOUND();
+		TRACE_MAINTABLEQL_DEADLOCK_FOUND();
 
 		nWaitOrders = 0;
 		if (!FindLockCycle(proc, possibleConstraints, &nSoftEdges))

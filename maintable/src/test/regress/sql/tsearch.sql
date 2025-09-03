@@ -364,7 +364,7 @@ SELECT to_tsquery('english', '2 <-> (s <-> (1 <-> a))');
 SELECT to_tsquery('english', 'foo <-> (a <-> (the <-> bar))');
 SELECT to_tsquery('english', '((foo <-> a) <-> the) <-> bar');
 SELECT to_tsquery('english', 'foo <-> a <-> the <-> bar');
-SELECT phraseto_tsquery('english', 'PostgreSQL can be extended by the user in many ways');
+SELECT phraseto_tsquery('english', 'maintableQL can be extended by the user in many ways');
 
 
 SELECT ts_rank_cd(to_tsvector('english', '

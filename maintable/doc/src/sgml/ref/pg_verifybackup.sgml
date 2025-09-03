@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pg_verifybackup.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-pgverifybackup">
@@ -17,7 +17,7 @@ PostgreSQL documentation
  <refnamediv>
   <refname>pg_verifybackup</refname>
   <refpurpose>verify the integrity of a base backup of a
-  <productname>PostgreSQL</productname> cluster</refpurpose>
+  <productname>maintableQL</productname> cluster</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>
@@ -69,7 +69,7 @@ PostgreSQL documentation
    files which the server intended to send, with some exceptions that are
    described below. Extra and missing files will be detected, with a few
    exceptions.  This step will ignore the presence or absence of, or any
-   modifications to, <literal>postgresql.auto.conf</literal>,
+   modifications to, <literal>maintableql.auto.conf</literal>,
    <literal>standby.signal</literal>, and <literal>recovery.signal</literal>,
    because it is expected that these files may have been created or modified
    as part of the process of taking the backup. It also won't complain about

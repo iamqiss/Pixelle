@@ -20,12 +20,12 @@ use crate::state::{COMPONENT, EntryCommand, StateEntry};
 use crate::streaming::personal_access_tokens::personal_access_token::PersonalAccessToken;
 use ahash::AHashMap;
 use error_set::ErrContext;
-use iggy_common::CompressionAlgorithm;
-use iggy_common::IggyError;
-use iggy_common::IggyExpiry;
-use iggy_common::IggyTimestamp;
-use iggy_common::MaxTopicSize;
-use iggy_common::{IdKind, Identifier, Permissions, UserStatus};
+use messenger_common::CompressionAlgorithm;
+use messenger_common::MessengerError;
+use messenger_common::MessengerExpiry;
+use messenger_common::MessengerTimestamp;
+use messenger_common::MaxTopicSize;
+use messenger_common::{IdKind, Identifier, Permissions, UserStatus};
 use std::fmt::Display;
 use tracing::{debug, info};
 
@@ -39,7 +39,7 @@ pub struct SystemState {
 pub struct StreamState {
     pub id: u32,
     pub name: String,
-    pub created_at: IggyTimestamp,
+    pub created_at: MessengerTimestamp,
     pub topics: AHashMap<u32, TopicState>,
 }
 
@@ -50,23 +50,23 @@ pub struct TopicState {
     pub partitions: AHashMap<u32, PartitionState>,
     pub consumer_groups: AHashMap<u32, ConsumerGroupState>,
     pub compression_algorithm: CompressionAlgorithm,
-    pub message_expiry: IggyExpiry,
+    pub message_expiry: MessengerExpiry,
     pub max_topic_size: MaxTopicSize,
     pub replication_factor: Option<u8>,
-    pub created_at: IggyTimestamp,
+    pub created_at: MessengerTimestamp,
 }
 
 #[derive(Debug)]
 pub struct PartitionState {
     pub id: u32,
-    pub created_at: IggyTimestamp,
+    pub created_at: MessengerTimestamp,
 }
 
 #[derive(Debug)]
 pub struct PersonalAccessTokenState {
     pub name: String,
     pub token_hash: String,
-    pub expiry_at: Option<IggyTimestamp>,
+    pub expiry_at: Option<MessengerTimestamp>,
 }
 
 #[derive(Debug)]
@@ -75,7 +75,7 @@ pub struct UserState {
     pub username: String,
     pub password_hash: String,
     pub status: UserStatus,
-    pub created_at: IggyTimestamp,
+    pub created_at: MessengerTimestamp,
     pub permissions: Option<Permissions>,
     pub personal_access_tokens: AHashMap<String, PersonalAccessTokenState>,
 }
@@ -87,7 +87,7 @@ pub struct ConsumerGroupState {
 }
 
 impl SystemState {
-    pub async fn init(entries: Vec<StateEntry>) -> Result<Self, IggyError> {
+    pub async fn init(entries: Vec<StateEntry>) -> Result<Self, MessengerError> {
         let mut streams = AHashMap::new();
         let mut users = AHashMap::new();
         for entry in entries {
@@ -374,7 +374,7 @@ impl SystemState {
                         command.command.expiry,
                     );
                     if let Some(expiry_at) = expiry_at
-                        && expiry_at.as_micros() <= IggyTimestamp::now().as_micros()
+                        && expiry_at.as_micros() <= MessengerTimestamp::now().as_micros()
                     {
                         debug!("Personal access token: {token_hash} has already expired.");
                         continue;

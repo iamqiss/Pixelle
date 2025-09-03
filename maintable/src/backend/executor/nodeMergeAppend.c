@@ -3,7 +3,7 @@
  * nodeMergeAppend.c
  *	  routines to handle MergeAppend nodes.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -36,7 +36,7 @@
  *								 subplans
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "executor/executor.h"
 #include "executor/execPartition.h"

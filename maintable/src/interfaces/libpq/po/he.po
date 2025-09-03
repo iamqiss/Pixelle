@@ -1,12 +1,12 @@
 # Hebrew message translation file for libpq
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Michael Goldberg <mic.goldbrg@gmail.com>, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libpq (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: libpq (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2017-05-16 18:18+0300\n"
 "PO-Revision-Date: 2017-05-16 22:35+0300\n"
 "Language-Team: \n"

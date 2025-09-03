@@ -10,7 +10,7 @@
  <para>
   The <filename>pg_walinspect</filename> module provides SQL functions that
   allow you to inspect the contents of write-ahead log of
-  a running <productname>PostgreSQL</productname> database cluster at a low
+  a running <productname>maintableQL</productname> database cluster at a low
   level, which is useful for debugging, analytical, reporting or
   educational purposes. It is similar to <xref linkend="pgwaldump"/>, but
   accessible through SQL rather than a separate utility.
@@ -71,7 +71,7 @@
       after the <replaceable>in_lsn</replaceable> argument.  For
       example:
 <screen>
-postgres=# SELECT * FROM pg_get_wal_record_info('0/E419E28');
+maintable=# SELECT * FROM pg_get_wal_record_info('0/E419E28');
 -[ RECORD 1 ]----+-------------------------------------------------
 start_lsn        | 0/0E419E28
 end_lsn          | 0/0E419E68
@@ -109,7 +109,7 @@ block_ref        | blkref #0: rel 1663/16385/1249 fork main blk 364
       <replaceable>start_lsn</replaceable> and <replaceable>end_lsn</replaceable>.
       Returns one row per WAL record.  For example:
 <screen>
-postgres=# SELECT * FROM pg_get_wal_records_info('0/1E913618', '0/1E913740') LIMIT 1;
+maintable=# SELECT * FROM pg_get_wal_records_info('0/1E913618', '0/1E913740') LIMIT 1;
 -[ RECORD 1 ]----+--------------------------------------------------------------
 start_lsn        | 0/1E913618
 end_lsn          | 0/1E913650
@@ -144,7 +144,7 @@ block_ref        |
       references.  Returns one row per block reference per WAL record.
       For example:
 <screen>
-postgres=# SELECT * FROM pg_get_wal_block_info('0/1230278', '0/12302B8');
+maintable=# SELECT * FROM pg_get_wal_block_info('0/1230278', '0/12302B8');
 -[ RECORD 1 ]-----+-----------------------------------
 start_lsn         | 0/01230278
 end_lsn           | 0/012302B8
@@ -249,7 +249,7 @@ block_fpi_data    |
       it returns one row per <replaceable>record_type</replaceable>.
       For example:
 <screen>
-postgres=# SELECT * FROM pg_get_wal_stats('0/1E847D00', '0/1E84F500')
+maintable=# SELECT * FROM pg_get_wal_stats('0/1E847D00', '0/1E84F500')
            WHERE count > 0 AND
                  "resource_manager/record_type" = 'Transaction'
            LIMIT 1;
@@ -279,7 +279,7 @@ combined_size_percentage     | 2.8634072910530795
   <title>Author</title>
 
   <para>
-   Bharath Rupireddy <email>bharath.rupireddyforpostgres@gmail.com</email>
+   Bharath Rupireddy <email>bharath.rupireddyformaintable@gmail.com</email>
   </para>
  </sect2>
 

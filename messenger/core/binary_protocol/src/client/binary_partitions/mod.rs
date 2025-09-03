@@ -18,9 +18,9 @@
 
 use crate::utils::auth::fail_if_not_authenticated;
 use crate::{BinaryClient, PartitionClient};
-use iggy_common::create_partitions::CreatePartitions;
-use iggy_common::delete_partitions::DeletePartitions;
-use iggy_common::{Identifier, IggyError};
+use messenger_common::create_partitions::CreatePartitions;
+use messenger_common::delete_partitions::DeletePartitions;
+use messenger_common::{Identifier, MessengerError};
 
 #[async_trait::async_trait]
 impl<B: BinaryClient> PartitionClient for B {
@@ -29,7 +29,7 @@ impl<B: BinaryClient> PartitionClient for B {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitions_count: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&CreatePartitions {
             stream_id: stream_id.clone(),
@@ -45,7 +45,7 @@ impl<B: BinaryClient> PartitionClient for B {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitions_count: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&DeletePartitions {
             stream_id: stream_id.clone(),

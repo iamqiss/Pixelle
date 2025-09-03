@@ -24,10 +24,10 @@ use crate::streaming::systems::system::SharedSystem;
 use crate::streaming::topics::topic::Topic;
 use error_set::ErrContext;
 use flume::Sender;
-use iggy_common::IggyDuration;
-use iggy_common::IggyError;
-use iggy_common::IggyTimestamp;
-use iggy_common::locking::IggySharedMutFn;
+use messenger_common::MessengerDuration;
+use messenger_common::MessengerError;
+use messenger_common::MessengerTimestamp;
+use messenger_common::locking::MessengerSharedMutFn;
 use std::sync::Arc;
 use tokio::time;
 use tracing::{debug, error, info, instrument, trace};
@@ -35,7 +35,7 @@ use tracing::{debug, error, info, instrument, trace};
 pub struct MessagesMaintainer {
     cleaner_enabled: bool,
     archiver_enabled: bool,
-    interval: IggyDuration,
+    interval: MessengerDuration,
     sender: Sender<MaintainMessagesCommand>,
 }
 
@@ -216,8 +216,8 @@ async fn handle_expired_segments(
     archiver: Option<Arc<ArchiverKind>>,
     archive: bool,
     clean: bool,
-) -> Result<HandledSegments, IggyError> {
-    let expired_segments = get_expired_segments(topic, IggyTimestamp::now()).await;
+) -> Result<HandledSegments, MessengerError> {
+    let expired_segments = get_expired_segments(topic, MessengerTimestamp::now()).await;
     if expired_segments.is_empty() {
         return Ok(HandledSegments::none());
     }
@@ -255,7 +255,7 @@ async fn handle_expired_segments(
     }
 }
 
-async fn get_expired_segments(topic: &Topic, now: IggyTimestamp) -> Vec<SegmentsToHandle> {
+async fn get_expired_segments(topic: &Topic, now: MessengerTimestamp) -> Vec<SegmentsToHandle> {
     let expired_segments = topic
         .get_expired_segments_start_offsets_per_partition(now)
         .await;
@@ -287,7 +287,7 @@ async fn handle_oldest_segments(
     topic: &Topic,
     archiver: Option<Arc<ArchiverKind>>,
     delete_oldest_segments: bool,
-) -> Result<HandledSegments, IggyError> {
+) -> Result<HandledSegments, MessengerError> {
     if let Some(archiver) = archiver {
         let mut segments_to_archive = Vec::new();
         for partition in topic.partitions.values() {
@@ -444,7 +444,7 @@ async fn archive_segments(
     topic: &Topic,
     segments_to_archive: &[SegmentsToHandle],
     archiver: Arc<ArchiverKind>,
-) -> Result<u64, IggyError> {
+) -> Result<u64, MessengerError> {
     if segments_to_archive.is_empty() {
         return Ok(0);
     }
@@ -507,7 +507,7 @@ async fn archive_segments(
 async fn delete_segments(
     topic: &Topic,
     segments_to_delete: &[SegmentsToHandle],
-) -> Result<HandledSegments, IggyError> {
+) -> Result<HandledSegments, MessengerError> {
     info!(
         "Deleting {} segments for stream ID: {}, topic ID: {}...",
         segments_to_delete.len(),

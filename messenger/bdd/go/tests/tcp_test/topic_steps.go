@@ -19,9 +19,9 @@ package tcp_test
 
 import (
 	"fmt"
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
-	ierror "github.com/apache/iggy/foreign/go/errors"
-	"github.com/apache/iggy/foreign/go/iggycli"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
+	ierror "github.com/apache/messenger/foreign/go/errors"
+	"github.com/apache/messenger/foreign/go/messengercli"
 	"github.com/onsi/ginkgo/v2"
 	"github.com/onsi/gomega"
 	"math"
@@ -29,7 +29,7 @@ import (
 
 //operations
 
-func successfullyCreateTopic(streamId uint32, client iggycli.Client) (uint32, string) {
+func successfullyCreateTopic(streamId uint32, client messengercli.Client) (uint32, string) {
 	topicId := createRandomUInt32()
 	replicationFactor := uint8(1)
 	name := createRandomString(128)
@@ -88,7 +88,7 @@ func itShouldContainSpecificTopic(id uint32, name string, topics []iggcon.Topic)
 	})
 }
 
-func itShouldSuccessfullyCreateTopic(streamId uint32, topicId uint32, expectedName string, client iggycli.Client) {
+func itShouldSuccessfullyCreateTopic(streamId uint32, topicId uint32, expectedName string, client messengercli.Client) {
 	streamIdentifier, _ := iggcon.NewIdentifier(streamId)
 	topicIdentifier, _ := iggcon.NewIdentifier(topicId)
 	topic, err := client.GetTopic(streamIdentifier, topicIdentifier)
@@ -104,7 +104,7 @@ func itShouldSuccessfullyCreateTopic(streamId uint32, topicId uint32, expectedNa
 	itShouldNotReturnError(err)
 }
 
-func itShouldSuccessfullyUpdateTopic(streamId uint32, topicId uint32, expectedName string, client iggycli.Client) {
+func itShouldSuccessfullyUpdateTopic(streamId uint32, topicId uint32, expectedName string, client messengercli.Client) {
 	streamIdentifier, _ := iggcon.NewIdentifier(streamId)
 	topicIdentifier, _ := iggcon.NewIdentifier(topicId)
 	topic, err := client.GetTopic(streamIdentifier, topicIdentifier)
@@ -121,12 +121,12 @@ func itShouldSuccessfullyUpdateTopic(streamId uint32, topicId uint32, expectedNa
 	itShouldNotReturnError(err)
 }
 
-func itShouldSuccessfullyDeleteTopic(streamId uint32, topicId uint32, client iggycli.Client) {
+func itShouldSuccessfullyDeleteTopic(streamId uint32, topicId uint32, client messengercli.Client) {
 	streamIdentifier, _ := iggcon.NewIdentifier(streamId)
 	topicIdentifier, _ := iggcon.NewIdentifier(topicId)
 	topic, err := client.GetTopic(streamIdentifier, topicIdentifier)
 
-	itShouldReturnSpecificIggyError(err, ierror.TopicIdNotFound)
+	itShouldReturnSpecificMessengerError(err, ierror.TopicIdNotFound)
 	ginkgo.It("should not return topic", func() {
 		gomega.Expect(topic).To(gomega.BeNil())
 	})

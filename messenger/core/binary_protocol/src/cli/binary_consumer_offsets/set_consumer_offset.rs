@@ -20,9 +20,9 @@ use crate::Client;
 use crate::cli::cli_command::{CliCommand, PRINT_TARGET};
 use anyhow::Context;
 use async_trait::async_trait;
-use iggy_common::Identifier;
-use iggy_common::store_consumer_offset::StoreConsumerOffset;
-use iggy_common::{Consumer, ConsumerKind};
+use messenger_common::Identifier;
+use messenger_common::store_consumer_offset::StoreConsumerOffset;
+use messenger_common::{Consumer, ConsumerKind};
 use tracing::{Level, event};
 
 pub struct SetConsumerOffsetCmd {

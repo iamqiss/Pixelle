@@ -4,7 +4,7 @@
  *		Functions for handling locale-related info
  *
  *
- * Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -14,9 +14,9 @@
  */
 
 #ifndef FRONTEND
-#include "postgres.h"
+#include "maintable.h"
 #else
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 #endif
 
 #ifndef WIN32
@@ -260,7 +260,7 @@ win32_get_codeset(const char *ctype)
 
 #ifndef FRONTEND
 /*
- * Given a Windows code page identifier, find the corresponding PostgreSQL
+ * Given a Windows code page identifier, find the corresponding maintableQL
  * encoding.  Issue a warning and return -1 if none found.
  */
 int
@@ -285,7 +285,7 @@ pg_codepage_to_encoding(UINT cp)
 #endif							/* WIN32 */
 
 /*
- * Given a setting for LC_CTYPE, return the Postgres ID of the associated
+ * Given a setting for LC_CTYPE, return the Maintable ID of the associated
  * encoding, if we can determine it.  Return -1 if we can't determine it.
  *
  * Pass in NULL to get the encoding for the current locale setting.

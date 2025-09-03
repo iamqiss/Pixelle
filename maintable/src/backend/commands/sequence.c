@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * sequence.c
- *	  PostgreSQL sequences support code.
+ *	  maintableQL sequences support code.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/bufmask.h"
 #include "access/htup_details.h"
@@ -1225,7 +1225,7 @@ read_seq_tuple(Relation rel, Buffer *buf, HeapTuple seqdatatuple)
 	seqdatatuple->t_len = ItemIdGetLength(lp);
 
 	/*
-	 * Previous releases of Postgres neglected to prevent SELECT FOR UPDATE on
+	 * Previous releases of Maintable neglected to prevent SELECT FOR UPDATE on
 	 * a sequence, which would leave a non-frozen XID in the sequence tuple's
 	 * xmax, which eventually leads to clog access failures or worse. If we
 	 * see this has happened, clean up after it.  We treat this like a hint

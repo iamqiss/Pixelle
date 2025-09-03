@@ -25,15 +25,15 @@ use crate::streaming::systems::COMPONENT;
 use crate::streaming::systems::system::System;
 use crate::streaming::users::user::User;
 use crate::streaming::utils::crypto;
-use crate::{IGGY_ROOT_PASSWORD_ENV, IGGY_ROOT_USERNAME_ENV};
+use crate::{MESSENGER_ROOT_PASSWORD_ENV, MESSENGER_ROOT_USERNAME_ENV};
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::Permissions;
-use iggy_common::UserStatus;
-use iggy_common::create_user::CreateUser;
-use iggy_common::defaults::*;
-use iggy_common::locking::IggySharedMutFn;
-use iggy_common::{IdKind, Identifier};
+use messenger_common::MessengerError;
+use messenger_common::Permissions;
+use messenger_common::UserStatus;
+use messenger_common::create_user::CreateUser;
+use messenger_common::defaults::*;
+use messenger_common::locking::MessengerSharedMutFn;
+use messenger_common::{IdKind, Identifier};
 use std::env;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicU32, Ordering};
@@ -43,7 +43,7 @@ static USER_ID: AtomicU32 = AtomicU32::new(1);
 const MAX_USERS: usize = u32::MAX as usize;
 
 impl System {
-    pub(crate) async fn load_users(&mut self, users: Vec<UserState>) -> Result<(), IggyError> {
+    pub(crate) async fn load_users(&mut self, users: Vec<UserState>) -> Result<(), MessengerError> {
         info!("Loading users...");
         if users.is_empty() {
             info!("No users found, creating the root user...");
@@ -110,8 +110,8 @@ impl System {
     }
 
     fn create_root_user() -> User {
-        let username = env::var(IGGY_ROOT_USERNAME_ENV);
-        let password = env::var(IGGY_ROOT_PASSWORD_ENV);
+        let username = env::var(MESSENGER_ROOT_USERNAME_ENV);
+        let password = env::var(MESSENGER_ROOT_PASSWORD_ENV);
         if (username.is_ok() && password.is_err()) || (username.is_err() && password.is_ok()) {
             panic!(
                 "When providing the custom root user credentials, both username and password must be set."
@@ -148,7 +148,7 @@ impl System {
         &self,
         session: &Session,
         user_id: &Identifier,
-    ) -> Result<Option<&User>, IggyError> {
+    ) -> Result<Option<&User>, MessengerError> {
         self.ensure_authenticated(session)?;
         let Some(user) = self.try_get_user(user_id)? else {
             return Ok(None);
@@ -166,12 +166,12 @@ impl System {
         Ok(Some(user))
     }
 
-    pub fn get_user(&self, user_id: &Identifier) -> Result<&User, IggyError> {
+    pub fn get_user(&self, user_id: &Identifier) -> Result<&User, MessengerError> {
         self.try_get_user(user_id)?
-            .ok_or(IggyError::ResourceNotFound(user_id.to_string()))
+            .ok_or(MessengerError::ResourceNotFound(user_id.to_string()))
     }
 
-    pub fn try_get_user(&self, user_id: &Identifier) -> Result<Option<&User>, IggyError> {
+    pub fn try_get_user(&self, user_id: &Identifier) -> Result<Option<&User>, MessengerError> {
         match user_id.kind {
             IdKind::Numeric => Ok(self.users.get(&user_id.get_u32_value()?)),
             IdKind::String => {
@@ -185,24 +185,24 @@ impl System {
         }
     }
 
-    pub fn get_user_mut(&mut self, user_id: &Identifier) -> Result<&mut User, IggyError> {
+    pub fn get_user_mut(&mut self, user_id: &Identifier) -> Result<&mut User, MessengerError> {
         match user_id.kind {
             IdKind::Numeric => self
                 .users
                 .get_mut(&user_id.get_u32_value()?)
-                .ok_or(IggyError::ResourceNotFound(user_id.to_string())),
+                .ok_or(MessengerError::ResourceNotFound(user_id.to_string())),
             IdKind::String => {
                 let username = user_id.get_cow_str_value()?;
                 self.users
                     .iter_mut()
                     .find(|(_, user)| user.username == username)
                     .map(|(_, user)| user)
-                    .ok_or(IggyError::ResourceNotFound(user_id.to_string()))
+                    .ok_or(MessengerError::ResourceNotFound(user_id.to_string()))
             }
         }
     }
 
-    pub async fn get_users(&self, session: &Session) -> Result<Vec<&User>, IggyError> {
+    pub async fn get_users(&self, session: &Session) -> Result<Vec<&User>, MessengerError> {
         self.ensure_authenticated(session)?;
         self.permissioner
             .get_users(session.get_user_id())
@@ -222,7 +222,7 @@ impl System {
         password: &str,
         status: UserStatus,
         permissions: Option<Permissions>,
-    ) -> Result<&User, IggyError> {
+    ) -> Result<&User, MessengerError> {
         self.ensure_authenticated(session)?;
         self.permissioner
             .create_user(session.get_user_id())
@@ -235,12 +235,12 @@ impl System {
 
         if self.users.iter().any(|(_, user)| user.username == username) {
             error!("User: {username} already exists.");
-            return Err(IggyError::UserAlreadyExists);
+            return Err(MessengerError::UserAlreadyExists);
         }
 
         if self.users.len() >= MAX_USERS {
             error!("Available users limit reached.");
-            return Err(IggyError::UsersLimitReached);
+            return Err(MessengerError::UsersLimitReached);
         }
 
         let user_id = USER_ID.fetch_add(1, Ordering::SeqCst);
@@ -261,7 +261,7 @@ impl System {
         &mut self,
         session: &Session,
         user_id: &Identifier,
-    ) -> Result<User, IggyError> {
+    ) -> Result<User, MessengerError> {
         self.ensure_authenticated(session)?;
         let existing_user_id;
         let existing_username;
@@ -279,7 +279,7 @@ impl System {
             })?;
             if user.is_root() {
                 error!("Cannot delete the root user.");
-                return Err(IggyError::CannotDeleteUser(user.id));
+                return Err(MessengerError::CannotDeleteUser(user.id));
             }
 
             existing_user_id = user.id;
@@ -290,7 +290,7 @@ impl System {
         let user = self
             .users
             .remove(&existing_user_id)
-            .ok_or(IggyError::ResourceNotFound(user_id.to_string()))?;
+            .ok_or(MessengerError::ResourceNotFound(user_id.to_string()))?;
         self.permissioner
             .delete_permissions_for_user(existing_user_id);
         let mut client_manager = self.client_manager.write().await;
@@ -313,7 +313,7 @@ impl System {
         user_id: &Identifier,
         username: Option<String>,
         status: Option<UserStatus>,
-    ) -> Result<&User, IggyError> {
+    ) -> Result<&User, MessengerError> {
         self.ensure_authenticated(session)?;
         self.permissioner
             .update_user(session.get_user_id())
@@ -329,7 +329,7 @@ impl System {
             let existing_user = self.get_user(&username.to_owned().try_into()?);
             if existing_user.is_ok() && existing_user.unwrap().id != user.id {
                 error!("User: {username} already exists.");
-                return Err(IggyError::UserAlreadyExists);
+                return Err(MessengerError::UserAlreadyExists);
             }
         }
 
@@ -353,7 +353,7 @@ impl System {
         session: &Session,
         user_id: &Identifier,
         permissions: Option<Permissions>,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.ensure_authenticated(session)?;
 
         {
@@ -369,7 +369,7 @@ impl System {
             })?;
             if user.is_root() {
                 error!("Cannot change the root user permissions.");
-                return Err(IggyError::CannotChangePermissions(user.id));
+                return Err(MessengerError::CannotChangePermissions(user.id));
             }
 
             self.permissioner
@@ -398,7 +398,7 @@ impl System {
         user_id: &Identifier,
         current_password: &str,
         new_password: &str,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.ensure_authenticated(session)?;
 
         {
@@ -419,7 +419,7 @@ impl System {
                 "Invalid current password for user: {} with ID: {user_id}.",
                 user.username
             );
-            return Err(IggyError::InvalidCredentials);
+            return Err(MessengerError::InvalidCredentials);
         }
 
         user.password = crypto::hash_password(new_password);
@@ -435,7 +435,7 @@ impl System {
         username: &str,
         password: &str,
         session: Option<&Session>,
-    ) -> Result<&User, IggyError> {
+    ) -> Result<&User, MessengerError> {
         self.login_user_with_credentials(username, Some(password), session)
             .await
     }
@@ -445,19 +445,19 @@ impl System {
         username: &str,
         password: Option<&str>,
         session: Option<&Session>,
-    ) -> Result<&User, IggyError> {
+    ) -> Result<&User, MessengerError> {
         let user = match self.get_user(&username.try_into()?) {
             Ok(user) => user,
             Err(_) => {
                 error!("Cannot login user: {username} (not found).");
-                return Err(IggyError::InvalidCredentials);
+                return Err(MessengerError::InvalidCredentials);
             }
         };
 
         info!("Logging in user: {username} with ID: {}...", user.id);
         if !user.is_active() {
             warn!("User: {username} with ID: {} is inactive.", user.id);
-            return Err(IggyError::UserInactive);
+            return Err(MessengerError::UserInactive);
         }
 
         if let Some(password) = password
@@ -467,7 +467,7 @@ impl System {
                 "Invalid password for user: {username} with ID: {}.",
                 user.id
             );
-            return Err(IggyError::InvalidCredentials);
+            return Err(MessengerError::InvalidCredentials);
         }
 
         info!("Logged in user: {username} with ID: {}.", user.id);
@@ -499,7 +499,7 @@ impl System {
         Ok(user)
     }
 
-    pub async fn logout_user(&self, session: &Session) -> Result<(), IggyError> {
+    pub async fn logout_user(&self, session: &Session) -> Result<(), MessengerError> {
         self.ensure_authenticated(session)?;
         let user = self
             .get_user(&Identifier::numeric(session.get_user_id())?)

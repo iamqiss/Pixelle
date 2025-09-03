@@ -16,8 +16,8 @@
  * under the License.
  */
 use async_trait::async_trait;
-use iggy_common::{
-    Consumer, Identifier, IggyError, IggyMessage, Partitioning, PolledMessages, PollingStrategy,
+use messenger_common::{
+    Consumer, Identifier, MessengerError, MessengerMessage, Partitioning, PolledMessages, PollingStrategy,
 };
 
 /// This trait defines the methods to interact with the messaging module.
@@ -36,7 +36,7 @@ pub trait MessageClient {
         strategy: &PollingStrategy,
         count: u32,
         auto_commit: bool,
-    ) -> Result<PolledMessages, IggyError>;
+    ) -> Result<PolledMessages, MessengerError>;
 
     /// Send messages using specified partitioning strategy to the given stream and topic by unique IDs or names.
     ///
@@ -46,8 +46,8 @@ pub trait MessageClient {
         stream_id: &Identifier,
         topic_id: &Identifier,
         partitioning: &Partitioning,
-        messages: &mut [IggyMessage],
-    ) -> Result<(), IggyError>;
+        messages: &mut [MessengerMessage],
+    ) -> Result<(), MessengerError>;
 
     /// Force flush of the `unsaved_messages` buffer to disk, optionally fsyncing the data.
     #[allow(clippy::too_many_arguments)]
@@ -57,5 +57,5 @@ pub trait MessageClient {
         topic_id: &Identifier,
         partition_id: u32,
         fsync: bool,
-    ) -> Result<(), IggyError>;
+    ) -> Result<(), MessengerError>;
 }

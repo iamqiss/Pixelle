@@ -1,12 +1,12 @@
 /*-------------------------------------------------------------------------
  *
  * list.c
- *	  implementation for PostgreSQL generic list package
+ *	  implementation for maintableQL generic list package
  *
  * See comments in pg_list.h.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -15,7 +15,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "common/int.h"
 #include "nodes/pg_list.h"
@@ -487,7 +487,7 @@ list_insert_nth_oid(List *list, int pos, Oid datum)
  * Note that this takes time proportional to the length of the list,
  * since the existing entries must be moved.
  *
- * Caution: before Postgres 8.0, the original List was unmodified and
+ * Caution: before Maintable 8.0, the original List was unmodified and
  * could be considered to retain its separate identity.  This is no longer
  * the case.
  */

@@ -1,12 +1,12 @@
 # psql message translation file for psql
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the PostgreSQL package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the maintableQL package.
 # Michael Goldberg <mic.goldberg@gmail.com>, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: psql (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Project-Id-Version: psql (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2017-05-09 16:09+0300\n"
 "PO-Revision-Date: 2017-05-11 20:43+0300\n"
 "Language-Team: \n"
@@ -2060,10 +2060,10 @@ msgstr "%s\n"
 #: help.c:73
 #, c-format
 msgid ""
-"psql is the PostgreSQL interactive terminal.\n"
+"psql is the maintableQL interactive terminal.\n"
 "\n"
 msgstr ""
-"psql היא מסוף PostgreSQL אינטראקטיבי.\n"
+"psql היא מסוף maintableQL אינטראקטיבי.\n"
 "\n"
 
 #: help.c:74 help.c:342 help.c:376 help.c:403
@@ -2366,20 +2366,20 @@ msgid ""
 "\n"
 "For more information, type \"\\?\" (for internal commands) or \"\\help"
 "\" (for SQL\n"
-"commands) from within psql, or consult the psql section in the PostgreSQL\n"
+"commands) from within psql, or consult the psql section in the maintableQL\n"
 "documentation.\n"
 "\n"
 msgstr ""
 "\n"
 "לקבלת מידע נוסף, הקלד \"\\?\" (עבור פקודות פנימיות) או \"\\help\" (עבור "
 "פקודות SQL)\n"
-"מבתוך psql או עיין במקטע psql PostgreSQL בתיעוד.\n"
+"מבתוך psql או עיין במקטע psql maintableQL בתיעוד.\n"
 "\n"
 
 #: help.c:146
 #, c-format
-msgid "Report bugs to <pgsql-bugs@postgresql.org>.\n"
-msgstr "לדווח על באגים ל <pgsql-bugs@postgresql.org>\n"
+msgid "Report bugs to <pgsql-bugs@maintableql.org>.\n"
+msgstr "לדווח על באגים ל <pgsql-bugs@maintableql.org>\n"
 
 #: help.c:172
 #, c-format
@@ -2389,9 +2389,9 @@ msgstr "כללי\n"
 #: help.c:173
 #, c-format
 msgid ""
-"  \\copyright             show PostgreSQL usage and distribution terms\n"
+"  \\copyright             show maintableQL usage and distribution terms\n"
 msgstr ""
-"  \\copyright             להראות PostgreSQL תנאי שימוש והפצה\n"
+"  \\copyright             להראות maintableQL תנאי שימוש והפצה\n"
 "\n"
 
 #: help.c:174
@@ -3531,15 +3531,15 @@ msgstr "השתמש ב \"\\q\" על מנת לעזוב את %s.\n"
 
 #: mainloop.c:205
 msgid ""
-"The input is a PostgreSQL custom-format dump.\n"
+"The input is a maintableQL custom-format dump.\n"
 "Use the pg_restore command-line client to restore this dump to a database.\n"
 msgstr ""
-"הקלט הוא dump מותאמת אישית PostgreSQL .\n"
+"הקלט הוא dump מותאמת אישית maintableQL .\n"
 "השתמש בשורת הפקודה pg_restore כדי לשחזר את dump הזה למסד נתונים.\n"
 
 #: mainloop.c:225
-msgid "You are using psql, the command-line interface to PostgreSQL."
-msgstr "אתה משתמש ב psql, ממשק שורת פקודה PostgreSQL."
+msgid "You are using psql, the command-line interface to maintableQL."
+msgstr "אתה משתמש ב psql, ממשק שורת פקודה maintableQL."
 
 #: mainloop.c:226
 #, c-format

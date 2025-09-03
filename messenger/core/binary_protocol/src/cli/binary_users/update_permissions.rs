@@ -20,8 +20,8 @@ use crate::Client;
 use crate::cli::cli_command::{CliCommand, PRINT_TARGET};
 use anyhow::Context;
 use async_trait::async_trait;
-use iggy_common::update_permissions::UpdatePermissions;
-use iggy_common::{Identifier, Permissions};
+use messenger_common::update_permissions::UpdatePermissions;
+use messenger_common::{Identifier, Permissions};
 use tracing::{Level, event};
 
 pub struct UpdatePermissionsCmd {

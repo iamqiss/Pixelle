@@ -27,7 +27,7 @@ use std::{
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
 
-use crate::IggyDuration;
+use crate::MessengerDuration;
 
 /// A struct that represents a timestamp.
 ///
@@ -36,24 +36,24 @@ use crate::IggyDuration;
 /// # Example
 ///
 /// ```
-/// use iggy_common::IggyTimestamp;
+/// use messenger_common::MessengerTimestamp;
 ///
-/// let timestamp = IggyTimestamp::from(1694968446131680);
+/// let timestamp = MessengerTimestamp::from(1694968446131680);
 /// assert_eq!(timestamp.to_utc_string("%Y-%m-%d %H:%M:%S"), "2023-09-17 16:34:06");
 /// assert_eq!(timestamp.as_micros(), 1694968446131680);
 /// ```
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
-pub struct IggyTimestamp(SystemTime);
+pub struct MessengerTimestamp(SystemTime);
 
 pub const UTC_TIME_FORMAT: &str = "%Y-%m-%d %H:%M:%S";
 
-impl IggyTimestamp {
+impl MessengerTimestamp {
     pub fn now() -> Self {
-        IggyTimestamp::default()
+        MessengerTimestamp::default()
     }
 
     pub fn zero() -> Self {
-        IggyTimestamp(UNIX_EPOCH)
+        MessengerTimestamp(UNIX_EPOCH)
     }
 
     pub fn to_secs(&self) -> u64 {
@@ -77,49 +77,49 @@ impl IggyTimestamp {
     }
 }
 
-impl From<u64> for IggyTimestamp {
+impl From<u64> for MessengerTimestamp {
     fn from(timestamp: u64) -> Self {
-        IggyTimestamp(UNIX_EPOCH + Duration::from_micros(timestamp))
+        MessengerTimestamp(UNIX_EPOCH + Duration::from_micros(timestamp))
     }
 }
 
-impl From<IggyTimestamp> for u64 {
-    fn from(timestamp: IggyTimestamp) -> u64 {
+impl From<MessengerTimestamp> for u64 {
+    fn from(timestamp: MessengerTimestamp) -> u64 {
         timestamp.as_micros()
     }
 }
 
-impl From<SystemTime> for IggyTimestamp {
+impl From<SystemTime> for MessengerTimestamp {
     fn from(timestamp: SystemTime) -> Self {
-        IggyTimestamp(timestamp)
+        MessengerTimestamp(timestamp)
     }
 }
 
-impl Add<SystemTime> for IggyTimestamp {
-    type Output = IggyTimestamp;
+impl Add<SystemTime> for MessengerTimestamp {
+    type Output = MessengerTimestamp;
 
-    fn add(self, other: SystemTime) -> IggyTimestamp {
-        IggyTimestamp(self.0 + other.duration_since(UNIX_EPOCH).unwrap())
+    fn add(self, other: SystemTime) -> MessengerTimestamp {
+        MessengerTimestamp(self.0 + other.duration_since(UNIX_EPOCH).unwrap())
     }
 }
 
-impl Sub<SystemTime> for IggyTimestamp {
-    type Output = IggyTimestamp;
+impl Sub<SystemTime> for MessengerTimestamp {
+    type Output = MessengerTimestamp;
 
     fn sub(self, rhs: SystemTime) -> Self::Output {
-        IggyTimestamp(self.0 - rhs.duration_since(UNIX_EPOCH).unwrap())
+        MessengerTimestamp(self.0 - rhs.duration_since(UNIX_EPOCH).unwrap())
     }
 }
 
-impl Add<IggyDuration> for IggyTimestamp {
-    type Output = IggyTimestamp;
+impl Add<MessengerDuration> for MessengerTimestamp {
+    type Output = MessengerTimestamp;
 
-    fn add(self, other: IggyDuration) -> Self::Output {
-        IggyTimestamp(self.0 + other.get_duration())
+    fn add(self, other: MessengerDuration) -> Self::Output {
+        MessengerTimestamp(self.0 + other.get_duration())
     }
 }
 
-impl Sub for IggyTimestamp {
+impl Sub for MessengerTimestamp {
     type Output = Duration;
 
     fn sub(self, rhs: Self) -> Self::Output {
@@ -129,19 +129,19 @@ impl Sub for IggyTimestamp {
     }
 }
 
-impl Default for IggyTimestamp {
+impl Default for MessengerTimestamp {
     fn default() -> Self {
         Self(SystemTime::now())
     }
 }
 
-impl fmt::Display for IggyTimestamp {
+impl fmt::Display for MessengerTimestamp {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.to_utc_string(UTC_TIME_FORMAT))
     }
 }
 
-impl Serialize for IggyTimestamp {
+impl Serialize for MessengerTimestamp {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -151,18 +151,18 @@ impl Serialize for IggyTimestamp {
     }
 }
 
-impl<'de> Deserialize<'de> for IggyTimestamp {
+impl<'de> Deserialize<'de> for MessengerTimestamp {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        deserializer.deserialize_u64(IggyTimestampVisitor)
+        deserializer.deserialize_u64(MessengerTimestampVisitor)
     }
 }
-struct IggyTimestampVisitor;
+struct MessengerTimestampVisitor;
 
-impl Visitor<'_> for IggyTimestampVisitor {
-    type Value = IggyTimestamp;
+impl Visitor<'_> for MessengerTimestampVisitor {
+    type Value = MessengerTimestamp;
 
     fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
         formatter.write_str("a microsecond timestamp as a u64")
@@ -172,7 +172,7 @@ impl Visitor<'_> for IggyTimestampVisitor {
     where
         E: de::Error,
     {
-        Ok(IggyTimestamp::from(value))
+        Ok(MessengerTimestamp::from(value))
     }
 }
 
@@ -182,19 +182,19 @@ mod tests {
 
     #[test]
     fn test_timestamp_get() {
-        let timestamp = IggyTimestamp::now();
+        let timestamp = MessengerTimestamp::now();
         assert!(timestamp.as_micros() > 0);
     }
 
     #[test]
     fn test_timestamp_to_micros() {
-        let timestamp = IggyTimestamp::from(1663472051111);
+        let timestamp = MessengerTimestamp::from(1663472051111);
         assert_eq!(timestamp.as_micros(), 1663472051111);
     }
 
     #[test]
     fn test_timestamp_to_string() {
-        let timestamp = IggyTimestamp::from(1694968446131680);
+        let timestamp = MessengerTimestamp::from(1694968446131680);
         assert_eq!(
             timestamp.to_utc_string("%Y-%m-%d %H:%M:%S"),
             "2023-09-17 16:34:06"
@@ -203,7 +203,7 @@ mod tests {
 
     #[test]
     fn test_timestamp_from_u64() {
-        let timestamp = IggyTimestamp::from(1663472051111);
+        let timestamp = MessengerTimestamp::from(1663472051111);
         assert_eq!(timestamp.as_micros(), 1663472051111);
     }
 }

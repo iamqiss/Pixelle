@@ -728,8 +728,8 @@ f:/etc/security/console.perms -> r:^<console>  \d+ <floppy>;
 [CIS - SLES12 - X.X.X - Disable standard boot services - Kudzu hardware detection Enabled] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_SUSE_Linux_Enterprise_Server_12_Benchmark_v1.0.0.pdf]
 d:$rc_dirs -> ^S\d\dkudzu$;
 
-[CIS - SLES12 - X.X.X - Disable standard boot services - PostgreSQL server Enabled {PCI_DSS: 2.2.2}] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_SUSE_Linux_Enterprise_Server_12_Benchmark_v1.0.0.pdf]
-d:$rc_dirs -> ^S\d\dpostgresql$;
+[CIS - SLES12 - X.X.X - Disable standard boot services - maintableQL server Enabled {PCI_DSS: 2.2.2}] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_SUSE_Linux_Enterprise_Server_12_Benchmark_v1.0.0.pdf]
+d:$rc_dirs -> ^S\d\dmaintableql$;
 
 [CIS - SLES12 - X.X.X - Disable standard boot services - MySQL server Enabled {PCI_DSS: 2.2.2}] [any] [https://benchmarks.cisecurity.org/tools2/linux/CIS_SUSE_Linux_Enterprise_Server_12_Benchmark_v1.0.0.pdf]
 d:$rc_dirs -> ^S\d\dmysqld$;

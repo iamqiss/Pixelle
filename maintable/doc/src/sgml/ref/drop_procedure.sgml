@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_procedure.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-dropprocedure">
@@ -130,7 +130,7 @@ DROP PROCEDURE [ IF EXISTS ] <replaceable class="parameter">name</replaceable> [
   </para>
 
   <para>
-   In <productname>PostgreSQL</productname>, it's sufficient to list the
+   In <productname>maintableQL</productname>, it's sufficient to list the
    input (including <literal>INOUT</literal>) arguments,
    because no two routines of the same name are allowed to share the same
    input-argument list.  Moreover, the <command>DROP</command> command
@@ -156,7 +156,7 @@ DROP PROCEDURE [ IF EXISTS ] <replaceable class="parameter">name</replaceable> [
    To avoid the risk of such ambiguity, it's recommendable to
    write <literal>IN</literal> markers explicitly rather than letting them
    be defaulted, thus forcing the
-   traditional <productname>PostgreSQL</productname> interpretation to be
+   traditional <productname>maintableQL</productname> interpretation to be
    used.
   </para>
 
@@ -202,7 +202,7 @@ CREATE PROCEDURE do_db_maintenance(IN target_schema text, IN options text) ...
 
   <para>
    This command conforms to the SQL standard, with
-   these <productname>PostgreSQL</productname> extensions:
+   these <productname>maintableQL</productname> extensions:
    <itemizedlist>
     <listitem>
      <para>The standard only allows one procedure to be dropped per command.</para>

@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------
  *
  * bitmapset.c
- *	  PostgreSQL generic bitmap set package
+ *	  maintableQL generic bitmap set package
  *
  * A bitmap set can represent any set of nonnegative integers, although
  * it is mainly intended for sets where the maximum value is not large,
@@ -29,14 +29,14 @@
  * any users of the old set will be accessing pfree'd memory.  This option is
  * only intended to be used for debugging.
  *
- * Copyright (c) 2003-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2003-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/nodes/bitmapset.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "common/hashfn.h"
 #include "nodes/bitmapset.h"
@@ -358,7 +358,7 @@ bms_difference(const Bitmapset *a, const Bitmapset *b)
 		return bms_copy(a);
 
 	/*
-	 * In Postgres' usage, an empty result is a very common case, so it's
+	 * In Maintable' usage, an empty result is a very common case, so it's
 	 * worth optimizing for that by testing bms_nonempty_difference().  This
 	 * saves us a palloc/pfree cycle compared to checking after-the-fact.
 	 */

@@ -1,2 +1,2 @@
-For information about contributing to PostgreSQL, see
-<https://www.postgresql.org/developer/>.
+For information about contributing to maintableQL, see
+<https://www.maintableql.org/developer/>.

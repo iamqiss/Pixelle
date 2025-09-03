@@ -24,13 +24,13 @@ use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
 use error_set::ErrContext;
-use iggy_common::IggyError;
-use iggy_common::delete_consumer_offset::DeleteConsumerOffset;
+use messenger_common::MessengerError;
+use messenger_common::delete_consumer_offset::DeleteConsumerOffset;
 use tracing::debug;
 
 impl ServerCommandHandler for DeleteConsumerOffset {
     fn code(&self) -> u32 {
-        iggy_common::DELETE_CONSUMER_OFFSET_CODE
+        messenger_common::DELETE_CONSUMER_OFFSET_CODE
     }
 
     async fn handle(
@@ -39,7 +39,7 @@ impl ServerCommandHandler for DeleteConsumerOffset {
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
         let system = system.read().await;
         system
@@ -60,7 +60,7 @@ impl ServerCommandHandler for DeleteConsumerOffset {
 }
 
 impl BinaryServerCommand for DeleteConsumerOffset {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
@@ -68,7 +68,7 @@ impl BinaryServerCommand for DeleteConsumerOffset {
             ServerCommand::DeleteConsumerOffset(delete_consumer_offset) => {
                 Ok(delete_consumer_offset)
             }
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

@@ -1,4 +1,4 @@
-# Copyright (c) 2025, PostgreSQL Global Development Group
+# Copyright (c) 2025, maintableQL Global Development Group
 
 test_binaryheap_sources = files(
   'test_binaryheap.c',

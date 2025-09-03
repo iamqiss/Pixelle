@@ -21,7 +21,7 @@ use crate::BytesSerializable;
 use crate::Permissions;
 use crate::UserStatus;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{CREATE_USER_CODE, Command};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -63,20 +63,20 @@ impl Default for CreateUser {
     }
 }
 
-impl Validatable<IggyError> for CreateUser {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for CreateUser {
+    fn validate(&self) -> Result<(), MessengerError> {
         if self.username.is_empty()
             || self.username.len() > MAX_USERNAME_LENGTH
             || self.username.len() < MIN_USERNAME_LENGTH
         {
-            return Err(IggyError::InvalidUsername);
+            return Err(MessengerError::InvalidUsername);
         }
 
         if self.password.is_empty()
             || self.password.len() > MAX_PASSWORD_LENGTH
             || self.password.len() < MIN_PASSWORD_LENGTH
         {
-            return Err(IggyError::InvalidPassword);
+            return Err(MessengerError::InvalidPassword);
         }
 
         Ok(())
@@ -105,27 +105,27 @@ impl BytesSerializable for CreateUser {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<CreateUser, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<CreateUser, MessengerError> {
         if bytes.len() < 10 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let username_length = bytes[0];
         let username = from_utf8(&bytes[1..1 + username_length as usize])
-            .map_err(|_| IggyError::InvalidUtf8)?
+            .map_err(|_| MessengerError::InvalidUtf8)?
             .to_string();
         if username.len() != username_length as usize {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let mut position = 1 + username_length as usize;
         let password_length = bytes[position];
         position += 1;
         let password = from_utf8(&bytes[position..position + password_length as usize])
-            .map_err(|_| IggyError::InvalidUtf8)?
+            .map_err(|_| MessengerError::InvalidUtf8)?
             .to_string();
         if password.len() != password_length as usize {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         position += password_length as usize;
@@ -133,7 +133,7 @@ impl BytesSerializable for CreateUser {
         position += 1;
         let has_permissions = bytes[position];
         if has_permissions > 1 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         position += 1;
@@ -141,7 +141,7 @@ impl BytesSerializable for CreateUser {
             let permissions_length = u32::from_le_bytes(
                 bytes[position..position + 4]
                     .try_into()
-                    .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                    .map_err(|_| MessengerError::InvalidNumberEncoding)?,
             );
             position += 4;
             Some(Permissions::from_bytes(

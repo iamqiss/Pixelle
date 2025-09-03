@@ -7,8 +7,8 @@
 # Tomáš Vondra <tv@fuzzy.cz>, 2012, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: pgscripts-cs (PostgreSQL 9.3)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pgscripts-cs (maintableQL 9.3)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2020-10-31 16:16+0000\n"
 "PO-Revision-Date: 2021-09-16 09:15+0200\n"
 "Last-Translator: Tomas Vondra <tv@fuzzy.cz>\n"
@@ -368,10 +368,10 @@ msgstr "tvorba komentáře selhala (databáze byla vytvořena): %s"
 #: createdb.c:265
 #, c-format
 msgid ""
-"%s creates a PostgreSQL database.\n"
+"%s creates a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s vytvoří PostgreSQL databázi.\n"
+"%s vytvoří maintableQL databázi.\n"
 "\n"
 
 #: createdb.c:267
@@ -515,10 +515,10 @@ msgstr "tvorba nové role selhala: %s"
 #: createuser.c:353
 #, c-format
 msgid ""
-"%s creates a new PostgreSQL role.\n"
+"%s creates a new maintableQL role.\n"
 "\n"
 msgstr ""
-"%s vytvoří novou PostgreSQL roli.\n"
+"%s vytvoří novou maintableQL roli.\n"
 "\n"
 
 #: createuser.c:355 dropuser.c:171
@@ -641,10 +641,10 @@ msgstr "odstraňování databáze selhalo: %s"
 #: dropdb.c:169
 #, c-format
 msgid ""
-"%s removes a PostgreSQL database.\n"
+"%s removes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s odstraňuje PostgreSQL databázi.\n"
+"%s odstraňuje maintableQL databázi.\n"
 "\n"
 
 #: dropdb.c:171
@@ -689,10 +689,10 @@ msgstr "odstraňování role \"%s\" selhalo: %s"
 #: dropuser.c:169
 #, c-format
 msgid ""
-"%s removes a PostgreSQL role.\n"
+"%s removes a maintableQL role.\n"
 "\n"
 msgstr ""
-"%s odstraňuje PostgreSQL roli.\n"
+"%s odstraňuje maintableQL roli.\n"
 "\n"
 
 #: dropuser.c:174
@@ -752,10 +752,10 @@ msgstr "neznámo\n"
 #: pg_isready.c:223
 #, c-format
 msgid ""
-"%s issues a connection check to a PostgreSQL database.\n"
+"%s issues a connection check to a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s provede kontrolu spojení k PostgreSQL databázi.\n"
+"%s provede kontrolu spojení k maintableQL databázi.\n"
 "\n"
 
 #: pg_isready.c:225
@@ -861,8 +861,8 @@ msgstr "pro reindexování nelze použít více paralelních jobů"
 #: reindexdb.c:344 vacuumdb.c:413 vacuumdb.c:421 vacuumdb.c:428 vacuumdb.c:435
 #: vacuumdb.c:442
 #, c-format
-msgid "cannot use the \"%s\" option on server versions older than PostgreSQL %s"
-msgstr "volbu \"%s\" nelze použít na serverech starších než PostgreSQL %s"
+msgid "cannot use the \"%s\" option on server versions older than maintableQL %s"
+msgstr "volbu \"%s\" nelze použít na serverech starších než maintableQL %s"
 
 #: reindexdb.c:384
 #, c-format
@@ -902,10 +902,10 @@ msgstr "%s: reindexace databáze \"%s\"\n"
 #: reindexdb.c:749
 #, c-format
 msgid ""
-"%s reindexes a PostgreSQL database.\n"
+"%s reindexes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s vytvoří PostgreSQL databázi.\n"
+"%s vytvoří maintableQL databázi.\n"
 "\n"
 
 #: reindexdb.c:753
@@ -1032,10 +1032,10 @@ msgstr "provádění VACUUM databáze \"%s\" selhalo: %s"
 #: vacuumdb.c:910
 #, c-format
 msgid ""
-"%s cleans and analyzes a PostgreSQL database.\n"
+"%s cleans and analyzes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s pročišťuje a analyzuje PostgreSQL databázi.\n"
+"%s pročišťuje a analyzuje maintableQL databázi.\n"
 "\n"
 
 #: vacuumdb.c:914
@@ -1220,10 +1220,10 @@ msgstr ""
 #~ msgstr "  %s [PŘEPÍNAČ]... JAZYK [DATABÁZE]\n"
 
 #~ msgid ""
-#~ "%s installs a procedural language into a PostgreSQL database.\n"
+#~ "%s installs a procedural language into a maintableQL database.\n"
 #~ "\n"
 #~ msgstr ""
-#~ "%s instaluje procedurální jazyk do PostgreSQL databáze.\n"
+#~ "%s instaluje procedurální jazyk do maintableQL databáze.\n"
 #~ "\n"
 
 #~ msgid "%s: language installation failed: %s"
@@ -1261,7 +1261,7 @@ msgstr ""
 
 #~ msgid ""
 #~ "\n"
-#~ "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+#~ "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Chyby hlaste na adresu <pgsql-bugs@postgresql.org>.\n"
+#~ "Chyby hlaste na adresu <pgsql-bugs@maintableql.org>.\n"

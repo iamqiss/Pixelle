@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/vacuum.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-vacuum">
@@ -51,7 +51,7 @@ VACUUM [ ( <replaceable class="parameter">option</replaceable> [, ...] ) ] [ <re
 
   <para>
    <command>VACUUM</command> reclaims storage occupied by dead tuples.
-   In normal <productname>PostgreSQL</productname> operation, tuples that
+   In normal <productname>maintableQL</productname> operation, tuples that
    are deleted or obsoleted by an update are not physically removed from
    their table; they remain present until a <command>VACUUM</command> is
    done.  Therefore it's necessary to do <command>VACUUM</command>
@@ -200,7 +200,7 @@ VACUUM [ ( <replaceable class="parameter">option</replaceable> [, ...] ) ] [ <re
       <literal>ON</literal>, <command>VACUUM</command> will
       conservatively remove all dead tuples from indexes.  This may be
       useful for backwards compatibility with earlier releases of
-      <productname>PostgreSQL</productname> where this was the
+      <productname>maintableQL</productname> where this was the
       standard behavior.
      </para>
      <para>
@@ -467,7 +467,7 @@ VACUUM [ ( <replaceable class="parameter">option</replaceable> [, ...] ) ] [ <re
 
    <para>
     We recommend that all databases be vacuumed regularly in
-    order to remove dead rows.  <productname>PostgreSQL</productname> includes
+    order to remove dead rows.  <productname>maintableQL</productname> includes
     an <quote>autovacuum</quote> facility which can automate routine vacuum
     maintenance.  For more information about automatic and manual vacuuming,
     see <xref linkend="routine-vacuuming"/>.
@@ -528,7 +528,7 @@ VACUUM (VERBOSE, ANALYZE) onek;
   </para>
 
   <para>
-   The following syntax was used before <productname>PostgreSQL</productname>
+   The following syntax was used before <productname>maintableQL</productname>
    version 9.0 and is still supported:
 <synopsis>
 VACUUM [ FULL ] [ FREEZE ] [ VERBOSE ] [ ANALYZE ] [ <replaceable class="parameter">table_and_columns</replaceable> [, ...] ]

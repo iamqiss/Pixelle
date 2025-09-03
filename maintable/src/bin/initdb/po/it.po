@@ -3,9 +3,9 @@
 #   Italian message translation file for initdb
 #
 # For development and bug report please use:
-# https://github.com/dvarrazzo/postgresql-it
+# https://github.com/dvarrazzo/maintableql-it
 #
-# Copyright (C) 2012-2017 PostgreSQL Global Development Group
+# Copyright (C) 2012-2017 maintableQL Global Development Group
 # Copyright (C) 2010, Associazione Culturale ITPUG
 #
 # Daniele Varrazzo <daniele.varrazzo@gmail.com>, 2012-2017
@@ -13,16 +13,16 @@
 # Ottavio Campana <campana@oc-si.it>, 2007.
 # Fabrizio Mazzoni <veramente@libero.it>, 2003.
 #
-# This file is distributed under the same license as the PostgreSQL package.
+# This file is distributed under the same license as the maintableQL package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: initdb (PostgreSQL) 11\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: initdb (maintableQL) 11\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2022-09-26 08:19+0000\n"
 "PO-Revision-Date: 2023-09-05 07:54+0200\n"
 "Last-Translator: Daniele Varrazzo <daniele.varrazzo@gmail.com>\n"
-"Language-Team: https://github.com/dvarrazzo/postgresql-it\n"
+"Language-Team: https://github.com/dvarrazzo/maintableql-it\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -389,8 +389,8 @@ msgstr "esecuzione dello script di bootstrap ... "
 
 #: initdb.c:1331
 #, c-format
-msgid "input file \"%s\" does not belong to PostgreSQL %s"
-msgstr "il file di input \"%s\" non appartiene a PostgreSQL %s"
+msgid "input file \"%s\" does not belong to maintableQL %s"
+msgstr "il file di input \"%s\" non appartiene a maintableQL %s"
 
 #: initdb.c:1333
 #, c-format
@@ -488,10 +488,10 @@ msgstr "ICU non supportato in questo build"
 #: initdb.c:2187
 #, c-format
 msgid ""
-"%s initializes a PostgreSQL database cluster.\n"
+"%s initializes a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s inizializza un cluster di database PostgreSQL.\n"
+"%s inizializza un cluster di database maintableQL.\n"
 "\n"
 
 #: initdb.c:2188
@@ -1112,10 +1112,10 @@ msgstr ""
 #~ msgstr "%s: il file \"%s\" non esiste\n"
 
 #~ msgid ""
-#~ "%s: input file \"%s\" does not belong to PostgreSQL %s\n"
+#~ "%s: input file \"%s\" does not belong to maintableQL %s\n"
 #~ "Check your installation or specify the correct path using the option -L.\n"
 #~ msgstr ""
-#~ "%s: il file di input \"%s\" non appartiene a PostgreSQL %s\n"
+#~ "%s: il file di input \"%s\" non appartiene a maintableQL %s\n"
 #~ "Controlla la correttezza dell'installazione oppure specifica\n"
 #~ "il percorso corretto con l'opzione -L.\n"
 
@@ -1126,20 +1126,20 @@ msgstr ""
 #~ msgstr "%s: memoria esaurita\n"
 
 #~ msgid ""
-#~ "The program \"postgres\" is needed by %s but was not found in the\n"
+#~ "The program \"maintable\" is needed by %s but was not found in the\n"
 #~ "same directory as \"%s\".\n"
 #~ "Check your installation.\n"
 #~ msgstr ""
-#~ "Il programma \"postgres\" è richiesto da %s ma non è stato trovato\n"
+#~ "Il programma \"maintable\" è richiesto da %s ma non è stato trovato\n"
 #~ "nella stessa directory \"%s\".\n"
 #~ "Verifica la correttezza dell'installazione.\n"
 
 #~ msgid ""
-#~ "The program \"postgres\" was found by \"%s\"\n"
+#~ "The program \"maintable\" was found by \"%s\"\n"
 #~ "but was not the same version as %s.\n"
 #~ "Check your installation.\n"
 #~ msgstr ""
-#~ "Il programma \"postgres\" è stato trovato da \"%s\"\n"
+#~ "Il programma \"maintable\" è stato trovato da \"%s\"\n"
 #~ "ma non ha la stessa versione di %s.\n"
 #~ "Verifica la correttezza dell'installazione.\n"
 

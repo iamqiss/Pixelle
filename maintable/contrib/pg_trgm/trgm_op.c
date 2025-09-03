@@ -1,7 +1,7 @@
 /*
  * contrib/pg_trgm/trgm_op.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 

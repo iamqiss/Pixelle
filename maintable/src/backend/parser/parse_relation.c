@@ -3,7 +3,7 @@
  * parse_relation.c
  *	  parser support routines dealing with relations
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 
@@ -191,7 +191,7 @@ refnameNamespaceItem(ParseState *pstate,
  *
  * Note: it might seem that we shouldn't have to worry about the possibility
  * of multiple matches; after all, the SQL standard disallows duplicate table
- * aliases within a given SELECT level.  Historically, however, Postgres has
+ * aliases within a given SELECT level.  Historically, however, Maintable has
  * been laxer than that.  For example, we allow
  *		SELECT ... FROM tab1 x CROSS JOIN (tab2 x CROSS JOIN tab3 y) z
  * on the grounds that the aliased join (z) hides the aliases within it,

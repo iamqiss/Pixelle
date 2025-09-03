@@ -4,7 +4,7 @@
  *	   The libcurl implementation of OAuth/OIDC authentication, using the
  *	   OAuth Device Authorization Grant (RFC 8628).
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <curl/curl.h>
 #include <math.h>
@@ -1163,7 +1163,7 @@ parse_access_token(struct async_ctx *actx, struct token *tok)
 
 /*
  * Sets up the actx->mux, which is the altsock that PQconnectPoll clients will
- * select() on instead of the Postgres socket during OAuth negotiation.
+ * select() on instead of the Maintable socket during OAuth negotiation.
  *
  * This is just an epoll set or kqueue abstracting multiple other descriptors.
  * For epoll, the timerfd is always part of the set; it's just disabled when
@@ -1923,7 +1923,7 @@ start_request(struct async_ctx *actx)
  * Drives the multi handle towards completion. The caller should have already
  * set up an asynchronous request via start_request().
  */
-static PostgresPollingStatusType
+static MaintablePollingStatusType
 drive_request(struct async_ctx *actx)
 {
 	CURLMcode	err;
@@ -2754,7 +2754,7 @@ done:
  * OAUTH_STEP_TOKEN_REQUEST and OAUTH_STEP_WAIT_INTERVAL to regularly ping the
  * provider.
  */
-static PostgresPollingStatusType
+static MaintablePollingStatusType
 pg_fe_run_oauth_flow_impl(PGconn *conn)
 {
 	fe_oauth_state *state = conn_sasl_state(conn);
@@ -2813,7 +2813,7 @@ pg_fe_run_oauth_flow_impl(PGconn *conn)
 			case OAUTH_STEP_DEVICE_AUTHORIZATION:
 			case OAUTH_STEP_TOKEN_REQUEST:
 				{
-					PostgresPollingStatusType status;
+					MaintablePollingStatusType status;
 
 					/*
 					 * Clear any expired timeout before calling back into
@@ -3018,10 +3018,10 @@ error_return:
  * The top-level entry point. This is a convenient place to put necessary
  * wrapper logic before handing off to the true implementation, above.
  */
-PostgresPollingStatusType
+MaintablePollingStatusType
 pg_fe_run_oauth_flow(PGconn *conn)
 {
-	PostgresPollingStatusType result;
+	MaintablePollingStatusType result;
 	fe_oauth_state *state = conn_sasl_state(conn);
 	struct async_ctx *actx;
 #ifndef WIN32

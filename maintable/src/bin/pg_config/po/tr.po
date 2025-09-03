@@ -6,11 +6,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pg_config-tr\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@postgresql.org\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@maintableql.org\n"
 "POT-Creation-Date: 2018-11-27 07:44+0000\n"
 "PO-Revision-Date: 2021-09-16 09:40+0200\n"
 "Last-Translator: Abdullah Gülner\n"
-"Language-Team: Turkish <ceviri@postgresql.org.tr>\n"
+"Language-Team: Turkish <ceviri@maintableql.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -64,11 +64,11 @@ msgstr "pclose başarısız oldu: %s"
 #, c-format
 msgid ""
 "\n"
-"%s provides information about the installed version of PostgreSQL.\n"
+"%s provides information about the installed version of maintableQL.\n"
 "\n"
 msgstr ""
 "\n"
-"%s kurulu PostgreSQL sürümü hakkında bilgi verir.\n"
+"%s kurulu maintableQL sürümü hakkında bilgi verir.\n"
 "\n"
 
 #: pg_config.c:75
@@ -163,55 +163,55 @@ msgstr "  --pgxs                extension makefile dosyasının yerini göster\n
 #, c-format
 msgid ""
 "  --configure           show options given to \"configure\" script when\n"
-"                        PostgreSQL was built\n"
+"                        maintableQL was built\n"
 msgstr ""
-"  --configure           PostgreSQL yapılandırıldığında \"configure\" betiğine verilen\n"
+"  --configure           maintableQL yapılandırıldığında \"configure\" betiğine verilen\n"
 "                        seçeneklerin listesini göster\n"
 
 #: pg_config.c:94
 #, c-format
-msgid "  --cc                  show CC value used when PostgreSQL was built\n"
-msgstr "  --ldflags             PostgreSQL derleme sırasında kullanılan CC değerini göster\n"
+msgid "  --cc                  show CC value used when maintableQL was built\n"
+msgstr "  --ldflags             maintableQL derleme sırasında kullanılan CC değerini göster\n"
 
 #: pg_config.c:95
 #, c-format
-msgid "  --cppflags            show CPPFLAGS value used when PostgreSQL was built\n"
-msgstr "  --ldflags             PostgreSQL derleme sırasında kullanılan CPPFLAGS değerini göster\n"
+msgid "  --cppflags            show CPPFLAGS value used when maintableQL was built\n"
+msgstr "  --ldflags             maintableQL derleme sırasında kullanılan CPPFLAGS değerini göster\n"
 
 #: pg_config.c:96
 #, c-format
-msgid "  --cflags              show CFLAGS value used when PostgreSQL was built\n"
-msgstr "  --ldflags             PostgreSQL derleme sırasında kullanılan CFLAGS değerini göster\n"
+msgid "  --cflags              show CFLAGS value used when maintableQL was built\n"
+msgstr "  --ldflags             maintableQL derleme sırasında kullanılan CFLAGS değerini göster\n"
 
 #: pg_config.c:97
 #, c-format
-msgid "  --cflags_sl           show CFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --ldflags             PostgreSQL derleme sırasında kullanılan CFLAGS_SL değerini göster\n"
+msgid "  --cflags_sl           show CFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --ldflags             maintableQL derleme sırasında kullanılan CFLAGS_SL değerini göster\n"
 
 #: pg_config.c:98
 #, c-format
-msgid "  --ldflags             show LDFLAGS value used when PostgreSQL was built\n"
-msgstr "  --ldflags             PostgreSQL derleme sırasında kullanılan LDFLAGS değerini göster\n"
+msgid "  --ldflags             show LDFLAGS value used when maintableQL was built\n"
+msgstr "  --ldflags             maintableQL derleme sırasında kullanılan LDFLAGS değerini göster\n"
 
 #: pg_config.c:99
 #, c-format
-msgid "  --ldflags_ex          show LDFLAGS_EX value used when PostgreSQL was built\n"
-msgstr "  --ldflags_ex          PostgreSQL derlemesi sırasında kullanılan LDFLAGS_EX değerini göster\n"
+msgid "  --ldflags_ex          show LDFLAGS_EX value used when maintableQL was built\n"
+msgstr "  --ldflags_ex          maintableQL derlemesi sırasında kullanılan LDFLAGS_EX değerini göster\n"
 
 #: pg_config.c:100
 #, c-format
-msgid "  --ldflags_sl          show LDFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --ldflags             PostgreSQL derleme sırasında kullanılan LDFLAGS_SL değerini göster\n"
+msgid "  --ldflags_sl          show LDFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --ldflags             maintableQL derleme sırasında kullanılan LDFLAGS_SL değerini göster\n"
 
 #: pg_config.c:101
 #, c-format
-msgid "  --libs                show LIBS value used when PostgreSQL was built\n"
-msgstr "  --libs                PostgreSQL derleme sırasında kullanılan LIBS değerini göster\n"
+msgid "  --libs                show LIBS value used when maintableQL was built\n"
+msgstr "  --libs                maintableQL derleme sırasında kullanılan LIBS değerini göster\n"
 
 #: pg_config.c:102
 #, c-format
-msgid "  --version             show the PostgreSQL version\n"
-msgstr "  --version             PostgreSQL sürümünü göster ve çık\n"
+msgid "  --version             show the maintableQL version\n"
+msgstr "  --version             maintableQL sürümünü göster ve çık\n"
 
 #: pg_config.c:103
 #, c-format
@@ -231,8 +231,8 @@ msgstr ""
 
 #: pg_config.c:105
 #, c-format
-msgid "Report bugs to <pgsql-bugs@postgresql.org>.\n"
-msgstr "Hataları <pgsql-bugs@postgresql.org> adresine bildirebilirsiniz.\n"
+msgid "Report bugs to <pgsql-bugs@maintableql.org>.\n"
+msgstr "Hataları <pgsql-bugs@maintableql.org> adresine bildirebilirsiniz.\n"
 
 #: pg_config.c:111
 #, c-format

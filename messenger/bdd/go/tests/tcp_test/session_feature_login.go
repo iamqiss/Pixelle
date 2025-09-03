@@ -18,7 +18,7 @@
 package tcp_test
 
 import (
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
 	"github.com/onsi/ginkgo/v2"
 	"github.com/onsi/gomega"
 )
@@ -27,7 +27,7 @@ var _ = ginkgo.Describe("LOGIN FEATURE:", func() {
 	ginkgo.When("user is already logged in", func() {
 		ginkgo.Context("and tries to log with correct data", func() {
 			client := createAuthorizedConnection()
-			user, err := client.LoginUser("iggy", "iggy")
+			user, err := client.LoginUser("messenger", "messenger")
 
 			itShouldNotReturnError(err)
 			itShouldReturnUserId(user, 1)
@@ -45,7 +45,7 @@ var _ = ginkgo.Describe("LOGIN FEATURE:", func() {
 	ginkgo.When("user is not logged in", func() {
 		ginkgo.Context("and tries to log with correct data", func() {
 			client := createClient()
-			user, err := client.LoginUser("iggy", "iggy")
+			user, err := client.LoginUser("messenger", "messenger")
 
 			itShouldNotReturnError(err)
 			itShouldReturnUserId(user, 1)

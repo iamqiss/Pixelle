@@ -10,11 +10,11 @@
    slightly modified)
  */
 
-/* Taken over as part of PostgreSQL by Michael Meskes <meskes@postgresql.org>
+/* Taken over as part of maintableQL by Michael Meskes <meskes@maintableql.org>
    on Feb. 5th, 1998 */
 
-#define POSTGRES_ECPG_INTERNAL
-#include "postgres_fe.h"
+#define MAINTABLE_ECPG_INTERNAL
+#include "maintable_fe.h"
 
 #include <math.h>
 
@@ -37,7 +37,7 @@
  *	escaped.
  */
 static char *
-quote_postgres(char *arg, bool quote, int lineno)
+quote_maintable(char *arg, bool quote, int lineno)
 {
 	char	   *res;
 	size_t		length;
@@ -171,7 +171,7 @@ ecpg_is_type_an_array(int type, const struct statement *stmt, const struct varia
 	if ((stmt->connection->cache_head) == NULL)
 	{
 		/*
-		 * Text like types are not an array for ecpg, but postgres counts them
+		 * Text like types are not an array for ecpg, but maintable counts them
 		 * as an array. This define reminds you to not 'correct' these values.
 		 */
 #define not_an_array_in_ecpg ECPG_ARRAY_NONE
@@ -792,7 +792,7 @@ ecpg_store_input(const int lineno, const bool force_indicator, const struct vari
 					strncpy(newcopy, (char *) var->value, slen);
 					newcopy[slen] = '\0';
 
-					mallocedval = quote_postgres(newcopy, quote, lineno);
+					mallocedval = quote_maintable(newcopy, quote, lineno);
 					if (!mallocedval)
 					{
 						ecpg_free(newcopy);
@@ -841,7 +841,7 @@ ecpg_store_input(const int lineno, const bool force_indicator, const struct vari
 					strncpy(newcopy, variable->arr, variable->len);
 					newcopy[variable->len] = '\0';
 
-					mallocedval = quote_postgres(newcopy, quote, lineno);
+					mallocedval = quote_maintable(newcopy, quote, lineno);
 					if (!mallocedval)
 					{
 						ecpg_free(newcopy);
@@ -932,7 +932,7 @@ ecpg_store_input(const int lineno, const bool force_indicator, const struct vari
 
 					for (element = 0; element < asize; element++)
 					{
-						str = quote_postgres(PGTYPESinterval_to_asc(&(((interval *) (var->value))[element])), quote, lineno);
+						str = quote_maintable(PGTYPESinterval_to_asc(&(((interval *) (var->value))[element])), quote, lineno);
 						if (!str)
 						{
 							ecpg_free(mallocedval);
@@ -979,7 +979,7 @@ ecpg_store_input(const int lineno, const bool force_indicator, const struct vari
 
 					for (element = 0; element < asize; element++)
 					{
-						str = quote_postgres(PGTYPESdate_to_asc(((date *) (var->value))[element]), quote, lineno);
+						str = quote_maintable(PGTYPESdate_to_asc(((date *) (var->value))[element]), quote, lineno);
 						if (!str)
 						{
 							ecpg_free(mallocedval);
@@ -1026,7 +1026,7 @@ ecpg_store_input(const int lineno, const bool force_indicator, const struct vari
 
 					for (element = 0; element < asize; element++)
 					{
-						str = quote_postgres(PGTYPEStimestamp_to_asc(((timestamp *) (var->value))[element]), quote, lineno);
+						str = quote_maintable(PGTYPEStimestamp_to_asc(((timestamp *) (var->value))[element]), quote, lineno);
 						if (!str)
 						{
 							ecpg_free(mallocedval);

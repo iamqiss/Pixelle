@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 cmake_minimum_required(VERSION 3.14)
-project(iggy-cpp-client)
+project(messenger-cpp-client)
 
 option(BUILD_TESTS "Build and run unit tests" OFF)
 option(BUILD_DOCS "Build documentation" OFF)
@@ -79,7 +79,7 @@ set(WOLFSSL_LIB_DIR ${CMAKE_BINARY_DIR}/wolfssl/lib)
 set(LWS_INCLUDE_DIR ${CMAKE_BINARY_DIR}/lws/include)
 set(LWS_LIB_DIR ${CMAKE_BINARY_DIR}/lws/lib)
 
-set(IGGY_INCLUDE_DIRS
+set(MESSENGER_INCLUDE_DIRS
   ${ADA_INCLUDE_DIR}
   ${JSON_INCLUDE_DIR}
   ${LWS_INCLUDE_DIR}
@@ -88,15 +88,15 @@ set(IGGY_INCLUDE_DIRS
   ${WOLFSSL_INCLUDE_DIR}
 )
 
-file(GLOB_RECURSE IGGY_SOURCES "sdk/*.cc")
+file(GLOB_RECURSE MESSENGER_SOURCES "sdk/*.cc")
 add_library(
-  iggy
-  ${IGGY_SOURCES}
+  messenger
+  ${MESSENGER_SOURCES}
 )
-target_include_directories(iggy PRIVATE ${IGGY_INCLUDE_DIRS})
-add_dependencies(iggy lws)
+target_include_directories(messenger PRIVATE ${MESSENGER_INCLUDE_DIRS})
+add_dependencies(messenger lws)
 target_link_libraries(
-  iggy PRIVATE
+  messenger PRIVATE
 
   ada::ada
   fmt::fmt

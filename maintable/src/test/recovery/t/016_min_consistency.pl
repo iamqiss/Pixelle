@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test for checking consistency of on-disk pages for a cluster with
 # the minimum recovery LSN, ensuring that the updates happen across
@@ -9,8 +9,8 @@
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Find the largest LSN in the set of pages part of the given relation
@@ -43,15 +43,15 @@ sub find_largest_lsn
 }
 
 # Initialize primary node
-my $primary = PostgreSQL::Test::Cluster->new('primary');
+my $primary = maintableQL::Test::Cluster->new('primary');
 $primary->init(allows_streaming => 1);
 
 # Set shared_buffers to a very low value to enforce discard and flush
-# of PostgreSQL buffers on standby, enforcing other processes than the
+# of maintableQL buffers on standby, enforcing other processes than the
 # startup process to update the minimum recovery LSN in the control
 # file.  Autovacuum is disabled so as there is no risk of having other
 # processes than the checkpointer doing page flushes.
-$primary->append_conf("postgresql.conf", <<EOF);
+$primary->append_conf("maintableql.conf", <<EOF);
 shared_buffers = 128kB
 autovacuum = off
 EOF
@@ -61,41 +61,41 @@ $primary->start;
 
 # setup/start a standby
 $primary->backup('bkp');
-my $standby = PostgreSQL::Test::Cluster->new('standby');
+my $standby = maintableQL::Test::Cluster->new('standby');
 $standby->init_from_backup($primary, 'bkp', has_streaming => 1);
 $standby->start;
 
 # Create base table whose data consistency is checked.
 $primary->safe_psql(
-	'postgres', "
+	'maintable', "
 CREATE TABLE test1 (a int) WITH (fillfactor = 10);
 INSERT INTO test1 SELECT generate_series(1, 10000);");
 
 # Take a checkpoint and enforce post-checkpoint full page writes
 # which makes the startup process replay those pages, updating
 # minRecoveryPoint.
-$primary->safe_psql('postgres', 'CHECKPOINT;');
-$primary->safe_psql('postgres', 'UPDATE test1 SET a = a + 1;');
+$primary->safe_psql('maintable', 'CHECKPOINT;');
+$primary->safe_psql('maintable', 'UPDATE test1 SET a = a + 1;');
 
 # Wait for last record to have been replayed on the standby.
 $primary->wait_for_catchup($standby);
 
 # Fill in the standby's shared buffers with the data filled in
 # previously.
-$standby->safe_psql('postgres', 'SELECT count(*) FROM test1;');
+$standby->safe_psql('maintable', 'SELECT count(*) FROM test1;');
 
 # Update the table again, this does not generate full page writes so
 # the standby will replay records associated with it, but the startup
 # process will not flush those pages.
-$primary->safe_psql('postgres', 'UPDATE test1 SET a = a + 1;');
+$primary->safe_psql('maintable', 'UPDATE test1 SET a = a + 1;');
 
 # Extract from the relation the last block created and its relation
 # file, this will be used at the end of the test for sanity checks.
-my $blocksize = $primary->safe_psql('postgres',
+my $blocksize = $primary->safe_psql('maintable',
 	"SELECT setting::int FROM pg_settings WHERE name = 'block_size';");
-my $last_block = $primary->safe_psql('postgres',
+my $last_block = $primary->safe_psql('maintable',
 	"SELECT pg_relation_size('test1')::int / $blocksize - 1;");
-my $relfilenode = $primary->safe_psql('postgres',
+my $relfilenode = $primary->safe_psql('maintable',
 	"SELECT pg_relation_filepath('test1'::regclass);");
 
 # Wait for last record to have been replayed on the standby.
@@ -103,7 +103,7 @@ $primary->wait_for_catchup($standby);
 
 # Issue a restart point on the standby now, which makes the checkpointer
 # update minRecoveryPoint.
-$standby->safe_psql('postgres', 'CHECKPOINT;');
+$standby->safe_psql('maintable', 'CHECKPOINT;');
 
 # Now shut down the primary violently so as the standby does not
 # receive the shutdown checkpoint, making sure that the startup

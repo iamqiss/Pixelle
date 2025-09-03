@@ -3,7 +3,7 @@
  * parse_func.c
  *		handle function calls in parser
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/htup_details.h"
 #include "catalog/pg_aggregate.h"
@@ -57,7 +57,7 @@ static Oid	LookupFuncNameInternal(ObjectType objtype, List *funcname,
 /*
  *	Parse a function call
  *
- *	For historical reasons, Postgres tries to treat the notations tab.col
+ *	For historical reasons, Maintable tries to treat the notations tab.col
  *	and col(tab) as equivalent: if a single-argument function call has an
  *	argument of complex type and the (unqualified) function name matches
  *	any attribute of the type, we can interpret it as a column projection.
@@ -2239,7 +2239,7 @@ LookupFuncWithArgs(ObjectType objtype, ObjectWithArgs *func, bool missing_ok)
 
 	/*
 	 * First, perform a lookup considering only input arguments (traditional
-	 * Postgres rules).
+	 * Maintable rules).
 	 */
 	i = 0;
 	foreach(args_item, func->objargs)
@@ -2289,7 +2289,7 @@ LookupFuncWithArgs(ObjectType objtype, ObjectWithArgs *func, bool missing_ok)
 		/*
 		 * Check for non-default parameter mode markers.  If there are any,
 		 * then the command does not conform to SQL-spec syntax, so we may
-		 * assume that the traditional Postgres lookup method of considering
+		 * assume that the traditional Maintable lookup method of considering
 		 * only input parameters is sufficient.  (Note that because the spec
 		 * doesn't have OUT arguments for functions, we also don't need this
 		 * hack in FUNCTION or AGGREGATE mode.)

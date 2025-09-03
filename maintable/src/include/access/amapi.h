@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------
  *
  * amapi.h
- *	  API for Postgres index access methods.
+ *	  API for Maintable index access methods.
  *
- * Copyright (c) 2015-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2015-2025, maintableQL Global Development Group
  *
  * src/include/access/amapi.h
  *

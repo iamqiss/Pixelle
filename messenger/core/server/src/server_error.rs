@@ -89,7 +89,7 @@ error_set!(
         TryFromSliceError(TryFromSliceError),
 
         #[display("SDK error")]
-        SdkError(iggy_common::IggyError),
+        SdkError(messenger_common::MessengerError),
     };
 
     QuicError = {

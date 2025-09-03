@@ -1,6 +1,6 @@
 # Quickwit Sink
 
-The Quickwit connector allows you to send data to the Quickwit API using HTTP. This sink will ensure that the index exists (create it if it doesn't) and will append the data to the index using the same batch size as specified in the Iggy configuration.
+The Quickwit connector allows you to send data to the Quickwit API using HTTP. This sink will ensure that the index exists (create it if it doesn't) and will append the data to the index using the same batch size as specified in the Messenger configuration.
 
 ## Configuration
 

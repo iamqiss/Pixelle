@@ -20,8 +20,8 @@
 use crate::BinaryClient;
 use crate::SegmentClient;
 use crate::utils::auth::fail_if_not_authenticated;
-use iggy_common::delete_segments::DeleteSegments;
-use iggy_common::{Identifier, IggyError};
+use messenger_common::delete_segments::DeleteSegments;
+use messenger_common::{Identifier, MessengerError};
 
 #[async_trait::async_trait]
 impl<B: BinaryClient> SegmentClient for B {
@@ -31,7 +31,7 @@ impl<B: BinaryClient> SegmentClient for B {
         topic_id: &Identifier,
         partition_id: u32,
         segments_count: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         fail_if_not_authenticated(self).await?;
         self.send_with_response(&DeleteSegments {
             stream_id: stream_id.clone(),

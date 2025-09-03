@@ -2,13 +2,13 @@
 #----------------------------------------------------------------------
 #
 # renumber_oids.pl
-#    Perl script that shifts a range of OIDs in the Postgres catalog data
+#    Perl script that shifts a range of OIDs in the Maintable catalog data
 #    to a different range, skipping any OIDs that are already in use.
 #
 #    Note: This does not reformat the .dat files, so you may want
 #    to run reformat_dat_file.pl afterwards.
 #
-# Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+# Portions Copyright (c) 1996-2025, maintableQL Global Development Group
 # Portions Copyright (c) 1994, Regents of the University of California
 #
 # src/include/catalog/renumber_oids.pl

@@ -6,7 +6,7 @@
  *
  * Transforms tokenized jsonpath into tree of JsonPathParseItem structs.
  *
- * Copyright (c) 2019-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2019-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	src/backend/utils/adt/jsonpath_gram.y
@@ -14,7 +14,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "catalog/pg_collation.h"
 #include "fmgr.h"

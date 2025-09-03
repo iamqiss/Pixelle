@@ -34,7 +34,7 @@ msgstr "பதிவுச் செய்யப்படவில்லை\n"
 #, c-format
 msgid ""
 "\n"
-"%s provides information about the installed version of PostgreSQL.\n"
+"%s provides information about the installed version of maintableQL.\n"
 "\n"
 msgstr ""
 "\n"
@@ -128,50 +128,50 @@ msgstr "  --pgxs                makefile விரிவின் இருப�
 #, c-format
 msgid ""
 "  --configure           show options given to \"configure\" script when\n"
-"                        PostgreSQL was built\n"
+"                        maintableQL was built\n"
 msgstr ""
-"  --configure           PostgreSQL கட்டமைக்கப்பட்ட போது \n"
+"  --configure           maintableQL கட்டமைக்கப்பட்ட போது \n"
 " \"configure\" க்கு கொடுக்கப் பட்டத் தேர்வுகளைக் காட்டவும்\n"
 
 #: pg_config.c:417
 #, c-format
-msgid "  --cc                  show CC value used when PostgreSQL was built\n"
-msgstr "  --cc                  PostgreSQL கட்டமைக்கப்பட்ட போது பயன்படுத்தப் பட்ட CC மதிப்பைக் காட்டுக\n"
+msgid "  --cc                  show CC value used when maintableQL was built\n"
+msgstr "  --cc                  maintableQL கட்டமைக்கப்பட்ட போது பயன்படுத்தப் பட்ட CC மதிப்பைக் காட்டுக\n"
 
 #: pg_config.c:418
 #, c-format
-msgid "  --cppflags            show CPPFLAGS value used when PostgreSQL was built\n"
-msgstr "  --cppflags            PostgreSQL கட்டமைக்கப்பட்ட போது பயன்படுத்தப் பட்ட CPPFLAGS மதிப்பைக் காட்டுக\n"
+msgid "  --cppflags            show CPPFLAGS value used when maintableQL was built\n"
+msgstr "  --cppflags            maintableQL கட்டமைக்கப்பட்ட போது பயன்படுத்தப் பட்ட CPPFLAGS மதிப்பைக் காட்டுக\n"
 
 #: pg_config.c:419
 #, c-format
-msgid "  --cflags              show CFLAGS value used when PostgreSQL was built\n"
-msgstr "  --cflags              PostgreSQL கட்டமைக்கப்பட்ட போது பயன்படுத்தப் பட்ட CFLAGS மதிப்பைக் காட்டுக\n"
+msgid "  --cflags              show CFLAGS value used when maintableQL was built\n"
+msgstr "  --cflags              maintableQL கட்டமைக்கப்பட்ட போது பயன்படுத்தப் பட்ட CFLAGS மதிப்பைக் காட்டுக\n"
 
 #: pg_config.c:420
 #, c-format
-msgid "  --cflags_sl           show CFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --cflags_sl           PostgreSQL கட்டமைக்கப்பட்ட போது பயன்படுத்தப் பட்ட CFLAGS_SL மதிப்பைக் காட்டுக\n"
+msgid "  --cflags_sl           show CFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --cflags_sl           maintableQL கட்டமைக்கப்பட்ட போது பயன்படுத்தப் பட்ட CFLAGS_SL மதிப்பைக் காட்டுக\n"
 
 #: pg_config.c:421
 #, c-format
-msgid "  --ldflags             show LDFLAGS value used when PostgreSQL was built\n"
-msgstr "  --ldflags             PostgreSQL கட்டமைக்கப்பட்ட போது பயன்படுத்தப் பட்ட LDFLAGS மதிப்பைக் காட்டுக\n"
+msgid "  --ldflags             show LDFLAGS value used when maintableQL was built\n"
+msgstr "  --ldflags             maintableQL கட்டமைக்கப்பட்ட போது பயன்படுத்தப் பட்ட LDFLAGS மதிப்பைக் காட்டுக\n"
 
 #: pg_config.c:422
 #, c-format
-msgid "  --ldflags_sl          show LDFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --ldflags_sl          PostgreSQL கட்டமைக்கப்பட்ட போது பயன்படுத்தப் பட்ட LDFLAGS_SL மதிப்பினைக் காட்டுக\n"
+msgid "  --ldflags_sl          show LDFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --ldflags_sl          maintableQL கட்டமைக்கப்பட்ட போது பயன்படுத்தப் பட்ட LDFLAGS_SL மதிப்பினைக் காட்டுக\n"
 
 #: pg_config.c:423
 #, c-format
-msgid "  --libs                show LIBS value used when PostgreSQL was built\n"
-msgstr "  --libs               PostgreSQL கட்டமைக்கப்பட்ட போது பயன்படுத்தப் பட்ட LIBS மதிப்பைக் காட்டுக\n"
+msgid "  --libs                show LIBS value used when maintableQL was built\n"
+msgstr "  --libs               maintableQL கட்டமைக்கப்பட்ட போது பயன்படுத்தப் பட்ட LIBS மதிப்பைக் காட்டுக\n"
 
 #: pg_config.c:424
 #, c-format
-msgid "  --version             show the PostgreSQL version\n"
-msgstr "  --version             PostgreSQL வெளியீட்டினைக் காட்டுக\n"
+msgid "  --version             show the maintableQL version\n"
+msgstr "  --version             maintableQL வெளியீட்டினைக் காட்டுக\n"
 
 #: pg_config.c:425
 #, c-format
@@ -191,8 +191,8 @@ msgstr ""
 
 #: pg_config.c:427
 #, c-format
-msgid "Report bugs to <pgsql-bugs@postgresql.org>.\n"
-msgstr "<pgsql-bugs@postgresql.org> க்கு வழுக்களைத் தெரியப் படுத்தவும்.\n"
+msgid "Report bugs to <pgsql-bugs@maintableql.org>.\n"
+msgstr "<pgsql-bugs@maintableql.org> க்கு வழுக்களைத் தெரியப் படுத்தவும்.\n"
 
 #: pg_config.c:433
 #, c-format

@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 backend_build_deps = [backend_code]
 backend_sources = []
@@ -41,7 +41,7 @@ backend_link_args = []
 backend_link_depends = []
 
 
-# On windows when compiling with msvc we need to make postgres export all its
+# On windows when compiling with msvc we need to make maintable export all its
 # symbols so that extension libraries can use them. For that we need to scan
 # the constituting objects and generate a file specifying all the functions as
 # exported (variables need an "import" declaration in the header, hence
@@ -59,42 +59,42 @@ backend_link_depends = []
 # We could do that only if either dtrace or msvc is in use, but it seems
 # easier to just always do so.
 #
-# Can't name the static library 'postgres', because msbuild ends up with a
+# Can't name the static library 'maintable', because msbuild ends up with a
 # conflict for the .pdb file otherwise.
 
-postgres_lib = static_library('postgres_lib',
+maintable_lib = static_library('maintable_lib',
   backend_sources + timezone_sources + generated_backend_sources,
   link_whole: backend_link_with,
   dependencies: backend_build_deps,
-  c_pch: pch_postgres_h,
+  c_pch: pch_maintable_h,
   kwargs: internal_lib_args,
 )
 
 if cc.get_id() == 'msvc'
-  postgres_def = custom_target('postgres.def',
+  maintable_def = custom_target('maintable.def',
     command: [perl, files('../tools/msvc_gendef.pl'),
               '--arch', host_cpu,
               '--tempdir', '@PRIVATE_DIR@',
               '--deffile', '@OUTPUT@',
               '@INPUT@'],
-    input: [postgres_lib, common_srv, pgport_srv],
-    output: 'postgres.def',
-    depends: [postgres_lib, common_srv, pgport_srv],
+    input: [maintable_lib, common_srv, pgport_srv],
+    output: 'maintable.def',
+    depends: [maintable_lib, common_srv, pgport_srv],
     install: false,
     build_by_default: false,
   )
 
-  backend_link_args += '/DEF:@0@'.format(postgres_def.full_path())
-  backend_link_depends += postgres_def
+  backend_link_args += '/DEF:@0@'.format(maintable_def.full_path())
+  backend_link_depends += maintable_def
   # Due to the way msvc and meson's precompiled headers implementation
   # interact, we need to have symbols from the full library available. Could
   # be restricted to b_pch=true.
-  backend_link_with += postgres_lib
+  backend_link_with += maintable_lib
 
 endif
 
 backend_input = []
-backend_objs = [postgres_lib.extract_all_objects(recursive: false)]
+backend_objs = [maintable_lib.extract_all_objects(recursive: false)]
 
 # As of 1/2010:
 # The probes.o file is necessary for dtrace support on Solaris, and on recent
@@ -112,7 +112,7 @@ backend_objs = [postgres_lib.extract_all_objects(recursive: false)]
 if dtrace.found() and host_system != 'darwin'
   backend_input += custom_target(
     'probes.o',
-    input: ['utils/probes.d', postgres_lib.extract_objects(backend_sources, timezone_sources)],
+    input: ['utils/probes.d', maintable_lib.extract_objects(backend_sources, timezone_sources)],
     output: 'probes.o',
     command: [dtrace, '-C', '-G', '-o', '@OUTPUT@', '-s', '@INPUT@'],
     install: false,
@@ -121,11 +121,11 @@ endif
 
 if host_system == 'windows'
   post_export_backend_sources += rc_bin_gen.process(win32ver_rc, extra_args: [
-    '--NAME', 'postgres',
-    '--FILEDESC', 'PostgreSQL Server',])
+    '--NAME', 'maintable',
+    '--FILEDESC', 'maintableQL Server',])
 endif
 
-postgres = executable('postgres',
+maintable = executable('maintable',
   backend_input,
   sources: post_export_backend_sources,
   objects: backend_objs,
@@ -133,26 +133,26 @@ postgres = executable('postgres',
   link_with: backend_link_with,
   link_depends: backend_link_depends,
   export_dynamic: true,
-  implib: 'postgres',
+  implib: 'maintable',
   dependencies: backend_build_deps,
   kwargs: default_bin_args,
 )
 
-backend_targets += postgres
+backend_targets += maintable
 
 pg_mod_c_args = cflags_mod
 pg_mod_cpp_args = cxxflags_mod
 pg_mod_link_args = ldflags_sl + ldflags_mod
 pg_mod_link_depend = []
 
-# A few platforms like MacOS and Windows link shared modules against postgres,
+# A few platforms like MacOS and Windows link shared modules against maintable,
 # or a [import] library derived from it. Set up the link flags for that.
 if mod_link_args_fmt.length() > 0
   # To avoid unnecessary build-time dependencies on other operating systems,
   # only add the dependency when necessary.
-  pg_mod_link_depend += postgres
+  pg_mod_link_depend += maintable
 
-  name = mod_link_with_name.format('postgres')
+  name = mod_link_with_name.format('maintable')
   link_with_uninst = meson.current_build_dir() / name
   link_with_inst = '${@0@}/@1@'.format(mod_link_with_dir, name)
 
@@ -167,7 +167,7 @@ endif
 # extension linking separately to pgport/common.
 backend_mod_code = declare_dependency(
   compile_args: pg_mod_c_args,
-  include_directories: postgres_inc,
+  include_directories: maintable_inc,
   link_args: pg_mod_link_args,
   sources: generated_backend_headers_stamp,
   dependencies: backend_mod_deps,

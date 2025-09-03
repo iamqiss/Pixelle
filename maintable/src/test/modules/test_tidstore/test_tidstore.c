@@ -7,14 +7,14 @@
  * a single process to use the TidStore. It is meant to be an example of
  * usage.
  *
- * Copyright (c) 2024-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2024-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		src/test/modules/test_tidstore/test_tidstore.c
  *
  * -------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/tidstore.h"
 #include "fmgr.h"

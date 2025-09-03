@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_procedure.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createprocedure">
@@ -390,7 +390,7 @@ CALL insert_data(1, 2);
 
   <para>
    A <command>CREATE PROCEDURE</command> command is defined in the SQL
-   standard.  The <productname>PostgreSQL</productname> implementation can be
+   standard.  The <productname>maintableQL</productname> implementation can be
    used in a compatible way but has many extensions.  For details see also
    <xref linkend="sql-createfunction"/>.
   </para>

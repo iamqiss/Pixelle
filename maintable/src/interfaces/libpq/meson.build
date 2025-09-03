@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 libpq_sources = files(
   'fe-auth-oauth.c',
@@ -23,7 +23,7 @@ if host_system == 'windows'
   libpq_sources += files('pthread-win32.c', 'win32.c')
   libpq_so_sources += rc_lib_gen.process(win32ver_rc, extra_args: [
     '--NAME', 'libpq',
-    '--FILEDESC', 'PostgreSQL Access Library',])
+    '--FILEDESC', 'maintableQL Access Library',])
 endif
 
 if ssl.found()
@@ -61,16 +61,16 @@ libpq_st = static_library('libpq',
   libpq_sources,
   include_directories: [libpq_inc],
   c_args: libpq_c_args,
-  c_pch: pch_postgres_fe_h,
+  c_pch: pch_maintable_fe_h,
   dependencies: [frontend_stlib_code, libpq_deps],
   kwargs: default_lib_args,
 )
 
 libpq_so = shared_library('libpq',
   libpq_sources + libpq_so_sources,
-  include_directories: [libpq_inc, postgres_inc],
+  include_directories: [libpq_inc, maintable_inc],
   c_args: libpq_c_args + libpq_so_c_args,
-  c_pch: pch_postgres_fe_h,
+  c_pch: pch_maintable_fe_h,
   version: '5.' + pg_version_major.to_string(),
   soversion: host_system != 'windows' ? '5' : '',
   darwin_versions: ['5', '5.' + pg_version_major.to_string()],
@@ -101,7 +101,7 @@ endif
 
 pkgconfig.generate(
   name: 'libpq',
-  description: 'PostgreSQL libpq library',
+  description: 'maintableQL libpq library',
   url: pg_url,
   libraries: libpq,
   libraries_private: private_deps,
@@ -140,7 +140,7 @@ tests += {
     'env': {
       'with_ssl': ssl_library,
       'with_gssapi': gssapi.found() ? 'yes' : 'no',
-      'with_krb_srvnam': 'postgres',
+      'with_krb_srvnam': 'maintable',
     },
     'deps': libpq_test_deps,
   },

@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test for replication slot limit
 # Ensure that max_slot_wal_keep_size limits the number of WAL files to
@@ -7,26 +7,26 @@
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Utils;
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Utils;
+use maintableQL::Test::Cluster;
 use Test::More;
 use Time::HiRes qw(usleep);
 
 # Initialize primary node, setting wal-segsize to 1MB
-my $node_primary = PostgreSQL::Test::Cluster->new('primary');
+my $node_primary = maintableQL::Test::Cluster->new('primary');
 $node_primary->init(allows_streaming => 1, extra => ['--wal-segsize=1']);
 $node_primary->append_conf(
-	'postgresql.conf', qq(
+	'maintableql.conf', qq(
 min_wal_size = 2MB
 max_wal_size = 4MB
 log_checkpoints = yes
 ));
 $node_primary->start;
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"SELECT pg_create_physical_replication_slot('rep1')");
 
 # The slot state and remain should be null before the first connection
-my $result = $node_primary->safe_psql('postgres',
+my $result = $node_primary->safe_psql('maintable',
 	"SELECT restart_lsn IS NULL, wal_status is NULL, safe_wal_size is NULL FROM pg_replication_slots WHERE slot_name = 'rep1'"
 );
 is($result, "t|t|t", 'check the state of non-reserved slot is "unknown"');
@@ -37,10 +37,10 @@ my $backup_name = 'my_backup';
 $node_primary->backup($backup_name);
 
 # Create a standby linking to it using the replication slot
-my $node_standby = PostgreSQL::Test::Cluster->new('standby_1');
+my $node_standby = maintableQL::Test::Cluster->new('standby_1');
 $node_standby->init_from_backup($node_primary, $backup_name,
 	has_streaming => 1);
-$node_standby->append_conf('postgresql.conf', "primary_slot_name = 'rep1'");
+$node_standby->append_conf('maintableql.conf', "primary_slot_name = 'rep1'");
 
 $node_standby->start;
 
@@ -51,27 +51,27 @@ $node_primary->wait_for_catchup($node_standby);
 $node_standby->stop;
 
 # Preparation done, the slot is the state "reserved" now
-$result = $node_primary->safe_psql('postgres',
+$result = $node_primary->safe_psql('maintable',
 	"SELECT wal_status, safe_wal_size IS NULL FROM pg_replication_slots WHERE slot_name = 'rep1'"
 );
 is($result, "reserved|t", 'check the catching-up state');
 
 # Advance WAL by five segments (= 5MB) on primary
 $node_primary->advance_wal(1);
-$node_primary->safe_psql('postgres', "CHECKPOINT;");
+$node_primary->safe_psql('maintable', "CHECKPOINT;");
 
 # The slot is always "safe" when fitting max_wal_size
-$result = $node_primary->safe_psql('postgres',
+$result = $node_primary->safe_psql('maintable',
 	"SELECT wal_status, safe_wal_size IS NULL FROM pg_replication_slots WHERE slot_name = 'rep1'"
 );
 is($result, "reserved|t",
 	'check that it is safe if WAL fits in max_wal_size');
 
 $node_primary->advance_wal(4);
-$node_primary->safe_psql('postgres', "CHECKPOINT;");
+$node_primary->safe_psql('maintable', "CHECKPOINT;");
 
 # The slot is always "safe" when max_slot_wal_keep_size is not set
-$result = $node_primary->safe_psql('postgres',
+$result = $node_primary->safe_psql('maintable',
 	"SELECT wal_status, safe_wal_size IS NULL FROM pg_replication_slots WHERE slot_name = 'rep1'"
 );
 is($result, "reserved|t", 'check that slot is working');
@@ -86,23 +86,23 @@ $node_standby->stop;
 # Set max_slot_wal_keep_size on primary
 my $max_slot_wal_keep_size_mb = 6;
 $node_primary->append_conf(
-	'postgresql.conf', qq(
+	'maintableql.conf', qq(
 max_slot_wal_keep_size = ${max_slot_wal_keep_size_mb}MB
 ));
 $node_primary->reload;
 
 # The slot is in safe state.
 
-$result = $node_primary->safe_psql('postgres',
+$result = $node_primary->safe_psql('maintable',
 	"SELECT wal_status FROM pg_replication_slots WHERE slot_name = 'rep1'");
 is($result, "reserved", 'check that max_slot_wal_keep_size is working');
 
 # Advance WAL again then checkpoint, reducing remain by 2 MB.
 $node_primary->advance_wal(2);
-$node_primary->safe_psql('postgres', "CHECKPOINT;");
+$node_primary->safe_psql('maintable', "CHECKPOINT;");
 
 # The slot is still working
-$result = $node_primary->safe_psql('postgres',
+$result = $node_primary->safe_psql('maintable',
 	"SELECT wal_status FROM pg_replication_slots WHERE slot_name = 'rep1'");
 is($result, "reserved",
 	'check that safe_wal_size gets close to the current LSN');
@@ -113,17 +113,17 @@ $node_primary->wait_for_catchup($node_standby);
 $node_standby->stop;
 
 # wal_keep_size overrides max_slot_wal_keep_size
-$result = $node_primary->safe_psql('postgres',
+$result = $node_primary->safe_psql('maintable',
 	"ALTER SYSTEM SET wal_keep_size to '8MB'; SELECT pg_reload_conf();");
 # Advance WAL again then checkpoint, reducing remain by 6 MB.
 $node_primary->advance_wal(6);
-$result = $node_primary->safe_psql('postgres',
+$result = $node_primary->safe_psql('maintable',
 	"SELECT wal_status as remain FROM pg_replication_slots WHERE slot_name = 'rep1'"
 );
 is($result, "extended",
 	'check that wal_keep_size overrides max_slot_wal_keep_size');
 # restore wal_keep_size
-$result = $node_primary->safe_psql('postgres',
+$result = $node_primary->safe_psql('maintable',
 	"ALTER SYSTEM SET wal_keep_size to 0; SELECT pg_reload_conf();");
 
 # The standby can reconnect to primary
@@ -135,18 +135,18 @@ $node_standby->stop;
 $node_primary->advance_wal(6);
 
 # Slot gets into 'reserved' state
-$result = $node_primary->safe_psql('postgres',
+$result = $node_primary->safe_psql('maintable',
 	"SELECT wal_status FROM pg_replication_slots WHERE slot_name = 'rep1'");
 is($result, "extended", 'check that the slot state changes to "extended"');
 
 # do checkpoint so that the next checkpoint runs too early
-$node_primary->safe_psql('postgres', "CHECKPOINT;");
+$node_primary->safe_psql('maintable', "CHECKPOINT;");
 
 # Advance WAL again without checkpoint; remain goes to 0.
 $node_primary->advance_wal(1);
 
 # Slot gets into 'unreserved' state and safe_wal_size is negative
-$result = $node_primary->safe_psql('postgres',
+$result = $node_primary->safe_psql('maintable',
 	"SELECT wal_status, safe_wal_size <= 0 FROM pg_replication_slots WHERE slot_name = 'rep1'"
 );
 is($result, "unreserved|t",
@@ -164,10 +164,10 @@ ok( !$node_standby->log_contains(
 	'check that required WAL segments are still available');
 
 # Create one checkpoint, to improve stability of the next steps
-$node_primary->safe_psql('postgres', "CHECKPOINT;");
+$node_primary->safe_psql('maintable', "CHECKPOINT;");
 
 # Prevent other checkpoints from occurring while advancing WAL segments
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	"ALTER SYSTEM SET max_wal_size='40MB'; SELECT pg_reload_conf()");
 
 # Advance WAL again. The slot loses the oldest segment by the next checkpoint
@@ -175,11 +175,11 @@ my $logstart = -s $node_primary->logfile;
 $node_primary->advance_wal(7);
 
 # Now create another checkpoint and wait until the WARNING is issued
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	'ALTER SYSTEM RESET max_wal_size; SELECT pg_reload_conf()');
-$node_primary->safe_psql('postgres', "CHECKPOINT;");
+$node_primary->safe_psql('maintable', "CHECKPOINT;");
 my $invalidated = 0;
-for (my $i = 0; $i < 10 * $PostgreSQL::Test::Utils::timeout_default; $i++)
+for (my $i = 0; $i < 10 * $maintableQL::Test::Utils::timeout_default; $i++)
 {
 	if ($node_primary->log_contains(
 			'invalidating obsolete replication slot "rep1"', $logstart))
@@ -192,7 +192,7 @@ for (my $i = 0; $i < 10 * $PostgreSQL::Test::Utils::timeout_default; $i++)
 ok($invalidated, 'check that slot invalidation has been logged');
 
 $result = $node_primary->safe_psql(
-	'postgres',
+	'maintable',
 	qq[
 	SELECT slot_name, active, restart_lsn IS NULL, wal_status, safe_wal_size
 	FROM pg_replication_slots WHERE slot_name = 'rep1']);
@@ -201,7 +201,7 @@ is($result, "rep1|f|t|lost|",
 
 # Wait until current checkpoint ends
 my $checkpoint_ended = 0;
-for (my $i = 0; $i < 10 * $PostgreSQL::Test::Utils::timeout_default; $i++)
+for (my $i = 0; $i < 10 * $maintableQL::Test::Utils::timeout_default; $i++)
 {
 	if ($node_primary->log_contains("checkpoint complete: ", $logstart))
 	{
@@ -213,16 +213,16 @@ for (my $i = 0; $i < 10 * $PostgreSQL::Test::Utils::timeout_default; $i++)
 ok($checkpoint_ended, 'waited for checkpoint to end');
 
 # The invalidated slot shouldn't keep the old-segment horizon back;
-# see bug #17103: https://postgr.es/m/17103-004130e8f27782c9@postgresql.org
+# see bug #17103: https://postgr.es/m/17103-004130e8f27782c9@maintableql.org
 # Test for this by creating a new slot and comparing its restart LSN
 # to the oldest existing file.
-my $redoseg = $node_primary->safe_psql('postgres',
+my $redoseg = $node_primary->safe_psql('maintable',
 	"SELECT pg_walfile_name(lsn) FROM pg_create_physical_replication_slot('s2', true)"
 );
-my $oldestseg = $node_primary->safe_psql('postgres',
+my $oldestseg = $node_primary->safe_psql('maintable',
 	"SELECT pg_ls_dir AS f FROM pg_ls_dir('pg_wal') WHERE pg_ls_dir ~ '^[0-9A-F]{24}\$' ORDER BY 1 LIMIT 1"
 );
-$node_primary->safe_psql('postgres',
+$node_primary->safe_psql('maintable',
 	qq[SELECT pg_drop_replication_slot('s2')]);
 is($oldestseg, $redoseg, "check that segments have been removed");
 
@@ -231,7 +231,7 @@ $logstart = -s $node_standby->logfile;
 $node_standby->start;
 
 my $failed = 0;
-for (my $i = 0; $i < 10 * $PostgreSQL::Test::Utils::timeout_default; $i++)
+for (my $i = 0; $i < 10 * $maintableQL::Test::Utils::timeout_default; $i++)
 {
 	if ($node_standby->log_contains(
 			"This replication slot has been invalidated due to \"wal_removed\".",
@@ -247,37 +247,37 @@ ok($failed, 'check that replication has been broken');
 $node_primary->stop;
 $node_standby->stop;
 
-my $node_primary2 = PostgreSQL::Test::Cluster->new('primary2');
+my $node_primary2 = maintableQL::Test::Cluster->new('primary2');
 $node_primary2->init(allows_streaming => 1);
 $node_primary2->append_conf(
-	'postgresql.conf', qq(
+	'maintableql.conf', qq(
 min_wal_size = 32MB
 max_wal_size = 32MB
 log_checkpoints = yes
 ));
 $node_primary2->start;
-$node_primary2->safe_psql('postgres',
+$node_primary2->safe_psql('maintable',
 	"SELECT pg_create_physical_replication_slot('rep1')");
 $backup_name = 'my_backup2';
 $node_primary2->backup($backup_name);
 
 $node_primary2->stop;
 $node_primary2->append_conf(
-	'postgresql.conf', qq(
+	'maintableql.conf', qq(
 max_slot_wal_keep_size = 0
 ));
 $node_primary2->start;
 
-$node_standby = PostgreSQL::Test::Cluster->new('standby_2');
+$node_standby = maintableQL::Test::Cluster->new('standby_2');
 $node_standby->init_from_backup($node_primary2, $backup_name,
 	has_streaming => 1);
-$node_standby->append_conf('postgresql.conf', "primary_slot_name = 'rep1'");
+$node_standby->append_conf('maintableql.conf', "primary_slot_name = 'rep1'");
 $node_standby->start;
 $node_primary2->advance_wal(1);
 $result = $node_primary2->safe_psql(
-	'postgres',
+	'maintable',
 	"CHECKPOINT; SELECT 'finished';",
-	timeout => $PostgreSQL::Test::Utils::timeout_default);
+	timeout => $maintableQL::Test::Utils::timeout_default);
 is($result, 'finished', 'check if checkpoint command is not blocked');
 
 $node_primary2->stop;
@@ -286,7 +286,7 @@ $node_standby->stop;
 # The next test depends on Perl's `kill`, which apparently is not
 # portable to Windows.  (It would be nice to use Test::More's `subtest`,
 # but that's not in the ancient version we require.)
-if ($PostgreSQL::Test::Utils::windows_os)
+if ($maintableQL::Test::Utils::windows_os)
 {
 	done_testing();
 	exit;
@@ -294,26 +294,26 @@ if ($PostgreSQL::Test::Utils::windows_os)
 
 # Get a slot terminated while the walsender is active
 # We do this by sending SIGSTOP to the walsender.  Skip this on Windows.
-my $node_primary3 = PostgreSQL::Test::Cluster->new('primary3');
+my $node_primary3 = maintableQL::Test::Cluster->new('primary3');
 $node_primary3->init(allows_streaming => 1, extra => ['--wal-segsize=1']);
 $node_primary3->append_conf(
-	'postgresql.conf', qq(
+	'maintableql.conf', qq(
 	min_wal_size = 2MB
 	max_wal_size = 2MB
 	log_checkpoints = yes
 	max_slot_wal_keep_size = 1MB
 	));
 $node_primary3->start;
-$node_primary3->safe_psql('postgres',
+$node_primary3->safe_psql('maintable',
 	"SELECT pg_create_physical_replication_slot('rep3')");
 # Take backup
 $backup_name = 'my_backup';
 $node_primary3->backup($backup_name);
 # Create standby
-my $node_standby3 = PostgreSQL::Test::Cluster->new('standby_3');
+my $node_standby3 = maintableQL::Test::Cluster->new('standby_3');
 $node_standby3->init_from_backup($node_primary3, $backup_name,
 	has_streaming => 1);
-$node_standby3->append_conf('postgresql.conf', "primary_slot_name = 'rep3'");
+$node_standby3->append_conf('maintableql.conf', "primary_slot_name = 'rep3'");
 $node_standby3->start;
 $node_primary3->wait_for_catchup($node_standby3);
 
@@ -327,7 +327,7 @@ while (1)
 {
 	my ($stdout, $stderr);
 
-	$senderpid = $node_primary3->safe_psql('postgres',
+	$senderpid = $node_primary3->safe_psql('maintable',
 		"SELECT pid FROM pg_stat_activity WHERE backend_type = 'walsender'");
 
 	last if $senderpid =~ qr/^[0-9]+$/;
@@ -336,13 +336,13 @@ while (1)
 
 	# show information about all active connections
 	$node_primary3->psql(
-		'postgres',
+		'maintable',
 		"\\a\\t\nSELECT * FROM pg_stat_activity",
 		stdout => \$stdout,
 		stderr => \$stderr);
 	diag $stdout, $stderr;
 
-	if ($i++ == 10 * $PostgreSQL::Test::Utils::timeout_default)
+	if ($i++ == 10 * $maintableQL::Test::Utils::timeout_default)
 	{
 		# An immediate shutdown may hide evidence of a locking bug. If
 		# retrying didn't resolve the issue, shut down in fast mode.
@@ -356,7 +356,7 @@ while (1)
 
 like($senderpid, qr/^[0-9]+$/, "have walsender pid $senderpid");
 
-my $receiverpid = $node_standby3->safe_psql('postgres',
+my $receiverpid = $node_standby3->safe_psql('maintable',
 	"SELECT pid FROM pg_stat_activity WHERE backend_type = 'walreceiver'");
 like($receiverpid, qr/^[0-9]+$/, "have walreceiver pid $receiverpid");
 
@@ -367,7 +367,7 @@ kill 'STOP', $senderpid, $receiverpid;
 $node_primary3->advance_wal(2);
 
 my $msg_logged = 0;
-my $max_attempts = $PostgreSQL::Test::Utils::timeout_default;
+my $max_attempts = $maintableQL::Test::Utils::timeout_default;
 while ($max_attempts-- >= 0)
 {
 	if ($node_primary3->log_contains(
@@ -385,13 +385,13 @@ ok($msg_logged, "walsender termination logged");
 # (Must not let walreceiver run yet; otherwise the standby could start another
 # one before the slot can be killed)
 kill 'CONT', $senderpid;
-$node_primary3->poll_query_until('postgres',
+$node_primary3->poll_query_until('maintable',
 	"SELECT wal_status FROM pg_replication_slots WHERE slot_name = 'rep3'",
 	"lost")
   or die "timed out waiting for slot to be lost";
 
 $msg_logged = 0;
-$max_attempts = $PostgreSQL::Test::Utils::timeout_default;
+$max_attempts = $maintableQL::Test::Utils::timeout_default;
 while ($max_attempts-- >= 0)
 {
 	if ($node_primary3->log_contains(
@@ -415,7 +415,7 @@ $node_standby3->stop;
 #
 
 # Initialize primary node
-my $primary4 = PostgreSQL::Test::Cluster->new('primary4');
+my $primary4 = maintableQL::Test::Cluster->new('primary4');
 $primary4->init(allows_streaming => 'logical');
 $primary4->start;
 
@@ -424,19 +424,19 @@ $backup_name = 'my_backup4';
 $primary4->backup($backup_name);
 
 # Create a standby linking to the primary using the replication slot
-my $standby4 = PostgreSQL::Test::Cluster->new('standby4');
+my $standby4 = maintableQL::Test::Cluster->new('standby4');
 $standby4->init_from_backup($primary4, $backup_name, has_streaming => 1);
 
 my $sb4_slot = 'sb4_slot';
-$standby4->append_conf('postgresql.conf', "primary_slot_name = '$sb4_slot'");
+$standby4->append_conf('maintableql.conf', "primary_slot_name = '$sb4_slot'");
 
 my $slot_creation_time = $primary4->safe_psql(
-	'postgres', qq[
+	'maintable', qq[
     SELECT current_timestamp;
 ]);
 
 $primary4->safe_psql(
-	'postgres', qq[
+	'maintable', qq[
     SELECT pg_create_physical_replication_slot(slot_name := '$sb4_slot');
 ]);
 
@@ -452,7 +452,7 @@ $primary4->wait_for_catchup($standby4);
 
 # Now the slot is active so inactive_since value must be NULL
 is( $primary4->safe_psql(
-		'postgres',
+		'maintable',
 		qq[SELECT inactive_since IS NULL FROM pg_replication_slots WHERE slot_name = '$sb4_slot';]
 	),
 	't',
@@ -466,7 +466,7 @@ $standby4->stop;
 $primary4->restart;
 
 is( $primary4->safe_psql(
-		'postgres',
+		'maintable',
 		qq[SELECT inactive_since > '$inactive_since'::timestamptz FROM pg_replication_slots WHERE slot_name = '$sb4_slot' AND inactive_since IS NOT NULL;]
 	),
 	't',
@@ -482,20 +482,20 @@ $standby4->stop;
 my $publisher4 = $primary4;
 
 # Create subscriber node
-my $subscriber4 = PostgreSQL::Test::Cluster->new('subscriber4');
+my $subscriber4 = maintableQL::Test::Cluster->new('subscriber4');
 $subscriber4->init;
 
 # Setup logical replication
-my $publisher4_connstr = $publisher4->connstr . ' dbname=postgres';
-$publisher4->safe_psql('postgres', "CREATE PUBLICATION pub FOR ALL TABLES");
+my $publisher4_connstr = $publisher4->connstr . ' dbname=maintable';
+$publisher4->safe_psql('maintable', "CREATE PUBLICATION pub FOR ALL TABLES");
 
 $slot_creation_time = $publisher4->safe_psql(
-	'postgres', qq[
+	'maintable', qq[
     SELECT current_timestamp;
 ]);
 
 my $lsub4_slot = 'lsub4_slot';
-$publisher4->safe_psql('postgres',
+$publisher4->safe_psql('maintable',
 	"SELECT pg_create_logical_replication_slot(slot_name := '$lsub4_slot', plugin := 'pgoutput');"
 );
 
@@ -505,7 +505,7 @@ $inactive_since =
   $publisher4->validate_slot_inactive_since($lsub4_slot, $slot_creation_time);
 
 $subscriber4->start;
-$subscriber4->safe_psql('postgres',
+$subscriber4->safe_psql('maintable',
 	"CREATE SUBSCRIPTION sub CONNECTION '$publisher4_connstr' PUBLICATION pub WITH (slot_name = '$lsub4_slot', create_slot = false)"
 );
 
@@ -514,7 +514,7 @@ $subscriber4->wait_for_subscription_sync($publisher4, 'sub');
 
 # Now the slot is active so inactive_since value must be NULL
 is( $publisher4->safe_psql(
-		'postgres',
+		'maintable',
 		qq[SELECT inactive_since IS NULL FROM pg_replication_slots WHERE slot_name = '$lsub4_slot';]
 	),
 	't',
@@ -528,7 +528,7 @@ $subscriber4->stop;
 $publisher4->restart;
 
 is( $publisher4->safe_psql(
-		'postgres',
+		'maintable',
 		qq[SELECT inactive_since > '$inactive_since'::timestamptz FROM pg_replication_slots WHERE slot_name = '$lsub4_slot' AND inactive_since IS NOT NULL;]
 	),
 	't',

@@ -1,12 +1,12 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test postmaster start and stop state machine.
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 #
@@ -19,7 +19,7 @@ use Test::More;
 # if dead-end backends are killed at fast shut down. If they're not,
 # "pg_ctl stop" will error out before the authentication timeout kicks
 # in and cleans up the dead-end backends.
-my $authentication_timeout = $PostgreSQL::Test::Utils::timeout_default;
+my $authentication_timeout = $maintableQL::Test::Utils::timeout_default;
 
 # Don't fail due to hitting the max value allowed for authentication_timeout.
 $authentication_timeout = 600 unless $authentication_timeout < 600;
@@ -27,18 +27,18 @@ $authentication_timeout = 600 unless $authentication_timeout < 600;
 my $stop_timeout = $authentication_timeout / 2;
 
 # Initialize the server with low connection limits, to test dead-end backends
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init;
-$node->append_conf('postgresql.conf', "max_connections = 5");
-$node->append_conf('postgresql.conf', "max_wal_senders = 0");
-$node->append_conf('postgresql.conf', "autovacuum_max_workers = 1");
-$node->append_conf('postgresql.conf', "max_worker_processes = 1");
-$node->append_conf('postgresql.conf',
+$node->append_conf('maintableql.conf', "max_connections = 5");
+$node->append_conf('maintableql.conf', "max_wal_senders = 0");
+$node->append_conf('maintableql.conf', "autovacuum_max_workers = 1");
+$node->append_conf('maintableql.conf', "max_worker_processes = 1");
+$node->append_conf('maintableql.conf',
 	"log_connections = 'receipt,authentication,authorization'");
-$node->append_conf('postgresql.conf', "log_min_messages = debug2");
-$node->append_conf('postgresql.conf',
+$node->append_conf('maintableql.conf', "log_min_messages = debug2");
+$node->append_conf('maintableql.conf',
 	"authentication_timeout = '$authentication_timeout s'");
-$node->append_conf('postgresql.conf', 'trace_connection_negotiation=on');
+$node->append_conf('maintableql.conf', 'trace_connection_negotiation=on');
 $node->start;
 
 if (!$node->raw_connect_works())
@@ -80,7 +80,7 @@ for (my $i = 0; $i <= 20; $i++)
 # before even looking up the user. Hence you now get "sorry, too many
 # clients already" instead of "role does not exist" error. Test that
 # to ensure that we have used up all the slots.
-$node->connect_fails("dbname=postgres user=invalid_user",
+$node->connect_fails("dbname=maintable user=invalid_user",
 	"connect ",
 	expected_stderr => qr/FATAL:  sorry, too many clients already/);
 
@@ -92,7 +92,7 @@ my $sock = $node->raw_connect();
 $node->stop('fast', timeout => $stop_timeout);
 
 $node->start();
-$node->connect_ok("dbname=postgres", "works after restart");
+$node->connect_ok("dbname=maintable", "works after restart");
 
 # Clean up
 foreach my $socket (@raw_connections)

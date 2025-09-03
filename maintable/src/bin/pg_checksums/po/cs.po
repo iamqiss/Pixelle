@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_checksums
-# Copyright (C) 2019 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_checksums (PostgreSQL) package.
+# Copyright (C) 2019 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_checksums (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_checksums (PostgreSQL) 12\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_checksums (maintableQL) 12\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2020-10-31 16:17+0000\n"
 "PO-Revision-Date: 2020-10-31 21:31+0100\n"
 "Last-Translator: \n"
@@ -35,10 +35,10 @@ msgstr "warning: "
 #: pg_checksums.c:75
 #, c-format
 msgid ""
-"%s enables, disables, or verifies data checksums in a PostgreSQL database cluster.\n"
+"%s enables, disables, or verifies data checksums in a maintableQL database cluster.\n"
 "\n"
 msgstr ""
-"%s zapíná, vypíná, nebo ověřuje kontrolní součty v PostgreSQL databázovém clusteru.\n"
+"%s zapíná, vypíná, nebo ověřuje kontrolní součty v maintableQL databázovém clusteru.\n"
 "\n"
 
 #: pg_checksums.c:76
@@ -308,5 +308,5 @@ msgstr "Kontrolní součty zapnuty v clusteru\n"
 msgid "Checksums disabled in cluster\n"
 msgstr "Kontrolní součty vypnuty v clusteru\n"
 
-#~ msgid "Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
-#~ msgstr "Chyby hlaste na adresu <pgsql-bugs@postgresql.org>.\n"
+#~ msgid "Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
+#~ msgstr "Chyby hlaste na adresu <pgsql-bugs@maintableql.org>.\n"

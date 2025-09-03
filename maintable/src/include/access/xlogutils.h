@@ -3,7 +3,7 @@
  *
  * Utilities for replaying WAL records.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/access/xlogutils.h
@@ -32,7 +32,7 @@ extern PGDLLIMPORT bool InRecovery;
  * InHotStandby will read as false).
  *
  * In DISABLED state, we're performing crash recovery or hot standby was
- * disabled in postgresql.conf.
+ * disabled in maintableql.conf.
  *
  * In INITIALIZED state, we've run InitRecoveryTransactionEnvironment, but
  * we haven't yet processed a RUNNING_XACTS or shutdown-checkpoint WAL record

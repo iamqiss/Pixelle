@@ -19,8 +19,8 @@ FROM rust:1.89.0-alpine3.22 AS builder
 RUN apk add musl-dev
 WORKDIR /build
 COPY . /build
-RUN cargo build --bin iggy --release
-RUN cargo build --bin iggy-server --release
+RUN cargo build --bin messenger --release
+RUN cargo build --bin messenger-server --release
 
 FROM debian:bookworm-slim
 RUN apt-get update && apt-get install -y \
@@ -28,7 +28,7 @@ RUN apt-get update && apt-get install -y \
     liblzma5 \
     && rm -rf /var/lib/apt/lists/*
 COPY ./core/configs ./configs
-COPY --from=builder /build/target/release/iggy .
-COPY --from=builder /build/target/release/iggy-server .
+COPY --from=builder /build/target/release/messenger .
+COPY --from=builder /build/target/release/messenger-server .
 
-CMD ["/iggy-server"]
+CMD ["/messenger-server"]

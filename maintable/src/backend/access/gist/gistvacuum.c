@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * gistvacuum.c
- *	  vacuuming routines for the postgres GiST index access method.
+ *	  vacuuming routines for the maintable GiST index access method.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/genam.h"
 #include "access/gist_private.h"
@@ -443,8 +443,8 @@ restart:
 	{
 		/*
 		 * On an internal page, check for "invalid tuples", left behind by an
-		 * incomplete page split on PostgreSQL 9.0 or below.  These are not
-		 * created by newer PostgreSQL versions, but unfortunately, there is
+		 * incomplete page split on maintableQL 9.0 or below.  These are not
+		 * created by newer maintableQL versions, but unfortunately, there is
 		 * no version number anywhere in a GiST index, so we don't know
 		 * whether this index might still contain invalid tuples or not.
 		 */
@@ -462,7 +462,7 @@ restart:
 				ereport(LOG,
 						(errmsg("index \"%s\" contains an inner tuple marked as invalid",
 								RelationGetRelationName(rel)),
-						 errdetail("This is caused by an incomplete page split at crash recovery before upgrading to PostgreSQL 9.1."),
+						 errdetail("This is caused by an incomplete page split at crash recovery before upgrading to maintableQL 9.1."),
 						 errhint("Please REINDEX it.")));
 		}
 

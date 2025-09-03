@@ -1,35 +1,35 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test materialized views behavior
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
-my $node_publisher = PostgreSQL::Test::Cluster->new('publisher');
+my $node_publisher = maintableQL::Test::Cluster->new('publisher');
 $node_publisher->init(allows_streaming => 'logical');
 $node_publisher->start;
 
-my $node_subscriber = PostgreSQL::Test::Cluster->new('subscriber');
+my $node_subscriber = maintableQL::Test::Cluster->new('subscriber');
 $node_subscriber->init;
 $node_subscriber->start;
 
-my $publisher_connstr = $node_publisher->connstr . ' dbname=postgres';
+my $publisher_connstr = $node_publisher->connstr . ' dbname=maintable';
 
-$node_publisher->safe_psql('postgres',
+$node_publisher->safe_psql('maintable',
 	"CREATE PUBLICATION mypub FOR ALL TABLES;");
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	"CREATE SUBSCRIPTION mysub CONNECTION '$publisher_connstr' PUBLICATION mypub;"
 );
 
-$node_publisher->safe_psql('postgres',
+$node_publisher->safe_psql('maintable',
 	q{CREATE TABLE test1 (a int PRIMARY KEY, b text)});
-$node_publisher->safe_psql('postgres',
+$node_publisher->safe_psql('maintable',
 	q{INSERT INTO test1 (a, b) VALUES (1, 'one'), (2, 'two');});
 
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	q{CREATE TABLE test1 (a int PRIMARY KEY, b text);});
 
 $node_publisher->wait_for_catchup('mysub');
@@ -39,7 +39,7 @@ $node_publisher->wait_for_catchup('mysub');
 # need to make sure they are properly ignored. (bug #15044)
 
 # create a MV with some data
-$node_publisher->safe_psql('postgres',
+$node_publisher->safe_psql('maintable',
 	q{CREATE MATERIALIZED VIEW testmv1 AS SELECT * FROM test1;});
 $node_publisher->wait_for_catchup('mysub');
 

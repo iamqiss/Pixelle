@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/delete.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-delete">
@@ -253,7 +253,7 @@ DELETE <replaceable class="parameter">count</replaceable>
   <title>Notes</title>
 
   <para>
-   <productname>PostgreSQL</productname> lets you reference columns of
+   <productname>maintableQL</productname> lets you reference columns of
    other tables in the <literal>WHERE</literal> condition by specifying the
    other tables in the <literal>USING</literal> clause.  For example,
    to delete all films produced by a given producer, one can do:
@@ -332,7 +332,7 @@ DELETE FROM user_logs AS dl
   <para>
    This command conforms to the <acronym>SQL</acronym> standard, except
    that the <literal>USING</literal> and <literal>RETURNING</literal> clauses
-   are <productname>PostgreSQL</productname> extensions, as is the ability
+   are <productname>maintableQL</productname> extensions, as is the ability
    to use <literal>WITH</literal> with <command>DELETE</command>.
   </para>
  </refsect1>

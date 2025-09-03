@@ -1,4 +1,4 @@
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 

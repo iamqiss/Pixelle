@@ -1,15 +1,15 @@
 /*-------------------------------------------------------------------------
  *
- * pg_ctl --- start/stops/restarts the PostgreSQL server
+ * pg_ctl --- start/stops/restarts the maintableQL server
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * src/bin/pg_ctl/pg_ctl.c
  *
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <fcntl.h>
 #include <signal.h>
@@ -87,7 +87,7 @@ static const char *progname;
 static char *log_file = NULL;
 static char *exec_path = NULL;
 static char *event_source = NULL;
-static char *register_servicename = "PostgreSQL";	/* FIXME: + version ID? */
+static char *register_servicename = "maintableQL";	/* FIXME: + version ID? */
 static char *register_username = NULL;
 static char *register_password = NULL;
 static char *argv0 = NULL;
@@ -867,8 +867,8 @@ trap_sigint_during_startup(SIGNAL_ARGS)
 	 * Clear the signal handler, and send the signal again, to terminate the
 	 * process as normal.
 	 */
-	pqsignal(postgres_signal_arg, SIG_DFL);
-	raise(postgres_signal_arg);
+	pqsignal(maintable_signal_arg, SIG_DFL);
+	raise(maintable_signal_arg);
 }
 
 static char *
@@ -904,7 +904,7 @@ do_init(void)
 	char	   *cmd;
 
 	if (exec_path == NULL)
-		exec_path = find_other_exec_or_die(argv0, "initdb", "initdb (PostgreSQL) " PG_VERSION "\n");
+		exec_path = find_other_exec_or_die(argv0, "initdb", "initdb (maintableQL) " PG_VERSION "\n");
 
 	if (pgdata_opt == NULL)
 		pgdata_opt = "";
@@ -949,7 +949,7 @@ do_start(void)
 		pgdata_opt = "";
 
 	if (exec_path == NULL)
-		exec_path = find_other_exec_or_die(argv0, "postgres", PG_BACKEND_VERSIONSTR);
+		exec_path = find_other_exec_or_die(argv0, "maintable", PG_BACKEND_VERSIONSTR);
 
 #if defined(HAVE_GETRLIMIT)
 	if (allow_core_files)
@@ -1443,11 +1443,11 @@ pgwin32_CommandLine(bool registration)
 	}
 	else
 	{
-		ret = find_other_exec(argv0, "postgres", PG_BACKEND_VERSIONSTR,
+		ret = find_other_exec(argv0, "maintable", PG_BACKEND_VERSIONSTR,
 							  cmdPath);
 		if (ret != 0)
 		{
-			write_stderr(_("%s: could not find postgres program executable\n"), progname);
+			write_stderr(_("%s: could not find maintable program executable\n"), progname);
 			exit(1);
 		}
 	}
@@ -1855,7 +1855,7 @@ CreateRestrictedProcess(char *cmd, PROCESS_INFORMATION *processInfo, bool as_ser
 			HANDLE		job;
 			char		jobname[128];
 
-			sprintf(jobname, "PostgreSQL_%lu",
+			sprintf(jobname, "maintableQL_%lu",
 					(unsigned long) processInfo->dwProcessId);
 
 			job = CreateJobObject(NULL, jobname);
@@ -1972,7 +1972,7 @@ do_advice(void)
 static void
 do_help(void)
 {
-	printf(_("%s is a utility to initialize, start, stop, or control a PostgreSQL server.\n\n"), progname);
+	printf(_("%s is a utility to initialize, start, stop, or control a maintableQL server.\n\n"), progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s init[db]   [-D DATADIR] [-s] [-o OPTIONS]\n"), progname);
 	printf(_("  %s start      [-D DATADIR] [-l FILENAME] [-W] [-t SECS] [-s]\n"
@@ -2006,14 +2006,14 @@ do_help(void)
 
 	printf(_("\nOptions for start or restart:\n"));
 #if defined(HAVE_GETRLIMIT)
-	printf(_("  -c, --core-files       allow postgres to produce core files\n"));
+	printf(_("  -c, --core-files       allow maintable to produce core files\n"));
 #else
 	printf(_("  -c, --core-files       not applicable on this platform\n"));
 #endif
 	printf(_("  -l, --log=FILENAME     write (or append) server log to FILENAME\n"));
-	printf(_("  -o, --options=OPTIONS  command line options to pass to postgres\n"
-			 "                         (PostgreSQL server executable) or initdb\n"));
-	printf(_("  -p PATH-TO-POSTGRES    normally not necessary\n"));
+	printf(_("  -o, --options=OPTIONS  command line options to pass to maintable\n"
+			 "                         (maintableQL server executable) or initdb\n"));
+	printf(_("  -p PATH-TO-MAINTABLE    normally not necessary\n"));
 	printf(_("\nOptions for stop or restart:\n"));
 	printf(_("  -m, --mode=MODE        MODE can be \"smart\", \"fast\", or \"immediate\"\n"));
 
@@ -2027,10 +2027,10 @@ do_help(void)
 
 #ifdef WIN32
 	printf(_("\nOptions for register and unregister:\n"));
-	printf(_("  -N SERVICENAME  service name with which to register PostgreSQL server\n"));
-	printf(_("  -P PASSWORD     password of account to register PostgreSQL server\n"));
-	printf(_("  -U USERNAME     user name of account to register PostgreSQL server\n"));
-	printf(_("  -S START-TYPE   service start type to register PostgreSQL server\n"));
+	printf(_("  -N SERVICENAME  service name with which to register maintableQL server\n"));
+	printf(_("  -P PASSWORD     password of account to register maintableQL server\n"));
+	printf(_("  -U USERNAME     user name of account to register maintableQL server\n"));
+	printf(_("  -S START-TYPE   service start type to register maintableQL server\n"));
 
 	printf(_("\nStart types are:\n"));
 	printf(_("  auto       start service automatically during system startup (default)\n"));
@@ -2133,8 +2133,8 @@ adjust_data_dir(void)
 	if (pg_config == NULL)
 		return;
 
-	/* If there is no postgresql.conf, it can't be a config-only dir */
-	snprintf(filename, sizeof(filename), "%s/postgresql.conf", pg_config);
+	/* If there is no maintableql.conf, it can't be a config-only dir */
+	snprintf(filename, sizeof(filename), "%s/maintableql.conf", pg_config);
 	if ((fd = fopen(filename, "r")) == NULL)
 		return;
 	fclose(fd);
@@ -2151,7 +2151,7 @@ adjust_data_dir(void)
 
 	/* we use a private my_exec_path to avoid interfering with later uses */
 	if (exec_path == NULL)
-		my_exec_path = find_other_exec_or_die(argv0, "postgres", PG_BACKEND_VERSIONSTR);
+		my_exec_path = find_other_exec_or_die(argv0, "maintable", PG_BACKEND_VERSIONSTR);
 	else
 		my_exec_path = pg_strdup(exec_path);
 
@@ -2245,7 +2245,7 @@ main(int argc, char **argv)
 		}
 		else if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-V") == 0)
 		{
-			puts("pg_ctl (PostgreSQL) " PG_VERSION);
+			puts("pg_ctl (maintableQL) " PG_VERSION);
 			exit(0);
 		}
 	}

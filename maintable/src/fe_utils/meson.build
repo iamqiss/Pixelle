@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 fe_utils_sources = files(
   'archive.c',
@@ -30,8 +30,8 @@ fe_utils_sources += psqlscan
 
 fe_utils = static_library('libpgfeutils',
   fe_utils_sources,
-  c_pch: pch_postgres_fe_h,
-  include_directories: [postgres_inc, libpq_inc],
+  c_pch: pch_maintable_fe_h,
+  include_directories: [maintable_inc, libpq_inc],
   c_args: host_system == 'windows' ? ['-DFD_SETSIZE=1024'] : [],
   dependencies: frontend_common_code,
   kwargs: default_lib_args,

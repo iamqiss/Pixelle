@@ -18,7 +18,7 @@
 
 use crate::Permissions;
 use crate::types::user::user_status::UserStatus;
-use crate::utils::timestamp::IggyTimestamp;
+use crate::utils::timestamp::MessengerTimestamp;
 use serde::{Deserialize, Serialize};
 use std::sync::atomic::AtomicU32;
 
@@ -39,7 +39,7 @@ pub struct UserInfo {
     /// The unique identifier (numeric) of the user.
     pub id: UserId,
     /// The timestamp when the user was created.
-    pub created_at: IggyTimestamp,
+    pub created_at: MessengerTimestamp,
     /// The status of the user.
     pub status: UserStatus,
     /// The username of the user.
@@ -58,7 +58,7 @@ pub struct UserInfoDetails {
     /// The unique identifier (numeric) of the user.
     pub id: UserId,
     /// The timestamp when the user was created.
-    pub created_at: IggyTimestamp,
+    pub created_at: MessengerTimestamp,
     /// The status of the user.
     pub status: UserStatus,
     /// The username of the user.

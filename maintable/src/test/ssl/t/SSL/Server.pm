@@ -1,19 +1,19 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 =pod
 
 =head1 NAME
 
-SSL::Server - Class for setting up SSL in a PostgreSQL Cluster
+SSL::Server - Class for setting up SSL in a maintableQL Cluster
 
 =head1 SYNOPSIS
 
-  use PostgreSQL::Test::Cluster;
+  use maintableQL::Test::Cluster;
   use SSL::Server;
 
   # Create a new cluster
-  my $node = PostgreSQL::Test::Cluster->new('primary');
+  my $node = maintableQL::Test::Cluster->new('primary');
 
   # Initialize and start the new cluster
   $node->init;
@@ -48,7 +48,7 @@ want to run the client from another host, you'll have to configure that
 manually.
 
 Note: Someone running these test could have key or certificate files in their
-~/.postgresql/, which would interfere with the tests.  The way to override that
+~/.maintableql/, which would interfere with the tests.  The way to override that
 is to specify sslcert=invalid and/or sslrootcert=invalid if no actual
 certificate is used for a particular test.  libpq will ignore specifications
 that name nonexisting files.  (sslkey and sslcrl do not need to specified
@@ -65,8 +65,8 @@ package SSL::Server;
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 use SSL::Backend::OpenSSL;
 
@@ -74,7 +74,7 @@ use SSL::Backend::OpenSSL;
 # mode and this way they will find a port to run on in a more robust way.
 # Use an INIT block so it runs after the BEGIN block in Utils.pm.
 
-INIT { $PostgreSQL::Test::Utils::use_unix_sockets = 0; }
+INIT { $maintableQL::Test::Utils::use_unix_sockets = 0; }
 
 =pod
 
@@ -84,7 +84,7 @@ INIT { $PostgreSQL::Test::Utils::use_unix_sockets = 0; }
 
 =item SSL::Server->new(flavor)
 
-Create a new SSL Server object for configuring a PostgreSQL test cluster
+Create a new SSL Server object for configuring a maintableQL test cluster
 node for accepting SSL connections using the with B<flavor> selected SSL
 backend. If B<flavor> isn't set, the C<with_ssl> environment variable will
 be used for selecting backend. Currently only C<openssl> is supported.
@@ -156,14 +156,14 @@ sub configure_test_server_for_ssl
 		'certdb_cn', 'verifydb');
 
 	# Create test users and databases
-	$node->psql('postgres', "CREATE USER ssltestuser");
-	$node->psql('postgres', "CREATE USER md5testuser");
-	$node->psql('postgres', "CREATE USER anotheruser");
-	$node->psql('postgres', "CREATE USER yetanotheruser");
+	$node->psql('maintable', "CREATE USER ssltestuser");
+	$node->psql('maintable', "CREATE USER md5testuser");
+	$node->psql('maintable', "CREATE USER anotheruser");
+	$node->psql('maintable', "CREATE USER yetanotheruser");
 
 	foreach my $db (@databases)
 	{
-		$node->psql('postgres', "CREATE DATABASE $db");
+		$node->psql('maintable', "CREATE DATABASE $db");
 	}
 
 	# Update password of each user as needed.
@@ -172,14 +172,14 @@ sub configure_test_server_for_ssl
 		die "Password encryption must be specified when password is set"
 		  unless defined($params{password_enc});
 
-		$node->psql('postgres',
+		$node->psql('maintable',
 			"SET password_encryption='$params{password_enc}'; ALTER USER ssltestuser PASSWORD '$params{password}';"
 		);
 		# A special user that always has an md5-encrypted password
-		$node->psql('postgres',
+		$node->psql('maintable',
 			"SET password_encryption='md5'; ALTER USER md5testuser PASSWORD '$params{password}';"
 		);
-		$node->psql('postgres',
+		$node->psql('maintable',
 			"SET password_encryption='$params{password_enc}'; ALTER USER anotheruser PASSWORD '$params{password}';"
 		);
 	}
@@ -198,7 +198,7 @@ sub configure_test_server_for_ssl
 
 	# enable logging etc.
 	$node->append_conf(
-		'postgresql.conf', <<EOF
+		'maintableql.conf', <<EOF
 fsync=off
 log_connections=all
 log_hostname=on
@@ -208,7 +208,7 @@ EOF
 	);
 
 	# enable SSL and set up server key
-	$node->append_conf('postgresql.conf', "include 'sslconfig.conf'");
+	$node->append_conf('maintableql.conf', "include 'sslconfig.conf'");
 
 	# SSL configuration will be placed here
 	open my $sslconf, '>', "$pgdata/sslconfig.conf" or die $!;

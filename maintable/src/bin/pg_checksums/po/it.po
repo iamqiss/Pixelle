@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_checksums
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_checksums (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_checksums (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_checksums (PostgreSQL) 15\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_checksums (maintableQL) 15\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2022-09-26 08:21+0000\n"
 "PO-Revision-Date: 2023-09-05 08:10+0200\n"
 "Last-Translator: \n"
@@ -50,9 +50,9 @@ msgstr "%s deve essere compreso nell'intervallo %d..%d"
 #: pg_checksums.c:79
 #, c-format
 msgid ""
-"%s enables, disables, or verifies data checksums in a PostgreSQL database cluster.\n"
+"%s enables, disables, or verifies data checksums in a maintableQL database cluster.\n"
 "\n"
-msgstr "%s abilita, disabilita o verifica i checksum dei dati in un cluster di database PostgreSQL.\n"
+msgstr "%s abilita, disabilita o verifica i checksum dei dati in un cluster di database maintableQL.\n"
 
 #: pg_checksums.c:80
 #, c-format

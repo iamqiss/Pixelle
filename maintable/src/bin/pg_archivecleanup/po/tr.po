@@ -1,12 +1,12 @@
 # LANGUAGE message translation file for pg_archivecleanup
-# Copyright (C) 2017 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_archivecleanup (PostgreSQL) package.
+# Copyright (C) 2017 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_archivecleanup (maintableQL) package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_archivecleanup (PostgreSQL) 10\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_archivecleanup (maintableQL) 10\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2019-04-26 13:48+0000\n"
 "PO-Revision-Date: 2021-09-16 09:39+0200\n"
 "Last-Translator: \n"
@@ -71,9 +71,9 @@ msgstr "Daha fazla bilgi için \"%s --help\" yazın\n"
 #: pg_archivecleanup.c:255
 #, c-format
 msgid ""
-"%s removes older WAL files from PostgreSQL archives.\n"
+"%s removes older WAL files from maintableQL archives.\n"
 "\n"
-msgstr "%s daha eski WAL dosyalarını PostgreSQL arşivlerinden kaldırır.\n"
+msgstr "%s daha eski WAL dosyalarını maintableQL arşivlerinden kaldırır.\n"
 
 #: pg_archivecleanup.c:256
 #, c-format
@@ -123,13 +123,13 @@ msgstr "  -?, --help     bu yardımı göster, sonra çık\n"
 #, c-format
 msgid ""
 "\n"
-"For use as archive_cleanup_command in postgresql.conf:\n"
+"For use as archive_cleanup_command in maintableql.conf:\n"
 "  archive_cleanup_command = 'pg_archivecleanup [OPTION]... ARCHIVELOCATION %%r'\n"
 "e.g.\n"
 "  archive_cleanup_command = 'pg_archivecleanup /mnt/server/archiverdir %%r'\n"
 msgstr ""
 "\n"
-"postgresql.conf'da archive_cleanup_command olarak kullanmak için:\n"
+"maintableql.conf'da archive_cleanup_command olarak kullanmak için:\n"
 "  archive_cleanup_command = 'pg_archivecleanup [SECENEK]... ARSIVLOKASYONU %%r'\n"
 "örnek:\n"
 "  archive_cleanup_command = 'pg_archivecleanup /mnt/server/archiverdir %%r'\n"
@@ -152,10 +152,10 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"Report bugs to <pgsql-bugs@lists.postgresql.org>.\n"
+"Report bugs to <pgsql-bugs@lists.maintableql.org>.\n"
 msgstr ""
 "\n"
-"Hataları <pgsql-bugs@lists.postgresql.org> adresine bildirebilirsiniz.\n"
+"Hataları <pgsql-bugs@lists.maintableql.org> adresine bildirebilirsiniz.\n"
 
 #: pg_archivecleanup.c:335
 #, c-format

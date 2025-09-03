@@ -20,7 +20,7 @@ use crate::args::common::ListMode;
 use crate::args::permissions::UserStatusArg;
 use crate::args::permissions::stream::StreamPermissionsArg;
 use clap::{Args, Subcommand};
-use iggy::prelude::Identifier;
+use messenger::prelude::Identifier;
 
 use super::permissions::global::GlobalPermissionsArg;
 
@@ -29,8 +29,8 @@ pub(crate) enum UserAction {
     /// Create user with given username and password
     ///
     /// Examples
-    ///  iggy user create testuser pass#1%X!
-    ///  iggy user create guest guess --user-status inactive
+    ///  messenger user create testuser pass#1%X!
+    ///  messenger user create guest guess --user-status inactive
     #[clap(verbatim_doc_comment, visible_alias = "c")]
     Create(UserCreateArgs),
     /// Delete user with given ID
@@ -38,8 +38,8 @@ pub(crate) enum UserAction {
     /// The user ID can be specified as either a username or an ID
     ///
     /// Examples:
-    ///  iggy user delete 2
-    ///  iggy user delete testuser
+    ///  messenger user delete 2
+    ///  messenger user delete testuser
     #[clap(verbatim_doc_comment, visible_alias = "d")]
     Delete(UserDeleteArgs),
     /// Get details of a single user with given ID
@@ -47,16 +47,16 @@ pub(crate) enum UserAction {
     /// The user ID can be specified as either a username or an ID
     ///
     /// Examples:
-    ///  iggy user get 2
-    ///  iggy user get testuser
+    ///  messenger user get 2
+    ///  messenger user get testuser
     #[clap(verbatim_doc_comment, visible_alias = "g")]
     Get(UserGetArgs),
     /// List all users
     ///
     /// Examples:
-    ///  iggy user list
-    ///  iggy user list --list-mode table
-    ///  iggy user list -l table
+    ///  messenger user list
+    ///  messenger user list --list-mode table
+    ///  messenger user list -l table
     #[clap(verbatim_doc_comment, visible_alias = "l")]
     List(UserListArgs),
     /// Change username for user with given ID
@@ -64,8 +64,8 @@ pub(crate) enum UserAction {
     /// The user ID can be specified as either a username or an ID
     ///
     /// Examples:
-    ///  iggy user name 2 new_user_name
-    ///  iggy user name testuser test_user
+    ///  messenger user name 2 new_user_name
+    ///  messenger user name testuser test_user
     #[clap(verbatim_doc_comment, visible_alias = "n")]
     Name(UserNameArgs),
     /// Change status for user with given ID
@@ -73,8 +73,8 @@ pub(crate) enum UserAction {
     /// The user ID can be specified as either a username or an ID
     ///
     /// Examples:
-    ///  iggy user status 2 active
-    ///  iggy user status testuser inactive
+    ///  messenger user status 2 active
+    ///  messenger user status testuser inactive
     #[clap(verbatim_doc_comment, visible_alias = "s")]
     Status(UserStatusArgs),
     /// Change password for user with given ID
@@ -82,10 +82,10 @@ pub(crate) enum UserAction {
     /// The user ID can be specified as either a username or an ID
     ///
     /// Examples:
-    ///  iggy user password 2
-    ///  iggy user password client
-    ///  iggy user password 3 current_password new_password
-    ///  iggy user password testuser curpwd p@sswor4
+    ///  messenger user password 2
+    ///  messenger user password client
+    ///  messenger user password 3 current_password new_password
+    ///  messenger user password testuser curpwd p@sswor4
     #[clap(verbatim_doc_comment, visible_alias = "pwd")]
     Password(UserPasswordArgs),
     /// Set permissions for user with given ID
@@ -96,8 +96,8 @@ pub(crate) enum UserAction {
     /// specified user.
     ///
     /// Examples:
-    ///  iggy user permissions 2
-    ///  iggy user permissions client
+    ///  messenger user permissions 2
+    ///  messenger user permissions client
     #[clap(verbatim_doc_comment, visible_alias = "p")]
     Permissions(UserPermissionsArgs),
 }
@@ -106,7 +106,7 @@ pub(crate) enum UserAction {
 pub(crate) struct UserCreateArgs {
     /// Username
     ///
-    /// Unique identifier for the user account on iggy server,
+    /// Unique identifier for the user account on messenger server,
     /// must be between 3 and 50 characters long.
     #[clap(verbatim_doc_comment)]
     pub(crate) username: String,
@@ -123,8 +123,8 @@ pub(crate) struct UserCreateArgs {
     ///
     /// All global permissions by default are set to false and this command line option
     /// allows to set each permission individually. Permissions are separated
-    /// by comma and each permission is identified by the same name as in the iggy
-    /// SDK in iggy::models::permissions::GlobalPermissions struct. For each permission
+    /// by comma and each permission is identified by the same name as in the messenger
+    /// SDK in messenger::models::permissions::GlobalPermissions struct. For each permission
     /// there's long variant (same as in SDK) and short variant.
     ///
     /// Available permissions (long and short versions):  manage_servers / m_srv,
@@ -133,8 +133,8 @@ pub(crate) struct UserCreateArgs {
     /// read_topics / r_top, poll_messages / p_msg, send_messages / s_msg
     ///
     /// Examples:
-    ///  iggy user create guest guess --global-permissions p_msg,s_msg
-    ///  iggy user create admin pass#1%X! -g m_srv,r_srv,m_usr,r_usr,m_str,r_str,m_top,r_top,p_msg,s_msg
+    ///  messenger user create guest guess --global-permissions p_msg,s_msg
+    ///  messenger user create admin pass#1%X! -g m_srv,r_srv,m_usr,r_usr,m_str,r_str,m_top,r_top,p_msg,s_msg
     #[clap(short, long, verbatim_doc_comment)]
     #[arg(value_parser = clap::value_parser!(GlobalPermissionsArg))]
     pub(crate) global_permissions: Option<GlobalPermissionsArg>,
@@ -145,7 +145,7 @@ pub(crate) struct UserCreateArgs {
     /// (only stream ID is provided) all are set fo false. Stream permission format consists
     /// of stream ID followed by colon (:) and list of permissions separated by comma (,).
     /// For each stream permission there's long variant (same as in SDK in
-    /// iggy::models::permissions::StreamPermissions) and short variant.
+    /// messenger::models::permissions::StreamPermissions) and short variant.
     ///
     /// Available stream permissions: manage_stream / m_str, read_stream / r_str, manage_topics / m_top,
     /// read_topics / r_top, poll_messages / p_msg, send_messages / s_msg.
@@ -155,7 +155,7 @@ pub(crate) struct UserCreateArgs {
     /// permission individually, by default, if no permission is provided (only topic ID is provided)
     /// all are set fo false. Topic permission format consists of topic ID followed by colon (:)
     /// and list of permissions separated by comma (,). For each topic permission there's long
-    /// variant (same as in SDK in iggy::models::permissions::TopicPermissions) and short variant.
+    /// variant (same as in SDK in messenger::models::permissions::TopicPermissions) and short variant.
     /// Topic permissions are separated by hash (#) after stream permissions.
     ///
     /// Available topic permissions: manage_topic / m_top, read_topic / r_top, poll_messages / p_msg,
@@ -164,10 +164,10 @@ pub(crate) struct UserCreateArgs {
     /// Permissions format: STREAM_ID\[:STREAM_PERMISSIONS\]\[#TOPIC_ID\[:TOPIC_PERMISSIONS\]\]
     ///
     /// Examples:
-    ///  iggy user create guest guest -s 1:manage_topics,read_topics
-    ///  iggy user create admin p@Ss! --stream-permissions 2:m_str,r_str,m_top,r_top,p_msg,s_msg
-    ///  iggy user create sender s3n43r -s 3#1:s_msg#2:s_msg
-    ///  iggy user create user1 test12 -s 4:manage_stream,r_top#1:s_msg,p_msg#2:manage_topic
+    ///  messenger user create guest guest -s 1:manage_topics,read_topics
+    ///  messenger user create admin p@Ss! --stream-permissions 2:m_str,r_str,m_top,r_top,p_msg,s_msg
+    ///  messenger user create sender s3n43r -s 3#1:s_msg#2:s_msg
+    ///  messenger user create user1 test12 -s 4:manage_stream,r_top#1:s_msg,p_msg#2:manage_topic
     #[clap(short, long, verbatim_doc_comment)]
     #[arg(value_parser = clap::value_parser!(StreamPermissionsArg))]
     pub(crate) stream_permissions: Option<Vec<StreamPermissionsArg>>,
@@ -204,7 +204,7 @@ pub(crate) struct UserNameArgs {
     pub(crate) user_id: Identifier,
     /// New username
     ///
-    /// New and unique identifier for the user account on iggy server,
+    /// New and unique identifier for the user account on messenger server,
     /// must be between 3 and 50 characters long.
     #[clap(verbatim_doc_comment)]
     pub(crate) username: String,
@@ -254,8 +254,8 @@ pub(crate) struct UserPermissionsArgs {
     ///
     /// All global permissions by default are set to false and this command line option
     /// allows to set each permission individually. Permissions are separated
-    /// by comma and each permission is identified by the same name as in the iggy
-    /// SDK in iggy::models::permissions::GlobalPermissions struct. For each permission
+    /// by comma and each permission is identified by the same name as in the messenger
+    /// SDK in messenger::models::permissions::GlobalPermissions struct. For each permission
     /// there's long variant (same as in SDK) and short variant.
     ///
     /// Available permissions (long and short versions):  manage_servers / m_srv,
@@ -264,8 +264,8 @@ pub(crate) struct UserPermissionsArgs {
     /// read_topics / r_top, poll_messages / p_msg, send_messages / s_msg
     ///
     /// Examples:
-    ///  iggy user create guest guess --global-permissions p_msg,s_msg
-    ///  iggy user create admin pass#1%X! -g m_srv,r_srv,m_usr,r_usr,m_str,r_str,m_top,r_top,p_msg,s_msg
+    ///  messenger user create guest guess --global-permissions p_msg,s_msg
+    ///  messenger user create admin pass#1%X! -g m_srv,r_srv,m_usr,r_usr,m_str,r_str,m_top,r_top,p_msg,s_msg
     #[clap(short, long, verbatim_doc_comment)]
     #[arg(value_parser = clap::value_parser!(GlobalPermissionsArg))]
     pub(crate) global_permissions: Option<GlobalPermissionsArg>,
@@ -276,7 +276,7 @@ pub(crate) struct UserPermissionsArgs {
     /// (only stream ID is provided) all are set fo false. Stream permission format consists
     /// of stream ID followed by colon (:) and list of permissions separated by comma (,).
     /// For each stream permission there's long variant (same as in SDK in
-    /// iggy::models::permissions::StreamPermissions) and short variant.
+    /// messenger::models::permissions::StreamPermissions) and short variant.
     ///
     /// Available stream permissions: manage_stream / m_str, read_stream / r_str, manage_topics / m_top,
     /// read_topics / r_top, poll_messages / p_msg, send_messages / s_msg.
@@ -286,7 +286,7 @@ pub(crate) struct UserPermissionsArgs {
     /// permission individually, by default, if no permission is provided (only topic ID is provided)
     /// all are set fo false. Topic permission format consists of topic ID followed by colon (:)
     /// and list of permissions separated by comma (,). For each topic permission there's long
-    /// variant (same as in SDK in iggy::models::permissions::TopicPermissions) and short variant.
+    /// variant (same as in SDK in messenger::models::permissions::TopicPermissions) and short variant.
     /// Topic permissions are separated by hash (#) after stream permissions.
     ///
     /// Available topic permissions: manage_topic / m_top, read_topic / r_top, poll_messages / p_msg,
@@ -295,10 +295,10 @@ pub(crate) struct UserPermissionsArgs {
     /// Permissions format: STREAM_ID\[:STREAM_PERMISSIONS\]\[#TOPIC_ID\[:TOPIC_PERMISSIONS\]\]
     ///
     /// Examples:
-    ///  iggy user create guest guest -s 1:manage_topics,read_topics
-    ///  iggy user create admin p@Ss! --stream-permissions 2:m_str,r_str,m_top,r_top,p_msg,s_msg
-    ///  iggy user create sender s3n43r -s 3#1:s_msg#2:s_msg
-    ///  iggy user create user1 test12 -s 4:manage_stream,r_top#1:s_msg,p_msg#2:manage_topic
+    ///  messenger user create guest guest -s 1:manage_topics,read_topics
+    ///  messenger user create admin p@Ss! --stream-permissions 2:m_str,r_str,m_top,r_top,p_msg,s_msg
+    ///  messenger user create sender s3n43r -s 3#1:s_msg#2:s_msg
+    ///  messenger user create user1 test12 -s 4:manage_stream,r_top#1:s_msg,p_msg#2:manage_topic
     #[clap(short, long, verbatim_doc_comment)]
     #[arg(value_parser = clap::value_parser!(StreamPermissionsArg))]
     pub(crate) stream_permissions: Option<Vec<StreamPermissionsArg>>,

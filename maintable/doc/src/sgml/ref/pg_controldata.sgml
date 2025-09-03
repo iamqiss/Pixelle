@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/pg_controldata.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="app-pgcontroldata">
@@ -16,7 +16,7 @@ PostgreSQL documentation
 
  <refnamediv>
   <refname>pg_controldata</refname>
-  <refpurpose>display control information of a <productname>PostgreSQL</productname> database cluster</refpurpose>
+  <refpurpose>display control information of a <productname>maintableQL</productname> database cluster</refpurpose>
  </refnamediv>
 
  <refsynopsisdiv>

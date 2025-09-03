@@ -3,14 +3,14 @@
  * backup_manifest.c
  *	  code for generating and sending a backup manifest
  *
- * Portions Copyright (c) 2010-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 2010-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/backup/backup_manifest.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/timeline.h"
 #include "access/xlog.h"
@@ -79,7 +79,7 @@ InitializeBackupManifest(backup_manifest_info *manifest,
 
 	if (want_manifest != MANIFEST_OPTION_NO)
 		AppendToManifest(manifest,
-						 "{ \"PostgreSQL-Backup-Manifest-Version\": 2,\n"
+						 "{ \"maintableQL-Backup-Manifest-Version\": 2,\n"
 						 "\"System-Identifier\": " UINT64_FORMAT ",\n"
 						 "\"Files\": [",
 						 GetSystemIdentifier());

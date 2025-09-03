@@ -16,7 +16,7 @@
  * under the License.
  */
 use crate::streaming::users::permissioner::Permissioner;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 
 impl Permissioner {
     pub fn delete_segments(
@@ -24,7 +24,7 @@ impl Permissioner {
         user_id: u32,
         stream_id: u32,
         topic_id: u32,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         self.update_topic(user_id, stream_id, topic_id)
     }
 }

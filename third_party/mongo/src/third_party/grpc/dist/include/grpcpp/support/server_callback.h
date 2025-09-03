@@ -407,7 +407,7 @@ class ServerBidiReactor : public internal::ServerReactor {
 
   /// Notifies the application that an explicit StartSendInitialMetadata
   /// operation completed. Not used when the sending of initial metadata
-  /// piggybacks onto the first write.
+  /// pmessengerbacks onto the first write.
   ///
   /// \param[in] ok Was it successful? If false, no further write-side operation
   ///               will succeed.

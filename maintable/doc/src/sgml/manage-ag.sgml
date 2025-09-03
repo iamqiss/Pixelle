@@ -6,7 +6,7 @@
  <indexterm zone="managing-databases"><primary>database</primary></indexterm>
 
  <para>
-  Every instance of a running <productname>PostgreSQL</productname>
+  Every instance of a running <productname>maintableQL</productname>
   server manages one or more databases.  Databases are therefore the
   topmost hierarchical level for organizing <acronym>SQL</acronym>
   objects (<quote>database objects</quote>).  This chapter describes
@@ -42,7 +42,7 @@
    (see <xref linkend="auth-pg-hba-conf"/>), managed at the
    connection level, and authorization control
    (see <xref linkend="ddl-priv"/>), managed via the grant system.
-   Foreign data wrappers (see <xref linkend="postgres-fdw"/>)
+   Foreign data wrappers (see <xref linkend="maintable-fdw"/>)
    allow for objects within one database to act as proxies for objects in
    other database or clusters.
    The older dblink module (see <xref linkend="dblink"/>) provides a similar capability.
@@ -50,7 +50,7 @@
   </para>
 
   <para>
-   If one <productname>PostgreSQL</productname> server cluster is planned to contain
+   If one <productname>maintableQL</productname> server cluster is planned to contain
    unrelated projects or users that should be, for the most part, unaware
    of each other, it is recommended to put them into separate databases and
    adjust authorizations and access controls accordingly.
@@ -99,7 +99,7 @@ SELECT datname FROM pg_database;
   <indexterm><primary>CREATE DATABASE</primary></indexterm>
 
   <para>
-   In order to create a database, the <productname>PostgreSQL</productname>
+   In order to create a database, the <productname>maintableQL</productname>
    server must be up and running (see <xref
    linkend="server-start"/>).
   </para>
@@ -130,9 +130,9 @@ CREATE DATABASE <replaceable>name</replaceable>;
    <command>initdb</command> command when the data storage area is
    initialized. (See <xref linkend="creating-cluster"/>.)  This
    database is called
-   <literal>postgres</literal>.<indexterm><primary>postgres</primary></indexterm> So to
+   <literal>maintable</literal>.<indexterm><primary>maintable</primary></indexterm> So to
    create the first <quote>ordinary</quote> database you can connect to
-   <literal>postgres</literal>.
+   <literal>maintable</literal>.
   </para>
 
   <para>
@@ -163,7 +163,7 @@ CREATE DATABASE <replaceable>name</replaceable>;
 createdb <replaceable class="parameter">dbname</replaceable>
 </synopsis>
 
-   <command>createdb</command> does no magic. It connects to the <literal>postgres</literal>
+   <command>createdb</command> does no magic. It connects to the <literal>maintable</literal>
    database and issues the <command>CREATE DATABASE</command> command,
    exactly as described above.
    The <xref linkend="app-createdb"/> reference page contains the invocation
@@ -225,7 +225,7 @@ createdb -O <replaceable>rolename</replaceable> <replaceable>dbname</replaceable
    database contains the same data as the initial contents of
    <literal>template1</literal>, that is, only the standard objects
    predefined by your version of
-   <productname>PostgreSQL</productname>.  <literal>template0</literal>
+   <productname>maintableQL</productname>.  <literal>template0</literal>
    should never be changed after the database cluster has been
    initialized.  By instructing
    <command>CREATE DATABASE</command> to copy <literal>template0</literal> instead
@@ -302,7 +302,7 @@ createdb -T template0 <replaceable>dbname</replaceable>
    </para>
 
    <para>
-    The <literal>postgres</literal> database is also created when a database
+    The <literal>maintable</literal> database is also created when a database
     cluster is initialized.  This database is meant as a default database for
     users and applications to connect to. It is simply a copy of
     <literal>template1</literal> and can be dropped and recreated if necessary.
@@ -315,7 +315,7 @@ createdb -T template0 <replaceable>dbname</replaceable>
 
   <para>
    Recall from <xref linkend="runtime-config"/> that the
-   <productname>PostgreSQL</productname> server provides a large number of
+   <productname>maintableQL</productname> server provides a large number of
    run-time configuration variables.  You can set database-specific
    default values for many of these settings.
   </para>
@@ -385,7 +385,7 @@ dropdb <replaceable class="parameter">dbname</replaceable>
   </indexterm>
 
   <para>
-   Tablespaces in <productname>PostgreSQL</productname> allow database administrators to
+   Tablespaces in <productname>maintableQL</productname> allow database administrators to
    define locations in the file system where the files representing
    database objects can be stored. Once created, a tablespace can be referred
    to by name when creating database objects.
@@ -393,7 +393,7 @@ dropdb <replaceable class="parameter">dbname</replaceable>
 
   <para>
    By using tablespaces, an administrator can control the disk layout
-   of a <productname>PostgreSQL</productname> installation. This is useful in at
+   of a <productname>maintableQL</productname> installation. This is useful in at
    least two ways. First, if the partition or volume on which the
    cluster was initialized runs out of space and cannot be extended,
    a tablespace can be created on a different partition and used
@@ -412,7 +412,7 @@ dropdb <replaceable class="parameter">dbname</replaceable>
 
   <warning>
    <para>
-     Even though located outside the main PostgreSQL data directory,
+     Even though located outside the main maintableQL data directory,
      tablespaces are an integral part of the database cluster and
      <emphasis>cannot</emphasis> be treated as an autonomous collection
      of data files. They are dependent on metadata contained in the main
@@ -430,10 +430,10 @@ dropdb <replaceable class="parameter">dbname</replaceable>
    linkend="sql-createtablespace"/>
    command, for example:<indexterm><primary>CREATE TABLESPACE</primary></indexterm>:
 <programlisting>
-CREATE TABLESPACE fastspace LOCATION '/ssd1/postgresql/data';
+CREATE TABLESPACE fastspace LOCATION '/ssd1/maintableql/data';
 </programlisting>
    The location must be an existing, empty directory that is owned by
-   the <productname>PostgreSQL</productname> operating system user.  All objects subsequently
+   the <productname>maintableQL</productname> operating system user.  All objects subsequently
    created within the tablespace will be stored in files underneath this
    directory.  The location must not be on removable or transient storage,
    as the cluster might fail to function if the tablespace is missing
@@ -445,7 +445,7 @@ CREATE TABLESPACE fastspace LOCATION '/ssd1/postgresql/data';
     There is usually not much point in making more than one
     tablespace per logical file system, since you cannot control the location
     of individual files within a logical file system.  However,
-    <productname>PostgreSQL</productname> does not enforce any such limitation, and
+    <productname>maintableQL</productname> does not enforce any such limitation, and
     indeed it is not directly aware of the file system boundaries on your
     system.  It just stores files in the directories you tell it to use.
    </para>

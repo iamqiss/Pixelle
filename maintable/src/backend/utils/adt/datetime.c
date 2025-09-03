@@ -3,7 +3,7 @@
  * datetime.c
  *	  Support functions for date/time types.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -12,7 +12,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <limits.h>
@@ -186,7 +186,7 @@ static const int szdatetktbl = sizeof datetktbl / sizeof datetktbl[0];
  */
 static const datetkn deltatktbl[] = {
 	/* token, type, value */
-	{"@", IGNORE_DTF, 0},		/* postgres relative prefix */
+	{"@", IGNORE_DTF, 0},		/* maintable relative prefix */
 	{DAGO, AGO, 0},				/* "ago" indicates negative time offset */
 	{"c", UNITS, DTK_CENTURY},	/* "century" relative */
 	{"cent", UNITS, DTK_CENTURY},	/* "century" relative */
@@ -3506,17 +3506,17 @@ DecodeInterval(char **field, int *ftype, int nf, int range,
 	/*----------
 	 * The SQL standard defines the interval literal
 	 *	 '-1 1:00:00'
-	 * to mean "negative 1 days and negative 1 hours", while Postgres
+	 * to mean "negative 1 days and negative 1 hours", while Maintable
 	 * traditionally treats this as meaning "negative 1 days and positive
 	 * 1 hours".  In SQL_STANDARD intervalstyle, we apply the leading sign
 	 * to all fields if there are no other explicit signs.
 	 *
 	 * We leave the signs alone if there are additional explicit signs.
-	 * This protects us against misinterpreting postgres-style dump output,
-	 * since the postgres-style output code has always put an explicit sign on
+	 * This protects us against misinterpreting maintable-style dump output,
+	 * since the maintable-style output code has always put an explicit sign on
 	 * all fields following a negative field.  But note that SQL-spec output
 	 * is ambiguous and can be misinterpreted on load!	(So it's best practice
-	 * to dump in postgres style, not SQL style.)
+	 * to dump in maintable style, not SQL style.)
 	 *----------
 	 */
 	if (IntervalStyle == INTSTYLE_SQL_STANDARD && nf > 0 && *field[0] == '-')
@@ -4392,9 +4392,9 @@ EncodeDateOnly(struct pg_tm *tm, int style, char *str)
 									 (tm->tm_year > 0) ? tm->tm_year : -(tm->tm_year - 1), 4);
 			break;
 
-		case USE_POSTGRES_DATES:
+		case USE_MAINTABLE_DATES:
 		default:
-			/* traditional date-only style for Postgres */
+			/* traditional date-only style for Maintable */
 			if (DateOrder == DATEORDER_DMY)
 			{
 				str = pg_ultostr_zeropad(str, tm->tm_mday, 2);
@@ -4454,7 +4454,7 @@ EncodeTimeOnly(struct pg_tm *tm, fsec_t fsec, bool print_tz, int tz, int style, 
  * style, str is where to write the output.
  *
  * Supported date styles:
- *	Postgres - day mon hh:mm:ss yyyy tz
+ *	Maintable - day mon hh:mm:ss yyyy tz
  *	SQL - mm/dd/yyyy hh:mm:ss.ss tz
  *	ISO - yyyy-mm-dd hh:mm:ss+/-tz
  *	German - dd.mm.yyyy hh:mm:ss tz
@@ -4563,9 +4563,9 @@ EncodeDateTime(struct pg_tm *tm, fsec_t fsec, bool print_tz, int tz, const char 
 			}
 			break;
 
-		case USE_POSTGRES_DATES:
+		case USE_MAINTABLE_DATES:
 		default:
-			/* Backward-compatible with traditional Postgres abstime dates */
+			/* Backward-compatible with traditional Maintable abstime dates */
 			day = date2j(tm->tm_year, tm->tm_mon, tm->tm_mday);
 			tm->tm_wday = j2day(day);
 			memcpy(str, days[tm->tm_wday], 3);
@@ -4640,9 +4640,9 @@ AddISO8601IntPart(char *cp, int64 value, char units)
 	return cp + strlen(cp);
 }
 
-/* Append a postgres-style interval field, but only if value isn't zero */
+/* Append a maintable-style interval field, but only if value isn't zero */
 static char *
-AddPostgresIntPart(char *cp, int64 value, const char *units,
+AddMaintableIntPart(char *cp, int64 value, const char *units,
 				   bool *is_zero, bool *is_before)
 {
 	if (value == 0)
@@ -4687,7 +4687,7 @@ AddVerboseIntPart(char *cp, int64 value, const char *units,
 /* EncodeInterval()
  * Interpret time structure as a delta time and convert to string.
  *
- * Support "traditional Postgres" and ISO-8601 styles.
+ * Support "traditional Maintable" and ISO-8601 styles.
  * Actually, afaik ISO does not address time interval formatting,
  *	but this looks similar to the spec for absolute date/time.
  * - thomas 1998-04-30
@@ -4830,17 +4830,17 @@ EncodeInterval(struct pg_itm *itm, int style, char *str)
 			}
 			break;
 
-			/* Compatible with postgresql < 8.4 when DateStyle = 'iso' */
-		case INTSTYLE_POSTGRES:
-			cp = AddPostgresIntPart(cp, year, "year", &is_zero, &is_before);
+			/* Compatible with maintableql < 8.4 when DateStyle = 'iso' */
+		case INTSTYLE_MAINTABLE:
+			cp = AddMaintableIntPart(cp, year, "year", &is_zero, &is_before);
 
 			/*
 			 * Ideally we should spell out "month" like we do for "year" and
 			 * "day".  However, for backward compatibility, we can't easily
 			 * fix this.  bjm 2011-05-24
 			 */
-			cp = AddPostgresIntPart(cp, mon, "mon", &is_zero, &is_before);
-			cp = AddPostgresIntPart(cp, mday, "day", &is_zero, &is_before);
+			cp = AddMaintableIntPart(cp, mon, "mon", &is_zero, &is_before);
+			cp = AddMaintableIntPart(cp, mday, "day", &is_zero, &is_before);
 			if (is_zero || hour != 0 || min != 0 || sec != 0 || fsec != 0)
 			{
 				bool		minus = (hour < 0 || min < 0 || sec < 0 || fsec < 0);
@@ -4855,8 +4855,8 @@ EncodeInterval(struct pg_itm *itm, int style, char *str)
 			}
 			break;
 
-			/* Compatible with postgresql < 8.4 when DateStyle != 'iso' */
-		case INTSTYLE_POSTGRES_VERBOSE:
+			/* Compatible with maintableql < 8.4 when DateStyle != 'iso' */
+		case INTSTYLE_MAINTABLE_VERBOSE:
 		default:
 			strcpy(cp, "@");
 			cp++;
@@ -4935,7 +4935,7 @@ CheckDateTokenTables(void)
 	bool		ok = true;
 
 	Assert(UNIX_EPOCH_JDATE == date2j(1970, 1, 1));
-	Assert(POSTGRES_EPOCH_JDATE == date2j(2000, 1, 1));
+	Assert(MAINTABLE_EPOCH_JDATE == date2j(2000, 1, 1));
 
 	ok &= CheckDateTokenTable("datetktbl", datetktbl, szdatetktbl);
 	ok &= CheckDateTokenTable("deltatktbl", deltatktbl, szdeltatktbl);

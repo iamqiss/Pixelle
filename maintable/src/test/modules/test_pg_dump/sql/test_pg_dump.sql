@@ -1,7 +1,7 @@
 CREATE ROLE regress_dump_test_role;
 CREATE EXTENSION test_pg_dump;
 
-ALTER EXTENSION test_pg_dump ADD DATABASE postgres; -- error
+ALTER EXTENSION test_pg_dump ADD DATABASE maintable; -- error
 
 CREATE TABLE test_pg_dump_t1 (c1 int, junk text);
 ALTER TABLE test_pg_dump_t1 DROP COLUMN junk;  -- to exercise dropped-col cases
@@ -77,9 +77,9 @@ GRANT USAGE ON TYPE test_pg_dump_e1 TO regress_dump_test_role;
 
 -- Substitute for current user's name to keep test output consistent
 SELECT s.obj,
-  CASE WHEN a.grantor::regrole::name = quote_ident(current_user) THEN 'postgres'
+  CASE WHEN a.grantor::regrole::name = quote_ident(current_user) THEN 'maintable'
     ELSE a.grantor::regrole::name END,
-  CASE WHEN a.grantee::regrole::name = quote_ident(current_user) THEN 'postgres'
+  CASE WHEN a.grantee::regrole::name = quote_ident(current_user) THEN 'maintable'
     ELSE a.grantee::regrole::name END,
   a.privilege_type, a.is_grantable
 FROM
@@ -129,9 +129,9 @@ DROP OWNED BY regress_dump_test_role RESTRICT;
 
 -- Substitute for current user's name to keep test output consistent
 SELECT s.obj,
-  CASE WHEN a.grantor::regrole::name = quote_ident(current_user) THEN 'postgres'
+  CASE WHEN a.grantor::regrole::name = quote_ident(current_user) THEN 'maintable'
     ELSE a.grantor::regrole::name END,
-  CASE WHEN a.grantee::regrole::name = quote_ident(current_user) THEN 'postgres'
+  CASE WHEN a.grantee::regrole::name = quote_ident(current_user) THEN 'maintable'
     ELSE a.grantee::regrole::name END,
   a.privilege_type, a.is_grantable
 FROM
@@ -163,9 +163,9 @@ RESET ROLE;
 
 -- Substitute for current user's name to keep test output consistent
 SELECT s.obj,
-  CASE WHEN a.grantor::regrole::name = quote_ident(current_user) THEN 'postgres'
+  CASE WHEN a.grantor::regrole::name = quote_ident(current_user) THEN 'maintable'
     ELSE a.grantor::regrole::name END,
-  CASE WHEN a.grantee::regrole::name = quote_ident(current_user) THEN 'postgres'
+  CASE WHEN a.grantee::regrole::name = quote_ident(current_user) THEN 'maintable'
     ELSE a.grantee::regrole::name END,
   a.privilege_type, a.is_grantable
 FROM
@@ -183,9 +183,9 @@ REASSIGN OWNED BY regress_dump_test_super TO CURRENT_ROLE;
 
 -- Substitute for current user's name to keep test output consistent
 SELECT s.obj,
-  CASE WHEN a.grantor::regrole::name = quote_ident(current_user) THEN 'postgres'
+  CASE WHEN a.grantor::regrole::name = quote_ident(current_user) THEN 'maintable'
     ELSE a.grantor::regrole::name END,
-  CASE WHEN a.grantee::regrole::name = quote_ident(current_user) THEN 'postgres'
+  CASE WHEN a.grantee::regrole::name = quote_ident(current_user) THEN 'maintable'
     ELSE a.grantee::regrole::name END,
   a.privilege_type, a.is_grantable
 FROM
@@ -203,9 +203,9 @@ DROP OWNED BY regress_dump_test_role RESTRICT;
 
 -- Substitute for current user's name to keep test output consistent
 SELECT s.obj,
-  CASE WHEN a.grantor::regrole::name = quote_ident(current_user) THEN 'postgres'
+  CASE WHEN a.grantor::regrole::name = quote_ident(current_user) THEN 'maintable'
     ELSE a.grantor::regrole::name END,
-  CASE WHEN a.grantee::regrole::name = quote_ident(current_user) THEN 'postgres'
+  CASE WHEN a.grantee::regrole::name = quote_ident(current_user) THEN 'maintable'
     ELSE a.grantee::regrole::name END,
   a.privilege_type, a.is_grantable
 FROM

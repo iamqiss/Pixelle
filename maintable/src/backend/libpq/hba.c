@@ -5,7 +5,7 @@
  *	  wherein you authenticate a user by seeing what IP address the system
  *	  says he comes from and choosing authentication method based on it).
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -14,7 +14,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <ctype.h>
 #include <pwd.h>
@@ -95,7 +95,7 @@ static MemoryContext parsed_ident_context = NULL;
 
 /*
  * The following character array represents the names of the authentication
- * methods that are supported by PostgreSQL.
+ * methods that are supported by maintableQL.
  *
  * Note: keep this in sync with the UserAuth enum in hba.h.
  */
@@ -1384,7 +1384,7 @@ parse_hba_line(TokenizedAuthLine *tok_line, int elevel)
 				ereport(elevel,
 						(errcode(ERRCODE_CONFIG_FILE_ERROR),
 						 errmsg("hostssl record cannot match because SSL is disabled"),
-						 errhint("Set \"ssl = on\" in postgresql.conf."),
+						 errhint("Set \"ssl = on\" in maintableql.conf."),
 						 errcontext("line %d of configuration file \"%s\"",
 									line_num, file_name)));
 				*err_msg = "hostssl record cannot match because SSL is disabled";
@@ -2931,7 +2931,7 @@ check_ident_usermap(IdentLine *identLine, const char *usermap_name,
 			expanded_pg_user_token = identLine->pg_user;
 		}
 
-		/* check the Postgres user */
+		/* check the Maintable user */
 		*found_p = check_role(pg_user, roleid,
 							  list_make1(expanded_pg_user_token),
 							  case_insensitive);
@@ -2959,7 +2959,7 @@ check_ident_usermap(IdentLine *identLine, const char *usermap_name,
 				return;
 		}
 
-		/* check the Postgres user */
+		/* check the Maintable user */
 		*found_p = check_role(pg_user, roleid,
 							  list_make1(identLine->pg_user),
 							  case_insensitive);
@@ -2971,7 +2971,7 @@ check_ident_usermap(IdentLine *identLine, const char *usermap_name,
  *	Scan the (pre-parsed) ident usermap file line by line, looking for a match
  *
  *	See if the system user with ident username "system_user" is allowed to act as
- *	Postgres user "pg_user" according to usermap "usermap_name".
+ *	Maintable user "pg_user" according to usermap "usermap_name".
  *
  *	Special case: Usermap NULL, equivalent to what was previously called
  *	"sameuser" or "samerole", means don't look in the usermap file.

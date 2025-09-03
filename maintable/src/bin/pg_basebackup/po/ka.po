@@ -1,12 +1,12 @@
 # Georgian message translation file for pg_basebackup
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_basebackup (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_basebackup (maintableQL) package.
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_basebackup (PostgreSQL) 18\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_basebackup (maintableQL) 18\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-04-05 02:20+0000\n"
 "PO-Revision-Date: 2025-04-05 05:14+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -123,11 +123,11 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "ბაიტების მიმდევრობის შესაძლო შეუსაბამობა pg_control ფაილის შესანახად გამოყენებული \n"
 "ბაიტების მიმდევრობა შესაძლოა არ ემთხვეოდეს ამ პროგრამის მიერ გამოყენებულს. ამ შემთხვევაში  ქვემოთ \n"
-"მოცემული შედეგები არასწორი იქნება და PostgreSQL ეს აგება ამ მონაცემთა საქაღალდესთან შეუთავსებელი იქნება."
+"მოცემული შედეგები არასწორი იქნება და maintableQL ეს აგება ამ მონაცემთა საქაღალდესთან შეუთავსებელი იქნება."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:69
 #: ../../common/file_utils.c:370 ../../common/file_utils.c:428
@@ -500,10 +500,10 @@ msgstr "ახალი საქაღალდის ბილიკი ცხ
 #: pg_basebackup.c:392
 #, c-format
 msgid ""
-"%s takes a base backup of a running PostgreSQL server.\n"
+"%s takes a base backup of a running maintableQL server.\n"
 "\n"
 msgstr ""
-"%s გაშვებული PostgreSQL სერვერის მარქაფს იღებს.\n"
+"%s გაშვებული maintableQL სერვერის მარქაფს იღებს.\n"
 "\n"
 
 #: pg_basebackup.c:394 pg_createsubscriber.c:246 pg_receivewal.c:79
@@ -1859,8 +1859,8 @@ msgstr "root-ით ვერ გაეშვება"
 
 #: pg_createsubscriber.c:2104
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "%s PostgreSQL-ის ზემომხმარებლით უნდა გაუშვათ."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "%s maintableQL-ის ზემომხმარებლით უნდა გაუშვათ."
 
 #: pg_createsubscriber.c:2127
 #, c-format
@@ -2010,10 +2010,10 @@ msgstr "შესრულებულია!"
 #: pg_receivewal.c:77
 #, c-format
 msgid ""
-"%s receives PostgreSQL streaming write-ahead logs.\n"
+"%s receives maintableQL streaming write-ahead logs.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL-ის ნაკადური წინასწარ-ჩაწერადი ჟურნალს ახდენს.\n"
+"%s maintableQL-ის ნაკადური წინასწარ-ჩაწერადი ჟურნალს ახდენს.\n"
 "\n"
 
 #: pg_receivewal.c:82
@@ -2222,10 +2222,10 @@ msgstr "გათიშულია; თავიდან ცდამდე �
 #: pg_recvlogical.c:83
 #, c-format
 msgid ""
-"%s controls PostgreSQL logical decoding streams.\n"
+"%s controls maintableQL logical decoding streams.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL_ის ლოგიკური გაშიფვრის ნაკადებს აკონტროლებს.\n"
+"%s maintableQL_ის ლოგიკური გაშიფვრის ნაკადებს აკონტროლებს.\n"
 "\n"
 " \n"
 

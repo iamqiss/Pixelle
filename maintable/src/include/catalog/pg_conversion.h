@@ -3,7 +3,7 @@
  * pg_conversion.h
  *	  definition of the "conversion" system catalog (pg_conversion)
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/catalog/pg_conversion.h
@@ -38,7 +38,7 @@ CATALOG(pg_conversion,2607,ConversionRelationId)
 	Oid			connamespace BKI_DEFAULT(pg_catalog) BKI_LOOKUP(pg_namespace);
 
 	/* owner of the conversion */
-	Oid			conowner BKI_DEFAULT(POSTGRES) BKI_LOOKUP(pg_authid);
+	Oid			conowner BKI_DEFAULT(MAINTABLE) BKI_LOOKUP(pg_authid);
 
 	/* FOR encoding id */
 	int32		conforencoding BKI_LOOKUP(encoding);

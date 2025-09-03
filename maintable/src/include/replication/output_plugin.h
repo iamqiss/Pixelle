@@ -1,8 +1,8 @@
 /*-------------------------------------------------------------------------
  * output_plugin.h
- *	   PostgreSQL Logical Decode Plugin Interface
+ *	   maintableQL Logical Decode Plugin Interface
  *
- * Copyright (c) 2012-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2012-2025, maintableQL Global Development Group
  *
  *-------------------------------------------------------------------------
  */

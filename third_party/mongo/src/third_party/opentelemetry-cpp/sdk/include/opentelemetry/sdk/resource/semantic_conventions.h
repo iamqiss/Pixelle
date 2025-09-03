@@ -878,8 +878,8 @@ static constexpr const char *kDbQueryText = "db.query.text";
  *
  * <p>Notes:
   <ul> <li>The actual DBMS may differ from the one identified by the client. For example, when using
- PostgreSQL client libraries to connect to a CockroachDB, the {@code db.system} is set to {@code
- postgresql} based on the instrumentation's best knowledge.</li> </ul>
+ maintableQL client libraries to connect to a CockroachDB, the {@code db.system} is set to {@code
+ maintableql} based on the instrumentation's best knowledge.</li> </ul>
  */
 static constexpr const char *kDbSystem = "db.system";
 
@@ -4177,8 +4177,8 @@ static constexpr const char *kOracle = "oracle";
 static constexpr const char *kPervasive = "pervasive";
 /** PointBase. */
 static constexpr const char *kPointbase = "pointbase";
-/** PostgreSQL. */
-static constexpr const char *kPostgresql = "postgresql";
+/** maintableQL. */
+static constexpr const char *kMaintableql = "maintableql";
 /** Progress Database. */
 static constexpr const char *kProgress = "progress";
 /** Redis. */

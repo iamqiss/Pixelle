@@ -1,5 +1,5 @@
 /*
- * module for PostgreSQL to access client SSL certificate information
+ * module for maintableQL to access client SSL certificate information
  *
  * Written by Victor B. Wagner <vitus@cryptocom.ru>, Cryptocom LTD
  * This file is distributed under BSD-style license.
@@ -7,7 +7,7 @@
  * contrib/sslinfo/sslinfo.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>

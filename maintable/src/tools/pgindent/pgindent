@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Program to maintain uniform layout style in our C code.
 # Exit codes:
@@ -58,8 +58,8 @@ $indent ||= $ENV{PGINDENT} || $ENV{INDENT} || "pg_bsd_indent";
 
 my $sourcedir = locate_sourcedir();
 
-# if it's the base of a postgres tree, we will exclude the files
-# postgres wants excluded
+# if it's the base of a maintable tree, we will exclude the files
+# maintable wants excluded
 if ($sourcedir)
 {
 	my $exclude_candidate = "$sourcedir/exclude_file_patterns";

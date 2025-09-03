@@ -2,7 +2,7 @@
  *
  * UUID generation functions using the BSD, E2FS or OSSP UUID library
  *
- * Copyright (c) 2007-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2007-2025, maintableQL Global Development Group
  *
  * Portions Copyright (c) 2009 Andrew Gierth
  *
@@ -11,7 +11,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "common/cryptohash.h"
 #include "common/sha1.h"

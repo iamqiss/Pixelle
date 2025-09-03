@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/drop_table.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-droptable">
@@ -112,7 +112,7 @@ DROP TABLE films, distributors;
   <para>
    This command conforms to the SQL standard, except that the standard only
    allows one table to be dropped per command, and apart from the
-   <literal>IF EXISTS</literal> option, which is a <productname>PostgreSQL</productname>
+   <literal>IF EXISTS</literal> option, which is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

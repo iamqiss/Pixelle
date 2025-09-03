@@ -1,4 +1,4 @@
-# Copyright (c) 2024-2025, PostgreSQL Global Development Group
+# Copyright (c) 2024-2025, maintableQL Global Development Group
 
 # Test SCRAM authentication when opening a new connection with a foreign
 # server.
@@ -8,8 +8,8 @@
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Utils;
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Utils;
+use maintableQL::Test::Cluster;
 use Test::More;
 
 if (!$use_unix_sockets)
@@ -28,8 +28,8 @@ my $fdw_invalid_server = "db2_fdw_invalid";    # For invalid fdw options
 my $fdw_invalid_server2 =
   "db2_fdw_invalid2";    # For invalid scram keys fdw options
 
-my $node1 = PostgreSQL::Test::Cluster->new('node1');
-my $node2 = PostgreSQL::Test::Cluster->new('node2');
+my $node1 = maintableQL::Test::Cluster->new('node1');
+my $node2 = maintableQL::Test::Cluster->new('node2');
 
 $node1->init;
 $node2->init;
@@ -39,13 +39,13 @@ $node2->start;
 
 # Test setup
 
-$node1->safe_psql('postgres', qq'CREATE USER $user WITH password \'pass\'');
-$node2->safe_psql('postgres', qq'CREATE USER $user WITH password \'pass\'');
+$node1->safe_psql('maintable', qq'CREATE USER $user WITH password \'pass\'');
+$node2->safe_psql('maintable', qq'CREATE USER $user WITH password \'pass\'');
 $ENV{PGPASSWORD} = "pass";
 
-$node1->safe_psql('postgres', qq'CREATE DATABASE $db0');
-$node1->safe_psql('postgres', qq'CREATE DATABASE $db1');
-$node2->safe_psql('postgres', qq'CREATE DATABASE $db2');
+$node1->safe_psql('maintable', qq'CREATE DATABASE $db0');
+$node1->safe_psql('maintable', qq'CREATE DATABASE $db1');
+$node2->safe_psql('maintable', qq'CREATE DATABASE $db2');
 
 setup_table($node1, $db1, "t");
 setup_table($node2, $db2, "t2");
@@ -62,9 +62,9 @@ setup_user_mapping($node1, $db0, $fdw_invalid_server);
 
 # Make the user have the same SCRAM key on both servers. Forcing to have the
 # same iteration and salt.
-my $rolpassword = $node1->safe_psql('postgres',
+my $rolpassword = $node1->safe_psql('maintable',
 	qq"SELECT rolpassword FROM pg_authid WHERE rolname = '$user';");
-$node2->safe_psql('postgres', qq"ALTER ROLE $user PASSWORD '$rolpassword'");
+$node2->safe_psql('maintable', qq"ALTER ROLE $user PASSWORD '$rolpassword'");
 
 unlink($node1->data_dir . '/pg_hba.conf');
 unlink($node2->data_dir . '/pg_hba.conf');

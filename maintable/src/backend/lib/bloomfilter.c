@@ -24,14 +24,14 @@
  * caller many authoritative lookups, such as expensive probes of a much larger
  * on-disk structure.
  *
- * Copyright (c) 2018-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2018-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/lib/bloomfilter.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include <math.h>
 

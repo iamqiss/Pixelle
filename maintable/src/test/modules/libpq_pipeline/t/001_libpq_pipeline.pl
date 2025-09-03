@@ -1,11 +1,11 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Use Test::Differences if installed, and select unified diff output.
@@ -21,7 +21,7 @@ BEGIN
 	*eq_or_diff = \&is if $@;
 }
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init;
 $node->start;
 
@@ -31,7 +31,7 @@ my ($out, $err) = run_command([ 'libpq_pipeline', 'tests' ]);
 die "oops: $err" unless $err eq '';
 my @tests = split(/\s+/, $out);
 
-mkdir "$PostgreSQL::Test::Utils::tmp_check/traces";
+mkdir "$maintableQL::Test::Utils::tmp_check/traces";
 
 for my $testname (@tests)
 {
@@ -43,7 +43,7 @@ for my $testname (@tests)
 
 	# For a bunch of tests, generate a libpq trace file too.
 	my $traceout =
-	  "$PostgreSQL::Test::Utils::tmp_check/traces/$testname.trace";
+	  "$maintableQL::Test::Utils::tmp_check/traces/$testname.trace";
 	if ($cmptrace)
 	{
 		push @extraargs, "-t" => $traceout;
@@ -54,7 +54,7 @@ for my $testname (@tests)
 		[
 			'libpq_pipeline', @extraargs,
 			$testname,
-			$node->connstr('postgres') . " max_protocol_version=latest"
+			$node->connstr('maintable') . " max_protocol_version=latest"
 		],
 		"libpq_pipeline $testname");
 
@@ -78,7 +78,7 @@ for my $testname (@tests)
 $node->command_ok(
 	[
 		'libpq_pipeline', 'cancel',
-		$node->connstr('postgres') . " max_protocol_version=3.0"
+		$node->connstr('maintable') . " max_protocol_version=3.0"
 	],
 	"libpq_pipeline cancel with protocol 3.0");
 

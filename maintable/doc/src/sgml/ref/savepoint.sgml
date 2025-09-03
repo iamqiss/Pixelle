@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/savepoint.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-savepoint">
@@ -142,7 +142,7 @@ COMMIT;
   <para>
    SQL requires a savepoint to be destroyed automatically when another
    savepoint with the same name is established.  In
-   <productname>PostgreSQL</productname>, the old savepoint is kept, though only the more
+   <productname>maintableQL</productname>, the old savepoint is kept, though only the more
    recent one will be used when rolling back or releasing.  (Releasing the
    newer savepoint with <command>RELEASE SAVEPOINT</command> will cause the older one
    to again become accessible to <command>ROLLBACK TO SAVEPOINT</command> and

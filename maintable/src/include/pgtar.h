@@ -4,7 +4,7 @@
  *	  Functions for manipulating tarfile datastructures (src/port/tar.c)
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/pgtar.h
@@ -32,7 +32,7 @@ enum tarError
  *
  * The value for the checksum field can be computed using tarChecksum().
  *
- * Some fields are not used by PostgreSQL; see tarCreateHeader().
+ * Some fields are not used by maintableQL; see tarCreateHeader().
  */
 enum tarHeaderOffset
 {

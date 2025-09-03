@@ -1,7 +1,7 @@
 /*
  * contrib/btree_gist/btree_time.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "btree_gist.h"
 #include "btree_utils_num.h"

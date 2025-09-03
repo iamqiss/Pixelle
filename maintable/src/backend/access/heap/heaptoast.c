@@ -4,7 +4,7 @@
  *	  Heap-specific definitions for external and compressed storage
  *	  of variable size attributes.
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  *
  *
  * IDENTIFICATION
@@ -22,7 +22,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/detoast.h"
 #include "access/genam.h"

@@ -1,6 +1,6 @@
 /* src/interfaces/ecpg/pgtypeslib/datetime.c */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <time.h>
 #include <ctype.h>

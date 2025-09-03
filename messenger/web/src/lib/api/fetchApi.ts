@@ -22,7 +22,7 @@ import type { ApiSchema } from '$lib/api/ApiSchema';
 import { tokens } from '$lib/utils/constants/tokens';
 import { type Cookies } from '@sveltejs/kit';
 
-export async function fetchIggyApi(
+export async function fetchMessengerApi(
   args: ApiSchema & { queryParams?: Record<string, string>; cookies?: Cookies }
 ): Promise<Response | unknown> {
   const { path, method, queryParams, cookies } = args;
@@ -36,7 +36,7 @@ export async function fetchIggyApi(
       if (accessToken) headers.set('Authorization', `Bearer ${accessToken}`);
     }
 
-    let fullUrl = `${env.PUBLIC_IGGY_API_URL}${path}`;
+    let fullUrl = `${env.PUBLIC_MESSENGER_API_URL}${path}`;
 
     if (queryParams) {
       const query = new URLSearchParams(Object.entries(queryParams));

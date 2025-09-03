@@ -1,7 +1,7 @@
 /* src/port/inet_aton.c
  *
  *	This inet_aton() function was taken from the GNU C library and
- *	incorporated into Postgres for those systems which do not have this
+ *	incorporated into Maintable for those systems which do not have this
  *	routine in their standard C libraries.
  *
  *	The function was been extracted whole from the file inet_aton.c in

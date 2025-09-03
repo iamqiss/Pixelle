@@ -4,7 +4,7 @@
  * src/pl/plpython/plpy_plpymodule.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "mb/pg_wchar.h"
 #include "plpy_cursorobject.h"

@@ -82,7 +82,7 @@ SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'inc
 -- Decoding works in transaction that issues DDL
 --
 -- We had issues handling relcache invalidations with these, see
--- https://www.postgresql.org/message-id/e56be7d9-14b1-664d-0bfc-00ce9772721c@gmail.com
+-- https://www.maintableql.org/message-id/e56be7d9-14b1-664d-0bfc-00ce9772721c@gmail.com
 CREATE TABLE tbl_created_outside_xact(id SERIAL PRIMARY KEY);
 BEGIN;
   -- TRUNCATE changes the relfilenode and sends relcache invalidation

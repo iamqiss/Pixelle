@@ -20,7 +20,7 @@ package binaryserialization
 import (
 	"encoding/binary"
 
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
 	"github.com/klauspost/compress/s2"
 )
 
@@ -28,12 +28,12 @@ type TcpSendMessagesRequest struct {
 	StreamId     iggcon.Identifier    `json:"streamId"`
 	TopicId      iggcon.Identifier    `json:"topicId"`
 	Partitioning iggcon.Partitioning  `json:"partitioning"`
-	Messages     []iggcon.IggyMessage `json:"messages"`
+	Messages     []iggcon.MessengerMessage `json:"messages"`
 }
 
 const indexSize = 16
 
-func (request *TcpSendMessagesRequest) Serialize(compression iggcon.IggyMessageCompression) []byte {
+func (request *TcpSendMessagesRequest) Serialize(compression iggcon.MessengerMessageCompression) []byte {
 	for i, message := range request.Messages {
 		switch compression {
 		case iggcon.MESSAGE_COMPRESSION_S2:
@@ -122,7 +122,7 @@ func (request *TcpSendMessagesRequest) Serialize(compression iggcon.IggyMessageC
 	return bytes
 }
 
-func calculateMessageBytesCount(messages []iggcon.IggyMessage) int {
+func calculateMessageBytesCount(messages []iggcon.MessengerMessage) int {
 	count := 0
 	for _, msg := range messages {
 		count += iggcon.MessageHeaderSize + len(msg.Payload) + len(msg.UserHeaders)

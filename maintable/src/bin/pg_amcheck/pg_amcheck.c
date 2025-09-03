@@ -3,14 +3,14 @@
  * pg_amcheck.c
  *		Detects corruption within database relations.
  *
- * Copyright (c) 2017-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2017-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/bin/pg_amcheck/pg_amcheck.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <limits.h>
 #include <time.h>
@@ -1182,7 +1182,7 @@ verify_btree_slot_handler(PGresult *res, PGconn *conn, void *context)
 static void
 help(const char *progname)
 {
-	printf(_("%s checks objects in a PostgreSQL database for corruption.\n\n"), progname);
+	printf(_("%s checks objects in a maintableQL database for corruption.\n\n"), progname);
 	printf(_("Usage:\n"));
 	printf(_("  %s [OPTION]... [DBNAME]\n"), progname);
 	printf(_("\nTarget options:\n"));

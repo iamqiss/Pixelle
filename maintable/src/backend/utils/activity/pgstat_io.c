@@ -7,14 +7,14 @@
  * from pgstat.c to enforce the line between the statistics access / storage
  * implementation and the details about individual types of statistics.
  *
- * Copyright (c) 2021-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2021-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	  src/backend/utils/activity/pgstat_io.c
  * -------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "executor/instrument.h"
 #include "storage/bufmgr.h"
@@ -419,7 +419,7 @@ pgstat_tracks_io_object(BackendType bktype, IOObject io_object,
 		return false;
 
 	/*
-	 * In core Postgres, only regular backends and WAL Sender processes
+	 * In core Maintable, only regular backends and WAL Sender processes
 	 * executing queries will use local buffers and operate on temporary
 	 * relations. Parallel workers will not use local buffers (see
 	 * InitLocalBuffers()); however, extensions leveraging background workers

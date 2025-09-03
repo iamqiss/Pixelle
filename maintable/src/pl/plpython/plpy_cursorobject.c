@@ -4,7 +4,7 @@
  * src/pl/plpython/plpy_cursorobject.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <limits.h>
 
@@ -25,7 +25,7 @@ static PyObject *PLy_cursor_iternext(PyObject *self);
 static PyObject *PLy_cursor_fetch(PyObject *self, PyObject *args);
 static PyObject *PLy_cursor_close(PyObject *self, PyObject *unused);
 
-static const char PLy_cursor_doc[] = "Wrapper around a PostgreSQL cursor";
+static const char PLy_cursor_doc[] = "Wrapper around a maintableQL cursor";
 
 static PyMethodDef PLy_cursor_methods[] = {
 	{"fetch", PLy_cursor_fetch, METH_VARARGS, NULL},

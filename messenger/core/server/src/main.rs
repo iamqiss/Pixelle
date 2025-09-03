@@ -48,14 +48,14 @@ use tracing::{info, instrument};
 async fn main() -> Result<(), ServerError> {
     let startup_timestamp = Instant::now();
     let standard_font = FIGfont::standard().unwrap();
-    let figure = standard_font.convert("Iggy Server");
+    let figure = standard_font.convert("Messenger Server");
     println!("{}", figure.unwrap());
 
     if let Some(sha) = option_env!("VERGEN_GIT_SHA") {
         println!("Commit SHA: {sha}");
     }
 
-    if let Ok(env_path) = std::env::var("IGGY_ENV_PATH") {
+    if let Ok(env_path) = std::env::var("MESSENGER_ENV_PATH") {
         if dotenvy::from_path(&env_path).is_ok() {
             println!("Loaded environment variables from path: {env_path}");
         }
@@ -148,24 +148,24 @@ async fn main() -> Result<(), ServerError> {
 
     let elapsed_time = startup_timestamp.elapsed();
     info!(
-        "Iggy server has started - overall startup took {} ms.",
+        "Messenger server has started - overall startup took {} ms.",
         elapsed_time.as_millis()
     );
 
     #[cfg(unix)]
     tokio::select! {
         _ = ctrl_c.recv() => {
-            info!("Received SIGINT. Shutting down Iggy server...");
+            info!("Received SIGINT. Shutting down Messenger server...");
         },
         _ = sigterm.recv() => {
-            info!("Received SIGTERM. Shutting down Iggy server...");
+            info!("Received SIGTERM. Shutting down Messenger server...");
         }
     }
 
     #[cfg(windows)]
     match tokio::signal::ctrl_c().await {
         Ok(()) => {
-            info!("Received CTRL-C. Shutting down Iggy server...");
+            info!("Received CTRL-C. Shutting down Messenger server...");
         }
         Err(err) => {
             eprintln!("Unable to listen for shutdown signal: {}", err);
@@ -178,7 +178,7 @@ async fn main() -> Result<(), ServerError> {
     let elapsed_time = shutdown_timestamp.elapsed();
 
     info!(
-        "Iggy server has shutdown successfully. Shutdown took {} ms.",
+        "Messenger server has shutdown successfully. Shutdown took {} ms.",
         elapsed_time.as_millis()
     );
     Ok(())

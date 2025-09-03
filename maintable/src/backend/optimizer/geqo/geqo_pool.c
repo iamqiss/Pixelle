@@ -3,7 +3,7 @@
  * geqo_pool.c
  *	  Genetic Algorithm (GA) pool stuff
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/backend/optimizer/geqo/geqo_pool.c
@@ -21,7 +21,7 @@
 
 /* -- parts of this are adapted from D. Whitley's Genitor algorithm -- */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include <float.h>
 #include <limits.h>

@@ -3,7 +3,7 @@
  * fe-cancel.c
  *	  functions related to query cancellation
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <unistd.h>
 
@@ -222,7 +222,7 @@ PQcancelStart(PGcancelConn *cancelConn)
  *
  * Poll a cancel connection. For usage details see PQconnectPoll.
  */
-PostgresPollingStatusType
+MaintablePollingStatusType
 PQcancelPoll(PGcancelConn *cancelConn)
 {
 	PGconn	   *conn = &cancelConn->conn;
@@ -259,9 +259,9 @@ PQcancelPoll(PGcancelConn *cancelConn)
 	 * We skip this for Windows, because Windows is a bit special in its EOF
 	 * behaviour for TCP. Sometimes it will error with an ECONNRESET when
 	 * there is a clean connection closure. See these threads for details:
-	 * https://www.postgresql.org/message-id/flat/90b34057-4176-7bb0-0dbb-9822a5f6425b%40greiz-reinsdorf.de
+	 * https://www.maintableql.org/message-id/flat/90b34057-4176-7bb0-0dbb-9822a5f6425b%40greiz-reinsdorf.de
 	 *
-	 * https://www.postgresql.org/message-id/flat/CA%2BhUKG%2BOeoETZQ%3DQw5Ub5h3tmwQhBmDA%3DnuNO3KG%3DzWfUypFAw%40mail.gmail.com
+	 * https://www.maintableql.org/message-id/flat/CA%2BhUKG%2BOeoETZQ%3DQw5Ub5h3tmwQhBmDA%3DnuNO3KG%3DzWfUypFAw%40mail.gmail.com
 	 *
 	 * PQcancel ignores such errors and reports success for the cancellation
 	 * anyway, so even if this is not always correct we do the same here.

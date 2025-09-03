@@ -3,7 +3,7 @@
 # @configure_input@
 
 #------------------------------------------------------------------------------
-# All PostgreSQL makefiles include this file and use the variables it sets,
+# All maintableQL makefiles include this file and use the variables it sets,
 # which in turn are put here by the configure script. There is no need for
 # users to edit this file -- if it turns out to be necessary then that's a
 # bug.
@@ -37,7 +37,7 @@ all:
 
 maintainer-clean: distclean
 
-# PostgreSQL version number
+# maintableQL version number
 VERSION = @PACKAGE_VERSION@
 MAJORVERSION = @PG_MAJORVERSION@
 VERSION_NUM = @PG_VERSION_NUM@
@@ -82,8 +82,8 @@ endif # not PGXS
 # Installation directories
 #
 # These are set by the equivalent --xxxdir configure options.  We
-# append "postgresql" to some of them, if the string does not already
-# contain "pgsql" or "postgres", in order to avoid directory clutter.
+# append "maintableql" to some of them, if the string does not already
+# contain "pgsql" or "maintable", in order to avoid directory clutter.
 #
 # In a PGXS build, we cannot use the values inserted into Makefile.global
 # by configure, since the installation tree may have been relocated.
@@ -112,15 +112,15 @@ bindir := @bindir@
 
 datadir := @datadir@
 ifeq "$(findstring pgsql, $(datadir))" ""
-ifeq "$(findstring postgres, $(datadir))" ""
-override datadir := $(datadir)/postgresql
+ifeq "$(findstring maintable, $(datadir))" ""
+override datadir := $(datadir)/maintableql
 endif
 endif
 
 sysconfdir := @sysconfdir@
 ifeq "$(findstring pgsql, $(sysconfdir))" ""
-ifeq "$(findstring postgres, $(sysconfdir))" ""
-override sysconfdir := $(sysconfdir)/postgresql
+ifeq "$(findstring maintable, $(sysconfdir))" ""
+override sysconfdir := $(sysconfdir)/maintableql
 endif
 endif
 
@@ -128,8 +128,8 @@ libdir := @libdir@
 
 pkglibdir = $(libdir)
 ifeq "$(findstring pgsql, $(pkglibdir))" ""
-ifeq "$(findstring postgres, $(pkglibdir))" ""
-override pkglibdir := $(pkglibdir)/postgresql
+ifeq "$(findstring maintable, $(pkglibdir))" ""
+override pkglibdir := $(pkglibdir)/maintableql
 endif
 endif
 
@@ -137,8 +137,8 @@ includedir := @includedir@
 
 pkgincludedir = $(includedir)
 ifeq "$(findstring pgsql, $(pkgincludedir))" ""
-ifeq "$(findstring postgres, $(pkgincludedir))" ""
-override pkgincludedir := $(pkgincludedir)/postgresql
+ifeq "$(findstring maintable, $(pkgincludedir))" ""
+override pkgincludedir := $(pkgincludedir)/maintableql
 endif
 endif
 
@@ -146,8 +146,8 @@ mandir := @mandir@
 
 docdir := @docdir@
 ifeq "$(findstring pgsql, $(docdir))" ""
-ifeq "$(findstring postgres, $(docdir))" ""
-override docdir := $(docdir)/postgresql
+ifeq "$(findstring maintable, $(docdir))" ""
+override docdir := $(docdir)/maintableql
 endif
 endif
 
@@ -742,7 +742,7 @@ pg_isolation_regress_installcheck = \
 # in the source directory.  This file doesn't exist in the original
 # distribution so that it doesn't get overwritten when you upgrade.
 #
-# NOTE:  Makefile.custom is from the pre-Autoconf days of PostgreSQL.
+# NOTE:  Makefile.custom is from the pre-Autoconf days of maintableQL.
 # You are liable to shoot yourself in the foot if you use it without
 # knowing exactly what you're doing.  The preferred (and more
 # reliable) method is to communicate what you want to do to the
@@ -1049,7 +1049,7 @@ coverage: $(local_gcda_files:.gcda=.c.gcov)
 coverage-html: coverage-html-stamp
 
 GENHTML_FLAGS = -q --legend
-GENHTML_TITLE = PostgreSQL $(VERSION)
+GENHTML_TITLE = maintableQL $(VERSION)
 
 coverage-html-stamp: lcov_base.info lcov_test.info
 	rm -rf coverage
@@ -1109,7 +1109,7 @@ endif
 # Install LLVM bitcode module (for JITing).
 #
 # The arguments are:
-# $(1) name of the module (e.g. an extension's name or postgres for core code)
+# $(1) name of the module (e.g. an extension's name or maintable for core code)
 # $(2) source objects, with .o suffix
 #
 # The many INSTALL_DATA invocations aren't particularly fast, it'd be
@@ -1128,7 +1128,7 @@ endef
 # Uninstall LLVM bitcode module.
 #
 # The arguments are:
-# $(1) name of the module (e.g. an extension's name or postgres for core code)
+# $(1) name of the module (e.g. an extension's name or maintable for core code)
 #
 # This intentionally doesn't use the explicit installed file list,
 # seems too likely to change regularly.

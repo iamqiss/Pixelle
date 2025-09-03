@@ -1,13 +1,13 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Cluster;
 use Test::More;
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init;
 $node->start;
 
@@ -17,7 +17,7 @@ $node->issues_sql_like(
 	'vacuum all databases');
 
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 	CREATE DATABASE regression_invalid;
 	UPDATE pg_database SET datconnlimit = -2 WHERE datname = 'regression_invalid';
 ));

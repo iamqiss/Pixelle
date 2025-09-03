@@ -1,8 +1,8 @@
-# C# SDK for [Iggy](https://github.com/apache/iggy)
+# C# SDK for [Messenger](https://github.com/apache/messenger)
 
 <div align="center">
 
-[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Iggy)](https://www.nuget.org/packages/Iggy)
+[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Messenger)](https://www.nuget.org/packages/Messenger)
 
 </div>
 
@@ -13,13 +13,13 @@ Currently supported transfer protocols
 - TCP
 - HTTP
 
-The whole SDK revolves around `IIggyClient` interface to create an instance of it, use following code
+The whole SDK revolves around `IMessengerClient` interface to create an instance of it, use following code
 
 ```c#
 var loggerFactory = LoggerFactory.Create(builder =>
 {
     builder
-        .AddFilter("Iggy_SDK.MessageStream.Implementations;", LogLevel.Trace)
+        .AddFilter("Messenger_SDK.MessageStream.Implementations;", LogLevel.Trace)
         .AddConsole();
 });
 var bus = MessageStreamFactory.CreateMessageStream(options =>
@@ -29,15 +29,15 @@ var bus = MessageStreamFactory.CreateMessageStream(options =>
     options.TlsSettings = x =>
     {
         x.Enabled = false;
-        x.Hostname = "iggy";
+        x.Hostname = "messenger";
         x.Authenticate = false;
     };
 }, loggerFactory);
 ```
 
-Iggy necessitates the use of `ILoggerFactory` to generate logs from locations that are inaccessible to the user.
+Messenger necessitates the use of `ILoggerFactory` to generate logs from locations that are inaccessible to the user.
 
-In addition to the basic configuration settings, Iggy provides support for batching send/poll messages at intervals,
+In addition to the basic configuration settings, Messenger provides support for batching send/poll messages at intervals,
 which effectively decreases the frequency of network calls, this option is enabled by default.
 
 ```c#
@@ -49,7 +49,7 @@ var bus = MessageStreamFactory.CreateMessageStream(options =>
     options.TlsSettings = x =>
     {
         x.Enabled = false;
-        x.Hostname = "iggy";
+        x.Hostname = "messenger";
         x.Authenticate = false;
     };
 
@@ -75,8 +75,8 @@ To begin, utilize the root account (note that the root account cannot be removed
 ```c#
 var response = await bus.LoginUser(new LoginUserRequest
 {
-    Username = "iggy",
-    Password = "iggy",
+    Username = "messenger",
+    Password = "messenger",
 });
 ```
 
@@ -185,7 +185,7 @@ await bus.CreateTopicAsync(streamId, new TopicRequest
 });
 ```
 
-Notice that both Stream aswell as Topic use `-` instead of space in its name, Iggy will replace any spaces in
+Notice that both Stream aswell as Topic use `-` instead of space in its name, Messenger will replace any spaces in
 name with `-` instead, so keep that in mind.
 
 ### Sending messages
@@ -384,19 +384,19 @@ await foreach (var messageResponse in bus.PollMessagesAsync<Envelope>(new PollMe
 It is worth noting that every method (except `PollMessagesAsync`) will throw an `InvalidResponseException` when
 encountering an error.
 
-If you register `IIggyClient` in a dependency injection container, you will have access to interfaces
-that encapsulate smaller parts of the system `IIggyStream` `IIggyTopic` `IIggyPublisher` `IIggyConsumer`
-`IIggyConsumerGroup` `IIggyOffset`
-`IIggyPartition` `IIggyUsers` `IIggyUtils`
+If you register `IMessengerClient` in a dependency injection container, you will have access to interfaces
+that encapsulate smaller parts of the system `IMessengerStream` `IMessengerTopic` `IMessengerPublisher` `IMessengerConsumer`
+`IMessengerConsumerGroup` `IMessengerOffset`
+`IMessengerPartition` `IMessengerUsers` `IMessengerUtils`
 
-For more information about how Iggy works check its [documentation](https://iggy.apache.org/docs/)
+For more information about how Messenger works check its [documentation](https://messenger.apache.org/docs/)
 
 ## Producer / Consumer Sample
 
-To run the samples, first get [Iggy](https://github.com/apache/iggy), Run the server with `cargo run --bin iggy-server`,
-then get the SDK, cd into `Iggy_SDK`
-and run following commands: `dotnet run -c Release --project Iggy_Sample_Producer` for producer,
-`dotnet run -c Release --project Iggy_Sample_Consumer`
+To run the samples, first get [Messenger](https://github.com/apache/messenger), Run the server with `cargo run --bin messenger-server`,
+then get the SDK, cd into `Messenger_SDK`
+and run following commands: `dotnet run -c Release --project Messenger_Sample_Producer` for producer,
+`dotnet run -c Release --project Messenger_Sample_Consumer`
 for consumer.
 
 ## TODO

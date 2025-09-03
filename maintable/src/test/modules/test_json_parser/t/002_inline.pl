@@ -1,5 +1,5 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 # Test success or failure of the incremental (table-driven) JSON parser
 # for a variety of small inputs.
@@ -7,12 +7,12 @@
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Utils;
 use Test::More;
 
 use File::Temp qw(tempfile);
 
-my $dir = PostgreSQL::Test::Utils::tempdir;
+my $dir = maintableQL::Test::Utils::tempdir;
 my @exe;
 
 sub test

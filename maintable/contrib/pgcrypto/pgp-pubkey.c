@@ -28,7 +28,7 @@
  *
  * contrib/pgcrypto/pgp-pubkey.c
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "mbuf.h"
 #include "pgp.h"

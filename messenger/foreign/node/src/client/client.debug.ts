@@ -20,4 +20,4 @@
 
 import Debug from 'debug';
 
-export const debug = Debug('iggy:client');
+export const debug = Debug('messenger:client');

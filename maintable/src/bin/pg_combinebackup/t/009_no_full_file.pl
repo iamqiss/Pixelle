@@ -1,10 +1,10 @@
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 use File::Copy;
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Can be changed to test the other modes.
@@ -13,9 +13,9 @@ my $mode = $ENV{PG_TEST_PG_COMBINEBACKUP_MODE} || '--copy';
 note "testing using mode $mode";
 
 # Set up a new database instance.
-my $primary = PostgreSQL::Test::Cluster->new('primary');
+my $primary = maintableQL::Test::Cluster->new('primary');
 $primary->init(has_archiving => 1, allows_streaming => 1);
-$primary->append_conf('postgresql.conf', 'summarize_wal = on');
+$primary->append_conf('maintableql.conf', 'summarize_wal = on');
 $primary->start;
 
 # Take a full backup.

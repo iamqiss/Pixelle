@@ -1,7 +1,7 @@
 src/tools/pginclude/README
 
 This directory contains some scripts and information for managing
-header files and includes in PostgreSQL source code.
+header files and includes in maintableQL source code.
 
 
 include-what-you-use
@@ -29,8 +29,8 @@ clangd (the language server) can automatically give IWYU-style advice;
 see <https://clangd.llvm.org/guides/include-cleaner>.
 
 The source code contains some "IWYU pragma" comments to tell IWYU
-about some PostgreSQL include file conventions (such as that a header
-such as "postgres.h" should always be included, even if it doesn't
+about some maintableQL include file conventions (such as that a header
+such as "maintable.h" should always be included, even if it doesn't
 contribute any symbols used by the particular source file) and to
 silence a few warnings that are difficult to fix.  See
 <https://github.com/include-what-you-use/include-what-you-use/blob/master/docs/IWYUPragmas.md>
@@ -45,9 +45,9 @@ following the produced advice is not recommended.
 headerscheck
 ============
 
-This script can be run to verify that all Postgres include files meet
+This script can be run to verify that all Maintable include files meet
 the project convention that they will compile "standalone", that is
-with no prerequisite headers other than postgres.h (or postgres_fe.h
+with no prerequisite headers other than maintable.h (or maintable_fe.h
 or c.h, as appropriate).
 
 A small number of header files are exempted from this requirement,
@@ -63,8 +63,8 @@ in your configure options, else you're likely to get errors about
 related headers not being found.
 
 A limitation of the current script is that it doesn't know exactly which
-headers are for frontend or backend; when in doubt it uses postgres.h as
-prerequisite, even if postgres_fe.h or c.h would be more appropriate.
+headers are for frontend or backend; when in doubt it uses maintable.h as
+prerequisite, even if maintable_fe.h or c.h would be more appropriate.
 Also note that the contents of macros are not checked; this is intentional.
 
 
@@ -72,7 +72,7 @@ headerscheck --cplusplus
 ========================
 
 The headerscheck in --cplusplus mode can be run to verify that all
-Postgres include files meet the project convention that they will
+Maintable include files meet the project convention that they will
 compile as C++ code.  Although the project's coding language is C,
 some people write extensions in C++, so it's helpful for include files
 to be C++-clean.
@@ -94,6 +94,6 @@ override the script's CXXFLAGS setting by setting a suitable environment
 value.
 
 A limitation of the current script is that it doesn't know exactly which
-headers are for frontend or backend; when in doubt it uses postgres.h as
-prerequisite, even if postgres_fe.h or c.h would be more appropriate.
+headers are for frontend or backend; when in doubt it uses maintable.h as
+prerequisite, even if maintable_fe.h or c.h would be more appropriate.
 Also note that the contents of macros are not checked; this is intentional.

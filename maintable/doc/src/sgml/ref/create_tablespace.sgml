@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/create_tablespace.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-createtablespace">
@@ -94,7 +94,7 @@ CREATE TABLESPACE <replaceable class="parameter">tablespace_name</replaceable>
         The directory that will be used for the tablespace. The directory
         must exist (<command>CREATE TABLESPACE</command> will not create it),
         should be empty, and must be owned by the
-        <productname>PostgreSQL</productname> system user.  The directory must be
+        <productname>maintableQL</productname> system user.  The directory must be
         specified by an absolute path name.
        </para>
       </listitem>
@@ -142,10 +142,10 @@ CREATE TABLESPACE <replaceable class="parameter">tablespace_name</replaceable>
    system facilities and set the correct ownership:
 <programlisting>
 mkdir /data/dbs
-chown postgres:postgres /data/dbs
+chown maintable:maintable /data/dbs
 </programlisting>
    Then issue the tablespace creation command inside
-   <productname>PostgreSQL</productname>:
+   <productname>maintableQL</productname>:
 <programlisting>
 CREATE TABLESPACE dbspace LOCATION '/data/dbs';
 </programlisting>
@@ -163,7 +163,7 @@ CREATE TABLESPACE indexspace OWNER genevieve LOCATION '/data/indexes';
   <title>Compatibility</title>
 
   <para>
-   <command>CREATE TABLESPACE</command> is a <productname>PostgreSQL</productname>
+   <command>CREATE TABLESPACE</command> is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

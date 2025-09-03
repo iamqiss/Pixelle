@@ -1,12 +1,12 @@
 # Georgian message translation file for pgscripts
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pgscripts (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pgscripts (maintableQL) package.
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pgscripts (PostgreSQL) 18\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pgscripts (maintableQL) 18\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-04-25 17:51+0000\n"
 "PO-Revision-Date: 2025-04-26 05:06+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -430,10 +430,10 @@ msgstr "კომენტარის შექმნის შეცდომ�
 #: createdb.c:299
 #, c-format
 msgid ""
-"%s creates a PostgreSQL database.\n"
+"%s creates a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL-ის ბაზას ქმნის.\n"
+"%s maintableQL-ის ბაზას ქმნის.\n"
 "\n"
 
 #: createdb.c:301
@@ -601,10 +601,10 @@ msgstr "ახალი როლის შექმნის შეცდომ
 #: createuser.c:416
 #, c-format
 msgid ""
-"%s creates a new PostgreSQL role.\n"
+"%s creates a new maintableQL role.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL-ის როლს ქმნის.\n"
+"%s maintableQL-ის როლს ქმნის.\n"
 "\n"
 
 #: createuser.c:418 dropuser.c:172
@@ -769,10 +769,10 @@ msgstr "ბაზის წაშლის შეცდომა:%s"
 #: dropdb.c:170
 #, c-format
 msgid ""
-"%s removes a PostgreSQL database.\n"
+"%s removes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s წაშლის PostgreSQL ბაზას.\n"
+"%s წაშლის maintableQL ბაზას.\n"
 "\n"
 
 #: dropdb.c:172
@@ -817,10 +817,10 @@ msgstr "როლის (\"%s\") წაშლის შეცდომა: %s"
 #: dropuser.c:170
 #, c-format
 msgid ""
-"%s removes a PostgreSQL role.\n"
+"%s removes a maintableQL role.\n"
 "\n"
 msgstr ""
-"%s წაშლის PostgreSQL-ის როლს.\n"
+"%s წაშლის maintableQL-ის როლს.\n"
 "\n"
 
 #: dropuser.c:175
@@ -875,10 +875,10 @@ msgstr "უცნობი\n"
 #: pg_isready.c:225
 #, c-format
 msgid ""
-"%s issues a connection check to a PostgreSQL database.\n"
+"%s issues a connection check to a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL მონაცემთა ბაზასთან კავშირს ამოწმებს.\n"
+"%s maintableQL მონაცემთა ბაზასთან კავშირს ამოწმებს.\n"
 "\n"
 
 #: pg_isready.c:227
@@ -940,8 +940,8 @@ msgstr "ყველა და მითითებული ბაზები
 #: vacuumdb.c:579 vacuumdb.c:586 vacuumdb.c:593 vacuumdb.c:600 vacuumdb.c:607
 #: vacuumdb.c:614 vacuumdb.c:621 vacuumdb.c:628 vacuumdb.c:635
 #, c-format
-msgid "cannot use the \"%s\" option on server versions older than PostgreSQL %s"
-msgstr "პარამეტრი \"%s\" არ გამოიყენება PostgreSQL-ის ვერსიაში \"%s\" ან უფრო ძველში"
+msgid "cannot use the \"%s\" option on server versions older than maintableQL %s"
+msgstr "პარამეტრი \"%s\" არ გამოიყენება maintableQL-ის ვერსიაში \"%s\" ან უფრო ძველში"
 
 #: reindexdb.c:597
 #, c-format
@@ -976,10 +976,10 @@ msgstr "%s: ბაზის თავიდან ინდექსირებ
 #: reindexdb.c:897
 #, c-format
 msgid ""
-"%s reindexes a PostgreSQL database.\n"
+"%s reindexes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL ბაზის თავიდან ინდექსირება.\n"
+"%s maintableQL ბაზის თავიდან ინდექსირება.\n"
 "\n"
 
 #: reindexdb.c:901
@@ -1127,10 +1127,10 @@ msgstr "ბაზის (\"%s\") დამტვერსასრუტებ�
 #: vacuumdb.c:1336
 #, c-format
 msgid ""
-"%s cleans and analyzes a PostgreSQL database.\n"
+"%s cleans and analyzes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL ბაზის გასუფთავება და ოპტიმიზაცია.\n"
+"%s maintableQL ბაზის გასუფთავება და ოპტიმიზაცია.\n"
 "\n"
 
 #: vacuumdb.c:1340

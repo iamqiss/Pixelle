@@ -18,7 +18,7 @@
 
 use crate::streaming::common::test_setup::TestSetup;
 use crate::streaming::create_messages;
-use iggy::prelude::{IggyExpiry, IggyTimestamp, Sizeable};
+use messenger::prelude::{MessengerExpiry, MessengerTimestamp, Sizeable};
 use server::state::system::PartitionState;
 use server::streaming::partitions::partition::Partition;
 use server::streaming::segments::*;
@@ -42,13 +42,13 @@ async fn should_persist_partition_with_segment() {
             with_segment,
             setup.config.clone(),
             setup.storage.clone(),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU32::new(0)),
-            IggyTimestamp::now(),
+            MessengerTimestamp::now(),
         )
         .await;
 
@@ -74,19 +74,19 @@ async fn should_load_existing_partition_from_disk() {
             with_segment,
             setup.config.clone(),
             setup.storage.clone(),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU32::new(0)),
-            IggyTimestamp::now(),
+            MessengerTimestamp::now(),
         )
         .await;
         partition.persist().await.unwrap();
         assert_persisted_partition(&partition.partition_path, with_segment).await;
 
-        let now = IggyTimestamp::now();
+        let now = MessengerTimestamp::now();
         let mut loaded_partition = Partition::create(
             stream_id,
             topic_id,
@@ -94,7 +94,7 @@ async fn should_load_existing_partition_from_disk() {
             false,
             setup.config.clone(),
             setup.storage.clone(),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
@@ -144,13 +144,13 @@ async fn should_delete_existing_partition_from_disk() {
             with_segment,
             setup.config.clone(),
             setup.storage.clone(),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU32::new(0)),
-            IggyTimestamp::now(),
+            MessengerTimestamp::now(),
         )
         .await;
         partition.persist().await.unwrap();
@@ -178,13 +178,13 @@ async fn should_purge_existing_partition_on_disk() {
             with_segment,
             setup.config.clone(),
             setup.storage.clone(),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU64::new(0)),
             Arc::new(AtomicU32::new(0)),
-            IggyTimestamp::now(),
+            MessengerTimestamp::now(),
         )
         .await;
         partition.persist().await.unwrap();
@@ -195,7 +195,7 @@ async fn should_purge_existing_partition_on_disk() {
             .iter()
             .map(|msg| msg.get_size_bytes().as_bytes_u32())
             .sum();
-        let batch = IggyMessagesBatchMut::from_messages(&messages, messages_size);
+        let batch = MessengerMessagesBatchMut::from_messages(&messages, messages_size);
         partition.append_messages(batch, None).await.unwrap();
         let loaded_messages = partition.get_messages_by_offset(0, 100).await.unwrap();
         assert_eq!(loaded_messages.count(), messages_count);

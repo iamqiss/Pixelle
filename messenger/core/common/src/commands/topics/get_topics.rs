@@ -19,7 +19,7 @@
 use crate::BytesSerializable;
 use crate::Identifier;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, GET_TOPICS_CODE};
 use bytes::Bytes;
 use serde::{Deserialize, Serialize};
@@ -41,8 +41,8 @@ impl Command for GetTopics {
     }
 }
 
-impl Validatable<IggyError> for GetTopics {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for GetTopics {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -52,9 +52,9 @@ impl BytesSerializable for GetTopics {
         self.stream_id.to_bytes()
     }
 
-    fn from_bytes(bytes: Bytes) -> std::result::Result<GetTopics, IggyError> {
+    fn from_bytes(bytes: Bytes) -> std::result::Result<GetTopics, MessengerError> {
         if bytes.len() < 3 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let stream_id = Identifier::from_bytes(bytes)?;

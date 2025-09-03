@@ -4,7 +4,7 @@
  *	  definition of the "statistics" system catalog (pg_statistic)
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/catalog/pg_statistic.h
@@ -145,7 +145,7 @@ DECLARE_FOREIGN_KEY((starelid, staattnum), pg_attribute, (attrelid, attnum));
 #ifdef EXPOSE_TO_CLIENT_CODE
 
 /*
- * Several statistical slot "kinds" are defined by core PostgreSQL, as
+ * Several statistical slot "kinds" are defined by core maintableQL, as
  * documented below.  Also, custom data types can define their own "kind"
  * codes by mutual agreement between a custom typanalyze routine and the
  * selectivity estimation functions of the type's operators.
@@ -162,7 +162,7 @@ DECLARE_FOREIGN_KEY((starelid, staattnum), pg_attribute, (attrelid, attnum));
 /*
  * The present allocation of "kind" codes is:
  *
- *	1-99:		reserved for assignment by the core PostgreSQL project
+ *	1-99:		reserved for assignment by the core maintableQL project
  *				(values in this range will be documented in this file)
  *	100-199:	reserved for assignment by the PostGIS project
  *				(values to be documented in PostGIS documentation)
@@ -173,7 +173,7 @@ DECLARE_FOREIGN_KEY((starelid, staattnum), pg_attribute, (attrelid, attnum));
  * For private use you may choose a "kind" code at random in the range
  * 10000-30000.  However, for code that is to be widely disseminated it is
  * better to obtain a publicly defined "kind" code by request from the
- * PostgreSQL Global Development Group.
+ * maintableQL Global Development Group.
  */
 
 /*

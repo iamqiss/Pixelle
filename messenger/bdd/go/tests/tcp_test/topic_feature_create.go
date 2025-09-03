@@ -20,7 +20,7 @@ package tcp_test
 import (
 	"math"
 
-	iggcon "github.com/apache/iggy/foreign/go/contracts"
+	iggcon "github.com/apache/messenger/foreign/go/contracts"
 	"github.com/onsi/ginkgo/v2"
 )
 
@@ -83,7 +83,7 @@ var _ = ginkgo.Describe("CREATE TOPIC:", func() {
 				name,
 				2,
 				iggcon.CompressionAlgorithmNone,
-				iggcon.IggyExpiryServerDefault,
+				iggcon.MessengerExpiryServerDefault,
 				math.MaxUint64,
 				&replicationFactor,
 				&topicId)
@@ -102,7 +102,7 @@ var _ = ginkgo.Describe("CREATE TOPIC:", func() {
 				createRandomString(32),
 				2,
 				iggcon.CompressionAlgorithmNone,
-				iggcon.IggyExpiryServerDefault,
+				iggcon.MessengerExpiryServerDefault,
 				math.MaxUint64,
 				&replicationFactor,
 				&topicId)
@@ -122,7 +122,7 @@ var _ = ginkgo.Describe("CREATE TOPIC:", func() {
 				createRandomString(256),
 				2,
 				iggcon.CompressionAlgorithmNone,
-				iggcon.IggyExpiryServerDefault,
+				iggcon.MessengerExpiryServerDefault,
 				math.MaxUint64,
 				&replicationFactor,
 				&topicId)
@@ -142,7 +142,7 @@ var _ = ginkgo.Describe("CREATE TOPIC:", func() {
 				"name",
 				2,
 				iggcon.CompressionAlgorithmNone,
-				iggcon.IggyExpiryServerDefault,
+				iggcon.MessengerExpiryServerDefault,
 				math.MaxUint64,
 				&replicationFactor,
 				&topicId)

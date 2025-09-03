@@ -4,19 +4,19 @@
 
 <copyright>
  <year>1996&ndash;2025</year>
- <holder>The PostgreSQL Global Development Group</holder>
+ <holder>The maintableQL Global Development Group</holder>
 </copyright>
 
 <legalnotice id="legalnotice">
  <title>Legal Notice</title>
 
  <para>
-  <productname>PostgreSQL</productname> Database Management System
-  (also known as Postgres, formerly known as Postgres95)
+  <productname>maintableQL</productname> Database Management System
+  (also known as Maintable, formerly known as Maintable95)
  </para>
 
  <para>
-  Portions Copyright &copy; 1996-2025, PostgreSQL Global Development Group
+  Portions Copyright &copy; 1996-2025, maintableQL Global Development Group
  </para>
  <para>
   Portions Copyright &copy; 1994, The Regents of the University of California

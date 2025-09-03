@@ -1,12 +1,12 @@
 
-# Copyright (c) 2024-2025, PostgreSQL Global Development Group
+# Copyright (c) 2024-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 use locale;
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Time::HiRes qw(usleep);
 use Test::More;
 
@@ -21,7 +21,7 @@ if ($ENV{enable_injection_points} ne 'yes')
 }
 
 # Node initialization
-my $node = PostgreSQL::Test::Cluster->new('master');
+my $node = maintableQL::Test::Cluster->new('master');
 $node->init();
 $node->start;
 
@@ -33,16 +33,16 @@ if (!$node->check_extension('injection_points'))
 	plan skip_all => 'Extension injection_points not installed';
 }
 
-$node->safe_psql('postgres', 'CREATE EXTENSION injection_points;');
+$node->safe_psql('maintable', 'CREATE EXTENSION injection_points;');
 
 #
 # 1. Test of the transaction timeout
 #
 
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"SELECT injection_points_attach('transaction-timeout', 'wait');");
 
-my $psql_session = $node->background_psql('postgres');
+my $psql_session = $node->background_psql('maintable');
 
 # The following query will generate a stream of SELECT 1 queries. This is done
 # so to exercise transaction timeout in the presence of short queries.
@@ -64,7 +64,7 @@ $node->wait_for_event('client backend', 'transaction-timeout');
 my $log_offset = -s $node->logfile;
 
 # Remove the injection point.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"SELECT injection_points_wakeup('transaction-timeout');");
 
 # Check that the timeout was logged.
@@ -80,12 +80,12 @@ $psql_session->{run}->finish;
 # 2. Test of the idle in transaction timeout
 #
 
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"SELECT injection_points_attach('idle-in-transaction-session-timeout', 'wait');"
 );
 
 # We begin a transaction and the hand on the line
-$psql_session = $node->background_psql('postgres');
+$psql_session = $node->background_psql('maintable');
 $psql_session->query_until(
 	qr/starting_bg_psql/, q(
    \echo starting_bg_psql
@@ -100,7 +100,7 @@ $node->wait_for_event('client backend',
 $log_offset = -s $node->logfile;
 
 # Remove the injection point.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"SELECT injection_points_wakeup('idle-in-transaction-session-timeout');");
 
 # Check that the timeout was logged.
@@ -113,11 +113,11 @@ ok($psql_session->quit);
 #
 # 3. Test of the idle session timeout
 #
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"SELECT injection_points_attach('idle-session-timeout', 'wait');");
 
 # We just initialize the GUC and wait. No transaction is required.
-$psql_session = $node->background_psql('postgres');
+$psql_session = $node->background_psql('maintable');
 $psql_session->query_until(
 	qr/starting_bg_psql/, q(
    \echo starting_bg_psql
@@ -130,7 +130,7 @@ $node->wait_for_event('client backend', 'idle-session-timeout');
 $log_offset = -s $node->logfile;
 
 # Remove the injection point.
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	"SELECT injection_points_wakeup('idle-session-timeout');");
 
 # Check that the timeout was logged.

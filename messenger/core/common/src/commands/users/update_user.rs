@@ -22,7 +22,7 @@ use crate::Identifier;
 use crate::Sizeable;
 use crate::UserStatus;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, UPDATE_USER_CODE};
 use bytes::{BufMut, Bytes, BytesMut};
 use serde::{Deserialize, Serialize};
@@ -48,8 +48,8 @@ impl Command for UpdateUser {
     }
 }
 
-impl Validatable<IggyError> for UpdateUser {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for UpdateUser {
+    fn validate(&self) -> Result<(), MessengerError> {
         if self.username.is_none() {
             return Ok(());
         }
@@ -59,7 +59,7 @@ impl Validatable<IggyError> for UpdateUser {
             || username.len() > MAX_USERNAME_LENGTH
             || username.len() < MIN_USERNAME_LENGTH
         {
-            return Err(IggyError::InvalidUsername);
+            return Err(MessengerError::InvalidUsername);
         }
 
         Ok(())
@@ -89,16 +89,16 @@ impl BytesSerializable for UpdateUser {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<UpdateUser, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<UpdateUser, MessengerError> {
         if bytes.len() < 5 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let user_id = Identifier::from_bytes(bytes.clone())?;
         let mut position = user_id.get_size_bytes().as_bytes_usize();
         let has_username = bytes[position];
         if has_username > 1 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         position += 1;
@@ -106,7 +106,7 @@ impl BytesSerializable for UpdateUser {
             let username_length = bytes[position];
             position += 1;
             let username = from_utf8(&bytes[position..position + username_length as usize])
-                .map_err(|_| IggyError::InvalidUtf8)?
+                .map_err(|_| MessengerError::InvalidUtf8)?
                 .to_string();
             position += username_length as usize;
             Some(username)
@@ -116,7 +116,7 @@ impl BytesSerializable for UpdateUser {
 
         let has_status = bytes[position];
         if has_status > 1 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         let status = if has_status == 1 {

@@ -16,10 +16,10 @@
  * under the License.
  */
 
-use iggy_common::IggyByteSize;
-use iggy_common::IggyDuration;
-use iggy_common::IggyError;
-use iggy_common::IggyExpiry;
+use messenger_common::MessengerByteSize;
+use messenger_common::MessengerDuration;
+use messenger_common::MessengerError;
+use messenger_common::MessengerExpiry;
 use jsonwebtoken::{Algorithm, DecodingKey, EncodingKey};
 use serde::{Deserialize, Serialize};
 use serde_with::DisplayFromStr;
@@ -29,7 +29,7 @@ use serde_with::serde_as;
 pub struct HttpConfig {
     pub enabled: bool,
     pub address: String,
-    pub max_request_size: IggyByteSize,
+    pub max_request_size: MessengerByteSize,
     pub cors: HttpCorsConfig,
     pub jwt: HttpJwtConfig,
     pub metrics: HttpMetricsConfig,
@@ -56,11 +56,11 @@ pub struct HttpJwtConfig {
     pub valid_issuers: Vec<String>,
     pub valid_audiences: Vec<String>,
     #[serde_as(as = "DisplayFromStr")]
-    pub access_token_expiry: IggyExpiry,
+    pub access_token_expiry: MessengerExpiry,
     #[serde_as(as = "DisplayFromStr")]
-    pub clock_skew: IggyDuration,
+    pub clock_skew: MessengerDuration,
     #[serde_as(as = "DisplayFromStr")]
-    pub not_before: IggyDuration,
+    pub not_before: MessengerDuration,
     pub encoding_secret: String,
     pub decoding_secret: String,
     pub use_base64_secret: bool,
@@ -86,7 +86,7 @@ pub struct HttpTlsConfig {
 }
 
 impl HttpJwtConfig {
-    pub fn get_algorithm(&self) -> Result<Algorithm, IggyError> {
+    pub fn get_algorithm(&self) -> Result<Algorithm, MessengerError> {
         match self.algorithm.as_str() {
             "HS256" => Ok(Algorithm::HS256),
             "HS384" => Ok(Algorithm::HS384),
@@ -94,7 +94,7 @@ impl HttpJwtConfig {
             "RS256" => Ok(Algorithm::RS256),
             "RS384" => Ok(Algorithm::RS384),
             "RS512" => Ok(Algorithm::RS512),
-            _ => Err(IggyError::InvalidJwtAlgorithm(self.algorithm.clone())),
+            _ => Err(MessengerError::InvalidJwtAlgorithm(self.algorithm.clone())),
         }
     }
 
@@ -106,28 +106,28 @@ impl HttpJwtConfig {
         self.get_secret(&self.encoding_secret)
     }
 
-    pub fn get_decoding_key(&self) -> Result<DecodingKey, IggyError> {
+    pub fn get_decoding_key(&self) -> Result<DecodingKey, MessengerError> {
         if self.decoding_secret.is_empty() {
-            return Err(IggyError::InvalidJwtSecret);
+            return Err(MessengerError::InvalidJwtSecret);
         }
 
         Ok(match self.get_decoding_secret() {
             JwtSecret::Default(ref secret) => DecodingKey::from_secret(secret.as_ref()),
             JwtSecret::Base64(ref secret) => {
-                DecodingKey::from_base64_secret(secret).map_err(|_| IggyError::InvalidJwtSecret)?
+                DecodingKey::from_base64_secret(secret).map_err(|_| MessengerError::InvalidJwtSecret)?
             }
         })
     }
 
-    pub fn get_encoding_key(&self) -> Result<EncodingKey, IggyError> {
+    pub fn get_encoding_key(&self) -> Result<EncodingKey, MessengerError> {
         if self.encoding_secret.is_empty() {
-            return Err(IggyError::InvalidJwtSecret);
+            return Err(MessengerError::InvalidJwtSecret);
         }
 
         Ok(match self.get_encoding_secret() {
             JwtSecret::Default(ref secret) => EncodingKey::from_secret(secret.as_ref()),
             JwtSecret::Base64(ref secret) => {
-                EncodingKey::from_base64_secret(secret).map_err(|_| IggyError::InvalidJwtSecret)?
+                EncodingKey::from_base64_secret(secret).map_err(|_| MessengerError::InvalidJwtSecret)?
             }
         })
     }

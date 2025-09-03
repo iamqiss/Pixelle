@@ -18,7 +18,7 @@
 
 use crate::BytesSerializable;
 use crate::Validatable;
-use crate::error::IggyError;
+use crate::error::MessengerError;
 use crate::{Command, GET_STREAMS_CODE};
 use bytes::Bytes;
 use serde::{Deserialize, Serialize};
@@ -35,8 +35,8 @@ impl Command for GetStreams {
     }
 }
 
-impl Validatable<IggyError> for GetStreams {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for GetStreams {
+    fn validate(&self) -> Result<(), MessengerError> {
         Ok(())
     }
 }
@@ -46,9 +46,9 @@ impl BytesSerializable for GetStreams {
         Bytes::new()
     }
 
-    fn from_bytes(bytes: Bytes) -> std::result::Result<GetStreams, IggyError> {
+    fn from_bytes(bytes: Bytes) -> std::result::Result<GetStreams, MessengerError> {
         if !bytes.is_empty() {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
 
         Ok(GetStreams {})

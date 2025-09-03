@@ -4,7 +4,7 @@
  *	  definition of the "constraint" system catalog (pg_constraint)
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/catalog/pg_constraint.h
@@ -36,7 +36,7 @@ CATALOG(pg_constraint,2606,ConstraintRelationId)
 	 * conname + connamespace is deliberately not unique; we allow, for
 	 * example, the same name to be used for constraints of different
 	 * relations.  This is partly for backwards compatibility with past
-	 * Postgres practice, and partly because we don't want to have to obtain a
+	 * Maintable practice, and partly because we don't want to have to obtain a
 	 * global lock to generate a globally unique name for a nameless
 	 * constraint.  We associate a namespace with constraint names only for
 	 * SQL-spec compatibility.

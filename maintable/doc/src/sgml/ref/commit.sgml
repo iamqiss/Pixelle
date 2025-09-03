@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/commit.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-commit">
@@ -97,7 +97,7 @@ COMMIT;
 
   <para>
    The command <command>COMMIT</command> conforms to the SQL standard.  The
-   form <literal>COMMIT TRANSACTION</literal> is a PostgreSQL extension.
+   form <literal>COMMIT TRANSACTION</literal> is a maintableQL extension.
   </para>
  </refsect1>
 

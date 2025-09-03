@@ -16,7 +16,7 @@
  * do_like_escape - name of function if wanted - needs CHAREQ and CopyAdvChar
  * MATCH_LOWER - define for case (4) to specify case folding for 1-byte chars
  *
- * Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *	src/backend/utils/adt/like_match.c
@@ -385,7 +385,7 @@ MatchText(const char *t, int tlen, const char *p, int plen, pg_locale_t locale)
 
 /*
  * like_escape() --- given a pattern and an ESCAPE string,
- * convert the pattern to use Postgres' standard backslash escape convention.
+ * convert the pattern to use Maintable' standard backslash escape convention.
  */
 #ifdef do_like_escape
 

@@ -18,7 +18,7 @@
 
 use crate::tcp::tcp_stream::ConnectionStream;
 use async_trait::async_trait;
-use iggy_common::IggyError;
+use messenger_common::MessengerError;
 use std::net::SocketAddr;
 use tokio::io::{AsyncReadExt, AsyncWriteExt, BufReader, BufWriter};
 use tokio::net::TcpStream;
@@ -45,43 +45,43 @@ impl TcpConnectionStream {
 
 #[async_trait]
 impl ConnectionStream for TcpConnectionStream {
-    async fn read(&mut self, buf: &mut [u8]) -> Result<usize, IggyError> {
+    async fn read(&mut self, buf: &mut [u8]) -> Result<usize, MessengerError> {
         self.reader.read_exact(buf).await.map_err(|error| {
             error!(
                 "Failed to read data by client: {} from the TCP connection: {error}",
                 self.client_address
             );
-            IggyError::TcpError
+            MessengerError::TcpError
         })
     }
 
-    async fn write(&mut self, buf: &[u8]) -> Result<(), IggyError> {
+    async fn write(&mut self, buf: &[u8]) -> Result<(), MessengerError> {
         self.writer.write_all(buf).await.map_err(|error| {
             error!(
                 "Failed to write data by client: {} to the TCP connection: {error}",
                 self.client_address
             );
-            IggyError::TcpError
+            MessengerError::TcpError
         })
     }
 
-    async fn flush(&mut self) -> Result<(), IggyError> {
+    async fn flush(&mut self) -> Result<(), MessengerError> {
         self.writer.flush().await.map_err(|error| {
             error!(
                 "Failed to flush data by client: {} to the TCP connection: {error}",
                 self.client_address
             );
-            IggyError::TcpError
+            MessengerError::TcpError
         })
     }
 
-    async fn shutdown(&mut self) -> Result<(), IggyError> {
+    async fn shutdown(&mut self) -> Result<(), MessengerError> {
         self.writer.shutdown().await.map_err(|error| {
             error!(
                 "Failed to shutdown the TCP connection by client: {} to the TCP connection: {error}",
                 self.client_address
             );
-            IggyError::TcpError
+            MessengerError::TcpError
         })
     }
 }

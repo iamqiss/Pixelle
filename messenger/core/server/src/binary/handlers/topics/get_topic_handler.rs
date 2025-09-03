@@ -23,13 +23,13 @@ use crate::binary::sender::SenderKind;
 use crate::streaming::session::Session;
 use crate::streaming::systems::system::SharedSystem;
 use anyhow::Result;
-use iggy_common::IggyError;
-use iggy_common::get_topic::GetTopic;
+use messenger_common::MessengerError;
+use messenger_common::get_topic::GetTopic;
 use tracing::debug;
 
 impl ServerCommandHandler for GetTopic {
     fn code(&self) -> u32 {
-        iggy_common::GET_TOPIC_CODE
+        messenger_common::GET_TOPIC_CODE
     }
 
     async fn handle(
@@ -38,7 +38,7 @@ impl ServerCommandHandler for GetTopic {
         _length: u32,
         session: &Session,
         system: &SharedSystem,
-    ) -> Result<(), IggyError> {
+    ) -> Result<(), MessengerError> {
         debug!("session: {session}, command: {self}");
         let system = system.read().await;
         let Ok(topic) = system.try_find_topic(session, &self.stream_id, &self.topic_id) else {
@@ -58,13 +58,13 @@ impl ServerCommandHandler for GetTopic {
 }
 
 impl BinaryServerCommand for GetTopic {
-    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, IggyError>
+    async fn from_sender(sender: &mut SenderKind, code: u32, length: u32) -> Result<Self, MessengerError>
     where
         Self: Sized,
     {
         match receive_and_validate(sender, code, length).await? {
             ServerCommand::GetTopic(get_topic) => Ok(get_topic),
-            _ => Err(IggyError::InvalidCommand),
+            _ => Err(MessengerError::InvalidCommand),
         }
     }
 }

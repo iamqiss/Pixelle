@@ -16,7 +16,7 @@
  * under the License.
  */
 
-use iggy_common::UserId;
+use messenger_common::UserId;
 use serde::{Deserialize, Serialize};
 use std::net::SocketAddr;
 

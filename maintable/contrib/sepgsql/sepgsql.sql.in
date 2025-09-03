@@ -6,7 +6,7 @@
 -- 1. Run initdb
 --    to set up a new database cluster.
 --
--- 2. Edit $PGDATA/postgresql.conf
+-- 2. Edit $PGDATA/maintableql.conf
 --    to add 'MODULE_PATHNAME' to shared_preload_libraries.
 --
 --    Example)
@@ -19,9 +19,9 @@
 --    to your preference.
 --
 --    Example)
---      $ for DBNAME in template0 template1 postgres;     \
+--      $ for DBNAME in template0 template1 maintable;     \
 --        do                                              \
---          postgres --single -F -c exit_on_error=true -D $PGDATA $DBNAME \
+--          maintable --single -F -c exit_on_error=true -D $PGDATA $DBNAME \
 --            < /path/to/script/sepgsql.sql > /dev/null   \
 --        done
 --

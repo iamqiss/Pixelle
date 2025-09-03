@@ -1,6 +1,6 @@
 <!--
 doc/src/sgml/ref/alter_extension.sgml
-PostgreSQL documentation
+maintableQL documentation
 -->
 
 <refentry id="sql-alterextension">
@@ -318,7 +318,7 @@ ALTER EXTENSION hstore ADD FUNCTION populate_record(anyelement, hstore);
   <title>Compatibility</title>
 
   <para>
-   <command>ALTER EXTENSION</command> is a <productname>PostgreSQL</productname>
+   <command>ALTER EXTENSION</command> is a <productname>maintableQL</productname>
    extension.
   </para>
  </refsect1>

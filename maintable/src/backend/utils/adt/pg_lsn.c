@@ -3,7 +3,7 @@
  * pg_lsn.c
  *	  Operations for the pg_lsn datatype.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -11,7 +11,7 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
+#include "maintable.h"
 
 #include "libpq/pqformat.h"
 #include "utils/fmgrprotos.h"
@@ -111,7 +111,7 @@ pg_lsn_send(PG_FUNCTION_ARGS)
 
 
 /*----------------------------------------------------------
- *	Operators for PostgreSQL LSNs
+ *	Operators for maintableQL LSNs
  *---------------------------------------------------------*/
 
 Datum
@@ -217,7 +217,7 @@ pg_lsn_hash_extended(PG_FUNCTION_ARGS)
 
 
 /*----------------------------------------------------------
- *	Arithmetic operators on PostgreSQL LSNs.
+ *	Arithmetic operators on maintableQL LSNs.
  *---------------------------------------------------------*/
 
 Datum

@@ -17,7 +17,7 @@
  */
 
 use crate::args::{
-    common::IggyBenchArgs,
+    common::MessengerBenchArgs,
     defaults::{
         DEFAULT_BALANCED_NUMBER_OF_STREAMS, DEFAULT_NUMBER_OF_CONSUMER_GROUPS,
         DEFAULT_NUMBER_OF_CONSUMERS,
@@ -26,7 +26,7 @@ use crate::args::{
     transport::BenchmarkTransportCommand,
 };
 use clap::{CommandFactory, Parser, error::ErrorKind};
-use iggy::prelude::IggyByteSize;
+use messenger::prelude::MessengerByteSize;
 use std::num::NonZeroU32;
 
 /// Polling benchmark with consumer group
@@ -76,7 +76,7 @@ impl BenchmarkKindProps for BalancedConsumerGroupArgs {
     fn validate(&self) {
         let cg_number = self.consumer_groups.get();
         let streams = self.streams.get();
-        let mut cmd = IggyBenchArgs::command();
+        let mut cmd = MessengerBenchArgs::command();
 
         if cg_number < streams {
             cmd.error(
@@ -89,7 +89,7 @@ impl BenchmarkKindProps for BalancedConsumerGroupArgs {
         }
     }
 
-    fn max_topic_size(&self) -> Option<IggyByteSize> {
+    fn max_topic_size(&self) -> Option<MessengerByteSize> {
         None
     }
 }

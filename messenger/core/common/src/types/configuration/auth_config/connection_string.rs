@@ -16,12 +16,12 @@
  * under the License.
  */
 
-use crate::{AutoLogin, ConnectionStringOptions, Credentials, IggyError};
+use crate::{AutoLogin, ConnectionStringOptions, Credentials, MessengerError};
 use std::str::FromStr;
 use strum::{Display, EnumString, IntoStaticStr};
 
-const DEFAULT_CONNECTION_STRING_PREFIX: &str = "iggy://";
-const CONNECTION_STRING_PREFIX: &str = "iggy+";
+const DEFAULT_CONNECTION_STRING_PREFIX: &str = "messenger://";
+const CONNECTION_STRING_PREFIX: &str = "messenger+";
 
 #[derive(Debug)]
 pub struct ConnectionString<T: ConnectionStringOptions + Default> {
@@ -43,7 +43,7 @@ impl<T: ConnectionStringOptions + Default> ConnectionString<T> {
         &self.options
     }
 
-    pub fn new(connection_string: &str) -> Result<Self, IggyError> {
+    pub fn new(connection_string: &str) -> Result<Self, MessengerError> {
         let connection_string = connection_string.split("://").collect::<Vec<&str>>()[1];
         let parts = connection_string.split('@').collect::<Vec<&str>>();
         let mut username = "";
@@ -51,7 +51,7 @@ impl<T: ConnectionStringOptions + Default> ConnectionString<T> {
         let mut pat_token = "";
 
         if parts.len() != 2 {
-            return Err(IggyError::InvalidConnectionString);
+            return Err(MessengerError::InvalidConnectionString);
         }
 
         let credentials = parts[0].split(':').collect::<Vec<&str>>();
@@ -62,33 +62,33 @@ impl<T: ConnectionStringOptions + Default> ConnectionString<T> {
             password = credentials[1];
 
             if username.is_empty() || password.is_empty() {
-                return Err(IggyError::InvalidConnectionString);
+                return Err(MessengerError::InvalidConnectionString);
             }
         } else {
-            return Err(IggyError::InvalidConnectionString);
+            return Err(MessengerError::InvalidConnectionString);
         }
 
         let server_and_options = parts[1].split('?').collect::<Vec<&str>>();
         if server_and_options.len() > 2 {
-            return Err(IggyError::InvalidConnectionString);
+            return Err(MessengerError::InvalidConnectionString);
         }
 
         let server_address = server_and_options[0];
         if server_address.is_empty() {
-            return Err(IggyError::InvalidConnectionString);
+            return Err(MessengerError::InvalidConnectionString);
         }
 
         if !server_address.contains(':') || server_address.starts_with(':') {
-            return Err(IggyError::InvalidConnectionString);
+            return Err(MessengerError::InvalidConnectionString);
         }
 
         let port = server_address.split(':').collect::<Vec<&str>>()[1];
         if port.is_empty() {
-            return Err(IggyError::InvalidConnectionString);
+            return Err(MessengerError::InvalidConnectionString);
         }
 
         if port.parse::<u16>().is_err() {
-            return Err(IggyError::InvalidConnectionString);
+            return Err(MessengerError::InvalidConnectionString);
         }
 
         let connection_string_options;
@@ -120,7 +120,7 @@ impl<T: ConnectionStringOptions + Default> ConnectionString<T> {
 }
 
 impl<T: ConnectionStringOptions + Default> FromStr for ConnectionString<T> {
-    type Err = IggyError;
+    type Err = MessengerError;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         ConnectionString::<T>::new(s)
     }
@@ -148,9 +148,9 @@ impl TransportProtocol {
 }
 
 impl ConnectionStringUtils {
-    pub fn parse_protocol(connection_string: &str) -> Result<TransportProtocol, IggyError> {
+    pub fn parse_protocol(connection_string: &str) -> Result<TransportProtocol, MessengerError> {
         if connection_string.is_empty() {
-            return Err(IggyError::InvalidConnectionString);
+            return Err(MessengerError::InvalidConnectionString);
         }
 
         if connection_string.starts_with(DEFAULT_CONNECTION_STRING_PREFIX) {
@@ -158,12 +158,12 @@ impl ConnectionStringUtils {
         }
 
         if !connection_string.starts_with(CONNECTION_STRING_PREFIX) {
-            return Err(IggyError::InvalidConnectionString);
+            return Err(MessengerError::InvalidConnectionString);
         }
 
         let connection_string = connection_string.replace(CONNECTION_STRING_PREFIX, "");
         TransportProtocol::from_str(connection_string.split("://").collect::<Vec<&str>>()[0])
-            .map_err(|_| IggyError::InvalidConnectionString)
+            .map_err(|_| MessengerError::InvalidConnectionString)
     }
 }
 
@@ -173,7 +173,7 @@ impl ConnectionStringUtils {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::IggyDuration;
+    use crate::MessengerDuration;
     use crate::TcpConnectionStringOptions;
 
     #[test]
@@ -269,7 +269,7 @@ mod tests {
         assert!(connection_string.options.retries().is_none());
         assert_eq!(
             connection_string.options.heartbeat_interval(),
-            IggyDuration::from_str("5s").unwrap()
+            MessengerDuration::from_str("5s").unwrap()
         );
     }
 
@@ -303,7 +303,7 @@ mod tests {
         assert_eq!(connection_string.options.retries().unwrap(), 3);
         assert_eq!(
             connection_string.options.heartbeat_interval(),
-            IggyDuration::from_str("10s").unwrap()
+            MessengerDuration::from_str("10s").unwrap()
         );
     }
 
@@ -311,7 +311,7 @@ mod tests {
     fn should_succeed_with_pat() {
         let server_address = "127.0.0.1";
         let port = "1234";
-        let pat = "iggypat-1234567890abcdef";
+        let pat = "messengerpat-1234567890abcdef";
         let value = format!("{DEFAULT_CONNECTION_STRING_PREFIX}{pat}@{server_address}:{port}");
         let connection_string = ConnectionString::<TcpConnectionStringOptions>::new(&value);
         assert!(connection_string.is_ok());
@@ -329,7 +329,7 @@ mod tests {
         assert!(connection_string.options.retries().is_none());
         assert_eq!(
             connection_string.options.heartbeat_interval(),
-            IggyDuration::from_str("5s").unwrap()
+            MessengerDuration::from_str("5s").unwrap()
         );
     }
 }

@@ -1,12 +1,12 @@
 # Georgian message translation file for pg_archivecleanup
-# Copyright (C) 2022 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_archivecleanup (PostgreSQL) package.
+# Copyright (C) 2022 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_archivecleanup (maintableQL) package.
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_archivecleanup (PostgreSQL) 18\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_archivecleanup (maintableQL) 18\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-02-27 09:54+0000\n"
 "PO-Revision-Date: 2025-02-27 12:57+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -88,10 +88,10 @@ msgstr "მეტი ინფორმაციისთვის სცად�
 #: pg_archivecleanup.c:260
 #, c-format
 msgid ""
-"%s removes older WAL files from PostgreSQL archives.\n"
+"%s removes older WAL files from maintableQL archives.\n"
 "\n"
 msgstr ""
-"%s PostgreSQL-ის არქივებიდან ძველი WAL ფაილების წაშლა.\n"
+"%s maintableQL-ის არქივებიდან ძველი WAL ფაილების წაშლა.\n"
 "\n"
 
 #: pg_archivecleanup.c:261
@@ -155,13 +155,13 @@ msgstr "  -?, --help     ამ დახმარების ჩვენე�
 #, c-format
 msgid ""
 "\n"
-"For use as \"archive_cleanup_command\" in postgresql.conf:\n"
+"For use as \"archive_cleanup_command\" in maintableql.conf:\n"
 "  archive_cleanup_command = 'pg_archivecleanup [OPTION]... ARCHIVELOCATION %%r'\n"
 "e.g.\n"
 "  archive_cleanup_command = 'pg_archivecleanup /mnt/server/archiverdir %%r'\n"
 msgstr ""
 "\n"
-"გამოსაყენებლად, როგორც \"archive_cleanup_command\" postgresql.conf-ში: \n"
+"გამოსაყენებლად, როგორც \"archive_cleanup_command\" maintableql.conf-ში: \n"
 "  archive_cleanup_command = 'pg_archivecleanup [პარამეტრი]... არქივისმდებარეობა %%r'\n"
 "მაგ: \n"
 "  archive_cleanup_command = 'pg_archivecleanup /mnt/server/archiverdir %%r'\n"

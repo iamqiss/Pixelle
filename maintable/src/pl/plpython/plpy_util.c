@@ -4,7 +4,7 @@
  * src/pl/plpython/plpy_util.c
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "mb/pg_wchar.h"
 #include "plpy_elog.h"
@@ -12,7 +12,7 @@
 
 /*
  * Convert a Python unicode object to a Python string/bytes object in
- * PostgreSQL server encoding.  Reference ownership is passed to the
+ * maintableQL server encoding.  Reference ownership is passed to the
  * caller.
  */
 PyObject *
@@ -40,7 +40,7 @@ PLyUnicode_Bytes(PyObject *unicode)
 	 *
 	 * PyUnicode_AsEncodedString could be used to encode the object directly
 	 * in the server encoding, but Python doesn't support all the encodings
-	 * that PostgreSQL does (EUC_TW and MULE_INTERNAL). UTF-8 is used as an
+	 * that maintableQL does (EUC_TW and MULE_INTERNAL). UTF-8 is used as an
 	 * intermediary in PLyUnicode_FromString as well.
 	 */
 	if (GetDatabaseEncoding() != PG_UTF8)
@@ -73,7 +73,7 @@ PLyUnicode_Bytes(PyObject *unicode)
 }
 
 /*
- * Convert a Python unicode object to a C string in PostgreSQL server
+ * Convert a Python unicode object to a C string in maintableQL server
  * encoding.  No Python object reference is passed out of this
  * function.  The result is palloc'ed.
  */
@@ -88,7 +88,7 @@ PLyUnicode_AsString(PyObject *unicode)
 }
 
 /*
- * Convert a C string in the PostgreSQL server encoding to a Python
+ * Convert a C string in the maintableQL server encoding to a Python
  * unicode object.  Reference ownership is passed to the caller.
  */
 PyObject *

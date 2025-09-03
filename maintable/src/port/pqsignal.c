@@ -4,7 +4,7 @@
  *	  reliable BSD-style signal(2) routine stolen from RWW who stole it
  *	  from Stevens...
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -87,8 +87,8 @@ wrapper_handler(SIGNAL_ARGS)
 {
 	int			save_errno = errno;
 
-	Assert(postgres_signal_arg > 0);
-	Assert(postgres_signal_arg < PG_NSIG);
+	Assert(maintable_signal_arg > 0);
+	Assert(maintable_signal_arg < PG_NSIG);
 
 #ifndef FRONTEND
 
@@ -101,13 +101,13 @@ wrapper_handler(SIGNAL_ARGS)
 
 	if (unlikely(MyProcPid != (int) getpid()))
 	{
-		pqsignal(postgres_signal_arg, SIG_DFL);
-		raise(postgres_signal_arg);
+		pqsignal(maintable_signal_arg, SIG_DFL);
+		raise(maintable_signal_arg);
 		return;
 	}
 #endif
 
-	(*pqsignal_handlers[postgres_signal_arg]) (postgres_signal_arg);
+	(*pqsignal_handlers[maintable_signal_arg]) (maintable_signal_arg);
 
 	errno = save_errno;
 }

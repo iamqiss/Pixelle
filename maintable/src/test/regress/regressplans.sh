@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# This script runs the Postgres regression tests with all useful combinations
+# This script runs the Maintable regression tests with all useful combinations
 # of the backend options that disable various query plan types.  If the
 # results are not all the same, it may indicate a bug in a particular
 # plan type, or perhaps just a regression test whose results aren't fully

@@ -1,19 +1,19 @@
 
-# Copyright (c) 2021-2025, PostgreSQL Global Development Group
+# Copyright (c) 2021-2025, maintableQL Global Development Group
 
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
+use maintableQL::Test::Cluster;
 use Test::More;
 
-my $node = PostgreSQL::Test::Cluster->new('main');
+my $node = maintableQL::Test::Cluster->new('main');
 $node->init;
 $node->start;
 
 $ENV{PGOPTIONS} = '--client-min-messages=WARNING';
 
-$node->safe_psql('postgres',
+$node->safe_psql('maintable',
 	'CREATE TABLE test1 (a int); CREATE INDEX test1x ON test1 (a);');
 $node->safe_psql('template1',
 	'CREATE TABLE test1 (a int); CREATE INDEX test1x ON test1 (a);');
@@ -23,7 +23,7 @@ $node->issues_sql_like(
 	'reindex all databases');
 $node->issues_sql_like(
 	[ 'reindexdb', '--all', '--system' ],
-	qr/statement: REINDEX SYSTEM postgres/s,
+	qr/statement: REINDEX SYSTEM maintable/s,
 	'reindex system catalogs in all databases');
 $node->issues_sql_like(
 	[ 'reindexdb', '--all', '--schema' => 'public' ],
@@ -39,7 +39,7 @@ $node->issues_sql_like(
 	'reindex table in all databases');
 
 $node->safe_psql(
-	'postgres', q(
+	'maintable', q(
 	CREATE DATABASE regression_invalid;
 	UPDATE pg_database SET datconnlimit = -2 WHERE datname = 'regression_invalid';
 ));

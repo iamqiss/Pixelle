@@ -21,7 +21,7 @@ import { toDate } from "../serialize.utils.js";
 import { u128LEBufToBigint } from "../number.utils.js";
 
 
-export type IggyMessageHeader = {
+export type MessengerMessageHeader = {
   checksum: bigint,
   id: string | BigInt,
   offset: bigint,
@@ -32,14 +32,14 @@ export type IggyMessageHeader = {
 };
 
 // u64 + u128 + u64 + u64 + u64 + u32 + u32
-export const IGGY_MESSAGE_HEADER_SIZE = 8 + 16 + 8 + 8 + 8 + 4 + 4;
+export const MESSENGER_MESSAGE_HEADER_SIZE = 8 + 16 + 8 + 8 + 8 + 4 + 4;
 
-export const serializeIggyMessageHeader = (
+export const serializeMessengerMessageHeader = (
   id: Buffer,
   payload: Buffer,
   userHeaders: Buffer
 ) => {
-  const b = Buffer.allocUnsafe(IGGY_MESSAGE_HEADER_SIZE);
+  const b = Buffer.allocUnsafe(MESSENGER_MESSAGE_HEADER_SIZE);
   b.writeBigUInt64LE(0n, 0); // checksum u64
   b.fill(id, 8, 24); // id u128
   b.writeBigUInt64LE(0n, 24); // offset u64
@@ -52,13 +52,13 @@ export const serializeIggyMessageHeader = (
 
 export const deserialiseMessageId = (b: Buffer) => u128LEBufToBigint(b);
 
-export const deserializeIggyMessageHeaders = (b: Buffer) => {
-  if(b.length !== IGGY_MESSAGE_HEADER_SIZE)
+export const deserializeMessengerMessageHeaders = (b: Buffer) => {
+  if(b.length !== MESSENGER_MESSAGE_HEADER_SIZE)
     throw new Error(
       `deserialize message headers error, length = ${b.length} ` +
-        `expected ${IGGY_MESSAGE_HEADER_SIZE}`
+        `expected ${MESSENGER_MESSAGE_HEADER_SIZE}`
     );
-  const headers: IggyMessageHeader = {
+  const headers: MessengerMessageHeader = {
     checksum: b.readBigUInt64LE(0),
     id: deserialiseMessageId(b.subarray(8, 24)),
     offset: b.readBigUInt64LE(24),

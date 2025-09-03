@@ -16,58 +16,58 @@
  * under the License.
  */
 
-//! Prelude module for the Iggy SDK.
+//! Prelude module for the Messenger SDK.
 //!
 //! This module re-exports the most common types, traits, and functions
-//! from the Iggy SDK to make them easier to import and use.
+//! from the Messenger SDK to make them easier to import and use.
 //!
 //! # Examples
 //!
 //! ```
-//! use iggy::prelude::*;
+//! use messenger::prelude::*;
 //! ```
 
 pub use crate::client_provider;
 pub use crate::client_provider::ClientProviderConfig;
 pub use crate::client_wrappers::client_wrapper::ClientWrapper;
-pub use crate::clients::client::IggyClient;
-pub use crate::clients::client_builder::IggyClientBuilder;
+pub use crate::clients::client::MessengerClient;
+pub use crate::clients::client_builder::MessengerClientBuilder;
 pub use crate::clients::consumer::{
-    AutoCommit, AutoCommitAfter, AutoCommitWhen, IggyConsumer, ReceivedMessage,
+    AutoCommit, AutoCommitAfter, AutoCommitWhen, MessengerConsumer, ReceivedMessage,
 };
-pub use crate::clients::consumer_builder::IggyConsumerBuilder;
-pub use crate::clients::producer::IggyProducer;
-pub use crate::clients::producer_builder::IggyProducerBuilder;
+pub use crate::clients::consumer_builder::MessengerConsumerBuilder;
+pub use crate::clients::producer::MessengerProducer;
+pub use crate::clients::producer_builder::MessengerProducerBuilder;
 pub use crate::clients::producer_config::{BackgroundConfig, DirectConfig};
-pub use crate::consumer_ext::IggyConsumerMessageExt;
-pub use crate::stream_builder::IggyConsumerConfig;
-pub use crate::stream_builder::IggyStreamConsumer;
-pub use crate::stream_builder::{IggyProducerConfig, IggyStreamProducer};
-pub use crate::stream_builder::{IggyStream, IggyStreamConfig};
+pub use crate::consumer_ext::MessengerConsumerMessageExt;
+pub use crate::stream_builder::MessengerConsumerConfig;
+pub use crate::stream_builder::MessengerStreamConsumer;
+pub use crate::stream_builder::{MessengerProducerConfig, MessengerStreamProducer};
+pub use crate::stream_builder::{MessengerStream, MessengerStreamConfig};
 pub use crate::tcp::tcp_client::TcpClient;
-pub use iggy_binary_protocol::{
+pub use messenger_binary_protocol::{
     Client, ConsumerGroupClient, ConsumerOffsetClient, MessageClient, PartitionClient,
     PersonalAccessTokenClient, SegmentClient, StreamClient, SystemClient, TopicClient, UserClient,
 };
-pub use iggy_common::{
+pub use messenger_common::{
     Aes256GcmEncryptor, Args, ArgsOptional, AutoLogin, BytesSerializable, CacheMetrics,
     CacheMetricsKey, ClientError, ClientInfoDetails, CompressionAlgorithm, Confirmation, Consumer,
     ConsumerGroupDetails, ConsumerKind, EncryptorKind, FlushUnsavedBuffer, GlobalPermissions,
     HeaderKey, HeaderValue, HttpClientConfig, HttpClientConfigBuilder, IdKind, Identifier,
-    IdentityInfo, IggyByteSize, IggyDuration, IggyError, IggyExpiry, IggyIndexView, IggyMessage,
-    IggyMessageHeader, IggyMessageHeaderView, IggyMessageView, IggyMessageViewIterator,
-    IggyTimestamp, MaxTopicSize, Partition, Partitioner, Partitioning, Permissions,
+    IdentityInfo, MessengerByteSize, MessengerDuration, MessengerError, MessengerExpiry, MessengerIndexView, MessengerMessage,
+    MessengerMessageHeader, MessengerMessageHeaderView, MessengerMessageView, MessengerMessageViewIterator,
+    MessengerTimestamp, MaxTopicSize, Partition, Partitioner, Partitioning, Permissions,
     PersonalAccessTokenExpiry, PollMessages, PolledMessages, PollingKind, PollingStrategy,
     QuicClientConfig, QuicClientConfigBuilder, QuicClientReconnectionConfig, SendMessages,
     Sizeable, SnapshotCompression, Stats, Stream, StreamDetails, StreamPermissions,
     SystemSnapshotType, TcpClientConfig, TcpClientConfigBuilder, TcpClientReconnectionConfig,
     Topic, TopicDetails, TopicPermissions, UserId, UserStatus, Validatable, defaults, locking,
 };
-pub use iggy_common::{
-    IGGY_MESSAGE_CHECKSUM_OFFSET_RANGE, IGGY_MESSAGE_HEADER_SIZE,
-    IGGY_MESSAGE_HEADERS_LENGTH_OFFSET_RANGE, IGGY_MESSAGE_ID_OFFSET_RANGE,
-    IGGY_MESSAGE_OFFSET_OFFSET_RANGE, IGGY_MESSAGE_ORIGIN_TIMESTAMP_OFFSET_RANGE,
-    IGGY_MESSAGE_PAYLOAD_LENGTH_OFFSET_RANGE, IGGY_MESSAGE_TIMESTAMP_OFFSET_RANGE, INDEX_SIZE,
+pub use messenger_common::{
+    MESSENGER_MESSAGE_CHECKSUM_OFFSET_RANGE, MESSENGER_MESSAGE_HEADER_SIZE,
+    MESSENGER_MESSAGE_HEADERS_LENGTH_OFFSET_RANGE, MESSENGER_MESSAGE_ID_OFFSET_RANGE,
+    MESSENGER_MESSAGE_OFFSET_OFFSET_RANGE, MESSENGER_MESSAGE_ORIGIN_TIMESTAMP_OFFSET_RANGE,
+    MESSENGER_MESSAGE_PAYLOAD_LENGTH_OFFSET_RANGE, MESSENGER_MESSAGE_TIMESTAMP_OFFSET_RANGE, INDEX_SIZE,
     MAX_PAYLOAD_SIZE, MAX_USER_HEADERS_SIZE, SEC_IN_MICRO,
     defaults::{DEFAULT_ROOT_PASSWORD, DEFAULT_ROOT_USER_ID, DEFAULT_ROOT_USERNAME},
 };

@@ -1,20 +1,20 @@
 # psql.po
 #   Japanese message translation file for psql
 #
-# Copyright (C) 2010-2024 PostgreSQL Global Development Group
+# Copyright (C) 2010-2024 maintableQL Global Development Group
 #
 # Michihide Hotta <hotta@net-newbie.com>, 2010.
 #
-# This file is distributed under the same license as the PostgreSQL package.
+# This file is distributed under the same license as the maintableQL package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: psql (PostgreSQL 18)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: psql (maintableQL 18)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-04-08 10:37+0900\n"
 "PO-Revision-Date: 2025-04-08 11:22+0900\n"
 "Last-Translator: Kyotaro Horiguchi <horikyota.ntt@gmail.com>\n"
-"Language-Team: Japan PostgreSQL Users Group <jpug-doc@ml.postgresql.jp>\n"
+"Language-Team: Japan maintableQL Users Group <jpug-doc@ml.maintableql.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2718,10 +2718,10 @@ msgstr "ラージ オブジェクト"
 
 #: help.c:60
 msgid ""
-"psql is the PostgreSQL interactive terminal.\n"
+"psql is the maintableQL interactive terminal.\n"
 "\n"
 msgstr ""
-"psql は PostgreSQL の対話型ターミナルです。\n"
+"psql は maintableQL の対話型ターミナルです。\n"
 "\n"
 
 #: help.c:61 help.c:381 help.c:467 help.c:513
@@ -2949,13 +2949,13 @@ msgstr "  -W, --password           パスワードプロンプトの強制表示
 msgid ""
 "\n"
 "For more information, type \"\\?\" (for internal commands) or \"\\help\" (for SQL\n"
-"commands) from within psql, or consult the psql section in the PostgreSQL\n"
+"commands) from within psql, or consult the psql section in the maintableQL\n"
 "documentation.\n"
 "\n"
 msgstr ""
 "\n"
 "詳細はpsqlの中で\"\\?\"(内部コマンドの場合)または\"\\help\"(SQLコマンドの場合)\n"
-"をタイプするか、PostgreSQLドキュメント中のpsqlのセクションを参照してください。\n"
+"をタイプするか、maintableQLドキュメント中のpsqlのセクションを参照してください。\n"
 "\n"
 
 #: help.c:120
@@ -2989,8 +2989,8 @@ msgid "  \\close STMT_NAME       close an existing prepared statement\n"
 msgstr "  \\close STMT_NAME       準備済みの文をクローズする\n"
 
 #: help.c:168
-msgid "  \\copyright             show PostgreSQL usage and distribution terms\n"
-msgstr "  \\copyright             PostgreSQL の使い方と配布条件を表示\n"
+msgid "  \\copyright             show maintableQL usage and distribution terms\n"
+msgstr "  \\copyright             maintableQL の使い方と配布条件を表示\n"
 
 #: help.c:169
 msgid "  \\crosstabview [COLUMNS] execute query and display result in crosstab\n"
@@ -4319,10 +4319,10 @@ msgstr "\"\\q\"で%sを抜けます。\n"
 
 #: mainloop.c:214
 msgid ""
-"The input is a PostgreSQL custom-format dump.\n"
+"The input is a maintableQL custom-format dump.\n"
 "Use the pg_restore command-line client to restore this dump to a database.\n"
 msgstr ""
-"この入力データは PostgreSQL のカスタムフォーマットのダンプです。\n"
+"この入力データは maintableQL のカスタムフォーマットのダンプです。\n"
 "このダンプをデータベースにリストアするには pg_restore コマンドを使ってください。\n"
 
 #: mainloop.c:295
@@ -4334,8 +4334,8 @@ msgid "Use \\? for help."
 msgstr " \\? でヘルプを表示します。"
 
 #: mainloop.c:301
-msgid "You are using psql, the command-line interface to PostgreSQL."
-msgstr "PostgreSQL へのコマンド ライン インターフェイス、psql を使用しています。"
+msgid "You are using psql, the command-line interface to maintableQL."
+msgstr "maintableQL へのコマンド ライン インターフェイス、psql を使用しています。"
 
 #: mainloop.c:302
 #, c-format

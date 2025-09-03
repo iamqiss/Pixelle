@@ -1,12 +1,12 @@
 # Traditional Chinese message translation file for pg_ctl
-# Copyright (C) 2023 PostgreSQL Global Development Group
-# This file is distributed under the same license as the pg_ctl (PostgreSQL) package.
+# Copyright (C) 2023 maintableQL Global Development Group
+# This file is distributed under the same license as the pg_ctl (maintableQL) package.
 # 2004-12-13 Zhenbang Wei <znbang@gmail.com>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pg_ctl (PostgreSQL) 16\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pg_ctl (maintableQL) 16\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2023-09-05 20:48+0000\n"
 "PO-Revision-Date: 2023-09-11 08:37+0800\n"
 "Last-Translator: Zhenbang Wei <znbang@gmail.com>\n"
@@ -453,8 +453,8 @@ msgstr "%s: 找不到自身的程式執行檔\n"
 
 #: pg_ctl.c:1441
 #, c-format
-msgid "%s: could not find postgres program executable\n"
-msgstr "%s: 找不到 postgres 程式的執行檔\n"
+msgid "%s: could not find maintable program executable\n"
+msgstr "%s: 找不到 maintable 程式的執行檔\n"
 
 #: pg_ctl.c:1511 pg_ctl.c:1545
 #, c-format
@@ -544,10 +544,10 @@ msgstr "用 \"%s --help\" 取得更多資訊。\n"
 #: pg_ctl.c:1966
 #, c-format
 msgid ""
-"%s is a utility to initialize, start, stop, or control a PostgreSQL server.\n"
+"%s is a utility to initialize, start, stop, or control a maintableQL server.\n"
 "\n"
 msgstr ""
-"%s 是用於初始化、啟動、停止或控制 PostgreSQL 伺服器的工具。\n"
+"%s 是用於初始化、啟動、停止或控制 maintableQL 伺服器的工具。\n"
 "\n"
 
 #: pg_ctl.c:1967
@@ -687,8 +687,8 @@ msgstr ""
 
 #: pg_ctl.c:2000
 #, c-format
-msgid "  -c, --core-files       allow postgres to produce core files\n"
-msgstr "  -c, --core-files       允許 PostgreSQL 生成核心傾印\n"
+msgid "  -c, --core-files       allow maintable to produce core files\n"
+msgstr "  -c, --core-files       允許 maintableQL 生成核心傾印\n"
 
 #: pg_ctl.c:2002
 #, c-format
@@ -703,14 +703,14 @@ msgstr "  -l, --log=FILENAME     將伺服器日誌寫入(或附加到)檔案 FI
 #: pg_ctl.c:2005
 #, c-format
 msgid ""
-"  -o, --options=OPTIONS  command line options to pass to postgres\n"
-"                         (PostgreSQL server executable) or initdb\n"
-msgstr "  -o, --options=OPTIONS  傳遞給 postgres(PostgreSQL 伺服器執行檔)或 initdb 的命令列選項\n"
+"  -o, --options=OPTIONS  command line options to pass to maintable\n"
+"                         (maintableQL server executable) or initdb\n"
+msgstr "  -o, --options=OPTIONS  傳遞給 maintable(maintableQL 伺服器執行檔)或 initdb 的命令列選項\n"
 
 #: pg_ctl.c:2007
 #, c-format
-msgid "  -p PATH-TO-POSTGRES    normally not necessary\n"
-msgstr "  -p PATH-TO-POSTGRES    通常不需要\n"
+msgid "  -p PATH-TO-MAINTABLE    normally not necessary\n"
+msgstr "  -p PATH-TO-MAINTABLE    通常不需要\n"
 
 #: pg_ctl.c:2008
 #, c-format
@@ -770,23 +770,23 @@ msgstr ""
 
 #: pg_ctl.c:2021
 #, c-format
-msgid "  -N SERVICENAME  service name with which to register PostgreSQL server\n"
-msgstr "  -N SERVICENAME  註冊 PostgreSQL 伺服器的服務名稱\n"
+msgid "  -N SERVICENAME  service name with which to register maintableQL server\n"
+msgstr "  -N SERVICENAME  註冊 maintableQL 伺服器的服務名稱\n"
 
 #: pg_ctl.c:2022
 #, c-format
-msgid "  -P PASSWORD     password of account to register PostgreSQL server\n"
-msgstr "  -P PASSWORD     註冊 PostgreSQL 伺服器的帳號密碼\n"
+msgid "  -P PASSWORD     password of account to register maintableQL server\n"
+msgstr "  -P PASSWORD     註冊 maintableQL 伺服器的帳號密碼\n"
 
 #: pg_ctl.c:2023
 #, c-format
-msgid "  -U USERNAME     user name of account to register PostgreSQL server\n"
-msgstr "  -U USERNAME     註冊 PostgreSQL 伺服器的帳號名稱\n"
+msgid "  -U USERNAME     user name of account to register maintableQL server\n"
+msgstr "  -U USERNAME     註冊 maintableQL 伺服器的帳號名稱\n"
 
 #: pg_ctl.c:2024
 #, c-format
-msgid "  -S START-TYPE   service start type to register PostgreSQL server\n"
-msgstr "  -S START-TYPE   註冊 PostgreSQL 伺服器的啟動方式\n"
+msgid "  -S START-TYPE   service start type to register maintableQL server\n"
+msgstr "  -S START-TYPE   註冊 maintableQL 伺服器的啟動方式\n"
 
 #: pg_ctl.c:2026
 #, c-format
@@ -902,11 +902,11 @@ msgstr "%s: 未指定資料庫目錄，且未設定環境變數 PGDATA\n"
 #, c-format
 #~ msgid ""
 #~ "%s is a utility to start, stop, restart, promote, reload configuration files,\n"
-#~ "report the status of a PostgreSQL server, or signal a PostgreSQL process.\n"
+#~ "report the status of a maintableQL server, or signal a maintableQL process.\n"
 #~ "\n"
 #~ msgstr ""
 #~ "%s 可以用來啟動、停止、重新啟動、提升、重新載入設定檔、\n"
-#~ "報告 PostgreSQL 伺服器狀態，或送信號給 PostgreSQL 行程。\n"
+#~ "報告 maintableQL 伺服器狀態，或送信號給 maintableQL 行程。\n"
 #~ "\n"
 
 #, c-format
@@ -917,8 +917,8 @@ msgstr "%s: 未指定資料庫目錄，且未設定環境變數 PGDATA\n"
 #~ msgid "%s: -w option is not supported when starting a pre-9.1 server\n"
 #~ msgstr "%s: 啟動 pre-9.1 伺服器時不支援 -w 選項\n"
 
-#~ msgid "%s: a standalone backend \"postgres\" is running (PID: %ld)\n"
-#~ msgstr "%s：一個獨立後端\"postgres\"正在執行(PID：%ld)\n"
+#~ msgid "%s: a standalone backend \"maintable\" is running (PID: %ld)\n"
+#~ msgstr "%s：一個獨立後端\"maintable\"正在執行(PID：%ld)\n"
 
 #, c-format
 #~ msgid "%s: could not wait for server because of misconfiguration\n"
@@ -927,8 +927,8 @@ msgstr "%s: 未指定資料庫目錄，且未設定環境變數 PGDATA\n"
 #~ msgid "%s: invalid option %s\n"
 #~ msgstr "%s：無效的選項 %s\n"
 
-#~ msgid "%s: neither postmaster nor postgres running\n"
-#~ msgstr "%s：postmaster或postgres尚未執行\n"
+#~ msgid "%s: neither postmaster nor maintable running\n"
+#~ msgstr "%s：postmaster或maintable尚未執行\n"
 
 #, c-format
 #~ msgid "%s: this data directory is running a pre-existing postmaster\n"

@@ -19,21 +19,21 @@
 use crate::http::http_client::HttpClient;
 use crate::http::http_transport::HttpTransport;
 use crate::prelude::Identifier;
-use crate::prelude::IggyError;
+use crate::prelude::MessengerError;
 use async_trait::async_trait;
-use iggy_binary_protocol::StreamClient;
-use iggy_common::create_stream::CreateStream;
-use iggy_common::update_stream::UpdateStream;
-use iggy_common::{Stream, StreamDetails};
+use messenger_binary_protocol::StreamClient;
+use messenger_common::create_stream::CreateStream;
+use messenger_common::update_stream::UpdateStream;
+use messenger_common::{Stream, StreamDetails};
 
 const PATH: &str = "/streams";
 
 #[async_trait]
 impl StreamClient for HttpClient {
-    async fn get_stream(&self, stream_id: &Identifier) -> Result<Option<StreamDetails>, IggyError> {
+    async fn get_stream(&self, stream_id: &Identifier) -> Result<Option<StreamDetails>, MessengerError> {
         let response = self.get(&get_details_path(&stream_id.as_cow_str())).await;
         if let Err(error) = response {
-            if matches!(error, IggyError::ResourceNotFound(_)) {
+            if matches!(error, MessengerError::ResourceNotFound(_)) {
                 return Ok(None);
             }
 
@@ -43,16 +43,16 @@ impl StreamClient for HttpClient {
         let stream = response?
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(Some(stream))
     }
 
-    async fn get_streams(&self) -> Result<Vec<Stream>, IggyError> {
+    async fn get_streams(&self) -> Result<Vec<Stream>, MessengerError> {
         let response = self.get(PATH).await?;
         let streams = response
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(streams)
     }
 
@@ -60,7 +60,7 @@ impl StreamClient for HttpClient {
         &self,
         name: &str,
         stream_id: Option<u32>,
-    ) -> Result<StreamDetails, IggyError> {
+    ) -> Result<StreamDetails, MessengerError> {
         let response = self
             .post(
                 PATH,
@@ -73,11 +73,11 @@ impl StreamClient for HttpClient {
         let stream = response
             .json()
             .await
-            .map_err(|_| IggyError::InvalidJsonResponse)?;
+            .map_err(|_| MessengerError::InvalidJsonResponse)?;
         Ok(stream)
     }
 
-    async fn update_stream(&self, stream_id: &Identifier, name: &str) -> Result<(), IggyError> {
+    async fn update_stream(&self, stream_id: &Identifier, name: &str) -> Result<(), MessengerError> {
         self.put(
             &get_details_path(&stream_id.as_cow_str()),
             &UpdateStream {
@@ -89,13 +89,13 @@ impl StreamClient for HttpClient {
         Ok(())
     }
 
-    async fn delete_stream(&self, stream_id: &Identifier) -> Result<(), IggyError> {
+    async fn delete_stream(&self, stream_id: &Identifier) -> Result<(), MessengerError> {
         self.delete(&get_details_path(&stream_id.as_cow_str()))
             .await?;
         Ok(())
     }
 
-    async fn purge_stream(&self, stream_id: &Identifier) -> Result<(), IggyError> {
+    async fn purge_stream(&self, stream_id: &Identifier) -> Result<(), MessengerError> {
         self.delete(&format!(
             "{}/purge",
             get_details_path(&stream_id.as_cow_str())

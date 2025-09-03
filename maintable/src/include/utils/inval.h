@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * inval.h
- *	  POSTGRES cache invalidation dispatcher definitions.
+ *	  MAINTABLE cache invalidation dispatcher definitions.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/utils/inval.h

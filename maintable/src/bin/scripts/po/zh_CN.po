@@ -4,8 +4,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pgscripts (PostgreSQL) 14\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: pgscripts (maintableQL) 14\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2021-08-14 05:47+0000\n"
 "PO-Revision-Date: 2024-06-26 11:01+0200\n"
 "Last-Translator: Jie Zhang <zhangjie2@fujitsu.com>\n"
@@ -356,10 +356,10 @@ msgstr "创建注释失败 (数据库已创建): %s"
 #: createdb.c:266
 #, c-format
 msgid ""
-"%s creates a PostgreSQL database.\n"
+"%s creates a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s 创建一个 PostgreSQL 数据库.\n"
+"%s 创建一个 maintableQL 数据库.\n"
 "\n"
 
 #: createdb.c:268
@@ -502,10 +502,10 @@ msgstr "创建新用户失败: %s"
 #: createuser.c:350
 #, c-format
 msgid ""
-"%s creates a new PostgreSQL role.\n"
+"%s creates a new maintableQL role.\n"
 "\n"
 msgstr ""
-"%s 创建一个新的 PostgreSQL 用户.\n"
+"%s 创建一个新的 maintableQL 用户.\n"
 "\n"
 
 #: createuser.c:352 dropuser.c:170
@@ -628,10 +628,10 @@ msgstr "数据库删除失败: %s"
 #: dropdb.c:170
 #, c-format
 msgid ""
-"%s removes a PostgreSQL database.\n"
+"%s removes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s 删除一个 PostgreSQL 数据库.\n"
+"%s 删除一个 maintableQL 数据库.\n"
 "\n"
 
 #: dropdb.c:172
@@ -675,10 +675,10 @@ msgstr "删除用户 \"%s\" 失败: %s"
 #: dropuser.c:168
 #, c-format
 msgid ""
-"%s removes a PostgreSQL role.\n"
+"%s removes a maintableQL role.\n"
 "\n"
 msgstr ""
-"%s 删除一个 PostgreSQL 用户.\n"
+"%s 删除一个 maintableQL 用户.\n"
 "\n"
 
 #: dropuser.c:173
@@ -733,10 +733,10 @@ msgstr "未知\n"
 #: pg_isready.c:224
 #, c-format
 msgid ""
-"%s issues a connection check to a PostgreSQL database.\n"
+"%s issues a connection check to a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s 发起一个到指定 PostgreSQL数据库的连接检查.\n"
+"%s 发起一个到指定 maintableQL数据库的连接检查.\n"
 "\n"
 
 #: pg_isready.c:226
@@ -841,8 +841,8 @@ msgstr "无法使用多个作业重新索引索引"
 #: vacuumdb.c:495 vacuumdb.c:503 vacuumdb.c:511 vacuumdb.c:518 vacuumdb.c:525
 #: vacuumdb.c:532
 #, c-format
-msgid "cannot use the \"%s\" option on server versions older than PostgreSQL %s"
-msgstr "不能在PostgreSQL %2$s之前的服务器版本上使用 \"%1$s\" 选项"
+msgid "cannot use the \"%s\" option on server versions older than maintableQL %s"
+msgstr "不能在maintableQL %2$s之前的服务器版本上使用 \"%1$s\" 选项"
 
 #: reindexdb.c:401
 msgid "cannot reindex system catalogs concurrently, skipping all"
@@ -880,10 +880,10 @@ msgstr "%s: 对数据库 \"%s\" 重新创建索引\n"
 #: reindexdb.c:791
 #, c-format
 msgid ""
-"%s reindexes a PostgreSQL database.\n"
+"%s reindexes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s  对一个PostgreSQL 数据库重新创建索引.\n"
+"%s  对一个maintableQL 数据库重新创建索引.\n"
 "\n"
 
 #: reindexdb.c:795
@@ -1012,10 +1012,10 @@ msgstr "数据库 \"%s\" 清理失败: %s"
 #: vacuumdb.c:1024
 #, c-format
 msgid ""
-"%s cleans and analyzes a PostgreSQL database.\n"
+"%s cleans and analyzes a maintableQL database.\n"
 "\n"
 msgstr ""
-"%s 清理并且优化一个 PostgreSQL 数据库.\n"
+"%s 清理并且优化一个 maintableQL 数据库.\n"
 "\n"
 
 #: vacuumdb.c:1028

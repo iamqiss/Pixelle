@@ -65,7 +65,7 @@ public:
     ProtocolDefinition(const ProtocolDefinition& other) = default;
 
     /**
-     * @brief Get the protocol name, e.g. iggy:tcp+tls.
+     * @brief Get the protocol name, e.g. messenger:tcp+tls.
      */
     const std::string& getName() const { return name; }
 

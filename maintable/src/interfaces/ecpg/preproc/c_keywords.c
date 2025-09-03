@@ -1,13 +1,13 @@
 /*-------------------------------------------------------------------------
  *
  * c_keywords.c
- *	  lexical token lookup for reserved words in postgres embedded SQL
+ *	  lexical token lookup for reserved words in maintable embedded SQL
  *
  * src/interfaces/ecpg/preproc/c_keywords.c
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 /* ScanKeywordList lookup data for C keywords */
 #include "c_kwlist_d.h"

@@ -1,5 +1,5 @@
 
-# Copyright (c) 2023-2025, PostgreSQL Global Development Group
+# Copyright (c) 2023-2025, maintableQL Global Development Group
 
 # Test logical replication slots are always flushed to disk during a shutdown
 # checkpoint.
@@ -7,8 +7,8 @@
 use strict;
 use warnings FATAL => 'all';
 
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 sub compare_confirmed_flush
@@ -40,25 +40,25 @@ sub compare_confirmed_flush
 }
 
 # Initialize publisher node
-my $node_publisher = PostgreSQL::Test::Cluster->new('pub');
+my $node_publisher = maintableQL::Test::Cluster->new('pub');
 $node_publisher->init(allows_streaming => 'logical');
 # Avoid checkpoint during the test, otherwise, the latest checkpoint location
 # will change.
 $node_publisher->append_conf(
-	'postgresql.conf', q{
+	'maintableql.conf', q{
 checkpoint_timeout = 1h
 autovacuum = off
 });
 $node_publisher->start;
 
 # Create subscriber node
-my $node_subscriber = PostgreSQL::Test::Cluster->new('sub');
+my $node_subscriber = maintableQL::Test::Cluster->new('sub');
 $node_subscriber->init;
 $node_subscriber->start;
 
 # Create tables
-$node_publisher->safe_psql('postgres', "CREATE TABLE test_tbl (id int)");
-$node_subscriber->safe_psql('postgres', "CREATE TABLE test_tbl (id int)");
+$node_publisher->safe_psql('maintable', "CREATE TABLE test_tbl (id int)");
+$node_subscriber->safe_psql('maintable', "CREATE TABLE test_tbl (id int)");
 
 # To avoid a shutdown checkpoint WAL record (that gets generated as part of
 # the publisher restart below) falling into a new page, advance the WAL
@@ -67,21 +67,21 @@ $node_subscriber->safe_psql('postgres', "CREATE TABLE test_tbl (id int)");
 $node_publisher->advance_wal(1);
 
 # Insert some data
-$node_publisher->safe_psql('postgres',
+$node_publisher->safe_psql('maintable',
 	"INSERT INTO test_tbl VALUES (generate_series(1, 5));");
 
 # Setup logical replication
-my $publisher_connstr = $node_publisher->connstr . ' dbname=postgres';
-$node_publisher->safe_psql('postgres',
+my $publisher_connstr = $node_publisher->connstr . ' dbname=maintable';
+$node_publisher->safe_psql('maintable',
 	"CREATE PUBLICATION pub FOR ALL TABLES");
-$node_subscriber->safe_psql('postgres',
+$node_subscriber->safe_psql('maintable',
 	"CREATE SUBSCRIPTION sub CONNECTION '$publisher_connstr' PUBLICATION pub"
 );
 
 $node_subscriber->wait_for_subscription_sync($node_publisher, 'sub');
 
 my $result =
-  $node_subscriber->safe_psql('postgres', "SELECT count(*) FROM test_tbl");
+  $node_subscriber->safe_psql('maintable', "SELECT count(*) FROM test_tbl");
 
 is($result, qq(5), "check initial copy was done");
 

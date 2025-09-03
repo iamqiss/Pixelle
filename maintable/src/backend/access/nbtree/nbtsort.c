@@ -29,7 +29,7 @@
  * This code isn't concerned about the FSM at all. The caller is responsible
  * for initializing that.
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * IDENTIFICATION
@@ -38,7 +38,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres.h"
+#include "maintable.h"
 
 #include "access/nbtree.h"
 #include "access/parallel.h"
@@ -1422,7 +1422,7 @@ _bt_begin_parallel(BTBuildState *buildstate, bool isconcurrent, int request)
 	 */
 	EnterParallelMode();
 	Assert(request > 0);
-	pcxt = CreateParallelContext("postgres", "_bt_parallel_build_main",
+	pcxt = CreateParallelContext("maintable", "_bt_parallel_build_main",
 								 request);
 
 	scantuplesortstates = leaderparticipates ? request + 1 : request;

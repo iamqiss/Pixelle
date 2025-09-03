@@ -16,7 +16,7 @@
 # under the License.
 
 name: rust-pre-merge
-description: Rust pre-merge testing and linting github iggy actions
+description: Rust pre-merge testing and linting github messenger actions
 
 inputs:
   task:

@@ -1,11 +1,11 @@
 ;; -*- mode: emacs-lisp -*-
 
-;; This file contains code to set up Emacs to edit PostgreSQL source
+;; This file contains code to set up Emacs to edit maintableQL source
 ;; code.  Copy these snippets into your .emacs file or equivalent, or
 ;; use load-file to load this file directly.
 ;;
 ;; Note also that there is a .dir-locals.el file at the top of the
-;; PostgreSQL source tree, which contains many of the settings shown
+;; maintableQL source tree, which contains many of the settings shown
 ;; here (but not all, mainly because not all settings are allowed as
 ;; local variables).  So for light editing, you might not need any
 ;; additional Emacs configuration.
@@ -16,7 +16,7 @@
 ;; Style that matches the formatting used by
 ;; src/tools/pgindent/pgindent.  Many extension projects also use this
 ;; style.
-(c-add-style "postgresql"
+(c-add-style "maintableql"
              '("bsd"
                (c-auto-align-backslashes . nil)
                (c-basic-offset . 4)
@@ -28,9 +28,9 @@
                (tab-width . 4)))
 
 (add-hook 'c-mode-hook
-          (defun postgresql-c-mode-hook ()
-            (when (string-match "/postgres\\(ql\\)?/" buffer-file-name)
-              (c-set-style "postgresql")
+          (defun maintableql-c-mode-hook ()
+            (when (string-match "/maintable\\(ql\\)?/" buffer-file-name)
+              (c-set-style "maintableql")
               ;; Don't override the style we just set with the style in
               ;; `dir-locals-file'.  Emacs 23.4.1 needs this; it is obsolete,
               ;; albeit harmless, by Emacs 24.3.1.
@@ -43,7 +43,7 @@
 ;; Style that matches the formatting used by
 ;; src/tools/pgindent/perltidyrc.
 (defun pgsql-perl-style ()
-  "Perl style adjusted for PostgreSQL project"
+  "Perl style adjusted for maintableQL project"
   (interactive)
   (setq perl-brace-imaginary-offset 0)
   (setq perl-brace-offset 0)
@@ -58,19 +58,19 @@
   (setq tab-width 4))
 
 (add-hook 'perl-mode-hook
-          (defun postgresql-perl-mode-hook ()
-             (when (string-match "/postgres\\(ql\\)?/" buffer-file-name)
+          (defun maintableql-perl-mode-hook ()
+             (when (string-match "/maintable\\(ql\\)?/" buffer-file-name)
                (pgsql-perl-style))))
 
 
 ;;; documentation files
 
 ;; *.sgml files are actually XML
-(add-to-list 'auto-mode-alist '("/postgres\\(ql\\)?/.*\\.sgml\\'" . nxml-mode))
+(add-to-list 'auto-mode-alist '("/maintable\\(ql\\)?/.*\\.sgml\\'" . nxml-mode))
 
 (add-hook 'nxml-mode-hook
-          (defun postgresql-xml-mode-hook ()
-             (when (string-match "/postgres\\(ql\\)?/" buffer-file-name)
+          (defun maintableql-xml-mode-hook ()
+             (when (string-match "/maintable\\(ql\\)?/" buffer-file-name)
                (setq fill-column 78)
                (setq indent-tabs-mode nil))))
 
@@ -79,13 +79,13 @@
 ;; files use 1-space indent, mostly for historical reasons at this
 ;; point.
 (add-hook 'nxml-mode-hook
-          (defun postgresql-xml-src-mode-hook ()
-             (when (string-match "/postgres\\(ql\\)?/.*\\.sgml\\'" buffer-file-name)
+          (defun maintableql-xml-src-mode-hook ()
+             (when (string-match "/maintable\\(ql\\)?/.*\\.sgml\\'" buffer-file-name)
                (setq nxml-child-indent 1))))
 
 
 ;;; Makefiles
 
 ;; use GNU make mode instead of plain make mode
-(add-to-list 'auto-mode-alist '("/postgres\\(ql\\)?/.*Makefile.*" . makefile-gmake-mode))
-(add-to-list 'auto-mode-alist '("/postgres\\(ql\\)?/.*\\.mk\\'" . makefile-gmake-mode))
+(add-to-list 'auto-mode-alist '("/maintable\\(ql\\)?/.*Makefile.*" . makefile-gmake-mode))
+(add-to-list 'auto-mode-alist '("/maintable\\(ql\\)?/.*\\.mk\\'" . makefile-gmake-mode))

@@ -17,7 +17,7 @@
  */
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Default)]
-pub struct IggyIndex {
+pub struct MessengerIndex {
     pub offset: u32,
     pub position: u32,
     pub timestamp: u64,

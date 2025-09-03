@@ -1,11 +1,11 @@
 /*
- * psql - the PostgreSQL interactive terminal
+ * psql - the maintableQL interactive terminal
  *
- * Copyright (c) 2000-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2000-2025, maintableQL Global Development Group
  *
  * src/bin/psql/startup.c
  */
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #ifndef WIN32
 #include <unistd.h>
@@ -265,7 +265,7 @@ main(int argc, char *argv[])
 		values[3] = password;
 		keywords[4] = "dbname"; /* see do_connect() */
 		values[4] = (options.list_dbs && options.dbname == NULL) ?
-			"postgres" : options.dbname;
+			"maintable" : options.dbname;
 		keywords[5] = "fallback_application_name";
 		values[5] = pset.progname;
 		keywords[6] = "client_encoding";
@@ -843,7 +843,7 @@ process_psqlrc_file(char *filename)
 static void
 showVersion(void)
 {
-	puts("psql (PostgreSQL) " PG_VERSION);
+	puts("psql (maintableQL) " PG_VERSION);
 }
 
 

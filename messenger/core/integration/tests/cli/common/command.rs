@@ -16,16 +16,16 @@
  * under the License.
  */
 
-use iggy::prelude::defaults::{DEFAULT_ROOT_PASSWORD, DEFAULT_ROOT_USERNAME};
+use messenger::prelude::defaults::{DEFAULT_ROOT_PASSWORD, DEFAULT_ROOT_USERNAME};
 use std::collections::HashMap;
 
-pub(crate) struct IggyCmdCommand {
+pub(crate) struct MessengerCmdCommand {
     opts: Vec<String>,
     args: Vec<String>,
     env: HashMap<String, String>,
 }
 
-impl IggyCmdCommand {
+impl MessengerCmdCommand {
     pub(crate) fn new() -> Self {
         Self {
             opts: vec![],
@@ -70,8 +70,8 @@ impl IggyCmdCommand {
     }
 
     pub(crate) fn with_env_credentials(self) -> Self {
-        self.env("IGGY_USERNAME", DEFAULT_ROOT_USERNAME)
-            .env("IGGY_PASSWORD", DEFAULT_ROOT_PASSWORD)
+        self.env("MESSENGER_USERNAME", DEFAULT_ROOT_USERNAME)
+            .env("MESSENGER_PASSWORD", DEFAULT_ROOT_PASSWORD)
     }
 
     pub(crate) fn with_cli_credentials(mut self) -> Self {

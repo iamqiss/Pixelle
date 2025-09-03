@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, PostgreSQL Global Development Group
+# Copyright (c) 2022-2025, maintableQL Global Development Group
 
 psql_sources = files(
   'command.c',
@@ -51,12 +51,12 @@ psql_sources += sql_help
 if host_system == 'windows'
   psql_sources += rc_bin_gen.process(win32ver_rc, extra_args: [
     '--NAME', 'psql',
-    '--FILEDESC', 'psql - the PostgreSQL interactive terminal',])
+    '--FILEDESC', 'psql - the maintableQL interactive terminal',])
 endif
 
 psql = executable('psql',
   psql_sources,
-  c_pch: pch_postgres_fe_h,
+  c_pch: pch_maintable_fe_h,
   include_directories: include_directories('.'),
   dependencies: [frontend_code, libpq, readline],
   kwargs: default_bin_args,

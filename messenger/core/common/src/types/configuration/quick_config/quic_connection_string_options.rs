@@ -16,7 +16,7 @@
 * under the License.
 */
 
-use crate::{ConnectionStringOptions, IggyDuration, IggyError, QuicClientReconnectionConfig};
+use crate::{ConnectionStringOptions, MessengerDuration, MessengerError, QuicClientReconnectionConfig};
 use std::str::FromStr;
 
 #[derive(Debug)]
@@ -31,7 +31,7 @@ pub struct QuicConnectionStringOptions {
     keep_alive_interval: u64,
     max_idle_timeout: u64,
     validate_certificate: bool,
-    heartbeat_interval: IggyDuration,
+    heartbeat_interval: MessengerDuration,
 }
 
 impl QuicConnectionStringOptions {
@@ -81,11 +81,11 @@ impl ConnectionStringOptions for QuicConnectionStringOptions {
         self.reconnection.max_retries
     }
 
-    fn heartbeat_interval(&self) -> IggyDuration {
+    fn heartbeat_interval(&self) -> MessengerDuration {
         self.heartbeat_interval
     }
 
-    fn parse_options(options: &str) -> Result<QuicConnectionStringOptions, IggyError> {
+    fn parse_options(options: &str) -> Result<QuicConnectionStringOptions, MessengerError> {
         let options = options.split('&').collect::<Vec<&str>>();
         let mut response_buffer_size = 1000 * 1000 * 10;
         let mut max_concurrent_bidi_streams = 10000;
@@ -106,7 +106,7 @@ impl ConnectionStringOptions for QuicConnectionStringOptions {
         for option in options {
             let option_parts = option.split('=').collect::<Vec<&str>>();
             if option_parts.len() != 2 {
-                return Err(IggyError::InvalidConnectionString);
+                return Err(MessengerError::InvalidConnectionString);
             }
             match option_parts[0] {
                 "response_buffer_size" => match option_parts[1].parse::<u64>() {
@@ -114,7 +114,7 @@ impl ConnectionStringOptions for QuicConnectionStringOptions {
                         response_buffer_size = value;
                     }
                     Err(_) => {
-                        return Err(IggyError::InvalidConnectionString);
+                        return Err(MessengerError::InvalidConnectionString);
                     }
                 },
                 "max_concurrent_bidi_streams" => match option_parts[1].parse::<u64>() {
@@ -122,7 +122,7 @@ impl ConnectionStringOptions for QuicConnectionStringOptions {
                         max_concurrent_bidi_streams = value;
                     }
                     Err(_) => {
-                        return Err(IggyError::InvalidConnectionString);
+                        return Err(MessengerError::InvalidConnectionString);
                     }
                 },
                 "datagram_send_buffer_size" => match option_parts[1].parse::<u64>() {
@@ -130,7 +130,7 @@ impl ConnectionStringOptions for QuicConnectionStringOptions {
                         datagram_send_buffer_size = value;
                     }
                     Err(_) => {
-                        return Err(IggyError::InvalidConnectionString);
+                        return Err(MessengerError::InvalidConnectionString);
                     }
                 },
                 "initial_mtu" => match option_parts[1].parse::<u16>() {
@@ -138,7 +138,7 @@ impl ConnectionStringOptions for QuicConnectionStringOptions {
                         initial_mtu = value;
                     }
                     Err(_) => {
-                        return Err(IggyError::InvalidConnectionString);
+                        return Err(MessengerError::InvalidConnectionString);
                     }
                 },
                 "send_window" => match option_parts[1].parse::<u64>() {
@@ -146,7 +146,7 @@ impl ConnectionStringOptions for QuicConnectionStringOptions {
                         send_window = value;
                     }
                     Err(_) => {
-                        return Err(IggyError::InvalidConnectionString);
+                        return Err(MessengerError::InvalidConnectionString);
                     }
                 },
                 "receive_window" => match option_parts[1].parse::<u64>() {
@@ -154,7 +154,7 @@ impl ConnectionStringOptions for QuicConnectionStringOptions {
                         receive_window = value;
                     }
                     Err(_) => {
-                        return Err(IggyError::InvalidConnectionString);
+                        return Err(MessengerError::InvalidConnectionString);
                     }
                 },
                 "keep_alive_interval" => match option_parts[1].parse::<u64>() {
@@ -162,7 +162,7 @@ impl ConnectionStringOptions for QuicConnectionStringOptions {
                         keep_alive_interval = value;
                     }
                     Err(_) => {
-                        return Err(IggyError::InvalidConnectionString);
+                        return Err(MessengerError::InvalidConnectionString);
                     }
                 },
                 "max_idle_timeout" => match option_parts[1].parse::<u64>() {
@@ -170,7 +170,7 @@ impl ConnectionStringOptions for QuicConnectionStringOptions {
                         max_idle_timeout = value;
                     }
                     Err(_) => {
-                        return Err(IggyError::InvalidConnectionString);
+                        return Err(MessengerError::InvalidConnectionString);
                     }
                 },
                 "validate_certificate" => {
@@ -189,7 +189,7 @@ impl ConnectionStringOptions for QuicConnectionStringOptions {
                     reconnection_reestablish_after = option_parts[1].to_string();
                 }
                 _ => {
-                    return Err(IggyError::InvalidConnectionString);
+                    return Err(MessengerError::InvalidConnectionString);
                 }
             }
         }
@@ -201,17 +201,17 @@ impl ConnectionStringOptions for QuicConnectionStringOptions {
                 _ => Some(
                     reconnection_max_retries
                         .parse()
-                        .map_err(|_| IggyError::InvalidNumberValue)?,
+                        .map_err(|_| MessengerError::InvalidNumberValue)?,
                 ),
             },
-            interval: IggyDuration::from_str(reconnection_interval.as_str())
-                .map_err(|_| IggyError::InvalidConnectionString)?,
-            reestablish_after: IggyDuration::from_str(reconnection_reestablish_after.as_str())
-                .map_err(|_| IggyError::InvalidConnectionString)?,
+            interval: MessengerDuration::from_str(reconnection_interval.as_str())
+                .map_err(|_| MessengerError::InvalidConnectionString)?,
+            reestablish_after: MessengerDuration::from_str(reconnection_reestablish_after.as_str())
+                .map_err(|_| MessengerError::InvalidConnectionString)?,
         };
 
-        let heartbeat_interval = IggyDuration::from_str(heartbeat_interval.as_str())
-            .map_err(|_| IggyError::InvalidConnectionString)?;
+        let heartbeat_interval = MessengerDuration::from_str(heartbeat_interval.as_str())
+            .map_err(|_| MessengerError::InvalidConnectionString)?;
 
         let connection_string_options = QuicConnectionStringOptions::new(
             reconnection,
@@ -244,7 +244,7 @@ impl QuicConnectionStringOptions {
         keep_alive_interval: u64,
         max_idle_timeout: u64,
         validate_certificate: bool,
-        heartbeat_interval: IggyDuration,
+        heartbeat_interval: MessengerDuration,
     ) -> Self {
         Self {
             reconnection,
@@ -275,7 +275,7 @@ impl Default for QuicConnectionStringOptions {
             keep_alive_interval: 5000,
             max_idle_timeout: 10000,
             validate_certificate: false,
-            heartbeat_interval: IggyDuration::from_str("5s").unwrap(),
+            heartbeat_interval: MessengerDuration::from_str("5s").unwrap(),
         }
     }
 }

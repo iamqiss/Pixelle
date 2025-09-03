@@ -23,16 +23,16 @@ import assert from 'node:assert/strict';
 import { SingleClient } from '../client/client.js';
 import { Consumer, PollingStrategy, Partitioning } from '../wire/index.js';
 import { generateMessages } from '../tcp.sm.utils.js';
-import { getIggyAddress } from '../tcp.sm.utils.js';
+import { getMessengerAddress } from '../tcp.sm.utils.js';
 
 describe('e2e -> consumer-group', async () => {
 
-  const [host, port] = getIggyAddress();
+  const [host, port] = getMessengerAddress();
 
   const c = new SingleClient({
     transport: 'TCP',
     options: { host, port },
-    credentials: { username: 'iggy', password: 'iggy' }
+    credentials: { username: 'messenger', password: 'messenger' }
   });
   
   const streamId = 555;

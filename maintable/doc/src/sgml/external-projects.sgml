@@ -4,9 +4,9 @@
   <title>External Projects</title>
 
   <para>
-   <productname>PostgreSQL</productname> is a complex software project,
+   <productname>maintableQL</productname> is a complex software project,
    and managing the project is difficult. We have found that many
-   enhancements to <productname>PostgreSQL</productname> can be more
+   enhancements to <productname>maintableQL</productname> can be more
    efficiently developed separately from the core project.
   </para>
 
@@ -20,7 +20,7 @@
 
   <para>
    There are only two client interfaces included in the base
-   <productname>PostgreSQL</productname> distribution:
+   <productname>maintableQL</productname> distribution:
    <itemizedlist>
     <listitem>
      <para>
@@ -34,22 +34,22 @@
      <para>
       <link linkend="ecpg">ECPG</link> is included because it depends on the
       server-side SQL grammar, and is therefore sensitive to changes in
-      <productname>PostgreSQL</productname> itself.
+      <productname>maintableQL</productname> itself.
      </para>
     </listitem>
    </itemizedlist>
 
    All other language interfaces are external projects and are distributed
    separately. A
-   <ulink url="https://wiki.postgresql.org/wiki/List_of_drivers">list of language interfaces</ulink>
-   is maintained on the PostgreSQL wiki. Note that some of these packages are
-   not released under the same license as <productname>PostgreSQL</productname>.
+   <ulink url="https://wiki.maintableql.org/wiki/List_of_drivers">list of language interfaces</ulink>
+   is maintained on the maintableQL wiki. Note that some of these packages are
+   not released under the same license as <productname>maintableQL</productname>.
    For more information on each language interface, including licensing terms,
    refer to its website and documentation.
   </para>
 
   <para>
-    <ulink url="https://wiki.postgresql.org/wiki/List_of_drivers"></ulink>
+    <ulink url="https://wiki.maintableql.org/wiki/List_of_drivers"></ulink>
   </para>
  </sect1>
 
@@ -63,7 +63,7 @@
 
   <para>
    There are several administration tools available for
-   <productname>PostgreSQL</productname>. The most popular is
+   <productname>maintableQL</productname>. The most popular is
    <application><ulink url="https://www.pgadmin.org/">pgAdmin</ulink></application>,
    and there are several commercially available ones as well.
   </para>
@@ -78,7 +78,7 @@
   </indexterm>
 
   <para>
-   <productname>PostgreSQL</productname> includes several procedural
+   <productname>maintableQL</productname> includes several procedural
    languages with the base distribution: <link
    linkend="plpgsql">PL/pgSQL</link>, <link linkend="pltcl">PL/Tcl</link>,
    <link linkend="plperl">PL/Perl</link>, and <link
@@ -87,18 +87,18 @@
 
   <para>
    In addition, there are a number of procedural languages that are developed
-   and maintained outside the core <productname>PostgreSQL</productname>
+   and maintained outside the core <productname>maintableQL</productname>
    distribution. A list of
-   <ulink url="https://wiki.postgresql.org/wiki/PL_Matrix">procedural languages</ulink>
-   is maintained on the PostgreSQL wiki. Note that some of these projects are
-   not released under the same license as <productname>PostgreSQL</productname>.
+   <ulink url="https://wiki.maintableql.org/wiki/PL_Matrix">procedural languages</ulink>
+   is maintained on the maintableQL wiki. Note that some of these projects are
+   not released under the same license as <productname>maintableQL</productname>.
    For more information on each procedural language, including licensing
    information, refer to its website
    and documentation.
   </para>
 
   <para>
-   <ulink url="https://wiki.postgresql.org/wiki/PL_Matrix"></ulink>
+   <ulink url="https://wiki.maintableql.org/wiki/PL_Matrix"></ulink>
   </para>
  </sect1>
 
@@ -111,7 +111,7 @@
   </indexterm>
 
   <para>
-   <productname>PostgreSQL</productname> is designed to be easily extensible. For
+   <productname>maintableQL</productname> is designed to be easily extensible. For
    this reason, extensions loaded into the database can function
    just like features that are built in. The
    <filename>contrib/</filename> directory shipped with the source code
@@ -119,7 +119,7 @@
    <xref linkend="contrib"/>.  Other extensions are developed
    independently, like <application><ulink
    url="https://postgis.net/">PostGIS</ulink></application>.  Even
-   <productname>PostgreSQL</productname> replication solutions can be developed
+   <productname>maintableQL</productname> replication solutions can be developed
    externally. For example, <application> <ulink
    url="https://www.slony.info">Slony-I</ulink></application> is a popular
    primary/standby replication solution that is developed independently

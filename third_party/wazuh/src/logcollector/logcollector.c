@@ -1256,8 +1256,8 @@ void set_read(logreader *current, int i, int j) {
         current->read = read_mysql_log;
     } else if (strcmp("mssql_log", current->logformat) == 0) {
         current->read = read_mssql_log;
-    } else if (strcmp("postgresql_log", current->logformat) == 0) {
-        current->read = read_postgresql_log;
+    } else if (strcmp("maintableql_log", current->logformat) == 0) {
+        current->read = read_maintableql_log;
     } else if (strcmp("djb-multilog", current->logformat) == 0) {
         if (!init_djbmultilog(current)) {
             merror(INV_MULTILOG, current->file);

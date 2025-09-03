@@ -16,11 +16,11 @@
  * under the License.
  */
 
-use crate::cli::common::{IggyCmdCommand, IggyCmdTest, IggyCmdTestCase};
+use crate::cli::common::{MessengerCmdCommand, MessengerCmdTest, MessengerCmdTestCase};
 use assert_cmd::assert::Assert;
 use async_trait::async_trait;
 use bytes::Bytes;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use predicates::str::{contains, is_match, starts_with};
 use serial_test::parallel;
 use std::collections::HashMap;
@@ -92,7 +92,7 @@ impl<'a> TestMessagePollToFileCmd<'a> {
 }
 
 #[async_trait]
-impl IggyCmdTestCase for TestMessagePollToFileCmd<'_> {
+impl MessengerCmdTestCase for TestMessagePollToFileCmd<'_> {
     async fn prepare_server_state(&mut self, client: &dyn Client) {
         let stream = client.create_stream(&self.stream_name, None).await;
         assert!(stream.is_ok());
@@ -109,7 +109,7 @@ impl IggyCmdTestCase for TestMessagePollToFileCmd<'_> {
                 Default::default(),
                 None,
                 None,
-                IggyExpiry::NeverExpire,
+                MessengerExpiry::NeverExpire,
                 MaxTopicSize::ServerDefault,
             )
             .await;
@@ -124,7 +124,7 @@ impl IggyCmdTestCase for TestMessagePollToFileCmd<'_> {
             .iter()
             .map(|s| {
                 let payload = Bytes::from(s.as_bytes().to_vec());
-                IggyMessage::builder()
+                MessengerMessage::builder()
                     .payload(payload)
                     .user_headers(self.headers.clone())
                     .build()
@@ -143,8 +143,8 @@ impl IggyCmdTestCase for TestMessagePollToFileCmd<'_> {
         assert!(send_status.is_ok());
     }
 
-    fn get_command(&self) -> IggyCmdCommand {
-        IggyCmdCommand::new()
+    fn get_command(&self) -> MessengerCmdCommand {
+        MessengerCmdCommand::new()
             .arg("message")
             .arg("poll")
             .args(self.to_args())
@@ -204,7 +204,7 @@ impl IggyCmdTestCase for TestMessagePollToFileCmd<'_> {
 #[tokio::test]
 #[parallel]
 pub async fn should_be_successful() {
-    let mut iggy_cmd_test = IggyCmdTest::default();
+    let mut messenger_cmd_test = MessengerCmdTest::default();
 
     let test_messages: Vec<&str> = vec![
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
@@ -243,14 +243,14 @@ pub async fn should_be_successful() {
         (3, PollingStrategy::next()),
     ];
 
-    iggy_cmd_test.setup().await;
+    messenger_cmd_test.setup().await;
     for (message_count, strategy) in test_parameters {
         let temp_file = tempfile::Builder::new().tempfile().unwrap();
         let temp_path = temp_file.path().to_path_buf();
         temp_file.close().unwrap();
         let temp_path_str = temp_path.to_str().unwrap();
 
-        iggy_cmd_test
+        messenger_cmd_test
             .execute_test(TestMessagePollToFileCmd::new(
                 "stream",
                 "topic",

@@ -44,7 +44,7 @@ export type Stats = {
   osName: StatsStringItem;
   osVersion: StatsStringItem;
   kernelVersion: StatsStringItem;
-  iggyServerVersion: StatsStringItem;
+  messengerServerVersion: StatsStringItem;
 };
 
 export function statsMapper(item: any): Stats {
@@ -159,10 +159,10 @@ export function statsMapper(item: any): Stats {
       value: item.kernel_version,
       rawValue: item.kernel_version
     },
-    iggyServerVersion: {
-      name: 'Iggy server version',
-      value: item.iggy_server_version,
-      rawValue: item.iggy_server_version
+    messengerServerVersion: {
+      name: 'Messenger server version',
+      value: item.messenger_server_version,
+      rawValue: item.messenger_server_version
     }
   };
 }

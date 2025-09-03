@@ -1,5 +1,5 @@
-# The source code has been moved to [Apache Iggy](https://github.com/apache/iggy/)
+# The source code has been moved to [Apache Messenger](https://github.com/apache/messenger/)
 
-## iggy-helm
+## messenger-helm
 
-Official Helm chart for Apache Iggy
+Official Helm chart for Apache Messenger

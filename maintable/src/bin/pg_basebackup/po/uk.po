@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: postgresql\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableql\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-08-31 06:20+0000\n"
 "PO-Revision-Date: 2024-09-23 19:38\n"
 "Last-Translator: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
-"X-Crowdin-Project: postgresql\n"
+"X-Crowdin-Project: maintableql\n"
 "X-Crowdin-Project-ID: 324573\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: /REL_17_STABLE/pg_basebackup.pot\n"
@@ -120,9 +120,9 @@ msgstr "неправильний порядок байтів"
 msgid "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr "можлива помилка у послідовності байтів.\n"
-"Порядок байтів, що використовують для зберігання файлу pg_control, може не відповідати тому, який використовується цією програмою. У такому випадку результати нижче будуть неправильним, і інсталяція PostgreSQL буде несумісною з цим каталогом даних."
+"Порядок байтів, що використовують для зберігання файлу pg_control, може не відповідати тому, який використовується цією програмою. У такому випадку результати нижче будуть неправильним, і інсталяція maintableQL буде несумісною з цим каталогом даних."
 
 #: ../../common/controldata_utils.c:230 ../../common/file_utils.c:70
 #: ../../common/file_utils.c:347 ../../common/file_utils.c:406
@@ -485,8 +485,8 @@ msgstr "новий каталог не є абсолютним шляхом у �
 
 #: pg_basebackup.c:392
 #, c-format
-msgid "%s takes a base backup of a running PostgreSQL server.\n\n"
-msgstr "%s робить базову резервну копію працюючого сервера PostgreSQL.\n\n"
+msgid "%s takes a base backup of a running maintableQL server.\n\n"
+msgstr "%s робить базову резервну копію працюючого сервера maintableQL.\n\n"
 
 #: pg_basebackup.c:394 pg_createsubscriber.c:221 pg_receivewal.c:79
 #: pg_recvlogical.c:86
@@ -1760,8 +1760,8 @@ msgstr "\"root\" не може це виконувати"
 
 #: pg_createsubscriber.c:1945
 #, c-format
-msgid "You must run %s as the PostgreSQL superuser."
-msgstr "Запускати %s треба від суперкористувача PostgreSQL."
+msgid "You must run %s as the maintableQL superuser."
+msgstr "Запускати %s треба від суперкористувача maintableQL."
 
 #: pg_createsubscriber.c:1966
 #, c-format
@@ -1890,8 +1890,8 @@ msgstr "Готово!"
 
 #: pg_receivewal.c:77
 #, c-format
-msgid "%s receives PostgreSQL streaming write-ahead logs.\n\n"
-msgstr "%s отримує передачу випереджувальних журналів PostgreSQL.\n\n"
+msgid "%s receives maintableQL streaming write-ahead logs.\n\n"
+msgstr "%s отримує передачу випереджувальних журналів maintableQL.\n\n"
 
 #: pg_receivewal.c:82
 #, c-format
@@ -2092,8 +2092,8 @@ msgstr "роз’єднано; через %d секунд буде повтор�
 
 #: pg_recvlogical.c:84
 #, c-format
-msgid "%s controls PostgreSQL logical decoding streams.\n\n"
-msgstr "%s керує потоковими передаваннями логічного декодування PostgreSQL.\n\n"
+msgid "%s controls maintableQL logical decoding streams.\n\n"
+msgstr "%s керує потоковими передаваннями логічного декодування maintableQL.\n\n"
 
 #: pg_recvlogical.c:88
 #, c-format

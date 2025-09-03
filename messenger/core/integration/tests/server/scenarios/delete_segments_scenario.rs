@@ -16,7 +16,7 @@
 // under the License.
 
 use bytes::Bytes;
-use iggy::prelude::*;
+use messenger::prelude::*;
 use integration::test_server::{ClientFactory, TestServer};
 use std::fs::{DirEntry, read_dir};
 
@@ -29,7 +29,7 @@ const LOG_EXTENSION: &str = "log";
 
 pub async fn run(client_factory: &dyn ClientFactory, test_server: &TestServer) {
     let client = client_factory.create_client().await;
-    let client = IggyClient::create(client, None, None);
+    let client = MessengerClient::create(client, None, None);
 
     client
         .login_user(DEFAULT_ROOT_USERNAME, DEFAULT_ROOT_PASSWORD)
@@ -49,7 +49,7 @@ pub async fn run(client_factory: &dyn ClientFactory, test_server: &TestServer) {
             CompressionAlgorithm::None,
             None,
             Some(TOPIC_ID),
-            IggyExpiry::NeverExpire,
+            MessengerExpiry::NeverExpire,
             MaxTopicSize::ServerDefault,
         )
         .await
@@ -59,7 +59,7 @@ pub async fn run(client_factory: &dyn ClientFactory, test_server: &TestServer) {
     let large_payload = "A".repeat(1024 * 1024);
 
     for i in 0..5 {
-        let message = IggyMessage::builder()
+        let message = MessengerMessage::builder()
             .id(i as u128)
             .payload(Bytes::from(large_payload.clone()))
             .build()

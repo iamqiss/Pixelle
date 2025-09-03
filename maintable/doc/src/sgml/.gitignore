@@ -6,10 +6,10 @@
 /man7/
 /man-stamp
 # Other popular build targets
-/postgres-US.pdf
-/postgres-A4.pdf
-/postgres.html
-/postgres.txt
+/maintable-US.pdf
+/maintable-A4.pdf
+/maintable.html
+/maintable.txt
 # GENERATED_SGML
 /features-supported.sgml
 /features-unsupported.sgml
@@ -19,6 +19,6 @@
 /version.sgml
 /wait_event_types.sgml
 # Assorted byproducts from building the above
-/postgres-full.xml
-/postgres-US.fo
-/postgres-A4.fo
+/maintable-full.xml
+/maintable-US.fo
+/maintable-A4.fo

@@ -1,10 +1,10 @@
 /*-------------------------------------------------------------------------
  *
  * syncscan.h
- *    POSTGRES synchronous scan support functions.
+ *    MAINTABLE synchronous scan support functions.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  * src/include/access/syncscan.h

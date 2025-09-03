@@ -38,11 +38,11 @@
  * words, it only ever initiates one connection to each database in the
  * cluster for a given run.
  *
- * Copyright (c) 2024-2025, PostgreSQL Global Development Group
+ * Copyright (c) 2024-2025, maintableQL Global Development Group
  * src/bin/pg_upgrade/task.c
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include "common/connect.h"
 #include "fe_utils/string_utils.h"
@@ -233,7 +233,7 @@ process_query_result(const ClusterInfo *cluster, UpgradeTaskSlot *slot,
 static void
 process_slot(const ClusterInfo *cluster, UpgradeTaskSlot *slot, const UpgradeTask *task)
 {
-	PostgresPollingStatusType status;
+	MaintablePollingStatusType status;
 
 	if (!slot->ready)
 		return;

@@ -1,20 +1,20 @@
-# postgres.po
-#   Japanese message translation file for postgres
+# maintable.po
+#   Japanese message translation file for maintable
 #
-# Copyright (C) 2011-2024 PostgreSQL Global Development Group
+# Copyright (C) 2011-2024 maintableQL Global Development Group
 #
 # HOTTA Michihide <hotta@net-newbie.com>, 2011.
 #
-# This file is distributed under the same license as the PostgreSQL package.
+# This file is distributed under the same license as the maintableQL package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: postgres (PostgreSQL 18)\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintable (maintableQL 18)\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2025-04-09 09:36+0900\n"
 "PO-Revision-Date: 2025-04-09 10:06+0900\n"
 "Last-Translator: Kyotaro Horiguchi <horikyota.ntt@gmail.com>\n"
-"Language-Team: jpug-doc <jpug-doc@ml.postgresql.jp>\n"
+"Language-Team: jpug-doc <jpug-doc@ml.maintableql.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -115,12 +115,12 @@ msgid ""
 "possible byte ordering mismatch\n"
 "The byte ordering used to store the pg_control file might not match the one\n"
 "used by this program.  In that case the results below would be incorrect, and\n"
-"the PostgreSQL installation would be incompatible with this data directory."
+"the maintableQL installation would be incompatible with this data directory."
 msgstr ""
 "バイトオーダが異なる可能性があります。\n"
 "pg_controlファイルを格納するために使用するバイトオーダが本プログラムで使用\n"
 "されるものと一致しないようです。この場合以下の結果は不正確になります。また、\n"
-"PostgreSQLインストレーションはこのデータディレクトリと互換性がなくなります。"
+"maintableQLインストレーションはこのデータディレクトリと互換性がなくなります。"
 
 #: ../common/controldata_utils.c:225 ../common/controldata_utils.c:230 ../common/file_utils.c:69 ../common/file_utils.c:370 ../common/file_utils.c:428 ../common/file_utils.c:502 access/heap/rewriteheap.c:1229 access/transam/timeline.c:111 access/transam/timeline.c:251 access/transam/timeline.c:348 access/transam/twophase.c:1309 access/transam/xlog.c:3357 access/transam/xlog.c:3537 access/transam/xlog.c:3576 access/transam/xlog.c:3769 access/transam/xlog.c:4502
 #: access/transam/xlogrecovery.c:4285 access/transam/xlogrecovery.c:4386 access/transam/xlogutils.c:825 backup/basebackup.c:549 backup/basebackup.c:1600 backup/walsummary.c:220 libpq/hba.c:626 postmaster/syslogger.c:1512 replication/logical/origin.c:735 replication/logical/reorderbuffer.c:3889 replication/logical/reorderbuffer.c:4443 replication/logical/reorderbuffer.c:5216 replication/logical/snapbuild.c:1603 replication/logical/snapbuild.c:1715
@@ -891,7 +891,7 @@ msgstr "インデックス列数(%d)が上限(%d)を超えています"
 msgid "index row requires %zu bytes, maximum size is %zu"
 msgstr "インデックス行が%zuバイトを必要としますが最大値は%zuです"
 
-#: access/common/printtup.c:292 commands/explain_dr.c:94 tcop/fastpath.c:106 tcop/fastpath.c:453 tcop/postgres.c:1951
+#: access/common/printtup.c:292 commands/explain_dr.c:94 tcop/fastpath.c:106 tcop/fastpath.c:453 tcop/maintable.c:1951
 #, c-format
 msgid "unsupported format code: %d"
 msgstr "非サポートの書式コード: %d"
@@ -1056,8 +1056,8 @@ msgstr "インデックス\"%s\"内に無効と判断されている内部タプ
 
 #: access/gist/gist.c:767 access/gist/gistvacuum.c:464
 #, c-format
-msgid "This is caused by an incomplete page split at crash recovery before upgrading to PostgreSQL 9.1."
-msgstr "これは、PostgreSQL 9.1へアップグレードする前のクラッシュリカバリにおける不完全なページ分割が原因で発生します。"
+msgid "This is caused by an incomplete page split at crash recovery before upgrading to maintableQL 9.1."
+msgstr "これは、maintableQL 9.1へアップグレードする前のクラッシュリカバリにおける不完全なページ分割が原因で発生します。"
 
 #: access/gist/gist.c:768 access/gist/gistutil.c:801 access/gist/gistutil.c:812 access/gist/gistvacuum.c:465 access/hash/hashutil.c:226 access/hash/hashutil.c:237 access/hash/hashutil.c:249 access/hash/hashutil.c:270 access/nbtree/nbtpage.c:813 access/nbtree/nbtpage.c:824
 #, c-format
@@ -2356,12 +2356,12 @@ msgstr[0] "制御ファイル中の不正なWALセグメントサイズ (%dバ�
 msgid "\"%s\" must be at least twice \"%s\""
 msgstr "\"%s\"は\"%s\"の2倍以上でなければなりません"
 
-#: access/transam/xlog.c:4868 catalog/namespace.c:4696 commands/tablespace.c:1210 commands/user.c:2542 commands/variable.c:72 replication/slot.c:2655 tcop/postgres.c:3631 utils/error/elog.c:2274
+#: access/transam/xlog.c:4868 catalog/namespace.c:4696 commands/tablespace.c:1210 commands/user.c:2542 commands/variable.c:72 replication/slot.c:2655 tcop/maintable.c:3631 utils/error/elog.c:2274
 #, c-format
 msgid "List syntax is invalid."
 msgstr "リスト文法が無効です"
 
-#: access/transam/xlog.c:4914 commands/user.c:2558 commands/variable.c:173 tcop/postgres.c:3647 utils/error/elog.c:2300
+#: access/transam/xlog.c:4914 commands/user.c:2558 commands/variable.c:173 tcop/maintable.c:3647 utils/error/elog.c:2300
 #, c-format
 msgid "Unrecognized key word: \"%s\"."
 msgstr "不明なキーワードです: \"%s\""
@@ -2648,7 +2648,7 @@ msgstr "\"restore_command\"が終了ステータス0を返却しましたが、s
 msgid "could not restore file \"%s\" from archive: %s"
 msgstr "ファイル\"%s\"をアーカイブから復元できませんでした: %s"
 
-#. translator: First %s represents a postgresql.conf parameter name like
+#. translator: First %s represents a maintableql.conf parameter name like
 #. "recovery_end_command", the 2nd is the value of that parameter, the
 #. third an already translated error message.
 #: access/transam/xlogarchive.c:346
@@ -3733,17 +3733,17 @@ msgstr "長距離モードを有効化できませんでした: %s"
 msgid "invalid timeline %<PRId64>"
 msgstr "不正なタイムライン%<PRId64>"
 
-#: bootstrap/bootstrap.c:239 postmaster/postmaster.c:626 tcop/postgres.c:3863
+#: bootstrap/bootstrap.c:239 postmaster/postmaster.c:626 tcop/maintable.c:3863
 #, c-format
 msgid "--%s must be first argument"
 msgstr "--%sは最初の引数でなければなりません"
 
-#: bootstrap/bootstrap.c:253 postmaster/postmaster.c:640 tcop/postgres.c:3877
+#: bootstrap/bootstrap.c:253 postmaster/postmaster.c:640 tcop/maintable.c:3877
 #, c-format
 msgid "--%s requires a value"
 msgstr "--%sには値が必要です"
 
-#: bootstrap/bootstrap.c:258 postmaster/postmaster.c:645 tcop/postgres.c:3882
+#: bootstrap/bootstrap.c:258 postmaster/postmaster.c:645 tcop/maintable.c:3882
 #, c-format
 msgid "-c %s requires a value"
 msgstr "-c %sは値が必要です"
@@ -6950,8 +6950,8 @@ msgstr "符号化方式\"%s\"から\"%s\"用のデフォルト変換関数は存
 
 #: commands/copyfrom.c:1882
 #, c-format
-msgid "COPY FROM instructs the PostgreSQL server process to read a file. You may want a client-side facility such as psql's \\copy."
-msgstr "COPY FROMによってPostgreSQLサーバープロセスはファイルを読み込みます。psqlの \\copy のようなクライアント側の仕組みが必要かもしれません"
+msgid "COPY FROM instructs the maintableQL server process to read a file. You may want a client-side facility such as psql's \\copy."
+msgstr "COPY FROMによってmaintableQLサーバープロセスはファイルを読み込みます。psqlの \\copy のようなクライアント側の仕組みが必要かもしれません"
 
 #: commands/copyfrom.c:1895 commands/copyto.c:986
 #, c-format
@@ -7003,7 +7003,7 @@ msgstr "COPYファイルのヘッダが不正です(サイズが不正です)"
 msgid "could not read from COPY file: %m"
 msgstr "COPYファイルから読み込めませんでした: %m"
 
-#: commands/copyfromparse.c:278 commands/copyfromparse.c:303 replication/walsender.c:732 replication/walsender.c:758 tcop/postgres.c:369
+#: commands/copyfromparse.c:278 commands/copyfromparse.c:303 replication/walsender.c:732 replication/walsender.c:758 tcop/maintable.c:369
 #, c-format
 msgid "unexpected EOF on client connection with an open transaction"
 msgstr "トランザクションを実行中のクライアント接続で想定外のEOFがありました"
@@ -7245,8 +7245,8 @@ msgstr "ファイル\"%s\"を書き込み用にオープンできませんでし
 
 #: commands/copyto.c:973
 #, c-format
-msgid "COPY TO instructs the PostgreSQL server process to write a file. You may want a client-side facility such as psql's \\copy."
-msgstr "COPY TOによってPostgreSQLサーバープロセスはファイルの書き込みを行います。psqlの \\copy のようなクライアント側の仕組みが必要かもしれません"
+msgid "COPY TO instructs the maintableQL server process to write a file. You may want a client-side facility such as psql's \\copy."
+msgstr "COPY TOによってmaintableQLサーバープロセスはファイルの書き込みを行います。psqlの \\copy のようなクライアント側の仕組みが必要かもしれません"
 
 #: commands/createas.c:212 commands/createas.c:524
 #, c-format
@@ -7450,8 +7450,8 @@ msgstr "データベース中の照合順序はバージョン%sで作成され�
 
 #: commands/dbcommands.c:1267
 #, c-format
-msgid "Rebuild all objects in the template database that use the default collation and run ALTER DATABASE %s REFRESH COLLATION VERSION, or build PostgreSQL with the right library version."
-msgstr "デフォルトの照合順序を使用しているテンプレート・データベースの全てのオブジェクトを再構築して、ALTER DATABASE %s REFRESH COLLATION VERSIONを実行するか、正しいバージョンのライブラリを用いてPostgreSQLをビルドしてください。"
+msgid "Rebuild all objects in the template database that use the default collation and run ALTER DATABASE %s REFRESH COLLATION VERSION, or build maintableQL with the right library version."
+msgstr "デフォルトの照合順序を使用しているテンプレート・データベースの全てのオブジェクトを再構築して、ALTER DATABASE %s REFRESH COLLATION VERSIONを実行するか、正しいバージョンのライブラリを用いてmaintableQLをビルドしてください。"
 
 #: commands/dbcommands.c:1312 commands/dbcommands.c:2055
 #, c-format
@@ -7970,8 +7970,8 @@ msgstr "機能拡張\"%s\" は利用できません"
 
 #: commands/extension.c:550
 #, c-format
-msgid "The extension must first be installed on the system where PostgreSQL is running."
-msgstr "PostgreSQLが稼働しているシステムで、事前に機能拡張がインストールされている必要があります。"
+msgid "The extension must first be installed on the system where maintableQL is running."
+msgstr "maintableQLが稼働しているシステムで、事前に機能拡張がインストールされている必要があります。"
 
 #: commands/extension.c:564
 #, c-format
@@ -13091,8 +13091,8 @@ msgstr "タイムゾーン\"%s\"はうるう秒を使用するようです"
 
 #: commands/variable.c:353 commands/variable.c:437
 #, c-format
-msgid "PostgreSQL does not support leap seconds."
-msgstr "PostgreSQLはうるう秒をサポートしていません。"
+msgid "maintableQL does not support leap seconds."
+msgstr "maintableQLはうるう秒をサポートしていません。"
 
 #: commands/variable.c:362
 #, c-format
@@ -15875,13 +15875,13 @@ msgstr "MD5暗号化パスワードを設定しています"
 
 #: libpq/crypt.c:184
 #, c-format
-msgid "MD5 password support is deprecated and will be removed in a future release of PostgreSQL."
-msgstr "MD5パスワードは非推奨であり、PostgreSQLの将来のリリースでは廃止される予定です。"
+msgid "MD5 password support is deprecated and will be removed in a future release of maintableQL."
+msgstr "MD5パスワードは非推奨であり、maintableQLの将来のリリースでは廃止される予定です。"
 
 #: libpq/crypt.c:185
 #, c-format
-msgid "Refer to the PostgreSQL documentation for details about migrating to another password type."
-msgstr "他のパスワードタイプへの移行の詳細についてはPostgreSQL文書を参照してください。"
+msgid "Refer to the maintableQL documentation for details about migrating to another password type."
+msgstr "他のパスワードタイプへの移行の詳細についてはmaintableQL文書を参照してください。"
 
 #: libpq/crypt.c:216
 #, c-format
@@ -15956,8 +15956,8 @@ msgstr "SSLが無効なため、hostssl行は照合できません"
 
 #: libpq/hba.c:1387
 #, c-format
-msgid "Set \"ssl = on\" in postgresql.conf."
-msgstr "postgresql.confで\"ssl = on\"に設定してください。"
+msgid "Set \"ssl = on\" in maintableql.conf."
+msgstr "maintableql.confで\"ssl = on\"に設定してください。"
 
 #: libpq/hba.c:1395
 #, c-format
@@ -16372,7 +16372,7 @@ msgstr "クライアント接続がありません"
 msgid "could not receive data from client: %m"
 msgstr "クライアントからデータを受信できませんでした: %m"
 
-#: libpq/pqcomm.c:1151 tcop/postgres.c:4505
+#: libpq/pqcomm.c:1151 tcop/maintable.c:4505
 #, c-format
 msgid "terminating connection because protocol synchronization was lost"
 msgstr "プロトコルの同期が失われたためコネクションを終了します"
@@ -16440,10 +16440,10 @@ msgstr "%s: WSAStartupが失敗しました: %d\n"
 #: main/main.c:386
 #, c-format
 msgid ""
-"%s is the PostgreSQL server.\n"
+"%s is the maintableQL server.\n"
 "\n"
 msgstr ""
-"%sはPostgreSQLサーバーです\n"
+"%sはmaintableQLサーバーです\n"
 "\n"
 
 #: main/main.c:387
@@ -16687,12 +16687,12 @@ msgstr "%s ホームページ: <%s>\n"
 #: main/main.c:448
 #, c-format
 msgid ""
-"\"root\" execution of the PostgreSQL server is not permitted.\n"
+"\"root\" execution of the maintableQL server is not permitted.\n"
 "The server must be started under an unprivileged user ID to prevent\n"
 "possible system security compromise.  See the documentation for\n"
 "more information on how to properly start the server.\n"
 msgstr ""
-"PostgreSQLの\"root\"での実行は許可されません。\n"
+"maintableQLの\"root\"での実行は許可されません。\n"
 "システムセキュリティの低下を防止するため、サーバーは非特権ユーザーIDで起動\n"
 "する必要があります。適切なサーバーの起動方法に関する詳細はドキュメントを\n"
 "参照してください\n"
@@ -16705,13 +16705,13 @@ msgstr "%s: 実ユーザーIDと実効ユーザーIDは一致しなければな�
 #: main/main.c:472
 #, c-format
 msgid ""
-"Execution of PostgreSQL by a user with administrative permissions is not\n"
+"Execution of maintableQL by a user with administrative permissions is not\n"
 "permitted.\n"
 "The server must be started under an unprivileged user ID to prevent\n"
 "possible system security compromises.  See the documentation for\n"
 "more information on how to properly start the server.\n"
 msgstr ""
-"PostgreSQLを管理者権限を持つユーザーでの実行は許可されません。\n"
+"maintableQLを管理者権限を持つユーザーでの実行は許可されません。\n"
 "システムセキュリティの低下を防止するため、サーバーは非特権ユーザーIDで起動\n"
 "する必要があります。適切なサーバーの起動方法に関する詳細はドキュメントを\n"
 "参照してください\n"
@@ -18832,7 +18832,7 @@ msgstr "演算子 ANY/ALL (配列) 集合を返してはなりません"
 msgid "inconsistent types deduced for parameter $%d"
 msgstr "パラメータ$%dについて推定された型が不整合です"
 
-#: parser/parse_param.c:310 tcop/postgres.c:734
+#: parser/parse_param.c:310 tcop/maintable.c:734
 #, c-format
 msgid "could not determine data type of parameter $%d"
 msgstr "パラメータ$%dのデータ型が特定できませんでした"
@@ -19548,29 +19548,29 @@ msgstr "失敗したシステムコールはshmget(key=%lu, size=%zu, 0%o)です
 #: port/pg_shmem.c:229 port/sysv_shmem.c:229
 #, c-format
 msgid ""
-"This error usually means that PostgreSQL's request for a shared memory segment exceeded your kernel's SHMMAX parameter, or possibly that it is less than your kernel's SHMMIN parameter.\n"
-"The PostgreSQL documentation contains more information about shared memory configuration."
+"This error usually means that maintableQL's request for a shared memory segment exceeded your kernel's SHMMAX parameter, or possibly that it is less than your kernel's SHMMIN parameter.\n"
+"The maintableQL documentation contains more information about shared memory configuration."
 msgstr ""
-"通常このエラーは、PostgreSQLが要求する共有メモリセグメントがカーネルのSHMMAXパラメータを超えた場合、または可能性としてはカーネルのSHMMINパラメータより小さい場合に発生します。\n"
-"共有メモリの設定に関する詳細情報は、PostgreSQL のドキュメントに記載されています。"
+"通常このエラーは、maintableQLが要求する共有メモリセグメントがカーネルのSHMMAXパラメータを超えた場合、または可能性としてはカーネルのSHMMINパラメータより小さい場合に発生します。\n"
+"共有メモリの設定に関する詳細情報は、maintableQL のドキュメントに記載されています。"
 
 #: port/pg_shmem.c:236 port/sysv_shmem.c:236
 #, c-format
 msgid ""
-"This error usually means that PostgreSQL's request for a shared memory segment exceeded your kernel's SHMALL parameter.  You might need to reconfigure the kernel with larger SHMALL.\n"
-"The PostgreSQL documentation contains more information about shared memory configuration."
+"This error usually means that maintableQL's request for a shared memory segment exceeded your kernel's SHMALL parameter.  You might need to reconfigure the kernel with larger SHMALL.\n"
+"The maintableQL documentation contains more information about shared memory configuration."
 msgstr ""
-"通常このエラーは、PostgreSQLが要求する共有メモリセグメントがカーネルのSHMALLパラメータを超えた場合に発生します。より大きなSHMALLでカーネルを再設定する必要があるかもしれません。\n"
-"これ以上の共有メモリの設定に関する情報は、PostgreSQL のドキュメントに記載されています。"
+"通常このエラーは、maintableQLが要求する共有メモリセグメントがカーネルのSHMALLパラメータを超えた場合に発生します。より大きなSHMALLでカーネルを再設定する必要があるかもしれません。\n"
+"これ以上の共有メモリの設定に関する情報は、maintableQL のドキュメントに記載されています。"
 
 #: port/pg_shmem.c:242 port/sysv_shmem.c:242
 #, c-format
 msgid ""
 "This error does *not* mean that you have run out of disk space.  It occurs either if all available shared memory IDs have been taken, in which case you need to raise the SHMMNI parameter in your kernel, or because the system's overall limit for shared memory has been reached.\n"
-"The PostgreSQL documentation contains more information about shared memory configuration."
+"The maintableQL documentation contains more information about shared memory configuration."
 msgstr ""
 "このエラーはディスクの容量不足を意味していません。このエラーの要因の一つは共有メモリの識別子の枯渇です。この場合はカーネルのSHMMNIパラメータを増やす必要がありますが、そうでなければ要因はシステム全体の共有メモリの制限へ到達となります。\n"
-"これ以上の共有メモリの設定に関する情報は、PostgreSQLのドキュメントに記載されています。"
+"これ以上の共有メモリの設定に関する情報は、maintableQLのドキュメントに記載されています。"
 
 #: port/pg_shmem.c:584 port/sysv_shmem.c:584 port/win32_shmem.c:646
 #, c-format
@@ -19584,8 +19584,8 @@ msgstr "匿名共有メモリをマップできませんでした: %m"
 
 #: port/pg_shmem.c:657 port/sysv_shmem.c:657
 #, c-format
-msgid "This error usually means that PostgreSQL's request for a shared memory segment exceeded available memory, swap space, or huge pages. To reduce the request size (currently %zu bytes), reduce PostgreSQL's shared memory usage, perhaps by reducing \"shared_buffers\" or \"max_connections\"."
-msgstr "通常このエラーは、PostgreSQL が要求する共有メモリのサイズが利用可能なメモリやスワップ容量、ないしはヒュージページを超えた場合に発生します。要求サイズ（現在%zuバイト）を減らすためにPostgreSQLの共有メモリの使用量を減らすことを検討してください。たとえば\"shared_buffers\"または\"max_connections\"を減らすことが考えられます。"
+msgid "This error usually means that maintableQL's request for a shared memory segment exceeded available memory, swap space, or huge pages. To reduce the request size (currently %zu bytes), reduce maintableQL's shared memory usage, perhaps by reducing \"shared_buffers\" or \"max_connections\"."
+msgstr "通常このエラーは、maintableQL が要求する共有メモリのサイズが利用可能なメモリやスワップ容量、ないしはヒュージページを超えた場合に発生します。要求サイズ（現在%zuバイト）を減らすためにmaintableQLの共有メモリの使用量を減らすことを検討してください。たとえば\"shared_buffers\"または\"max_connections\"を減らすことが考えられます。"
 
 #: port/pg_shmem.c:725 port/sysv_shmem.c:725
 #, c-format
@@ -19620,18 +19620,18 @@ msgstr "失敗したシステムコールはsemget(%lu, %d, 0%o)です。"
 #: port/sysv_sema.c:131
 #, c-format
 msgid ""
-"This error does *not* mean that you have run out of disk space.  It occurs when either the system limit for the maximum number of semaphore sets (SEMMNI), or the system wide maximum number of semaphores (SEMMNS), would be exceeded.  You need to raise the respective kernel parameter.  Alternatively, reduce PostgreSQL's consumption of semaphores by reducing its \"max_connections\" parameter.\n"
-"The PostgreSQL documentation contains more information about configuring your system for PostgreSQL."
+"This error does *not* mean that you have run out of disk space.  It occurs when either the system limit for the maximum number of semaphore sets (SEMMNI), or the system wide maximum number of semaphores (SEMMNS), would be exceeded.  You need to raise the respective kernel parameter.  Alternatively, reduce maintableQL's consumption of semaphores by reducing its \"max_connections\" parameter.\n"
+"The maintableQL documentation contains more information about configuring your system for maintableQL."
 msgstr ""
-"このエラーは、ディスクが足りなくなったことを意味していません。この原因はセマフォセット数が上限(SEMMNI)に達したか、またはシステム全体でのセマフォ数を上限まで(SEMMNS)を使いきるような場合です。対処としては、対応するカーネルのパラメータを増やす必要があります。もしくは PostgreSQLの\"max_connections\"設定をを減らすことで、消費するセマフォの数を減らしてください。\n"
-"PostgreSQL向けの共有メモリ設定に関する詳細情報は、PostgreSQL のドキュメントに記載されています。"
+"このエラーは、ディスクが足りなくなったことを意味していません。この原因はセマフォセット数が上限(SEMMNI)に達したか、またはシステム全体でのセマフォ数を上限まで(SEMMNS)を使いきるような場合です。対処としては、対応するカーネルのパラメータを増やす必要があります。もしくは maintableQLの\"max_connections\"設定をを減らすことで、消費するセマフォの数を減らしてください。\n"
+"maintableQL向けの共有メモリ設定に関する詳細情報は、maintableQL のドキュメントに記載されています。"
 
 #: port/sysv_sema.c:161
 #, c-format
-msgid "You possibly need to raise your kernel's SEMVMX value to be at least %d.  Look into the PostgreSQL documentation for details."
+msgid "You possibly need to raise your kernel's SEMVMX value to be at least %d.  Look into the maintableQL documentation for details."
 msgstr ""
 "おそらくカーネルのSEMVMX値を最低でも%dまで増やす必要があります。\n"
-"詳細はPostgreSQLのドキュメントを調べてください。"
+"詳細はmaintableQLのドキュメントを調べてください。"
 
 #: port/win32/crashdump.c:119
 #, c-format
@@ -19712,8 +19712,8 @@ msgstr "ユーザー権限\"%s\"を有効化できませんでした"
 
 #: port/win32_shmem.c:185
 #, c-format
-msgid "Assign user right \"%s\" to the Windows user account which runs PostgreSQL."
-msgstr "PostgreSQL を実行するWindowsユーザーアカウントに\"%s\"権限を付与してください。"
+msgid "Assign user right \"%s\" to the Windows user account which runs maintableQL."
+msgstr "maintableQL を実行するWindowsユーザーアカウントに\"%s\"権限を付与してください。"
 
 #: port/win32_shmem.c:244
 #, c-format
@@ -19820,7 +19820,7 @@ msgstr "バックグラウンドワーカー\"%s\": 不正な再起動間隔"
 msgid "background worker \"%s\": parallel workers may not be configured for restart"
 msgstr "バックグラウンドワーカー\"%s\": パラレルワーカーは再起動するように設定してはいけません"
 
-#: postmaster/bgworker.c:709 tcop/postgres.c:3345
+#: postmaster/bgworker.c:709 tcop/maintable.c:3345
 #, c-format
 msgid "terminating background worker \"%s\" due to administrator command"
 msgstr "管理者コマンドによりバックグラウンドワーカー\"%s\"を終了しています"
@@ -20135,13 +20135,13 @@ msgstr "%s: 自身の実行ファイルのパスが特定できません"
 
 #: postmaster/postmaster.c:1475
 #, c-format
-msgid "%s: could not locate matching postgres executable"
-msgstr "%s: 一致するpostgres実行ファイルがありませんでした"
+msgid "%s: could not locate matching maintable executable"
+msgstr "%s: 一致するmaintable実行ファイルがありませんでした"
 
 #: postmaster/postmaster.c:1498 utils/misc/tzparser.c:342
 #, c-format
-msgid "This may indicate an incomplete PostgreSQL installation, or that the file \"%s\" has been moved away from its proper location."
-msgstr "これは、PostgreSQLのインストールが不完全であるかまたは、ファイル\"%s\"が本来の場所からなくなってしまったことを示しています。"
+msgid "This may indicate an incomplete maintableQL installation, or that the file \"%s\" has been moved away from its proper location."
+msgstr "これは、maintableQLのインストールが不完全であるかまたは、ファイル\"%s\"が本来の場所からなくなってしまったことを示しています。"
 
 #: postmaster/postmaster.c:1525
 #, c-format
@@ -22094,7 +22094,7 @@ msgstr "物理レプリケーション用のWAL送信プロセスでSQLコマン
 msgid "received replication command: %s"
 msgstr "レプリケーションコマンドを受信しました: %s"
 
-#: replication/walsender.c:2068 tcop/fastpath.c:208 tcop/postgres.c:1137 tcop/postgres.c:1495 tcop/postgres.c:1747 tcop/postgres.c:2253 tcop/postgres.c:2690 tcop/postgres.c:2767
+#: replication/walsender.c:2068 tcop/fastpath.c:208 tcop/maintable.c:1137 tcop/maintable.c:1495 tcop/maintable.c:1747 tcop/maintable.c:2253 tcop/maintable.c:2690 tcop/maintable.c:2767
 #, c-format
 msgid "current transaction is aborted, commands ignored until end of transaction block"
 msgstr "現在のトランザクションがアボートしました。トランザクションブロックが終わるまでコマンドは無視されます"
@@ -23366,8 +23366,8 @@ msgstr "要求された共有メモリのサイズはsize_tを超えています
 
 #: storage/ipc/signalfuncs.c:74
 #, c-format
-msgid "PID %d is not a PostgreSQL backend process"
-msgstr "PID %dはPostgreSQLバックエンドプロセスではありません"
+msgid "PID %d is not a maintableQL backend process"
+msgstr "PID %dはmaintableQLバックエンドプロセスではありません"
 
 #: storage/ipc/signalfuncs.c:123 storage/lmgr/proc.c:1547 utils/adt/mcxtfuncs.c:314 utils/adt/mcxtfuncs.c:412
 #, c-format
@@ -23430,12 +23430,12 @@ msgstr "リカバリは%ld.%03dミリ秒経過後待機継続中: %s"
 msgid "recovery finished waiting after %ld.%03d ms: %s"
 msgstr "リカバリは%ld.%03dミリ秒で待機終了: %s"
 
-#: storage/ipc/standby.c:921 tcop/postgres.c:3225
+#: storage/ipc/standby.c:921 tcop/maintable.c:3225
 #, c-format
 msgid "canceling statement due to conflict with recovery"
 msgstr "リカバリで競合が発生したためステートメントをキャンセルしています"
 
-#: storage/ipc/standby.c:922 tcop/postgres.c:2575
+#: storage/ipc/standby.c:922 tcop/maintable.c:2575
 #, c-format
 msgid "User transaction caused buffer deadlock with recovery."
 msgstr "リカバリ時にユーザーのトランザクションがバッファのデッドロックを引き起こしました。"
@@ -23969,8 +23969,8 @@ msgstr "開始パケットの配置が不正です: 最終バイトはターミ�
 
 #: tcop/backend_startup.c:830
 #, c-format
-msgid "no PostgreSQL user name specified in startup packet"
-msgstr "開始パケットで指定されたPostgreSQLユーザー名は存在しません"
+msgid "no maintableQL user name specified in startup packet"
+msgstr "開始パケットで指定されたmaintableQLユーザー名は存在しません"
 
 #: tcop/backend_startup.c:884
 #, c-format
@@ -24007,7 +24007,7 @@ msgstr "関数\"%s\"は高速呼び出しインタフェースでの呼び出し
 msgid "fastpath function call: \"%s\" (OID %u)"
 msgstr "近道関数呼び出し: \"%s\"(OID %u）)"
 
-#: tcop/fastpath.c:312 tcop/postgres.c:1364 tcop/postgres.c:1600 tcop/postgres.c:2079 tcop/postgres.c:2351
+#: tcop/fastpath.c:312 tcop/maintable.c:1364 tcop/maintable.c:1600 tcop/maintable.c:2079 tcop/maintable.c:2351
 #, c-format
 msgid "duration: %s ms"
 msgstr "期間: %s ミリ秒"
@@ -24037,155 +24037,155 @@ msgstr "関数呼び出しメッセージ内の引数サイズ%dが不正です"
 msgid "incorrect binary data format in function argument %d"
 msgstr "関数引数%dのバイナリデータ書式が不正です"
 
-#: tcop/postgres.c:455 tcop/postgres.c:5023
+#: tcop/maintable.c:455 tcop/maintable.c:5023
 #, c-format
 msgid "invalid frontend message type %d"
 msgstr "フロントエンドメッセージタイプ%dが不正です"
 
-#: tcop/postgres.c:1070
+#: tcop/maintable.c:1070
 #, c-format
 msgid "statement: %s"
 msgstr "文: %s"
 
-#: tcop/postgres.c:1369
+#: tcop/maintable.c:1369
 #, c-format
 msgid "duration: %s ms  statement: %s"
 msgstr "期間: %s ミリ秒  文: %s"
 
-#: tcop/postgres.c:1475
+#: tcop/maintable.c:1475
 #, c-format
 msgid "cannot insert multiple commands into a prepared statement"
 msgstr "準備された文に複数のコマンドを挿入できません"
 
-#: tcop/postgres.c:1605
+#: tcop/maintable.c:1605
 #, c-format
 msgid "duration: %s ms  parse %s: %s"
 msgstr "期間: %s ミリ秒  パース%s : %s"
 
-#: tcop/postgres.c:1672 tcop/postgres.c:2671
+#: tcop/maintable.c:1672 tcop/maintable.c:2671
 #, c-format
 msgid "unnamed prepared statement does not exist"
 msgstr "無名の準備された文が存在しません"
 
-#: tcop/postgres.c:1724
+#: tcop/maintable.c:1724
 #, c-format
 msgid "bind message has %d parameter formats but %d parameters"
 msgstr "バインドメッセージは%dパラメータ書式ありましたがパラメータは%dでした"
 
-#: tcop/postgres.c:1730
+#: tcop/maintable.c:1730
 #, c-format
 msgid "bind message supplies %d parameters, but prepared statement \"%s\" requires %d"
 msgstr "バインドメッセージは%dパラメータを提供しましたが、準備された文\"%s\"では%d必要でした"
 
-#: tcop/postgres.c:1944
+#: tcop/maintable.c:1944
 #, c-format
 msgid "incorrect binary data format in bind parameter %d"
 msgstr "バインドパラメータ%dにおいてバイナリデータ書式が不正です"
 
-#: tcop/postgres.c:2084
+#: tcop/maintable.c:2084
 #, c-format
 msgid "duration: %s ms  bind %s%s%s: %s"
 msgstr "期間: %s ミリ秒  バインド %s%s%s: %s"
 
-#: tcop/postgres.c:2139 tcop/postgres.c:2753
+#: tcop/maintable.c:2139 tcop/maintable.c:2753
 #, c-format
 msgid "portal \"%s\" does not exist"
 msgstr "ポータル\"%s\"は存在しません"
 
-#: tcop/postgres.c:2232
+#: tcop/maintable.c:2232
 #, c-format
 msgid "%s %s%s%s: %s"
 msgstr "%s %s%s%s: %s"
 
-#: tcop/postgres.c:2234 tcop/postgres.c:2359
+#: tcop/maintable.c:2234 tcop/maintable.c:2359
 msgid "execute fetch from"
 msgstr "取り出し実行"
 
-#: tcop/postgres.c:2235 tcop/postgres.c:2360
+#: tcop/maintable.c:2235 tcop/maintable.c:2360
 msgid "execute"
 msgstr "実行"
 
-#: tcop/postgres.c:2356
+#: tcop/maintable.c:2356
 #, c-format
 msgid "duration: %s ms  %s %s%s%s: %s"
 msgstr "期間: %s ミリ秒  %s %s%s%s: %s"
 
-#: tcop/postgres.c:2504
+#: tcop/maintable.c:2504
 #, c-format
 msgid "prepare: %s"
 msgstr "準備: %s"
 
-#: tcop/postgres.c:2529
+#: tcop/maintable.c:2529
 #, c-format
 msgid "Parameters: %s"
 msgstr "パラメータ: %s"
 
-#: tcop/postgres.c:2544
+#: tcop/maintable.c:2544
 #, c-format
 msgid "Abort reason: recovery conflict"
 msgstr "異常終了の理由: リカバリ衝突"
 
-#: tcop/postgres.c:2560
+#: tcop/maintable.c:2560
 #, c-format
 msgid "User was holding shared buffer pin for too long."
 msgstr "ユーザーが共有バッファ・ピンを長く保持し過ぎていました"
 
-#: tcop/postgres.c:2563
+#: tcop/maintable.c:2563
 #, c-format
 msgid "User was holding a relation lock for too long."
 msgstr "ユーザーリレーションのロックを長く保持し過ぎていました"
 
-#: tcop/postgres.c:2566
+#: tcop/maintable.c:2566
 #, c-format
 msgid "User was or might have been using tablespace that must be dropped."
 msgstr "削除されるべきテーブルスペースをユーザーが使っていました（もしくはその可能性がありました）。"
 
-#: tcop/postgres.c:2569
+#: tcop/maintable.c:2569
 #, c-format
 msgid "User query might have needed to see row versions that must be removed."
 msgstr "削除されるべきバージョンの行をユーザー問い合わせが参照しなければならなかった可能性がありました。"
 
-#: tcop/postgres.c:2572
+#: tcop/maintable.c:2572
 #, c-format
 msgid "User was using a logical replication slot that must be invalidated."
 msgstr "無効化されるべき論理レプリケーションスロットをユーザーが使用していました。"
 
-#: tcop/postgres.c:2578
+#: tcop/maintable.c:2578
 #, c-format
 msgid "User was connected to a database that must be dropped."
 msgstr "削除されるべきデータベースにユーザーが接続していました。"
 
-#: tcop/postgres.c:2617
+#: tcop/maintable.c:2617
 #, c-format
 msgid "portal \"%s\" parameter $%d = %s"
 msgstr "ポータル\"%s\" パラメータ$%d = %s"
 
-#: tcop/postgres.c:2620
+#: tcop/maintable.c:2620
 #, c-format
 msgid "portal \"%s\" parameter $%d"
 msgstr "ポータル\"%s\" パラメータ $%d"
 
-#: tcop/postgres.c:2626
+#: tcop/maintable.c:2626
 #, c-format
 msgid "unnamed portal parameter $%d = %s"
 msgstr "無名ポータルパラメータ $%d = %s"
 
-#: tcop/postgres.c:2629
+#: tcop/maintable.c:2629
 #, c-format
 msgid "unnamed portal parameter $%d"
 msgstr "無名ポータルパラメータ $%d"
 
-#: tcop/postgres.c:2984
+#: tcop/maintable.c:2984
 #, c-format
 msgid "terminating connection because of unexpected SIGQUIT signal"
 msgstr "予期しないSIGQUITシグナルによりコネクションを終了します"
 
-#: tcop/postgres.c:2990
+#: tcop/maintable.c:2990
 #, c-format
 msgid "terminating connection because of crash of another server process"
 msgstr "他のサーバープロセスがクラッシュしたため接続を終了します"
 
-#: tcop/postgres.c:2991
+#: tcop/maintable.c:2991
 #, c-format
 msgid "The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory."
 msgstr ""
@@ -24193,162 +24193,162 @@ msgstr ""
 "postmasterはこのサーバープロセスに対し、現在のトランザクションをロールバック\n"
 "し終了するよう指示しました。"
 
-#: tcop/postgres.c:2995 tcop/postgres.c:3248
+#: tcop/maintable.c:2995 tcop/maintable.c:3248
 #, c-format
 msgid "In a moment you should be able to reconnect to the database and repeat your command."
 msgstr "この後、データベースに再接続し、コマンドを繰り返さなければなりません。"
 
-#: tcop/postgres.c:3002
+#: tcop/maintable.c:3002
 #, c-format
 msgid "terminating connection due to immediate shutdown command"
 msgstr "即時シャットダウンコマンドによりコネクションを終了します"
 
-#: tcop/postgres.c:3080
+#: tcop/maintable.c:3080
 #, c-format
 msgid "floating-point exception"
 msgstr "浮動小数点例外"
 
-#: tcop/postgres.c:3081
+#: tcop/maintable.c:3081
 #, c-format
 msgid "An invalid floating-point operation was signaled. This probably means an out-of-range result or an invalid operation, such as division by zero."
 msgstr "不正な浮動小数点演算がシグナルされました。おそらくこれは、範囲外の結果もしくは0除算のような不正な演算によるものです。"
 
-#: tcop/postgres.c:3246
+#: tcop/maintable.c:3246
 #, c-format
 msgid "terminating connection due to conflict with recovery"
 msgstr "リカバリで競合が発生したため、接続を終了しています"
 
-#: tcop/postgres.c:3318
+#: tcop/maintable.c:3318
 #, c-format
 msgid "canceling authentication due to timeout"
 msgstr "タイムアウトにより認証処理をキャンセルしています"
 
-#: tcop/postgres.c:3322
+#: tcop/maintable.c:3322
 #, c-format
 msgid "terminating autovacuum process due to administrator command"
 msgstr "管理者コマンドにより自動VACUUM処理を終了しています"
 
-#: tcop/postgres.c:3326
+#: tcop/maintable.c:3326
 #, c-format
 msgid "terminating logical replication worker due to administrator command"
 msgstr "管理者コマンドにより、論理レプリケーションワーカーを終了します"
 
-#: tcop/postgres.c:3341
+#: tcop/maintable.c:3341
 #, c-format
 msgid "terminating walreceiver process due to administrator command"
 msgstr "管理者コマンドにより WAL 受信プロセスを終了しています"
 
-#: tcop/postgres.c:3357
+#: tcop/maintable.c:3357
 #, c-format
 msgid "terminating connection due to administrator command"
 msgstr "管理者コマンドにより接続を終了しています"
 
-#: tcop/postgres.c:3388
+#: tcop/maintable.c:3388
 #, c-format
 msgid "connection to client lost"
 msgstr "クライアントへの接続が切れました。"
 
-#: tcop/postgres.c:3440
+#: tcop/maintable.c:3440
 #, c-format
 msgid "canceling statement due to lock timeout"
 msgstr "ロックのタイムアウトのためステートメントをキャンセルしています"
 
-#: tcop/postgres.c:3447
+#: tcop/maintable.c:3447
 #, c-format
 msgid "canceling statement due to statement timeout"
 msgstr "ステートメントのタイムアウトのためステートメントをキャンセルしています"
 
-#: tcop/postgres.c:3454
+#: tcop/maintable.c:3454
 #, c-format
 msgid "canceling autovacuum task"
 msgstr "自動VACUUM処理をキャンセルしています"
 
-#: tcop/postgres.c:3467
+#: tcop/maintable.c:3467
 #, c-format
 msgid "canceling statement due to user request"
 msgstr "ユーザーからの要求により文をキャンセルしています"
 
-#: tcop/postgres.c:3488
+#: tcop/maintable.c:3488
 #, c-format
 msgid "terminating connection due to idle-in-transaction timeout"
 msgstr "トランザクション中アイドルタイムアウトのため接続を終了します"
 
-#: tcop/postgres.c:3501
+#: tcop/maintable.c:3501
 #, c-format
 msgid "terminating connection due to transaction timeout"
 msgstr "トランザクションタイムアウトのため接続を終了します"
 
-#: tcop/postgres.c:3514
+#: tcop/maintable.c:3514
 #, c-format
 msgid "terminating connection due to idle-session timeout"
 msgstr "アイドルセッションタイムアウトにより接続を終了します"
 
-#: tcop/postgres.c:3553
+#: tcop/maintable.c:3553
 #, c-format
 msgid "\"client_connection_check_interval\" must be set to 0 on this platform."
 msgstr "このプラットフォームでは\"client_connection_check_interval\"を0に設定する必要があります。"
 
-#: tcop/postgres.c:3574
+#: tcop/maintable.c:3574
 #, c-format
 msgid "Cannot enable parameter when \"log_statement_stats\" is true."
 msgstr "\"log_statement_stats\"が真の場合、パラメータを有効にできません"
 
-#: tcop/postgres.c:3589
+#: tcop/maintable.c:3589
 #, c-format
 msgid "Cannot enable \"log_statement_stats\" when \"log_parser_stats\", \"log_planner_stats\", or \"log_executor_stats\" is true."
 msgstr "\"log_parser_stats\"、\"log_planner_stats\"、または\"log_executor_stats\"のいずれかがtrueの場合は\"log_statement_stats\"を有効にできません。"
 
-#: tcop/postgres.c:4029
+#: tcop/maintable.c:4029
 #, c-format
 msgid "invalid command-line argument for server process: %s"
 msgstr "サーバープロセスに対する不正なコマンドライン引数: %s"
 
-#: tcop/postgres.c:4030 tcop/postgres.c:4036
+#: tcop/maintable.c:4030 tcop/maintable.c:4036
 #, c-format
 msgid "Try \"%s --help\" for more information."
 msgstr "詳細は\"%s --help\"を実行してください。"
 
-#: tcop/postgres.c:4034
+#: tcop/maintable.c:4034
 #, c-format
 msgid "%s: invalid command-line argument: %s"
 msgstr "%s: 不正なコマンドライン引数: %s"
 
-#: tcop/postgres.c:4087
+#: tcop/maintable.c:4087
 #, c-format
 msgid "%s: no database nor user name specified"
 msgstr "%s: データベース名もユーザー名も指定されていません"
 
-#: tcop/postgres.c:4280
+#: tcop/maintable.c:4280
 #, c-format
 msgid "could not generate random cancel key"
 msgstr "ランダムなキャンセルキーを生成できませんでした"
 
-#: tcop/postgres.c:4682
+#: tcop/maintable.c:4682
 #, c-format
 msgid "connection ready: setup total=%.3f ms, fork=%.3f ms, authentication=%.3f ms"
 msgstr "接続完了: 所要時間=%.3fミリ秒、fork=%.3fミリ秒、認証処理=%.3fミリ秒"
 
-#: tcop/postgres.c:4913
+#: tcop/maintable.c:4913
 #, c-format
 msgid "invalid CLOSE message subtype %d"
 msgstr "不正なCLOSEメッセージのサブタイプ%d"
 
-#: tcop/postgres.c:4950
+#: tcop/maintable.c:4950
 #, c-format
 msgid "invalid DESCRIBE message subtype %d"
 msgstr "不正なDESCRIBEメッセージのサブタイプ%d"
 
-#: tcop/postgres.c:5044
+#: tcop/maintable.c:5044
 #, c-format
 msgid "fastpath function calls not supported in a replication connection"
 msgstr "レプリケーション接続では高速関数呼び出しはサポートされていません"
 
-#: tcop/postgres.c:5048
+#: tcop/maintable.c:5048
 #, c-format
 msgid "extended query protocol not supported in a replication connection"
 msgstr "レプリケーション接続では拡張問い合わせプロトコルはサポートされていません"
 
-#: tcop/postgres.c:5194
+#: tcop/maintable.c:5194
 #, c-format
 msgid "disconnection: session time: %d:%02d:%02d.%03d user=%s database=%s host=%s%s%s"
 msgstr "接続を切断: セッション時間: %d:%02d:%02d.%03d ユーザー=%s データベース=%s ホスト=%s%s%s"
@@ -26518,13 +26518,13 @@ msgstr "左から4、5バイト目にFFとFEがあるアドレス、具体的に
 
 #: utils/adt/mcxtfuncs.c:305 utils/adt/mcxtfuncs.c:391
 #, c-format
-msgid "PID %d is not a PostgreSQL server process"
-msgstr "PID %dはPostgreSQLサーバープロセスではありません"
+msgid "PID %d is not a maintableQL server process"
+msgstr "PID %dはmaintableQLサーバープロセスではありません"
 
 #: utils/adt/mcxtfuncs.c:480
 #, c-format
-msgid "PID %d is no longer a PostgreSQL server process"
-msgstr "PID %dはすでにPostgreSQLサーバープロセスではありません"
+msgid "PID %d is no longer a maintableQL server process"
+msgstr "PID %dはすでにmaintableQLサーバープロセスではありません"
 
 #: utils/adt/misc.c:237
 #, c-format
@@ -26880,8 +26880,8 @@ msgstr "データベース中の照合順序はバージョン%sで作成され�
 
 #: utils/adt/pg_locale.c:1130
 #, c-format
-msgid "Rebuild all objects affected by this collation and run ALTER COLLATION %s REFRESH VERSION, or build PostgreSQL with the right library version."
-msgstr "この照合順序の影響を受ける全てのオブジェクトを再構築して、ALTER COLLATION %s REFRESH VERSIONを実行するか、正しいバージョンのライブラリを用いてPostgreSQLをビルドしてください。"
+msgid "Rebuild all objects affected by this collation and run ALTER COLLATION %s REFRESH VERSION, or build maintableQL with the right library version."
+msgstr "この照合順序の影響を受ける全てのオブジェクトを再構築して、ALTER COLLATION %s REFRESH VERSIONを実行するか、正しいバージョンのライブラリを用いてmaintableQLをビルドしてください。"
 
 #: utils/adt/pg_locale.c:1481 utils/adt/pg_locale.c:1508 utils/adt/pg_locale_builtin.c:186
 #, c-format
@@ -27927,8 +27927,8 @@ msgstr "XMLエラーハンドラを設定できませんでした"
 
 #: utils/adt/xml.c:1255
 #, c-format
-msgid "This probably indicates that the version of libxml2 being used is not compatible with the libxml2 header files that PostgreSQL was built with."
-msgstr "これはおそらく使用するlibxml2のバージョンがPostgreSQLを構築する時に使用したlibxml2ヘッダと互換性がないことを示します。"
+msgid "This probably indicates that the version of libxml2 being used is not compatible with the libxml2 header files that maintableQL was built with."
+msgstr "これはおそらく使用するlibxml2のバージョンがmaintableQLを構築する時に使用したlibxml2ヘッダと互換性がないことを示します。"
 
 #: utils/adt/xml.c:2281
 msgid "Invalid character value."
@@ -28518,8 +28518,8 @@ msgstr "ロックファイル\"%s\"はすでに存在します"
 
 #: utils/init/miscinit.c:1363
 #, c-format
-msgid "Is another postgres (PID %d) running in data directory \"%s\"?"
-msgstr "他のpostgres(PID %d)がデータディレクトリ\"%s\"で稼動していませんか?"
+msgid "Is another maintable (PID %d) running in data directory \"%s\"?"
+msgstr "他のmaintable(PID %d)がデータディレクトリ\"%s\"で稼動していませんか?"
 
 #: utils/init/miscinit.c:1365
 #, c-format
@@ -28528,8 +28528,8 @@ msgstr "他のpostmaster(PID %d)がデータディレクトリ\"%s\"で稼動し
 
 #: utils/init/miscinit.c:1368
 #, c-format
-msgid "Is another postgres (PID %d) using socket file \"%s\"?"
-msgstr "他のpostgres(PID %d)がソケットファイル\"%s\"を使用していませんか?"
+msgid "Is another maintable (PID %d) using socket file \"%s\"?"
+msgstr "他のmaintable(PID %d)がソケットファイル\"%s\"を使用していませんか?"
 
 #: utils/init/miscinit.c:1370
 #, c-format
@@ -28588,8 +28588,8 @@ msgstr "initdbする必要があるかもしれません"
 
 #: utils/init/miscinit.c:1818
 #, c-format
-msgid "The data directory was initialized by PostgreSQL version %s, which is not compatible with this version %s."
-msgstr "データディレクトリはPostgreSQLバージョン%sで初期化されましたが、これはバージョン%sとは互換性がありません"
+msgid "The data directory was initialized by maintableQL version %s, which is not compatible with this version %s."
+msgstr "データディレクトリはmaintableQLバージョン%sで初期化されましたが、これはバージョン%sとは互換性がありません"
 
 #: utils/init/postinit.c:269
 #, c-format
@@ -28696,8 +28696,8 @@ msgstr "データベースは照合順序バージョン%sで作成されてい�
 
 #: utils/init/postinit.c:476
 #, c-format
-msgid "Rebuild all objects in this database that use the default collation and run ALTER DATABASE %s REFRESH COLLATION VERSION, or build PostgreSQL with the right library version."
-msgstr "このデータベース内でデフォルトの照合順序を使用している全てのオブジェクトを再構築して、ALTER DATABASE %s REFRESH COLLATION VERSIONを実行するか、正しいバージョンのライブラリを用いてPostgreSQLをビルドしてください。"
+msgid "Rebuild all objects in this database that use the default collation and run ALTER DATABASE %s REFRESH COLLATION VERSION, or build maintableQL with the right library version."
+msgstr "このデータベース内でデフォルトの照合順序を使用している全てのオブジェクトを再構築して、ALTER DATABASE %s REFRESH COLLATION VERSIONを実行するか、正しいバージョンのライブラリを用いてmaintableQLをビルドしてください。"
 
 #: utils/init/postinit.c:566
 #, c-format
@@ -28909,8 +28909,8 @@ msgstr "%s: ディレクトリ\"%s\"にアクセスできませんでした: %m\
 
 #: utils/misc/guc.c:1804
 #, c-format
-msgid "Run initdb or pg_basebackup to initialize a PostgreSQL data directory.\n"
-msgstr "initdbまたはpg_basebackupを実行して、PostgreSQLデータディレクトリを初期化してください。\n"
+msgid "Run initdb or pg_basebackup to initialize a maintableQL data directory.\n"
+msgstr "initdbまたはpg_basebackupを実行して、maintableQLデータディレクトリを初期化してください。\n"
 
 #: utils/misc/guc.c:1828
 #, c-format
@@ -29265,8 +29265,8 @@ msgid "Lock Management"
 msgstr "ロック管理"
 
 #: utils/misc/guc_tables.c:734
-msgid "Version and Platform Compatibility / Previous PostgreSQL Versions"
-msgstr "バージョンおよびプラットフォーム間の互換性 / PostgreSQLの以前のバージョン"
+msgid "Version and Platform Compatibility / Previous maintableQL Versions"
+msgstr "バージョンおよびプラットフォーム間の互換性 / maintableQLの以前のバージョン"
 
 #: utils/misc/guc_tables.c:735
 msgid "Version and Platform Compatibility / Other Platforms and Clients"
@@ -29445,24 +29445,24 @@ msgid "Continues processing after a checksum failure."
 msgstr "チェックサムエラーの発生時に処理を継続します。"
 
 #: utils/misc/guc_tables.c:1140
-msgid "Detection of a checksum failure normally causes PostgreSQL to report an error, aborting the current transaction. Setting ignore_checksum_failure to true causes the system to ignore the failure (but still report a warning), and continue processing. This behavior could cause crashes or other serious problems. Only has an effect if checksums are enabled."
-msgstr "チェックサムエラーを検知すると、通常PostgreSQLはエラーの報告を行ない、現在のトランザクションを中断させます。ignore_checksum_failureを真に設定することによりエラーを無視します（代わりに警告を報告します）この動作はクラッシュや他の深刻な問題を引き起こすかもしれません。チェックサムが有効な場合にのみ効果があります。"
+msgid "Detection of a checksum failure normally causes maintableQL to report an error, aborting the current transaction. Setting ignore_checksum_failure to true causes the system to ignore the failure (but still report a warning), and continue processing. This behavior could cause crashes or other serious problems. Only has an effect if checksums are enabled."
+msgstr "チェックサムエラーを検知すると、通常maintableQLはエラーの報告を行ない、現在のトランザクションを中断させます。ignore_checksum_failureを真に設定することによりエラーを無視します（代わりに警告を報告します）この動作はクラッシュや他の深刻な問題を引き起こすかもしれません。チェックサムが有効な場合にのみ効果があります。"
 
 #: utils/misc/guc_tables.c:1154
 msgid "Continues processing past damaged page headers."
 msgstr "破損したページヘッダがあっても処理を継続します。"
 
 #: utils/misc/guc_tables.c:1155
-msgid "Detection of a damaged page header normally causes PostgreSQL to report an error, aborting the current transaction. Setting \"zero_damaged_pages\" to true causes the system to instead report a warning, zero out the damaged page, and continue processing. This behavior will destroy data, namely all the rows on the damaged page."
-msgstr "ページヘッダの障害が検出されると、通常PostgreSQLはエラーの報告を行ない、現在のトランザクションを中断させます。\"zero_damaged_pages\"をtrueに設定することにより、システムは代わりに警告を報告し、障害のあるページをゼロで埋め、処理を継続します。 この動作により、障害のあったページ上にある全ての行のデータが破壊されます。"
+msgid "Detection of a damaged page header normally causes maintableQL to report an error, aborting the current transaction. Setting \"zero_damaged_pages\" to true causes the system to instead report a warning, zero out the damaged page, and continue processing. This behavior will destroy data, namely all the rows on the damaged page."
+msgstr "ページヘッダの障害が検出されると、通常maintableQLはエラーの報告を行ない、現在のトランザクションを中断させます。\"zero_damaged_pages\"をtrueに設定することにより、システムは代わりに警告を報告し、障害のあるページをゼロで埋め、処理を継続します。 この動作により、障害のあったページ上にある全ての行のデータが破壊されます。"
 
 #: utils/misc/guc_tables.c:1168
 msgid "Continues recovery after an invalid pages failure."
 msgstr "不正ページエラーの発生時に処理を継続します。"
 
 #: utils/misc/guc_tables.c:1169
-msgid "Detection of WAL records having references to invalid pages during recovery causes PostgreSQL to raise a PANIC-level error, aborting the recovery. Setting \"ignore_invalid_pages\" to true causes the system to ignore invalid page references in WAL records (but still report a warning), and continue recovery. This behavior may cause crashes, data loss, propagate or hide corruption, or other serious problems. Only has an effect during recovery or in standby mode."
-msgstr "リカバリ中に不正なページへの参照を行うWALレコードを検出した場合、PostgreSQLはPANICレベルのエラーを出力してリカバリを中断します。”ignore_invalid_pages\"をtrueに設定するとシステムはWALレコード中の不正なページへの参照を無視してリカバリを継続します(ただし、引き続き警告は出力します)。この挙動はクラッシュ、データ損失、破壊の伝播ないしは隠蔽または他の深刻な問題を引き起こします。リカバリモードもしくはスタンバイモードでのみ有効となります。"
+msgid "Detection of WAL records having references to invalid pages during recovery causes maintableQL to raise a PANIC-level error, aborting the recovery. Setting \"ignore_invalid_pages\" to true causes the system to ignore invalid page references in WAL records (but still report a warning), and continue recovery. This behavior may cause crashes, data loss, propagate or hide corruption, or other serious problems. Only has an effect during recovery or in standby mode."
+msgstr "リカバリ中に不正なページへの参照を行うWALレコードを検出した場合、maintableQLはPANICレベルのエラーを出力してリカバリを中断します。”ignore_invalid_pages\"をtrueに設定するとシステムはWALレコード中の不正なページへの参照を無視してリカバリを継続します(ただし、引き続き警告は出力します)。この挙動はクラッシュ、データ損失、破壊の伝播ないしは隠蔽または他の深刻な問題を引き起こします。リカバリモードもしくはスタンバイモードでのみ有効となります。"
 
 #: utils/misc/guc_tables.c:1187
 msgid "Writes full pages to WAL when first modified after a checkpoint."
@@ -29789,8 +29789,8 @@ msgid "Enables backward compatibility mode for privilege checks on large objects
 msgstr "ラージオブジェクトで権限チェックを行う際、後方互換性モードを有効にします。"
 
 #: utils/misc/guc_tables.c:1953
-msgid "Skips privilege checks when reading or modifying large objects, for compatibility with PostgreSQL releases prior to 9.0."
-msgstr "9.0 より前のPostgreSQLとの互換のため、ラージオブジェクトを読んだり変更したりする際に権限チェックをスキップする。"
+msgid "Skips privilege checks when reading or modifying large objects, for compatibility with maintableQL releases prior to 9.0."
+msgstr "9.0 より前のmaintableQLとの互換のため、ラージオブジェクトを読んだり変更したりする際に権限チェックをスキップする。"
 
 #: utils/misc/guc_tables.c:1963
 msgid "When generating SQL fragments, quote all identifiers."
@@ -30581,8 +30581,8 @@ msgid "Sets the planner's assumption about the total size of the data caches."
 msgstr "プランナが想定するデータキャッシュ全体のサイズを設定。"
 
 #: utils/misc/guc_tables.c:3708
-msgid "That is, the total size of the caches (kernel cache and shared buffers) used for PostgreSQL data files. This is measured in disk pages, which are normally 8 kB each."
-msgstr "つまり、PostgreSQLのデータファイルに対して使用されるキャッシュ(カーネルキャッシュおよび共有バッファ)全体の量です。これは通常8KBのディスクページを単位とします。"
+msgid "That is, the total size of the caches (kernel cache and shared buffers) used for maintableQL data files. This is measured in disk pages, which are normally 8 kB each."
+msgstr "つまり、maintableQLのデータファイルに対して使用されるキャッシュ(カーネルキャッシュおよび共有バッファ)全体の量です。これは通常8KBのディスクページを単位とします。"
 
 #: utils/misc/guc_tables.c:3719
 msgid "Sets the minimum amount of table data for a parallel scan."
@@ -31002,12 +31002,12 @@ msgid "Sets the file name pattern for log files."
 msgstr "ログファイルのファイル名パターンを設定。"
 
 #: utils/misc/guc_tables.c:4593
-msgid "Sets the program name used to identify PostgreSQL messages in syslog."
-msgstr "syslog内でPostgreSQLのメッセージを識別するために使用されるプログラム名を設定。"
+msgid "Sets the program name used to identify maintableQL messages in syslog."
+msgstr "syslog内でmaintableQLのメッセージを識別するために使用されるプログラム名を設定。"
 
 #: utils/misc/guc_tables.c:4604
-msgid "Sets the application name used to identify PostgreSQL messages in the event log."
-msgstr "イベントログ内でPostgreSQLのメッセージを識別するために使用されるアプリケーション名を設定。"
+msgid "Sets the application name used to identify maintableQL messages in the event log."
+msgstr "イベントログ内でmaintableQLのメッセージを識別するために使用されるアプリケーション名を設定。"
 
 #: utils/misc/guc_tables.c:4615
 msgid "Sets the time zone for displaying and interpreting time stamps."

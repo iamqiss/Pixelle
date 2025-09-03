@@ -6,7 +6,7 @@
  *	  message integrity and endpoint authentication.
  *
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
  *
@@ -16,7 +16,7 @@
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <signal.h>
 #include <fcntl.h>
@@ -134,7 +134,7 @@ PQinitOpenSSL(int do_ssl, int do_crypto)
 /*
  *	Begin or continue negotiating a secure session.
  */
-PostgresPollingStatusType
+MaintablePollingStatusType
 pqsecure_open_client(PGconn *conn)
 {
 #ifdef USE_SSL

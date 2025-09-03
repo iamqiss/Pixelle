@@ -4,12 +4,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PostgreSQL 17\n"
-"Report-Msgid-Bugs-To: pgsql-bugs@lists.postgresql.org\n"
+"Project-Id-Version: maintableQL 17\n"
+"Report-Msgid-Bugs-To: pgsql-bugs@lists.maintableql.org\n"
 "POT-Creation-Date: 2024-07-12 14:19+0000\n"
 "PO-Revision-Date: 2024-07-12 18:58+0200\n"
 "Last-Translator: Dennis Björklund <db@zigo.dhs.org>\n"
-"Language-Team: Swedish <pgsql-translators@postgresql.org>\n"
+"Language-Team: Swedish <pgsql-translators@maintableql.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -82,11 +82,11 @@ msgstr "kan inte duplicera null-pekare (internt fel)\n"
 #, c-format
 msgid ""
 "\n"
-"%s provides information about the installed version of PostgreSQL.\n"
+"%s provides information about the installed version of maintableQL.\n"
 "\n"
 msgstr ""
 "\n"
-"%s ger information on den installerade versionen av PostgreSQL.\n"
+"%s ger information on den installerade versionen av maintableQL.\n"
 "\n"
 
 #: pg_config.c:75
@@ -181,55 +181,55 @@ msgstr "  --pgxs                visa plats för make-filen vid utvidgningar\n"
 #, c-format
 msgid ""
 "  --configure           show options given to \"configure\" script when\n"
-"                        PostgreSQL was built\n"
+"                        maintableQL was built\n"
 msgstr ""
 "  --configure           dessa flaggor gavs till \"configure\"-skriptet när\n"
-"                        PostgreSQL byggdes\n"
+"                        maintableQL byggdes\n"
 
 #: pg_config.c:94
 #, c-format
-msgid "  --cc                  show CC value used when PostgreSQL was built\n"
-msgstr "  --cc                  visa värde på CC när PostgreSQL byggdes\n"
+msgid "  --cc                  show CC value used when maintableQL was built\n"
+msgstr "  --cc                  visa värde på CC när maintableQL byggdes\n"
 
 #: pg_config.c:95
 #, c-format
-msgid "  --cppflags            show CPPFLAGS value used when PostgreSQL was built\n"
-msgstr "  --cppflags            visa värde på CPPFLAGS när PostgreSQL byggdes\n"
+msgid "  --cppflags            show CPPFLAGS value used when maintableQL was built\n"
+msgstr "  --cppflags            visa värde på CPPFLAGS när maintableQL byggdes\n"
 
 #: pg_config.c:96
 #, c-format
-msgid "  --cflags              show CFLAGS value used when PostgreSQL was built\n"
-msgstr "  --cflags              visa värde på CFLAGS när PostgreSQL byggdes\n"
+msgid "  --cflags              show CFLAGS value used when maintableQL was built\n"
+msgstr "  --cflags              visa värde på CFLAGS när maintableQL byggdes\n"
 
 #: pg_config.c:97
 #, c-format
-msgid "  --cflags_sl           show CFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --cflags_sl           visa värde på CFLAGS_SL när PostgreSQL byggdes\n"
+msgid "  --cflags_sl           show CFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --cflags_sl           visa värde på CFLAGS_SL när maintableQL byggdes\n"
 
 #: pg_config.c:98
 #, c-format
-msgid "  --ldflags             show LDFLAGS value used when PostgreSQL was built\n"
-msgstr "  --ldflags             visa värde på LDFLAGS när PostgreSQL byggdes\n"
+msgid "  --ldflags             show LDFLAGS value used when maintableQL was built\n"
+msgstr "  --ldflags             visa värde på LDFLAGS när maintableQL byggdes\n"
 
 #: pg_config.c:99
 #, c-format
-msgid "  --ldflags_ex          show LDFLAGS_EX value used when PostgreSQL was built\n"
-msgstr "  --ldflags_ex          visa värde på LDFLAGS_EX när PostgreSQL byggdes\n"
+msgid "  --ldflags_ex          show LDFLAGS_EX value used when maintableQL was built\n"
+msgstr "  --ldflags_ex          visa värde på LDFLAGS_EX när maintableQL byggdes\n"
 
 #: pg_config.c:100
 #, c-format
-msgid "  --ldflags_sl          show LDFLAGS_SL value used when PostgreSQL was built\n"
-msgstr "  --ldflags_sl          visa värde på LDFLAGS_SL när PostgreSQL byggdes\n"
+msgid "  --ldflags_sl          show LDFLAGS_SL value used when maintableQL was built\n"
+msgstr "  --ldflags_sl          visa värde på LDFLAGS_SL när maintableQL byggdes\n"
 
 #: pg_config.c:101
 #, c-format
-msgid "  --libs                show LIBS value used when PostgreSQL was built\n"
-msgstr "  --libs                visa värde på LIBS när PostgreSQL byggdes\n"
+msgid "  --libs                show LIBS value used when maintableQL was built\n"
+msgstr "  --libs                visa värde på LIBS när maintableQL byggdes\n"
 
 #: pg_config.c:102
 #, c-format
-msgid "  --version             show the PostgreSQL version\n"
-msgstr "  --version             visa version för PostgreSQL\n"
+msgid "  --version             show the maintableQL version\n"
+msgstr "  --version             visa version för maintableQL\n"
 
 #: pg_config.c:103
 #, c-format

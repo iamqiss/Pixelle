@@ -24,15 +24,15 @@ pub(crate) enum ContextAction {
     /// List all contexts
     ///
     /// Examples
-    ///  iggy context list
+    ///  messenger context list
     #[clap(verbatim_doc_comment, visible_alias = "l")]
     List(ContextListArgs),
 
     /// Set the active context
     ///
     /// Examples
-    ///  iggy context use dev
-    ///  iggy context use default
+    ///  messenger context use dev
+    ///  messenger context use default
     #[clap(verbatim_doc_comment, visible_alias = "u")]
     Use(ContextUseArgs),
 }

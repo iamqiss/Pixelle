@@ -22,8 +22,8 @@ use crate::CompressionAlgorithm;
 use crate::Identifier;
 use crate::Sizeable;
 use crate::Validatable;
-use crate::error::IggyError;
-use crate::utils::expiry::IggyExpiry;
+use crate::error::MessengerError;
+use crate::utils::expiry::MessengerExpiry;
 use crate::utils::topic_size::MaxTopicSize;
 use crate::{Command, UPDATE_TOPIC_CODE};
 use bytes::{BufMut, Bytes, BytesMut};
@@ -51,7 +51,7 @@ pub struct UpdateTopic {
     /// Compression algorithm for the topic.
     pub compression_algorithm: CompressionAlgorithm,
     /// Message expiry, if `NeverExpire` then messages will never expire.
-    pub message_expiry: IggyExpiry,
+    pub message_expiry: MessengerExpiry,
     /// Max topic size, if `Unlimited` then topic size is unlimited.
     /// Can't be lower than segment size in the config.
     pub max_topic_size: MaxTopicSize,
@@ -73,7 +73,7 @@ impl Default for UpdateTopic {
             stream_id: Identifier::default(),
             topic_id: Identifier::default(),
             compression_algorithm: Default::default(),
-            message_expiry: IggyExpiry::NeverExpire,
+            message_expiry: MessengerExpiry::NeverExpire,
             max_topic_size: MaxTopicSize::ServerDefault,
             replication_factor: None,
             name: "topic".to_string(),
@@ -81,16 +81,16 @@ impl Default for UpdateTopic {
     }
 }
 
-impl Validatable<IggyError> for UpdateTopic {
-    fn validate(&self) -> Result<(), IggyError> {
+impl Validatable<MessengerError> for UpdateTopic {
+    fn validate(&self) -> Result<(), MessengerError> {
         if self.name.is_empty() || self.name.len() > MAX_NAME_LENGTH {
-            return Err(IggyError::InvalidTopicName);
+            return Err(MessengerError::InvalidTopicName);
         }
 
         if let Some(replication_factor) = self.replication_factor
             && replication_factor == 0
         {
-            return Err(IggyError::InvalidReplicationFactor);
+            return Err(MessengerError::InvalidReplicationFactor);
         }
 
         Ok(())
@@ -119,9 +119,9 @@ impl BytesSerializable for UpdateTopic {
         bytes.freeze()
     }
 
-    fn from_bytes(bytes: Bytes) -> Result<UpdateTopic, IggyError> {
+    fn from_bytes(bytes: Bytes) -> Result<UpdateTopic, MessengerError> {
         if bytes.len() < 21 {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
         let mut position = 0;
         let stream_id = Identifier::from_bytes(bytes.clone())?;
@@ -133,13 +133,13 @@ impl BytesSerializable for UpdateTopic {
         let message_expiry = u64::from_le_bytes(
             bytes[position..position + 8]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
-        let message_expiry: IggyExpiry = message_expiry.into();
+        let message_expiry: MessengerExpiry = message_expiry.into();
         let max_topic_size = u64::from_le_bytes(
             bytes[position + 8..position + 16]
                 .try_into()
-                .map_err(|_| IggyError::InvalidNumberEncoding)?,
+                .map_err(|_| MessengerError::InvalidNumberEncoding)?,
         );
         let max_topic_size: MaxTopicSize = max_topic_size.into();
         let replication_factor = match bytes[position + 16] {
@@ -148,10 +148,10 @@ impl BytesSerializable for UpdateTopic {
         };
         let name_length = bytes[position + 17];
         let name = from_utf8(&bytes[position + 18..(position + 18 + name_length as usize)])
-            .map_err(|_| IggyError::InvalidUtf8)?
+            .map_err(|_| MessengerError::InvalidUtf8)?
             .to_string();
         if name.len() != name_length as usize {
-            return Err(IggyError::InvalidCommand);
+            return Err(MessengerError::InvalidCommand);
         }
         let command = UpdateTopic {
             stream_id,
@@ -184,7 +184,7 @@ impl Display for UpdateTopic {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::utils::byte_size::IggyByteSize;
+    use crate::utils::byte_size::MessengerByteSize;
     use bytes::BufMut;
 
     #[test]
@@ -193,7 +193,7 @@ mod tests {
             stream_id: Identifier::numeric(1).unwrap(),
             topic_id: Identifier::numeric(2).unwrap(),
             compression_algorithm: CompressionAlgorithm::None,
-            message_expiry: IggyExpiry::NeverExpire,
+            message_expiry: MessengerExpiry::NeverExpire,
             max_topic_size: MaxTopicSize::ServerDefault,
             replication_factor: Some(1),
             name: "test".to_string(),
@@ -208,7 +208,7 @@ mod tests {
         let compression_algorithm = CompressionAlgorithm::from_code(bytes[position]).unwrap();
         position += 1;
         let message_expiry = u64::from_le_bytes(bytes[position..position + 8].try_into().unwrap());
-        let message_expiry: IggyExpiry = message_expiry.into();
+        let message_expiry: MessengerExpiry = message_expiry.into();
         let max_topic_size =
             u64::from_le_bytes(bytes[position + 8..position + 16].try_into().unwrap());
         let max_topic_size: MaxTopicSize = max_topic_size.into();
@@ -235,8 +235,8 @@ mod tests {
         let topic_id = Identifier::numeric(2).unwrap();
         let compression_algorithm = CompressionAlgorithm::None;
         let name = "test".to_string();
-        let message_expiry = IggyExpiry::NeverExpire;
-        let max_topic_size = MaxTopicSize::Custom(IggyByteSize::from(100));
+        let message_expiry = MessengerExpiry::NeverExpire;
+        let max_topic_size = MaxTopicSize::Custom(MessengerByteSize::from(100));
         let replication_factor = 1;
 
         let stream_id_bytes = stream_id.to_bytes();

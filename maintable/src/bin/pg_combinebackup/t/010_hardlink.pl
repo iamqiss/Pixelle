@@ -1,20 +1,20 @@
-# Copyright (c) 2025, PostgreSQL Global Development Group
+# Copyright (c) 2025, maintableQL Global Development Group
 #
 # This test aims to validate that hard links are created as expected in the
 # output directory, when running pg_combinebackup with --link mode.
 
 use strict;
 use warnings FATAL => 'all';
-use PostgreSQL::Test::Cluster;
-use PostgreSQL::Test::Utils;
+use maintableQL::Test::Cluster;
+use maintableQL::Test::Utils;
 use Test::More;
 
 # Set up a new database instance.
-my $primary = PostgreSQL::Test::Cluster->new('primary');
+my $primary = maintableQL::Test::Cluster->new('primary');
 $primary->init(has_archiving => 1, allows_streaming => 1);
-$primary->append_conf('postgresql.conf', 'summarize_wal = on');
+$primary->append_conf('maintableql.conf', 'summarize_wal = on');
 # We disable autovacuum to prevent "something else" to modify our test tables.
-$primary->append_conf('postgresql.conf', 'autovacuum = off');
+$primary->append_conf('maintableql.conf', 'autovacuum = off');
 $primary->start;
 
 # Create a couple of tables (~264KB each).
@@ -32,8 +32,8 @@ CREATE TABLE test_%s AS
     FROM generate_series(1, 100) AS x(id);
 EOM
 
-$primary->safe_psql('postgres', sprintf($query, '1'));
-$primary->safe_psql('postgres', sprintf($query, '2'));
+$primary->safe_psql('maintable', sprintf($query, '1'));
+$primary->safe_psql('maintable', sprintf($query, '2'));
 
 # Fetch information about the data files.
 $query = <<'EOM';
@@ -42,10 +42,10 @@ FROM pg_class
 WHERE relname = 'test_%s';
 EOM
 
-my $test_1_path = $primary->safe_psql('postgres', sprintf($query, '1'));
+my $test_1_path = $primary->safe_psql('maintable', sprintf($query, '1'));
 note "test_1 path is $test_1_path";
 
-my $test_2_path = $primary->safe_psql('postgres', sprintf($query, '2'));
+my $test_2_path = $primary->safe_psql('maintable', sprintf($query, '2'));
 note "test_2 path is $test_2_path";
 
 # Take a full backup.
@@ -62,7 +62,7 @@ $primary->command_ok(
 
 # Perform an insert that touches a page of the last segment of the data file of
 # table test_2.
-$primary->safe_psql('postgres', <<EOM);
+$primary->safe_psql('maintable', <<EOM);
 INSERT INTO test_2 (id, value) VALUES (101, repeat('a', 1600));
 EOM
 
@@ -80,7 +80,7 @@ $primary->command_ok(
 	"incremental backup");
 
 # Restore the incremental backup and use it to create a new node.
-my $restore = PostgreSQL::Test::Cluster->new('restore');
+my $restore = maintableQL::Test::Cluster->new('restore');
 $restore->init_from_backup(
 	$primary, 'backup2',
 	combine_with_prior => ['backup1'],

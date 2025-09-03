@@ -5,14 +5,14 @@
  *
  * Author: Magnus Hagander <magnus@hagander.net>
  *
- * Portions Copyright (c) 1996-2025, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1996-2025, maintableQL Global Development Group
  *
  * IDENTIFICATION
  *		  src/bin/pg_basebackup/streamutil.c
  *-------------------------------------------------------------------------
  */
 
-#include "postgres_fe.h"
+#include "maintable_fe.h"
 
 #include <sys/time.h>
 #include <unistd.h>
@@ -216,7 +216,7 @@ GetConnection(void)
 
 	/*
 	 * Set always-secure search path, so malicious users can't get control.
-	 * The capacity to run normal SQL queries was added in PostgreSQL 10, so
+	 * The capacity to run normal SQL queries was added in maintableQL 10, so
 	 * the search path cannot be changed (by us or attackers) on earlier
 	 * versions.
 	 */
@@ -808,7 +808,7 @@ feGetCurrentTimestamp(void)
 	gettimeofday(&tp, NULL);
 
 	result = (TimestampTz) tp.tv_sec -
-		((POSTGRES_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY);
+		((MAINTABLE_EPOCH_JDATE - UNIX_EPOCH_JDATE) * SECS_PER_DAY);
 	result = (result * USECS_PER_SEC) + tp.tv_usec;
 
 	return result;
