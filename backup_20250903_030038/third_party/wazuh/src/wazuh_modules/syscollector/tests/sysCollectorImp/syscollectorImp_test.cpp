@@ -1,0 +1,2447 @@
+/*
+ * Wazuh SyscollectorImp
+ * Copyright (C) 2015, Wazuh Inc.
+ * November 9, 2020.
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General Public
+ * License (version 2) as published by the FSF - Free Software
+ * Foundation.
+ */
+#include <cstdio>
+#include "syscollectorImp_test.h"
+#include "syscollector.hpp"
+
+constexpr auto SYSCOLLECTOR_DB_PATH {"TEMP.db"};
+
+void SyscollectorImpTest::SetUp() {};
+
+void SyscollectorImpTest::TearDown()
+{
+    std::remove(SYSCOLLECTOR_DB_PATH);
+};
+
+using ::testing::_;
+using ::testing::Return;
+
+class SysInfoWrapper: public ISysInfo
+{
+    public:
+        SysInfoWrapper() = default;
+        ~SysInfoWrapper() = default;
+        MOCK_METHOD(nlohmann::json, hardware, (), (override));
+        MOCK_METHOD(nlohmann::json, packages, (), (override));
+        MOCK_METHOD(void, packages, (std::function<void(nlohmann::json&)>), (override));
+        MOCK_METHOD(nlohmann::json, os, (), (override));
+        MOCK_METHOD(nlohmann::json, networks, (), (override));
+        MOCK_METHOD(nlohmann::json, processes, (), (override));
+        MOCK_METHOD(void, processes, (std::function<void(nlohmann::json&)>), (override));
+        MOCK_METHOD(nlohmann::json, ports, (), (override));
+        MOCK_METHOD(nlohmann::json, hotfixes, (), (override));
+        MOCK_METHOD(nlohmann::json, groups, (), (override));
+        MOCK_METHOD(nlohmann::json, users, (), (override));
+};
+
+class CallbackMock
+{
+    public:
+        CallbackMock() = default;
+        ~CallbackMock() = default;
+        MOCK_METHOD(void, callbackMock, (const std::string&), ());
+};
+
+void reportFunction(const std::string& /*payload*/)
+{
+    // std::cout << payload << std::endl;
+}
+
+void logFunction(const modules_log_level_t /*level*/, const std::string& /*log*/)
+{
+    // static const std::map<modules_log_level_t, std::string> s_logStringMap
+    // {
+    //     {LOG_ERROR, "ERROR"},
+    //     {LOG_INFO, "INFO"},
+    //     {LOG_DEBUG, "DEBUG"},
+    //     {LOG_DEBUG_VERBOSE, "DEBUG2"}
+    // };
+    // std::cout << s_logStringMap.at(level) << ": " << log << std::endl;
+}
+
+// Expected results for persist callback - shared across all tests
+static const auto expectedPersistHW
+{
+    R"({"checksum":{"hash":{"sha1":"0288831cec1334e0d67eb2f7b83e0c96d2abb9be"}},"host":{"cpu":{"cores":2,"name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz","speed":2904},"memory":{"free":2257872,"total":4972208,"used":54},"serial_number":"Intel Corporation"}})"
+};
+static const auto expectedPersistOS
+{
+    R"({"checksum":{"hash":{"sha1":"f3c7fafbb0479a090c16a6954650654a957f30c3"}},"host":{"architecture":"x86_64","hostname":"UBUNTU","os":{"build":"7601","codename":null,"distribution":{"release":"sp1"},"full":null,"kernel":{"name":null,"release":null,"version":null},"major":"6","minor":"1","name":"Microsoft Windows 7","patch":null,"platform":null,"version":"6.1.7601"}}})"
+};
+static const auto expectedPersistNetIface
+{
+    R"({"checksum":{"hash":{"sha1":"712c4c9e6d65a48bc8fb0e99f8ce9238d88bbca4"}},"host":{"mac":["d4:5d:64:51:07:5d"],"network":{"egress":{"bytes":0,"drops":0,"errors":0,"packets":0},"ingress":{"bytes":0,"drops":0,"errors":0,"packets":0}}},"interface":{"alias":null,"mtu":1500,"name":"enp4s0","state":"up","type":"ethernet"}})"
+};
+static const auto expectedPersistNetProtoIPv4
+{
+    R"({"checksum":{"hash":{"sha1":"be03649a0596f425cbfe630a164cb2291603b365"}},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv4"}})"
+};
+static const auto expectedPersistNetAddrIPv4
+{
+    R"({"checksum":{"hash":{"sha1":"1a1d96860fa2ff8ffed446c8f77e3d66ca393afa"}},"interface":{"name":"enp4s0"},"network":{"broadcast":"192.168.153.255","ip":"192.168.153.1","netmask":"255.255.255.0","protocol":0}})"
+};
+static const auto expectedPersistNetProtoIPv6
+{
+    R"({"checksum":{"hash":{"sha1":"128b7f9181f7b4bc75fe64a5b915cce8406e522b"}},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv6"}})"
+};
+static const auto expectedPersistNetAddrIPv6
+{
+    R"({"checksum":{"hash":{"sha1":"2b5750d4d09e93980c1846e5a50f97b1504b0d79"}},"interface":{"name":"enp4s0"},"network":{"broadcast":null,"ip":"fe80::250:56ff:fec0:8","netmask":"ffff:ffff:ffff:ffff::","protocol":1}})"
+};
+static const auto expectedPersistPorts
+{
+    R"({"checksum":{"hash":{"sha1":"7223807075622557e855677b47f23f321091353c"}},"destination":{"ip":"0.0.0.0","port":0},"file":{"inode":0},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":"System Idle Process","pid":0},"source":{"ip":"127.0.0.1","port":631}})"
+};
+static const auto expectedPersistPortsUdp
+{
+    R"({"checksum":{"hash":{"sha1":"dff9e7c5127ea90f4e9c38840683330b8c1351c9"}},"destination":{"ip":"0.0.0.0","port":0},"file":{"inode":0},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":null},"network":{"transport":"udp"},"process":{"name":"System Idle Process","pid":0},"source":{"ip":"127.0.0.1","port":631}})"
+};
+static const auto expectedPersistProcess
+{
+    R"({"checksum":{"hash":{"sha1":"78e4e090e42f88d949428eb56836287f99de9f4f"}},"process":{"args":null,"args_count":null,"command_line":null,"name":"kworker/u256:2-","parent":{"pid":2},"pid":"431625","start":9302261,"state":"I","stime":3,"utime":0}})"
+};
+static const auto expectedPersistPackage
+{
+    R"({"checksum":{"hash":{"sha1":"9148999562df0ea8c1cdf97fa99499a0ee7e6299"}},"package":{"architecture":"amd64","category":"x11","description":null,"installed":null,"multiarch":null,"name":"xserver-xorg","path":null,"priority":"optional","size":4111222333,"source":"xorg","type":"deb","vendor":null,"version":"1:7.7+19ubuntu14"}})"
+};
+static const auto expectedPersistHotfix
+{
+    R"({"checksum":{"hash":{"sha1":"759c555df92c606e73b435e5e768d692b9815e29"}},"package":{"hotfix":{"name":"KB12345678"}}})"
+};
+static const auto expectedPersistGroup
+{
+    R"({"checksum":{"hash":{"sha1":"81793e529c565256a60eff6c6345e2f5c5ee8cb0"}},"group":{"description":null,"id":1,"id_signed":1,"is_hidden":0,"name":"daemon","users":["daemon:pollinate:vboxadd"],"uuid":null}})"
+};
+static const auto expectedPersistUser
+{
+    R"({"checksum":{"hash":{"sha1":"11769088416d594d547a508e084cec990e282ece"}},"host":{"ip":["192.168.0.84"]},"login":{"status":0,"tty":"pts/0","type":"user"},"process":{"pid":"129870"},"user":{"auth_failures":{"count":0,"timestamp":0},"created":0,"full_name":"root","group":{"id":0,"id_signed":0},"groups":[0],"home":"/root","id":0,"is_hidden":0,"is_remote":1,"last_login":"1749605216","name":"root","password":{"expiration_date":-1,"hash_algorithm":"y","inactive_days":-1,"last_change":1745971200.0,"max_days_between_changes":99999,"min_days_between_changes":0,"status":"active","warning_days_before_expiration":7},"roles":["sudo"],"shell":"/bin/bash","type":null,"uid_signed":0,"uuid":null}})"
+};
+
+TEST_F(SyscollectorImpTest, defaultCtor)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, hardware()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"serial_number":"Intel Corporation", "cpu_speed":2904,"cpu_cores":2,"cpu_name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz", "memory_free":2257872,"memory_total":4972208,"memory_used":54})")));
+    EXPECT_CALL(*spInfoWrapper, os()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                R"({"architecture":"x86_64", "hostname":"UBUNTU","os_build":"7601","os_major":"6","os_minor":"1","os_name":"Microsoft Windows 7","os_distribution_release":"sp1","os_version":"6.1.7601"})")));
+    EXPECT_CALL(*spInfoWrapper, networks()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"iface":[{"network_ip":"127.0.0.1", "host_mac":"d4:5d:64:51:07:5d", "network_gateway":"192.168.0.1|600","network_broadcast":"127.255.255.255", "interface_mtu":1500, "interface_name":"enp4s0", "interface_alias":" ", "interface_type":"ethernet", "interface_state":"up", "network_dhcp":"disabled","network_metric":"75","network_netmask":"255.0.0.0","network_protocol":"IPv4","host_network_ingress_bytes":0,"host_network_ingress_drops":0,"host_network_ingress_errors":0,"host_network_ingress_packages":0,"host_network_egress_bytes":0,"host_network_egress_drops":0,"host_network_egress_errors":0,"host_network_egress_packages":0, "IPv4":[{"network_ip":"192.168.153.1","network_broadcast":"192.168.153.255","network_dhcp":"unknown","network_metric":" ","network_netmask":"255.255.255.0"}], "IPv6":[{"network_ip":"fe80::250:56ff:fec0:8","network_dhcp":"unknown","network_metric":" ","network_netmask":"ffff:ffff:ffff:ffff::"}]}]})")));
+    EXPECT_CALL(*spInfoWrapper, ports()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                   R"([{"file_inode":0,"source_ip":"127.0.0.1", "source_port":631,"process_pid":0,"process_name":"System Idle Process","network_transport":"tcp","destination_ip":"0.0.0.0","destination_port":0,"host_network_ingress_queue":0,"interface_state":"listening","host_network_egress_queue":0}])")));
+    EXPECT_CALL(*spInfoWrapper, packages(_))
+    .Times(::testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"architecture":"amd64", "category":"x11","name":"xserver-xorg","priority":"optional","size":4111222333,"source":"xorg","version":"1:7.7+19ubuntu14","type":"deb","path":" "})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, hotfixes()).WillRepeatedly(Return(R"([{"hotfix_name":"KB12345678"}])"_json));
+
+    EXPECT_CALL(*spInfoWrapper, processes(_))
+    .Times(testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"name":"kworker/u256:2-","pid":"431625","parent_pid":2,"start":9302261,"state":"I","stime":3,"utime":0})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, groups()).WillRepeatedly(Return(
+                                                             R"([{"group_description": null, "group_id": 1, "group_id_signed": 1, "group_is_hidden": 0, "group_name": "daemon", "group_users": "daemon:pollinate:vboxadd", "group_uuid": null }])"_json));
+    EXPECT_CALL(*spInfoWrapper, users()).WillRepeatedly(Return
+                                                        (R"([{"host_ip":"192.168.0.84","login_status":0,"login_tty":"pts/0","login_type":"user","process_pid":"129870","user_auth_failed_count":0,"user_auth_failed_timestamp":0,"user_created":0,"user_full_name":"root","user_group_id":0,"user_group_id_signed":0,"user_groups":0,"user_home":"/root","user_id":0,"user_is_hidden":0,"user_is_remote":1,"user_last_login":"1749605216","user_name":"root","user_password_expiration_date":-1,"user_password_hash_algorithm":"y","user_password_inactive_days":-1,"user_password_last_change":1745971200.0,"user_password_max_days_between_changes":99999,"user_password_min_days_between_changes":0,"user_password_status":"active","user_password_warning_days_before_expiration":7,"user_roles":"sudo","user_shell":"/bin/bash","user_type":null,"user_uid_signed":0,"user_uuid":null}])"_json));
+
+    CallbackMock wrapperDelta;
+    std::function<void(const std::string&)> callbackDataDelta
+    {
+        [&wrapperDelta](const std::string & data)
+        {
+            auto delta = nlohmann::json::parse(data);
+
+            if (delta.contains("data") && delta["data"].contains("event") && delta["data"]["event"].contains("created"))
+            {
+                delta["data"]["event"].erase("created");
+            }
+
+            wrapperDelta.callbackMock(delta.dump());
+        }
+    };
+
+    CallbackMock wrapperPersist;
+    std::function<void(const std::string&)> callbackDataPersist
+    {
+        [&wrapperPersist](const std::string & data)
+        {
+            wrapperPersist.callbackMock(data);
+        }
+    };
+
+    const auto expectedResult1
+    {
+        R"({"collector":"dbsync_hwinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"cpu":{"cores":2,"name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz","speed":2904},"memory":{"free":2257872,"total":4972208,"used":54},"serial_number":"Intel Corporation"}},"module":"inventory"})"
+    };
+    const auto expectedResult2
+    {
+        R"({"collector":"dbsync_osinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"architecture":"x86_64","hostname":"UBUNTU","os":{"build":"7601","codename":null,"distribution":{"release":"sp1"},"full":null,"kernel":{"name":null,"release":null,"version":null},"major":"6","minor":"1","name":"Microsoft Windows 7","patch":null,"platform":null,"version":"6.1.7601"}}},"module":"inventory"})"
+    };
+    const auto expectedResult3
+    {
+        R"({"collector":"dbsync_network_iface","data":{"event":{"changed_fields":[],"type":"created"},"host":{"mac":["d4:5d:64:51:07:5d"],"network":{"egress":{"bytes":0,"drops":0,"errors":0,"packets":0},"ingress":{"bytes":0,"drops":0,"errors":0,"packets":0}}},"interface":{"alias":null,"mtu":1500,"name":"enp4s0","state":"up","type":"ethernet"}},"module":"inventory"})"
+    };
+    const auto expectedResult4
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv4"}},"module":"inventory"})"
+    };
+    const auto expectedResult5
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":"192.168.153.255","ip":"192.168.153.1","netmask":"255.255.255.0","protocol":0}},"module":"inventory"})"
+    };
+    const auto expectedResult6
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":null,"ip":"fe80::250:56ff:fec0:8","netmask":"ffff:ffff:ffff:ffff::","protocol":1}},"module":"inventory"})"
+    };
+    const auto expectedResult7
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":0},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":"System Idle Process","pid":0},"source":{"ip":"127.0.0.1","port":631}},"module":"inventory"})"
+    };
+    const auto expectedResult8
+    {
+        R"({"collector":"dbsync_processes","data":{"event":{"changed_fields":[],"type":"created"},"process":{"args":null,"args_count":null,"command_line":null,"name":"kworker/u256:2-","parent":{"pid":2},"pid":"431625","start":9302261,"state":"I","stime":3,"utime":0}},"module":"inventory"})"
+    };
+    const auto expectedResult9
+    {
+        R"({"collector":"dbsync_packages","data":{"event":{"changed_fields":[],"type":"created"},"package":{"architecture":"amd64","category":"x11","description":null,"installed":null,"multiarch":null,"name":"xserver-xorg","path":null,"priority":"optional","size":4111222333,"source":"xorg","type":"deb","vendor":null,"version":"1:7.7+19ubuntu14"}},"module":"inventory"})"
+    };
+    const auto expectedResult18
+    {
+        R"({"collector":"dbsync_hotfixes","data":{"event":{"changed_fields":[],"type":"created"},"package":{"hotfix":{"name":"KB12345678"}}},"module":"inventory"})"
+    };
+    const auto expectedResult20
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv6"}},"module":"inventory"})"
+    };
+    const auto expectedResult21
+    {
+        R"({"collector":"dbsync_groups","data":{"event":{"changed_fields":[],"type":"created"},"group":{"description":null,"id":1,"id_signed":1,"is_hidden":0,"name":"daemon","users":["daemon:pollinate:vboxadd"],"uuid":null}},"module":"inventory"})"
+    };
+    const auto expectedResult24
+    {
+        R"({"collector":"dbsync_users","data":{"event":{"changed_fields":[],"type":"created"},"host":{"ip":["192.168.0.84"]},"login":{"status":0,"tty":"pts/0","type":"user"},"process":{"pid":"129870"},"user":{"auth_failures":{"count":0,"timestamp":0},"created":0,"full_name":"root","group":{"id":0,"id_signed":0},"groups":[0],"home":"/root","id":0,"is_hidden":0,"is_remote":1,"last_login":"1749605216","name":"root","password":{"expiration_date":-1,"hash_algorithm":"y","inactive_days":-1,"last_change":1745971200.0,"max_days_between_changes":99999,"min_days_between_changes":0,"status":"active","warning_days_before_expiration":7},"roles":["sudo"],"shell":"/bin/bash","type":null,"uid_signed":0,"uuid":null}},"module":"inventory"})"
+    };
+
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult1)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult2)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult3)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult4)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult5)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult6)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult7)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult8)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult9)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult18)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult20)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult21)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult24)).Times(1);
+
+    // All modules enabled in this test
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHW)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistOS)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetIface)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistProcess)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPackage)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHotfix)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistGroup)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistUser)).Times(1);
+
+    std::thread t
+    {
+        [&spInfoWrapper, &callbackDataDelta, &callbackDataPersist]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          callbackDataDelta,
+                                          callbackDataPersist,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          5, true, true, true, true, true, true, true, true, true, true, true, true);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}
+
+TEST_F(SyscollectorImpTest, intervalSeconds)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, hardware()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"serial_number":"Intel Corporation", "cpu_speed":2904,"cpu_cores":2,"cpu_name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz","memory_free":2257872,"memory_total":4972208,"memory_used":54})")));
+    EXPECT_CALL(*spInfoWrapper, os()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                R"({"architecture":"x86_64", "hostname":"UBUNTU","os_build":"7601","os_major":"6","os_minor":"1","os_name":"Microsoft Windows 7","os_distribution_release":"sp1","os_version":"6.1.7601"})")));
+    EXPECT_CALL(*spInfoWrapper, networks()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"iface":[{"network_ip":"127.0.0.1", "host_mac":"d4:5d:64:51:07:5d", "network_gateway":"192.168.0.1|600","network_broadcast":"127.255.255.255", "interface_mtu":1500, "interface_name":"enp4s0", "interface_alias":" ", "interface_type":"ethernet", "interface_state":"up", "network_dhcp":"disabled","network_metric":"75","network_netmask":"255.0.0.0","network_protocol":"IPv4","host_network_ingress_bytes":0,"host_network_ingress_drops":0,"host_network_ingress_errors":0,"host_network_ingress_packages":0,"host_network_egress_bytes":0,"host_network_egress_drops":0,"host_network_egress_errors":0,"host_network_egress_packages":0, "IPv4":[{"network_ip":"192.168.153.1","network_broadcast":"192.168.153.255","network_dhcp":"unknown","network_metric":" ","network_netmask":"255.255.255.0"}], "IPv6":[{"network_ip":"fe80::250:56ff:fec0:8","network_dhcp":"unknown","network_metric":" ","network_netmask":"ffff:ffff:ffff:ffff::"}]}]})")));
+    EXPECT_CALL(*spInfoWrapper, ports()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                   R"([{"file_inode":0,"source_ip":"127.0.0.1", "source_port":631,"process_pid":0,"process_name":"System Idle Process","network_transport":"tcp","destination_ip":"0.0.0.0","destination_port":0,"host_network_ingress_queue":0,"interface_state":"listening","host_network_egress_queue":0}])")));
+    EXPECT_CALL(*spInfoWrapper, hotfixes()).WillRepeatedly(Return(R"([{"hotfix_name":"KB12345678"},{"hotfix_name":"KB87654321"}])"_json));
+    EXPECT_CALL(*spInfoWrapper, processes(_))
+    .Times(::testing::AtLeast(2))
+    .WillRepeatedly(testing::InvokeArgument<0>(nlohmann::json::parse(
+                                                   R"({"name":"kworker/u256:2-","pid":431625,"parent_pid":2,"start":9302261,"state":"I","stime":3,"utime":0})")));
+
+    EXPECT_CALL(*spInfoWrapper, packages(_))
+    .Times(::testing::AtLeast(2))
+    .WillRepeatedly(::testing::InvokeArgument<0>
+                    (R"({"name":"TEXT", "version":"TEXT", "vendor":"TEXT", "installed":"TEXT", "path":"TEXT", "architecture":"TEXT", "category":"TEXT", "description":"TEXT", "size":"TEXT", "priority":"TEXT", "multiarch":"TEXT", "source":"TEXT", "os_patch":"TEXT"})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, groups()).WillRepeatedly(Return(
+                                                             R"([{"group_description": null, "group_id": 1, "group_id_signed": 1, "group_is_hidden": 0, "group_name": "daemon", "group_users": "daemon:pollinate:vboxadd", "group_uuid": null }])"_json));
+    EXPECT_CALL(*spInfoWrapper, users()).WillRepeatedly(Return
+                                                        (R"([{"host_ip":"192.168.0.84","login_status":0,"login_tty":"pts/0","login_type":"user","process_pid":"129870","user_auth_failed_count":0,"user_auth_failed_timestamp":0,"user_created":0,"user_full_name":"root","user_group_id":0,"user_group_id_signed":0,"user_groups":0,"user_home":"/root","user_id":0,"user_is_hidden":0,"user_is_remote":1,"user_last_login":"1749605216","user_name":"root","user_password_expiration_date":-1,"user_password_hash_algorithm":"y","user_password_inactive_days":-1,"user_password_last_change":1745971200.0,"user_password_max_days_between_changes":99999,"user_password_min_days_between_changes":0,"user_password_status":"active","user_password_warning_days_before_expiration":7,"user_roles":"sudo","user_shell":"/bin/bash","user_type":null,"user_uid_signed":0,"user_uuid":null}])"_json));
+
+    std::thread t
+    {
+        [&spInfoWrapper]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          reportFunction,
+                                          reportFunction,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          1, true, true, true, true, true, true, true, true, true, true, true, true);
+
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds{10});
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}
+
+TEST_F(SyscollectorImpTest, noScanOnStart)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, hardware()).Times(0);
+    EXPECT_CALL(*spInfoWrapper, os()).Times(0);
+    EXPECT_CALL(*spInfoWrapper, packages(_)).Times(0);
+    EXPECT_CALL(*spInfoWrapper, networks()).Times(0);
+    EXPECT_CALL(*spInfoWrapper, processes(_)).Times(0);
+    EXPECT_CALL(*spInfoWrapper, ports()).Times(0);
+    EXPECT_CALL(*spInfoWrapper, hotfixes()).Times(0);
+    EXPECT_CALL(*spInfoWrapper, groups()).Times(0);
+    EXPECT_CALL(*spInfoWrapper, users()).Times(0);
+
+    std::thread t
+    {
+        [&spInfoWrapper]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          reportFunction,
+                                          reportFunction,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          3600, false);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds{2});
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}
+
+TEST_F(SyscollectorImpTest, noHardware)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, hardware()).Times(0);
+    EXPECT_CALL(*spInfoWrapper, os()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                R"({"architecture":"x86_64", "hostname":"UBUNTU","os_build":"7601","os_major":"6","os_minor":"1","os_name":"Microsoft Windows 7","os_distribution_release":"sp1","os_version":"6.1.7601"})")));
+    EXPECT_CALL(*spInfoWrapper, networks()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"iface":[{"network_ip":"127.0.0.1", "host_mac":"d4:5d:64:51:07:5d", "network_gateway":"192.168.0.1|600","network_broadcast":"127.255.255.255", "interface_mtu":1500, "interface_name":"enp4s0", "interface_alias":" ", "interface_type":"ethernet", "interface_state":"up", "network_dhcp":"disabled","network_metric":"75","network_netmask":"255.0.0.0","network_protocol":"IPv4","host_network_ingress_bytes":0,"host_network_ingress_drops":0,"host_network_ingress_errors":0,"host_network_ingress_packages":0,"host_network_egress_bytes":0,"host_network_egress_drops":0,"host_network_egress_errors":0,"host_network_egress_packages":0, "IPv4":[{"network_ip":"192.168.153.1","network_broadcast":"192.168.153.255","network_dhcp":"unknown","network_metric":" ","network_netmask":"255.255.255.0"}], "IPv6":[{"network_ip":"fe80::250:56ff:fec0:8","network_dhcp":"unknown","network_metric":" ","network_netmask":"ffff:ffff:ffff:ffff::"}]}]})")));
+    EXPECT_CALL(*spInfoWrapper, ports()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                   R"([{"file_inode":0,"source_ip":"127.0.0.1", "source_port":631,"process_pid":0,"process_name":"System Idle Process","network_transport":"tcp","destination_ip":"0.0.0.0","destination_port":0,"host_network_ingress_queue":0,"interface_state":"listening","host_network_egress_queue":0}])")));
+    EXPECT_CALL(*spInfoWrapper, packages(_))
+    .Times(::testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"architecture":"amd64", "category":"x11","name":"xserver-xorg","priority":"optional","size":4111222333,"source":"xorg","version":"1:7.7+19ubuntu14","type":"deb","path":" "})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, hotfixes()).WillRepeatedly(Return(R"([{"hotfix_name":"KB12345678"}])"_json));
+
+    EXPECT_CALL(*spInfoWrapper, processes(_))
+    .Times(testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"name":"kworker/u256:2-","pid":"431625","parent_pid":2,"start":9302261,"state":"I","stime":3,"utime":0})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, groups()).WillRepeatedly(Return(
+                                                             R"([{"group_description": null, "group_id": 1, "group_id_signed": 1, "group_is_hidden": 0, "group_name": "daemon", "group_users": "daemon:pollinate:vboxadd", "group_uuid": null }])"_json));
+    EXPECT_CALL(*spInfoWrapper, users()).WillRepeatedly(Return
+                                                        (R"([{"host_ip":"192.168.0.84","login_status":0,"login_tty":"pts/0","login_type":"user","process_pid":"129870","user_auth_failed_count":0,"user_auth_failed_timestamp":0,"user_created":0,"user_full_name":"root","user_group_id":0,"user_group_id_signed":0,"user_groups":0,"user_home":"/root","user_id":0,"user_is_hidden":0,"user_is_remote":1,"user_last_login":"1749605216","user_name":"root","user_password_expiration_date":-1,"user_password_hash_algorithm":"y","user_password_inactive_days":-1,"user_password_last_change":1745971200.0,"user_password_max_days_between_changes":99999,"user_password_min_days_between_changes":0,"user_password_status":"active","user_password_warning_days_before_expiration":7,"user_roles":"sudo","user_shell":"/bin/bash","user_type":null,"user_uid_signed":0,"user_uuid":null}])"_json));
+
+    CallbackMock wrapperDelta;
+    std::function<void(const std::string&)> callbackDataDelta
+    {
+        [&wrapperDelta](const std::string & data)
+        {
+            auto delta = nlohmann::json::parse(data);
+
+            if (delta.contains("data") && delta["data"].contains("event") && delta["data"]["event"].contains("created"))
+            {
+                delta["data"]["event"].erase("created");
+            }
+
+            wrapperDelta.callbackMock(delta.dump());
+        }
+    };
+
+    CallbackMock wrapperPersist;
+    std::function<void(const std::string&)> callbackDataPersist
+    {
+        [&wrapperPersist](const std::string & data)
+        {
+            wrapperPersist.callbackMock(data);
+        }
+    };
+
+    const auto expectedResult2
+    {
+        R"({"collector":"dbsync_osinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"architecture":"x86_64","hostname":"UBUNTU","os":{"build":"7601","codename":null,"distribution":{"release":"sp1"},"full":null,"kernel":{"name":null,"release":null,"version":null},"major":"6","minor":"1","name":"Microsoft Windows 7","patch":null,"platform":null,"version":"6.1.7601"}}},"module":"inventory"})"
+    };
+    const auto expectedResult3
+    {
+        R"({"collector":"dbsync_network_iface","data":{"event":{"changed_fields":[],"type":"created"},"host":{"mac":["d4:5d:64:51:07:5d"],"network":{"egress":{"bytes":0,"drops":0,"errors":0,"packets":0},"ingress":{"bytes":0,"drops":0,"errors":0,"packets":0}}},"interface":{"alias":null,"mtu":1500,"name":"enp4s0","state":"up","type":"ethernet"}},"module":"inventory"})"
+    };
+    const auto expectedResult4
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv4"}},"module":"inventory"})"
+    };
+    const auto expectedResult5
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":"192.168.153.255","ip":"192.168.153.1","netmask":"255.255.255.0","protocol":0}},"module":"inventory"})"
+    };
+    const auto expectedResult6
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":null,"ip":"fe80::250:56ff:fec0:8","netmask":"ffff:ffff:ffff:ffff::","protocol":1}},"module":"inventory"})"
+    };
+    const auto expectedResult7
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":0},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":"System Idle Process","pid":0},"source":{"ip":"127.0.0.1","port":631}},"module":"inventory"})"
+    };
+    const auto expectedResult8
+    {
+        R"({"collector":"dbsync_processes","data":{"event":{"changed_fields":[],"type":"created"},"process":{"args":null,"args_count":null,"command_line":null,"name":"kworker/u256:2-","parent":{"pid":2},"pid":"431625","start":9302261,"state":"I","stime":3,"utime":0}},"module":"inventory"})"
+    };
+    const auto expectedResult9
+    {
+        R"({"collector":"dbsync_packages","data":{"event":{"changed_fields":[],"type":"created"},"package":{"architecture":"amd64","category":"x11","description":null,"installed":null,"multiarch":null,"name":"xserver-xorg","path":null,"priority":"optional","size":4111222333,"source":"xorg","type":"deb","vendor":null,"version":"1:7.7+19ubuntu14"}},"module":"inventory"})"
+    };
+    const auto expectedResult18
+    {
+        R"({"collector":"dbsync_hotfixes","data":{"event":{"changed_fields":[],"type":"created"},"package":{"hotfix":{"name":"KB12345678"}}},"module":"inventory"})"
+    };
+    const auto expectedResult20
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv6"}},"module":"inventory"})"
+    };
+    const auto expectedResult22
+    {
+        R"({"collector":"dbsync_groups","data":{"event":{"changed_fields":[],"type":"created"},"group":{"description":null,"id":1,"id_signed":1,"is_hidden":0,"name":"daemon","users":["daemon:pollinate:vboxadd"],"uuid":null}},"module":"inventory"})"
+    };
+    const auto expectedResult25
+    {
+        R"({"collector":"dbsync_users","data":{"event":{"changed_fields":[],"type":"created"},"host":{"ip":["192.168.0.84"]},"login":{"status":0,"tty":"pts/0","type":"user"},"process":{"pid":"129870"},"user":{"auth_failures":{"count":0,"timestamp":0},"created":0,"full_name":"root","group":{"id":0,"id_signed":0},"groups":[0],"home":"/root","id":0,"is_hidden":0,"is_remote":1,"last_login":"1749605216","name":"root","password":{"expiration_date":-1,"hash_algorithm":"y","inactive_days":-1,"last_change":1745971200.0,"max_days_between_changes":99999,"min_days_between_changes":0,"status":"active","warning_days_before_expiration":7},"roles":["sudo"],"shell":"/bin/bash","type":null,"uid_signed":0,"uuid":null}},"module":"inventory"})"
+    };
+
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult2)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult3)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult4)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult5)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult6)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult7)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult8)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult9)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult18)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult20)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult22)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult25)).Times(1);
+
+    // All modules except Hardware (disabled in this test)
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistOS)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetIface)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistProcess)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPackage)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHotfix)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistGroup)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistUser)).Times(1);
+
+    std::thread t
+    {
+        [&spInfoWrapper, &callbackDataDelta, &callbackDataPersist]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          callbackDataDelta,
+                                          callbackDataPersist,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          3600, true, false, true, true, true, true, true, true, true, true, true, true);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+
+}
+
+TEST_F(SyscollectorImpTest, noOs)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, hardware()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"serial_number":"Intel Corporation", "cpu_speed":2904,"cpu_cores":2,"cpu_name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz", "memory_free":2257872,"memory_total":4972208,"memory_used":54})")));
+    EXPECT_CALL(*spInfoWrapper, networks()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"iface":[{"network_ip":"127.0.0.1", "host_mac":"d4:5d:64:51:07:5d", "network_gateway":"192.168.0.1|600","network_broadcast":"127.255.255.255", "interface_mtu":1500, "interface_name":"enp4s0", "interface_alias":" ", "interface_type":"ethernet", "interface_state":"up", "network_dhcp":"disabled","network_metric":"75","network_netmask":"255.0.0.0","network_protocol":"IPv4","host_network_ingress_bytes":0,"host_network_ingress_drops":0,"host_network_ingress_errors":0,"host_network_ingress_packages":0,"host_network_egress_bytes":0,"host_network_egress_drops":0,"host_network_egress_errors":0,"host_network_egress_packages":0, "IPv4":[{"network_ip":"192.168.153.1","network_broadcast":"192.168.153.255","network_dhcp":"unknown","network_metric":" ","network_netmask":"255.255.255.0"}], "IPv6":[{"network_ip":"fe80::250:56ff:fec0:8","network_dhcp":"unknown","network_metric":" ","network_netmask":"ffff:ffff:ffff:ffff::"}]}]})")));
+    EXPECT_CALL(*spInfoWrapper, ports()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                   R"([{"file_inode":0,"source_ip":"127.0.0.1", "source_port":631,"process_pid":0,"process_name":"System Idle Process","network_transport":"tcp","destination_ip":"0.0.0.0","destination_port":0,"host_network_ingress_queue":0,"interface_state":"listening","host_network_egress_queue":0}])")));
+    EXPECT_CALL(*spInfoWrapper, os()).Times(0);
+    EXPECT_CALL(*spInfoWrapper, packages(_))
+    .Times(::testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"architecture":"amd64", "category":"x11","name":"xserver-xorg","priority":"optional","size":4111222333,"source":"xorg","version":"1:7.7+19ubuntu14","type":"deb","path":" "})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, hotfixes()).WillRepeatedly(Return(R"([{"hotfix_name":"KB12345678"}])"_json));
+
+    EXPECT_CALL(*spInfoWrapper, processes(_))
+    .Times(testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"name":"kworker/u256:2-","pid":"431625","parent_pid":2,"start":9302261,"state":"I","stime":3,"utime":0})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, groups()).WillRepeatedly(Return(
+                                                             R"([{"group_description": null, "group_id": 1, "group_id_signed": 1, "group_is_hidden": 0, "group_name": "daemon", "group_users": "daemon:pollinate:vboxadd", "group_uuid": null }])"_json));
+    EXPECT_CALL(*spInfoWrapper, users()).WillRepeatedly(Return
+                                                        (R"([{"host_ip":"192.168.0.84","login_status":0,"login_tty":"pts/0","login_type":"user","process_pid":"129870","user_auth_failed_count":0,"user_auth_failed_timestamp":0,"user_created":0,"user_full_name":"root","user_group_id":0,"user_group_id_signed":0,"user_groups":0,"user_home":"/root","user_id":0,"user_is_hidden":0,"user_is_remote":1,"user_last_login":"1749605216","user_name":"root","user_password_expiration_date":-1,"user_password_hash_algorithm":"y","user_password_inactive_days":-1,"user_password_last_change":1745971200.0,"user_password_max_days_between_changes":99999,"user_password_min_days_between_changes":0,"user_password_status":"active","user_password_warning_days_before_expiration":7,"user_roles":"sudo","user_shell":"/bin/bash","user_type":null,"user_uid_signed":0,"user_uuid":null}])"_json));
+
+    CallbackMock wrapperDelta;
+    std::function<void(const std::string&)> callbackDataDelta
+    {
+        [&wrapperDelta](const std::string & data)
+        {
+            auto delta = nlohmann::json::parse(data);
+
+            if (delta.contains("data") && delta["data"].contains("event") && delta["data"]["event"].contains("created"))
+            {
+                delta["data"]["event"].erase("created");
+            }
+
+            wrapperDelta.callbackMock(delta.dump());
+        }
+    };
+
+    CallbackMock wrapperPersist;
+    std::function<void(const std::string&)> callbackDataPersist
+    {
+        [&wrapperPersist](const std::string & data)
+        {
+            wrapperPersist.callbackMock(data);
+        }
+    };
+
+    const auto expectedResult1
+    {
+        R"({"collector":"dbsync_hwinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"cpu":{"cores":2,"name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz","speed":2904},"memory":{"free":2257872,"total":4972208,"used":54},"serial_number":"Intel Corporation"}},"module":"inventory"})"
+    };
+    const auto expectedResult3
+    {
+        R"({"collector":"dbsync_network_iface","data":{"event":{"changed_fields":[],"type":"created"},"host":{"mac":["d4:5d:64:51:07:5d"],"network":{"egress":{"bytes":0,"drops":0,"errors":0,"packets":0},"ingress":{"bytes":0,"drops":0,"errors":0,"packets":0}}},"interface":{"alias":null,"mtu":1500,"name":"enp4s0","state":"up","type":"ethernet"}},"module":"inventory"})"
+    };
+    const auto expectedResult4
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv4"}},"module":"inventory"})"
+    };
+    const auto expectedResult5
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":"192.168.153.255","ip":"192.168.153.1","netmask":"255.255.255.0","protocol":0}},"module":"inventory"})"
+    };
+    const auto expectedResult6
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":null,"ip":"fe80::250:56ff:fec0:8","netmask":"ffff:ffff:ffff:ffff::","protocol":1}},"module":"inventory"})"
+    };
+    const auto expectedResult7
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":0},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":"System Idle Process","pid":0},"source":{"ip":"127.0.0.1","port":631}},"module":"inventory"})"
+    };
+    const auto expectedResult8
+    {
+        R"({"collector":"dbsync_processes","data":{"event":{"changed_fields":[],"type":"created"},"process":{"args":null,"args_count":null,"command_line":null,"name":"kworker/u256:2-","parent":{"pid":2},"pid":"431625","start":9302261,"state":"I","stime":3,"utime":0}},"module":"inventory"})"
+    };
+    const auto expectedResult9
+    {
+        R"({"collector":"dbsync_packages","data":{"event":{"changed_fields":[],"type":"created"},"package":{"architecture":"amd64","category":"x11","description":null,"installed":null,"multiarch":null,"name":"xserver-xorg","path":null,"priority":"optional","size":4111222333,"source":"xorg","type":"deb","vendor":null,"version":"1:7.7+19ubuntu14"}},"module":"inventory"})"
+    };
+    const auto expectedResult18
+    {
+        R"({"collector":"dbsync_hotfixes","data":{"event":{"changed_fields":[],"type":"created"},"package":{"hotfix":{"name":"KB12345678"}}},"module":"inventory"})"
+    };
+    const auto expectedResult20
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv6"}},"module":"inventory"})"
+    };
+    const auto expectedResult22
+    {
+        R"({"collector":"dbsync_groups","data":{"event":{"changed_fields":[],"type":"created"},"group":{"description":null,"id":1,"id_signed":1,"is_hidden":0,"name":"daemon","users":["daemon:pollinate:vboxadd"],"uuid":null}},"module":"inventory"})"
+    };
+    const auto expectedResult25
+    {
+        R"({"collector":"dbsync_users","data":{"event":{"changed_fields":[],"type":"created"},"host":{"ip":["192.168.0.84"]},"login":{"status":0,"tty":"pts/0","type":"user"},"process":{"pid":"129870"},"user":{"auth_failures":{"count":0,"timestamp":0},"created":0,"full_name":"root","group":{"id":0,"id_signed":0},"groups":[0],"home":"/root","id":0,"is_hidden":0,"is_remote":1,"last_login":"1749605216","name":"root","password":{"expiration_date":-1,"hash_algorithm":"y","inactive_days":-1,"last_change":1745971200.0,"max_days_between_changes":99999,"min_days_between_changes":0,"status":"active","warning_days_before_expiration":7},"roles":["sudo"],"shell":"/bin/bash","type":null,"uid_signed":0,"uuid":null}},"module":"inventory"})"
+    };
+
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult1)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult3)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult4)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult5)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult6)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult7)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult8)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult9)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult18)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult20)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult22)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult25)).Times(1);
+
+    // All modules except OS (disabled in this test)
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHW)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetIface)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistProcess)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPackage)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHotfix)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistGroup)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistUser)).Times(1);
+
+    std::thread t
+    {
+        [&spInfoWrapper, &callbackDataDelta, &callbackDataPersist]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          callbackDataDelta,
+                                          callbackDataPersist,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          3600, true, true, false, true, true, true, true, true, true, true, true, true);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}
+
+TEST_F(SyscollectorImpTest, noNetwork)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, hardware()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"serial_number":"Intel Corporation", "cpu_speed":2904,"cpu_cores":2,"cpu_name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz", "memory_free":2257872,"memory_total":4972208,"memory_used":54})")));
+    EXPECT_CALL(*spInfoWrapper, os()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                R"({"architecture":"x86_64", "hostname":"UBUNTU","os_build":"7601","os_major":"6","os_minor":"1","os_name":"Microsoft Windows 7","os_distribution_release":"sp1","os_version":"6.1.7601"})")));
+    EXPECT_CALL(*spInfoWrapper, networks()).Times(0);
+    EXPECT_CALL(*spInfoWrapper, ports()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                   R"([{"file_inode":0,"source_ip":"127.0.0.1", "source_port":631,"process_pid":0,"process_name":"System Idle Process","network_transport":"tcp","destination_ip":"0.0.0.0","destination_port":0,"host_network_ingress_queue":0,"interface_state":"listening","host_network_egress_queue":0}])")));
+    EXPECT_CALL(*spInfoWrapper, packages(_))
+    .Times(::testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"architecture":"amd64", "category":"x11","name":"xserver-xorg","priority":"optional","size":4111222333,"source":"xorg","version":"1:7.7+19ubuntu14","type":"deb","path":" "})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, hotfixes()).WillRepeatedly(Return(R"([{"hotfix_name":"KB12345678"}])"_json));
+
+    EXPECT_CALL(*spInfoWrapper, processes(_))
+    .Times(testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"name":"kworker/u256:2-","pid":"431625","parent_pid":2,"start":9302261,"state":"I","stime":3,"utime":0})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, groups()).WillRepeatedly(Return(
+                                                             R"([{"group_description": null, "group_id": 1, "group_id_signed": 1, "group_is_hidden": 0, "group_name": "daemon", "group_users": "daemon:pollinate:vboxadd", "group_uuid": null }])"_json));
+    EXPECT_CALL(*spInfoWrapper, users()).WillRepeatedly(Return
+                                                        (R"([{"host_ip":"192.168.0.84","login_status":0,"login_tty":"pts/0","login_type":"user","process_pid":"129870","user_auth_failed_count":0,"user_auth_failed_timestamp":0,"user_created":0,"user_full_name":"root","user_group_id":0,"user_group_id_signed":0,"user_groups":0,"user_home":"/root","user_id":0,"user_is_hidden":0,"user_is_remote":1,"user_last_login":"1749605216","user_name":"root","user_password_expiration_date":-1,"user_password_hash_algorithm":"y","user_password_inactive_days":-1,"user_password_last_change":1745971200.0,"user_password_max_days_between_changes":99999,"user_password_min_days_between_changes":0,"user_password_status":"active","user_password_warning_days_before_expiration":7,"user_roles":"sudo","user_shell":"/bin/bash","user_type":null,"user_uid_signed":0,"user_uuid":null}])"_json));
+
+    CallbackMock wrapperDelta;
+    std::function<void(const std::string&)> callbackDataDelta
+    {
+        [&wrapperDelta](const std::string & data)
+        {
+            auto delta = nlohmann::json::parse(data);
+
+            if (delta.contains("data") && delta["data"].contains("event") && delta["data"]["event"].contains("created"))
+            {
+                delta["data"]["event"].erase("created");
+            }
+
+            wrapperDelta.callbackMock(delta.dump());
+        }
+    };
+
+    CallbackMock wrapperPersist;
+    std::function<void(const std::string&)> callbackDataPersist
+    {
+        [&wrapperPersist](const std::string & data)
+        {
+            wrapperPersist.callbackMock(data);
+        }
+    };
+
+    const auto expectedResult1
+    {
+        R"({"collector":"dbsync_hwinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"cpu":{"cores":2,"name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz","speed":2904},"memory":{"free":2257872,"total":4972208,"used":54},"serial_number":"Intel Corporation"}},"module":"inventory"})"
+    };
+    const auto expectedResult2
+    {
+        R"({"collector":"dbsync_osinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"architecture":"x86_64","hostname":"UBUNTU","os":{"build":"7601","codename":null,"distribution":{"release":"sp1"},"full":null,"kernel":{"name":null,"release":null,"version":null},"major":"6","minor":"1","name":"Microsoft Windows 7","patch":null,"platform":null,"version":"6.1.7601"}}},"module":"inventory"})"
+    };
+    const auto expectedResult7
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":0},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":"System Idle Process","pid":0},"source":{"ip":"127.0.0.1","port":631}},"module":"inventory"})"
+    };
+    const auto expectedResult8
+    {
+        R"({"collector":"dbsync_processes","data":{"event":{"changed_fields":[],"type":"created"},"process":{"args":null,"args_count":null,"command_line":null,"name":"kworker/u256:2-","parent":{"pid":2},"pid":"431625","start":9302261,"state":"I","stime":3,"utime":0}},"module":"inventory"})"
+    };
+    const auto expectedResult9
+    {
+        R"({"collector":"dbsync_packages","data":{"event":{"changed_fields":[],"type":"created"},"package":{"architecture":"amd64","category":"x11","description":null,"installed":null,"multiarch":null,"name":"xserver-xorg","path":null,"priority":"optional","size":4111222333,"source":"xorg","type":"deb","vendor":null,"version":"1:7.7+19ubuntu14"}},"module":"inventory"})"
+    };
+    const auto expectedResult18
+    {
+        R"({"collector":"dbsync_hotfixes","data":{"event":{"changed_fields":[],"type":"created"},"package":{"hotfix":{"name":"KB12345678"}}},"module":"inventory"})"
+    };
+    const auto expectedResult23
+    {
+        R"({"collector":"dbsync_groups","data":{"event":{"changed_fields":[],"type":"created"},"group":{"description":null,"id":1,"id_signed":1,"is_hidden":0,"name":"daemon","users":["daemon:pollinate:vboxadd"],"uuid":null}},"module":"inventory"})"
+    };
+    const auto expectedResult26
+    {
+        R"({"collector":"dbsync_users","data":{"event":{"changed_fields":[],"type":"created"},"host":{"ip":["192.168.0.84"]},"login":{"status":0,"tty":"pts/0","type":"user"},"process":{"pid":"129870"},"user":{"auth_failures":{"count":0,"timestamp":0},"created":0,"full_name":"root","group":{"id":0,"id_signed":0},"groups":[0],"home":"/root","id":0,"is_hidden":0,"is_remote":1,"last_login":"1749605216","name":"root","password":{"expiration_date":-1,"hash_algorithm":"y","inactive_days":-1,"last_change":1745971200.0,"max_days_between_changes":99999,"min_days_between_changes":0,"status":"active","warning_days_before_expiration":7},"roles":["sudo"],"shell":"/bin/bash","type":null,"uid_signed":0,"uuid":null}},"module":"inventory"})"
+    };
+
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult1)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult2)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult7)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult8)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult9)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult18)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult23)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult26)).Times(1);
+
+    // All modules except Network (disabled in this test)
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHW)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistOS)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistProcess)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPackage)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHotfix)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistGroup)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistUser)).Times(1);
+
+    std::thread t
+    {
+        [&spInfoWrapper, &callbackDataDelta, &callbackDataPersist]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          callbackDataDelta,
+                                          callbackDataPersist,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          3600, true, true, true, false, true, true, true, true, true, true, true, true);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}
+
+TEST_F(SyscollectorImpTest, noPackages)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, hardware()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"serial_number":"Intel Corporation", "cpu_speed":2904,"cpu_cores":2,"cpu_name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz", "memory_free":2257872,"memory_total":4972208,"memory_used":54})")));
+    EXPECT_CALL(*spInfoWrapper, os()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                R"({"architecture":"x86_64", "hostname":"UBUNTU","os_build":"7601","os_major":"6","os_minor":"1","os_name":"Microsoft Windows 7","os_distribution_release":"sp1","os_version":"6.1.7601"})")));
+    EXPECT_CALL(*spInfoWrapper, networks()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"iface":[{"network_ip":"127.0.0.1", "host_mac":"d4:5d:64:51:07:5d", "network_gateway":"192.168.0.1|600","network_broadcast":"127.255.255.255", "interface_mtu":1500, "interface_name":"enp4s0", "interface_alias":" ", "interface_type":"ethernet", "interface_state":"up", "network_dhcp":"disabled","network_metric":"75","network_netmask":"255.0.0.0","network_protocol":"IPv4","host_network_ingress_bytes":0,"host_network_ingress_drops":0,"host_network_ingress_errors":0,"host_network_ingress_packages":0,"host_network_egress_bytes":0,"host_network_egress_drops":0,"host_network_egress_errors":0,"host_network_egress_packages":0, "IPv4":[{"network_ip":"192.168.153.1","network_broadcast":"192.168.153.255","network_dhcp":"unknown","network_metric":" ","network_netmask":"255.255.255.0"}], "IPv6":[{"network_ip":"fe80::250:56ff:fec0:8","network_dhcp":"unknown","network_metric":" ","network_netmask":"ffff:ffff:ffff:ffff::"}]}]})")));
+    EXPECT_CALL(*spInfoWrapper, ports()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                   R"([{"file_inode":0,"source_ip":"127.0.0.1", "source_port":631,"process_pid":0,"process_name":"System Idle Process","network_transport":"tcp","destination_ip":"0.0.0.0","destination_port":0,"host_network_ingress_queue":0,"interface_state":"listening","host_network_egress_queue":0}])")));
+    EXPECT_CALL(*spInfoWrapper, packages(_)).Times(0);
+
+    EXPECT_CALL(*spInfoWrapper, hotfixes()).WillRepeatedly(Return(R"([{"hotfix_name":"KB12345678"}])"_json));
+
+    EXPECT_CALL(*spInfoWrapper, processes(_))
+    .Times(testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"name":"kworker/u256:2-","pid":"431625","parent_pid":2,"start":9302261,"state":"I","stime":3,"utime":0})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, groups()).WillRepeatedly(Return(
+                                                             R"([{"group_description": null, "group_id": 1, "group_id_signed": 1, "group_is_hidden": 0, "group_name": "daemon", "group_users": "daemon:pollinate:vboxadd", "group_uuid": null }])"_json));
+    EXPECT_CALL(*spInfoWrapper, users()).WillRepeatedly(Return
+                                                        (R"([{"host_ip":"192.168.0.84","login_status":0,"login_tty":"pts/0","login_type":"user","process_pid":"129870","user_auth_failed_count":0,"user_auth_failed_timestamp":0,"user_created":0,"user_full_name":"root","user_group_id":0,"user_group_id_signed":0,"user_groups":0,"user_home":"/root","user_id":0,"user_is_hidden":0,"user_is_remote":1,"user_last_login":"1749605216","user_name":"root","user_password_expiration_date":-1,"user_password_hash_algorithm":"y","user_password_inactive_days":-1,"user_password_last_change":1745971200.0,"user_password_max_days_between_changes":99999,"user_password_min_days_between_changes":0,"user_password_status":"active","user_password_warning_days_before_expiration":7,"user_roles":"sudo","user_shell":"/bin/bash","user_type":null,"user_uid_signed":0,"user_uuid":null}])"_json));
+
+    CallbackMock wrapperDelta;
+    std::function<void(const std::string&)> callbackDataDelta
+    {
+        [&wrapperDelta](const std::string & data)
+        {
+            auto delta = nlohmann::json::parse(data);
+
+            if (delta.contains("data") && delta["data"].contains("event") && delta["data"]["event"].contains("created"))
+            {
+                delta["data"]["event"].erase("created");
+            }
+
+            wrapperDelta.callbackMock(delta.dump());
+        }
+    };
+
+    CallbackMock wrapperPersist;
+    std::function<void(const std::string&)> callbackDataPersist
+    {
+        [&wrapperPersist](const std::string & data)
+        {
+            wrapperPersist.callbackMock(data);
+        }
+    };
+
+    const auto expectedResult1
+    {
+        R"({"collector":"dbsync_hwinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"cpu":{"cores":2,"name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz","speed":2904},"memory":{"free":2257872,"total":4972208,"used":54},"serial_number":"Intel Corporation"}},"module":"inventory"})"
+    };
+    const auto expectedResult2
+    {
+        R"({"collector":"dbsync_osinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"architecture":"x86_64","hostname":"UBUNTU","os":{"build":"7601","codename":null,"distribution":{"release":"sp1"},"full":null,"kernel":{"name":null,"release":null,"version":null},"major":"6","minor":"1","name":"Microsoft Windows 7","patch":null,"platform":null,"version":"6.1.7601"}}},"module":"inventory"})"
+    };
+    const auto expectedResult3
+    {
+        R"({"collector":"dbsync_network_iface","data":{"event":{"changed_fields":[],"type":"created"},"host":{"mac":["d4:5d:64:51:07:5d"],"network":{"egress":{"bytes":0,"drops":0,"errors":0,"packets":0},"ingress":{"bytes":0,"drops":0,"errors":0,"packets":0}}},"interface":{"alias":null,"mtu":1500,"name":"enp4s0","state":"up","type":"ethernet"}},"module":"inventory"})"
+    };
+    const auto expectedResult4
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv4"}},"module":"inventory"})"
+    };
+    const auto expectedResult5
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":"192.168.153.255","ip":"192.168.153.1","netmask":"255.255.255.0","protocol":0}},"module":"inventory"})"
+    };
+    const auto expectedResult6
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":null,"ip":"fe80::250:56ff:fec0:8","netmask":"ffff:ffff:ffff:ffff::","protocol":1}},"module":"inventory"})"
+    };
+    const auto expectedResult7
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":0},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":"System Idle Process","pid":0},"source":{"ip":"127.0.0.1","port":631}},"module":"inventory"})"
+    };
+    const auto expectedResult8
+    {
+        R"({"collector":"dbsync_processes","data":{"event":{"changed_fields":[],"type":"created"},"process":{"args":null,"args_count":null,"command_line":null,"name":"kworker/u256:2-","parent":{"pid":2},"pid":"431625","start":9302261,"state":"I","stime":3,"utime":0}},"module":"inventory"})"
+    };
+    const auto expectedResult18
+    {
+        R"({"collector":"dbsync_hotfixes","data":{"event":{"changed_fields":[],"type":"created"},"package":{"hotfix":{"name":"KB12345678"}}},"module":"inventory"})"
+    };
+    const auto expectedResult20
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv6"}},"module":"inventory"})"
+    };
+    const auto expectedResult22
+    {
+        R"({"collector":"dbsync_groups","data":{"event":{"changed_fields":[],"type":"created"},"group":{"description":null,"id":1,"id_signed":1,"is_hidden":0,"name":"daemon","users":["daemon:pollinate:vboxadd"],"uuid":null}},"module":"inventory"})"
+    };
+    const auto expectedResult25
+    {
+        R"({"collector":"dbsync_users","data":{"event":{"changed_fields":[],"type":"created"},"host":{"ip":["192.168.0.84"]},"login":{"status":0,"tty":"pts/0","type":"user"},"process":{"pid":"129870"},"user":{"auth_failures":{"count":0,"timestamp":0},"created":0,"full_name":"root","group":{"id":0,"id_signed":0},"groups":[0],"home":"/root","id":0,"is_hidden":0,"is_remote":1,"last_login":"1749605216","name":"root","password":{"expiration_date":-1,"hash_algorithm":"y","inactive_days":-1,"last_change":1745971200.0,"max_days_between_changes":99999,"min_days_between_changes":0,"status":"active","warning_days_before_expiration":7},"roles":["sudo"],"shell":"/bin/bash","type":null,"uid_signed":0,"uuid":null}},"module":"inventory"})"
+    };
+
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult1)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult2)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult3)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult4)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult5)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult6)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult7)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult8)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult18)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult20)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult22)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult25)).Times(1);
+
+    // All modules except Packages (disabled in this test)
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHW)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistOS)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetIface)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistProcess)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHotfix)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistGroup)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistUser)).Times(1);
+
+    std::thread t
+    {
+        [&spInfoWrapper, &callbackDataDelta, &callbackDataPersist]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          callbackDataDelta,
+                                          callbackDataPersist,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          3600, true, true, true, true, false, true, true, true, true, true, true, true);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds{2});
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}
+
+TEST_F(SyscollectorImpTest, noPorts)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, hardware()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"serial_number":"Intel Corporation", "cpu_speed":2904,"cpu_cores":2,"cpu_name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz", "memory_free":2257872,"memory_total":4972208,"memory_used":54})")));
+    EXPECT_CALL(*spInfoWrapper, os()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                R"({"architecture":"x86_64", "hostname":"UBUNTU","os_build":"7601","os_major":"6","os_minor":"1","os_name":"Microsoft Windows 7","os_distribution_release":"sp1","os_version":"6.1.7601"})")));
+    EXPECT_CALL(*spInfoWrapper, networks()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"iface":[{"network_ip":"127.0.0.1", "host_mac":"d4:5d:64:51:07:5d", "network_gateway":"192.168.0.1|600","network_broadcast":"127.255.255.255", "interface_mtu":1500, "interface_name":"enp4s0", "interface_alias":" ", "interface_type":"ethernet", "interface_state":"up", "network_dhcp":"disabled","network_metric":"75","network_netmask":"255.0.0.0","network_protocol":"IPv4","host_network_ingress_bytes":0,"host_network_ingress_drops":0,"host_network_ingress_errors":0,"host_network_ingress_packages":0,"host_network_egress_bytes":0,"host_network_egress_drops":0,"host_network_egress_errors":0,"host_network_egress_packages":0, "IPv4":[{"network_ip":"192.168.153.1","network_broadcast":"192.168.153.255","network_dhcp":"unknown","network_metric":" ","network_netmask":"255.255.255.0"}], "IPv6":[{"network_ip":"fe80::250:56ff:fec0:8","network_dhcp":"unknown","network_metric":" ","network_netmask":"ffff:ffff:ffff:ffff::"}]}]})")));
+    EXPECT_CALL(*spInfoWrapper, ports()).Times(0);
+    EXPECT_CALL(*spInfoWrapper, packages(_))
+    .Times(::testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"architecture":"amd64", "category":"x11","name":"xserver-xorg","priority":"optional","size":4111222333,"source":"xorg","version":"1:7.7+19ubuntu14","type":"deb","path":" "})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, hotfixes()).WillRepeatedly(Return(R"([{"hotfix_name":"KB12345678"}])"_json));
+
+    EXPECT_CALL(*spInfoWrapper, processes(_))
+    .Times(testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"name":"kworker/u256:2-","pid":"431625","parent_pid":2,"start":9302261,"state":"I","stime":3,"utime":0})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, groups()).WillRepeatedly(Return(
+                                                             R"([{"group_description": null, "group_id": 1, "group_id_signed": 1, "group_is_hidden": 0, "group_name": "daemon", "group_users": "daemon:pollinate:vboxadd", "group_uuid": null }])"_json));
+    EXPECT_CALL(*spInfoWrapper, users()).WillRepeatedly(Return
+                                                        (R"([{"host_ip":"192.168.0.84","login_status":0,"login_tty":"pts/0","login_type":"user","process_pid":"129870","user_auth_failed_count":0,"user_auth_failed_timestamp":0,"user_created":0,"user_full_name":"root","user_group_id":0,"user_group_id_signed":0,"user_groups":0,"user_home":"/root","user_id":0,"user_is_hidden":0,"user_is_remote":1,"user_last_login":"1749605216","user_name":"root","user_password_expiration_date":-1,"user_password_hash_algorithm":"y","user_password_inactive_days":-1,"user_password_last_change":1745971200.0,"user_password_max_days_between_changes":99999,"user_password_min_days_between_changes":0,"user_password_status":"active","user_password_warning_days_before_expiration":7,"user_roles":"sudo","user_shell":"/bin/bash","user_type":null,"user_uid_signed":0,"user_uuid":null}])"_json));
+
+    CallbackMock wrapperDelta;
+    std::function<void(const std::string&)> callbackDataDelta
+    {
+        [&wrapperDelta](const std::string & data)
+        {
+            auto delta = nlohmann::json::parse(data);
+
+            if (delta.contains("data") && delta["data"].contains("event") && delta["data"]["event"].contains("created"))
+            {
+                delta["data"]["event"].erase("created");
+            }
+
+            wrapperDelta.callbackMock(delta.dump());
+        }
+    };
+
+    CallbackMock wrapperPersist;
+    std::function<void(const std::string&)> callbackDataPersist
+    {
+        [&wrapperPersist](const std::string & data)
+        {
+            wrapperPersist.callbackMock(data);
+        }
+    };
+
+    const auto expectedResult1
+    {
+        R"({"collector":"dbsync_hwinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"cpu":{"cores":2,"name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz","speed":2904},"memory":{"free":2257872,"total":4972208,"used":54},"serial_number":"Intel Corporation"}},"module":"inventory"})"
+    };
+    const auto expectedResult2
+    {
+        R"({"collector":"dbsync_osinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"architecture":"x86_64","hostname":"UBUNTU","os":{"build":"7601","codename":null,"distribution":{"release":"sp1"},"full":null,"kernel":{"name":null,"release":null,"version":null},"major":"6","minor":"1","name":"Microsoft Windows 7","patch":null,"platform":null,"version":"6.1.7601"}}},"module":"inventory"})"
+    };
+    const auto expectedResult3
+    {
+        R"({"collector":"dbsync_network_iface","data":{"event":{"changed_fields":[],"type":"created"},"host":{"mac":["d4:5d:64:51:07:5d"],"network":{"egress":{"bytes":0,"drops":0,"errors":0,"packets":0},"ingress":{"bytes":0,"drops":0,"errors":0,"packets":0}}},"interface":{"alias":null,"mtu":1500,"name":"enp4s0","state":"up","type":"ethernet"}},"module":"inventory"})"
+    };
+    const auto expectedResult4
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv4"}},"module":"inventory"})"
+    };
+    const auto expectedResult5
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":"192.168.153.255","ip":"192.168.153.1","netmask":"255.255.255.0","protocol":0}},"module":"inventory"})"
+    };
+    const auto expectedResult6
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":null,"ip":"fe80::250:56ff:fec0:8","netmask":"ffff:ffff:ffff:ffff::","protocol":1}},"module":"inventory"})"
+    };
+    const auto expectedResult8
+    {
+        R"({"collector":"dbsync_processes","data":{"event":{"changed_fields":[],"type":"created"},"process":{"args":null,"args_count":null,"command_line":null,"name":"kworker/u256:2-","parent":{"pid":2},"pid":"431625","start":9302261,"state":"I","stime":3,"utime":0}},"module":"inventory"})"
+    };
+    const auto expectedResult9
+    {
+        R"({"collector":"dbsync_packages","data":{"event":{"changed_fields":[],"type":"created"},"package":{"architecture":"amd64","category":"x11","description":null,"installed":null,"multiarch":null,"name":"xserver-xorg","path":null,"priority":"optional","size":4111222333,"source":"xorg","type":"deb","vendor":null,"version":"1:7.7+19ubuntu14"}},"module":"inventory"})"
+    };
+    const auto expectedResult18
+    {
+        R"({"collector":"dbsync_hotfixes","data":{"event":{"changed_fields":[],"type":"created"},"package":{"hotfix":{"name":"KB12345678"}}},"module":"inventory"})"
+    };
+    const auto expectedResult20
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv6"}},"module":"inventory"})"
+    };
+    const auto expectedResult22
+    {
+        R"({"collector":"dbsync_groups","data":{"event":{"changed_fields":[],"type":"created"},"group":{"description":null,"id":1,"id_signed":1,"is_hidden":0,"name":"daemon","users":["daemon:pollinate:vboxadd"],"uuid":null}},"module":"inventory"})"
+    };
+    const auto expectedResult25
+    {
+        R"({"collector":"dbsync_users","data":{"event":{"changed_fields":[],"type":"created"},"host":{"ip":["192.168.0.84"]},"login":{"status":0,"tty":"pts/0","type":"user"},"process":{"pid":"129870"},"user":{"auth_failures":{"count":0,"timestamp":0},"created":0,"full_name":"root","group":{"id":0,"id_signed":0},"groups":[0],"home":"/root","id":0,"is_hidden":0,"is_remote":1,"last_login":"1749605216","name":"root","password":{"expiration_date":-1,"hash_algorithm":"y","inactive_days":-1,"last_change":1745971200.0,"max_days_between_changes":99999,"min_days_between_changes":0,"status":"active","warning_days_before_expiration":7},"roles":["sudo"],"shell":"/bin/bash","type":null,"uid_signed":0,"uuid":null}},"module":"inventory"})"
+    };
+
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult1)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult2)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult3)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult4)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult5)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult6)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult8)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult9)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult18)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult20)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult22)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult25)).Times(1);
+
+    // All modules except Ports (disabled in this test)
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHW)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistOS)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetIface)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistProcess)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPackage)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHotfix)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistGroup)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistUser)).Times(1);
+
+    std::thread t
+    {
+        [&spInfoWrapper, &callbackDataDelta, &callbackDataPersist]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          callbackDataDelta,
+                                          callbackDataPersist,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          5, true, true, true, true, true, false, true, true, true, true, true, true);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}
+
+TEST_F(SyscollectorImpTest, noPortsAll)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, hardware()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"serial_number":"Intel Corporation", "cpu_speed":2904,"cpu_cores":2,"cpu_name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz", "memory_free":2257872,"memory_total":4972208,"memory_used":54})")));
+    EXPECT_CALL(*spInfoWrapper, os()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                R"({"architecture":"x86_64", "hostname":"UBUNTU","os_build":"7601","os_major":"6","os_minor":"1","os_name":"Microsoft Windows 7","os_distribution_release":"sp1","os_version":"6.1.7601"})")));
+    EXPECT_CALL(*spInfoWrapper, networks()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"iface":[{"network_ip":"127.0.0.1", "host_mac":"d4:5d:64:51:07:5d", "network_gateway":"192.168.0.1|600","network_broadcast":"127.255.255.255", "interface_mtu":1500, "interface_name":"enp4s0", "interface_alias":" ", "interface_type":"ethernet", "interface_state":"up", "network_dhcp":"disabled","network_metric":"75","network_netmask":"255.0.0.0","network_protocol":"IPv4","host_network_ingress_bytes":0,"host_network_ingress_drops":0,"host_network_ingress_errors":0,"host_network_ingress_packages":0,"host_network_egress_bytes":0,"host_network_egress_drops":0,"host_network_egress_errors":0,"host_network_egress_packages":0, "IPv4":[{"network_ip":"192.168.153.1","network_broadcast":"192.168.153.255","network_dhcp":"unknown","network_metric":" ","network_netmask":"255.255.255.0"}], "IPv6":[{"network_ip":"fe80::250:56ff:fec0:8","network_dhcp":"unknown","network_metric":" ","network_netmask":"ffff:ffff:ffff:ffff::"}]}]})")));
+    EXPECT_CALL(*spInfoWrapper, ports()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                   R"([{"file_inode":0,"source_ip":"127.0.0.1", "source_port":631,"process_pid":0,"process_name":"System Idle Process","network_transport":"udp","destination_ip":"0.0.0.0","destination_port":0,"host_network_ingress_queue":0,"interface_state":"","host_network_egress_queue":0},{"file_inode":0,"source_ip":"127.0.0.1", "source_port":631,"process_pid":0,"process_name":"System Idle Process","network_transport":"tcp","destination_ip":"0.0.0.0","destination_port":0,"host_network_ingress_queue":0,"interface_state":"listening","host_network_egress_queue":0}])")));
+    EXPECT_CALL(*spInfoWrapper, packages(_))
+    .Times(::testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"architecture":"amd64", "category":"x11","name":"xserver-xorg","priority":"optional","size":4111222333,"source":"xorg","version":"1:7.7+19ubuntu14","type":"deb","path":" "})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, hotfixes()).WillRepeatedly(Return(R"([{"hotfix_name":"KB12345678"}])"_json));
+
+    EXPECT_CALL(*spInfoWrapper, processes(_))
+    .Times(testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"name":"kworker/u256:2-","pid":"431625","parent_pid":2,"start":9302261,"state":"I","stime":3,"utime":0})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, groups()).WillRepeatedly(Return(
+                                                             R"([{"group_description": null, "group_id": 1, "group_id_signed": 1, "group_is_hidden": 0, "group_name": "daemon", "group_users": "daemon:pollinate:vboxadd", "group_uuid": null }])"_json));
+    EXPECT_CALL(*spInfoWrapper, users()).WillRepeatedly(Return
+                                                        (R"([{"host_ip":"192.168.0.84","login_status":0,"login_tty":"pts/0","login_type":"user","process_pid":"129870","user_auth_failed_count":0,"user_auth_failed_timestamp":0,"user_created":0,"user_full_name":"root","user_group_id":0,"user_group_id_signed":0,"user_groups":0,"user_home":"/root","user_id":0,"user_is_hidden":0,"user_is_remote":1,"user_last_login":"1749605216","user_name":"root","user_password_expiration_date":-1,"user_password_hash_algorithm":"y","user_password_inactive_days":-1,"user_password_last_change":1745971200.0,"user_password_max_days_between_changes":99999,"user_password_min_days_between_changes":0,"user_password_status":"active","user_password_warning_days_before_expiration":7,"user_roles":"sudo","user_shell":"/bin/bash","user_type":null,"user_uid_signed":0,"user_uuid":null}])"_json));
+
+    CallbackMock wrapperDelta;
+    std::function<void(const std::string&)> callbackDataDelta
+    {
+        [&wrapperDelta](const std::string & data)
+        {
+            auto delta = nlohmann::json::parse(data);
+
+            if (delta.contains("data") && delta["data"].contains("event") && delta["data"]["event"].contains("created"))
+            {
+                delta["data"]["event"].erase("created");
+            }
+
+            wrapperDelta.callbackMock(delta.dump());
+        }
+    };
+
+    CallbackMock wrapperPersist;
+    std::function<void(const std::string&)> callbackDataPersist
+    {
+        [&wrapperPersist](const std::string & data)
+        {
+            wrapperPersist.callbackMock(data);
+        }
+    };
+
+    const auto expectedResult1
+    {
+        R"({"collector":"dbsync_hwinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"cpu":{"cores":2,"name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz","speed":2904},"memory":{"free":2257872,"total":4972208,"used":54},"serial_number":"Intel Corporation"}},"module":"inventory"})"
+    };
+    const auto expectedResult2
+    {
+        R"({"collector":"dbsync_osinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"architecture":"x86_64","hostname":"UBUNTU","os":{"build":"7601","codename":null,"distribution":{"release":"sp1"},"full":null,"kernel":{"name":null,"release":null,"version":null},"major":"6","minor":"1","name":"Microsoft Windows 7","patch":null,"platform":null,"version":"6.1.7601"}}},"module":"inventory"})"
+    };
+    const auto expectedResult3
+    {
+        R"({"collector":"dbsync_network_iface","data":{"event":{"changed_fields":[],"type":"created"},"host":{"mac":["d4:5d:64:51:07:5d"],"network":{"egress":{"bytes":0,"drops":0,"errors":0,"packets":0},"ingress":{"bytes":0,"drops":0,"errors":0,"packets":0}}},"interface":{"alias":null,"mtu":1500,"name":"enp4s0","state":"up","type":"ethernet"}},"module":"inventory"})"
+    };
+    const auto expectedResult4
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv4"}},"module":"inventory"})"
+    };
+    const auto expectedResult5
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":"192.168.153.255","ip":"192.168.153.1","netmask":"255.255.255.0","protocol":0}},"module":"inventory"})"
+    };
+    const auto expectedResult6
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":null,"ip":"fe80::250:56ff:fec0:8","netmask":"ffff:ffff:ffff:ffff::","protocol":1}},"module":"inventory"})"
+    };
+    const auto expectedResult7
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":0},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":"System Idle Process","pid":0},"source":{"ip":"127.0.0.1","port":631}},"module":"inventory"})"
+    };
+    const auto expectedResult8
+    {
+        R"({"collector":"dbsync_processes","data":{"event":{"changed_fields":[],"type":"created"},"process":{"args":null,"args_count":null,"command_line":null,"name":"kworker/u256:2-","parent":{"pid":2},"pid":"431625","start":9302261,"state":"I","stime":3,"utime":0}},"module":"inventory"})"
+    };
+    const auto expectedResult9
+    {
+        R"({"collector":"dbsync_packages","data":{"event":{"changed_fields":[],"type":"created"},"package":{"architecture":"amd64","category":"x11","description":null,"installed":null,"multiarch":null,"name":"xserver-xorg","path":null,"priority":"optional","size":4111222333,"source":"xorg","type":"deb","vendor":null,"version":"1:7.7+19ubuntu14"}},"module":"inventory"})"
+    };
+    const auto expectedResult18
+    {
+        R"({"collector":"dbsync_hotfixes","data":{"event":{"changed_fields":[],"type":"created"},"package":{"hotfix":{"name":"KB12345678"}}},"module":"inventory"})"
+    };
+    const auto expectedResult20
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":0},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":null},"network":{"transport":"udp"},"process":{"name":"System Idle Process","pid":0},"source":{"ip":"127.0.0.1","port":631}},"module":"inventory"})"
+    };
+    const auto expectedResult21
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv6"}},"module":"inventory"})"
+    };
+    const auto expectedResult22
+    {
+        R"({"collector":"dbsync_groups","data":{"event":{"changed_fields":[],"type":"created"},"group":{"description":null,"id":1,"id_signed":1,"is_hidden":0,"name":"daemon","users":["daemon:pollinate:vboxadd"],"uuid":null}},"module":"inventory"})"
+    };
+    const auto expectedResult25
+    {
+        R"({"collector":"dbsync_users","data":{"event":{"changed_fields":[],"type":"created"},"host":{"ip":["192.168.0.84"]},"login":{"status":0,"tty":"pts/0","type":"user"},"process":{"pid":"129870"},"user":{"auth_failures":{"count":0,"timestamp":0},"created":0,"full_name":"root","group":{"id":0,"id_signed":0},"groups":[0],"home":"/root","id":0,"is_hidden":0,"is_remote":1,"last_login":"1749605216","name":"root","password":{"expiration_date":-1,"hash_algorithm":"y","inactive_days":-1,"last_change":1745971200.0,"max_days_between_changes":99999,"min_days_between_changes":0,"status":"active","warning_days_before_expiration":7},"roles":["sudo"],"shell":"/bin/bash","type":null,"uid_signed":0,"uuid":null}},"module":"inventory"})"
+    };
+
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult1)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult2)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult3)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult4)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult5)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult6)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult7)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult8)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult9)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult18)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult20)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult21)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult22)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult25)).Times(1);
+
+    // All modules except PortsAll
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHW)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistOS)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetIface)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPortsUdp)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistProcess)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPackage)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHotfix)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistGroup)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistUser)).Times(1);
+
+    std::thread t
+    {
+        [&spInfoWrapper, &callbackDataDelta, &callbackDataPersist]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          callbackDataDelta,
+                                          callbackDataPersist,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          3600, true, true, true, true, true, true, false, true, true, true, true, true);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}
+
+TEST_F(SyscollectorImpTest, noProcesses)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, hardware()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"serial_number":"Intel Corporation", "cpu_speed":2904,"cpu_cores":2,"cpu_name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz", "memory_free":2257872,"memory_total":4972208,"memory_used":54})")));
+    EXPECT_CALL(*spInfoWrapper, os()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                R"({"architecture":"x86_64", "hostname":"UBUNTU","os_build":"7601","os_major":"6","os_minor":"1","os_name":"Microsoft Windows 7","os_distribution_release":"sp1","os_version":"6.1.7601"})")));
+    EXPECT_CALL(*spInfoWrapper, networks()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"iface":[{"network_ip":"127.0.0.1", "host_mac":"d4:5d:64:51:07:5d", "network_gateway":"192.168.0.1|600","network_broadcast":"127.255.255.255", "interface_mtu":1500, "interface_name":"enp4s0", "interface_alias":" ", "interface_type":"ethernet", "interface_state":"up", "network_dhcp":"disabled","network_metric":"75","network_netmask":"255.0.0.0","network_protocol":"IPv4","host_network_ingress_bytes":0,"host_network_ingress_drops":0,"host_network_ingress_errors":0,"host_network_ingress_packages":0,"host_network_egress_bytes":0,"host_network_egress_drops":0,"host_network_egress_errors":0,"host_network_egress_packages":0, "IPv4":[{"network_ip":"192.168.153.1","network_broadcast":"192.168.153.255","network_dhcp":"unknown","network_metric":" ","network_netmask":"255.255.255.0"}], "IPv6":[{"network_ip":"fe80::250:56ff:fec0:8","network_dhcp":"unknown","network_metric":" ","network_netmask":"ffff:ffff:ffff:ffff::"}]}]})")));
+    EXPECT_CALL(*spInfoWrapper, ports()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                   R"([{"file_inode":0,"source_ip":"127.0.0.1", "source_port":631,"process_pid":0,"process_name":"System Idle Process","network_transport":"tcp","destination_ip":"0.0.0.0","destination_port":0,"host_network_ingress_queue":0,"interface_state":"listening","host_network_egress_queue":0}])")));
+    EXPECT_CALL(*spInfoWrapper, packages(_))
+    .Times(::testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"architecture":"amd64", "category":"x11","name":"xserver-xorg","priority":"optional","size":4111222333,"source":"xorg","version":"1:7.7+19ubuntu14","type":"deb","path":" "})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, hotfixes()).WillRepeatedly(Return(R"([{"hotfix_name":"KB12345678"}])"_json));
+
+    EXPECT_CALL(*spInfoWrapper, processes(_)).Times(0);
+
+    EXPECT_CALL(*spInfoWrapper, groups()).WillRepeatedly(Return(
+                                                             R"([{"group_description": null, "group_id": 1, "group_id_signed": 1, "group_is_hidden": 0, "group_name": "daemon", "group_users": "daemon:pollinate:vboxadd", "group_uuid": null }])"_json));
+    EXPECT_CALL(*spInfoWrapper, users()).WillRepeatedly(Return
+                                                        (R"([{"host_ip":"192.168.0.84","login_status":0,"login_tty":"pts/0","login_type":"user","process_pid":"129870","user_auth_failed_count":0,"user_auth_failed_timestamp":0,"user_created":0,"user_full_name":"root","user_group_id":0,"user_group_id_signed":0,"user_groups":0,"user_home":"/root","user_id":0,"user_is_hidden":0,"user_is_remote":1,"user_last_login":"1749605216","user_name":"root","user_password_expiration_date":-1,"user_password_hash_algorithm":"y","user_password_inactive_days":-1,"user_password_last_change":1745971200.0,"user_password_max_days_between_changes":99999,"user_password_min_days_between_changes":0,"user_password_status":"active","user_password_warning_days_before_expiration":7,"user_roles":"sudo","user_shell":"/bin/bash","user_type":null,"user_uid_signed":0,"user_uuid":null}])"_json));
+
+    CallbackMock wrapperDelta;
+    std::function<void(const std::string&)> callbackDataDelta
+    {
+        [&wrapperDelta](const std::string & data)
+        {
+            auto delta = nlohmann::json::parse(data);
+
+            if (delta.contains("data") && delta["data"].contains("event") && delta["data"]["event"].contains("created"))
+            {
+                delta["data"]["event"].erase("created");
+            }
+
+            wrapperDelta.callbackMock(delta.dump());
+        }
+    };
+
+    CallbackMock wrapperPersist;
+    std::function<void(const std::string&)> callbackDataPersist
+    {
+        [&wrapperPersist](const std::string & data)
+        {
+            wrapperPersist.callbackMock(data);
+        }
+    };
+
+    const auto expectedResult1
+    {
+        R"({"collector":"dbsync_hwinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"cpu":{"cores":2,"name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz","speed":2904},"memory":{"free":2257872,"total":4972208,"used":54},"serial_number":"Intel Corporation"}},"module":"inventory"})"
+    };
+    const auto expectedResult2
+    {
+        R"({"collector":"dbsync_osinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"architecture":"x86_64","hostname":"UBUNTU","os":{"build":"7601","codename":null,"distribution":{"release":"sp1"},"full":null,"kernel":{"name":null,"release":null,"version":null},"major":"6","minor":"1","name":"Microsoft Windows 7","patch":null,"platform":null,"version":"6.1.7601"}}},"module":"inventory"})"
+    };
+    const auto expectedResult3
+    {
+        R"({"collector":"dbsync_network_iface","data":{"event":{"changed_fields":[],"type":"created"},"host":{"mac":["d4:5d:64:51:07:5d"],"network":{"egress":{"bytes":0,"drops":0,"errors":0,"packets":0},"ingress":{"bytes":0,"drops":0,"errors":0,"packets":0}}},"interface":{"alias":null,"mtu":1500,"name":"enp4s0","state":"up","type":"ethernet"}},"module":"inventory"})"
+    };
+    const auto expectedResult4
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv4"}},"module":"inventory"})"
+    };
+    const auto expectedResult5
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":"192.168.153.255","ip":"192.168.153.1","netmask":"255.255.255.0","protocol":0}},"module":"inventory"})"
+    };
+    const auto expectedResult6
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":null,"ip":"fe80::250:56ff:fec0:8","netmask":"ffff:ffff:ffff:ffff::","protocol":1}},"module":"inventory"})"
+    };
+    const auto expectedResult7
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":0},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":"System Idle Process","pid":0},"source":{"ip":"127.0.0.1","port":631}},"module":"inventory"})"
+    };
+    const auto expectedResult9
+    {
+        R"({"collector":"dbsync_packages","data":{"event":{"changed_fields":[],"type":"created"},"package":{"architecture":"amd64","category":"x11","description":null,"installed":null,"multiarch":null,"name":"xserver-xorg","path":null,"priority":"optional","size":4111222333,"source":"xorg","type":"deb","vendor":null,"version":"1:7.7+19ubuntu14"}},"module":"inventory"})"
+    };
+    const auto expectedResult18
+    {
+        R"({"collector":"dbsync_hotfixes","data":{"event":{"changed_fields":[],"type":"created"},"package":{"hotfix":{"name":"KB12345678"}}},"module":"inventory"})"
+    };
+    const auto expectedResult20
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv6"}},"module":"inventory"})"
+    };
+    const auto expectedResult22
+    {
+        R"({"collector":"dbsync_groups","data":{"event":{"changed_fields":[],"type":"created"},"group":{"description":null,"id":1,"id_signed":1,"is_hidden":0,"name":"daemon","users":["daemon:pollinate:vboxadd"],"uuid":null}},"module":"inventory"})"
+    };
+    const auto expectedResult25
+    {
+        R"({"collector":"dbsync_users","data":{"event":{"changed_fields":[],"type":"created"},"host":{"ip":["192.168.0.84"]},"login":{"status":0,"tty":"pts/0","type":"user"},"process":{"pid":"129870"},"user":{"auth_failures":{"count":0,"timestamp":0},"created":0,"full_name":"root","group":{"id":0,"id_signed":0},"groups":[0],"home":"/root","id":0,"is_hidden":0,"is_remote":1,"last_login":"1749605216","name":"root","password":{"expiration_date":-1,"hash_algorithm":"y","inactive_days":-1,"last_change":1745971200.0,"max_days_between_changes":99999,"min_days_between_changes":0,"status":"active","warning_days_before_expiration":7},"roles":["sudo"],"shell":"/bin/bash","type":null,"uid_signed":0,"uuid":null}},"module":"inventory"})"
+    };
+
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult1)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult2)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult3)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult4)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult5)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult6)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult7)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult9)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult18)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult20)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult22)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult25)).Times(1);
+
+    // All modules except Processes (disabled in this test)
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHW)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistOS)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetIface)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPackage)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHotfix)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistGroup)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistUser)).Times(1);
+
+    std::thread t
+    {
+        [&spInfoWrapper, &callbackDataDelta, &callbackDataPersist]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          callbackDataDelta,
+                                          callbackDataPersist,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          3600, true, true, true, true, true, true, true, false, true, true, true, true);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds{2});
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}
+
+TEST_F(SyscollectorImpTest, noHotfixes)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, hardware()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"serial_number":"Intel Corporation", "cpu_speed":2904,"cpu_cores":2,"cpu_name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz", "memory_free":2257872,"memory_total":4972208,"memory_used":54})")));
+    EXPECT_CALL(*spInfoWrapper, os()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                R"({"architecture":"x86_64", "hostname":"UBUNTU","os_build":"7601","os_major":"6","os_minor":"1","os_name":"Microsoft Windows 7","os_distribution_release":"sp1","os_version":"6.1.7601"})")));
+    EXPECT_CALL(*spInfoWrapper, networks()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"iface":[{"network_ip":"127.0.0.1", "host_mac":"d4:5d:64:51:07:5d", "network_gateway":"192.168.0.1|600","network_broadcast":"127.255.255.255", "interface_mtu":1500, "interface_name":"enp4s0", "interface_alias":" ", "interface_type":"ethernet", "interface_state":"up", "network_dhcp":"disabled","network_metric":"75","network_netmask":"255.0.0.0","network_protocol":"IPv4","host_network_ingress_bytes":0,"host_network_ingress_drops":0,"host_network_ingress_errors":0,"host_network_ingress_packages":0,"host_network_egress_bytes":0,"host_network_egress_drops":0,"host_network_egress_errors":0,"host_network_egress_packages":0, "IPv4":[{"network_ip":"192.168.153.1","network_broadcast":"192.168.153.255","network_dhcp":"unknown","network_metric":" ","network_netmask":"255.255.255.0"}], "IPv6":[{"network_ip":"fe80::250:56ff:fec0:8","network_dhcp":"unknown","network_metric":" ","network_netmask":"ffff:ffff:ffff:ffff::"}]}]})")));
+    EXPECT_CALL(*spInfoWrapper, ports()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                   R"([{"file_inode":0,"source_ip":"127.0.0.1", "source_port":631,"process_pid":0,"process_name":"System Idle Process","network_transport":"tcp","destination_ip":"0.0.0.0","destination_port":0,"host_network_ingress_queue":0,"interface_state":"listening","host_network_egress_queue":0}])")));
+    EXPECT_CALL(*spInfoWrapper, packages(_))
+    .Times(::testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"architecture":"amd64", "category":"x11","name":"xserver-xorg","priority":"optional","size":4111222333,"source":"xorg","version":"1:7.7+19ubuntu14","type":"deb","path":" "})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, hotfixes()).Times(0);
+
+    EXPECT_CALL(*spInfoWrapper, processes(_))
+    .Times(testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"name":"kworker/u256:2-","pid":"431625","parent_pid":2,"start":9302261,"state":"I","stime":3,"utime":0})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, groups()).WillRepeatedly(Return(
+                                                             R"([{"group_description": null, "group_id": 1, "group_id_signed": 1, "group_is_hidden": 0, "group_name": "daemon", "group_users": "daemon:pollinate:vboxadd", "group_uuid": null }])"_json));
+    EXPECT_CALL(*spInfoWrapper, users()).WillRepeatedly(Return
+                                                        (R"([{"host_ip":"192.168.0.84","login_status":0,"login_tty":"pts/0","login_type":"user","process_pid":"129870","user_auth_failed_count":0,"user_auth_failed_timestamp":0,"user_created":0,"user_full_name":"root","user_group_id":0,"user_group_id_signed":0,"user_groups":0,"user_home":"/root","user_id":0,"user_is_hidden":0,"user_is_remote":1,"user_last_login":"1749605216","user_name":"root","user_password_expiration_date":-1,"user_password_hash_algorithm":"y","user_password_inactive_days":-1,"user_password_last_change":1745971200.0,"user_password_max_days_between_changes":99999,"user_password_min_days_between_changes":0,"user_password_status":"active","user_password_warning_days_before_expiration":7,"user_roles":"sudo","user_shell":"/bin/bash","user_type":null,"user_uid_signed":0,"user_uuid":null}])"_json));
+
+    CallbackMock wrapperDelta;
+    std::function<void(const std::string&)> callbackDataDelta
+    {
+        [&wrapperDelta](const std::string & data)
+        {
+            auto delta = nlohmann::json::parse(data);
+
+            if (delta.contains("data") && delta["data"].contains("event") && delta["data"]["event"].contains("created"))
+            {
+                delta["data"]["event"].erase("created");
+            }
+
+            wrapperDelta.callbackMock(delta.dump());
+        }
+    };
+
+    CallbackMock wrapperPersist;
+    std::function<void(const std::string&)> callbackDataPersist
+    {
+        [&wrapperPersist](const std::string & data)
+        {
+            wrapperPersist.callbackMock(data);
+        }
+    };
+
+    const auto expectedResult1
+    {
+        R"({"collector":"dbsync_hwinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"cpu":{"cores":2,"name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz","speed":2904},"memory":{"free":2257872,"total":4972208,"used":54},"serial_number":"Intel Corporation"}},"module":"inventory"})"
+    };
+    const auto expectedResult2
+    {
+        R"({"collector":"dbsync_osinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"architecture":"x86_64","hostname":"UBUNTU","os":{"build":"7601","codename":null,"distribution":{"release":"sp1"},"full":null,"kernel":{"name":null,"release":null,"version":null},"major":"6","minor":"1","name":"Microsoft Windows 7","patch":null,"platform":null,"version":"6.1.7601"}}},"module":"inventory"})"
+    };
+    const auto expectedResult3
+    {
+        R"({"collector":"dbsync_network_iface","data":{"event":{"changed_fields":[],"type":"created"},"host":{"mac":["d4:5d:64:51:07:5d"],"network":{"egress":{"bytes":0,"drops":0,"errors":0,"packets":0},"ingress":{"bytes":0,"drops":0,"errors":0,"packets":0}}},"interface":{"alias":null,"mtu":1500,"name":"enp4s0","state":"up","type":"ethernet"}},"module":"inventory"})"
+    };
+    const auto expectedResult4
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv4"}},"module":"inventory"})"
+    };
+    const auto expectedResult5
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":"192.168.153.255","ip":"192.168.153.1","netmask":"255.255.255.0","protocol":0}},"module":"inventory"})"
+    };
+    const auto expectedResult6
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":null,"ip":"fe80::250:56ff:fec0:8","netmask":"ffff:ffff:ffff:ffff::","protocol":1}},"module":"inventory"})"
+    };
+    const auto expectedResult7
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":0},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":"System Idle Process","pid":0},"source":{"ip":"127.0.0.1","port":631}},"module":"inventory"})"
+    };
+    const auto expectedResult8
+    {
+        R"({"collector":"dbsync_processes","data":{"event":{"changed_fields":[],"type":"created"},"process":{"args":null,"args_count":null,"command_line":null,"name":"kworker/u256:2-","parent":{"pid":2},"pid":"431625","start":9302261,"state":"I","stime":3,"utime":0}},"module":"inventory"})"
+    };
+    const auto expectedResult9
+    {
+        R"({"collector":"dbsync_packages","data":{"event":{"changed_fields":[],"type":"created"},"package":{"architecture":"amd64","category":"x11","description":null,"installed":null,"multiarch":null,"name":"xserver-xorg","path":null,"priority":"optional","size":4111222333,"source":"xorg","type":"deb","vendor":null,"version":"1:7.7+19ubuntu14"}},"module":"inventory"})"
+    };
+    const auto expectedResult18
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv6"}},"module":"inventory"})"
+    };
+    const auto expectedResult20
+    {
+        R"({"collector":"dbsync_groups","data":{"event":{"changed_fields":[],"type":"created"},"group":{"description":null,"id":1,"id_signed":1,"is_hidden":0,"name":"daemon","users":["daemon:pollinate:vboxadd"],"uuid":null}},"module":"inventory"})"
+    };
+    const auto expectedResult23
+    {
+        R"({"collector":"dbsync_users","data":{"event":{"changed_fields":[],"type":"created"},"host":{"ip":["192.168.0.84"]},"login":{"status":0,"tty":"pts/0","type":"user"},"process":{"pid":"129870"},"user":{"auth_failures":{"count":0,"timestamp":0},"created":0,"full_name":"root","group":{"id":0,"id_signed":0},"groups":[0],"home":"/root","id":0,"is_hidden":0,"is_remote":1,"last_login":"1749605216","name":"root","password":{"expiration_date":-1,"hash_algorithm":"y","inactive_days":-1,"last_change":1745971200.0,"max_days_between_changes":99999,"min_days_between_changes":0,"status":"active","warning_days_before_expiration":7},"roles":["sudo"],"shell":"/bin/bash","type":null,"uid_signed":0,"uuid":null}},"module":"inventory"})"
+    };
+
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult1)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult2)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult3)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult4)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult5)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult6)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult7)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult8)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult9)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult18)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult20)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult23)).Times(1);
+
+    // All modules except Hotfixes (disabled in this test)
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHW)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistOS)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetIface)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistProcess)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPackage)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistGroup)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistUser)).Times(1);
+
+    std::thread t
+    {
+        [&spInfoWrapper, &callbackDataDelta, &callbackDataPersist]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          callbackDataDelta,
+                                          callbackDataPersist,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          3600, true, true, true, true, true, true, true, true, false, true, true, true);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds{2});
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}
+
+TEST_F(SyscollectorImpTest, noUsers)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, hardware()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"serial_number":"Intel Corporation", "cpu_speed":2904,"cpu_cores":2,"cpu_name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz", "memory_free":2257872,"memory_total":4972208,"memory_used":54})")));
+    EXPECT_CALL(*spInfoWrapper, os()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                R"({"architecture":"x86_64", "hostname":"UBUNTU","os_build":"7601","os_major":"6","os_minor":"1","os_name":"Microsoft Windows 7","os_distribution_release":"sp1","os_version":"6.1.7601"})")));
+    EXPECT_CALL(*spInfoWrapper, networks()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"iface":[{"network_ip":"127.0.0.1", "host_mac":"d4:5d:64:51:07:5d", "network_gateway":"192.168.0.1|600","network_broadcast":"127.255.255.255", "interface_mtu":1500, "interface_name":"enp4s0", "interface_alias":" ", "interface_type":"ethernet", "interface_state":"up", "network_dhcp":"disabled","network_metric":"75","network_netmask":"255.0.0.0","network_protocol":"IPv4","host_network_ingress_bytes":0,"host_network_ingress_drops":0,"host_network_ingress_errors":0,"host_network_ingress_packages":0,"host_network_egress_bytes":0,"host_network_egress_drops":0,"host_network_egress_errors":0,"host_network_egress_packages":0, "IPv4":[{"network_ip":"192.168.153.1","network_broadcast":"192.168.153.255","network_dhcp":"unknown","network_metric":" ","network_netmask":"255.255.255.0"}], "IPv6":[{"network_ip":"fe80::250:56ff:fec0:8","network_dhcp":"unknown","network_metric":" ","network_netmask":"ffff:ffff:ffff:ffff::"}]}]})")));
+    EXPECT_CALL(*spInfoWrapper, ports()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                   R"([{"file_inode":0,"source_ip":"127.0.0.1", "source_port":631,"process_pid":0,"process_name":"System Idle Process","network_transport":"tcp","destination_ip":"0.0.0.0","destination_port":0,"host_network_ingress_queue":0,"interface_state":"listening","host_network_egress_queue":0}])")));
+    EXPECT_CALL(*spInfoWrapper, packages(_))
+    .Times(::testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"architecture":"amd64", "category":"x11","name":"xserver-xorg","priority":"optional","size":4111222333,"source":"xorg","version":"1:7.7+19ubuntu14","type":"deb","path":" "})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, hotfixes()).WillRepeatedly(Return(R"([{"hotfix_name":"KB12345678"}])"_json));
+
+    EXPECT_CALL(*spInfoWrapper, processes(_))
+    .Times(testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"name":"kworker/u256:2-","pid":"431625","parent_pid":2,"start":9302261,"state":"I","stime":3,"utime":0})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, groups()).WillRepeatedly(Return(
+                                                             R"([{"group_description": null, "group_id": 1, "group_id_signed": 1, "group_is_hidden": 0, "group_name": "daemon", "group_users": "daemon:pollinate:vboxadd", "group_uuid": null }])"_json));
+
+
+    EXPECT_CALL(*spInfoWrapper, users()).Times(0);
+
+    CallbackMock wrapperDelta;
+    std::function<void(const std::string&)> callbackDataDelta
+    {
+        [&wrapperDelta](const std::string & data)
+        {
+            auto delta = nlohmann::json::parse(data);
+
+            if (delta.contains("data") && delta["data"].contains("event") && delta["data"]["event"].contains("created"))
+            {
+                delta["data"]["event"].erase("created");
+            }
+
+            wrapperDelta.callbackMock(delta.dump());
+        }
+    };
+
+    CallbackMock wrapperPersist;
+    std::function<void(const std::string&)> callbackDataPersist
+    {
+        [&wrapperPersist](const std::string & data)
+        {
+            wrapperPersist.callbackMock(data);
+        }
+    };
+
+    const auto expectedResult1
+    {
+        R"({"collector":"dbsync_hwinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"cpu":{"cores":2,"name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz","speed":2904},"memory":{"free":2257872,"total":4972208,"used":54},"serial_number":"Intel Corporation"}},"module":"inventory"})"
+    };
+    const auto expectedResult2
+    {
+        R"({"collector":"dbsync_osinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"architecture":"x86_64","hostname":"UBUNTU","os":{"build":"7601","codename":null,"distribution":{"release":"sp1"},"full":null,"kernel":{"name":null,"release":null,"version":null},"major":"6","minor":"1","name":"Microsoft Windows 7","patch":null,"platform":null,"version":"6.1.7601"}}},"module":"inventory"})"
+    };
+    const auto expectedResult3
+    {
+        R"({"collector":"dbsync_network_iface","data":{"event":{"changed_fields":[],"type":"created"},"host":{"mac":["d4:5d:64:51:07:5d"],"network":{"egress":{"bytes":0,"drops":0,"errors":0,"packets":0},"ingress":{"bytes":0,"drops":0,"errors":0,"packets":0}}},"interface":{"alias":null,"mtu":1500,"name":"enp4s0","state":"up","type":"ethernet"}},"module":"inventory"})"
+    };
+    const auto expectedResult4
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv4"}},"module":"inventory"})"
+    };
+    const auto expectedResult5
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":"192.168.153.255","ip":"192.168.153.1","netmask":"255.255.255.0","protocol":0}},"module":"inventory"})"
+    };
+    const auto expectedResult6
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":null,"ip":"fe80::250:56ff:fec0:8","netmask":"ffff:ffff:ffff:ffff::","protocol":1}},"module":"inventory"})"
+    };
+    const auto expectedResult7
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":0},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":"System Idle Process","pid":0},"source":{"ip":"127.0.0.1","port":631}},"module":"inventory"})"
+    };
+    const auto expectedResult8
+    {
+        R"({"collector":"dbsync_processes","data":{"event":{"changed_fields":[],"type":"created"},"process":{"args":null,"args_count":null,"command_line":null,"name":"kworker/u256:2-","parent":{"pid":2},"pid":"431625","start":9302261,"state":"I","stime":3,"utime":0}},"module":"inventory"})"
+    };
+    const auto expectedResult9
+    {
+        R"({"collector":"dbsync_packages","data":{"event":{"changed_fields":[],"type":"created"},"package":{"architecture":"amd64","category":"x11","description":null,"installed":null,"multiarch":null,"name":"xserver-xorg","path":null,"priority":"optional","size":4111222333,"source":"xorg","type":"deb","vendor":null,"version":"1:7.7+19ubuntu14"}},"module":"inventory"})"
+    };
+    const auto expectedResult18
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv6"}},"module":"inventory"})"
+    };
+    const auto expectedResult20
+    {
+        R"({"collector":"dbsync_hotfixes","data":{"event":{"changed_fields":[],"type":"created"},"package":{"hotfix":{"name":"KB12345678"}}},"module":"inventory"})"
+    };
+    const auto expectedResult23
+    {
+        R"({"collector":"dbsync_groups","data":{"event":{"changed_fields":[],"type":"created"},"group":{"description":null,"id":1,"id_signed":1,"is_hidden":0,"name":"daemon","users":["daemon:pollinate:vboxadd"],"uuid":null}},"module":"inventory"})"
+    };
+
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult1)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult2)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult3)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult4)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult5)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult6)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult7)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult8)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult9)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult18)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult20)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult23)).Times(1);
+
+    // All modules except Users (disabled in this test)
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHW)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistOS)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetIface)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistProcess)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPackage)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHotfix)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistGroup)).Times(1);
+
+    std::thread t
+    {
+        [&spInfoWrapper, &callbackDataDelta, &callbackDataPersist]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          callbackDataDelta,
+                                          callbackDataPersist,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          3600, true, true, true, true, true, true, true, true, true, true, false, true);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds{2});
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}
+
+TEST_F(SyscollectorImpTest, noGroups)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, hardware()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"serial_number":"Intel Corporation", "cpu_speed":2904,"cpu_cores":2,"cpu_name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz", "memory_free":2257872,"memory_total":4972208,"memory_used":54})")));
+    EXPECT_CALL(*spInfoWrapper, os()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                R"({"architecture":"x86_64", "hostname":"UBUNTU","os_build":"7601","os_major":"6","os_minor":"1","os_name":"Microsoft Windows 7","os_distribution_release":"sp1","os_version":"6.1.7601"})")));
+    EXPECT_CALL(*spInfoWrapper, networks()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"iface":[{"network_ip":"127.0.0.1", "host_mac":"d4:5d:64:51:07:5d", "network_gateway":"192.168.0.1|600","network_broadcast":"127.255.255.255", "interface_mtu":1500, "interface_name":"enp4s0", "interface_alias":" ", "interface_type":"ethernet", "interface_state":"up", "network_dhcp":"disabled","network_metric":"75","network_netmask":"255.0.0.0","network_protocol":"IPv4","host_network_ingress_bytes":0,"host_network_ingress_drops":0,"host_network_ingress_errors":0,"host_network_ingress_packages":0,"host_network_egress_bytes":0,"host_network_egress_drops":0,"host_network_egress_errors":0,"host_network_egress_packages":0, "IPv4":[{"network_ip":"192.168.153.1","network_broadcast":"192.168.153.255","network_dhcp":"unknown","network_metric":" ","network_netmask":"255.255.255.0"}], "IPv6":[{"network_ip":"fe80::250:56ff:fec0:8","network_dhcp":"unknown","network_metric":" ","network_netmask":"ffff:ffff:ffff:ffff::"}]}]})")));
+    EXPECT_CALL(*spInfoWrapper, ports()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                   R"([{"file_inode":0,"source_ip":"127.0.0.1", "source_port":631,"process_pid":0,"process_name":"System Idle Process","network_transport":"tcp","destination_ip":"0.0.0.0","destination_port":0,"host_network_ingress_queue":0,"interface_state":"listening","host_network_egress_queue":0}])")));
+    EXPECT_CALL(*spInfoWrapper, packages(_))
+    .Times(::testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"architecture":"amd64", "category":"x11","name":"xserver-xorg","priority":"optional","size":4111222333,"source":"xorg","version":"1:7.7+19ubuntu14","type":"deb","path":" "})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, hotfixes()).WillRepeatedly(Return(R"([{"hotfix_name":"KB12345678"}])"_json));
+
+    EXPECT_CALL(*spInfoWrapper, processes(_))
+    .Times(testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"name":"kworker/u256:2-","pid":"431625","parent_pid":2,"start":9302261,"state":"I","stime":3,"utime":0})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, groups()).Times(0);
+
+    EXPECT_CALL(*spInfoWrapper, users()).WillRepeatedly(Return
+                                                        (R"([{"host_ip":"192.168.0.84","login_status":0,"login_tty":"pts/0","login_type":"user","process_pid":"129870","user_auth_failed_count":0,"user_auth_failed_timestamp":0,"user_created":0,"user_full_name":"root","user_group_id":0,"user_group_id_signed":0,"user_groups":0,"user_home":"/root","user_id":0,"user_is_hidden":0,"user_is_remote":1,"user_last_login":"1749605216","user_name":"root","user_password_expiration_date":-1,"user_password_hash_algorithm":"y","user_password_inactive_days":-1,"user_password_last_change":1745971200.0,"user_password_max_days_between_changes":99999,"user_password_min_days_between_changes":0,"user_password_status":"active","user_password_warning_days_before_expiration":7,"user_roles":"sudo","user_shell":"/bin/bash","user_type":null,"user_uid_signed":0,"user_uuid":null}])"_json));
+
+    CallbackMock wrapperDelta;
+    std::function<void(const std::string&)> callbackDataDelta
+    {
+        [&wrapperDelta](const std::string & data)
+        {
+            auto delta = nlohmann::json::parse(data);
+
+            if (delta.contains("data") && delta["data"].contains("event") && delta["data"]["event"].contains("created"))
+            {
+                delta["data"]["event"].erase("created");
+            }
+
+            wrapperDelta.callbackMock(delta.dump());
+        }
+    };
+
+    CallbackMock wrapperPersist;
+    std::function<void(const std::string&)> callbackDataPersist
+    {
+        [&wrapperPersist](const std::string & data)
+        {
+            wrapperPersist.callbackMock(data);
+        }
+    };
+
+    const auto expectedResult1
+    {
+        R"({"collector":"dbsync_hwinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"cpu":{"cores":2,"name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz","speed":2904},"memory":{"free":2257872,"total":4972208,"used":54},"serial_number":"Intel Corporation"}},"module":"inventory"})"
+    };
+    const auto expectedResult2
+    {
+        R"({"collector":"dbsync_osinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"architecture":"x86_64","hostname":"UBUNTU","os":{"build":"7601","codename":null,"distribution":{"release":"sp1"},"full":null,"kernel":{"name":null,"release":null,"version":null},"major":"6","minor":"1","name":"Microsoft Windows 7","patch":null,"platform":null,"version":"6.1.7601"}}},"module":"inventory"})"
+    };
+    const auto expectedResult3
+    {
+        R"({"collector":"dbsync_network_iface","data":{"event":{"changed_fields":[],"type":"created"},"host":{"mac":["d4:5d:64:51:07:5d"],"network":{"egress":{"bytes":0,"drops":0,"errors":0,"packets":0},"ingress":{"bytes":0,"drops":0,"errors":0,"packets":0}}},"interface":{"alias":null,"mtu":1500,"name":"enp4s0","state":"up","type":"ethernet"}},"module":"inventory"})"
+    };
+    const auto expectedResult4
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv4"}},"module":"inventory"})"
+    };
+    const auto expectedResult5
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":"192.168.153.255","ip":"192.168.153.1","netmask":"255.255.255.0","protocol":0}},"module":"inventory"})"
+    };
+    const auto expectedResult6
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":null,"ip":"fe80::250:56ff:fec0:8","netmask":"ffff:ffff:ffff:ffff::","protocol":1}},"module":"inventory"})"
+    };
+    const auto expectedResult7
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":0},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":"System Idle Process","pid":0},"source":{"ip":"127.0.0.1","port":631}},"module":"inventory"})"
+    };
+    const auto expectedResult8
+    {
+        R"({"collector":"dbsync_processes","data":{"event":{"changed_fields":[],"type":"created"},"process":{"args":null,"args_count":null,"command_line":null,"name":"kworker/u256:2-","parent":{"pid":2},"pid":"431625","start":9302261,"state":"I","stime":3,"utime":0}},"module":"inventory"})"
+    };
+    const auto expectedResult9
+    {
+        R"({"collector":"dbsync_packages","data":{"event":{"changed_fields":[],"type":"created"},"package":{"architecture":"amd64","category":"x11","description":null,"installed":null,"multiarch":null,"name":"xserver-xorg","path":null,"priority":"optional","size":4111222333,"source":"xorg","type":"deb","vendor":null,"version":"1:7.7+19ubuntu14"}},"module":"inventory"})"
+    };
+    const auto expectedResult18
+    {
+        R"({"collector":"dbsync_hotfixes","data":{"event":{"changed_fields":[],"type":"created"},"package":{"hotfix":{"name":"KB12345678"}}},"module":"inventory"})"
+    };
+    const auto expectedResult20
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv6"}},"module":"inventory"})"
+    };
+    const auto expectedResult25
+    {
+        R"({"collector":"dbsync_users","data":{"event":{"changed_fields":[],"type":"created"},"host":{"ip":["192.168.0.84"]},"login":{"status":0,"tty":"pts/0","type":"user"},"process":{"pid":"129870"},"user":{"auth_failures":{"count":0,"timestamp":0},"created":0,"full_name":"root","group":{"id":0,"id_signed":0},"groups":[0],"home":"/root","id":0,"is_hidden":0,"is_remote":1,"last_login":"1749605216","name":"root","password":{"expiration_date":-1,"hash_algorithm":"y","inactive_days":-1,"last_change":1745971200.0,"max_days_between_changes":99999,"min_days_between_changes":0,"status":"active","warning_days_before_expiration":7},"roles":["sudo"],"shell":"/bin/bash","type":null,"uid_signed":0,"uuid":null}},"module":"inventory"})"
+    };
+
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult1)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult2)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult3)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult4)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult5)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult6)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult7)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult8)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult9)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult18)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult20)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult25)).Times(1);
+
+    // All modules except Groups (disabled in this test)
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHW)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistOS)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetIface)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistProcess)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPackage)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHotfix)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistUser)).Times(1);
+
+    std::thread t
+    {
+        [&spInfoWrapper, &callbackDataDelta, &callbackDataPersist]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          callbackDataDelta,
+                                          callbackDataPersist,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          3600, true, true, true, true, true, true, true, true, true, false, true, true);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}
+
+TEST_F(SyscollectorImpTest, portAllEnable)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, ports()).WillRepeatedly(Return(nlohmann::json::parse(R"(
+    [
+        {
+            "destination_ip":"0.0.0.0",
+            "destination_port":0,
+            "file_inode":43481,
+            "host_network_egress_queue":0,
+            "host_network_ingress_queue":0,
+            "interface_state":"",
+            "network_transport":"udp",
+            "process_name":"",
+            "process_pid":0,
+            "source_ip":"0.0.0.0",
+            "source_port":47748
+        },
+        {
+            "destination_ip":"::",
+            "destination_port":0,
+            "file_inode":43482,
+            "host_network_egress_queue":0,
+            "host_network_ingress_queue":0,
+            "interface_state":"",
+            "network_transport":"udp6",
+            "process_name":"",
+            "process_pid":0,
+            "source_ip":"::",
+            "source_port":51087
+        },
+        {
+            "destination_ip":"0.0.0.0",
+            "destination_port":0,
+            "file_inode":50324,
+            "host_network_egress_queue":0,
+            "host_network_ingress_queue":0,
+            "interface_state":"listening",
+            "network_transport":"tcp",
+            "process_name":"",
+            "process_pid":0,
+            "source_ip":"127.0.0.1",
+            "source_port":33060
+        },
+        {
+            "destination_ip":"44.238.116.130",
+            "destination_port":443,
+            "file_inode":122575,
+            "host_network_egress_queue":0,
+            "host_network_ingress_queue":0,
+            "interface_state":"established",
+            "network_transport":"tcp",
+            "process_name":"",
+            "process_pid":0,
+            "source_ip":"192.168.0.104",
+            "source_port":39106
+        },
+        {
+            "destination_ip":"44.238.116.130",
+            "destination_port":443,
+            "file_inode":122575,
+            "host_network_egress_queue":0,
+            "host_network_ingress_queue":0,
+            "interface_state":"established",
+            "network_transport":"tcp",
+            "process_name":"",
+            "process_pid":0,
+            "source_ip":"192.168.0.104",
+            "source_port":39106
+        }
+    ])")));
+
+    CallbackMock wrapper;
+    std::function<void(const std::string&)> callbackData
+    {
+        [&wrapper](const std::string & data)
+        {
+            auto delta = nlohmann::json::parse(data);
+
+            if (delta.contains("data") && delta["data"].contains("event") && delta["data"]["event"].contains("created"))
+            {
+                delta["data"]["event"].erase("created");
+            }
+
+            wrapper.callbackMock(delta.dump());
+        }
+    };
+
+    CallbackMock wrapperPersist;
+    std::function<void(const std::string&)> callbackDataPersist
+    {
+        [&wrapperPersist](const std::string & data)
+        {
+            wrapperPersist.callbackMock(data);
+        }
+    };
+
+    const auto expectedResult1
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":43481},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":null},"network":{"transport":"udp"},"process":{"name":null,"pid":0},"source":{"ip":"0.0.0.0","port":47748}},"module":"inventory"})"
+    };
+
+    const auto expectedResult2
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"::","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":43482},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":null},"network":{"transport":"udp6"},"process":{"name":null,"pid":0},"source":{"ip":"::","port":51087}},"module":"inventory"})"
+    };
+
+    const auto expectedResult3
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":50324},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":null,"pid":0},"source":{"ip":"127.0.0.1","port":33060}},"module":"inventory"})"
+    };
+
+    const auto expectedResult4
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"44.238.116.130","port":443},"event":{"changed_fields":[],"type":"created"},"file":{"inode":122575},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"established"},"network":{"transport":"tcp"},"process":{"name":null,"pid":0},"source":{"ip":"192.168.0.104","port":39106}},"module":"inventory"})"
+    };
+
+    EXPECT_CALL(wrapper, callbackMock(expectedResult1)).Times(1);
+    EXPECT_CALL(wrapper, callbackMock(expectedResult2)).Times(1);
+    EXPECT_CALL(wrapper, callbackMock(expectedResult3)).Times(1);
+    EXPECT_CALL(wrapper, callbackMock(expectedResult4)).Times(1);
+
+    const auto expectedPersistPorts1
+    {
+        R"({"checksum":{"hash":{"sha1":"88b40f1347d9ef9d381287b00c9e924e800a25f7"}},"destination":{"ip":"0.0.0.0","port":0},"file":{"inode":43481},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":null},"network":{"transport":"udp"},"process":{"name":null,"pid":0},"source":{"ip":"0.0.0.0","port":47748}})"
+    };
+
+    const auto expectedPersistPorts2
+    {
+        R"({"checksum":{"hash":{"sha1":"62a2fc1c9277988df156c208c2a7897b1fb41236"}},"destination":{"ip":"::","port":0},"file":{"inode":43482},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":null},"network":{"transport":"udp6"},"process":{"name":null,"pid":0},"source":{"ip":"::","port":51087}})"
+    };
+
+    const auto expectedPersistPorts3
+    {
+        R"({"checksum":{"hash":{"sha1":"e049eb5f4a3dbf71dc1e6bdd11a4d070459b36fe"}},"destination":{"ip":"0.0.0.0","port":0},"file":{"inode":50324},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":null,"pid":0},"source":{"ip":"127.0.0.1","port":33060}})"
+    };
+
+    const auto expectedPersistPorts4
+    {
+        R"({"checksum":{"hash":{"sha1":"1fcee2154ec4ad7e68c2627a731760dd72fb45ae"}},"destination":{"ip":"44.238.116.130","port":443},"file":{"inode":122575},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"established"},"network":{"transport":"tcp"},"process":{"name":null,"pid":0},"source":{"ip":"192.168.0.104","port":39106}})"
+    };
+
+    // Only ports enabled in this test
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts1)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts2)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts3)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts4)).Times(1);
+
+    std::thread t
+    {
+        [&spInfoWrapper, &callbackData, &callbackDataPersist]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          callbackData,
+                                          callbackDataPersist,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          3600, true, false, false, false, false, true, true, false, false, false, false, true);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds{2});
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}
+
+TEST_F(SyscollectorImpTest, portAllDisable)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, ports()).WillRepeatedly(Return(nlohmann::json::parse(R"(
+    [
+        {
+            "destination_ip":"0.0.0.0",
+            "destination_port":0,
+            "file_inode":43481,
+            "host_network_egress_queue":0,
+            "host_network_ingress_queue":0,
+            "interface_state":"",
+            "network_transport":"udp",
+            "process_name":"",
+            "process_pid":0,
+            "source_ip":"0.0.0.0",
+            "source_port":47748
+        },
+        {
+            "destination_ip":"::",
+            "destination_port":0,
+            "file_inode":43482,
+            "host_network_egress_queue":0,
+            "host_network_ingress_queue":0,
+            "interface_state":"",
+            "network_transport":"udp6",
+            "process_name":"",
+            "process_pid":0,
+            "source_ip":"::",
+            "source_port":51087
+        },
+        {
+            "destination_ip":"0.0.0.0",
+            "destination_port":0,
+            "file_inode":50324,
+            "host_network_egress_queue":0,
+            "host_network_ingress_queue":0,
+            "interface_state":"listening",
+            "network_transport":"tcp",
+            "process_name":"",
+            "process_pid":0,
+            "source_ip":"127.0.0.1",
+            "source_port":33060
+        },
+        {
+            "destination_ip":"0.0.0.0",
+            "destination_port":0,
+            "file_inode":50324,
+            "host_network_egress_queue":0,
+            "host_network_ingress_queue":0,
+            "interface_state":"listening",
+            "network_transport":"tcp",
+            "process_name":"",
+            "process_pid":0,
+            "source_ip":"127.0.0.1",
+            "source_port":33060
+        },
+        {
+            "destination_ip":"44.238.116.130",
+            "destination_port":443,
+            "file_inode":122575,
+            "host_network_egress_queue":0,
+            "host_network_ingress_queue":0,
+            "interface_state":"established",
+            "network_transport":"tcp",
+            "process_name":"",
+            "process_pid":0,
+            "source_ip":"192.168.0.104",
+            "source_port":39106
+        }
+    ])")));
+
+    CallbackMock wrapper;
+    std::function<void(const std::string&)> callbackData
+    {
+        [&wrapper](const std::string & data)
+        {
+            auto delta = nlohmann::json::parse(data);
+
+            if (delta.contains("data") && delta["data"].contains("event") && delta["data"]["event"].contains("created"))
+            {
+                delta["data"]["event"].erase("created");
+            }
+
+            wrapper.callbackMock(delta.dump());
+        }
+    };
+
+    CallbackMock wrapperPersist;
+    std::function<void(const std::string&)> callbackDataPersist
+    {
+        [&wrapperPersist](const std::string & data)
+        {
+            wrapperPersist.callbackMock(data);
+        }
+    };
+
+    const auto expectedResult1
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":43481},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":null},"network":{"transport":"udp"},"process":{"name":null,"pid":0},"source":{"ip":"0.0.0.0","port":47748}},"module":"inventory"})"
+    };
+
+    const auto expectedResult2
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"::","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":43482},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":null},"network":{"transport":"udp6"},"process":{"name":null,"pid":0},"source":{"ip":"::","port":51087}},"module":"inventory"})"
+    };
+
+    const auto expectedResult3
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":50324},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":null,"pid":0},"source":{"ip":"127.0.0.1","port":33060}},"module":"inventory"})"
+    };
+
+    EXPECT_CALL(wrapper, callbackMock(expectedResult1)).Times(1);
+    EXPECT_CALL(wrapper, callbackMock(expectedResult2)).Times(1);
+    EXPECT_CALL(wrapper, callbackMock(expectedResult3)).Times(1);
+
+    const auto expectedPersistPorts1
+    {
+        R"({"checksum":{"hash":{"sha1":"88b40f1347d9ef9d381287b00c9e924e800a25f7"}},"destination":{"ip":"0.0.0.0","port":0},"file":{"inode":43481},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":null},"network":{"transport":"udp"},"process":{"name":null,"pid":0},"source":{"ip":"0.0.0.0","port":47748}})"
+    };
+
+    const auto expectedPersistPorts2
+    {
+        R"({"checksum":{"hash":{"sha1":"62a2fc1c9277988df156c208c2a7897b1fb41236"}},"destination":{"ip":"::","port":0},"file":{"inode":43482},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":null},"network":{"transport":"udp6"},"process":{"name":null,"pid":0},"source":{"ip":"::","port":51087}})"
+    };
+
+    const auto expectedPersistPorts3
+    {
+        R"({"checksum":{"hash":{"sha1":"e049eb5f4a3dbf71dc1e6bdd11a4d070459b36fe"}},"destination":{"ip":"0.0.0.0","port":0},"file":{"inode":50324},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":null,"pid":0},"source":{"ip":"127.0.0.1","port":33060}})"
+    };
+
+    // Only ports enabled in this test
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts1)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts2)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts3)).Times(1);
+
+    std::thread t
+    {
+        [&spInfoWrapper, &callbackData, &callbackDataPersist]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          callbackData,
+                                          callbackDataPersist,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          3600, true, false, false, false, false, true, false, false, false, false, false, true);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds{2});
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}
+
+TEST_F(SyscollectorImpTest, PackagesDuplicated)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+
+    EXPECT_CALL(*spInfoWrapper, packages(_))
+    .Times(::testing::AtLeast(1))
+    .WillOnce(::testing::DoAll(
+                  ::testing::InvokeArgument<0>
+                  (R"({"architecture":"amd64", "category":"x11","name":"xserver-xorg","priority":"optional","size":4111222333,"source":"xorg","version":"1:7.7+19ubuntu14","type":"deb","path":" "})"_json),
+                  ::testing::InvokeArgument<0>
+                  (R"({"architecture":"amd64", "category":"x11","name":"xserver-xorg","priority":"optional","size":4111222333,"source":"xorg","version":"1:7.7+19ubuntu14","type":"deb","path":" "})"_json)));
+
+    CallbackMock wrapper;
+    std::function<void(const std::string&)> callbackData
+    {
+        [&wrapper](const std::string & data)
+        {
+            auto delta = nlohmann::json::parse(data);
+
+            if (delta.contains("data") && delta["data"].contains("event") && delta["data"]["event"].contains("created"))
+            {
+                delta["data"]["event"].erase("created");
+            }
+
+            wrapper.callbackMock(delta.dump());
+        }
+    };
+
+    CallbackMock wrapperPersist;
+    std::function<void(const std::string&)> callbackDataPersist
+    {
+        [&wrapperPersist](const std::string & data)
+        {
+            wrapperPersist.callbackMock(data);
+        }
+    };
+
+    const auto expectedResult1
+    {
+        R"({"collector":"dbsync_packages","data":{"event":{"changed_fields":[],"type":"created"},"package":{"architecture":"amd64","category":"x11","description":null,"installed":null,"multiarch":null,"name":"xserver-xorg","path":null,"priority":"optional","size":4111222333,"source":"xorg","type":"deb","vendor":null,"version":"1:7.7+19ubuntu14"}},"module":"inventory"})"
+    };
+
+    EXPECT_CALL(wrapper, callbackMock(expectedResult1)).Times(1);
+
+    // Only packages enabled in this test
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPackage)).Times(1);
+
+    std::thread t
+    {
+        [&spInfoWrapper, &callbackData, &callbackDataPersist]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          callbackData,
+                                          callbackDataPersist,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          3600, true, false, false, false, true, false, false, false, false, false, false, true);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds{2});
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}
+
+TEST_F(SyscollectorImpTest, sanitizeJsonValues)
+{
+    const auto spInfoWrapper{std::make_shared<SysInfoWrapper>()};
+    EXPECT_CALL(*spInfoWrapper, hardware()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"serial_number":" Intel Corporation", "cpu_speed":2904,"cpu_cores":2,"cpu_name":" Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz ", "memory_free":2257872,"memory_total":4972208,"memory_used":54})")));
+    EXPECT_CALL(*spInfoWrapper, os()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                R"({"architecture":" x86_64", "hostname":" UBUNTU ","os_build":"  7601","os_major":"6  ","os_minor":"  1  ","os_name":" Microsoft Windows 7 ","os_distribution_release":"   sp1","os_version":"6.1.7601   "})")));
+    EXPECT_CALL(*spInfoWrapper, networks()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                      R"({"iface":[{"network_ip":"127.0.0.1", "host_mac":"d4:5d:64:51:07:5d", "network_gateway":"192.168.0.1|600","network_broadcast":"127.255.255.255", "interface_name":"enp4s0", "interface_alias":" ", "interface_type":"   ethernet", "interface_state":"up   ", "network_dhcp":"disabled","interface_mtu":1500,"host_network_ingress_bytes":0,"host_network_ingress_drops":0,"host_network_ingress_errors":0,"host_network_ingress_packages":0,"host_network_egress_bytes":0,"host_network_egress_drops":0,"host_network_egress_errors":0,"host_network_egress_packages":0, "IPv4":[{"network_ip":"192.168.153.1","network_broadcast":"192.168.153.255","network_dhcp":"unknown","network_metric":" ","network_netmask":"255.255.255.0"}], "IPv6":[{"network_ip":"fe80::250:56ff:fec0:8","network_dhcp":"unknown","network_metric":" ","network_netmask":"ffff:ffff:ffff:ffff::"}]}]})")));
+    EXPECT_CALL(*spInfoWrapper, ports()).WillRepeatedly(Return(nlohmann::json::parse(
+                                                                   R"([{"file_inode":0,"source_ip":" 127.0.0.1 ", "source_port":631,"process_pid":0,"process_name":"System Idle Process","network_transport":"tcp   ","destination_ip":"   0.0.0.0","destination_port":0,"host_network_ingress_queue":0,"interface_state":"listening","host_network_egress_queue":0}])")));
+    EXPECT_CALL(*spInfoWrapper, packages(_))
+    .Times(::testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"architecture":" amd64", "category":"  x11  ","name":" xserver-xorg","priority":"optional ","size":4111222333,"source":"xorg","version":"1:7.7+19ubuntu14","type":"deb","path":" "})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, hotfixes()).WillRepeatedly(Return(R"([{"hotfix_name":" KB12345678 "}])"_json));
+
+    EXPECT_CALL(*spInfoWrapper, processes(_))
+    .Times(testing::AtLeast(1))
+    .WillOnce(::testing::InvokeArgument<0>
+              (R"({"name":" kworker/u256:2-  ","pid":"  431625  ","parent_pid":2,"start":9302261,"state":"I","stime":3,"utime":0})"_json));
+
+    EXPECT_CALL(*spInfoWrapper, groups()).WillRepeatedly(Return(
+                                                             R"([{"group_description": null, "group_id": 1, "group_id_signed": 1, "group_is_hidden": 0, "group_name": "daemon", "group_users": "daemon:pollinate:vboxadd", "group_uuid": null }])"_json));
+
+    EXPECT_CALL(*spInfoWrapper, users()).WillRepeatedly(Return
+                                                        (R"([{"host_ip":"192.168.0.84","login_status":0,"login_tty":"pts/0","login_type":"user","process_pid":"129870","user_auth_failed_count":0,"user_auth_failed_timestamp":0,"user_created":0,"user_full_name":"root","user_group_id":0,"user_group_id_signed":0,"user_groups":0,"user_home":"/root","user_id":0,"user_is_hidden":0,"user_is_remote":1,"user_last_login":"1749605216","user_name":"root","user_password_expiration_date":-1,"user_password_hash_algorithm":"y","user_password_inactive_days":-1,"user_password_last_change":1745971200.0,"user_password_max_days_between_changes":99999,"user_password_min_days_between_changes":0,"user_password_status":"active","user_password_warning_days_before_expiration":7,"user_roles":"sudo","user_shell":"/bin/bash","user_type":null,"user_uid_signed":0,"user_uuid":null}])"_json));
+
+    CallbackMock wrapperDelta;
+    std::function<void(const std::string&)> callbackDataDelta
+    {
+        [&wrapperDelta](const std::string & data)
+        {
+            auto delta = nlohmann::json::parse(data);
+
+            if (delta.contains("data") && delta["data"].contains("event") && delta["data"]["event"].contains("created"))
+            {
+                delta["data"]["event"].erase("created");
+            }
+
+            wrapperDelta.callbackMock(delta.dump());
+        }
+    };
+
+    CallbackMock wrapperPersist;
+    std::function<void(const std::string&)> callbackDataPersist
+    {
+        [&wrapperPersist](const std::string & data)
+        {
+            wrapperPersist.callbackMock(data);
+        }
+    };
+
+    const auto expectedResult1
+    {
+        R"({"collector":"dbsync_hwinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"cpu":{"cores":2,"name":"Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz","speed":2904},"memory":{"free":2257872,"total":4972208,"used":54},"serial_number":"Intel Corporation"}},"module":"inventory"})"
+    };
+    const auto expectedResult2
+    {
+        R"({"collector":"dbsync_osinfo","data":{"event":{"changed_fields":[],"type":"created"},"host":{"architecture":"x86_64","hostname":"UBUNTU","os":{"build":"7601","codename":null,"distribution":{"release":"sp1"},"full":null,"kernel":{"name":null,"release":null,"version":null},"major":"6","minor":"1","name":"Microsoft Windows 7","patch":null,"platform":null,"version":"6.1.7601"}}},"module":"inventory"})"
+    };
+    const auto expectedResult3
+    {
+        R"({"collector":"dbsync_network_iface","data":{"event":{"changed_fields":[],"type":"created"},"host":{"mac":["d4:5d:64:51:07:5d"],"network":{"egress":{"bytes":0,"drops":0,"errors":0,"packets":0},"ingress":{"bytes":0,"drops":0,"errors":0,"packets":0}}},"interface":{"alias":null,"mtu":1500,"name":"enp4s0","state":"up","type":"ethernet"}},"module":"inventory"})"
+    };
+    const auto expectedResult4
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv4"}},"module":"inventory"})"
+    };
+    const auto expectedResult5
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":"192.168.153.255","ip":"192.168.153.1","netmask":"255.255.255.0","protocol":0}},"module":"inventory"})"
+    };
+    const auto expectedResult6
+    {
+        R"({"collector":"dbsync_network_address","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"broadcast":null,"ip":"fe80::250:56ff:fec0:8","netmask":"ffff:ffff:ffff:ffff::","protocol":1}},"module":"inventory"})"
+    };
+    const auto expectedResult7
+    {
+        R"({"collector":"dbsync_ports","data":{"destination":{"ip":"0.0.0.0","port":0},"event":{"changed_fields":[],"type":"created"},"file":{"inode":0},"host":{"network":{"egress":{"queue":0},"ingress":{"queue":0}}},"interface":{"state":"listening"},"network":{"transport":"tcp"},"process":{"name":"System Idle Process","pid":0},"source":{"ip":"127.0.0.1","port":631}},"module":"inventory"})"
+    };
+    const auto expectedResult8
+    {
+        R"({"collector":"dbsync_processes","data":{"event":{"changed_fields":[],"type":"created"},"process":{"args":null,"args_count":null,"command_line":null,"name":"kworker/u256:2-","parent":{"pid":2},"pid":"431625","start":9302261,"state":"I","stime":3,"utime":0}},"module":"inventory"})"
+    };
+    const auto expectedResult9
+    {
+        R"({"collector":"dbsync_packages","data":{"event":{"changed_fields":[],"type":"created"},"package":{"architecture":"amd64","category":"x11","description":null,"installed":null,"multiarch":null,"name":"xserver-xorg","path":null,"priority":"optional","size":4111222333,"source":"xorg","type":"deb","vendor":null,"version":"1:7.7+19ubuntu14"}},"module":"inventory"})"
+    };
+    const auto expectedResult18
+    {
+        R"({"collector":"dbsync_hotfixes","data":{"event":{"changed_fields":[],"type":"created"},"package":{"hotfix":{"name":"KB12345678"}}},"module":"inventory"})"
+    };
+    const auto expectedResult20
+    {
+        R"({"collector":"dbsync_network_protocol","data":{"event":{"changed_fields":[],"type":"created"},"interface":{"name":"enp4s0"},"network":{"dhcp":"unknown","gateway":"192.168.0.1|600","metric":null,"type":"ipv6"}},"module":"inventory"})"
+    };
+    const auto expectedResult21
+    {
+        R"({"collector":"dbsync_groups","data":{"event":{"changed_fields":[],"type":"created"},"group":{"description":null,"id":1,"id_signed":1,"is_hidden":0,"name":"daemon","users":["daemon:pollinate:vboxadd"],"uuid":null}},"module":"inventory"})"
+    };
+    const auto expectedResult24
+    {
+        R"({"collector":"dbsync_users","data":{"event":{"changed_fields":[],"type":"created"},"host":{"ip":["192.168.0.84"]},"login":{"status":0,"tty":"pts/0","type":"user"},"process":{"pid":"129870"},"user":{"auth_failures":{"count":0,"timestamp":0},"created":0,"full_name":"root","group":{"id":0,"id_signed":0},"groups":[0],"home":"/root","id":0,"is_hidden":0,"is_remote":1,"last_login":"1749605216","name":"root","password":{"expiration_date":-1,"hash_algorithm":"y","inactive_days":-1,"last_change":1745971200.0,"max_days_between_changes":99999,"min_days_between_changes":0,"status":"active","warning_days_before_expiration":7},"roles":["sudo"],"shell":"/bin/bash","type":null,"uid_signed":0,"uuid":null}},"module":"inventory"})"
+    };
+
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult1)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult2)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult3)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult4)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult5)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult6)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult7)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult8)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult9)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult18)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult20)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult21)).Times(1);
+    EXPECT_CALL(wrapperDelta, callbackMock(expectedResult24)).Times(1);
+
+    // All modules enabled in this test
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHW)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistOS)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetIface)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv4)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetProtoIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistNetAddrIPv6)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPorts)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistProcess)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistPackage)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistHotfix)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistGroup)).Times(1);
+    EXPECT_CALL(wrapperPersist, callbackMock(expectedPersistUser)).Times(1);
+
+    std::thread t
+    {
+        [&spInfoWrapper, &callbackDataDelta, &callbackDataPersist]()
+        {
+            Syscollector::instance().init(spInfoWrapper,
+                                          callbackDataDelta,
+                                          callbackDataPersist,
+                                          logFunction,
+                                          SYSCOLLECTOR_DB_PATH,
+                                          "",
+                                          "",
+                                          5, true, true, true, true, true, true, true, true, true, true, true, true);
+        }
+    };
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    Syscollector::instance().destroy();
+
+    if (t.joinable())
+    {
+        t.join();
+    }
+}

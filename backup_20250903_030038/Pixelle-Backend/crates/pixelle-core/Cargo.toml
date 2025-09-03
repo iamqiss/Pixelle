@@ -1,0 +1,36 @@
+[package]
+name = "pixelle-core"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# Time and dates
+chrono = { workspace = true, features = ["serde"] }
+uuid = { workspace = true, features = ["v4", "serde"] }
+
+# Async
+tokio = { workspace = true }
+futures = { workspace = true }
+
+# Validation
+validator = { version = "0.16", features = ["derive"] }
+
+# Utilities
+base64 = { workspace = true }
+regex = { workspace = true }
+
+# Monitoring
+tracing = { workspace = true }
+
+# Additional dependencies for core functionality
+async-trait = "0.1"
+sqlx = { workspace = true }
+rand = "0.8"

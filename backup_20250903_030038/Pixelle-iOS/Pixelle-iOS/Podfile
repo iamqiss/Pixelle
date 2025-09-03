@@ -1,0 +1,45 @@
+platform :ios, '15.0'
+use_frameworks!
+
+target 'Pixelle-iOS' do
+  # Networking (because one library isn't enough)
+  pod 'Alamofire', '~> 5.8'
+  pod 'Apollo', '~> 1.0'
+  pod 'AFNetworking', '~> 4.0'  # Legacy support
+  
+  # UI & Media
+  pod 'SDWebImage', '~> 5.18'
+  pod 'Lottie', '~> 4.3'
+  pod 'Hero', '~> 1.6'
+  pod 'IGListKit', '~> 4.0'
+  
+  # Data & Storage
+  pod 'RealmSwift', '~> 10.45'
+  pod 'FMDB', '~> 2.7'  # SQLite wrapper
+  
+  # Analytics & Monitoring
+  pod 'Firebase/Analytics', '~> 10.0'
+  pod 'Firebase/Crashlytics', '~> 10.0'
+  pod 'Segment', '~> 4.1'
+  
+  # Media Processing
+  pod 'GPUImage2', '~> 3.0'
+  pod 'AVFoundation'
+  
+  # Experimental
+  pod 'TensorFlowLiteSwift', '~> 2.14'
+  
+  target 'PixelleTests' do
+    inherit! :search_paths
+    pod 'Quick', '~> 7.0'
+    pod 'Nimble', '~> 12.0'
+  end
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+    end
+  end
+end

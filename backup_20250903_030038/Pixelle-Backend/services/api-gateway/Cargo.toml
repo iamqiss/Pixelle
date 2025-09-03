@@ -1,0 +1,39 @@
+[package]
+name = "pixelle-api-gateway"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Core dependencies
+tokio = { workspace = true }
+actix-web = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# Internal crates
+pixelle-core = { path = "../../crates/pixelle-core" }
+pixelle-auth = { path = "../../crates/pixelle-auth" }
+pixelle-monitoring = { path = "../../crates/pixelle-monitoring" }
+
+# Rate limiting & security
+governor = "0.6"
+tower = "0.4"
+tower-http = { version = "0.4", features = ["cors", "trace"] }
+
+# Load balancing & service discovery
+consul = "0.4"
+etcd-rs = "1.0"
+
+# Configuration
+config = { workspace = true }
+clap = { workspace = true }
+
+# Monitoring
+tracing = { workspace = true }
+tracing-actix-web = "0.7"
+prometheus = { workspace = true }
+
+# HTTP client for service communication
+reqwest = { workspace = true }

@@ -1,0 +1,64 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+[package]
+name = "integration"
+version = "0.0.1"
+edition = "2024"
+license = "Apache-2.0"
+
+# Some tests are failing in CI due to lack of IPv6 interfaces
+# inside the docker containers. This is a temporary workaround (hopefully).
+[features]
+ci-qemu = []
+
+[dependencies]
+ahash = { workspace = true }
+assert_cmd = "2.0.17"
+async-trait = { workspace = true }
+bytes = { workspace = true }
+chrono = { workspace = true }
+ctor = "0.5.0"
+derive_more = { workspace = true }
+env_logger = { workspace = true }
+futures = { workspace = true }
+humantime = { workspace = true }
+iggy = { workspace = true }
+iggy_binary_protocol = { workspace = true }
+iggy_common = { workspace = true }
+keyring = { workspace = true }
+lazy_static = { workspace = true }
+libc = "0.2.175"
+log = { workspace = true }
+predicates = { workspace = true }
+rand = { workspace = true }
+rcgen = "0.14.3"
+reqwest = { workspace = true }
+rmcp = { version = "0.6.1", features = [
+    "client",
+    "reqwest",
+    "transport-streamable-http-client",
+    "transport-streamable-http-client-reqwest",
+] }
+serial_test = { workspace = true }
+server = { workspace = true }
+tempfile = { workspace = true }
+test-case = { workspace = true }
+tokio = { workspace = true }
+twox-hash = { workspace = true }
+uuid = { workspace = true }
+zip = { workspace = true }

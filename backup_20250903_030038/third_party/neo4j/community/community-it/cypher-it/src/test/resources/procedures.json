@@ -1,0 +1,3945 @@
+[
+  {
+    "name": "cdc.current",
+    "description": "Returns the current change identifier that can be used to stream changes from.",
+    "mode": "READ",
+    "worksOnSystem": false,
+    "signature": "cdc.current() :: (id :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "id",
+        "description": "The change identifier.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": true,
+    "deprecatedBy": "db.cdc.current",
+    "option": {
+      "deprecated": true
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "cdc.earliest",
+    "description": "Returns the earliest change identifier that can be used to stream changes from.",
+    "mode": "READ",
+    "worksOnSystem": false,
+    "signature": "cdc.earliest() :: (id :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "id",
+        "description": "The change identifier.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": true,
+    "deprecatedBy": "db.cdc.earliest",
+    "option": {
+      "deprecated": true
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "cdc.query",
+    "description": "Query changes happened from the provided change identifier.",
+    "mode": "READ",
+    "worksOnSystem": false,
+    "signature": "cdc.query(from =  :: STRING, selectors = [] :: LIST<MAP>) :: (id :: STRING, txId :: INTEGER, seq :: INTEGER, metadata :: MAP, event :: MAP)",
+    "argumentDescription": [
+      {
+        "default": "DefaultParameterValue{value=, type=STRING}",
+        "name": "from",
+        "description": "The change identifier to query changes from.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value=[], type=LIST<MAP>}",
+        "name": "selectors",
+        "description": "An optional list of selectors to filter out changes.",
+        "type": "LIST<MAP>",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "isDeprecated": false,
+        "name": "id",
+        "description": "The change identifier for this change event. Used to continue querying from this change event.",
+        "type": "STRING"
+      },
+      {
+        "isDeprecated": false,
+        "name": "txId",
+        "description": "A number identifying which transaction the change happened in, unique in combination with seq.",
+        "type": "INTEGER"
+      },
+      {
+        "isDeprecated": false,
+        "name": "seq",
+        "description": "A number used for ordering changes that happened in the same transaction.",
+        "type": "INTEGER"
+      },
+      {
+        "isDeprecated": false,
+        "name": "metadata",
+        "description": "Metadata from the transaction that caused this change event.",
+        "type": "MAP"
+      },
+      {
+        "isDeprecated": false,
+        "name": "event",
+        "description": "The retrieved changes on the affected entity.",
+        "type": "MAP"
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": true,
+    "deprecatedBy": "db.cdc.query",
+    "option": {
+      "deprecated": true
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.awaitIndex",
+    "description": "Wait for an index to come online (for example: CALL db.awaitIndex(\"MyIndex\", 300)).",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.awaitIndex(indexName :: STRING, timeOutSeconds = 300 :: INTEGER)",
+    "argumentDescription": [
+      {
+        "name": "indexName",
+        "description": "The name of the awaited index.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value=300, type=INTEGER}",
+        "name": "timeOutSeconds",
+        "description": "The maximum time to wait in seconds.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.awaitIndexes",
+    "description": "Wait for all indexes to come online (for example: CALL db.awaitIndexes(300)).",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.awaitIndexes(timeOutSeconds = 300 :: INTEGER)",
+    "argumentDescription": [
+      {
+        "default": "DefaultParameterValue{value=300, type=INTEGER}",
+        "name": "timeOutSeconds",
+        "description": "The maximum time to wait in seconds.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.cdc.current",
+    "description": "Returns the current change identifier that can be used to stream changes from.",
+    "mode": "READ",
+    "worksOnSystem": false,
+    "signature": "db.cdc.current() :: (id :: STRING)",
+    "argumentDescription": [],
+    "returnDescription" : [
+      {
+        "name": "id",
+        "description": "The change identifier.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.cdc.earliest",
+    "description": "Returns the earliest change identifier that can be used to stream changes from.",
+    "mode": "READ",
+    "worksOnSystem": false,
+    "signature": "db.cdc.earliest() :: (id :: STRING)",
+    "argumentDescription": [],
+    "returnDescription" : [
+      {
+        "name": "id",
+        "description": "The change identifier.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.cdc.query",
+    "description": "Query changes happened from the provided change identifier.",
+    "mode": "READ",
+    "worksOnSystem": false,
+    "signature": "db.cdc.query(from =  :: STRING, selectors = [] :: LIST<MAP>) :: (id :: STRING, txId :: INTEGER, seq :: INTEGER, metadata :: MAP, event :: MAP)",
+    "argumentDescription": [
+      {
+        "default": "DefaultParameterValue{value=, type=STRING}",
+        "name": "from",
+        "description": "The change identifier to query changes from.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value=[], type=LIST<MAP>}",
+        "name": "selectors",
+        "description": "An optional list of selectors to filter out changes.",
+        "type": "LIST<MAP>",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "isDeprecated": false,
+        "name": "id",
+        "description": "The change identifier for this change event. Used to continue querying from this change event.",
+        "type": "STRING"
+      },
+      {
+        "isDeprecated": false,
+        "name": "txId",
+        "description": "A number identifying which transaction the change happened in, unique in combination with seq.",
+        "type": "INTEGER"
+      },
+      {
+        "isDeprecated": false,
+        "name": "seq",
+        "description": "A number used for ordering changes that happened in the same transaction.",
+        "type": "INTEGER"
+      },
+      {
+        "isDeprecated": false,
+        "name": "metadata",
+        "description": "Metadata from the transaction that caused this change event.",
+        "type": "MAP"
+      },
+      {
+        "isDeprecated": false,
+        "name": "event",
+        "description": "The retrieved changes on the affected entity.",
+        "type": "MAP"
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.checkpoint",
+    "description": "Initiate and wait for a new check point, or wait any already on-going check point to complete. Note that this temporarily disables the `db.checkpoint.iops.limit` setting in order to make the check point complete faster. This might cause transaction throughput to degrade slightly, due to increased IO load.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "db.checkpoint() :: (success :: BOOLEAN, message :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "success",
+        "description": "Whether the checkpoint has successfully completed.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      },
+      {
+        "name": "message",
+        "description": "Details about the outcome of the procedure.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.clearQueryCaches",
+    "description": "Clears all query caches.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "db.clearQueryCaches() :: (value :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "value",
+        "description": "Information about the number of cleared query caches.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.create.setNodeVectorProperty",
+    "description": "Set a vector property on a given node in a more space efficient representation than Cypher's SET.",
+    "mode": "WRITE",
+    "worksOnSystem": false,
+    "signature": "db.create.setNodeVectorProperty(node :: NODE, key :: STRING, vector :: ANY)",
+    "argumentDescription": [
+      {
+        "name": "node",
+        "description": "The node on which the new property will be stored.",
+        "type": "NODE",
+        "isDeprecated": false
+      },
+      {
+        "name": "key",
+        "description": "The name of the new property.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "vector",
+        "description": "The object containing the embedding.",
+        "type": "ANY",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.create.setRelationshipVectorProperty",
+    "description": "Set a vector property on a given relationship in a more space efficient representation than Cypher's SET.",
+    "mode": "WRITE",
+    "worksOnSystem": false,
+    "signature": "db.create.setRelationshipVectorProperty(relationship :: RELATIONSHIP, key :: STRING, vector :: ANY)",
+    "argumentDescription": [
+      {
+        "name": "relationship",
+        "description": "The relationship on which the new property will be stored.",
+        "type": "RELATIONSHIP",
+        "isDeprecated": false
+      },
+      {
+        "name": "key",
+        "description": "The name of the new property.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "vector",
+        "description": "The object containing the embedding.",
+        "type": "ANY",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.create.setVectorProperty",
+    "description": "Set a vector property on a given node in a more space efficient representation than Cypher's SET.",
+    "mode": "WRITE",
+    "worksOnSystem": false,
+    "signature": "db.create.setVectorProperty(node :: NODE, key :: STRING, vector :: ANY) :: (node :: NODE)",
+    "argumentDescription": [
+      {
+        "name": "node",
+        "description": "The node on which the new property will be stored.",
+        "type": "NODE",
+        "isDeprecated": false
+      },
+      {
+        "name": "key",
+        "description": "The name of the new property.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "vector",
+        "description": "The object containing the embedding.",
+        "type": "ANY",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "node",
+        "description": "The node on which the vector property was set.",
+        "type": "NODE",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": true,
+    "deprecatedBy": "db.create.setNodeVectorProperty",
+    "option": {
+      "deprecated": true
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": true
+  },
+  {
+    "name": "db.createLabel",
+    "description": "Create a label",
+    "mode": "WRITE",
+    "worksOnSystem": false,
+    "signature": "db.createLabel(newLabel :: STRING)",
+    "argumentDescription": [
+      {
+        "name": "newLabel",
+        "description": "Label name.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.createProperty",
+    "description": "Create a Property",
+    "mode": "WRITE",
+    "worksOnSystem": false,
+    "signature": "db.createProperty(newProperty :: STRING)",
+    "argumentDescription": [
+      {
+        "name": "newProperty",
+        "description": "Property name.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.createRelationshipType",
+    "description": "Create a RelationshipType",
+    "mode": "WRITE",
+    "worksOnSystem": false,
+    "signature": "db.createRelationshipType(newRelationshipType :: STRING)",
+    "argumentDescription": [
+      {
+        "name": "newRelationshipType",
+        "description": "Relationship type name.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.index.fulltext.awaitEventuallyConsistentIndexRefresh",
+    "description": "Wait for the updates from recently committed transactions to be applied to any eventually-consistent full-text indexes.",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.index.fulltext.awaitEventuallyConsistentIndexRefresh()",
+    "argumentDescription": [],
+    "returnDescription": [],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.index.fulltext.listAvailableAnalyzers",
+    "description": "List the available analyzers that the full-text indexes can be configured with.",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.index.fulltext.listAvailableAnalyzers() :: (analyzer :: STRING, description :: STRING, stopwords :: LIST<STRING>)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "analyzer",
+        "description": "The name of the analyzer.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "description",
+        "description": "The  description of the analyzer.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "stopwords",
+        "description": "The stopwords used by the analyzer to tokenize strings.",
+        "type": "LIST<STRING>",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.index.fulltext.queryNodes",
+    "description": "Query the given full-text index. Returns the matching nodes and their Lucene query score, ordered by score.\nValid _key: value_ pairs for the `options` map are:\n\n* 'skip' -- to skip the top N results.\n* 'limit' -- to limit the number of results returned.\n* 'analyzer' -- to use the specified analyzer as a search analyzer for this query.\n\nThe `options` map and any of the keys are optional.\nAn example of the `options` map: `{skip: 30, limit: 10, analyzer: 'whitespace'}`\n",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.index.fulltext.queryNodes(indexName :: STRING, queryString :: STRING, options = {} :: MAP) :: (node :: NODE, score :: FLOAT)",
+    "argumentDescription": [
+      {
+        "name": "indexName",
+        "description": "The name of the full-text index.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "queryString",
+        "description": "The string to find approximate matches for.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value={}, type=MAP}",
+        "name": "options",
+        "description": "{skip :: INTEGER, limit :: INTEGER, analyzer :: STRING}",
+        "type": "MAP",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "node",
+        "description": "A node which contains a property similar to the query string.",
+        "type": "NODE",
+        "isDeprecated": false
+      },
+      {
+        "name": "score",
+        "description": "The score measuring how similar the node property is to the query string.",
+        "type": "FLOAT",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.index.fulltext.queryRelationships",
+    "description": "Query the given full-text index. Returns the matching relationships and their Lucene query score, ordered by score.\nValid _key: value_ pairs for the `options` map are:\n\n* 'skip' -- to skip the top N results.\n* 'limit' -- to limit the number of results returned.\n* 'analyzer' -- to use the specified analyzer as a search analyzer for this query.\n\nThe `options` map and any of the keys are optional.\nAn example of the `options` map: `{skip: 30, limit: 10, analyzer: 'whitespace'}`\n",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.index.fulltext.queryRelationships(indexName :: STRING, queryString :: STRING, options = {} :: MAP) :: (relationship :: RELATIONSHIP, score :: FLOAT)",
+    "argumentDescription": [
+      {
+        "name": "indexName",
+        "description": "The name of the full-text index.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "queryString",
+        "description": "The string to find approximate matches for.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value={}, type=MAP}",
+        "name": "options",
+        "description": "{skip :: INTEGER, limit :: INTEGER, analyzer :: STRING}",
+        "type": "MAP",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "relationship",
+        "description": "A relationship which contains a property similar to the query string.",
+        "type": "RELATIONSHIP",
+        "isDeprecated": false
+      },
+      {
+        "name": "score",
+        "description": "The score measuring how similar the relationship property is to the query string.",
+        "type": "FLOAT",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.index.vector.createNodeIndex",
+    "description": "Create a named node vector index for the specified label and property with the given vector dimensionality using either the EUCLIDEAN or COSINE similarity function.\nBoth similarity functions are case-insensitive.\nUse the `db.index.vector.queryNodes` procedure to query the named index.\n",
+    "mode": "SCHEMA",
+    "worksOnSystem": false,
+    "signature": "db.index.vector.createNodeIndex(indexName :: STRING, label :: STRING, propertyKey :: STRING, vectorDimension :: INTEGER, vectorSimilarityFunction :: STRING)",
+    "argumentDescription": [
+      {
+        "name": "indexName",
+        "description": "indexName :: STRING",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "label",
+        "description": "label :: STRING",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "propertyKey",
+        "description": "propertyKey :: STRING",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "vectorDimension",
+        "description": "vectorDimension :: INTEGER",
+        "type": "INTEGER",
+        "isDeprecated": false
+      },
+      {
+        "name": "vectorSimilarityFunction",
+        "description": "vectorSimilarityFunction :: STRING",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": true,
+    "deprecatedBy": "CREATE VECTOR INDEX",
+    "option": {
+      "deprecated": true
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": true
+  },
+  {
+    "name": "db.index.vector.queryNodes",
+    "description": "Query the given node vector index.\nReturns requested number of nearest neighbors to the provided query vector,\nand their similarity score to that query vector, based on the configured similarity function for the index.\nThe similarity score is a value between [0, 1]; where 0 indicates least similar, 1 most similar.\n",
+    "mode": "READ",
+    "worksOnSystem": false,
+    "signature": "db.index.vector.queryNodes(indexName :: STRING, numberOfNearestNeighbours :: INTEGER, query :: ANY) :: (node :: NODE, score :: FLOAT)",
+    "argumentDescription": [
+      {
+        "name": "indexName",
+        "description": "The name of the vector index.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "numberOfNearestNeighbours",
+        "description": "The size of the vector neighbourhood.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      },
+      {
+        "name": "query",
+        "description": "The object to find approximate matches for.",
+        "type": "ANY",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "node",
+        "description": "A node which contains a vector property similar to the query object.",
+        "type": "NODE",
+        "isDeprecated": false
+      },
+      {
+        "name": "score",
+        "description": "The score measuring how similar the node property is to the query object.",
+        "type": "FLOAT",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.index.vector.queryRelationships",
+    "description": "Query the given relationship vector index.\nReturns requested number of nearest neighbors to the provided query vector,\nand their similarity score to that query vector, based on the configured similarity function for the index.\nThe similarity score is a value between [0, 1]; where 0 indicates least similar, 1 most similar.\n",
+    "mode": "READ",
+    "worksOnSystem": false,
+    "signature": "db.index.vector.queryRelationships(indexName :: STRING, numberOfNearestNeighbours :: INTEGER, query :: ANY) :: (relationship :: RELATIONSHIP, score :: FLOAT)",
+    "argumentDescription": [
+      {
+        "name": "indexName",
+        "description": "The name of the vector index.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "numberOfNearestNeighbours",
+        "description": "The size of the vector neighbourhood.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      },
+      {
+        "name": "query",
+        "description": "The object to find approximate matches for.",
+        "type": "ANY",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "relationship",
+        "description": "A relationship which contains a vector property similar to the query object.",
+        "type": "RELATIONSHIP",
+        "isDeprecated": false
+      },
+      {
+        "name": "score",
+        "description": "The score measuring how similar the relationship property is to the query object.",
+        "type": "FLOAT",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.info",
+    "description": "Provides information regarding the database.",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.info() :: (id :: STRING, name :: STRING, creationDate :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "id",
+        "description": "The id of the database.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "name",
+        "description": "The name of the database.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "creationDate",
+        "description": "The creation date of the database, formatted according to the ISO-8601 Standard.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.labels",
+    "description": "List all labels attached to nodes within a database according to the user's access rights. The procedure returns empty results if the user is not authorized to view those labels.",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.labels() :: (label :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "label",
+        "description": "A label within the database.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.listLocks",
+    "description": "List all locks at this database.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "db.listLocks() :: (mode :: STRING, resourceType :: STRING, resourceId :: INTEGER, transactionId :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "mode",
+        "description": "The locking mode this lock is using, either \"SHARED\" or \"EXCLUSIVE\".",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "resourceType",
+        "description": "The type of resource (e.g. nodes, relationships, labels) this lock protects.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "resourceId",
+        "description": "The id of the resource this lock protects.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      },
+      {
+        "name": "transactionId",
+        "description": "The id of the transaction that owns this lock.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.ping",
+    "description": "This procedure can be used by client side tooling to test whether they are correctly connected to a database. The procedure is available in all databases and always returns true. A faulty connection can be detected by not being able to call this procedure.",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.ping() :: (success :: BOOLEAN)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "success",
+        "description": "Whether or not the connection call to the database has been successful.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.prepareForReplanning",
+    "description": "Triggers an index resample and waits for it to complete, and after that clears query caches. After this procedure has finished queries will be planned using the latest database statistics.",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.prepareForReplanning(timeOutSeconds = 300 :: INTEGER)",
+    "argumentDescription": [
+      {
+        "default": "DefaultParameterValue{value=300, type=INTEGER}",
+        "name": "timeOutSeconds",
+        "description": "The maximum time to wait in seconds.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.propertyKeys",
+    "description": "List all property keys in the database.",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.propertyKeys() :: (propertyKey :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "propertyKey",
+        "description": "A property key in the database.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.relationshipTypes",
+    "description": "List all types attached to relationships within a database according to the user's access rights. The procedure returns empty results if the user is not authorized to view those relationship types.",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.relationshipTypes() :: (relationshipType :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "relationshipType",
+        "description": "A relationship type in the database.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.resampleIndex",
+    "description": "Schedule resampling of an index (for example: CALL db.resampleIndex(\"MyIndex\")).",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.resampleIndex(indexName :: STRING)",
+    "argumentDescription": [
+      {
+        "name": "indexName",
+        "description": "The name of the index.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.resampleOutdatedIndexes",
+    "description": "Schedule resampling of all outdated indexes.",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.resampleOutdatedIndexes()",
+    "argumentDescription": [],
+    "returnDescription": [],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.schema.nodeTypeProperties",
+    "description": "Show the derived property schema of the nodes in tabular form.",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.schema.nodeTypeProperties() :: (nodeType :: STRING, nodeLabels :: LIST<STRING>, propertyName :: STRING, propertyTypes :: LIST<STRING>, mandatory :: BOOLEAN)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "nodeType",
+        "description": "A name generated from the labels on the node.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "nodeLabels",
+        "description": "A list containing the labels on a category of node.",
+        "type": "LIST<STRING>",
+        "isDeprecated": false
+      },
+      {
+        "name": "propertyName",
+        "description": "A property key on a category of node.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "propertyTypes",
+        "description": "All types of a property belonging to a node category.",
+        "type": "LIST<STRING>",
+        "isDeprecated": false
+      },
+      {
+        "name": "mandatory",
+        "description": "Whether or not the property is present on all nodes belonging to a node category.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.schema.relTypeProperties",
+    "description": "Show the derived property schema of the relationships in tabular form.",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.schema.relTypeProperties() :: (relType :: STRING, propertyName :: STRING, propertyTypes :: LIST<STRING>, mandatory :: BOOLEAN)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "relType",
+        "description": "A name generated from the type on the relationship.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "propertyName",
+        "description": "A property key on a category of relationship.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "propertyTypes",
+        "description": "All types of a property belonging to a relationship category.",
+        "type": "LIST<STRING>",
+        "isDeprecated": false
+      },
+      {
+        "name": "mandatory",
+        "description": "Whether or not the property is present on all relationships belonging to a relationship category.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.schema.visualization",
+    "description": "Visualizes the schema of the data based on available statistics. A new node is returned for each label. The properties represented on the node include: `name` (label name), `indexes` (list of indexes), and `constraints` (list of constraints). A relationship of a given type is returned for all possible combinations of start and end nodes. The properties represented on the relationship include: `name` (type name). Note that this may include additional relationships that do not exist in the data due to the information available in the count store. ",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.schema.visualization() :: (nodes :: LIST<NODE>, relationships :: LIST<RELATIONSHIP>)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "nodes",
+        "description": "A list of virtual nodes representing each label in the database.",
+        "type": "LIST<NODE>",
+        "isDeprecated": false
+      },
+      {
+        "name": "relationships",
+        "description": "A list of virtual relationships representing all combinations between start and end nodes in the database.",
+        "type": "LIST<RELATIONSHIP>",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.stats.clear",
+    "description": "Clear collected data of a given data section. Valid sections are 'QUERIES'",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.stats.clear(section :: STRING) :: (section :: STRING, success :: BOOLEAN, message :: STRING)",
+    "argumentDescription": [
+      {
+        "name": "section",
+        "description": "The section to clear. The only available section is: 'QUERIES'.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "section",
+        "description": "The section cleared.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "success",
+        "description": "Whether the section was successfully cleared.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      },
+      {
+        "name": "message",
+        "description": "Details about the outcome of the procedure.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.stats.collect",
+    "description": "Start data collection of a given data section. Valid sections are 'QUERIES'",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.stats.collect(section :: STRING, config = {} :: MAP) :: (section :: STRING, success :: BOOLEAN, message :: STRING)",
+    "argumentDescription": [
+      {
+        "name": "section",
+        "description": "The section to collect. The only available section is: 'QUERIES'.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value={}, type=MAP}",
+        "name": "config",
+        "description": "{durationSeconds = -1 :: INTEGER}",
+        "type": "MAP",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "section",
+        "description": "The section collected.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "success",
+        "description": "Whether the section was successfully collected.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      },
+      {
+        "name": "message",
+        "description": "Details about the outcome of the procedure.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.stats.retrieve",
+    "description": "Retrieve statistical data about the current database. Valid sections are 'GRAPH COUNTS', 'TOKENS', 'QUERIES', 'META'",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.stats.retrieve(section :: STRING, config = {} :: MAP) :: (section :: STRING, data :: MAP)",
+    "argumentDescription": [
+      {
+        "name": "section",
+        "description": "A section of stats to retrieve: ('GRAPH COUNTS', 'TOKENS', 'QUERIES', 'META').",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value={}, type=MAP}",
+        "name": "config",
+        "description": "{maxInvocations = 100 :: INTEGER}",
+        "type": "MAP",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "section",
+        "description": "The section retrieved.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "data",
+        "description": "Data pertaining to the retrieved statistics.",
+        "type": "MAP",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.stats.retrieveAllAnonymized",
+    "description": "Retrieve all available statistical data about the current database, in an anonymized form.",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.stats.retrieveAllAnonymized(graphToken :: STRING, config = {} :: MAP) :: (section :: STRING, data :: MAP)",
+    "argumentDescription": [
+      {
+        "name": "graphToken",
+        "description": "The name of the graph token.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value={}, type=MAP}",
+        "name": "config",
+        "description": "{maxInvocations = 100 :: INTEGER}",
+        "type": "MAP",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "section",
+        "description": "The section retrieved.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "data",
+        "description": "Data pertaining to the retrieved statistics.",
+        "type": "MAP",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.stats.status",
+    "description": "Retrieve the status of all available collector daemons, for this database.",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.stats.status() :: (section :: STRING, status :: STRING, data :: MAP)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "section",
+        "description": "String with the message \"QUERIES\".",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "status",
+        "description": "The status of the QueryCollector: \"idle\" or \"collecting\".",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "data",
+        "description": "data :: MAP",
+        "type": "MAP",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "db.stats.stop",
+    "description": "Stop data collection of a given data section. Valid sections are 'QUERIES'",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "db.stats.stop(section :: STRING) :: (section :: STRING, success :: BOOLEAN, message :: STRING)",
+    "argumentDescription": [
+      {
+        "name": "section",
+        "description": "The section to stop. The only available section is: 'QUERIES'.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "section",
+        "description": "The stopped section.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "success",
+        "description": "Whether the section was successfully stopped.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      },
+      {
+        "name": "message",
+        "description": "Details about the outcome of the procedure.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.checkConfigValue",
+    "description": "Check if a potential config setting value is valid.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.checkConfigValue(setting :: STRING, value :: STRING) :: (valid :: BOOLEAN, message :: STRING)",
+    "argumentDescription": [
+      {
+        "name": "setting",
+        "description": "The name of the setting.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "value",
+        "description": "The setting value to verify.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "valid",
+        "description": "Whether or not the setting value is valid.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      },
+      {
+        "name": "message",
+        "description": "Details about the outcome of the procedure.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "admin": true,
+    "name": "dbms.cluster.checkConnectivity",
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "signature": "dbms.cluster.checkConnectivity(port-name = null :: STRING, server = null :: STRING) :: (serverId :: STRING, name :: STRING, address :: STRING, mode-constraint :: STRING, port-name :: STRING, port-address :: STRING, result :: STRING)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [
+      {
+        "name": "serverId",
+        "description": "The id of the checked server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "name",
+        "description": "name :: STRING",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "address",
+        "description": "address :: STRING",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "mode-constraint",
+        "description": "The instance mode constraint of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "port-name",
+        "description": "The name of the checked port.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "port-address",
+        "description": "The address of the checked port.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "result",
+        "description": "Whether the check was successful or not.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "description": "Check the connectivity of this instance to other cluster members. Not all ports are relevant to all members. Valid values for 'port-name' are: []",
+    "rolesExecution": [
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "default": "DefaultParameterValue{value=null, type=STRING}",
+        "name": "port-name",
+        "description": "The name of the port: ('CLUSTER', 'RAFT').",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value=null, type=STRING}",
+        "name": "server",
+        "description": "The id of the server to check connectivity of.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "mode": "DBMS",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "admin": false,
+    "name": "dbms.cluster.cordonServer",
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "signature": "dbms.cluster.cordonServer(server :: STRING)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [],
+    "description": "Mark a server in the topology as not suitable for new allocations. It will not force current allocations off the server. This is useful when deallocating databases when you have multiple unavailable servers.",
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "name": "server",
+        "description": "The name or id of the server to be cordoned.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "mode": "WRITE",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.cluster.protocols",
+    "description": "Overview of installed protocols",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.cluster.protocols() :: (orientation :: STRING, remoteAddress :: STRING, applicationProtocol :: STRING, applicationProtocolVersion :: INTEGER, modifierProtocols :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "orientation",
+        "description": "Direction of the protocol (inbound or outbound).",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "remoteAddress",
+        "description": "The socket address this protocol is available on.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "applicationProtocol",
+        "description": "The name of the protocol.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "applicationProtocolVersion",
+        "description": "The version of the protocol.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      },
+      {
+        "name": "modifierProtocols",
+        "description": "Installed modifier protocols, for example, compression.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "admin": true,
+    "name": "dbms.cluster.readReplicaToggle",
+    "isDeprecated": true,
+    "deprecatedBy": "dbms.cluster.secondaryReplicationDisable",
+    "option": {
+      "deprecated": true
+    },
+    "signature": "dbms.cluster.readReplicaToggle(databaseName :: STRING, pause :: BOOLEAN) :: (state :: STRING)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [
+      {
+        "name": "state",
+        "description": "The current state of the secondary replication process.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "description": "The toggle can pause or resume read replica (deprecated in favor of dbms.cluster.secondaryReplicationDisable)",
+    "rolesExecution": [
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "name": "databaseName",
+        "description": "The name of the database to toggle the secondary replication process for.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "pause",
+        "description": "Whether or not to enable/disable the secondary replication process.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      }
+    ],
+    "mode": "DBMS",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.cluster.routing.getRoutingTable",
+    "description": "Returns the advertised bolt capable endpoints for a given database, divided by each endpoint's capabilities. For example, an endpoint may serve read queries, write queries, and/or future `getRoutingTable` requests.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.cluster.routing.getRoutingTable(context :: MAP, database = null :: STRING) :: (ttl :: INTEGER, servers :: LIST<MAP>)",
+    "argumentDescription": [
+      {
+        "name": "context",
+        "description": "Routing context, for example, routing policies.",
+        "type": "MAP",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value=null, type=STRING}",
+        "name": "database",
+        "description": "The database to get a routing table for.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "ttl",
+        "description": "Time to live (in seconds) for the routing table.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      },
+      {
+        "name": "servers",
+        "description": "Servers grouped by whether they are readers, writers, or routers.",
+        "type": "LIST<MAP>",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": true,
+    "deprecatedBy": "dbms.routing.getRoutingTable",
+    "option": {
+      "deprecated": true
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "admin": true,
+    "name": "dbms.cluster.secondaryReplicationDisable",
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "signature": "dbms.cluster.secondaryReplicationDisable(databaseName :: STRING, pause :: BOOLEAN) :: (state :: STRING)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [
+      {
+        "name": "state",
+        "description": "The current state of the secondary replication process.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "description": "The toggle can pause or resume the secondary replication process.",
+    "rolesExecution": [
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "name": "databaseName",
+        "description": "The name of the database to toggle the secondary replication process for.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "pause",
+        "description": "Whether or not to enable/disable the secondary replication process.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      }
+    ],
+    "mode": "DBMS",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "admin": false,
+    "name": "dbms.cluster.setAutomaticallyEnableFreeServers",
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "signature": "dbms.cluster.setAutomaticallyEnableFreeServers(autoEnable :: BOOLEAN)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [],
+    "description": "With this method you can set whether free servers are automatically enabled.",
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "name": "autoEnable",
+        "description": "Whether or not to automatically enable free servers.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      }
+    ],
+    "mode": "WRITE",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "admin": true,
+    "name": "dbms.cluster.statusCheck",
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "signature": "dbms.cluster.statusCheck(databases :: LIST<STRING>, timeoutMilliseconds = null :: INTEGER) :: (database :: STRING, serverId :: STRING, serverName :: STRING, address :: STRING, replicationSuccessful :: BOOLEAN, memberStatus :: STRING, recognisedLeader :: STRING, recognisedLeaderTerm :: INTEGER, requester :: BOOLEAN, error :: STRING)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [
+      {
+        "name": "database",
+        "description": "database :: STRING",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "serverId",
+        "description": "serverId :: STRING",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "serverName",
+        "description": "serverName :: STRING",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "address",
+        "description": "address :: STRING",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "replicationSuccessful",
+        "description": "replicationSuccessful :: BOOLEAN",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      },
+      {
+        "name": "memberStatus",
+        "description": "memberStatus :: STRING",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "recognisedLeader",
+        "description": "recognisedLeader :: STRING",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "recognisedLeaderTerm",
+        "description": "recognisedLeaderTerm :: INTEGER",
+        "type": "INTEGER",
+        "isDeprecated": false
+      },
+      {
+        "name": "requester",
+        "description": "requester :: BOOLEAN",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      },
+      {
+        "name": "error",
+        "description": "error :: STRING",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "description": "Performs a rafted status check.",
+    "rolesExecution": [
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "name": "databases",
+        "description": "databases :: LIST<STRING>",
+        "type": "LIST<STRING>",
+        "isDeprecated": false
+      },
+      {
+        "default" : "DefaultParameterValue{value=null, type=INTEGER}",
+        "name": "timeoutMilliseconds",
+        "description": "timeoutMilliseconds = null :: INTEGER",
+        "type": "INTEGER",
+        "isDeprecated": false
+      }
+    ],
+    "option": {
+      "deprecated": false
+    },
+    "mode": "DBMS",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "admin": false,
+    "name": "dbms.cluster.uncordonServer",
+    "isDeprecated": true,
+    "deprecatedBy": "ENABLE SERVER",
+    "option": {
+      "deprecated": true
+    },
+    "signature": "dbms.cluster.uncordonServer(server :: STRING)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [],
+    "description": "Remove the cordon on a server, returning it to 'enabled'.",
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "name": "server",
+        "description": "The name or id of the server to be uncordoned.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "mode": "WRITE",
+    "enterpriseOnly": true,
+    "removedInCypher25": true
+  },
+
+  {
+    "admin": false,
+    "name": "dbms.cluster.deallocateDatabaseFromServer",
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "signature": "dbms.cluster.deallocateDatabaseFromServer(server :: STRING, database :: STRING, dryrun = false :: BOOLEAN) :: (database :: STRING, fromServerName :: STRING, fromServerId :: STRING, toServerName :: STRING, toServerId :: STRING, mode :: STRING)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [
+      {
+        "name": "database",
+        "description": "The name of the database.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "fromServerName",
+        "description": "The name of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "fromServerId",
+        "description": "The id of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "toServerName",
+        "description": "The name of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "toServerId",
+        "description": "The id of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "mode",
+        "description": "The mode in which the database is hosted.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "description": "Deallocate a specific user database from a specific server.",
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "name": "server",
+        "description": "The id of the server to deallocate from.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "database",
+        "description": "The name of the database to deallocate.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value=false, type=BOOLEAN}",
+        "name": "dryrun",
+        "description": "Set to `true` to dry run the procedure.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      }
+    ],
+    "mode": "WRITE",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "admin": false,
+    "name": "dbms.cluster.deallocateDatabaseFromServers",
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "signature": "dbms.cluster.deallocateDatabaseFromServers(servers :: LIST<STRING>, database :: STRING, dryrun = false :: BOOLEAN) :: (database :: STRING, fromServerName :: STRING, fromServerId :: STRING, toServerName :: STRING, toServerId :: STRING, mode :: STRING)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [
+      {
+        "name": "database",
+        "description": "The name of the database.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "fromServerName",
+        "description": "The name of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "fromServerId",
+        "description": "The id of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "toServerName",
+        "description": "The name of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "toServerId",
+        "description": "The id of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "mode",
+        "description": "The mode in which the database is hosted.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "description": "Deallocate a specific user database from a list of servers.",
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "name": "servers",
+        "description": "The ids of the servers to deallocate from.",
+        "type": "LIST<STRING>",
+        "isDeprecated": false
+      },
+      {
+        "name": "database",
+        "description": "The id of the database to deallocate.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value=false, type=BOOLEAN}",
+        "name": "dryrun",
+        "description": "Set to `true` to dry run the procedure.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      }
+    ],
+    "mode": "WRITE",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+
+  {
+    "admin": false,
+    "name": "dbms.cluster.deallocateNumberOfDatabases",
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "signature": "dbms.cluster.deallocateNumberOfDatabases(server :: STRING, number :: INTEGER, dryrun = false :: BOOLEAN) :: (database :: STRING, fromServerName :: STRING, fromServerId :: STRING, toServerName :: STRING, toServerId :: STRING, mode :: STRING)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [
+      {
+        "name": "database",
+        "description": "The name of the database.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "fromServerName",
+        "description": "The name of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "fromServerId",
+        "description": "The id of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "toServerName",
+        "description": "The name of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "toServerId",
+        "description": "The id of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "mode",
+        "description": "The mode in which the database is hosted.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "description": "Deallocate a number of user databases from a specific server.",
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "name": "server",
+        "description": "The id of the server to deallocate from.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "number",
+        "description": "The number of databases to deallocate.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value=false, type=BOOLEAN}",
+        "name": "dryrun",
+        "description": "Set to `true` to dry run the procedure.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      }
+    ],
+    "mode": "WRITE",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "admin": false,
+    "name": "dbms.cluster.reallocateDatabase",
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "signature": "dbms.cluster.reallocateDatabase(database :: STRING, dryrun = false :: BOOLEAN) :: (database :: STRING, fromServerName :: STRING, fromServerId :: STRING, toServerName :: STRING, toServerId :: STRING, mode :: STRING)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [
+      {
+        "name": "database",
+        "description": "The name of the database.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "fromServerName",
+        "description": "The name of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "fromServerId",
+        "description": "The id of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "toServerName",
+        "description": "The name of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "toServerId",
+        "description": "The id of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "mode",
+        "description": "The mode in which the database is hosted.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "description": "Reallocate a specific database.",
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "name": "database",
+        "description": "The name of the database to reallocate.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value=false, type=BOOLEAN}",
+        "name": "dryrun",
+        "description": "Set to `true` to dry run the procedure.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      }
+    ],
+    "mode": "WRITE",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "admin": false,
+    "name": "dbms.cluster.reallocateNumberOfDatabases",
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "signature": "dbms.cluster.reallocateNumberOfDatabases(number :: INTEGER, dryrun = false :: BOOLEAN) :: (database :: STRING, fromServerName :: STRING, fromServerId :: STRING, toServerName :: STRING, toServerId :: STRING, mode :: STRING)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [
+      {
+        "name": "database",
+        "description": "The name of the database.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "fromServerName",
+        "description": "The name of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "fromServerId",
+        "description": "The id of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "toServerName",
+        "description": "The name of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "toServerId",
+        "description": "The id of the server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "mode",
+        "description": "The mode in which the database is hosted.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "description": "Reallocate a specified number of user databases.",
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "name": "number",
+        "description": "The number of databases to reallocate.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value=false, type=BOOLEAN}",
+        "name": "dryrun",
+        "description": "Set to `true` to dry run the procedure.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      }
+    ],
+    "mode": "WRITE",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.components",
+    "description": "List DBMS components and their versions.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.components() :: (name :: STRING, versions :: LIST<STRING>, edition :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "name",
+        "description": "The name of the component.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "versions",
+        "description": "The installed versions of the component.",
+        "type": "LIST<STRING>",
+        "isDeprecated": false
+      },
+      {
+        "name": "edition",
+        "description": "The Neo4j edition of the DBMS.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.info",
+    "description": "Provides information regarding the DBMS.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.info() :: (id :: STRING, name :: STRING, creationDate :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "id",
+        "description": "The id of the DBMS.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "name",
+        "description": "The name of the DBMS.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "creationDate",
+        "description": "The creation date of the DBMS.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.killConnection",
+    "description": "Kill network connection with the given connection id.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.killConnection(id :: STRING) :: (connectionId :: STRING, username :: STRING, message :: STRING)",
+    "argumentDescription": [
+      {
+        "name": "id",
+        "description": "The id of the connection to kill.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "connectionId",
+        "description": "The id of the connection killed.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "username",
+        "description": "The username of the user of the killed connection.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "message",
+        "description": "Details about the outcome of the procedure.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.killConnections",
+    "description": "Kill all network connections with the given connection ids.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.killConnections(ids :: LIST<STRING>) :: (connectionId :: STRING, username :: STRING, message :: STRING)",
+    "argumentDescription": [
+      {
+        "name": "ids",
+        "description": "The ids of the connections to kill.",
+        "type": "LIST<STRING>",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "connectionId",
+        "description": "The id of the connection killed.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "username",
+        "description": "The username of the user of the killed connection.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "message",
+        "description": "Details about the outcome of the procedure.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.listActiveLocks",
+    "description": "List the active lock requests granted for the transaction executing the query with the given query id.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.listActiveLocks(queryId :: STRING) :: (mode :: STRING, resourceType :: STRING, resourceId :: INTEGER)",
+    "argumentDescription": [
+      {
+        "name": "queryId",
+        "description": "The id of the query to check for active locks on.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "mode",
+        "description": "The lock type: ('SHARED', 'EXCLUSIVE').",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "resourceType",
+        "description": "The locked resource.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "resourceId",
+        "description": "The id of the locked resource.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.listCapabilities",
+    "description": "List capabilities.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.listCapabilities() :: (name :: STRING, description :: STRING, value :: ANY)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "name",
+        "description": "The full name of the capability (e.g. \"dbms.instance.version\").",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "description",
+        "description": "The capability description (e.g. \"Neo4j version this instance is running\").",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "value",
+        "description": "The capability object if it is present in the system (e.g. \"5.20.0\").",
+        "type": "ANY",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.listConfig",
+    "description": "List the currently active configuration settings of Neo4j.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.listConfig(searchString =  :: STRING) :: (name :: STRING, description :: STRING, value :: STRING, dynamic :: BOOLEAN, defaultValue :: STRING, startupValue :: STRING, explicitlySet :: BOOLEAN, validValues :: STRING)",
+    "argumentDescription": [
+      {
+        "default": "DefaultParameterValue{value=, type=STRING}",
+        "name": "searchString",
+        "description": "A string that filters on the name of config settings.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "name",
+        "description": "The name of the setting.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "description",
+        "description": "The description of the setting.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "value",
+        "description": "The set value of the setting.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "dynamic",
+        "description": "If the setting can be set dynamically or not.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      },
+      {
+        "name": "defaultValue",
+        "description": "The default value of the setting.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "startupValue",
+        "description": "The value of the setting when the database started.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "explicitlySet",
+        "description": "Whether or not the setting was explicitly set.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      },
+      {
+        "name": "validValues",
+        "description": "A description of the valid values.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.listConnections",
+    "description": "List all accepted network connections at this instance that are visible to the user.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.listConnections() :: (connectionId :: STRING, connectTime :: STRING, connector :: STRING, username :: STRING, userAgent :: STRING, serverAddress :: STRING, clientAddress :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "connectionId",
+        "description": "The id of the connection.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "connectTime",
+        "description": "The time the connection was established, formatted according to the ISO-8601 Standard.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "connector",
+        "description": "The protocol of the connector.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "username",
+        "description": "The username of the connected user.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "userAgent",
+        "description": "The active agent.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "serverAddress",
+        "description": "The address of the connected server.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "clientAddress",
+        "description": "The address of the connected client.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.listPools",
+    "description": "List all memory pools, including sub pools, currently registered at this instance that are visible to the user.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.listPools() :: (pool :: STRING, databaseName :: STRING, heapMemoryUsed :: STRING, heapMemoryUsedBytes :: STRING, nativeMemoryUsed :: STRING, nativeMemoryUsedBytes :: STRING, freeMemory :: STRING, freeMemoryBytes :: STRING, totalPoolMemory :: STRING, totalPoolMemoryBytes :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "pool",
+        "description": "The name of the memory pool.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "databaseName",
+        "description": "The name of the database.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "heapMemoryUsed",
+        "description": "The amount of heap memory used.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "heapMemoryUsedBytes",
+        "description": "The amount of heap memory used in bytes.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "nativeMemoryUsed",
+        "description": "The amount of native memory used.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "nativeMemoryUsedBytes",
+        "description": "The amount of native memory used in bytes.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "freeMemory",
+        "description": "The amount of free memory.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "freeMemoryBytes",
+        "description": "The amount of free memory in bytes.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "totalPoolMemory",
+        "description": "The total pool memory.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "totalPoolMemoryBytes",
+        "description": "The total pool memory in bytes.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.quarantineDatabase",
+    "description": "Place a database into quarantine or remove it from it.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.quarantineDatabase(databaseName :: STRING, setStatus :: BOOLEAN, reason = No reason given :: STRING) :: (databaseName :: STRING, quarantined :: BOOLEAN, result :: STRING)",
+    "argumentDescription": [
+      {
+        "name": "databaseName",
+        "description": "The name of the database to set the quarantine status of.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "setStatus",
+        "description": "Whether or not to quarantine the database.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value=No reason given, type=STRING}",
+        "name": "reason",
+        "description": "The reason to quarantine the database.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "databaseName",
+        "description": "The name of the database.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "quarantined",
+        "description": "Whether or not the database is quarantined.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      },
+      {
+        "name": "result",
+        "description": "Details about the outcome of the procedure.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.queryJmx",
+    "description": "Query JMX management data by domain and name. For instance, use `*:*` to find all JMX beans.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.queryJmx(query :: STRING) :: (name :: STRING, description :: STRING, attributes :: MAP)",
+    "argumentDescription": [
+      {
+        "name": "query",
+        "description": "A query for MBeans on this MBeanServer (e.g. '*:*,name=*neo4j*' for all metrics in neo4j database).",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "name",
+        "description": "The name of the metric.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "description",
+        "description": "The description of the metric.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "attributes",
+        "description": "A collection with the attributes (values) of that metric.",
+        "type": "MAP",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.routing.getRoutingTable",
+    "description": "Returns the advertised bolt capable endpoints for a given database, divided by each endpoint's capabilities. For example, an endpoint may serve read queries, write queries, and/or future `getRoutingTable` requests.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.routing.getRoutingTable(context :: MAP, database = null :: STRING) :: (ttl :: INTEGER, servers :: LIST<MAP>)",
+    "argumentDescription": [
+      {
+        "name": "context",
+        "description": "Routing context, for example, routing policies.",
+        "type": "MAP",
+        "isDeprecated": false
+      },
+      {
+        "default": "DefaultParameterValue{value=null, type=STRING}",
+        "name": "database",
+        "description": "The database to get a routing table for.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [
+      {
+        "name": "ttl",
+        "description": "Time to live (in seconds) for the routing table.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      },
+      {
+        "name": "servers",
+        "description": "Servers grouped by whether they are readers, writers, or routers.",
+        "type": "LIST<MAP>",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.scheduler.failedJobs",
+    "description": "List failed job runs. There is a limit for amount of historical data.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.scheduler.failedJobs() :: (jobId :: STRING, group :: STRING, database :: STRING, submitter :: STRING, description :: STRING, type :: STRING, submitted :: STRING, executionStart :: STRING, failureTime :: STRING, failureDescription :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "jobId",
+        "description": "The id of the failed job.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "group",
+        "description": "The category of the failed job.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "database",
+        "description": "The name of the database the job failed in.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "submitter",
+        "description": "The creator of the failed job.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "description",
+        "description": "Information about the failed job.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "type",
+        "description": "The interval of the failed job.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "submitted",
+        "description": "The submission time of the failed job.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "executionStart",
+        "description": "The start time of the failed job.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "failureTime",
+        "description": "The failure time of the failed job.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "failureDescription",
+        "description": "Information about the job failure.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.scheduler.groups",
+    "description": "List the job groups that are active in the database internal job scheduler.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.scheduler.groups() :: (group :: STRING, threads :: INTEGER)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "group",
+        "description": "The name of the job group.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "threads",
+        "description": "The number of active threads in that job group.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.scheduler.jobs",
+    "description": "List all jobs that are active in the database internal job scheduler.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.scheduler.jobs() :: (jobId :: STRING, group :: STRING, submitted :: STRING, database :: STRING, submitter :: STRING, description :: STRING, type :: STRING, scheduledAt :: STRING, period :: STRING, state :: STRING, currentStateDescription :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "jobId",
+        "description": "The id of the job.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "group",
+        "description": "The category of the job.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "submitted",
+        "description": "The submission time of the job.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "database",
+        "description": "The name of the database the job is in.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "submitter",
+        "description": "The creator of the job.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "description",
+        "description": "Information about the job.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "type",
+        "description": "The interval of the job.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "scheduledAt",
+        "description": "The start time of the job.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "period",
+        "description": "The interval for jobs run periodically.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "state",
+        "description": "The state of the job: ('EXECUTING', 'SCHEDULED').",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "currentStateDescription",
+        "description": "A description of the job state.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.security.clearAuthCache",
+    "description": "Clears authentication and authorization cache.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.security.clearAuthCache()",
+    "argumentDescription": [],
+    "returnDescription": [],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.setConfigValue",
+    "description": "Update a given setting value. Passing an empty value results in removing the configured value and falling back to the default value. Changes do not persist and are lost if the server is restarted. In a clustered environment, `dbms.setConfigValue` affects only the cluster member it is run against.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.setConfigValue(setting :: STRING, value :: STRING)",
+    "argumentDescription": [
+      {
+        "name": "setting",
+        "description": "The name of the setting.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "value",
+        "description": "The value to set.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "admin": true,
+    "name": "dbms.setDatabaseAllocator",
+    "isDeprecated": true,
+    "deprecatedBy": "Functionality is removed",
+    "option": {
+      "deprecated": true
+    },
+    "signature": "dbms.setDatabaseAllocator(allocator :: STRING)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [],
+    "description": "With this method you can set the allocator that is responsible for selecting servers for hosting databases.",
+    "rolesExecution": [
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "name": "allocator",
+        "description": "The name of the allocator.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "mode": "WRITE",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "admin": true,
+    "name": "dbms.setDefaultAllocationNumbers",
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "signature": "dbms.setDefaultAllocationNumbers(primaries :: INTEGER, secondaries :: INTEGER)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [],
+    "description": "With this method you can set the default number of primaries and secondaries.",
+    "rolesExecution": [
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "name": "primaries",
+        "description": "The default number of primaries.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      },
+      {
+        "name": "secondaries",
+        "description": "The default number of secondaries.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      }
+    ],
+    "mode": "WRITE",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "admin": true,
+    "name": "dbms.setDefaultDatabase",
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "signature": "dbms.setDefaultDatabase(databaseName :: STRING) :: (result :: STRING)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [
+      {
+        "name": "result",
+        "description": "Information about the default database.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "description": "Change the default database to the provided value. The database must exist and the old default database must be stopped.",
+    "rolesExecution": [
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "name": "databaseName",
+        "description": "The name of the database.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "mode": "WRITE",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "admin": false,
+    "name": "dbms.cluster.recreateDatabase",
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "signature": "dbms.cluster.recreateDatabase(database :: STRING, options = {} :: MAP)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [],
+    "description": "Recreates a database while keeping all RBAC settings. The procedure initiates a process, which when complete, will have synchronized and started all database instances within the cluster.",
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "argumentDescription": [
+      {
+        "name": "database",
+        "description": "database :: STRING",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "options",
+        "description": "options = {} :: MAP",
+        "type": "MAP",
+        "isDeprecated": false,
+        "default": "DefaultParameterValue{value={}, type=MAP}"
+      }
+    ],
+    "mode": "WRITE",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.showCurrentUser",
+    "description": "Show the current user.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "dbms.showCurrentUser() :: (username :: STRING, roles :: LIST<STRING>, flags :: LIST<STRING>)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "username",
+        "description": "The name of the current user.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "roles",
+        "description": "The roles assigned to the current user.",
+        "type": "LIST<STRING>",
+        "isDeprecated": false
+      },
+      {
+        "name": "flags",
+        "description": "The flags set on the current user.",
+        "type": "LIST<STRING>",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "admin": true,
+    "name": "dbms.showTopologyGraphConfig",
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "signature": "dbms.showTopologyGraphConfig() :: (allocator :: STRING, defaultPrimariesCount :: INTEGER, defaultSecondariesCount :: INTEGER, defaultDatabase :: STRING, autoEnableFreeServers :: BOOLEAN)",
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "worksOnSystem": true,
+    "returnDescription": [
+      {
+        "name": "allocator",
+        "description": "The name of the allocator.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "defaultPrimariesCount",
+        "description": "The default number of primaries.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      },
+      {
+        "name": "defaultSecondariesCount",
+        "description": "The default number of secondaries.",
+        "type": "INTEGER",
+        "isDeprecated": false
+      },
+      {
+        "name": "defaultDatabase",
+        "description": "The name of the default database.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "autoEnableFreeServers",
+        "description": "Whether or not to automatically enable free servers.",
+        "type": "BOOLEAN",
+        "isDeprecated": false
+      }
+    ],
+    "description": "With this method the configuration of the Topology Graph can be displayed.",
+    "rolesExecution": [
+      "admin"
+    ],
+    "argumentDescription": [],
+    "mode": "READ",
+    "enterpriseOnly": true,
+    "removedInCypher25": false
+  },
+  {
+    "name": "dbms.upgrade",
+    "description": "Upgrade the system database schema if it is not the current schema.",
+    "mode": "WRITE",
+    "worksOnSystem": true,
+    "signature": "dbms.upgrade() :: (status :: STRING, upgradeResult :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "status",
+        "description": "The upgrade status of the system database.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "upgradeResult",
+        "description": "Information about the upgrade outcome.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": true,
+    "deprecatedBy": "Automatic upgrade",
+    "option": {
+      "deprecated": true
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": true
+  },
+  {
+    "name": "dbms.upgradeStatus",
+    "description": "Report the current status of the system database sub-graph schema.",
+    "mode": "READ",
+    "worksOnSystem": true,
+    "signature": "dbms.upgradeStatus() :: (status :: STRING, description :: STRING, resolution :: STRING)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "status",
+        "description": "The upgrade status of the system database.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "description",
+        "description": "Information describing the upgrade status.",
+        "type": "STRING",
+        "isDeprecated": false
+      },
+      {
+        "name": "resolution",
+        "description": "Information about the steps necessary to upgrade.",
+        "type": "STRING",
+        "isDeprecated": false
+      }
+    ],
+    "admin": true,
+    "rolesExecution": [
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": true,
+    "deprecatedBy": "Automatic upgrade",
+    "option": {
+      "deprecated": true
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": true
+  },
+  {
+    "name": "tx.getMetaData",
+    "description": "Provides attached transaction metadata.",
+    "mode": "DBMS",
+    "worksOnSystem": true,
+    "signature": "tx.getMetaData() :: (metadata :: MAP)",
+    "argumentDescription": [],
+    "returnDescription": [
+      {
+        "name": "metadata",
+        "description": "Metadata about the transaction.",
+        "type": "MAP",
+        "isDeprecated": false
+      }
+    ],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  },
+  {
+    "name": "tx.setMetaData",
+    "description": "Attaches a map of data to the transaction. The data will be printed when listing queries, and inserted into the query log.",
+    "mode": "DBMS",
+    "worksOnSystem": false,
+    "signature": "tx.setMetaData(data :: MAP)",
+    "argumentDescription": [
+      {
+        "name": "data",
+        "description": "Metadata to attach to the transaction.",
+        "type": "MAP",
+        "isDeprecated": false
+      }
+    ],
+    "returnDescription": [],
+    "admin": false,
+    "rolesExecution": [
+      "PUBLIC",
+      "admin"
+    ],
+    "rolesBoostedExecution": [
+      "admin"
+    ],
+    "isDeprecated": false,
+    "deprecatedBy": null,
+    "option": {
+      "deprecated": false
+    },
+    "enterpriseOnly": false,
+    "removedInCypher25": false
+  }
+]

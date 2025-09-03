@@ -1,0 +1,12 @@
+[package]
+name = "pixelle-cache-service"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { workspace = true }
+actix-web = { workspace = true }
+serde = { workspace = true }
+pixelle-core = { path = "../../crates/pixelle-core" }
+pixelle-monitoring = { path = "../../crates/pixelle-monitoring" }
+anyhow = { workspace = true }

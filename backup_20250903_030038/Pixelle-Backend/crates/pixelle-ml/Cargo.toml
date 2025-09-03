@@ -1,0 +1,9 @@
+[package]
+name = "pixelle-ml"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+pixelle-core = { path = "../pixelle-core" }
+serde = { workspace = true }
+anyhow = { workspace = true }
