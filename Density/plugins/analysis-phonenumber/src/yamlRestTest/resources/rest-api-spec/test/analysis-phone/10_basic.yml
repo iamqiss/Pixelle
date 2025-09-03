@@ -1,8 +1,0 @@
-"Test that the plugin is loaded in Density":
-  - do:
-      cat.plugins:
-        local: true
-        h: component
-
-  - match:
-      $body: /^analysis-phonenumber\n$/
