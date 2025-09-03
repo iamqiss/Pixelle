@@ -1,3 +1,0 @@
-base_suite: core
-overrides:
-  - "ingress_request_rate_limiter.enable_override"

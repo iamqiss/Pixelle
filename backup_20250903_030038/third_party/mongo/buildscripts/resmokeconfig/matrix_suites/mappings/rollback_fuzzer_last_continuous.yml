@@ -1,3 +1,0 @@
-base_suite: rollback_fuzzer
-overrides:
-  - "multiversion.rollback_multiversion_fuzzer_testdata_last_continuous"

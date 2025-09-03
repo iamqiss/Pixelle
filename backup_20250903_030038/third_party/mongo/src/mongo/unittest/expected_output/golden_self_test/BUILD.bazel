@@ -1,8 +1,0 @@
-package(default_visibility = ["//visibility:public"])
-
-filegroup(
-    name = "sanity_test",
-    srcs = [
-        "sanity_test.txt",
-    ],
-)

@@ -1,9 +1,0 @@
-multiline
-multiline
-basic.coll
-
-:results {aggregate: "basic", pipeline: [{$limit:5}], cursor: {}}
-
-:sortResults {aggregate: "basic", pipeline: [{$limit:5}], cursor: {}}
-
-:results {aggregate: "basic", pipeline: [{$limit:1}], cursor: {}}

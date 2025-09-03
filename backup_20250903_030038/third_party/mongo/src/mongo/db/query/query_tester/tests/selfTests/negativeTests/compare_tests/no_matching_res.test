@@ -1,5 +1,0 @@
-no_matching_res
-no_matching_res
-test.coll as fuzzer_coll
-
-:sortResults {aggregate: "fuzzer_coll", pipeline: [{$limit: 1}], cursor: {}}

@@ -1,5 +1,0 @@
-- name: test_python
-  value:
-    selector:
-      roots:
-        - buildscripts/tests/resmoke_validation/tests/*.py

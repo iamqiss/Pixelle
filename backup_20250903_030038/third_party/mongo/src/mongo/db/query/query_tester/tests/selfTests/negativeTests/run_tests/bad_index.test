@@ -1,5 +1,0 @@
-bad_index
-bad_index
-bad_index.coll as test
-
-:sortResults {aggregate: "test", pipeline: [{$match: {}}], cursor: {}}
