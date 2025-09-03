@@ -1,3 +1,0 @@
-base_suite: test_python_suite
-overrides:
-  - "test_overrides.test_python"

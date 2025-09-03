@@ -1,8 +1,0 @@
-version: 1.0.0
-filters:
-  - "*":
-    approvers:
-      - 10gen/server-catalog-and-routing-routing-and-topology
-  - "*op_observer*":
-    approvers:
-      - 10gen/server-catalog-and-routing

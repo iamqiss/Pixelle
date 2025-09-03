@@ -1,8 +1,0 @@
-version: 1.0.0
-filters:
-  - "*":
-    approvers:
-      - 10gen/server-networking-and-observability
-  - "ssl_connection_context.h":
-    approvers:
-      - 10gen/mongo-default-approvers

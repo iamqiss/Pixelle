@@ -1,5 +1,0 @@
-base_suite: replica_sets
-overrides:
-  - "encryption.testdata_ese"
-excludes:
-  - "encryption.excluded_files"

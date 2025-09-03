@@ -1,5 +1,0 @@
-py_binary(
-    name = "test_sbom",
-    srcs = ["test_sbom.py"],
-    visibility = ["//visibility:public"],
-)

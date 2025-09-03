@@ -1,3 +1,0 @@
-Checks: '-*,mongo-no-unique-address-check'
-WarningsAsErrors: '*'
-HeaderFilterRegex: 'mongo/[-A-Za-z0-9_/]*\.(h|hpp|ipp|inl|cstruct.h|defs|def.h)'

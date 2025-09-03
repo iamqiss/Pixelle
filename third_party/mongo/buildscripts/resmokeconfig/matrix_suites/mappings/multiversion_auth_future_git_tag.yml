@@ -1,3 +1,0 @@
-base_suite: multiversion_auth
-excludes:
-  - "multiversion.multiversion_auth_future_git_tag_exclude_files"

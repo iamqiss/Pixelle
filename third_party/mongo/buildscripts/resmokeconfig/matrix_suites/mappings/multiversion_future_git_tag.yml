@@ -1,3 +1,0 @@
-base_suite: multiversion
-excludes:
-  - "multiversion.multiversion_future_git_tag_exclude_files"

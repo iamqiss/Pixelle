@@ -1,3 +1,0 @@
-base_suite: sharding
-overrides:
-  - "networking.task_executor_pool_size_8"
