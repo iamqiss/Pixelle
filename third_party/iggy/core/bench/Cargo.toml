@@ -1,0 +1,64 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+[package]
+name = "iggy-bench"
+version = "0.2.4"
+edition = "2024"
+license = "Apache-2.0"
+repository = "https://github.com/apache/iggy"
+homepage = "https://iggy.apache.org"
+description = "Benchmarking CLI for Iggy message streaming platform"
+keywords = ["iggy", "cli", "messaging", "streaming"]
+readme = "../../README.md"
+
+[[bin]]
+name = "iggy-bench"
+path = "src/main.rs"
+# Due to dependency to integration, which has a dependency to server, setting
+# mimalloc on server is also setting it on bench.
+
+[dependencies]
+async-trait = { workspace = true }
+bench-report = { workspace = true }
+bytes = { workspace = true }
+charming = { workspace = true }
+chrono = { workspace = true }
+clap = { workspace = true }
+figlet-rs = { workspace = true }
+futures-util = { workspace = true }
+governor = "0.10.1"
+hostname = "0.4.1"
+human-repr = { workspace = true }
+iggy = { workspace = true }
+integration = { workspace = true }
+nonzero_lit = { workspace = true }
+rand = { workspace = true }
+rayon = "1.11.0"
+serde = { workspace = true }
+sysinfo = { workspace = true }
+tokio = { workspace = true }
+toml = { workspace = true }
+tracing = { workspace = true }
+tracing-appender = { workspace = true }
+tracing-subscriber = { workspace = true }
+uuid = { workspace = true }
+
+[lints.clippy]
+enum_glob_use = "deny"
+pedantic = "deny"
+nursery = "deny"
