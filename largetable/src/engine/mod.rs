@@ -4,7 +4,7 @@
 // Built to outperform MongoDB with Rust's power.
 // ===========================================
 
-//! Core database engine
+//! Core database engine with enterprise-grade features
 
 pub mod async_runtime;
 pub mod memory_pool;
@@ -12,6 +12,10 @@ pub mod zero_copy;
 pub mod transaction;
 pub mod mvcc;
 pub mod recovery;
+pub mod connection_pool;
+pub mod cache;
+pub mod memory_manager;
+pub mod auto_scaling;
 
 use crate::{Result, DatabaseName, CollectionName, StorageEngine, DocumentId, Document};
 use crate::database::Database;
@@ -20,25 +24,46 @@ use std::sync::Arc;
 use tokio::sync::RwLock;
 use tracing::{debug, error, info};
 
+// Enterprise-grade features
+use connection_pool::{ConnectionPool, ConnectionPoolConfig};
+use cache::{MultiLevelCache, CacheConfig};
+use memory_manager::{MemoryManager, MemoryConfig};
+use auto_scaling::{AutoScalingManager, AutoScalingConfig};
+
 /// Main database engine that manages multiple databases
 pub struct DatabaseEngine {
     databases: Arc<RwLock<HashMap<DatabaseName, Arc<Database>>>>,
     default_storage_engine: StorageEngine,
+    // Enterprise-grade features
+    connection_pool: Arc<ConnectionPool>,
+    cache: Arc<MultiLevelCache>,
+    memory_manager: Arc<MemoryManager>,
+    auto_scaling: Arc<AutoScalingManager>,
 }
 
 impl DatabaseEngine {
     /// Create a new database engine
-    pub fn new() -> Result<Self> {
-        Self::with_default_storage_engine(StorageEngine::Lsm)
+    pub async fn new() -> Result<Self> {
+        Self::with_default_storage_engine(StorageEngine::Lsm).await
     }
 
     /// Create a new database engine with specified default storage engine
-    pub fn with_default_storage_engine(default_storage_engine: StorageEngine) -> Result<Self> {
+    pub async fn with_default_storage_engine(default_storage_engine: StorageEngine) -> Result<Self> {
         info!("Initialized Largetable Database Engine with {:?} storage engine", default_storage_engine);
+        
+        // Initialize enterprise-grade features
+        let connection_pool = Arc::new(ConnectionPool::new(ConnectionPoolConfig::default()).await?);
+        let cache = Arc::new(MultiLevelCache::new(CacheConfig::default()).await?);
+        let memory_manager = Arc::new(MemoryManager::new(MemoryConfig::default()).await?);
+        let auto_scaling = Arc::new(AutoScalingManager::new(AutoScalingConfig::default()).await?);
         
         Ok(Self {
             databases: Arc::new(RwLock::new(HashMap::new())),
             default_storage_engine,
+            connection_pool,
+            cache,
+            memory_manager,
+            auto_scaling,
         })
     }
 
@@ -179,6 +204,59 @@ impl DatabaseEngine {
             total_collections,
             total_documents,
         })
+    }
+
+    // Enterprise-grade features
+
+    /// Get connection pool statistics
+    pub async fn get_connection_pool_stats(&self) -> connection_pool::PoolStats {
+        self.connection_pool.get_stats().await
+    }
+
+    /// Get cache statistics
+    pub async fn get_cache_stats(&self) -> cache::CacheStats {
+        self.cache.get_stats().await
+    }
+
+    /// Get memory manager statistics
+    pub async fn get_memory_stats(&self) -> memory_manager::MemoryStats {
+        self.memory_manager.get_stats().await
+    }
+
+    /// Get auto-scaling statistics
+    pub async fn get_auto_scaling_stats(&self) -> auto_scaling::AutoScalingStats {
+        self.auto_scaling.get_stats().await
+    }
+
+    /// Force garbage collection
+    pub async fn force_gc(&self) -> Result<()> {
+        self.memory_manager.force_gc().await
+    }
+
+    /// Compact memory
+    pub async fn compact_memory(&self) -> Result<()> {
+        self.memory_manager.compact_memory().await
+    }
+
+    /// Clear cache
+    pub async fn clear_cache(&self) -> Result<()> {
+        self.cache.clear().await
+    }
+
+    /// Warm cache with frequently accessed keys
+    pub async fn warm_cache(&self, keys: Vec<String>) -> Result<()> {
+        self.cache.warm_cache(keys).await
+    }
+
+    /// Get a connection from the pool
+    pub async fn get_connection(&self) -> Result<connection_pool::PooledConnection> {
+        self.connection_pool.get_connection().await
+    }
+
+    /// Clean up broken connections
+    pub async fn cleanup_connections(&self) -> Result<()> {
+        self.connection_pool.cleanup_broken_connections().await;
+        Ok(())
     }
 }
 
