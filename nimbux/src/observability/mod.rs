@@ -4,3 +4,12 @@
 // Created by Neo Qiss - Unleash the power of Rust.
 // ===========================================
 // Observability module
+
+pub mod metrics;
+pub mod logging;
+
+// Re-export commonly used types
+pub use metrics::{
+    MetricsCollector, NimbuxMetrics, MetricsSummary, MetricType, 
+    MetricPoint, HistogramData
+};
