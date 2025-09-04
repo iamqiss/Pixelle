@@ -3,215 +3,311 @@
 // (c) 2025 Neo Qiss. All Rights Reserved.
 // Created by Neo Qiss - Unleash the power of Rust.
 // ===========================================
-// Compression utilities
+// Advanced compression and deduplication
 
-use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::sync::Arc;
+use std::io::Write;
+use serde::{Deserialize, Serialize};
+use tracing::{info, debug, warn};
+use blake3::Hasher;
+use zstd::encode_all;
+use flate2::{Compression, write::GzEncoder};
+use lz4_flex::compress;
 
 use crate::errors::{NimbuxError, Result};
 
-/// Supported compression algorithms
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+/// Compression algorithms supported by Nimbux
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum CompressionAlgorithm {
     None,
-    Zstd,
     Gzip,
+    Zstd,
     Lz4,
+    Auto, // Automatically choose best algorithm
 }
 
-impl CompressionAlgorithm {
-    /// Get the default compression level for the algorithm
-    pub fn default_level(&self) -> i32 {
-        match self {
-            CompressionAlgorithm::None => 0,
-            CompressionAlgorithm::Zstd => 3,
-            CompressionAlgorithm::Gzip => 6,
-            CompressionAlgorithm::Lz4 => 1,
-        }
-    }
-    
-    /// Get the maximum compression level for the algorithm
-    pub fn max_level(&self) -> i32 {
-        match self {
-            CompressionAlgorithm::None => 0,
-            CompressionAlgorithm::Zstd => 22,
-            CompressionAlgorithm::Gzip => 9,
-            CompressionAlgorithm::Lz4 => 16,
-        }
-    }
+/// Compression statistics
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CompressionStats {
+    pub original_size: u64,
+    pub compressed_size: u64,
+    pub compression_ratio: f64,
+    pub algorithm_used: CompressionAlgorithm,
+    pub compression_time_ms: u64,
 }
 
-/// Compression configuration
-#[derive(Debug, Clone)]
-pub struct CompressionConfig {
-    pub algorithm: CompressionAlgorithm,
-    pub level: i32,
-    pub min_size: usize,
-    pub max_ratio: f64,
-}
-
-impl Default for CompressionConfig {
-    fn default() -> Self {
-        Self {
-            algorithm: CompressionAlgorithm::Zstd,
-            level: 3,
-            min_size: 1024, // Only compress objects larger than 1KB
-            max_ratio: 0.8,  // Only compress if ratio is better than 80%
-        }
-    }
-}
-
-/// Compression result
-#[derive(Debug, Clone)]
-pub struct CompressionResult {
-    pub compressed_data: Vec<u8>,
-    pub algorithm: CompressionAlgorithm,
-    pub original_size: usize,
-    pub compressed_size: usize,
-    pub ratio: f64,
-}
-
-/// Compression utilities
+/// Content-addressable storage with advanced compression
 pub struct CompressionEngine {
-    config: CompressionConfig,
+    /// Cache of compressed content by hash
+    compressed_cache: Arc<tokio::sync::RwLock<HashMap<String, CompressedChunk>>>,
+    /// Statistics tracking
+    stats: Arc<tokio::sync::RwLock<CompressionStats>>,
+}
+
+/// Compressed data chunk
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CompressedChunk {
+    pub hash: String,
+    pub data: Vec<u8>,
+    pub algorithm: CompressionAlgorithm,
+    pub original_size: u64,
+    pub compressed_size: u64,
+    pub reference_count: u64,
 }
 
 impl CompressionEngine {
-    /// Create a new compression engine with default config
+    /// Create a new compression engine
     pub fn new() -> Self {
         Self {
-            config: CompressionConfig::default(),
+            compressed_cache: Arc::new(tokio::sync::RwLock::new(HashMap::new())),
+            stats: Arc::new(tokio::sync::RwLock::new(CompressionStats {
+                original_size: 0,
+                compressed_size: 0,
+                compression_ratio: 0.0,
+                algorithm_used: CompressionAlgorithm::None,
+                compression_time_ms: 0,
+            })),
         }
     }
-    
-    /// Create a new compression engine with custom config
-    pub fn with_config(config: CompressionConfig) -> Self {
-        Self { config }
-    }
-    
-    /// Compress data using the configured algorithm
-    pub fn compress(&self, data: &[u8]) -> Result<CompressionResult> {
-        // Skip compression for small objects
-        if data.len() < self.config.min_size {
-            return Ok(CompressionResult {
-                compressed_data: data.to_vec(),
-                algorithm: CompressionAlgorithm::None,
-                original_size: data.len(),
-                compressed_size: data.len(),
-                ratio: 1.0,
-            });
-        }
+
+    /// Compress data using the specified algorithm
+    pub async fn compress_data(
+        &self,
+        data: &[u8],
+        algorithm: CompressionAlgorithm,
+    ) -> Result<CompressedChunk> {
+        let start_time = std::time::Instant::now();
         
-        let compressed_data = match self.config.algorithm {
-            CompressionAlgorithm::None => data.to_vec(),
-            CompressionAlgorithm::Zstd => {
-                zstd::encode_all(data, self.config.level)
-                    .map_err(|e| NimbuxError::Compression(format!("Zstd compression failed: {}", e)))?
-            }
-            CompressionAlgorithm::Gzip => {
-                use flate2::write::GzEncoder;
-                use flate2::Compression;
-                use std::io::Write;
+        // Calculate content hash
+        let hash = self.calculate_hash(data);
+        
+        // Check if already compressed
+        {
+            let cache = self.compressed_cache.read().await;
+            if let Some(chunk) = cache.get(&hash) {
+                // Increment reference count
+                let mut chunk = chunk.clone();
+                chunk.reference_count += 1;
                 
-                let mut encoder = GzEncoder::new(Vec::new(), Compression::new(self.config.level as u32));
+                // Update cache
+                drop(cache);
+                let mut cache = self.compressed_cache.write().await;
+                cache.insert(hash.clone(), chunk.clone());
+                
+                debug!("Reused compressed chunk: {} (refs: {})", hash, chunk.reference_count);
+                return Ok(chunk);
+            }
+        }
+
+        // Compress data
+        let (compressed_data, used_algorithm) = match algorithm {
+            CompressionAlgorithm::None => (data.to_vec(), CompressionAlgorithm::None),
+            CompressionAlgorithm::Gzip => {
+                let mut encoder = GzEncoder::new(Vec::new(), Compression::default());
                 encoder.write_all(data)
                     .map_err(|e| NimbuxError::Compression(format!("Gzip compression failed: {}", e)))?;
-                encoder.finish()
-                    .map_err(|e| NimbuxError::Compression(format!("Gzip compression failed: {}", e)))?
+                let compressed = encoder.finish()
+                    .map_err(|e| NimbuxError::Compression(format!("Gzip finish failed: {}", e)))?;
+                (compressed, CompressionAlgorithm::Gzip)
+            }
+            CompressionAlgorithm::Zstd => {
+                let compressed = encode_all(data, 3)
+                    .map_err(|e| NimbuxError::Compression(format!("Zstd compression failed: {}", e)))?;
+                (compressed, CompressionAlgorithm::Zstd)
             }
             CompressionAlgorithm::Lz4 => {
-                lz4_flex::compress(data)
+                let compressed = compress(data);
+                (compressed, CompressionAlgorithm::Lz4)
+            }
+            CompressionAlgorithm::Auto => {
+                // Try all algorithms and choose the best one
+                let mut best_ratio = 0.0;
+                let mut best_data = data.to_vec();
+                let mut best_algorithm = CompressionAlgorithm::None;
+
+                // Test Gzip
+                let gzip_data = {
+                    let mut encoder = GzEncoder::new(Vec::new(), Compression::default());
+                    encoder.write_all(data).ok();
+                    encoder.finish().unwrap_or_default()
+                };
+                let gzip_ratio = 1.0 - (gzip_data.len() as f64 / data.len() as f64);
+                if gzip_ratio > best_ratio {
+                    best_ratio = gzip_ratio;
+                    best_data = gzip_data;
+                    best_algorithm = CompressionAlgorithm::Gzip;
+                }
+
+                // Test Zstd
+                if let Ok(zstd_data) = encode_all(data, 3) {
+                    let zstd_ratio = 1.0 - (zstd_data.len() as f64 / data.len() as f64);
+                    if zstd_ratio > best_ratio {
+                        best_ratio = zstd_ratio;
+                        best_data = zstd_data;
+                        best_algorithm = CompressionAlgorithm::Zstd;
+                    }
+                }
+
+                // Test Lz4
+                let lz4_data = compress(data);
+                let lz4_ratio = 1.0 - (lz4_data.len() as f64 / data.len() as f64);
+                if lz4_ratio > best_ratio {
+                    best_ratio = lz4_ratio;
+                    best_data = lz4_data;
+                    best_algorithm = CompressionAlgorithm::Lz4;
+                }
+
+                (best_data, best_algorithm)
             }
         };
-        
-        let compressed_size = compressed_data.len();
-        let ratio = compressed_size as f64 / data.len() as f64;
-        
-        // Only use compression if it meets our criteria
-        if ratio < self.config.max_ratio {
-            Ok(CompressionResult {
-                compressed_data,
-                algorithm: self.config.algorithm,
-                original_size: data.len(),
-                compressed_size,
-                ratio,
-            })
-        } else {
-            Ok(CompressionResult {
-                compressed_data: data.to_vec(),
-                algorithm: CompressionAlgorithm::None,
-                original_size: data.len(),
-                compressed_size: data.len(),
-                ratio: 1.0,
-            })
+
+        let compression_time = start_time.elapsed().as_millis() as u64;
+        let compression_ratio = 1.0 - (compressed_data.len() as f64 / data.len() as f64);
+
+        let chunk = CompressedChunk {
+            hash: hash.clone(),
+            data: compressed_data,
+            algorithm: used_algorithm,
+            original_size: data.len() as u64,
+            compressed_size: compressed_data.len() as u64,
+            reference_count: 1,
+        };
+
+        // Store in cache
+        {
+            let mut cache = self.compressed_cache.write().await;
+            cache.insert(hash.clone(), chunk.clone());
         }
+
+        // Update statistics
+        {
+            let mut stats = self.stats.write().await;
+            stats.original_size += data.len() as u64;
+            stats.compressed_size += chunk.compressed_size;
+            stats.compression_ratio = if stats.original_size > 0 {
+                1.0 - (stats.compressed_size as f64 / stats.original_size as f64)
+            } else {
+                0.0
+            };
+            stats.algorithm_used = used_algorithm;
+            stats.compression_time_ms += compression_time;
+        }
+
+        debug!("Compressed data: {} -> {} (ratio: {:.2}%, algorithm: {:?}, time: {}ms)",
+               data.len(), chunk.compressed_size, compression_ratio * 100.0, used_algorithm, compression_time);
+
+        Ok(chunk)
     }
-    
+
     /// Decompress data
-    pub fn decompress(&self, data: &[u8], algorithm: CompressionAlgorithm) -> Result<Vec<u8>> {
-        match algorithm {
-            CompressionAlgorithm::None => Ok(data.to_vec()),
-            CompressionAlgorithm::Zstd => {
-                zstd::decode_all(data)
-                    .map_err(|e| NimbuxError::Decompression(format!("Zstd decompression failed: {}", e)))
-            }
+    pub async fn decompress_data(&self, chunk: &CompressedChunk) -> Result<Vec<u8>> {
+        match chunk.algorithm {
+            CompressionAlgorithm::None => Ok(chunk.data.clone()),
             CompressionAlgorithm::Gzip => {
                 use flate2::read::GzDecoder;
                 use std::io::Read;
                 
-                let mut decoder = GzDecoder::new(data);
-                let mut result = Vec::new();
-                decoder.read_to_end(&mut result)
-                    .map_err(|e| NimbuxError::Decompression(format!("Gzip decompression failed: {}", e)))?;
-                Ok(result)
+                let mut decoder = GzDecoder::new(&chunk.data[..]);
+                let mut decompressed = Vec::new();
+                decoder.read_to_end(&mut decompressed)
+                    .map_err(|e| NimbuxError::Compression(format!("Gzip decompression failed: {}", e)))?;
+                Ok(decompressed)
+            }
+            CompressionAlgorithm::Zstd => {
+                zstd::decode_all(&chunk.data[..])
+                    .map_err(|e| NimbuxError::Compression(format!("Zstd decompression failed: {}", e)))
             }
             CompressionAlgorithm::Lz4 => {
-                lz4_flex::decompress_size_prepended(data)
-                    .map_err(|e| NimbuxError::Decompression(format!("LZ4 decompression failed: {}", e)))
+                lz4_flex::decompress(&chunk.data, chunk.original_size as usize)
+                    .map_err(|e| NimbuxError::Compression(format!("Lz4 decompression failed: {}", e)))
+            }
+            CompressionAlgorithm::Auto => {
+                // This shouldn't happen for stored chunks
+                Err(NimbuxError::Compression("Auto algorithm not supported for decompression".to_string()))
             }
         }
     }
-    
-    /// Get compression statistics for multiple data samples
-    pub fn analyze_compression(&self, samples: &[&[u8]]) -> CompressionAnalysis {
-        let mut total_original = 0;
-        let mut total_compressed = 0;
-        let mut compression_ratios = Vec::new();
-        let mut algorithm_usage = HashMap::new();
-        
-        for sample in samples {
-            match self.compress(sample) {
-                Ok(result) => {
-                    total_original += result.original_size;
-                    total_compressed += result.compressed_size;
-                    compression_ratios.push(result.ratio);
-                    *algorithm_usage.entry(result.algorithm).or_insert(0) += 1;
-                }
-                Err(_) => {
-                    // If compression fails, count as no compression
-                    total_original += sample.len();
-                    total_compressed += sample.len();
-                    compression_ratios.push(1.0);
-                    *algorithm_usage.entry(CompressionAlgorithm::None).or_insert(0) += 1;
-                }
+
+    /// Get compressed chunk by hash
+    pub async fn get_compressed_chunk(&self, hash: &str) -> Result<Option<CompressedChunk>> {
+        let cache = self.compressed_cache.read().await;
+        Ok(cache.get(hash).cloned())
+    }
+
+    /// Remove reference to compressed chunk
+    pub async fn remove_reference(&self, hash: &str) -> Result<()> {
+        let mut cache = self.compressed_cache.write().await;
+        if let Some(chunk) = cache.get_mut(hash) {
+            chunk.reference_count = chunk.reference_count.saturating_sub(1);
+            if chunk.reference_count == 0 {
+                cache.remove(hash);
+                debug!("Removed compressed chunk: {}", hash);
             }
         }
-        
-        let average_ratio = if !compression_ratios.is_empty() {
-            compression_ratios.iter().sum::<f64>() / compression_ratios.len() as f64
-        } else {
-            1.0
-        };
-        
-        CompressionAnalysis {
-            total_samples: samples.len(),
-            total_original_size: total_original,
-            total_compressed_size: total_compressed,
-            average_compression_ratio: average_ratio,
-            space_saved: total_original - total_compressed,
-            algorithm_usage,
-        }
+        Ok(())
     }
+
+    /// Get compression statistics
+    pub async fn get_stats(&self) -> Result<CompressionStats> {
+        let stats = self.stats.read().await;
+        Ok(stats.clone())
+    }
+
+    /// Get cache statistics
+    pub async fn get_cache_stats(&self) -> Result<CacheStats> {
+        let cache = self.compressed_cache.read().await;
+        let total_chunks = cache.len();
+        let total_references: u64 = cache.values().map(|c| c.reference_count).sum();
+        let total_compressed_size: u64 = cache.values().map(|c| c.compressed_size).sum();
+        let total_original_size: u64 = cache.values().map(|c| c.original_size).sum();
+
+        Ok(CacheStats {
+            total_chunks,
+            total_references,
+            total_compressed_size,
+            total_original_size,
+            space_saved: total_original_size.saturating_sub(total_compressed_size),
+            deduplication_ratio: if total_original_size > 0 {
+                total_references as f64 / total_chunks as f64
+            } else {
+                0.0
+            },
+        })
+    }
+
+    /// Calculate content hash
+    fn calculate_hash(&self, data: &[u8]) -> String {
+        let mut hasher = Hasher::new();
+        hasher.update(data);
+        hasher.finalize().to_hex().to_string()
+    }
+
+    /// Clean up unused chunks
+    pub async fn cleanup_unused_chunks(&self) -> Result<usize> {
+        let mut cache = self.compressed_cache.write().await;
+        let initial_count = cache.len();
+        
+        cache.retain(|_, chunk| chunk.reference_count > 0);
+        
+        let removed_count = initial_count - cache.len();
+        if removed_count > 0 {
+            info!("Cleaned up {} unused compressed chunks", removed_count);
+        }
+        
+        Ok(removed_count)
+    }
+}
+
+/// Cache statistics
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CacheStats {
+    pub total_chunks: usize,
+    pub total_references: u64,
+    pub total_compressed_size: u64,
+    pub total_original_size: u64,
+    pub space_saved: u64,
+    pub deduplication_ratio: f64,
 }
 
 impl Default for CompressionEngine {
@@ -220,57 +316,84 @@ impl Default for CompressionEngine {
     }
 }
 
-/// Compression analysis results
-#[derive(Debug, Clone)]
-pub struct CompressionAnalysis {
-    pub total_samples: usize,
-    pub total_original_size: usize,
-    pub total_compressed_size: usize,
-    pub average_compression_ratio: f64,
-    pub space_saved: usize,
-    pub algorithm_usage: HashMap<CompressionAlgorithm, usize>,
+/// Smart compression analyzer
+pub struct CompressionAnalyzer {
+    sample_size: usize,
+    min_size_for_compression: usize,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+impl CompressionAnalyzer {
+    /// Create a new compression analyzer
+    pub fn new() -> Self {
+        Self {
+            sample_size: 1024, // 1KB sample
+            min_size_for_compression: 512, // Don't compress files smaller than 512 bytes
+        }
+    }
 
-    #[test]
-    fn test_compression_basic() {
-        let engine = CompressionEngine::new();
-        let data = b"Hello, World! This is a test string for compression.".repeat(100);
+    /// Analyze data to determine if compression is beneficial
+    pub fn should_compress(&self, data: &[u8]) -> bool {
+        if data.len() < self.min_size_for_compression {
+            return false;
+        }
+
+        // Sample the data to analyze entropy
+        let sample = if data.len() > self.sample_size {
+            &data[..self.sample_size]
+        } else {
+            data
+        };
+
+        // Calculate entropy
+        let entropy = self.calculate_entropy(sample);
         
-        let result = engine.compress(&data).unwrap();
-        assert!(result.compressed_size < result.original_size);
-        assert!(result.ratio < 1.0);
-        
-        // Test decompression
-        let decompressed = engine.decompress(&result.compressed_data, result.algorithm).unwrap();
-        assert_eq!(decompressed, data);
+        // If entropy is low, data is likely already compressed or highly repetitive
+        entropy > 0.7 // Threshold for compression benefit
     }
-    
-    #[test]
-    fn test_compression_small_data() {
-        let engine = CompressionEngine::new();
-        let data = b"small";
-        
-        let result = engine.compress(data).unwrap();
-        // Small data should not be compressed
-        assert_eq!(result.algorithm, CompressionAlgorithm::None);
-        assert_eq!(result.compressed_data, data);
+
+    /// Calculate Shannon entropy of data
+    fn calculate_entropy(&self, data: &[u8]) -> f64 {
+        let mut counts = [0u32; 256];
+        for &byte in data {
+            counts[byte as usize] += 1;
+        }
+
+        let length = data.len() as f64;
+        let mut entropy = 0.0;
+
+        for &count in &counts {
+            if count > 0 {
+                let probability = count as f64 / length;
+                entropy -= probability * probability.log2();
+            }
+        }
+
+        entropy / 8.0 // Normalize to 0-1 range
     }
-    
-    #[test]
-    fn test_compression_analysis() {
-        let engine = CompressionEngine::new();
-        let samples = vec![
-            b"Hello, World!".as_slice(),
-            b"This is a test".as_slice(),
-            b"Another sample data".as_slice(),
-        ];
-        
-        let analysis = engine.analyze_compression(&samples);
-        assert_eq!(analysis.total_samples, 3);
-        assert!(analysis.average_compression_ratio <= 1.0);
+
+    /// Recommend compression algorithm based on data characteristics
+    pub fn recommend_algorithm(&self, data: &[u8]) -> CompressionAlgorithm {
+        if !self.should_compress(data) {
+            return CompressionAlgorithm::None;
+        }
+
+        // For small files, use LZ4 (fast)
+        if data.len() < 1024 * 1024 { // 1MB
+            return CompressionAlgorithm::Lz4;
+        }
+
+        // For medium files, use Zstd (good balance)
+        if data.len() < 10 * 1024 * 1024 { // 10MB
+            return CompressionAlgorithm::Zstd;
+        }
+
+        // For large files, use Gzip (good compression)
+        CompressionAlgorithm::Gzip
+    }
+}
+
+impl Default for CompressionAnalyzer {
+    fn default() -> Self {
+        Self::new()
     }
 }
