@@ -1,4 +1,0 @@
-# interp files are only used for debugging the grammar
-*.interp
-*.tokens
-gen/
