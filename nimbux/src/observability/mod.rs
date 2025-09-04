@@ -6,6 +6,7 @@
 // Observability module
 
 pub mod metrics;
+pub mod analytics;
 pub mod logging;
 
 // Re-export commonly used types
@@ -13,3 +14,4 @@ pub use metrics::{
     MetricsCollector, NimbuxMetrics, MetricsSummary, MetricType, 
     MetricPoint, HistogramData
 };
+pub use analytics::{RealtimeAnalytics, AnalyticsConfig, IntegrityReport, IntegrityStats, Dashboard, Widget, AnalyticsInsight};

@@ -4,3 +4,8 @@
 // Created by Neo Qiss - Unleash the power of Rust.
 // ===========================================
 // Metadata management
+
+pub mod search_engine;
+
+// Re-export commonly used types
+pub use search_engine::{SearchEngine, SearchQuery, SearchResponse, SearchResult, IndexedDocument, SearchIndex, IndexStats};
