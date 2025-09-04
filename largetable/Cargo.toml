@@ -51,6 +51,15 @@ lz4-flex = "0.11"
 rayon = "1.8"
 num_cpus = "1.16"
 
+# === ENTERPRISE FEATURES ===
+dashmap = "5.5"
+crossbeam = "0.8"
+parking_lot = "0.12"
+metrics = "0.21"
+metrics-exporter-prometheus = "0.12"
+opentelemetry = "0.20"
+opentelemetry-jaeger = "0.19"
+
 # === CONFIGURATION ===
 config = "0.14"
 toml = "0.8"
