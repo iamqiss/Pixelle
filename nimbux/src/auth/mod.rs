@@ -6,9 +6,11 @@
 // Authentication module
 
 pub mod token;
+pub mod jwt_auth;
 
 // Re-export commonly used types
 pub use token::{
     AuthManager, AuthContext, User, AccessKey, KeyStatus, 
     PolicyDocument, PolicyStatement, SignatureV4
 };
+pub use jwt_auth::{JwtAuthManager, NimbuxUser, UserRole, Permission, JwtConfig, AuthResult, TokenValidationResult};

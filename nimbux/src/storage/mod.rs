@@ -17,10 +17,16 @@ pub mod compression;
 pub mod content_addressable;
 pub mod disk;
 pub mod memory;
+pub mod advanced;
+pub mod ai_compression;
+pub mod integrity;
 
 // Re-export commonly used types
 pub use memory::MemoryStorage;
 pub use content_addressable::ContentAddressableStorage;
+pub use advanced::{AdvancedStorageBackend, AdvancedObject, AdvancedObjectMetadata, VersioningManager, LifecycleManager, ReplicationManager, EncryptionManager};
+pub use ai_compression::{CompressionManager, AICompressionAnalyzer, CompressionAlgorithm, CompressionConfig, CompressionResult};
+pub use integrity::{IntegrityManager, IntegrityConfig, ChecksumAlgorithm, IntegrityReport, IntegrityStats};
 
 /// Object metadata stored alongside the data
 #[derive(Debug, Clone, Serialize, Deserialize)]

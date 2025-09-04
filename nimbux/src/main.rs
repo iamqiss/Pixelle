@@ -9,7 +9,7 @@ use tracing_subscriber;
 
 use nimbux::errors::Result;
 use nimbux::storage::{MemoryStorage, ContentAddressableStorage, StorageEngine};
-use nimbux::network::{SimpleHttpServer, TcpServer, S3ApiServer};
+use nimbux::network::{SimpleHttpServer, TcpServer, NimbuxApiServer};
 use nimbux::auth::AuthManager;
 use nimbux::observability::MetricsCollector;
 
@@ -67,7 +67,7 @@ async fn main() -> Result<()> {
     let http_server = SimpleHttpServer::new(Arc::clone(&storage), 8080);
     let tcp_server = TcpServer::new(Arc::clone(&storage), 8081)
         .with_max_connections(1000);
-    let s3_api_server = S3ApiServer::new(
+    let nimbux_api_server = NimbuxApiServer::new(
         Arc::clone(&storage),
         Arc::clone(&auth_manager),
         Arc::clone(&metrics),
@@ -79,28 +79,36 @@ async fn main() -> Result<()> {
     tracing::info!("Servers:");
     tracing::info!("  HTTP API: http://localhost:8080");
     tracing::info!("  TCP Protocol: tcp://localhost:8081");
-    tracing::info!("  S3 API: http://localhost:8082");
+    tracing::info!("  Nimbux API: http://localhost:8082");
     tracing::info!("");
     tracing::info!("API endpoints:");
     tracing::info!("  GET  /health - Health check");
     tracing::info!("  GET  /stats - Get storage statistics");
     tracing::info!("  GET  /metrics - Get detailed metrics");
     tracing::info!("");
-    tracing::info!("S3-compatible endpoints:");
-    tracing::info!("  PUT  /:bucket - Create bucket");
-    tracing::info!("  GET  /:bucket - List objects");
-    tracing::info!("  PUT  /:bucket/*key - Put object");
-    tracing::info!("  GET  /:bucket/*key - Get object");
-    tracing::info!("  DEL  /:bucket/*key - Delete object");
+    tracing::info!("Nimbux API endpoints (NO S3 COMPATIBILITY):");
+    tracing::info!("  GET  /api/v1/buckets - List buckets");
+    tracing::info!("  POST /api/v1/buckets - Create bucket");
+    tracing::info!("  GET  /api/v1/buckets/:bucket - Get bucket details");
+    tracing::info!("  PUT  /api/v1/buckets/:bucket - Update bucket");
+    tracing::info!("  DEL  /api/v1/buckets/:bucket - Delete bucket");
+    tracing::info!("  GET  /api/v1/buckets/:bucket/objects - List objects");
+    tracing::info!("  POST /api/v1/buckets/:bucket/objects - Upload object");
+    tracing::info!("  GET  /api/v1/buckets/:bucket/objects/:key - Get object");
+    tracing::info!("  PUT  /api/v1/buckets/:bucket/objects/:key - Update object");
+    tracing::info!("  DEL  /api/v1/buckets/:bucket/objects/:key - Delete object");
+    tracing::info!("  POST /api/v1/search - Search objects");
+    tracing::info!("  POST /api/v1/batch - Batch operations");
+    tracing::info!("  GET  /api/v1/analytics - Analytics dashboard");
     tracing::info!("");
     tracing::info!("Authentication:");
-    tracing::info!("  Use AWS Signature V4 with the admin credentials above");
+    tracing::info!("  Use JWT tokens or custom Nimbux authentication");
     
     // Start all servers concurrently
     tokio::try_join!(
         http_server.start(),
         tcp_server.start(),
-        s3_api_server.start()
+        nimbux_api_server.start()
     )?;
     
     Ok(())
