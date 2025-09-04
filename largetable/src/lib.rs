@@ -13,8 +13,8 @@
 //! - Multi-model support
 //! - Built-in observability
 
-#![feature(generic_associated_types)]
-#![feature(type_alias_impl_trait)]
+// #![feature(generic_associated_types)]
+// #![feature(type_alias_impl_trait)]
 
 // === CORE MODULES ===
 pub mod engine;

@@ -4,9 +4,8 @@
 // Built to outperform MongoDB with Rust's power.
 // ===========================================
 
-//! Observability and monitoring
+//! Client drivers and APIs
 
-pub mod tracing;
-pub mod metrics;
+pub mod native;
 
-pub use tracing::init_tracing;
+pub use native::Client;

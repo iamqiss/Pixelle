@@ -4,13 +4,8 @@
 // Built to outperform MongoDB with Rust's power.
 // ===========================================
 
-//! Network layer for client-server communication
+//! Network layer and server
 
 pub mod async_server;
-pub mod connection_pool;
-pub mod protocol;
-pub mod wire_protocol;
-pub mod load_balancer;
-pub mod circuit_breaker;
 
-use crate::Result;
+pub use async_server::LargetableServer;

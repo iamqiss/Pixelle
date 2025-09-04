@@ -4,70 +4,40 @@
 // Built to outperform MongoDB with Rust's power.
 // ===========================================
 
-//! LSM Tree storage engine - write-optimized
+//! B-Tree storage engine - read-optimized
 
 use crate::storage::StorageEngine;
 use crate::{Result, DocumentId, Document, LargetableError};
 use async_trait::async_trait;
-use rocksdb::{DB, Options, WriteOptions, ReadOptions, IteratorMode};
+use redb::{Database, ReadableTable, TableDefinition, WriteableTable};
 use rkyv::{to_bytes, from_bytes};
 use std::path::Path;
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use tracing::{debug, error, info};
 
-/// LSM Tree storage engine using RocksDB
-pub struct LsmEngine {
-    db: Arc<RwLock<DB>>,
-    write_options: WriteOptions,
-    read_options: ReadOptions,
+const DOCUMENTS_TABLE: TableDefinition<&[u8], &[u8]> = TableDefinition::new("documents");
+
+/// B-Tree storage engine using Redb
+pub struct BTreeEngine {
+    db: Arc<RwLock<Database>>,
 }
 
-impl LsmEngine {
-    /// Create a new LSM engine with RocksDB backend
+impl BTreeEngine {
+    /// Create a new B-Tree engine with Redb backend
     pub fn new() -> Result<Self> {
-        Self::with_path("largetable_lsm")
+        Self::with_path("largetable_btree.redb")
     }
 
-    /// Create LSM engine with custom data path
+    /// Create B-Tree engine with custom data path
     pub fn with_path<P: AsRef<Path>>(path: P) -> Result<Self> {
-        let mut opts = Options::default();
-        opts.create_if_missing(true);
-        opts.set_compression_type(rocksdb::DBCompressionType::Lz4);
-        opts.set_use_fsync(false);
-        opts.set_max_background_jobs(4);
-        opts.set_bytes_per_sync(1048576);
-        opts.set_wal_bytes_per_sync(1048576);
+        let db = Database::create(path)
+            .map_err(|e| LargetableError::Storage(format!("Failed to create Redb database: {}", e)))?;
         
-        // Optimize for write-heavy workloads
-        opts.set_write_buffer_size(64 * 1024 * 1024); // 64MB
-        opts.set_max_write_buffer_number(3);
-        opts.set_min_write_buffer_number_to_merge(1);
-        
-        // Optimize for read performance
-        opts.set_max_open_files(1000);
-        opts.set_use_direct_reads(true);
-        opts.set_use_direct_io_for_flush_and_compaction(true);
-        
-        // Bloom filter for point lookups
-        opts.set_bloom_locality(1);
-        
-        let db = DB::open(&opts, path)
-            .map_err(|e| LargetableError::Storage(format!("Failed to open RocksDB: {}", e)))?;
-        
-        let mut write_opts = WriteOptions::default();
-        write_opts.set_sync(false);
-        write_opts.disable_wal(false);
-        
-        let mut read_opts = ReadOptions::default();
-        read_opts.set_verify_checksums(true);
-        
-        info!("LSM Engine initialized with RocksDB backend");
+        info!("B-Tree Engine initialized with Redb backend");
         
         Ok(Self {
             db: Arc::new(RwLock::new(db)),
-            write_options: write_opts,
-            read_options: read_opts,
         })
     }
 
@@ -83,7 +53,7 @@ impl LsmEngine {
             .map_err(|e| LargetableError::Serialization(format!("Failed to deserialize document: {}", e)))
     }
 
-    /// Convert DocumentId to bytes for RocksDB key
+    /// Convert DocumentId to bytes for Redb key
     fn id_to_bytes(&self, id: &DocumentId) -> Vec<u8> {
         id.as_bytes().to_vec()
     }
@@ -101,15 +71,21 @@ impl LsmEngine {
 }
 
 #[async_trait]
-impl StorageEngine for LsmEngine {
+impl StorageEngine for BTreeEngine {
     async fn get(&self, id: &DocumentId) -> Result<Option<Document>> {
         let db = self.db.read().await;
         let key = self.id_to_bytes(id);
         
-        match db.get_opt(&key, &self.read_options) {
+        let read_txn = db.begin_read()
+            .map_err(|e| LargetableError::Storage(format!("Failed to begin read transaction: {}", e)))?;
+        
+        let table = read_txn.open_table(DOCUMENTS_TABLE)
+            .map_err(|e| LargetableError::Storage(format!("Failed to open table: {}", e)))?;
+        
+        match table.get(&key) {
             Ok(Some(data)) => {
                 debug!("Retrieved document with ID: {}", id);
-                self.deserialize_document(&data).map(Some)
+                self.deserialize_document(&data.value()).map(Some)
             }
             Ok(None) => {
                 debug!("Document not found with ID: {}", id);
@@ -127,32 +103,44 @@ impl StorageEngine for LsmEngine {
         let key = self.id_to_bytes(&id);
         let value = self.serialize_document(&doc)?;
         
-        match db.put_opt(&key, &value, &self.write_options) {
-            Ok(_) => {
-                debug!("Stored document with ID: {}", id);
-                Ok(())
-            }
-            Err(e) => {
-                error!("Failed to put document {}: {}", id, e);
-                Err(LargetableError::Storage(format!("Put operation failed: {}", e)))
-            }
+        let write_txn = db.begin_write()
+            .map_err(|e| LargetableError::Storage(format!("Failed to begin write transaction: {}", e)))?;
+        
+        {
+            let mut table = write_txn.open_table(DOCUMENTS_TABLE)
+                .map_err(|e| LargetableError::Storage(format!("Failed to open table: {}", e)))?;
+            
+            table.insert(&key, &value)
+                .map_err(|e| LargetableError::Storage(format!("Failed to insert document: {}", e)))?;
         }
+        
+        write_txn.commit()
+            .map_err(|e| LargetableError::Storage(format!("Failed to commit transaction: {}", e)))?;
+        
+        debug!("Stored document with ID: {}", id);
+        Ok(())
     }
     
     async fn delete(&self, id: &DocumentId) -> Result<bool> {
         let db = self.db.write().await;
         let key = self.id_to_bytes(id);
         
-        match db.delete_opt(&key, &self.write_options) {
-            Ok(_) => {
-                debug!("Deleted document with ID: {}", id);
-                Ok(true)
-            }
-            Err(e) => {
-                error!("Failed to delete document {}: {}", id, e);
-                Err(LargetableError::Storage(format!("Delete operation failed: {}", e)))
-            }
+        let write_txn = db.begin_write()
+            .map_err(|e| LargetableError::Storage(format!("Failed to begin write transaction: {}", e)))?;
+        
+        {
+            let mut table = write_txn.open_table(DOCUMENTS_TABLE)
+                .map_err(|e| LargetableError::Storage(format!("Failed to open table: {}", e)))?;
+            
+            table.remove(&key)
+                .map_err(|e| LargetableError::Storage(format!("Failed to remove document: {}", e)))?;
         }
+        
+        write_txn.commit()
+            .map_err(|e| LargetableError::Storage(format!("Failed to commit transaction: {}", e)))?;
+        
+        debug!("Deleted document with ID: {}", id);
+        Ok(true)
     }
     
     async fn scan(&self, start: Option<DocumentId>, limit: usize) -> Result<Vec<(DocumentId, Document)>> {
@@ -160,23 +148,28 @@ impl StorageEngine for LsmEngine {
         let mut results = Vec::new();
         let mut count = 0;
         
-        let iter_mode = if let Some(start_id) = start {
-            IteratorMode::From(&self.id_to_bytes(&start_id), rocksdb::Direction::Forward)
+        let read_txn = db.begin_read()
+            .map_err(|e| LargetableError::Storage(format!("Failed to begin read transaction: {}", e)))?;
+        
+        let table = read_txn.open_table(DOCUMENTS_TABLE)
+            .map_err(|e| LargetableError::Storage(format!("Failed to open table: {}", e)))?;
+        
+        let range = if let Some(start_id) = start {
+            let start_key = self.id_to_bytes(&start_id);
+            table.range(start_key..)
         } else {
-            IteratorMode::Start
+            table.iter()
         };
         
-        let mut iter = db.iterator_opt(iter_mode, &self.read_options);
-        
-        while let Some(item) = iter.next() {
+        for item in range {
             if count >= limit {
                 break;
             }
             
             match item {
                 Ok((key, value)) => {
-                    let id = self.bytes_to_id(&key)?;
-                    let doc = self.deserialize_document(&value)?;
+                    let id = self.bytes_to_id(&key.value())?;
+                    let doc = self.deserialize_document(&value.value())?;
                     results.push((id, doc));
                     count += 1;
                 }
