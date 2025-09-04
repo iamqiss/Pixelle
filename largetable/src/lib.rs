@@ -36,6 +36,21 @@ pub mod drivers;
 // === MULTI-MODEL SUPPORT ===
 pub mod models;
 
+// === AI/ML INTEGRATION ===
+pub mod ai;
+
+// === DISTRIBUTED FEATURES ===
+pub mod distributed;
+
+// === SECURITY ===
+pub mod security;
+
+// === OBSERVABILITY ===
+pub mod observability;
+
+// === API ENHANCEMENTS ===
+pub mod api;
+
 // === SECURITY & AUTH ===
 pub mod auth;
 
