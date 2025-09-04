@@ -1,0 +1,398 @@
+#
+# Copyright (c) 2025 Neo Qiss
+# All rights reserved.
+# 
+# This software is proprietary and confidential.
+# Unauthorized copying, distribution, or use is strictly prohibited.
+#
+
+version: '3.8'
+
+services:
+  # Database
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      postgres_db: sonet_dev
+      postgres_user: sonet
+      postgres_password: ${postgres_password:-sonet_dev_password}
+      POSTGRES_MULTIPLE_DATABASES: "user_service,note_service,media_service,follow_service,notification_service,messaging_service,timeline_service,search_service,analytics_service"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schemas:/docker-entrypoint-initdb.d/schemas
+      - ./database/seeds:/docker-entrypoint-initdb.d/seeds
+    networks:
+      - sonet-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sonet -d sonet_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - sonet-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # API Gateway
+  gateway:
+    build:
+      context: ../gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - USER_GRPC_ADDR=user-service:9090
+      - NOTE_GRPC_ADDR=note-service:9090
+      - TIMELINE_GRPC_ADDR=timeline-service:50051
+      - MEDIA_GRPC_ADDR=media-service:9090
+      - PROTO_DIR=/app/proto
+      - JWT_SECRET=${JWT_SECRET:-}
+      - FOLLOW_GRPC_ADDR=follow-service:9090
+      - SEARCH_GRPC_ADDR=search-service:9096
+      - NOTIFICATION_GRPC_ADDR=notification-service:9097
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      user-service:
+        condition: service_started
+      note-service:
+        condition: service_started
+    networks:
+      - sonet-network
+    volumes:
+      - ./proto:/app/proto:ro
+
+  # User Service
+  user-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    command: ["./bin/user_service"]
+    ports:
+      - "8081:8080"
+      - "9090:9090"
+    environment:
+      - DATABASE_URL=postgresql://sonet:${postgres_password:-sonet_dev_password}@postgres:5432/user_service
+      - REDIS_URL=redis://redis:6379
+      - LOG_LEVEL=debug
+      - SERVICE_NAME=user-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sonet-network
+
+  # Note Service
+  note-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    command: ["./bin/note_service"]
+    ports:
+      - "8082:8080"
+      - "9090:9090"
+    environment:
+      - DATABASE_URL=postgresql://sonet:sonet_dev_password@postgres:5432/note_service
+      - REDIS_URL=redis://redis:6379
+      - LOG_LEVEL=debug
+      - SERVICE_NAME=note-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sonet-network
+
+  timeline-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    command: ["./bin/timeline_service"]
+    environment:
+      - DATABASE_URL=postgresql://sonet:sonet_dev_password@postgres:5432/timeline_service
+      - REDIS_URL=redis://redis:6379
+      - LOG_LEVEL=debug
+      - SERVICE_NAME=timeline-service
+    ports:
+      - "50051:50051"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sonet-network
+
+  # Follow Service
+  follow-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    ports:
+      - "8083:8080"
+    environment:
+      - DATABASE_URL=postgresql://sonet:sonet_dev_password@postgres:5432/follow_service
+      - REDIS_URL=redis://redis:6379
+      - LOG_LEVEL=debug
+      - SERVICE_NAME=follow-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sonet-network
+
+  # Media Service
+  media-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    command: ["./bin/media_service"]
+    ports:
+      - "8084:8080"
+      - "9090:9090"
+    environment:
+      - DATABASE_URL=postgresql://sonet:sonet_dev_password@postgres:5432/media_service
+      - REDIS_URL=redis://redis:6379
+      - LOG_LEVEL=debug
+      - SERVICE_NAME=media-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sonet-network
+
+  # Notification Service
+  notification-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    command: ["./bin/sonet-notification-service"]
+    ports:
+      - "8085:8080"
+      - "9090:9090"
+    environment:
+      - DATABASE_URL=postgresql://sonet:sonet_dev_password@postgres:5432/notification_service
+      - REDIS_URL=redis://redis:6379
+      - LOG_LEVEL=debug
+      - SERVICE_NAME=notification-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sonet-network
+
+  # Messaging Service
+  messaging-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    ports:
+      - "8086:8080"
+      - "9096:9090"  # WebSocket port for real-time messaging
+    environment:
+      - DATABASE_URL=postgresql://sonet:sonet_dev_password@postgres:5432/messaging_service
+      - REDIS_URL=redis://redis:6379
+      - LOG_LEVEL=debug
+      - SERVICE_NAME=messaging-service
+      - WEBSOCKET_PORT=9090
+      - ENCRYPTION_ENABLED=true
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sonet-network
+
+  # Monitoring - Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9091:9090"
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - sonet-network
+
+  # Monitoring - Grafana
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana:/etc/grafana/provisioning
+    networks:
+      - sonet-network
+
+  # Tracing - Jaeger
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"
+      - "14268:14268"
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    networks:
+      - sonet-network
+
+  # ELK - Elasticsearch
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.4
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    networks:
+      - sonet-network
+
+  # ELK - Kibana
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.13.4
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - sonet-network
+
+  # ELK - Logstash
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.13.4
+    ports:
+      - "5044:5044"
+    volumes:
+      - ./monitoring/elk/logstash/pipeline:/usr/share/logstash/pipeline
+    depends_on:
+      - elasticsearch
+    networks:
+      - sonet-network
+
+  # Beats - Filebeat (collect Docker logs)
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.13.4
+    user: root
+    command: ["-e"]
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./monitoring/elk/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+    depends_on:
+      - logstash
+    networks:
+      - sonet-network
+
+  # Beats - Metricbeat (system and docker metrics)
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:8.13.4
+    user: root
+    command: ["-e"]
+    volumes:
+      - /proc:/hostfs/proc:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /:/hostfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./monitoring/elk/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+    depends_on:
+      - elasticsearch
+      - kibana
+    networks:
+      - sonet-network
+
+  search-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    command: ["./bin/sonet-search-service"]
+    ports:
+      - "8087:8080"
+      - "9090:9090"
+    environment:
+      - DATABASE_URL=postgresql://sonet:sonet_dev_password@postgres:5432/search_service
+      - REDIS_URL=redis://redis:6379
+      - LOG_LEVEL=debug
+      - SERVICE_NAME=search-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sonet-network
+
+  # Minimal Search Service (temporary)
+  minimal-search-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    command: ["./bin/minimal_search_server"]
+    ports:
+      - "9096:9096"
+    networks:
+      - sonet-network
+
+  # Minimal Notification Service (temporary)
+  minimal-notification-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    command: ["./bin/minimal_notification_server"]
+    ports:
+      - "9097:9097"
+    networks:
+      - sonet-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  prometheus_data:
+  grafana_data:
+  es_data:
+
+networks:
+  sonet-network:
+    driver: bridge

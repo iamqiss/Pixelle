@@ -1,0 +1,200 @@
+syntax = "proto3";
+package moderation.v1;
+
+// Content classification
+message ClassifyRequest {
+    string content_id = 1;
+    string user_id = 2;
+    string text = 3;
+    string content_type = 4;  // post, comment, message, profile, media, link
+    string language_hint = 5; // optional language hint
+    map<string, string> context = 6; // additional context
+    string priority = 7;      // low, normal, high, critical
+}
+
+message Classification {
+    string label = 1;
+    float confidence = 2;
+    string language = 3;
+    uint64 processing_time_ms = 4;
+    string model_version = 5;
+    repeated string signals = 6;
+}
+
+message ClassifyResponse {
+    string content_id = 1;
+    Classification result = 2;
+}
+
+// User reports
+message CreateReportRequest {
+    string reporter_id = 1;
+    string target_id = 2;
+    string content_id = 3;
+    string report_type = 4;
+    string reason = 5;
+    string description = 6;
+    repeated Evidence evidence = 7;
+    map<string, string> metadata = 8;
+}
+
+message CreateReportResponse {
+    string report_id = 1;
+    string status = 2;
+    string created_at = 3;
+}
+
+message GetReportRequest {
+    string report_id = 1;
+}
+
+message GetReportResponse {
+    Report report = 1;
+}
+
+message GetReportsByUserRequest {
+    string user_id = 1;
+}
+
+message GetReportsByUserResponse {
+    repeated Report reports = 1;
+}
+
+message Report {
+    string id = 1;
+    string reporter_id = 2;
+    string target_id = 3;
+    string content_id = 4;
+    string report_type = 5;
+    string reason = 6;
+    string description = 7;
+    string status = 8;
+    string priority = 9;
+    string assigned_specialist = 10;
+    string created_at = 11;
+    string updated_at = 12;
+    string resolved_at = 13;
+}
+
+message Evidence {
+    string evidence_type = 1; // text, image, link, video, audio, screenshot, log
+    string content = 2;
+    string url = 3;
+    bytes screenshot = 4;
+    map<string, string> metadata = 5;
+}
+
+// User management
+message GetUserReportsRequest {
+    string user_id = 1;
+    string status = 2;  // optional filter by status
+    uint32 limit = 3;   // optional limit
+    uint32 offset = 4;  // optional offset
+}
+
+message GetUserReportsResponse {
+    repeated Report reports = 1;
+    uint32 total_count = 2;
+    bool has_more = 3;
+}
+
+// Investigation management
+message StartInvestigationRequest {
+    string report_id = 1;
+    string investigator_id = 2;
+}
+
+message StartInvestigationResponse {
+    string investigation_id = 1;
+    string status = 2;
+    string started_at = 3;
+}
+
+message AddInvestigationNoteRequest {
+    string investigation_id = 1;
+    string author_id = 2;
+    string content = 3;
+    bool is_internal = 4;
+}
+
+message AddInvestigationNoteResponse {
+    string note_id = 1;
+    string created_at = 2;
+}
+
+message CompleteInvestigationRequest {
+    string investigation_id = 1;
+    string final_status = 2;
+    string final_decision = 3;
+    repeated string actions_taken = 4;
+}
+
+message CompleteInvestigationResponse {
+    string investigation_id = 1;
+    string completed_at = 2;
+    uint32 time_spent_minutes = 3;
+}
+
+// Metrics and analytics
+message GetMetricsRequest {
+    string time_range = 1; // 1h, 24h, 7d, 30d
+    repeated string metrics = 2; // specific metrics to retrieve
+}
+
+message GetMetricsResponse {
+    map<string, double> metrics = 1;
+    string time_range = 2;
+    string generated_at = 3;
+}
+
+// Health and status
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+    string status = 1;
+    string version = 2;
+    uint64 uptime_seconds = 3;
+    map<string, ComponentHealth> components = 4;
+}
+
+message ComponentHealth {
+    string status = 1;
+    string message = 2;
+    uint64 last_check = 3;
+}
+
+// Main service
+service ModerationService {
+    // Content classification
+    rpc Classify (ClassifyRequest) returns (ClassifyResponse);
+    rpc ClassifyStream (stream ClassifyRequest) returns (stream ClassifyResponse);
+    rpc ClassifyBatch (BatchClassifyRequest) returns (BatchClassifyResponse);
+    
+    // User reports
+    rpc CreateReport (CreateReportRequest) returns (CreateReportResponse);
+    rpc GetReport (GetReportRequest) returns (GetReportResponse);
+    rpc GetReportsByUser (GetReportsByUserRequest) returns (GetReportsByUserResponse);
+    rpc GetUserReports (GetUserReportsRequest) returns (GetUserReportsResponse);
+    
+    // Investigation management
+    rpc StartInvestigation (StartInvestigationRequest) returns (StartInvestigationResponse);
+    rpc AddInvestigationNote (AddInvestigationNoteRequest) returns (AddInvestigationNoteResponse);
+    rpc CompleteInvestigation (CompleteInvestigationRequest) returns (CompleteInvestigationResponse);
+    
+    // Metrics and analytics
+    rpc GetMetrics (GetMetricsRequest) returns (GetMetricsResponse);
+    
+    // Health and status
+    rpc HealthCheck (HealthCheckRequest) returns (HealthCheckResponse);
+}
+
+// Batch operations
+message BatchClassifyRequest {
+    repeated ClassifyRequest requests = 1;
+}
+
+message BatchClassifyResponse {
+    repeated ClassifyResponse responses = 1;
+    uint64 processing_time_ms = 2;
+    uint32 batch_size = 3;
+}

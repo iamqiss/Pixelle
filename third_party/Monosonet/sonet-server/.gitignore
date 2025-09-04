@@ -1,0 +1,52 @@
+# Build directories
+build/
+cmake-build-*/
+bin/
+lib/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Compiled files
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+*.env
+
+# Database files
+*.db
+*.sqlite
+
+# Cache files
+.cache/
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Coverage files
+coverage/
+*.gcov
+*.gcda
+*.gcno
+
+# Profiling files
+*.prof
+gmon.out
+
+# Core dumps
+core.*

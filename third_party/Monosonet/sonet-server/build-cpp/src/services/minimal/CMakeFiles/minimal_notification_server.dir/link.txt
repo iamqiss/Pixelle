@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -Wextra -Wpedantic -O3 -DNDEBUG -O3 -DNDEBUG CMakeFiles/minimal_notification_server.dir/notification_server.cpp.o -o ../../../bin/minimal_notification_server  libminimal_protos.a /usr/lib/x86_64-linux-gnu/libgrpc++.so /usr/lib/x86_64-linux-gnu/libprotobuf.so /usr/lib/x86_64-linux-gnu/libgrpc.so 

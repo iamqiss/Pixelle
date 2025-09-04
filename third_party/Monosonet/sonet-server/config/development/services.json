@@ -1,0 +1,72 @@
+{
+  "_copyright": "Copyright (c) 2025 Neo Qiss. All rights reserved. Proprietary and confidential.",
+  "environment": "development",
+  "log_level": "debug",
+  "services": {
+    "gateway": {
+      "host": "0.0.0.0",
+      "port": 8080,
+      "grpc_port": 9090,
+      "max_connections": 1000,
+      "request_timeout": 30,
+      "cors_enabled": true,
+      "rate_limiting": {
+        "enabled": true,
+        "requests_per_minute": 1000
+      }
+    },
+    "user_service": {
+      "host": "user-service",
+      "port": 8080,
+      "grpc_port": 9090
+    },
+    "note_service": {
+      "host": "note-service",
+      "port": 8080,
+      "grpc_port": 9090
+    },
+    "media_service": {
+      "host": "media-service",
+      "port": 8080,
+      "grpc_port": 9090
+    },
+    "follow_service": {
+      "host": "follow-service",
+      "port": 8080,
+      "grpc_port": 9090
+    },
+    "notification_service": {
+      "host": "notification-service",
+      "port": 8080,
+      "grpc_port": 9090
+    },
+    "messaging_service": {
+      "host": "messaging-service", 
+      "port": 8080,
+      "grpc_port": 9090,
+      "websocket_port": 9096,
+      "encryption_enabled": true,
+      "max_message_size": 10485760,
+      "typing_timeout": 30,
+      "message_retention_days": 365
+    }
+  },
+  "monitoring": {
+    "prometheus": {
+      "enabled": true,
+      "host": "prometheus",
+      "port": 9091
+    },
+    "jaeger": {
+      "enabled": true,
+      "host": "jaeger",
+      "port": 14268
+    }
+  },
+  "security": {
+    "jwt_secret": "dev_jwt_secret_key_change_in_production",
+    "jwt_expiry": 86400,
+    "password_min_length": 8,
+    "session_timeout": 3600
+  }
+}

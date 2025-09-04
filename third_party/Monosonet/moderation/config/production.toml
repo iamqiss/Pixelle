@@ -1,0 +1,89 @@
+# Sonet Moderation Service - Production Configuration
+# This file contains production-optimized configuration values
+# Override default.toml settings for production deployment
+
+[server]
+port = 8080
+grpc_port = 9090
+host = "0.0.0.0"
+
+[database]
+url = "postgresql://moderation_user:secure_password@prod-db-cluster/sonet_moderation"
+max_connections = 500
+connection_timeout_seconds = 60
+
+[redis]
+url = "redis://prod-redis-cluster:6379"
+
+[ml]
+model_path = "/opt/models"
+batch_size = 128
+inference_timeout_seconds = 30
+gpu_enabled = true
+model_cache_size = 10000
+
+[languages]
+supported = ["en", "es", "fr", "de", "it", "pt", "ru", "zh", "ja", "ko", "ar", "hi", "tr", "nl", "pl", "sv", "da", "no", "fi", "cs", "hu", "ro", "bg", "hr", "sk", "sl", "et", "lv", "lt"]
+default = "en"
+detection_enabled = true
+
+[pipeline]
+workers = 32
+buffer_size = 100000
+timeout_seconds = 120
+
+[storage]
+backend = "hybrid"
+max_content_size_mb = 10
+compression_enabled = true
+cache_ttl_seconds = 7200
+
+[observability]
+log_level = "warn"
+jaeger_endpoint = "http://jaeger-collector:14268/api/traces"
+prometheus_enabled = true
+health_check_interval_seconds = 15
+
+[security]
+rate_limit_requests = 5000
+rate_limit_window_seconds = 60
+jwt_secret = "${JWT_SECRET}"
+cors_origins = ["https://app.sonet.com", "https://admin.sonet.com"]
+
+[abuse_specialists]
+queue_size = 10000
+timeout_seconds = 600
+escalation_threshold = 0.7
+
+[operations]
+alerting_enabled = true
+metrics_export_interval_seconds = 30
+backup_enabled = true
+backup_interval_seconds = 3600
+
+# Production-specific settings
+[production]
+auto_scaling = true
+min_instances = 3
+max_instances = 20
+cpu_threshold = 0.7
+memory_threshold = 0.8
+
+[monitoring]
+datadog_enabled = true
+datadog_api_key = "${DATADOG_API_KEY}"
+sentry_dsn = "${SENTRY_DSN}"
+pagerduty_service_key = "${PAGERDUTY_SERVICE_KEY}"
+
+[performance]
+connection_pool_size = 1000
+max_concurrent_requests = 10000
+request_timeout_seconds = 300
+keep_alive_seconds = 300
+
+[caching]
+redis_cluster_mode = true
+cache_compression = true
+cache_encryption = true
+cache_ttl_violations = 86400
+cache_ttl_clean = 3600

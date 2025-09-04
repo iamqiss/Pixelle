@@ -1,0 +1,163 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sonet-observability
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+  namespace: sonet-observability
+spec:
+  selector:
+    app: elasticsearch
+  ports:
+    - name: http
+      port: 9200
+      targetPort: 9200
+    - name: transport
+      port: 9300
+      targetPort: 9300
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elasticsearch
+  namespace: sonet-observability
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      containers:
+        - name: elasticsearch
+          image: docker.elastic.co/elasticsearch/elasticsearch:8.13.4
+          env:
+            - name: discovery.type
+              value: single-node
+            - name: xpack.security.enabled
+              value: "false"
+            - name: ES_JAVA_OPTS
+              value: -Xms1g -Xmx1g
+          ports:
+            - containerPort: 9200
+            - containerPort: 9300
+          volumeMounts:
+            - name: es-data
+              mountPath: /usr/share/elasticsearch/data
+      volumes:
+        - name: es-data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana
+  namespace: sonet-observability
+spec:
+  selector:
+    app: kibana
+  ports:
+    - name: http
+      port: 5601
+      targetPort: 5601
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana
+  namespace: sonet-observability
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kibana
+  template:
+    metadata:
+      labels:
+        app: kibana
+    spec:
+      containers:
+        - name: kibana
+          image: docker.elastic.co/kibana/kibana:8.13.4
+          env:
+            - name: ELASTICSEARCH_HOSTS
+              value: http://elasticsearch.sonet-observability.svc:9200
+          ports:
+            - containerPort: 5601
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-pipeline
+  namespace: sonet-observability
+  labels:
+    app: logstash
+    managed-by: sonet
+data:
+  logstash.conf: |
+    input {
+      beats { port => 5044 }
+    }
+    filter {
+      json { source => "message" target => "json" skip_on_invalid_json => true }
+      if ![json] {
+        grok {
+          match => { "message" => ["\\[%{TIMESTAMP_ISO8601:ts}\\] \\[%{LOGLEVEL:level}\\] %{GREEDYDATA:msg}"] }
+          tag_on_failure => []
+        }
+        date { match => ["ts", "YYYY-MM-dd HH:mm:ss.SSS", "YYYY-MM-dd HH:mm:ss,SSS"] target => "@timestamp" remove_field => ["ts"] }
+      } else {
+        mutate { add_field => { "level" => "%{[json][level]}" "msg" => "%{[json][message]}" } remove_field => ["json"] }
+      }
+    }
+    output {
+      elasticsearch { hosts => ["http://elasticsearch.sonet-observability.svc:9200"] index => "sonet-logs-%{+YYYY.MM.dd}" }
+      stdout { codec => rubydebug }
+    }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logstash
+  namespace: sonet-observability
+spec:
+  selector:
+    app: logstash
+  ports:
+    - name: beats
+      port: 5044
+      targetPort: 5044
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logstash
+  namespace: sonet-observability
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logstash
+  template:
+    metadata:
+      labels:
+        app: logstash
+    spec:
+      containers:
+        - name: logstash
+          image: docker.elastic.co/logstash/logstash:8.13.4
+          ports:
+            - containerPort: 5044
+          volumeMounts:
+            - name: pipeline
+              mountPath: /usr/share/logstash/pipeline
+      volumes:
+        - name: pipeline
+          configMap:
+            name: logstash-pipeline

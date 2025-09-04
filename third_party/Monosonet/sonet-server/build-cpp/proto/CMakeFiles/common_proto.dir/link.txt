@@ -1,0 +1,2 @@
+/usr/bin/ar qc libcommon_proto.a CMakeFiles/common_proto.dir/generated/timestamp.pb.cc.o CMakeFiles/common_proto.dir/generated/timestamp.grpc.pb.cc.o CMakeFiles/common_proto.dir/generated/pagination.pb.cc.o CMakeFiles/common_proto.dir/generated/pagination.grpc.pb.cc.o
+/usr/bin/ranlib libcommon_proto.a

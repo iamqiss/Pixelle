@@ -1,0 +1,121 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sonet-observability
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: metricbeat
+  namespace: sonet-observability
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: metricbeat
+rules:
+  - apiGroups: [""]
+    resources: ["nodes", "namespaces", "pods" ]
+    verbs: ["get", "list", "watch"]
+  - nonResourceURLs: ["/metrics", "/metrics/cadvisor"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: metricbeat
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: metricbeat
+subjects:
+  - kind: ServiceAccount
+    name: metricbeat
+    namespace: sonet-observability
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metricbeat-config
+  namespace: sonet-observability
+  labels:
+    app: metricbeat
+    k8s-app: metricbeat
+    managed-by: sonet
+data:
+  metricbeat.yml: |
+    metricbeat.autodiscover:
+      providers:
+        - type: kubernetes
+          node: ${NODE_NAME}
+          hints.enabled: true
+
+    metricbeat.modules:
+      - module: system
+        period: 10s
+        metricsets: [cpu, load, memory, network, process, process_summary, core, diskio, filesystem, fsstat]
+        processes: ['.*']
+      - module: docker
+        hosts: ["unix:///var/run/docker.sock"]
+        period: 10s
+        enabled: true
+        metricsets: [container, cpu, diskio, event, healthcheck, info, memory, network]
+
+    processors:
+      - add_kubernetes_metadata: ~
+      - add_host_metadata: ~
+
+    output.elasticsearch:
+      hosts: ["http://elasticsearch.sonet-observability.svc:9200"]
+
+    setup.kibana:
+      host: "kibana.sonet-observability.svc:5601"
+
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: metricbeat
+  namespace: sonet-observability
+  labels:
+    k8s-app: metricbeat
+spec:
+  selector:
+    matchLabels:
+      k8s-app: metricbeat
+  template:
+    metadata:
+      labels:
+        k8s-app: metricbeat
+    spec:
+      serviceAccountName: metricbeat
+      terminationGracePeriodSeconds: 30
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: metricbeat
+          image: docker.elastic.co/beats/metricbeat:8.13.4
+          args: ["-e", "-c", "/etc/metricbeat.yml"]
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: config
+              mountPath: /etc/metricbeat.yml
+              readOnly: true
+              subPath: metricbeat.yml
+            - name: dockersock
+              mountPath: /var/run/docker.sock
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: metricbeat-config
+            defaultMode: 0640
+        - name: dockersock
+          hostPath:
+            path: /var/run/docker.sock

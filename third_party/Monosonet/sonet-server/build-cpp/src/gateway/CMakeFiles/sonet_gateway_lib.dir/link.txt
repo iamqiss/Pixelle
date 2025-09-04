@@ -1,0 +1,2 @@
+/usr/bin/ar qc libsonet_gateway_lib.a CMakeFiles/sonet_gateway_lib.dir/gateway.cpp.o CMakeFiles/sonet_gateway_lib.dir/controllers/api_controller.cpp.o CMakeFiles/sonet_gateway_lib.dir/auth/jwt_handler.cpp.o CMakeFiles/sonet_gateway_lib.dir/rate_limiting/rate_limiter.cpp.o CMakeFiles/sonet_gateway_lib.dir/rate_limiting/token_bucket.cpp.o
+/usr/bin/ranlib libsonet_gateway_lib.a

@@ -1,0 +1,62 @@
+# Sonet Moderation Service - Default Configuration
+# This file contains the default configuration values
+# Environment-specific overrides can be provided in local.toml or production.toml
+
+[server]
+port = 8080
+grpc_port = 9090
+host = "0.0.0.0"
+
+[database]
+url = "postgresql://localhost/sonet_moderation"
+max_connections = 100
+connection_timeout_seconds = 30
+
+[redis]
+url = "redis://localhost:6379"
+
+[ml]
+model_path = "./models"
+batch_size = 32
+inference_timeout_seconds = 10
+gpu_enabled = false
+model_cache_size = 1000
+
+[languages]
+supported = ["en", "es", "fr", "de", "it", "pt", "ru", "zh", "ja", "ko", "ar", "hi"]
+default = "en"
+detection_enabled = true
+
+[pipeline]
+workers = 8
+buffer_size = 10000
+timeout_seconds = 60
+
+[storage]
+backend = "hybrid"
+max_content_size_mb = 1
+compression_enabled = true
+cache_ttl_seconds = 3600
+
+[observability]
+log_level = "info"
+jaeger_endpoint = ""
+prometheus_enabled = true
+health_check_interval_seconds = 30
+
+[security]
+rate_limit_requests = 1000
+rate_limit_window_seconds = 60
+jwt_secret = "change-this-in-production"
+cors_origins = ["*"]
+
+[abuse_specialists]
+queue_size = 1000
+timeout_seconds = 300
+escalation_threshold = 0.8
+
+[operations]
+alerting_enabled = true
+metrics_export_interval_seconds = 60
+backup_enabled = true
+backup_interval_seconds = 86400

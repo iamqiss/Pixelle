@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+package sonet.common;
+
+// Reserved for shared common messages; currently unused.
+message Empty {}

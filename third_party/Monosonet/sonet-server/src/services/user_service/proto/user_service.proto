@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package sonet.user.v1;
+
+option go_package = "sonet/src/services/user_service/proto";
+
+import "google/protobuf/timestamp.proto";
+
+// User Service
+service UserService {
+  // Get user privacy settings
+  rpc GetUserPrivacy(GetUserPrivacyRequest) returns (GetUserPrivacyResponse);
+  
+  // Update user privacy settings
+  rpc UpdateUserPrivacy(UpdateUserPrivacyRequest) returns (UpdateUserPrivacyResponse);
+  
+  // Get user profile with privacy check
+  rpc GetUserProfile(GetUserProfileRequest) returns (GetUserProfileResponse);
+}
+
+// Get user privacy settings request
+message GetUserPrivacyRequest {
+  string user_id = 1;
+}
+
+// Get user privacy settings response
+message GetUserPrivacyResponse {
+  bool success = 1;
+  string error_message = 2;
+  bool is_private = 3;
+}
+
+// Update user privacy settings request
+message UpdateUserPrivacyRequest {
+  string user_id = 1;
+  bool is_private = 2;
+}
+
+// Update user privacy settings response
+message UpdateUserPrivacyResponse {
+  bool success = 1;
+  string error_message = 2;
+  bool is_private = 3;
+}
+
+// Get user profile request
+message GetUserProfileRequest {
+  string user_id = 1;
+  string requester_id = 2;
+}
+
+// Get user profile response
+message GetUserProfileResponse {
+  bool success = 1;
+  string error_message = 2;
+  UserProfile profile = 3;
+}
+
+// User profile message
+message UserProfile {
+  string user_id = 1;
+  string username = 2;
+  string display_name = 3;
+  string bio = 4;
+  string avatar_url = 5;
+  string banner_url = 6;
+  string location = 7;
+  string website = 8;
+  bool is_verified = 9;
+  bool is_private = 10;
+  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp updated_at = 12;
+  UserStats stats = 13;
+  UserViewer viewer = 14;
+}
+
+// User statistics
+message UserStats {
+  int64 follower_count = 1;
+  int64 following_count = 2;
+  int64 note_count = 3;
+  int64 like_count = 4;
+  int64 renote_count = 5;
+  int64 comment_count = 6;
+}
+
+// User viewer information
+message UserViewer {
+  bool following = 1;
+  bool followed_by = 2;
+  bool muted = 3;
+  bool blocked_by = 4;
+  bool blocking = 5;
+}

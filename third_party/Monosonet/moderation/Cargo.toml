@@ -1,0 +1,91 @@
+[package]
+name = "moderation"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+authors = ["Sonet Team <dev@sonet.example>"]
+description = "Sonet moderation service: rules engine, classifiers, and APIs"
+repository = "https://example.com/sonet/moderation"
+
+[dependencies]
+# Web & gRPC
+axum = { version = "0.7", features = ["macros"] }
+tonic = { version = "0.12", features = ["transport", "prost", "tls"] }
+tower = "0.5"
+tower-http = { version = "0.5", features = ["trace", "timeout", "decompression-gzip", "compression-gzip", "cors"] }
+axum-prometheus = "0.6"
+
+# Async & Concurrency
+tokio = { version = "1.39", features = ["full", "rt-multi-thread"] }
+async-stream = "0.3"
+futures = "0.3"
+dashmap = "5.5"
+parking_lot = "0.12"
+
+# Serde & JSON
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Config & Environment
+dotenvy = "0.15"
+config = { version = "0.14", features = ["toml", "yaml", "env"] }
+
+# Database & Storage
+sqlx = { version = "0.7", features = ["runtime-tokio", "postgres", "macros", "uuid", "chrono", "migrate"] }
+redis = { version = "0.25", features = ["tokio-comp", "cluster", "connection-manager"] }
+deadpool-redis = "0.15"
+sled = "0.35"
+
+# ML & NLP
+rust-bert = "0.21"
+tokenizers = "0.15"
+ndarray = "0.15"
+rust-embed = "0.1"
+fasttext = "0.1"
+
+# Multilingual Support
+whatlang = "0.16"
+unic-langid = "0.9"
+
+# Observability & Monitoring
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json", "local-time"] }
+tracing-opentelemetry = "0.21"
+opentelemetry = { version = "0.21", features = ["rt-tokio", "metrics", "trace"] }
+opentelemetry-jaeger = "0.21"
+prometheus = "0.13"
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Utilities
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde", "clock"] }
+once_cell = "1.19"
+aho_corasick = "1.1"
+prost = "0.13"
+bytes = "1.5"
+base64 = "0.21"
+
+# Security & Crypto
+ring = "0.17"
+hmac = "0.12"
+sha2 = "0.10"
+
+# HTTP Client
+reqwest = { version = "0.12", features = ["json", "rustls-tls", "gzip", "brotli"] }
+
+# Serialization
+bincode = "2.0"
+msgpack = "0.3"
+
+# Time & Scheduling
+cron = "0.12"
+tokio-cron-scheduler = "0.9"
+
+[build-dependencies]
+tonic-build = "0.12"
+
+[dev-dependencies]
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+tokio-test = "0.4"
+wiremock = "0.5"

@@ -1,0 +1,229 @@
+syntax = "proto3";
+
+package sonet.common;
+
+// Video Candidate - Raw video data from database
+message VideoCandidate {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  string category = 4;
+  repeated string tags = 5;
+  string language = 6;
+  
+  // Video metadata
+  VideoMetadata video = 7;
+  
+  // Creator info
+  string creator_id = 8;
+  string creator_username = 9;
+  string creator_display_name = 10;
+  string creator_avatar_url = 11;
+  
+  // Engagement metrics
+  EngagementMetrics engagement = 12;
+  
+  // Video features
+  VideoFeatures features = 13;
+  
+  // Timestamps
+  string created_at = 14;
+  string updated_at = 15;
+  
+  // Cursor for pagination
+  string cursor = 16;
+}
+
+// Video Metadata
+message VideoMetadata {
+  uint32 duration_ms = 1;
+  string quality = 2;
+  string thumbnail_url = 3;
+  string playback_url = 4;
+  string resolution = 5;
+  string aspect_ratio = 6;
+  uint64 file_size_bytes = 7;
+  string encoding = 8;
+  uint32 bitrate_kbps = 9;
+  uint32 frame_rate = 10;
+}
+
+// Video Features
+message VideoFeatures {
+  double brightness = 1;
+  double contrast = 2;
+  double saturation = 3;
+  double motion_intensity = 4;
+  double scene_complexity = 5;
+  double audio_quality = 6;
+  bool background_music = 7;
+  double speech_clarity = 8;
+  double color_vibrancy = 9;
+  double visual_appeal = 10;
+}
+
+// Engagement Metrics
+message EngagementMetrics {
+  uint32 view_count = 1;
+  uint32 unique_viewers = 2;
+  uint32 like_count = 3;
+  uint32 renote_count = 4;
+  uint32 reply_count = 5;
+  uint32 share_count = 6;
+  uint32 bookmark_count = 7;
+  double average_watch_time_ms = 8;
+  double completion_rate = 9;
+  double skip_rate = 10;
+  double engagement_score = 11;
+  double viral_score = 12;
+  double retention_score = 13;
+}
+
+// Video Query Parameters
+message VideoQueryParams {
+  uint32 limit = 1;
+  uint32 offset = 2;
+  string cursor = 3;
+  repeated string categories = 4;
+  repeated string exclude_categories = 5;
+  repeated string tags = 6;
+  repeated string exclude_tags = 7;
+  uint32 min_duration_ms = 8;
+  uint32 max_duration_ms = 9;
+  string quality_preference = 10;
+  string creator_id = 11;
+  string time_window = 12;
+  string sort_by = 13;
+  string sort_order = 14;
+}
+
+// Video Search Result
+message VideoSearchResult {
+  repeated VideoCandidate videos = 1;
+  uint32 total_count = 2;
+  uint32 page_count = 3;
+  string next_cursor = 4;
+  string prev_cursor = 5;
+  double search_relevance = 6;
+  repeated string suggested_queries = 7;
+}
+
+// Video Upload Request
+message VideoUploadRequest {
+  string title = 1;
+  string description = 2;
+  string category = 3;
+  repeated string tags = 4;
+  string language = 5;
+  VideoUploadMetadata metadata = 6;
+  bytes video_data = 7;
+  bytes thumbnail_data = 8;
+}
+
+// Video Upload Metadata
+message VideoUploadMetadata {
+  uint32 duration_ms = 1;
+  string resolution = 2;
+  string aspect_ratio = 3;
+  string encoding = 4;
+  uint32 bitrate_kbps = 5;
+  uint32 frame_rate = 6;
+  uint64 file_size_bytes = 7;
+}
+
+// Video Upload Response
+message VideoUploadResponse {
+  bool success = 1;
+  string video_id = 2;
+  string message = 3;
+  string processing_status = 4;
+  string thumbnail_url = 5;
+  string playback_url = 6;
+  uint32 processing_time_ms = 7;
+}
+
+// Video Processing Status
+message VideoProcessingStatus {
+  string video_id = 1;
+  string status = 2;  // "uploading", "processing", "analyzing", "ready", "failed"
+  double progress = 3;
+  string current_step = 4;
+  repeated string completed_steps = 5;
+  string error_message = 6;
+  uint32 estimated_time_remaining_ms = 7;
+}
+
+// Video Analytics
+message VideoAnalytics {
+  string video_id = 1;
+  uint32 total_views = 2;
+  uint32 unique_viewers = 3;
+  double average_watch_time_ms = 4;
+  double completion_rate = 5;
+  double skip_rate = 6;
+  double engagement_rate = 7;
+  double viral_coefficient = 8;
+  double retention_score = 9;
+  
+  // Geographic data
+  repeated GeographicView geographic_views = 10;
+  
+  // Device data
+  repeated DeviceView device_views = 11;
+  
+  // Time-based data
+  repeated TimeView time_views = 12;
+}
+
+// Geographic View
+message GeographicView {
+  string country = 1;
+  string region = 2;
+  string city = 3;
+  uint32 view_count = 4;
+  double engagement_rate = 5;
+}
+
+// Device View
+message DeviceView {
+  string device_type = 1;
+  string platform = 2;
+  string browser = 3;
+  uint32 view_count = 4;
+  double engagement_rate = 5;
+}
+
+// Time View
+message TimeView {
+  string hour = 1;
+  string day_of_week = 2;
+  uint32 view_count = 3;
+  double engagement_rate = 4;
+}
+
+// Video Recommendation
+message VideoRecommendation {
+  string video_id = 1;
+  double relevance_score = 2;
+  string reason = 3;
+  repeated string factors = 4;
+  string algorithm = 5;
+  double confidence = 6;
+}
+
+// Video Batch Operations
+message VideoBatchRequest {
+  repeated string video_ids = 1;
+  string operation = 2;  // "delete", "update", "analyze", "reprocess"
+  map<string, string> parameters = 3;
+}
+
+// Video Batch Response
+message VideoBatchResponse {
+  bool success = 1;
+  uint32 processed_count = 2;
+  uint32 failed_count = 3;
+  repeated string failed_video_ids = 4;
+  string message = 5;
+  map<string, string> results = 6;
+}

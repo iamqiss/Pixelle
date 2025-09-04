@@ -1,0 +1,168 @@
+syntax = "proto3";
+
+package sonet.drafts.v1;
+
+option go_package = "sonet/src/services/drafts_service/proto";
+
+import "google/protobuf/timestamp.proto";
+
+// Drafts Service
+service DraftsService {
+  // Create a new draft
+  rpc CreateDraft(CreateDraftRequest) returns (CreateDraftResponse);
+  
+  // Get user drafts
+  rpc GetUserDrafts(GetUserDraftsRequest) returns (GetUserDraftsResponse);
+  
+  // Get a specific draft
+  rpc GetDraft(GetDraftRequest) returns (GetDraftResponse);
+  
+  // Update a draft
+  rpc UpdateDraft(UpdateDraftRequest) returns (UpdateDraftResponse);
+  
+  // Delete a draft
+  rpc DeleteDraft(DeleteDraftRequest) returns (DeleteDraftResponse);
+  
+  // Auto-save a draft
+  rpc AutoSaveDraft(AutoSaveDraftRequest) returns (AutoSaveDraftResponse);
+}
+
+// Create draft request
+message CreateDraftRequest {
+  string user_id = 1;
+  string content = 2;
+  string reply_to_uri = 3;
+  string quote_uri = 4;
+  string mention_handle = 5;
+  repeated DraftImage images = 6;
+  DraftVideo video = 7;
+  repeated string labels = 8;
+  bytes threadgate = 9;
+  bytes interaction_settings = 10;
+  bool is_auto_saved = 11;
+}
+
+// Create draft response
+message CreateDraftResponse {
+  bool success = 1;
+  string error_message = 2;
+  Draft draft = 3;
+}
+
+// Get user drafts request
+message GetUserDraftsRequest {
+  string user_id = 1;
+  int32 limit = 2;
+  string cursor = 3;
+  bool include_auto_saved = 4;
+}
+
+// Get user drafts response
+message GetUserDraftsResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated Draft drafts = 3;
+  string next_cursor = 4;
+}
+
+// Get draft request
+message GetDraftRequest {
+  string draft_id = 1;
+  string user_id = 2;
+}
+
+// Get draft response
+message GetDraftResponse {
+  bool success = 1;
+  string error_message = 2;
+  Draft draft = 3;
+}
+
+// Update draft request
+message UpdateDraftRequest {
+  string draft_id = 1;
+  string user_id = 2;
+  string content = 3;
+  string reply_to_uri = 4;
+  string quote_uri = 5;
+  string mention_handle = 6;
+  repeated DraftImage images = 7;
+  DraftVideo video = 8;
+  repeated string labels = 9;
+  bytes threadgate = 10;
+  bytes interaction_settings = 11;
+}
+
+// Update draft response
+message UpdateDraftResponse {
+  bool success = 1;
+  string error_message = 2;
+  Draft draft = 3;
+}
+
+// Delete draft request
+message DeleteDraftRequest {
+  string draft_id = 1;
+  string user_id = 2;
+}
+
+// Delete draft response
+message DeleteDraftResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+
+// Auto-save draft request
+message AutoSaveDraftRequest {
+  string user_id = 1;
+  string content = 2;
+  string reply_to_uri = 3;
+  string quote_uri = 4;
+  string mention_handle = 5;
+  repeated DraftImage images = 6;
+  DraftVideo video = 7;
+  repeated string labels = 8;
+  bytes threadgate = 9;
+  bytes interaction_settings = 10;
+}
+
+// Auto-save draft response
+message AutoSaveDraftResponse {
+  bool success = 1;
+  string error_message = 2;
+  Draft draft = 3;
+}
+
+// Draft message
+message Draft {
+  string draft_id = 1;
+  string user_id = 2;
+  string title = 3;
+  string content = 4;
+  string reply_to_uri = 5;
+  string quote_uri = 6;
+  string mention_handle = 7;
+  repeated DraftImage images = 8;
+  DraftVideo video = 9;
+  repeated string labels = 10;
+  bytes threadgate = 11;
+  bytes interaction_settings = 12;
+  google.protobuf.Timestamp created_at = 13;
+  google.protobuf.Timestamp updated_at = 14;
+  bool is_auto_saved = 15;
+}
+
+// Draft image
+message DraftImage {
+  string uri = 1;
+  int32 width = 2;
+  int32 height = 3;
+  string alt_text = 4;
+}
+
+// Draft video
+message DraftVideo {
+  string uri = 1;
+  int32 width = 2;
+  int32 height = 3;
+}

@@ -1,0 +1,887 @@
+/*
+ * Copyright (c) 2025 Neo Qiss
+ * All rights reserved.
+ * 
+ * This software is proprietary and confidential.
+ * Unauthorized copying, distribution, or use is strictly prohibited.
+ */
+
+syntax = "proto3";
+
+package sonet.note.grpc;
+
+import "common/common.proto";
+import "common/pagination.proto";
+import "common/timestamp.proto";
+
+option go_package = "github.com/sonet/proto/note";
+option java_package = "com.sonet.proto.note";
+option java_outer_classname = "NoteServiceProto";
+
+// ========== HIGH-PERFORMANCE NOTE GRPC SERVICE ==========
+
+/**
+ * @brief Twitter-Scale gRPC Service for Note Operations
+ * 
+ * Provides high-performance, low-latency gRPC endpoints for:
+ * - Core note CRUD with sub-millisecond response times
+ * - Bulk operations for timeline generation
+ * - Real-time engagement tracking
+ * - Advanced search with pagination
+ * - Analytics and metrics aggregation
+ * - Cross-service communication
+ */
+service NoteService {
+    // ========== CORE NOTE OPERATIONS ==========
+    
+    /**
+     * @brief Create a new note with attachments
+     * Performance target: < 10ms response time
+     */
+    rpc CreateNote(CreateNoteRequest) returns (CreateNoteResponse);
+    
+    /**
+     * @brief Get note by ID with optimized loading
+     * Performance target: < 5ms response time
+     */
+    rpc GetNote(GetNoteRequest) returns (GetNoteResponse);
+    
+    /**
+     * @brief Update note content (within edit window)
+     */
+    rpc UpdateNote(UpdateNoteRequest) returns (UpdateNoteResponse);
+    
+    /**
+     * @brief Delete note with cascade handling
+     */
+    rpc DeleteNote(DeleteNoteRequest) returns (DeleteNoteResponse);
+    
+    /**
+     * @brief Get multiple notes in single request (batch optimization)
+     * Performance target: < 20ms for 100 notes
+     */
+    rpc GetNotesBatch(GetNotesBatchRequest) returns (GetNotesBatchResponse);
+
+    // ========== ENGAGEMENT OPERATIONS ==========
+    
+    /**
+     * @brief Like/unlike note with real-time updates
+     * Performance target: < 3ms response time
+     */
+    rpc LikeNote(LikeNoteRequest) returns (LikeNoteResponse);
+    
+    /**
+     * @brief Renote (retweet) operations
+     */
+    rpc RenoteNote(RenoteNoteRequest) returns (RenoteNoteResponse);
+    
+    /**
+     * @brief Quote renote with additional content
+     */
+    rpc QuoteRenote(QuoteRenoteRequest) returns (QuoteRenoteResponse);
+    
+    /**
+     * @brief Bookmark note for later reading
+     */
+    rpc BookmarkNote(BookmarkNoteRequest) returns (BookmarkNoteResponse);
+
+    // ========== TIMELINE OPERATIONS ==========
+    
+    /**
+     * @brief Get personalized home timeline
+     * Performance target: < 15ms for 20 notes
+     */
+    rpc GetHomeTimeline(GetTimelineRequest) returns (GetTimelineResponse);
+    
+    /**
+     * @brief Get user's notes timeline
+     */
+    rpc GetUserTimeline(GetUserTimelineRequest) returns (GetTimelineResponse);
+    
+    /**
+     * @brief Get public timeline with trending content
+     */
+    rpc GetPublicTimeline(GetTimelineRequest) returns (GetTimelineResponse);
+    
+    /**
+     * @brief Get trending notes and topics
+     */
+    rpc GetTrendingTimeline(GetTrendingRequest) returns (GetTimelineResponse);
+
+    // ========== SEARCH OPERATIONS ==========
+    
+    /**
+     * @brief Advanced note search with filters
+     * Performance target: < 50ms with relevance ranking
+     */
+    rpc SearchNotes(SearchNotesRequest) returns (SearchNotesResponse);
+    
+    /**
+     * @brief Search by hashtag with trend analysis
+     */
+    rpc SearchByHashtag(SearchByHashtagRequest) returns (SearchNotesResponse);
+    
+    /**
+     * @brief Get trending hashtags and topics
+     */
+    rpc GetTrendingHashtags(GetTrendingHashtagsRequest) returns (GetTrendingHashtagsResponse);
+
+    // ========== ANALYTICS OPERATIONS ==========
+    
+    /**
+     * @brief Get comprehensive note analytics
+     */
+    rpc GetNoteAnalytics(GetNoteAnalyticsRequest) returns (GetNoteAnalyticsResponse);
+    
+    /**
+     * @brief Get real-time engagement metrics
+     */
+    rpc GetLiveEngagement(GetLiveEngagementRequest) returns (GetLiveEngagementResponse);
+    
+    /**
+     * @brief Get user note statistics
+     */
+    rpc GetUserNoteStats(GetUserNoteStatsRequest) returns (GetUserNoteStatsResponse);
+
+    // ========== THREAD OPERATIONS ==========
+    
+    /**
+     * @brief Get conversation thread
+     */
+    rpc GetThread(GetThreadRequest) returns (GetThreadResponse);
+    
+    /**
+     * @brief Create reply to note
+     */
+    rpc CreateReply(CreateReplyRequest) returns (CreateNoteResponse);
+
+    // ========== STREAMING OPERATIONS ==========
+    
+    /**
+     * @brief Stream real-time timeline updates
+     */
+    rpc StreamTimeline(StreamTimelineRequest) returns (stream TimelineUpdate);
+    
+    /**
+     * @brief Stream live engagement updates
+     */
+    rpc StreamEngagement(StreamEngagementRequest) returns (stream EngagementUpdate);
+
+    // ========== MODERATION OPERATIONS ==========
+    
+    /**
+     * @brief Report note for policy violation
+     */
+    rpc ReportNote(ReportNoteRequest) returns (ReportNoteResponse);
+    
+    /**
+     * @brief Get content moderation status
+     */
+    rpc GetModerationStatus(GetModerationStatusRequest) returns (GetModerationStatusResponse);
+}
+
+// ========== NOTE DATA STRUCTURES ==========
+
+/**
+ * @brief Core Note message with all Twitter-like features
+ */
+message Note {
+    string note_id = 1;
+    string author_id = 2;
+    string content = 3;
+    
+    // Relationship fields
+    string reply_to_id = 4;
+    string quote_note_id = 5;
+    string thread_id = 6;
+    
+    // Engagement metrics
+    int32 like_count = 7;
+    int32 renote_count = 8;
+    int32 reply_count = 9;
+    int32 quote_count = 10;
+    int32 bookmark_count = 11;
+    int32 view_count = 12;
+    
+    // Content features
+    repeated string hashtags = 13;
+    repeated string mentions = 14;
+    repeated string urls = 15;
+    repeated Attachment attachments = 16;
+    
+    // Metadata
+    NoteVisibility visibility = 17;
+    bool is_sensitive = 18;
+    bool is_edited = 19;
+    sonet.common.Timestamp created_at = 20;
+    sonet.common.Timestamp updated_at = 21;
+    sonet.common.Timestamp edited_at = 22;
+    
+    // Language and location
+    string language = 23;
+    Location location = 24;
+    
+    // Analytics data (for author only)
+    EngagementMetrics engagement_metrics = 25;
+    
+    // User interaction state (for requesting user)
+    UserInteractionState user_state = 26;
+}
+
+/**
+ * @brief Attachment data with media variants
+ */
+message Attachment {
+    string attachment_id = 1;
+    AttachmentType type = 2;
+    string url = 3;
+    string preview_url = 4;
+    
+    // Media properties
+    int32 width = 5;
+    int32 height = 6;
+    int64 file_size = 7;
+    string mime_type = 8;
+    double duration = 9;
+    
+    // Descriptive content
+    string alt_text = 10;
+    string description = 11;
+    
+    // Type-specific data
+    oneof type_data {
+        TenorGifData tenor_gif = 12;
+        PollData poll = 13;
+        LocationData location_data = 14;
+        LinkPreview link_preview = 15;
+    }
+    
+    // Processing status
+    ProcessingStatus status = 16;
+    repeated string processing_errors = 17;
+    
+    // Content safety
+    bool is_sensitive = 18;
+    double content_safety_score = 19;
+    map<string, string> moderation_flags = 20;
+}
+
+/**
+ * @brief User's interaction state with a note
+ */
+message UserInteractionState {
+    bool has_liked = 1;
+    bool has_renoted = 2;
+    bool has_bookmarked = 3;
+    bool has_replied = 4;
+    bool has_viewed = 5;
+    sonet.common.Timestamp last_interaction = 6;
+}
+
+/**
+ * @brief Engagement metrics for analytics
+ */
+message EngagementMetrics {
+    // Basic counts
+    int32 total_engagements = 1;
+    int32 unique_viewers = 2;
+    int32 click_through_rate = 3;
+    
+    // Time-based metrics
+    repeated HourlyMetric hourly_metrics = 4;
+    repeated DailyMetric daily_metrics = 5;
+    
+    // Demographic breakdown
+    map<string, int32> engagement_by_age_group = 6;
+    map<string, int32> engagement_by_location = 7;
+    map<string, int32> engagement_by_platform = 8;
+    
+    // Performance indicators
+    double viral_coefficient = 9;
+    double engagement_rate = 10;
+    double conversion_rate = 11;
+}
+
+/**
+ * @brief Location data for geo-tagged notes
+ */
+message Location {
+    string place_id = 1;
+    string name = 2;
+    string address = 3;
+    double latitude = 4;
+    double longitude = 5;
+    string city = 6;
+    string country = 7;
+    string country_code = 8;
+}
+
+/**
+ * @brief Tenor GIF-specific data
+ */
+message TenorGifData {
+    string tenor_id = 1;
+    string search_term = 2;
+    string title = 3;
+    string content_description = 4;
+    repeated string tags = 5;
+    string category = 6;
+    bool has_audio = 7;
+    int32 view_count = 8;
+    double rating = 9;
+}
+
+/**
+ * @brief Poll data for interactive content
+ */
+message PollData {
+    string poll_id = 1;
+    string question = 2;
+    repeated PollOption options = 3;
+    bool multiple_choice = 4;
+    bool anonymous = 5;
+    sonet.common.Timestamp expires_at = 6;
+    int32 total_votes = 7;
+    bool is_expired = 8;
+    repeated string voted_user_ids = 9;
+}
+
+message PollOption {
+    string option_id = 1;
+    string text = 2;
+    int32 vote_count = 3;
+    double percentage = 4;
+    repeated string voter_ids = 5;
+}
+
+/**
+ * @brief Link preview data
+ */
+message LinkPreview {
+    string url = 1;
+    string title = 2;
+    string description = 3;
+    string site_name = 4;
+    string author = 5;
+    string thumbnail_url = 6;
+    string favicon_url = 7;
+    bool is_video = 8;
+    bool is_image = 9;
+    bool is_article = 10;
+    int32 reading_time = 11;
+}
+
+/**
+ * @brief Location-specific attachment data
+ */
+message LocationData {
+    string place_id = 1;
+    string name = 2;
+    string address = 3;
+    double latitude = 4;
+    double longitude = 5;
+    string city = 6;
+    string country = 7;
+    string country_code = 8;
+    string timezone = 9;
+    map<string, string> metadata = 10;
+}
+
+// ========== ENUMS ==========
+
+enum NoteVisibility {
+    PUBLIC = 0;
+    FOLLOWERS = 1;
+    PRIVATE = 2;
+    UNLISTED = 3;
+}
+
+enum AttachmentType {
+    IMAGE = 0;
+    VIDEO = 1;
+    GIF = 2;
+    TENOR_GIF = 3;
+    AUDIO = 4;
+    DOCUMENT = 5;
+    LINK_PREVIEW = 6;
+    POLL = 7;
+    LOCATION = 8;
+    QUOTE_NOTE = 9;
+    THREAD = 10;
+}
+
+enum ProcessingStatus {
+    PENDING = 0;
+    PROCESSING = 1;
+    COMPLETED = 2;
+    FAILED = 3;
+    VIRUS_DETECTED = 4;
+    REJECTED = 5;
+}
+
+enum SortOrder {
+    CHRONOLOGICAL = 0;
+    RELEVANCE = 1;
+    ENGAGEMENT = 2;
+    TRENDING = 3;
+}
+
+enum TimelineType {
+    HOME = 0;
+    USER = 1;
+    PUBLIC = 2;
+    TRENDING = 3;
+    MENTIONS = 4;
+    BOOKMARKS = 5;
+}
+
+// ========== REQUEST/RESPONSE MESSAGES ==========
+
+// Create Note
+message CreateNoteRequest {
+    string user_id = 1;
+    string content = 2;
+    string reply_to_id = 3;
+    string quote_note_id = 4;
+    NoteVisibility visibility = 5;
+    bool is_sensitive = 6;
+    repeated CreateAttachmentRequest attachments = 7;
+    Location location = 8;
+    sonet.common.Timestamp scheduled_at = 9;
+    repeated string tags = 10;
+}
+
+message CreateAttachmentRequest {
+    AttachmentType type = 1;
+    string url = 2;
+    string alt_text = 3;
+    string description = 4;
+    oneof type_data {
+        TenorGifData tenor_gif = 5;
+        PollData poll = 6;
+        LocationData location_data = 7;
+        LinkPreview link_preview = 8;
+    }
+}
+
+message CreateNoteResponse {
+    bool success = 1;
+    Note note = 2;
+    string error_message = 3;
+    int32 error_code = 4;
+}
+
+// Get Note
+message GetNoteRequest {
+    string note_id = 1;
+    string requesting_user_id = 2;
+    bool include_thread_context = 3;
+    bool include_analytics = 4;
+}
+
+message GetNoteResponse {
+    bool success = 1;
+    Note note = 2;
+    repeated Note thread_context = 3;
+    string error_message = 4;
+    int32 error_code = 5;
+}
+
+// Update Note
+message UpdateNoteRequest {
+    string note_id = 1;
+    string user_id = 2;
+    string content = 3;
+    bool is_sensitive = 4;
+    repeated CreateAttachmentRequest new_attachments = 5;
+    repeated string remove_attachment_ids = 6;
+}
+
+message UpdateNoteResponse {
+    bool success = 1;
+    Note note = 2;
+    string error_message = 3;
+    int32 error_code = 4;
+}
+
+// Delete Note
+message DeleteNoteRequest {
+    string note_id = 1;
+    string user_id = 2;
+    bool cascade_delete = 3;
+}
+
+message DeleteNoteResponse {
+    bool success = 1;
+    string message = 2;
+    int32 deleted_count = 3;
+    string error_message = 4;
+    int32 error_code = 5;
+}
+
+// Batch Operations
+message GetNotesBatchRequest {
+    repeated string note_ids = 1;
+    string requesting_user_id = 2;
+    bool include_analytics = 3;
+}
+
+message GetNotesBatchResponse {
+    bool success = 1;
+    repeated Note notes = 2;
+    repeated string not_found_ids = 3;
+    string error_message = 4;
+    int32 error_code = 5;
+}
+
+// Engagement Operations
+message LikeNoteRequest {
+    string note_id = 1;
+    string user_id = 2;
+    bool like = 3; // true to like, false to unlike
+}
+
+message LikeNoteResponse {
+    bool success = 1;
+    int32 like_count = 2;
+    bool user_has_liked = 3;
+    string error_message = 4;
+    int32 error_code = 5;
+}
+
+message RenoteNoteRequest {
+    string note_id = 1;
+    string user_id = 2;
+    bool renote = 3; // true to renote, false to unrenote
+}
+
+message RenoteNoteResponse {
+    bool success = 1;
+    Note renote = 2;
+    int32 renote_count = 3;
+    string error_message = 4;
+    int32 error_code = 5;
+}
+
+message QuoteRenoteRequest {
+    string note_id = 1;
+    string user_id = 2;
+    string additional_content = 3;
+    repeated CreateAttachmentRequest attachments = 4;
+}
+
+message QuoteRenoteResponse {
+    bool success = 1;
+    Note quote_note = 2;
+    string error_message = 3;
+    int32 error_code = 4;
+}
+
+message BookmarkNoteRequest {
+    string note_id = 1;
+    string user_id = 2;
+    bool bookmark = 3; // true to bookmark, false to unbookmark
+}
+
+message BookmarkNoteResponse {
+    bool success = 1;
+    bool user_has_bookmarked = 2;
+    string error_message = 3;
+    int32 error_code = 4;
+}
+
+// Timeline Operations
+message GetTimelineRequest {
+    string user_id = 1;
+    TimelineType timeline_type = 2;
+    sonet.common.PaginationRequest pagination = 3;
+    SortOrder sort_order = 4;
+    bool include_replies = 5;
+    bool include_renotes = 6;
+    repeated string filter_languages = 7;
+    Location filter_location = 8;
+}
+
+message GetUserTimelineRequest {
+    string target_user_id = 1;
+    string requesting_user_id = 2;
+    sonet.common.PaginationRequest pagination = 3;
+    bool include_replies = 4;
+    bool include_renotes = 5;
+    bool pinned_only = 6;
+}
+
+message GetTimelineResponse {
+    bool success = 1;
+    repeated Note notes = 2;
+    sonet.common.PaginationResponse pagination = 3;
+    repeated TrendingTopic trending_topics = 4;
+    string error_message = 5;
+    int32 error_code = 6;
+}
+
+message GetTrendingRequest {
+    string user_id = 1;
+    string location_code = 2;
+    string language = 3;
+    sonet.common.PaginationRequest pagination = 4;
+    string timeframe = 5; // "1h", "24h", "7d"
+}
+
+// Search Operations
+message SearchNotesRequest {
+    string query = 1;
+    string user_id = 2;
+    sonet.common.PaginationRequest pagination = 3;
+    SortOrder sort_order = 4;
+    
+    // Advanced filters
+    repeated string filter_languages = 5;
+    sonet.common.Timestamp from_date = 6;
+    sonet.common.Timestamp to_date = 7;
+    repeated string filter_user_ids = 8;
+    bool has_media = 9;
+    bool has_links = 10;
+    int32 min_likes = 11;
+    int32 min_renotes = 12;
+    Location filter_location = 13;
+}
+
+message SearchNotesResponse {
+    bool success = 1;
+    repeated Note notes = 2;
+    sonet.common.PaginationResponse pagination = 3;
+    repeated string related_queries = 4;
+    repeated TrendingTopic trending_hashtags = 5;
+    SearchMetrics metrics = 6;
+    string error_message = 7;
+    int32 error_code = 8;
+}
+
+message SearchByHashtagRequest {
+    string hashtag = 1;
+    string user_id = 2;
+    sonet.common.PaginationRequest pagination = 3;
+    SortOrder sort_order = 4;
+    string timeframe = 5;
+}
+
+message GetTrendingHashtagsRequest {
+    string user_id = 1;
+    string location_code = 2;
+    string language = 3;
+    int32 limit = 4;
+    string timeframe = 5;
+}
+
+message GetTrendingHashtagsResponse {
+    bool success = 1;
+    repeated TrendingTopic trending_hashtags = 2;
+    string error_message = 3;
+    int32 error_code = 4;
+}
+
+message TrendingTopic {
+    string hashtag = 1;
+    string name = 2;
+    int32 note_count = 3;
+    double trend_score = 4;
+    double change_rate = 5;
+    string category = 6;
+    string description = 7;
+    repeated string related_hashtags = 8;
+}
+
+message SearchMetrics {
+    int32 total_results = 1;
+    double search_time_ms = 2;
+    string result_quality = 3;
+    bool has_more_results = 4;
+}
+
+// Analytics Operations
+message GetNoteAnalyticsRequest {
+    string note_id = 1;
+    string user_id = 2;
+    string timeframe = 3; // "1h", "24h", "7d", "30d"
+    repeated string metrics = 4; // specific metrics to include
+}
+
+message GetNoteAnalyticsResponse {
+    bool success = 1;
+    EngagementMetrics metrics = 2;
+    repeated TimeSeriesData time_series = 3;
+    map<string, int32> demographic_breakdown = 4;
+    string error_message = 5;
+    int32 error_code = 6;
+}
+
+message GetLiveEngagementRequest {
+    string note_id = 1;
+    string user_id = 2;
+}
+
+message GetLiveEngagementResponse {
+    bool success = 1;
+    int32 current_views = 2;
+    int32 concurrent_viewers = 3;
+    repeated RecentEngagement recent_engagements = 4;
+    string error_message = 5;
+    int32 error_code = 6;
+}
+
+message GetUserNoteStatsRequest {
+    string user_id = 1;
+    string requesting_user_id = 2;
+    string timeframe = 3;
+}
+
+message GetUserNoteStatsResponse {
+    bool success = 1;
+    UserNoteStats stats = 2;
+    string error_message = 3;
+    int32 error_code = 4;
+}
+
+message UserNoteStats {
+    int32 total_notes = 1;
+    int32 total_likes_received = 2;
+    int32 total_renotes_received = 3;
+    double average_engagement_rate = 4;
+    int32 followers_gained = 5;
+    repeated TopPerformingNote top_notes = 6;
+    repeated HourlyMetric noteing_pattern = 7;
+}
+
+message TopPerformingNote {
+    string note_id = 1;
+    string content = 2;
+    int32 total_engagement = 3;
+    double engagement_rate = 4;
+}
+
+// Thread Operations
+message GetThreadRequest {
+    string note_id = 1;
+    string user_id = 2;
+    sonet.common.PaginationRequest pagination = 3;
+    SortOrder sort_order = 4;
+}
+
+message GetThreadResponse {
+    bool success = 1;
+    repeated Note thread_notes = 2;
+    string root_note_id = 3;
+    sonet.common.PaginationResponse pagination = 4;
+    string error_message = 5;
+    int32 error_code = 6;
+}
+
+message CreateReplyRequest {
+    string parent_note_id = 1;
+    string user_id = 2;
+    string content = 3;
+    repeated CreateAttachmentRequest attachments = 4;
+    bool is_sensitive = 5;
+}
+
+// Streaming Operations
+message StreamTimelineRequest {
+    string user_id = 1;
+    TimelineType timeline_type = 2;
+    repeated string filter_languages = 3;
+    Location filter_location = 4;
+}
+
+message TimelineUpdate {
+    UpdateType update_type = 1;
+    Note note = 2;
+    string deleted_note_id = 3;
+    sonet.common.Timestamp timestamp = 4;
+}
+
+message StreamEngagementRequest {
+    string note_id = 1;
+    string user_id = 2;
+}
+
+message EngagementUpdate {
+    string note_id = 1;
+    string engagement_type = 2; // "like", "renote", "reply", "view"
+    int32 count = 3;
+    string user_id = 4;
+    sonet.common.Timestamp timestamp = 5;
+}
+
+enum UpdateType {
+    NOTE_CREATED = 0;
+    NOTE_UPDATED = 1;
+    NOTE_DELETED = 2;
+    ENGAGEMENT_UPDATED = 3;
+}
+
+// Moderation
+message ReportNoteRequest {
+    string note_id = 1;
+    string reporter_user_id = 2;
+    string reason = 3;
+    string description = 4;
+    repeated string evidence_urls = 5;
+}
+
+message ReportNoteResponse {
+    bool success = 1;
+    string report_id = 2;
+    string message = 3;
+    string error_message = 4;
+    int32 error_code = 5;
+}
+
+message GetModerationStatusRequest {
+    string note_id = 1;
+    string user_id = 2;
+}
+
+message GetModerationStatusResponse {
+    bool success = 1;
+    ModerationStatus status = 2;
+    string error_message = 3;
+    int32 error_code = 4;
+}
+
+message ModerationStatus {
+    bool is_under_review = 1;
+    bool is_flagged = 2;
+    repeated string flags = 3;
+    double content_safety_score = 4;
+    sonet.common.Timestamp reviewed_at = 5;
+}
+
+// Analytics Helper Messages
+message HourlyMetric {
+    int32 hour = 1;
+    int32 value = 2;
+    double percentage_change = 3;
+}
+
+message DailyMetric {
+    string date = 1;
+    int32 value = 2;
+    double percentage_change = 3;
+}
+
+message TimeSeriesData {
+    string metric_name = 1;
+    repeated DataPoint data_points = 2;
+}
+
+message DataPoint {
+    sonet.common.Timestamp timestamp = 1;
+    double value = 2;
+}
+
+message RecentEngagement {
+    string user_id = 1;
+    string engagement_type = 2;
+    sonet.common.Timestamp timestamp = 3;
+}

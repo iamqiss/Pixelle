@@ -1,0 +1,34 @@
+#
+# Copyright (c) 2025 Neo Qiss
+# All rights reserved.
+# 
+# This software is proprietary and confidential.
+# Unauthorized copying, distribution, or use is strictly prohibited.
+#
+
+collector:
+  grpc-server:
+    host-port: 0.0.0.0:14250
+  http-server:
+    host-port: 0.0.0.0:14268
+
+storage:
+  type: memory
+  memory:
+    max-traces: 10000
+
+query:
+  max-clock-skew-adjustment: 0s
+
+processor:
+  jaeger-binary:
+    server-max-packet-size: 65000
+    server-host-port: 0.0.0.0:14267
+    workers: 10
+    server-queue-size: 1000
+
+  jaeger-compact:
+    server-max-packet-size: 65000
+    server-host-port: 0.0.0.0:14268
+    workers: 10
+    server-queue-size: 1000

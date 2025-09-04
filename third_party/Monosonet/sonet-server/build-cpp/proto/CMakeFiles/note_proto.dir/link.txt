@@ -1,0 +1,2 @@
+/usr/bin/ar qc libnote_proto.a CMakeFiles/note_proto.dir/generated/note.pb.cc.o CMakeFiles/note_proto.dir/generated/note.grpc.pb.cc.o
+/usr/bin/ranlib libnote_proto.a

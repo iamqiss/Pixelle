@@ -1,0 +1,14 @@
+{
+  "_copyright": "Copyright (c) 2025 Neo Qiss. All rights reserved. Proprietary and confidential.",
+  "host": "redis",
+  "port": 6379,
+  "password": "",
+  "database": 0,
+  "pool_size": 10,
+  "connection_timeout": 5,
+  "read_timeout": 3,
+  "write_timeout": 3,
+  "keep_alive": true,
+  "key_prefix": "sonet:dev:",
+  "cache_ttl": 3600
+}

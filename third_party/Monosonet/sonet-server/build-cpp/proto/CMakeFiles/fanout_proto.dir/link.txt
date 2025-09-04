@@ -1,0 +1,2 @@
+/usr/bin/ar qc libfanout_proto.a CMakeFiles/fanout_proto.dir/generated/fanout.pb.cc.o CMakeFiles/fanout_proto.dir/generated/fanout.grpc.pb.cc.o
+/usr/bin/ranlib libfanout_proto.a

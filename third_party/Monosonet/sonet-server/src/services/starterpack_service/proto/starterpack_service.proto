@@ -1,0 +1,201 @@
+syntax = "proto3";
+
+package sonet.starterpack.v1;
+
+option go_package = "sonet/src/services/starterpack_service/proto";
+
+import "google/protobuf/timestamp.proto";
+
+// Starterpack Service
+service StarterpackService {
+  // Create a new starterpack
+  rpc CreateStarterpack(CreateStarterpackRequest) returns (CreateStarterpackResponse);
+  
+  // Get a starterpack by ID
+  rpc GetStarterpack(GetStarterpackRequest) returns (GetStarterpackResponse);
+  
+  // Get starterpacks created by a user
+  rpc GetUserStarterpacks(GetUserStarterpacksRequest) returns (GetUserStarterpacksResponse);
+  
+  // Update a starterpack
+  rpc UpdateStarterpack(UpdateStarterpackRequest) returns (UpdateStarterpackResponse);
+  
+  // Delete a starterpack
+  rpc DeleteStarterpack(DeleteStarterpackRequest) returns (DeleteStarterpackResponse);
+  
+  // Add an item to a starterpack
+  rpc AddStarterpackItem(AddStarterpackItemRequest) returns (AddStarterpackItemResponse);
+  
+  // Remove an item from a starterpack
+  rpc RemoveStarterpackItem(RemoveStarterpackItemRequest) returns (RemoveStarterpackItemResponse);
+  
+  // Get starterpack items
+  rpc GetStarterpackItems(GetStarterpackItemsRequest) returns (GetStarterpackItemsResponse);
+  
+  // Get suggested starterpacks for a user
+  rpc GetSuggestedStarterpacks(GetSuggestedStarterpacksRequest) returns (GetSuggestedStarterpacksResponse);
+}
+
+// Item types for starterpacks
+enum ItemType {
+  ITEM_TYPE_UNSPECIFIED = 0;
+  ITEM_TYPE_PROFILE = 1;
+  ITEM_TYPE_FEED = 2;
+}
+
+// Starterpack model
+message Starterpack {
+  string starterpack_id = 1;
+  string creator_id = 2;
+  string name = 3;
+  string description = 4;
+  string avatar_url = 5;
+  bool is_public = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+  int32 item_count = 9;
+}
+
+// Starterpack item model
+message StarterpackItem {
+  string item_id = 1;
+  string starterpack_id = 2;
+  ItemType item_type = 3;
+  string item_uri = 4;
+  int32 item_order = 5;
+  google.protobuf.Timestamp created_at = 6;
+}
+
+// Create starterpack request
+message CreateStarterpackRequest {
+  string creator_id = 1;
+  string name = 2;
+  string description = 3;
+  string avatar_url = 4;
+  bool is_public = 5;
+}
+
+// Create starterpack response
+message CreateStarterpackResponse {
+  bool success = 1;
+  Starterpack starterpack = 2;
+  string error_message = 3;
+}
+
+// Get starterpack request
+message GetStarterpackRequest {
+  string starterpack_id = 1;
+  string requester_id = 2; // For permission checking
+}
+
+// Get starterpack response
+message GetStarterpackResponse {
+  bool success = 1;
+  Starterpack starterpack = 2;
+  string error_message = 3;
+}
+
+// Get user starterpacks request
+message GetUserStarterpacksRequest {
+  string user_id = 1;
+  string requester_id = 2; // For permission checking
+  int32 limit = 3;
+  string cursor = 4;
+}
+
+// Get user starterpacks response
+message GetUserStarterpacksResponse {
+  bool success = 1;
+  repeated Starterpack starterpacks = 2;
+  string next_cursor = 3;
+  string error_message = 4;
+}
+
+// Update starterpack request
+message UpdateStarterpackRequest {
+  string starterpack_id = 1;
+  string requester_id = 2; // Must be creator
+  string name = 3;
+  string description = 4;
+  string avatar_url = 5;
+  bool is_public = 6;
+}
+
+// Update starterpack response
+message UpdateStarterpackResponse {
+  bool success = 1;
+  Starterpack starterpack = 2;
+  string error_message = 3;
+}
+
+// Delete starterpack request
+message DeleteStarterpackRequest {
+  string starterpack_id = 1;
+  string requester_id = 2; // Must be creator
+}
+
+// Delete starterpack response
+message DeleteStarterpackResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+
+// Add starterpack item request
+message AddStarterpackItemRequest {
+  string starterpack_id = 1;
+  ItemType item_type = 2;
+  string item_uri = 3;
+  int32 item_order = 4;
+  string added_by = 5; // Must have permission
+}
+
+// Add starterpack item response
+message AddStarterpackItemResponse {
+  bool success = 1;
+  StarterpackItem item = 2;
+  string error_message = 3;
+}
+
+// Remove starterpack item request
+message RemoveStarterpackItemRequest {
+  string starterpack_id = 1;
+  string item_id = 2;
+  string removed_by = 3; // Must have permission
+}
+
+// Remove starterpack item response
+message RemoveStarterpackItemResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+
+// Get starterpack items request
+message GetStarterpackItemsRequest {
+  string starterpack_id = 1;
+  string requester_id = 2; // For permission checking
+  int32 limit = 3;
+  string cursor = 4;
+}
+
+// Get starterpack items response
+message GetStarterpackItemsResponse {
+  bool success = 1;
+  repeated StarterpackItem items = 2;
+  string next_cursor = 3;
+  string error_message = 4;
+}
+
+// Get suggested starterpacks request
+message GetSuggestedStarterpacksRequest {
+  string user_id = 1;
+  int32 limit = 2;
+  string cursor = 3;
+}
+
+// Get suggested starterpacks response
+message GetSuggestedStarterpacksResponse {
+  bool success = 1;
+  repeated Starterpack starterpacks = 2;
+  string next_cursor = 3;
+  string error_message = 4;
+}

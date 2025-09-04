@@ -1,0 +1,254 @@
+/*
+ * Copyright (c) 2025 Neo Qiss
+ * All rights reserved.
+ * 
+ * This software is proprietary and confidential.
+ * Unauthorized copying, distribution, or use is strictly prohibited.
+ */
+
+syntax = "proto3";
+
+package sonet.messaging;
+
+import "common/common.proto";
+import "common/timestamp.proto";
+import "common/pagination.proto";
+
+option cc_enable_arenas = true;
+
+// Message types
+enum MessageType {
+  MESSAGE_TYPE_UNSPECIFIED = 0;
+  MESSAGE_TYPE_TEXT = 1;
+  MESSAGE_TYPE_IMAGE = 2;
+  MESSAGE_TYPE_VIDEO = 3;
+  MESSAGE_TYPE_AUDIO = 4;
+  MESSAGE_TYPE_FILE = 5;
+  MESSAGE_TYPE_LOCATION = 6;
+  MESSAGE_TYPE_SYSTEM = 7;
+}
+
+// Message status
+enum MessageStatus {
+  MESSAGE_STATUS_UNSPECIFIED = 0;
+  MESSAGE_STATUS_SENT = 1;
+  MESSAGE_STATUS_DELIVERED = 2;
+  MESSAGE_STATUS_READ = 3;
+  MESSAGE_STATUS_FAILED = 4;
+}
+
+// Chat types
+enum ChatType {
+  CHAT_TYPE_UNSPECIFIED = 0;
+  CHAT_TYPE_DIRECT = 1;
+  CHAT_TYPE_GROUP = 2;
+  CHAT_TYPE_CHANNEL = 3;
+}
+
+// Encryption type
+enum EncryptionType {
+  ENCRYPTION_TYPE_UNSPECIFIED = 0;
+  ENCRYPTION_TYPE_NONE = 1;
+  ENCRYPTION_TYPE_AES256 = 2;
+  ENCRYPTION_TYPE_E2E = 3;
+}
+
+// Message entity
+message Message {
+  string message_id = 1;
+  string chat_id = 2;
+  string sender_id = 3;
+  string content = 4;
+  MessageType type = 5;
+  MessageStatus status = 6;
+  EncryptionType encryption = 7;
+  string encrypted_content = 8;
+  repeated string attachments = 9;
+  string reply_to_message_id = 10;
+  bool is_edited = 11;
+  common.Timestamp created_at = 12;
+  common.Timestamp updated_at = 13;
+  common.Timestamp delivered_at = 14;
+  common.Timestamp read_at = 15;
+}
+
+// Chat entity
+message Chat {
+  string chat_id = 1;
+  string name = 2;
+  string description = 3;
+  ChatType type = 4;
+  string creator_id = 5;
+  repeated string participant_ids = 6;
+  string last_message_id = 7;
+  common.Timestamp last_activity = 8;
+  bool is_archived = 9;
+  bool is_muted = 10;
+  string avatar_url = 11;
+  map<string, string> settings = 12;
+  common.Timestamp created_at = 13;
+  common.Timestamp updated_at = 14;
+}
+
+// Typing indicator
+message TypingIndicator {
+  string chat_id = 1;
+  string user_id = 2;
+  bool is_typing = 3;
+  common.Timestamp timestamp = 4;
+}
+
+// Read receipt
+message ReadReceipt {
+  string message_id = 1;
+  string user_id = 2;
+  common.Timestamp read_at = 3;
+}
+
+// Message attachment
+message Attachment {
+  string attachment_id = 1;
+  string filename = 2;
+  string content_type = 3;
+  int64 size = 4;
+  string url = 5;
+  string thumbnail_url = 6;
+  map<string, string> metadata = 7;
+}
+
+// Requests and Responses
+
+// Send message
+message SendMessageRequest {
+  string chat_id = 1;
+  string content = 2;
+  MessageType type = 3;
+  repeated string attachment_ids = 4;
+  string reply_to_message_id = 5;
+  EncryptionType encryption = 6;
+}
+
+message SendMessageResponse {
+  common.Status status = 1;
+  Message message = 2;
+}
+
+// Get messages
+message GetMessagesRequest {
+  string chat_id = 1;
+  common.PaginationRequest pagination = 2;
+  common.Timestamp before = 3;
+  common.Timestamp after = 4;
+}
+
+message GetMessagesResponse {
+  common.Status status = 1;
+  repeated Message messages = 2;
+  common.PaginationResponse pagination = 3;
+}
+
+// Create chat
+message CreateChatRequest {
+  string name = 1;
+  string description = 2;
+  ChatType type = 3;
+  repeated string participant_ids = 4;
+  string avatar_url = 5;
+}
+
+message CreateChatResponse {
+  common.Status status = 1;
+  Chat chat = 2;
+}
+
+// Get chats
+message GetChatsRequest {
+  string user_id = 1;
+  ChatType type = 2;
+  common.PaginationRequest pagination = 3;
+}
+
+message GetChatsResponse {
+  common.Status status = 1;
+  repeated Chat chats = 2;
+  common.PaginationResponse pagination = 3;
+}
+
+// Update message status
+message UpdateMessageStatusRequest {
+  string message_id = 1;
+  MessageStatus status = 2;
+}
+
+message UpdateMessageStatusResponse {
+  common.Status status = 1;
+}
+
+// Search messages
+message SearchMessagesRequest {
+  string query = 1;
+  string chat_id = 2;
+  string user_id = 3;
+  MessageType type = 4;
+  common.PaginationRequest pagination = 5;
+}
+
+message SearchMessagesResponse {
+  common.Status status = 1;
+  repeated Message messages = 2;
+  common.PaginationResponse pagination = 3;
+}
+
+// Upload attachment
+message UploadAttachmentRequest {
+  string filename = 1;
+  string content_type = 2;
+  bytes data = 3;
+}
+
+message UploadAttachmentResponse {
+  common.Status status = 1;
+  Attachment attachment = 2;
+}
+
+// Typing indicator
+message SetTypingRequest {
+  string chat_id = 1;
+  bool is_typing = 2;
+}
+
+message SetTypingResponse {
+  common.Status status = 1;
+}
+
+// WebSocket messages
+message WebSocketMessage {
+  oneof payload {
+    Message new_message = 1;
+    TypingIndicator typing = 2;
+    ReadReceipt read_receipt = 3;
+    MessageStatus message_status_update = 4;
+  }
+}
+
+// Messaging service
+service MessagingService {
+  // Message operations
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
+  rpc GetMessages(GetMessagesRequest) returns (GetMessagesResponse);
+  rpc UpdateMessageStatus(UpdateMessageStatusRequest) returns (UpdateMessageStatusResponse);
+  rpc SearchMessages(SearchMessagesRequest) returns (SearchMessagesResponse);
+  
+  // Chat operations
+  rpc CreateChat(CreateChatRequest) returns (CreateChatResponse);
+  rpc GetChats(GetChatsRequest) returns (GetChatsResponse);
+  
+  // Attachment operations
+  rpc UploadAttachment(UploadAttachmentRequest) returns (UploadAttachmentResponse);
+  
+  // Real-time operations
+  rpc SetTyping(SetTypingRequest) returns (SetTypingResponse);
+  
+  // Streaming endpoints
+  rpc StreamMessages(stream WebSocketMessage) returns (stream WebSocketMessage);
+}

@@ -1,0 +1,104 @@
+name: media_service
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'sonet/src/services/media_service/**'
+      - 'sonet/proto/services/media.proto'
+      - 'sonet/scripts/build/install_aws_sdk.sh'
+      - '.github/workflows/media_service.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'sonet/src/services/media_service/**'
+      - 'sonet/proto/services/media.proto'
+      - 'sonet/scripts/build/install_aws_sdk.sh'
+      - '.github/workflows/media_service.yml'
+
+concurrency:
+  group: media-service-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  AWS_SDK_VERSION: v1.11.210
+  AWS_SDK_PREFIX: ${{ github.workspace }}/_aws-sdk
+
+jobs:
+  build:
+    name: Build (AWS SDK cached)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        build_type: [Release, Debug]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install build prerequisites
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y build-essential cmake pkg-config libssl-dev libcurl4-openssl-dev zlib1g-dev protobuf-compiler libprotobuf-dev ffmpeg imagemagick curl
+          sudo curl -L https://github.com/fullstorydev/grpcurl/releases/download/v1.9.1/grpcurl_1.9.1_linux_x86_64.tar.gz | sudo tar -xz -C /usr/local/bin grpcurl
+
+      - name: Cache AWS SDK
+        id: cache-aws-sdk
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.AWS_SDK_PREFIX }}
+          key: aws-sdk-${{ runner.os }}-${{ env.AWS_SDK_VERSION }}-${{ hashFiles('sonet/scripts/build/install_aws_sdk.sh') }}
+
+      - name: Install AWS SDK (if cache miss)
+        if: steps.cache-aws-sdk.outputs.cache-hit != 'true'
+        run: |
+          bash sonet/scripts/build/install_aws_sdk.sh --version $AWS_SDK_VERSION --prefix "$AWS_SDK_PREFIX"
+
+      - name: Configure
+        run: |
+          cmake -S sonet -B sonet/build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_PREFIX_PATH="${AWS_SDK_PREFIX}" \
+            -DBUILD_GLOBAL_PROTO=OFF -DBUILD_OTHER_SERVICES=OFF -DBUILD_EXTERNAL=OFF -DBUILD_TESTS=OFF
+
+      - name: Build media_service
+        run: cmake --build sonet/build --target media_service -j 4
+
+      - name: Show linkage
+        run: ldd sonet/build/src/services/media_service/media_service || true
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: media_service-${{ matrix.build_type }}
+          path: sonet/build/src/services/media_service/media_service
+
+      - name: HealthCheck smoke (local)
+        run: |
+          timeout 5s ./sonet/build/src/services/media_service/media_service &
+          sleep 2
+          grpcurl -plaintext localhost:50053 sonet.media.MediaService/HealthCheck || true
+
+  test-coverage:
+    name: Tests + Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deps
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y build-essential cmake pkg-config libssl-dev libcurl4-openssl-dev zlib1g-dev protobuf-compiler libprotobuf-dev ffmpeg imagemagick lcov
+      - name: Configure (coverage)
+        run: |
+          cmake -S sonet -B sonet/build -DENABLE_COVERAGE=ON -DBUILD_GLOBAL_PROTO=OFF -DBUILD_OTHER_SERVICES=OFF -DBUILD_EXTERNAL=OFF -DBUILD_TESTS=ON
+      - name: Build
+        run: cmake --build sonet/build -j 4 --target media_service_unit_tests
+      - name: Run tests
+        run: ctest --test-dir sonet/build --output-on-failure
+      - name: Collect coverage
+        run: |
+          lcov --capture --directory sonet/build --output-file coverage.info
+          lcov --remove coverage.info '/usr/*' '*/_deps/*' --output-file coverage.info
+          lcov --list coverage.info
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-info
+          path: coverage.info

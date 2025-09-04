@@ -1,0 +1,573 @@
+/*
+ * Copyright (c) 2025 Neo Qiss
+ * All rights reserved.
+ * 
+ * This software is proprietary and confidential.
+ * Unauthorized copying, distribution, or use is strictly prohibited.
+ */
+
+syntax = "proto3";
+
+package sonet.follow.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/nq-26/sonet/follow/v1;followv1";
+option java_package = "com.sonet.follow.v1";
+option java_multiple_files = true;
+option java_outer_classname = "FollowServiceProto";
+
+// ========== CORE MESSAGE TYPES ==========
+
+/**
+ * Follow relationship representation
+ */
+message Follow {
+  string follow_id = 1;
+  string follower_id = 2;
+  string following_id = 3;
+  FollowType type = 4;
+  FollowStatus status = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  google.protobuf.Timestamp approved_at = 8;
+  
+  // Engagement data
+  int32 interaction_count = 9;
+  google.protobuf.Timestamp last_interaction_at = 10;
+  double engagement_score = 11;
+  
+  // Settings
+  bool is_muted = 12;
+  bool show_retweets = 13;
+  bool show_replies = 14;
+  bool is_close_friend = 15;
+  FollowNotificationLevel notification_level = 16;
+  
+  // Analytics
+  string follow_source = 17;
+  double relationship_strength = 18;
+  int32 mutual_friends_count = 19;
+}
+
+/**
+ * Relationship between two users
+ */
+message Relationship {
+  string relationship_id = 1;
+  string user1_id = 2;
+  string user2_id = 3;
+  RelationshipType type = 4;
+  
+  // Bidirectional flags
+  bool user1_follows_user2 = 5;
+  bool user2_follows_user1 = 6;
+  bool user1_blocks_user2 = 7;
+  bool user2_blocks_user1 = 8;
+  bool user1_mutes_user2 = 9;
+  bool user2_mutes_user1 = 10;
+  
+  // Special flags
+  bool is_close_friends = 11;
+  bool is_verified_relationship = 12;
+  
+  // Timestamps
+  google.protobuf.Timestamp created_at = 13;
+  google.protobuf.Timestamp updated_at = 14;
+  google.protobuf.Timestamp user1_followed_user2_at = 15;
+  google.protobuf.Timestamp user2_followed_user1_at = 16;
+  
+  // Interaction metrics
+  int32 total_interactions = 17;
+  double relationship_strength = 18;
+  double engagement_rate = 19;
+  int32 mutual_followers_count = 20;
+}
+
+/**
+ * User information for lists and recommendations
+ */
+message UserInfo {
+  string user_id = 1;
+  string username = 2;
+  string display_name = 3;
+  string avatar_url = 4;
+  bool is_verified = 5;
+  bool is_private = 6;
+  int32 followers_count = 7;
+  int32 following_count = 8;
+  google.protobuf.Timestamp last_active_at = 9;
+}
+
+/**
+ * Recommendation with score and reasoning
+ */
+message Recommendation {
+  UserInfo user = 1;
+  double score = 2;
+  string reason = 3;
+  RecommendationAlgorithm algorithm = 4;
+  int32 mutual_friends_count = 5;
+  repeated string common_interests = 6;
+}
+
+/**
+ * Paginated response metadata
+ */
+message PaginationInfo {
+  string next_cursor = 1;
+  string previous_cursor = 2;
+  bool has_next = 3;
+  bool has_previous = 4;
+  int32 total_count = 5;
+}
+
+// ========== ENUM DEFINITIONS ==========
+
+enum FollowType {
+  FOLLOW_TYPE_UNSPECIFIED = 0;
+  FOLLOW_TYPE_STANDARD = 1;
+  FOLLOW_TYPE_CLOSE_FRIEND = 2;
+  FOLLOW_TYPE_MUTUAL = 3;
+  FOLLOW_TYPE_PENDING = 4;
+  FOLLOW_TYPE_REQUESTED = 5;
+}
+
+enum FollowStatus {
+  FOLLOW_STATUS_UNSPECIFIED = 0;
+  FOLLOW_STATUS_ACTIVE = 1;
+  FOLLOW_STATUS_INACTIVE = 2;
+  FOLLOW_STATUS_PENDING = 3;
+  FOLLOW_STATUS_REJECTED = 4;
+  FOLLOW_STATUS_CANCELLED = 5;
+}
+
+enum FollowNotificationLevel {
+  NOTIFICATION_LEVEL_UNSPECIFIED = 0;
+  NOTIFICATION_LEVEL_ALL = 1;
+  NOTIFICATION_LEVEL_IMPORTANT = 2;
+  NOTIFICATION_LEVEL_MENTIONS = 3;
+  NOTIFICATION_LEVEL_OFF = 4;
+}
+
+enum RelationshipType {
+  RELATIONSHIP_TYPE_UNSPECIFIED = 0;
+  RELATIONSHIP_TYPE_NONE = 1;
+  RELATIONSHIP_TYPE_FOLLOWING = 2;
+  RELATIONSHIP_TYPE_FOLLOWED_BY = 3;
+  RELATIONSHIP_TYPE_MUTUAL = 4;
+  RELATIONSHIP_TYPE_BLOCKED = 5;
+  RELATIONSHIP_TYPE_BLOCKED_BY = 6;
+  RELATIONSHIP_TYPE_MUTED = 7;
+  RELATIONSHIP_TYPE_CLOSE_FRIENDS = 8;
+  RELATIONSHIP_TYPE_PENDING_INCOMING = 9;
+  RELATIONSHIP_TYPE_PENDING_OUTGOING = 10;
+  RELATIONSHIP_TYPE_RESTRICTED = 11;
+}
+
+enum RecommendationAlgorithm {
+  RECOMMENDATION_ALGORITHM_UNSPECIFIED = 0;
+  RECOMMENDATION_ALGORITHM_MUTUAL_FRIENDS = 1;
+  RECOMMENDATION_ALGORITHM_INTERESTS = 2;
+  RECOMMENDATION_ALGORITHM_ENGAGEMENT = 3;
+  RECOMMENDATION_ALGORITHM_LOCATION = 4;
+  RECOMMENDATION_ALGORITHM_TRENDING = 5;
+  RECOMMENDATION_ALGORITHM_COLLABORATIVE = 6;
+  RECOMMENDATION_ALGORITHM_HYBRID = 7;
+}
+
+// ========== REQUEST/RESPONSE MESSAGES ==========
+
+// Follow Operations
+message FollowUserRequest {
+  string user_id = 1;
+  string follower_id = 2;
+  FollowType type = 3;
+  string source = 4;
+}
+
+message FollowUserResponse {
+  Follow follow = 1;
+  bool success = 2;
+  string message = 3;
+  bool was_already_following = 4;
+}
+
+message UnfollowUserRequest {
+  string user_id = 1;
+  string follower_id = 2;
+}
+
+message UnfollowUserResponse {
+  bool success = 1;
+  string message = 2;
+  bool was_following = 3;
+}
+
+// Block Operations
+message BlockUserRequest {
+  string user_id = 1;
+  string blocker_id = 2;
+  string reason = 3;
+}
+
+message BlockUserResponse {
+  bool success = 1;
+  string message = 2;
+  bool was_already_blocked = 3;
+  bool unfollowed_automatically = 4;
+}
+
+message UnblockUserRequest {
+  string user_id = 1;
+  string blocker_id = 2;
+}
+
+message UnblockUserResponse {
+  bool success = 1;
+  string message = 2;
+  bool was_blocked = 3;
+}
+
+// Mute Operations
+message MuteUserRequest {
+  string user_id = 1;
+  string muter_id = 2;
+  bool mute_notifications = 3;
+  bool mute_content = 4;
+}
+
+message MuteUserResponse {
+  bool success = 1;
+  string message = 2;
+  bool was_already_muted = 3;
+}
+
+message UnmuteUserRequest {
+  string user_id = 1;
+  string muter_id = 2;
+}
+
+message UnmuteUserResponse {
+  bool success = 1;
+  string message = 2;
+  bool was_muted = 3;
+}
+
+// Relationship Queries
+message GetRelationshipRequest {
+  string user1_id = 1;
+  string user2_id = 2;
+}
+
+message GetRelationshipResponse {
+  Relationship relationship = 1;
+  bool found = 2;
+}
+
+message CheckRelationshipRequest {
+  string follower_id = 1;
+  string following_id = 2;
+  string relationship_type = 3; // "following", "blocked", "muted"
+}
+
+message CheckRelationshipResponse {
+  bool exists = 1;
+  google.protobuf.Timestamp since = 2;
+}
+
+// Bulk Operations
+message GetBulkRelationshipsRequest {
+  string user_id = 1;
+  repeated string target_user_ids = 2;
+}
+
+message GetBulkRelationshipsResponse {
+  map<string, Relationship> relationships = 1;
+  repeated string not_found = 2;
+}
+
+message BulkFollowRequest {
+  string follower_id = 1;
+  repeated string user_ids = 2;
+  FollowType type = 3;
+}
+
+message BulkFollowResponse {
+  repeated string successful = 1;
+  repeated string failed = 2;
+  repeated string already_following = 3;
+  repeated string blocked = 4;
+  repeated string pending = 5;
+  int32 total_requested = 6;
+  int32 total_successful = 7;
+}
+
+// Lists
+message GetFollowersRequest {
+  string user_id = 1;
+  string requesting_user_id = 2;
+  int32 limit = 3;
+  string cursor = 4;
+  bool include_analytics = 5;
+}
+
+message GetFollowersResponse {
+  repeated UserInfo followers = 1;
+  PaginationInfo pagination = 2;
+  int32 total_count = 3;
+}
+
+message GetFollowingRequest {
+  string user_id = 1;
+  string requesting_user_id = 2;
+  int32 limit = 3;
+  string cursor = 4;
+  bool include_analytics = 5;
+}
+
+message GetFollowingResponse {
+  repeated UserInfo following = 1;
+  PaginationInfo pagination = 2;
+  int32 total_count = 3;
+}
+
+message GetMutualFriendsRequest {
+  string user1_id = 1;
+  string user2_id = 2;
+  string requesting_user_id = 3;
+  int32 limit = 4;
+}
+
+message GetMutualFriendsResponse {
+  repeated UserInfo mutual_friends = 1;
+  int32 total_count = 2;
+}
+
+// Recommendations
+message GetRecommendationsRequest {
+  string user_id = 1;
+  RecommendationAlgorithm algorithm = 2;
+  int32 limit = 3;
+  repeated string exclude_user_ids = 4;
+  repeated string interests = 5;
+}
+
+message GetRecommendationsResponse {
+  repeated Recommendation recommendations = 1;
+  string algorithm_used = 2;
+  google.protobuf.Timestamp generated_at = 3;
+}
+
+message GetTrendingUsersRequest {
+  string requesting_user_id = 1;
+  int32 limit = 2;
+  string category = 3;
+  int32 time_window_hours = 4;
+}
+
+message GetTrendingUsersResponse {
+  repeated Recommendation trending_users = 1;
+  string time_period = 2;
+  google.protobuf.Timestamp generated_at = 3;
+}
+
+// Analytics
+message GetFollowerAnalyticsRequest {
+  string user_id = 1;
+  string requesting_user_id = 2;
+  string time_range = 3; // "1d", "7d", "30d", "90d"
+}
+
+message GetFollowerAnalyticsResponse {
+  int32 total_followers = 1;
+  int32 total_following = 2;
+  int32 mutual_follows = 3;
+  int32 followers_gained_today = 4;
+  int32 followers_lost_today = 5;
+  int32 followers_gained_week = 6;
+  int32 followers_lost_week = 7;
+  int32 followers_gained_month = 8;
+  int32 followers_lost_month = 9;
+  double average_engagement_rate = 10;
+  map<string, int32> followers_by_country = 11;
+  map<string, int32> daily_growth = 12;
+}
+
+message GetSocialMetricsRequest {
+  string user_id = 1;
+  string requesting_user_id = 2;
+}
+
+message GetSocialMetricsResponse {
+  int32 followers_count = 1;
+  int32 following_count = 2;
+  double followers_following_ratio = 3;
+  double average_engagement_score = 4;
+  double influence_score = 5;
+  int32 mutual_connections = 6;
+  double network_reach = 7;
+  google.protobuf.Timestamp last_updated = 8;
+}
+
+// Real-time
+message GetLiveFollowerCountRequest {
+  string user_id = 1;
+  string requesting_user_id = 2;
+}
+
+message GetLiveFollowerCountResponse {
+  int32 follower_count = 1;
+  int32 following_count = 2;
+  google.protobuf.Timestamp last_updated = 3;
+  int32 change_since_yesterday = 4;
+}
+
+message GetRecentActivityRequest {
+  string user_id = 1;
+  int32 limit = 2;
+  string activity_type = 3; // "all", "follows", "unfollows"
+}
+
+message GetRecentActivityResponse {
+  repeated FollowActivity activities = 1;
+  bool has_more = 2;
+  google.protobuf.Timestamp last_updated = 3;
+}
+
+message FollowActivity {
+  string activity_id = 1;
+  string actor_user_id = 2;
+  string target_user_id = 3;
+  string action = 4; // "followed", "unfollowed", "blocked", "muted"
+  google.protobuf.Timestamp timestamp = 5;
+  UserInfo actor = 6;
+}
+
+// Validation
+message ValidateFollowRequest {
+  string follower_id = 1;
+  string following_id = 2;
+}
+
+message ValidateFollowResponse {
+  bool can_follow = 1;
+  string reason = 2;
+  bool requires_approval = 3;
+  bool is_blocked = 4;
+  bool at_follow_limit = 5;
+}
+
+// Rate Limiting
+message CheckRateLimitRequest {
+  string user_id = 1;
+  string action = 2; // "follow", "unfollow", "block"
+}
+
+message CheckRateLimitResponse {
+  bool allowed = 1;
+  int32 limit = 2;
+  int32 remaining = 3;
+  google.protobuf.Timestamp reset_time = 4;
+  int32 retry_after_seconds = 5;
+}
+
+// ========== FOLLOW SERVICE DEFINITION ==========
+
+/**
+ * Twitter-Scale Follow Service
+ * 
+ * High-performance gRPC service for social graph operations:
+ * - Sub-1ms follow/unfollow operations
+ * - Real-time relationship queries
+ * - Advanced recommendations
+ * - Comprehensive analytics
+ * - Bulk operations for efficiency
+ */
+service FollowService {
+  // ========== CORE OPERATIONS ==========
+  
+  // Follow a user
+  rpc FollowUser(FollowUserRequest) returns (FollowUserResponse);
+  
+  // Unfollow a user
+  rpc UnfollowUser(UnfollowUserRequest) returns (UnfollowUserResponse);
+  
+  // Block a user
+  rpc BlockUser(BlockUserRequest) returns (BlockUserResponse);
+  
+  // Unblock a user
+  rpc UnblockUser(UnblockUserRequest) returns (UnblockUserResponse);
+  
+  // Mute a user
+  rpc MuteUser(MuteUserRequest) returns (MuteUserResponse);
+  
+  // Unmute a user
+  rpc UnmuteUser(UnmuteUserRequest) returns (UnmuteUserResponse);
+  
+  // ========== RELATIONSHIP QUERIES ==========
+  
+  // Get relationship between two users
+  rpc GetRelationship(GetRelationshipRequest) returns (GetRelationshipResponse);
+  
+  // Check specific relationship type
+  rpc CheckRelationship(CheckRelationshipRequest) returns (CheckRelationshipResponse);
+  
+  // Get relationships with multiple users
+  rpc GetBulkRelationships(GetBulkRelationshipsRequest) returns (GetBulkRelationshipsResponse);
+  
+  // ========== LISTS ==========
+  
+  // Get user's followers
+  rpc GetFollowers(GetFollowersRequest) returns (GetFollowersResponse);
+  
+  // Get users that a user is following
+  rpc GetFollowing(GetFollowingRequest) returns (GetFollowingResponse);
+  
+  // Get mutual friends between two users
+  rpc GetMutualFriends(GetMutualFriendsRequest) returns (GetMutualFriendsResponse);
+  
+  // ========== BULK OPERATIONS ==========
+  
+  // Follow multiple users
+  rpc BulkFollow(BulkFollowRequest) returns (BulkFollowResponse);
+  
+  // Unfollow multiple users
+  rpc BulkUnfollow(BulkFollowRequest) returns (BulkFollowResponse);
+  
+  // ========== RECOMMENDATIONS ==========
+  
+  // Get friend recommendations
+  rpc GetRecommendations(GetRecommendationsRequest) returns (GetRecommendationsResponse);
+  
+  // Get trending users
+  rpc GetTrendingUsers(GetTrendingUsersRequest) returns (GetTrendingUsersResponse);
+  
+  // ========== ANALYTICS ==========
+  
+  // Get follower analytics
+  rpc GetFollowerAnalytics(GetFollowerAnalyticsRequest) returns (GetFollowerAnalyticsResponse);
+  
+  // Get social metrics
+  rpc GetSocialMetrics(GetSocialMetricsRequest) returns (GetSocialMetricsResponse);
+  
+  // ========== REAL-TIME ==========
+  
+  // Get live follower count
+  rpc GetLiveFollowerCount(GetLiveFollowerCountRequest) returns (GetLiveFollowerCountResponse);
+  
+  // Get recent activity
+  rpc GetRecentActivity(GetRecentActivityRequest) returns (GetRecentActivityResponse);
+  
+  // Stream follower updates
+  rpc StreamFollowerUpdates(GetLiveFollowerCountRequest) returns (stream FollowActivity);
+  
+  // ========== VALIDATION ==========
+  
+  // Validate follow request
+  rpc ValidateFollow(ValidateFollowRequest) returns (ValidateFollowResponse);
+  
+  // Check rate limits
+  rpc CheckRateLimit(CheckRateLimitRequest) returns (CheckRateLimitResponse);
+}

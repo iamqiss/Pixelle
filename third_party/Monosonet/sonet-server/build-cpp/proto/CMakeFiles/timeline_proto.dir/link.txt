@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtimeline_proto.a CMakeFiles/timeline_proto.dir/generated/timeline.pb.cc.o CMakeFiles/timeline_proto.dir/generated/timeline.grpc.pb.cc.o
+/usr/bin/ranlib libtimeline_proto.a

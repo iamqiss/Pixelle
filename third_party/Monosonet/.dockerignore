@@ -1,0 +1,20 @@
+# VCS
+.git
+.gitignore
+
+# Node/yarn artifacts
+node_modules
+.yarn
+pnpm-lock.yaml
+
+# Rust targets
+**/target
+
+# Editor/OS
+.vscode
+.DS_Store
+
+# Build and docs
+build
+coverage
+moderation/target

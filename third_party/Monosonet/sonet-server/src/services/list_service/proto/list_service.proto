@@ -1,0 +1,201 @@
+syntax = "proto3";
+
+package sonet.list.v1;
+
+option go_package = "sonet/src/services/list_service/proto";
+
+import "google/protobuf/timestamp.proto";
+
+// List Service
+service ListService {
+  // Create a new list
+  rpc CreateList(CreateListRequest) returns (CreateListResponse);
+  
+  // Get a list by ID
+  rpc GetList(GetListRequest) returns (GetListResponse);
+  
+  // Get lists owned by a user
+  rpc GetUserLists(GetUserListsRequest) returns (GetUserListsResponse);
+  
+  // Update a list
+  rpc UpdateList(UpdateListRequest) returns (UpdateListResponse);
+  
+  // Delete a list
+  rpc DeleteList(DeleteListRequest) returns (DeleteListResponse);
+  
+  // Add a member to a list
+  rpc AddListMember(AddListMemberRequest) returns (AddListMemberResponse);
+  
+  // Remove a member from a list
+  rpc RemoveListMember(RemoveListMemberRequest) returns (RemoveListMemberResponse);
+  
+  // Get list members
+  rpc GetListMembers(GetListMembersRequest) returns (GetListMembersResponse);
+  
+  // Check if user is in list
+  rpc IsUserInList(IsUserInListRequest) returns (IsUserInListResponse);
+}
+
+// List types
+enum ListType {
+  LIST_TYPE_UNSPECIFIED = 0;
+  LIST_TYPE_CUSTOM = 1;
+  LIST_TYPE_CLOSE_FRIENDS = 2;
+  LIST_TYPE_FAMILY = 3;
+  LIST_TYPE_WORK = 4;
+  LIST_TYPE_SCHOOL = 5;
+}
+
+// List model
+message List {
+  string list_id = 1;
+  string owner_id = 2;
+  string name = 3;
+  string description = 4;
+  bool is_public = 5;
+  ListType list_type = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+  int32 member_count = 9;
+}
+
+// List member model
+message ListMember {
+  string list_id = 1;
+  string user_id = 2;
+  string added_by = 3;
+  string notes = 4;
+  google.protobuf.Timestamp added_at = 5;
+}
+
+// Create list request
+message CreateListRequest {
+  string owner_id = 1;
+  string name = 2;
+  string description = 3;
+  bool is_public = 4;
+  ListType list_type = 5;
+}
+
+// Create list response
+message CreateListResponse {
+  bool success = 1;
+  List list = 2;
+  string error_message = 3;
+}
+
+// Get list request
+message GetListRequest {
+  string list_id = 1;
+  string requester_id = 2; // For permission checking
+}
+
+// Get list response
+message GetListResponse {
+  bool success = 1;
+  List list = 2;
+  string error_message = 3;
+}
+
+// Get user lists request
+message GetUserListsRequest {
+  string user_id = 1;
+  string requester_id = 2; // For permission checking
+  int32 limit = 3;
+  string cursor = 4;
+}
+
+// Get user lists response
+message GetUserListsResponse {
+  bool success = 1;
+  repeated List lists = 2;
+  string next_cursor = 3;
+  string error_message = 4;
+}
+
+// Update list request
+message UpdateListRequest {
+  string list_id = 1;
+  string requester_id = 2; // Must be owner
+  string name = 3;
+  string description = 4;
+  bool is_public = 5;
+  ListType list_type = 6;
+}
+
+// Update list response
+message UpdateListResponse {
+  bool success = 1;
+  List list = 2;
+  string error_message = 3;
+}
+
+// Delete list request
+message DeleteListRequest {
+  string list_id = 1;
+  string requester_id = 2; // Must be owner
+}
+
+// Delete list response
+message DeleteListResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+
+// Add list member request
+message AddListMemberRequest {
+  string list_id = 1;
+  string user_id = 2;
+  string added_by = 3; // Must have permission
+  string notes = 4;
+}
+
+// Add list member response
+message AddListMemberResponse {
+  bool success = 1;
+  ListMember member = 2;
+  string error_message = 3;
+}
+
+// Remove list member request
+message RemoveListMemberRequest {
+  string list_id = 1;
+  string user_id = 2;
+  string removed_by = 3; // Must have permission
+}
+
+// Remove list member response
+message RemoveListMemberResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+
+// Get list members request
+message GetListMembersRequest {
+  string list_id = 1;
+  string requester_id = 2; // For permission checking
+  int32 limit = 3;
+  string cursor = 4;
+}
+
+// Get list members response
+message GetListMembersResponse {
+  bool success = 1;
+  repeated ListMember members = 2;
+  string next_cursor = 3;
+  string error_message = 4;
+}
+
+// Is user in list request
+message IsUserInListRequest {
+  string list_id = 1;
+  string user_id = 2;
+  string requester_id = 3; // For permission checking
+}
+
+// Is user in list response
+message IsUserInListResponse {
+  bool success = 1;
+  bool is_member = 2;
+  string error_message = 3;
+}

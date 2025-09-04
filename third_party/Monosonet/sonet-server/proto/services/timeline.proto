@@ -1,0 +1,217 @@
+//
+// Copyright (c) 2025 Neo Qiss
+// All rights reserved.
+//
+// This software is proprietary and confidential.
+// Unauthorized copying, distribution, or use is strictly prohibited.
+//
+
+syntax = "proto3";
+
+package sonet.timeline;
+
+import "common/timestamp.proto";
+import "common/pagination.proto";
+import "services/note.proto";
+
+// Timeline algorithm types
+enum TimelineAlgorithm {
+  TIMELINE_ALGORITHM_UNKNOWN = 0;
+  TIMELINE_ALGORITHM_CHRONOLOGICAL = 1;   // Pure reverse chronological
+  TIMELINE_ALGORITHM_ALGORITHMIC = 2;     // ML-based ranking
+  TIMELINE_ALGORITHM_HYBRID = 3;          // Mix of both
+}
+
+// Content source types for timeline
+enum ContentSource {
+  CONTENT_SOURCE_UNKNOWN = 0;
+  CONTENT_SOURCE_FOLLOWING = 1;     // From followed users
+  CONTENT_SOURCE_TRENDING = 2;      // Trending content
+  CONTENT_SOURCE_RECOMMENDED = 3;   // Recommended based on interests
+  CONTENT_SOURCE_PROMOTED = 4;      // Sponsored/promoted content
+  CONTENT_SOURCE_LISTS = 5;         // From user-created lists
+}
+
+// Timeline item ranking signals
+message RankingSignals {
+  double author_affinity_score = 1;      // How much user interacts with author
+  double content_quality_score = 2;     // ML-based content quality
+  double engagement_velocity = 3;       // How fast content is gaining engagement
+  double recency_score = 4;             // Time-based decay
+  double personalization_score = 5;     // Based on user interests/history
+  double diversity_score = 6;           // Content diversity boost
+  bool is_reply_to_following = 7;       // Reply to someone user follows
+  int32 mutual_follower_interactions = 8; // Interactions from mutual followers
+}
+
+// Timeline item with metadata
+message TimelineItem {
+  sonet.note.Note note = 1;
+  ContentSource source = 2;
+  RankingSignals ranking_signals = 3;
+  sonet.common.Timestamp injected_at = 4;  // When added to timeline
+  double final_score = 5;                  // Final ranking score
+  string injection_reason = 6;             // Why this was included
+  int32 position_in_timeline = 7;          // Original position
+}
+
+// Timeline metadata
+message TimelineMetadata {
+  int32 total_items = 1;
+  int32 new_items_since_last_fetch = 2;
+  sonet.common.Timestamp last_updated = 3;
+  sonet.common.Timestamp last_user_read = 4;
+  TimelineAlgorithm algorithm_used = 5;
+  string timeline_version = 6;    // For A/B testing
+  map<string, double> algorithm_params = 7;
+}
+
+// User timeline preferences
+message TimelinePreferences {
+  TimelineAlgorithm preferred_algorithm = 1;
+  bool show_replies = 2;
+  bool show_renotes = 3; // formerly show_renotes
+  bool show_recommended_content = 4;
+  bool show_trending_content = 5;
+  bool sensitive_content_warning = 6;
+  repeated string muted_keywords = 7;
+  repeated string muted_users = 8;
+  repeated string preferred_languages = 9;
+  int32 timeline_refresh_minutes = 10;     // Auto-refresh interval
+}
+
+// Real-time timeline update
+message TimelineUpdate {
+  enum UpdateType {
+    UPDATE_TYPE_UNKNOWN = 0;
+    UPDATE_TYPE_NEW_ITEMS = 1;
+    UPDATE_TYPE_ITEM_UPDATED = 2;    // Metrics updated
+    UPDATE_TYPE_ITEM_DELETED = 3;
+    UPDATE_TYPE_BULK_REFRESH = 4;
+  }
+  
+  UpdateType type = 1;
+  repeated TimelineItem new_items = 2;
+  repeated string updated_item_ids = 3;
+  repeated string deleted_item_ids = 4;
+  int32 total_new_items = 5;
+  sonet.common.Timestamp update_timestamp = 6;
+}
+
+// ============= SERVICE DEFINITIONS =============
+
+// Get home timeline
+message GetTimelineRequest {
+  string user_id = 1;
+  TimelineAlgorithm algorithm = 2;  // Override default algorithm
+  sonet.common.PaginationRequest pagination = 3;
+  bool include_ranking_signals = 4;  // Include debug info
+  bool real_time_updates = 5;        // Enable real-time updates
+}
+
+message GetTimelineResponse {
+  repeated TimelineItem items = 1;
+  TimelineMetadata metadata = 2;
+  sonet.common.PaginationResponse pagination = 3;
+  bool success = 4;
+  string error_message = 5;
+}
+
+// Get user's profile timeline
+message GetUserTimelineRequest {
+  string target_user_id = 1;
+  string requesting_user_id = 2;
+  sonet.common.PaginationRequest pagination = 3;
+  bool include_replies = 4;
+  bool include_renotes = 5; // formerly include_renotes
+}
+
+message GetUserTimelineResponse {
+  repeated TimelineItem items = 1;
+  sonet.common.PaginationResponse pagination = 2;
+  bool success = 3;
+  string error_message = 4;
+}
+
+// Refresh timeline
+message RefreshTimelineRequest {
+  string user_id = 1;
+  sonet.common.Timestamp since = 2;  // Get updates since this timestamp
+  int32 max_items = 3;
+}
+
+message RefreshTimelineResponse {
+  repeated TimelineItem new_items = 1;
+  int32 total_new_items = 2;
+  bool has_more = 3;
+  bool success = 4;
+  string error_message = 5;
+}
+
+// Mark timeline as read
+message MarkTimelineReadRequest {
+  string user_id = 1;
+  sonet.common.Timestamp read_until = 2;
+}
+
+message MarkTimelineReadResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+
+// Update timeline preferences
+message UpdateTimelinePreferencesRequest {
+  string user_id = 1;
+  TimelinePreferences preferences = 2;
+}
+
+message UpdateTimelinePreferencesResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+
+// Get timeline preferences
+message GetTimelinePreferencesRequest {
+  string user_id = 1;
+}
+
+message GetTimelinePreferencesResponse {
+  TimelinePreferences preferences = 1;
+  bool success = 2;
+  string error_message = 3;
+}
+
+// Subscribe to real-time timeline updates (server streaming)
+message SubscribeTimelineUpdatesRequest {
+  string user_id = 1;
+  bool include_metadata = 2;
+}
+
+// Health check
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+  string status = 1;
+  map<string, string> details = 2;
+}
+
+// ============= TIMELINE SERVICE =============
+service TimelineService {
+  // Core timeline operations
+  rpc GetTimeline(GetTimelineRequest) returns (GetTimelineResponse);
+  rpc GetUserTimeline(GetUserTimelineRequest) returns (GetUserTimelineResponse);
+  rpc RefreshTimeline(RefreshTimelineRequest) returns (RefreshTimelineResponse);
+  
+  // Timeline state management
+  rpc MarkTimelineRead(MarkTimelineReadRequest) returns (MarkTimelineReadResponse);
+  
+  // Preferences
+  rpc UpdateTimelinePreferences(UpdateTimelinePreferencesRequest) returns (UpdateTimelinePreferencesResponse);
+  rpc GetTimelinePreferences(GetTimelinePreferencesRequest) returns (GetTimelinePreferencesResponse);
+  
+  // Real-time updates (server streaming)
+  rpc SubscribeTimelineUpdates(SubscribeTimelineUpdatesRequest) returns (stream TimelineUpdate);
+  
+  // Health
+  rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+}

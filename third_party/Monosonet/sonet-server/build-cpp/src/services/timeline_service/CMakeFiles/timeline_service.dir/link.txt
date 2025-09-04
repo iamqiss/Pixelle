@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtimeline_service.a CMakeFiles/timeline_service.dir/service.cpp.o CMakeFiles/timeline_service.dir/ranking_engine.cpp.o CMakeFiles/timeline_service.dir/cache.cpp.o CMakeFiles/timeline_service.dir/content_filter.cpp.o CMakeFiles/timeline_service.dir/realtime_notifier.cpp.o CMakeFiles/timeline_service.dir/content_adapters.cpp.o CMakeFiles/timeline_service.dir/controllers/timeline_controller.cpp.o CMakeFiles/timeline_service.dir/rankers/chronological_ranking_engine.cpp.o
+/usr/bin/ranlib libtimeline_service.a

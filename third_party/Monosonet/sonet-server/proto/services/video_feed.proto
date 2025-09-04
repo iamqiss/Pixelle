@@ -1,0 +1,408 @@
+syntax = "proto3";
+
+package sonet.services;
+
+import "proto/common/video_types.proto";
+import "proto/common/user_types.proto";
+import "proto/common/ranking_types.proto";
+import "proto/common/ml_types.proto";
+import "proto/common/pagination.proto";
+import "proto/common/health.proto";
+
+// Video Feed Service - High-performance ML-powered video ranking
+service VideoFeedService {
+  // Get video feed with ML ranking
+  rpc GetVideoFeed(VideoFeedRequest) returns (VideoFeedResponse);
+  
+  // Get personalized feed for specific user
+  rpc GetPersonalizedFeed(PersonalizedFeedRequest) returns (VideoFeedResponse);
+  
+  // Track user engagement events
+  rpc TrackEngagement(EngagementEvent) returns (EngagementResponse);
+  
+  // Get feed insights and analytics
+  rpc GetFeedInsights(FeedInsightsRequest) returns (FeedInsightsResponse);
+  
+  // Stream real-time video feed updates
+  rpc StreamVideoFeed(VideoFeedRequest) returns (stream VideoFeedUpdate);
+  
+  // Health check
+  rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+}
+
+// Video Feed Request
+message VideoFeedRequest {
+  // Feed configuration
+  string feed_type = 1;           // "for_you", "trending", "following", "discover"
+  string algorithm = 2;           // "hybrid", "ml_ranking", "recency", "engagement"
+  
+  // Pagination
+  PaginationRequest pagination = 3;
+  
+  // Content preferences
+  repeated string categories = 4;
+  repeated string exclude_categories = 5;
+  repeated string tags = 6;
+  repeated string exclude_tags = 7;
+  
+  // Video preferences
+  uint32 min_duration_ms = 8;    // Minimum video duration
+  uint32 max_duration_ms = 9;    // Maximum video duration
+  string quality_preference = 10; // "auto", "720p", "1080p", "4k"
+  
+  // User context (optional for anonymous feeds)
+  string user_id = 11;
+  UserContext user_context = 12;
+  
+  // Request context
+  RequestContext context = 13;
+  
+  // ML settings
+  MLRankingSettings ml_settings = 14;
+}
+
+// Personalized Feed Request
+message PersonalizedFeedRequest {
+  string user_id = 1;
+  VideoFeedRequest base_request = 2;
+  PersonalizationSettings personalization = 3;
+  repeated string user_interests = 4;
+  repeated string user_preferences = 5;
+}
+
+// Video Feed Response
+message VideoFeedResponse {
+  // Feed items
+  repeated VideoItem items = 1;
+  
+  // Pagination info
+  PaginationInfo pagination = 2;
+  
+  // Feed metadata
+  FeedMetadata metadata = 3;
+  
+  // ML insights
+  MLFeedInsights ml_insights = 4;
+  
+  // Performance metrics
+  PerformanceMetrics performance = 5;
+}
+
+// Video Item
+message VideoItem {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  string thumbnail_url = 4;
+  string playback_url = 5;
+  
+  // Video metadata
+  VideoMetadata video = 6;
+  
+  // Creator info
+  UserProfile creator = 7;
+  
+  // Engagement metrics
+  EngagementMetrics engagement = 8;
+  
+  // ML ranking info
+  MLRankingInfo ml_ranking = 9;
+  
+  // Content flags
+  repeated string content_flags = 10;
+  repeated string content_warnings = 11;
+  
+  // Timestamps
+  string created_at = 12;
+  string updated_at = 13;
+}
+
+// Video Metadata
+message VideoMetadata {
+  uint32 duration_ms = 1;
+  string quality = 2;
+  string resolution = 3;
+  string aspect_ratio = 4;
+  uint64 file_size_bytes = 5;
+  string encoding = 6;
+  uint32 bitrate_kbps = 7;
+  uint32 frame_rate = 8;
+  
+  // Video features
+  VideoFeatures features = 9;
+}
+
+// Video Features
+message VideoFeatures {
+  double brightness = 1;
+  double contrast = 2;
+  double saturation = 3;
+  double motion_intensity = 4;
+  double scene_complexity = 5;
+  double audio_quality = 6;
+  bool background_music = 7;
+  double speech_clarity = 8;
+  double color_vibrancy = 9;
+  double visual_appeal = 10;
+}
+
+// User Profile
+message UserProfile {
+  string user_id = 1;
+  string username = 2;
+  string display_name = 3;
+  string avatar_url = 4;
+  bool verified = 5;
+  uint32 follower_count = 6;
+  uint32 following_count = 7;
+  string bio = 8;
+  repeated string interests = 9;
+}
+
+// Engagement Metrics
+message EngagementMetrics {
+  uint32 view_count = 1;
+  uint32 unique_viewers = 2;
+  uint32 like_count = 3;
+  uint32 renote_count = 4;
+  uint32 reply_count = 5;
+  uint32 share_count = 6;
+  uint32 bookmark_count = 7;
+  double average_watch_time_ms = 8;
+  double completion_rate = 9;
+  double skip_rate = 10;
+  double engagement_score = 11;
+  double viral_score = 12;
+  double retention_score = 13;
+}
+
+// ML Ranking Info
+message MLRankingInfo {
+  double ranking_score = 1;
+  string algorithm_version = 2;
+  repeated RankingFactor factors = 3;
+  MLPredictions predictions = 4;
+  PersonalizationReasons personalization = 5;
+  double confidence = 6;
+}
+
+// Ranking Factor
+message RankingFactor {
+  string name = 1;
+  double weight = 2;
+  double value = 3;
+  string description = 4;
+}
+
+// Personalization Reasons
+message PersonalizationReasons {
+  repeated string category_matches = 1;
+  repeated string creator_matches = 2;
+  repeated string topic_matches = 3;
+  repeated string interest_matches = 4;
+  double user_preference_score = 5;
+  double content_affinity = 6;
+}
+
+// Feed Metadata
+message FeedMetadata {
+  string feed_type = 1;
+  string algorithm = 2;
+  string algorithm_version = 3;
+  uint32 total_items = 4;
+  uint32 filtered_items = 5;
+  string generated_at = 6;
+  double generation_time_ms = 7;
+  
+  // Feed statistics
+  FeedStatistics statistics = 8;
+}
+
+// Feed Statistics
+message FeedStatistics {
+  double average_ranking_score = 1;
+  double diversity_score = 2;
+  double freshness_score = 3;
+  double quality_score = 4;
+  repeated string top_categories = 5;
+  repeated string top_creators = 6;
+  repeated string trending_topics = 7;
+}
+
+// ML Feed Insights
+message MLFeedInsights {
+  string model_version = 1;
+  double prediction_accuracy = 2;
+  repeated string key_factors = 3;
+  PersonalizationSummary personalization = 4;
+  repeated string content_recommendations = 5;
+  double ml_confidence = 6;
+}
+
+// Performance Metrics
+message PerformanceMetrics {
+  double request_latency_ms = 1;
+  double ml_inference_time_ms = 2;
+  double database_query_time_ms = 3;
+  double cache_hit_rate = 4;
+  uint32 memory_usage_mb = 5;
+  uint32 cpu_usage_percent = 6;
+}
+
+// Engagement Event
+message EngagementEvent {
+  string user_id = 1;
+  string video_id = 2;
+  string event_type = 3;  // "view", "like", "renote", "reply", "share", "bookmark", "skip", "report"
+  string timestamp = 4;
+  
+  // Event-specific data
+  uint32 duration_ms = 5;
+  double completion_rate = 6;
+  string context = 7;
+  
+  // Request context
+  RequestContext request_context = 8;
+}
+
+// Engagement Response
+message EngagementResponse {
+  bool success = 1;
+  string message = 2;
+  uint32 updated_count = 3;
+  string timestamp = 4;
+}
+
+// Feed Insights Request
+message FeedInsightsRequest {
+  string user_id = 1;
+  string feed_type = 2;
+  string algorithm = 3;
+  uint32 time_window_hours = 4;
+}
+
+// Feed Insights Response
+message FeedInsightsResponse {
+  string user_id = 1;
+  repeated string top_categories = 2;
+  repeated string top_creators = 3;
+  repeated string top_topics = 4;
+  WatchPatterns watch_patterns = 5;
+  EngagementTrends engagement_trends = 6;
+  PersonalizationInsights personalization = 7;
+}
+
+// Watch Patterns
+message WatchPatterns {
+  double average_watch_time_ms = 1;
+  double completion_rate = 2;
+  repeated uint32 active_hours = 3;
+  uint32 preferred_duration_ms = 4;
+  string preferred_quality = 5;
+}
+
+// Engagement Trends
+message EngagementTrends {
+  double like_rate = 1;
+  double renote_rate = 2;
+  double reply_rate = 3;
+  double share_rate = 4;
+  double skip_rate = 5;
+  double engagement_score = 6;
+}
+
+// Personalization Insights
+message PersonalizationInsights {
+  repeated string discovered_interests = 1;
+  repeated string content_preferences = 2;
+  double personalization_effectiveness = 3;
+  repeated string recommended_categories = 4;
+  repeated string recommended_creators = 5;
+}
+
+// Video Feed Update (for streaming)
+message VideoFeedUpdate {
+  string update_type = 1;  // "new_video", "engagement_update", "ranking_change", "content_filter"
+  string timestamp = 2;
+  
+  // Update payload
+  oneof payload {
+    VideoItem new_video = 3;
+    EngagementUpdate engagement_update = 4;
+    RankingChange ranking_change = 5;
+    ContentFilterUpdate content_filter = 6;
+  }
+}
+
+// Engagement Update
+message EngagementUpdate {
+  string video_id = 1;
+  string event_type = 2;
+  uint32 new_count = 3;
+  string user_id = 4;
+}
+
+// Ranking Change
+message RankingChange {
+  string video_id = 1;
+  double old_score = 2;
+  double new_score = 3;
+  string reason = 4;
+}
+
+// Content Filter Update
+message ContentFilterUpdate {
+  string video_id = 1;
+  string filter_type = 2;
+  string action = 3;  // "block", "flag", "allow"
+  string reason = 4;
+}
+
+// Request Context
+message RequestContext {
+  string session_id = 1;
+  string device_type = 2;
+  string platform = 3;
+  string app_version = 4;
+  string ip_address = 5;
+  string user_agent = 6;
+  string language = 7;
+  string timezone = 8;
+  uint32 screen_width = 9;
+  uint32 screen_height = 10;
+}
+
+// User Context
+message UserContext {
+  uint32 age = 1;
+  string location = 2;
+  string language = 3;
+  string device_type = 4;
+  repeated string interests = 5;
+  repeated string preferences = 6;
+  bool is_premium = 7;
+  uint32 account_age_days = 8;
+}
+
+// ML Ranking Settings
+message MLRankingSettings {
+  bool enable_ml_ranking = 1;
+  string model_version = 2;
+  double ml_weight = 3;
+  repeated string enabled_features = 4;
+  bool enable_ab_testing = 5;
+  string experiment_id = 6;
+}
+
+// Health Check Request
+message HealthCheckRequest {
+  string service = 1;
+}
+
+// Health Check Response
+message HealthCheckResponse {
+  string status = 1;  // "healthy", "unhealthy", "degraded"
+  string message = 2;
+  string timestamp = 3;
+  map<string, string> details = 4;
+}

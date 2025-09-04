@@ -1,0 +1,113 @@
+//
+// Copyright (c) 2025 Neo Qiss
+// All rights reserved.
+//
+// This software is proprietary and confidential.
+// Unauthorized copying, distribution, or use is strictly prohibited.
+//
+
+syntax = "proto3";
+
+package sonet.media;
+
+// Media type enum
+enum MediaType {
+	MEDIA_TYPE_UNKNOWN = 0;
+	MEDIA_TYPE_IMAGE = 1;
+	MEDIA_TYPE_VIDEO = 2;
+	MEDIA_TYPE_GIF = 3;
+}
+
+// Basic Media metadata
+message Media {
+	string id = 1;
+	string owner_user_id = 2;
+	MediaType type = 3;
+	string mime_type = 4;
+	uint64 size_bytes = 5;
+	uint32 width = 6;
+	uint32 height = 7;
+	double duration_seconds = 8; // for video/gif
+	string original_url = 9;     // storage URL (may be signed)
+	string thumbnail_url = 10;   // for images/videos
+	string hls_url = 11;         // video HLS master playlist (optional)
+	string created_at = 12;      // RFC3339 timestamp
+	string webp_url = 13;        // optional optimized image variant
+	string mp4_url = 14;         // optional GIF->MP4 optimized variant
+}
+
+// Upload streaming: client sends chunks
+message UploadInit {
+	string owner_user_id = 1;
+	MediaType type = 2;
+	string original_filename = 3;
+	string mime_type = 4;
+}
+
+message UploadChunk {
+	bytes content = 1;
+}
+
+message UploadRequest {
+	oneof payload {
+		UploadInit init = 1;
+		UploadChunk chunk = 2;
+	}
+}
+
+message UploadResponse {
+	string media_id = 1;
+	MediaType type = 2;
+	string url = 3;
+	string thumbnail_url = 4;
+	string hls_url = 5;
+	string webp_url = 6;
+	string mp4_url = 7;
+}
+
+message GetMediaRequest { string media_id = 1; }
+message GetMediaResponse { Media media = 1; }
+
+message DeleteMediaRequest { string media_id = 1; }
+message DeleteMediaResponse { bool deleted = 1; }
+
+message ListUserMediaRequest {
+	string owner_user_id = 1;
+	uint32 page = 2;
+	uint32 page_size = 3;
+}
+
+message ListUserMediaResponse {
+	repeated Media items = 1;
+	uint32 page = 2;
+	uint32 page_size = 3;
+	uint32 total_pages = 4;
+}
+
+// Per-media like toggling
+message ToggleMediaLikeRequest {
+    string media_id = 1;
+    string user_id = 2;
+    bool is_liked = 3;
+}
+
+message ToggleMediaLikeResponse {
+    string media_id = 1;
+    uint32 like_count = 2;
+    bool is_liked = 3;
+}
+
+// Simple health check
+message HealthCheckRequest {}
+message HealthCheckResponse { string status = 1; }
+
+service MediaService {
+	// Client streaming upload
+	rpc Upload(stream UploadRequest) returns (UploadResponse);
+	rpc GetMedia(GetMediaRequest) returns (GetMediaResponse);
+	rpc DeleteMedia(DeleteMediaRequest) returns (DeleteMediaResponse);
+	rpc ListUserMedia(ListUserMediaRequest) returns (ListUserMediaResponse);
+	rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+    rpc ToggleMediaLike(ToggleMediaLikeRequest) returns (ToggleMediaLikeResponse);
+}
+

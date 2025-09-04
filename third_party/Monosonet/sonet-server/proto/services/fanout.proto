@@ -1,0 +1,206 @@
+//
+// Copyright (c) 2025 Neo Qiss
+// All rights reserved.
+//
+// This software is proprietary and confidential.
+// Unauthorized copying, distribution, or use is strictly prohibited.
+//
+
+syntax = "proto3";
+
+package sonet.fanout;
+
+import "common/timestamp.proto";
+import "services/note.proto";
+
+// Fanout strategies for different user tiers
+enum FanoutStrategy {
+  FANOUT_STRATEGY_UNKNOWN = 0;
+  FANOUT_STRATEGY_PUSH = 1;         // Pre-compute and push to followers' timelines
+  FANOUT_STRATEGY_PULL = 2;         // Compute on-demand when timeline requested
+  FANOUT_STRATEGY_HYBRID = 3;       // Push to active users, pull for others
+}
+
+// User tier for fanout strategy selection
+enum UserTier {
+  USER_TIER_UNKNOWN = 0;
+  USER_TIER_REGULAR = 1;           // < 1K followers - push fanout
+  USER_TIER_POPULAR = 2;           // 1K - 100K followers - hybrid
+  USER_TIER_CELEBRITY = 3;         // > 100K followers - pull only
+  USER_TIER_VERIFIED = 4;          // Verified users - special handling
+}
+
+// Fanout job for processing
+message FanoutJob {
+  string job_id = 1;
+  string note_id = 2;
+  string author_id = 3;
+  UserTier author_tier = 4;
+  FanoutStrategy strategy = 5;
+  sonet.common.Timestamp created_at = 6;
+  sonet.common.Timestamp started_at = 7;
+  sonet.common.Timestamp completed_at = 8;
+  
+  // Job status
+  enum JobStatus {
+    JOB_STATUS_UNKNOWN = 0;
+    JOB_STATUS_PENDING = 1;
+    JOB_STATUS_PROCESSING = 2;
+    JOB_STATUS_COMPLETED = 3;
+    JOB_STATUS_FAILED = 4;
+    JOB_STATUS_CANCELLED = 5;
+  }
+  JobStatus status = 9;
+  
+  // Processing metrics
+  int32 total_followers = 10;
+  int32 processed_followers = 11;
+  int32 failed_deliveries = 12;
+  double processing_time_ms = 13;
+  string error_message = 14;
+}
+
+// Follower batch for processing
+message FollowerBatch {
+  string batch_id = 1;
+  string job_id = 2;
+  repeated string follower_ids = 3;
+  int32 batch_size = 4;
+  int32 batch_number = 5;
+  FanoutStrategy strategy = 6;
+}
+
+// Timeline delivery target
+message DeliveryTarget {
+  string user_id = 1;
+  string timeline_key = 2;        // Redis key for user's timeline
+  bool is_active_user = 3;        // Recently active user
+  sonet.common.Timestamp last_seen = 4;
+  int32 follower_tier = 5;        // 1=close friend, 2=regular, 3=distant
+}
+
+// Fanout metrics and analytics
+message FanoutMetrics {
+  string author_id = 1;
+  string note_id = 2;
+  int64 total_deliveries = 3;
+  int64 successful_deliveries = 4;
+  int64 failed_deliveries = 5;
+  double avg_delivery_time_ms = 6;
+  map<string, int64> delivery_by_tier = 7;  // Deliveries by user tier
+  sonet.common.Timestamp completed_at = 8;
+}
+
+// ============= SERVICE DEFINITIONS =============
+
+// Initiate fanout for a new note
+message InitiateFanoutRequest {
+  sonet.note.Note note = 1;
+  FanoutStrategy strategy = 2;     // Override automatic strategy
+  bool urgent = 3;                 // High priority processing
+  repeated string specific_followers = 4; // Target specific followers only
+}
+
+message InitiateFanoutResponse {
+  string job_id = 1;
+  FanoutStrategy strategy_used = 2;
+  int32 estimated_deliveries = 3;
+  double estimated_completion_time_ms = 4;
+  bool success = 5;
+  string error_message = 6;
+}
+
+// Get fanout job status
+message GetFanoutJobStatusRequest {
+  string job_id = 1;
+}
+
+message GetFanoutJobStatusResponse {
+  FanoutJob job = 1;
+  bool success = 2;
+  string error_message = 3;
+}
+
+// Cancel fanout job
+message CancelFanoutJobRequest {
+  string job_id = 1;
+  string reason = 2;
+}
+
+message CancelFanoutJobResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+
+// Get user's fanout tier
+message GetUserTierRequest {
+  string user_id = 1;
+}
+
+message GetUserTierResponse {
+  UserTier tier = 1;
+  int32 follower_count = 2;
+  FanoutStrategy recommended_strategy = 3;
+  bool success = 4;
+  string error_message = 5;
+}
+
+// Batch process followers
+message ProcessFollowerBatchRequest {
+  FollowerBatch batch = 1;
+  sonet.note.Note note = 2;
+}
+
+message ProcessFollowerBatchResponse {
+  string batch_id = 1;
+  int32 successful_deliveries = 2;
+  int32 failed_deliveries = 3;
+  repeated string failed_user_ids = 4;
+  bool success = 5;
+  string error_message = 6;
+}
+
+// Get fanout metrics
+message GetFanoutMetricsRequest {
+  string author_id = 1;
+  string note_id = 2;
+  sonet.common.Timestamp since = 3;
+  sonet.common.Timestamp until = 4;
+}
+
+message GetFanoutMetricsResponse {
+  repeated FanoutMetrics metrics = 1;
+  map<string, double> summary_stats = 2;
+  bool success = 3;
+  string error_message = 4;
+}
+
+// Health check
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+  string status = 1;
+  map<string, string> details = 2;
+  int32 pending_jobs = 3;
+  int32 active_workers = 4;
+}
+
+// ============= FANOUT SERVICE =============
+service FanoutService {
+  // Job management
+  rpc InitiateFanout(InitiateFanoutRequest) returns (InitiateFanoutResponse);
+  rpc GetFanoutJobStatus(GetFanoutJobStatusRequest) returns (GetFanoutJobStatusResponse);
+  rpc CancelFanoutJob(CancelFanoutJobRequest) returns (CancelFanoutJobResponse);
+  
+  // User tier management
+  rpc GetUserTier(GetUserTierRequest) returns (GetUserTierResponse);
+  
+  // Batch processing (internal)
+  rpc ProcessFollowerBatch(ProcessFollowerBatchRequest) returns (ProcessFollowerBatchResponse);
+  
+  // Analytics
+  rpc GetFanoutMetrics(GetFanoutMetricsRequest) returns (GetFanoutMetricsResponse);
+  
+  // Health
+  rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+}

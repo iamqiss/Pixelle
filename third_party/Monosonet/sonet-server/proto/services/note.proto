@@ -1,0 +1,293 @@
+//
+// Copyright (c) 2025 Neo Qiss
+// All rights reserved.
+//
+// This software is proprietary and confidential.
+// Unauthorized copying, distribution, or use is strictly prohibited.
+//
+
+syntax = "proto3";
+
+package sonet.note;
+
+import "common/timestamp.proto";
+import "common/pagination.proto";
+
+// Note visibility levels (privacy)
+enum NoteVisibility {
+  NOTE_VISIBILITY_UNKNOWN = 0;
+  NOTE_VISIBILITY_PUBLIC = 1;      // Visible to everyone
+  NOTE_VISIBILITY_FOLLOWERS = 2;   // Visible to followers only
+  NOTE_VISIBILITY_FRIENDS = 3;     // Visible to mutual followers only
+  NOTE_VISIBILITY_PRIVATE = 4;     // Only visible to author
+  NOTE_VISIBILITY_MENTIONED = 5;   // Visible to mentioned users + author
+}
+
+// Content warning/sensitivity types
+enum ContentWarning {
+  CONTENT_WARNING_NONE = 0;
+  CONTENT_WARNING_SENSITIVE = 1;
+  CONTENT_WARNING_ADULT = 2;
+  CONTENT_WARNING_VIOLENCE = 3;
+  CONTENT_WARNING_POLITICAL = 4;
+}
+
+// Mention in a note
+message NoteMention {
+  string user_id = 1;
+  string username = 2;
+  int32 start_offset = 3;  // Character offset in text
+  int32 end_offset = 4;
+}
+
+// Hashtag in a note
+message NoteHashtag {
+  string tag = 1;           // Without # prefix
+  int32 start_offset = 2;
+  int32 end_offset = 3;
+}
+
+// URL/link in a note
+message NoteLink {
+  string url = 1;
+  string title = 2;         // Extracted title
+  string description = 3;   // Extracted description
+  string image_url = 4;     // Preview image
+  int32 start_offset = 5;
+  int32 end_offset = 6;
+}
+
+// Rich content entities in note text
+message NoteEntities {
+  repeated NoteMention mentions = 1;
+  repeated NoteHashtag hashtags = 2;
+  repeated NoteLink links = 3;
+}
+
+// Geographic location
+message GeoLocation {
+  double latitude = 1;
+  double longitude = 2;
+  string place_name = 3;    // Human readable name
+  string country_code = 4;  // ISO country code
+}
+
+// Engagement metrics
+message NoteMetrics {
+  int64 like_count = 1;
+  int64 renote_count = 2;                // formerly renote_count
+  int64 reply_count = 3;
+  int64 quote_count = 4;                 // Quote renotes with commentary
+  int64 bookmark_count = 5;
+  int64 view_count = 6;
+  double engagement_rate = 7;            // Calculated engagement score
+}
+
+// Core Note model
+message Note {
+  string id = 1;
+  string author_id = 2;
+  string text = 3;                        // Note content (max 280 chars)
+  NoteVisibility visibility = 4;
+  ContentWarning content_warning = 5;
+  
+  // Media attachments
+  repeated string media_ids = 6;          // References to media service
+  
+  // Rich content
+  NoteEntities entities = 7;
+  GeoLocation location = 8;
+  
+  // Thread/reply context
+  string reply_to_note_id = 9;           // If this is a reply
+  string reply_to_user_id = 10;          // User being replied to
+  string thread_root_id = 11;            // Root note of thread
+  
+  // Renote context (share)
+  string renoted_note_id = 12;           // If this is a renote
+  string renoted_user_id = 13;           // Original author
+  bool is_quote_renote = 14;             // Has additional commentary
+  
+  // Metadata
+  sonet.common.Timestamp created_at = 15;
+  sonet.common.Timestamp updated_at = 16;
+  sonet.common.Timestamp deleted_at = 17; // Soft delete
+  
+  // Analytics & moderation
+  NoteMetrics metrics = 18;
+  string language_code = 19;             // Detected language (ISO 639-1)
+  repeated string flags = 20;            // Moderation flags
+  bool is_verified_content = 21;         // From verified account
+  string client_name = 22;               // App/client used to create
+}
+
+// User's interaction with a note
+message UserNoteInteraction {
+  string user_id = 1;
+  string note_id = 2;
+  bool has_liked = 3;
+  bool has_renoted = 4;
+  bool has_bookmarked = 5;
+  bool has_reported = 6;
+  sonet.common.Timestamp last_viewed_at = 7;
+  sonet.common.Timestamp interacted_at = 8;
+}
+
+// ============= SERVICE DEFINITIONS =============
+
+// Create note request
+message CreateNoteRequest {
+  string author_id = 1;
+  string text = 2;
+  NoteVisibility visibility = 3;
+  ContentWarning content_warning = 4;
+  repeated string media_ids = 5;
+  GeoLocation location = 6;
+  // Reply context
+  string reply_to_note_id = 7;
+  // Renote context
+  string renoted_note_id = 8;
+  bool is_quote_renote = 9;
+  string client_name = 10;
+  string idempotency_key = 11; // For retries
+}
+
+message CreateNoteResponse {
+  Note note = 1;
+  bool success = 2;
+  string error_message = 3;
+}
+
+// Get note by ID
+message GetNoteRequest {
+  string note_id = 1;
+  string requesting_user_id = 2;  // For privacy checks
+  bool include_thread = 3;        // Include full thread context
+}
+
+message GetNoteResponse {
+  Note note = 1;
+  UserNoteInteraction user_interaction = 2; // Requesting user's interaction
+  repeated Note thread_notes = 3;           // If include_thread = true
+  bool success = 4;
+  string error_message = 5;
+}
+
+// Delete note
+message DeleteNoteRequest {
+  string note_id = 1;
+  string user_id = 2;
+}
+
+message DeleteNoteResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+
+// Like/unlike note
+message LikeNoteRequest {
+  string note_id = 1;
+  string user_id = 2;
+  bool like = 3;  // true = like, false = unlike
+}
+
+message LikeNoteResponse {
+  bool success = 1;
+  int64 new_like_count = 2;
+  string error_message = 3;
+}
+
+// Renote (share) note
+message RenoteNoteRequest {
+  string note_id = 1;
+  string user_id = 2;
+  bool is_quote_renote = 3;
+  string quote_text = 4;      // If quote renote
+}
+
+message RenoteNoteResponse {
+  Note renote_note = 1;  // The new renote created
+  bool success = 2;
+  string error_message = 3;
+}
+
+// Get user's notes (profile timeline)
+message GetUserNotesRequest {
+  string user_id = 1;
+  string requesting_user_id = 2;
+  sonet.common.PaginationRequest pagination = 3;
+  bool include_replies = 4;
+  bool include_renotes = 5;
+}
+
+message GetUserNotesResponse {
+  repeated Note notes = 1;
+  sonet.common.PaginationResponse pagination = 2;
+  bool success = 3;
+  string error_message = 4;
+}
+
+// Get note thread (replies)
+message GetNoteThreadRequest {
+  string note_id = 1;
+  string requesting_user_id = 2;
+  sonet.common.PaginationRequest pagination = 3;
+}
+
+message GetNoteThreadResponse {
+  Note root_note = 1;
+  repeated Note replies = 2;
+  sonet.common.PaginationResponse pagination = 3;
+  bool success = 4;
+  string error_message = 5;
+}
+
+// Search notes
+message SearchNotesRequest {
+  string query = 1;
+  string requesting_user_id = 2;
+  sonet.common.PaginationRequest pagination = 3;
+  
+  // Filters
+  string language = 4;
+  string author_id = 5;
+  repeated string hashtags = 6;
+  sonet.common.Timestamp since = 7;
+  sonet.common.Timestamp until = 8;
+  bool verified_only = 9;
+}
+
+message SearchNotesResponse {
+  repeated Note notes = 1;
+  sonet.common.PaginationResponse pagination = 2;
+  bool success = 3;
+  string error_message = 4;
+}
+
+// Health check
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+  string status = 1;
+  map<string, string> details = 2;
+}
+
+// ============= NOTE SERVICE =============
+service NoteService {
+  // Core operations
+  rpc CreateNote(CreateNoteRequest) returns (CreateNoteResponse);
+  rpc GetNote(GetNoteRequest) returns (GetNoteResponse);
+  rpc DeleteNote(DeleteNoteRequest) returns (DeleteNoteResponse);
+  
+  // Interactions
+  rpc LikeNote(LikeNoteRequest) returns (LikeNoteResponse);
+  rpc RenoteNote(RenoteNoteRequest) returns (RenoteNoteResponse);
+  
+  // Queries
+  rpc GetUserNotes(GetUserNotesRequest) returns (GetUserNotesResponse);
+  rpc GetNoteThread(GetNoteThreadRequest) returns (GetNoteThreadResponse);
+  rpc SearchNotes(SearchNotesRequest) returns (SearchNotesResponse);
+  
+  // Health
+  rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+}

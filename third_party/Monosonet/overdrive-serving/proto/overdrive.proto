@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package overdrive;
+
+message RankForYouRequest {
+	string user_id = 1;
+	repeated string candidate_note_ids = 2;
+	int32 limit = 3;
+	map<string, string> device_context = 4;
+	string cursor = 5;
+}
+
+message RankFactor {
+	string name = 1;
+	double value = 2;
+}
+
+message RankedItem {
+	string note_id = 1;
+	double score = 2;
+	repeated RankFactor factors = 3;
+	repeated string reasons = 4;
+	string cursor = 5;
+}
+
+message RankForYouResponse {
+	repeated RankedItem items = 1;
+	string algorithm_version = 2;
+	map<string, double> personalization_summary = 3;
+}
+
+service OverdriveRanker {
+	rpc RankForYou (RankForYouRequest) returns (RankForYouResponse);
+}

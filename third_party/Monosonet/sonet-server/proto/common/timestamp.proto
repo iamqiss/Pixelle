@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package sonet.common;
+
+// Timestamp representation
+message Timestamp {
+  // Represents seconds of UTC time since Unix epoch
+  int64 seconds = 1;
+  
+  // Non-negative fractions of a second at nanosecond resolution
+  int32 nanos = 2;
+}

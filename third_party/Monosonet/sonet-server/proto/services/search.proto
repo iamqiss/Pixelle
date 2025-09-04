@@ -1,0 +1,51 @@
+//
+// Copyright (c) 2025 Neo Qiss
+// All rights reserved.
+//
+// Proprietary and confidential.
+//
+
+syntax = "proto3";
+
+package sonet.search;
+
+import "common/pagination.proto";
+
+message SearchUserRequest {
+  string query = 1;
+  sonet.common.Pagination pagination = 2;
+}
+
+message UserResult {
+  string user_id = 1;
+  string username = 2;
+  string display_name = 3;
+  string avatar_url = 4;
+  bool is_verified = 5;
+}
+
+message SearchUserResponse {
+  repeated UserResult users = 1;
+  sonet.common.Pagination pagination = 2;
+}
+
+message SearchNoteRequest {
+  string query = 1;
+  sonet.common.Pagination pagination = 2;
+}
+
+message NoteResult {
+  string note_id = 1;
+  string author_id = 2;
+  string content = 3;
+}
+
+message SearchNoteResponse {
+  repeated NoteResult notes = 1;
+  sonet.common.Pagination pagination = 2;
+}
+
+service SearchService {
+  rpc SearchUsers(SearchUserRequest) returns (SearchUserResponse);
+  rpc SearchNotes(SearchNoteRequest) returns (SearchNoteResponse);
+}

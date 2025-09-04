@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package sonet.common;
+
+// Pagination information for API responses
+message Pagination {
+  // Number of items to skip
+  int32 offset = 1;
+  
+  // Maximum number of items to return
+  int32 limit = 2;
+  
+  // Total number of items available
+  int32 total_count = 3;
+  
+  // Whether there are more items available
+  bool has_next = 4;
+  
+  // Whether there are previous items available
+  bool has_previous = 5;
+}

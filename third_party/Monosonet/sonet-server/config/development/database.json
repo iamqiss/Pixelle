@@ -1,0 +1,18 @@
+{
+  "_copyright": "Copyright (c) 2025 Neo Qiss. All rights reserved. Proprietary and confidential.",
+  "host": "postgres",
+  "port": 5432,
+  "username": "sonet",
+  "password": "sonet_dev_password",
+  "database": "sonet_dev",
+  "pool_size": 10,
+  "connection_timeout": 30,
+  "ssl_mode": "disable",
+  "databases": {
+    "user_service": "user_service",
+    "note_service": "note_service",
+    "media_service": "media_service",
+    "follow_service": "follow_service",
+    "notification_service": "notification_service"
+  }
+}

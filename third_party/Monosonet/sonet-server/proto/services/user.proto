@@ -1,0 +1,308 @@
+/*
+ * Copyright (c) 2025 Neo Qiss
+ * All rights reserved.
+ * 
+ * This software is proprietary and confidential.
+ * Unauthorized copying, distribution, or use is strictly prohibited.
+ */
+
+syntax = "proto3";
+
+package sonet.user;
+
+import "common/common.proto";
+import "common/timestamp.proto";
+
+option cc_enable_arenas = true;
+
+// User status enumeration
+enum UserStatus {
+  USER_STATUS_UNSPECIFIED = 0;
+  USER_STATUS_ACTIVE = 1;
+  USER_STATUS_SUSPENDED = 2;
+  USER_STATUS_PENDING_VERIFICATION = 3;
+  USER_STATUS_DEACTIVATED = 4;
+  USER_STATUS_BANNED = 5;
+}
+
+// Session types
+enum SessionType {
+  SESSION_TYPE_UNSPECIFIED = 0;
+  SESSION_TYPE_WEB = 1;
+  SESSION_TYPE_MOBILE = 2;
+  SESSION_TYPE_API = 3;
+  SESSION_TYPE_ADMIN = 4;
+}
+
+// Core user profile
+message UserProfile {
+  string user_id = 1;
+  string username = 2;
+  string email = 3;
+  string display_name = 4;
+  string bio = 5;
+  string avatar_url = 6;
+  string location = 7;
+  string website = 8;
+  UserStatus status = 9;
+  bool is_verified = 10;
+  bool is_private = 11;
+  common.Timestamp created_at = 12;
+  common.Timestamp updated_at = 13;
+  common.Timestamp last_login = 14;
+  
+  // Social stats
+  uint64 follower_count = 15;
+  uint64 following_count = 16;
+  uint64 note_count = 17;
+  
+  // Settings
+  map<string, string> settings = 18;
+  map<string, string> privacy_settings = 19;
+}
+
+// Authentication credentials
+message AuthCredentials {
+  string email = 1;
+  string password = 2;
+  string two_factor_code = 3;
+}
+
+// Session information
+message Session {
+  string session_id = 1;
+  string user_id = 2;
+  string device_id = 3;
+  string device_name = 4;
+  string ip_address = 5;
+  string user_agent = 6;
+  SessionType type = 7;
+  common.Timestamp created_at = 8;
+  common.Timestamp last_activity = 9;
+  common.Timestamp expires_at = 10;
+  bool is_active = 11;
+  bool is_suspicious = 12;
+  string location_info = 13;
+}
+
+// Two-factor authentication setup
+message TwoFactorAuth {
+  string user_id = 1;
+  bool is_enabled = 2;
+  string qr_code_url = 3;
+  repeated string backup_codes = 4;
+  common.Timestamp setup_at = 5;
+}
+
+// Registration request
+message RegisterUserRequest {
+  string username = 1;
+  string email = 2;
+  string password = 3;
+  string display_name = 4;
+  string invitation_code = 5;
+  bool accept_terms = 6;
+  bool accept_privacy = 7;
+}
+
+message RegisterUserResponse {
+  common.Status status = 1;
+  UserProfile user = 2;
+  string verification_token = 3;
+}
+
+// Login request/response
+message LoginUserRequest {
+  AuthCredentials credentials = 1;
+  string device_name = 2;
+}
+
+message LoginUserResponse {
+  common.Status status = 1;
+  string access_token = 2;
+  string refresh_token = 3;
+  int32 expires_in = 4;
+  Session session = 5;
+  bool requires_2fa = 6;
+}
+
+// Token verification
+message VerifyTokenRequest {
+  string token = 1;
+}
+
+message VerifyTokenResponse {
+  common.Status status = 1;
+  UserProfile user = 2;
+  Session session = 3;
+}
+
+// Token refresh
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}
+
+message RefreshTokenResponse {
+  common.Status status = 1;
+  string access_token = 2;
+  int32 expires_in = 3;
+}
+
+// Logout
+message LogoutRequest {
+  string session_id = 1;
+  bool logout_all_devices = 2;
+}
+
+message LogoutResponse {
+  common.Status status = 1;
+}
+
+// Password change
+message ChangePasswordRequest {
+  string old_password = 1;
+  string new_password = 2;
+}
+
+message ChangePasswordResponse {
+  common.Status status = 1;
+}
+
+// Password reset
+message ResetPasswordRequest {
+  string email = 1;
+}
+
+message ResetPasswordResponse {
+  common.Status status = 1;
+  string reset_token = 2;
+}
+
+message ConfirmPasswordResetRequest {
+  string reset_token = 1;
+  string new_password = 2;
+}
+
+message ConfirmPasswordResetResponse {
+  common.Status status = 1;
+}
+
+// Email verification
+message VerifyEmailRequest {
+  string verification_token = 1;
+}
+
+message VerifyEmailResponse {
+  common.Status status = 1;
+}
+
+message ResendVerificationRequest {
+  string email = 1;
+}
+
+message ResendVerificationResponse {
+  common.Status status = 1;
+}
+
+// Two-factor authentication
+message SetupTwoFactorRequest {
+  string user_id = 1;
+}
+
+message SetupTwoFactorResponse {
+  common.Status status = 1;
+  TwoFactorAuth tfa_config = 2;
+}
+
+message VerifyTwoFactorRequest {
+  string user_id = 1;
+  string code = 2;
+}
+
+message VerifyTwoFactorResponse {
+  common.Status status = 1;
+  bool is_verified = 2;
+}
+
+message DisableTwoFactorRequest {
+  string password = 1;
+}
+
+message DisableTwoFactorResponse {
+  common.Status status = 1;
+}
+
+// Session management
+message GetActiveSessionsRequest {
+  string user_id = 1;
+}
+
+message GetActiveSessionsResponse {
+  common.Status status = 1;
+  repeated Session sessions = 2;
+}
+
+message TerminateSessionRequest {
+  string session_id = 1;
+}
+
+message TerminateSessionResponse {
+  common.Status status = 1;
+}
+
+// Profile management
+message GetUserProfileRequest {
+  string user_id = 1;
+}
+
+message GetUserProfileResponse {
+  common.Status status = 1;
+  UserProfile user = 2;
+}
+
+message UpdateUserProfileRequest {
+  string user_id = 1;
+  string display_name = 2;
+  string bio = 3;
+  string location = 4;
+  string website = 5;
+  bool is_private = 6;
+  map<string, string> settings = 7;
+}
+
+message UpdateUserProfileResponse {
+  common.Status status = 1;
+  UserProfile user = 2;
+}
+
+// User Service definition
+service UserService {
+  // Authentication operations
+  rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
+  rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
+  rpc LogoutUser(LogoutRequest) returns (LogoutResponse);
+  rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse);
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
+  
+  // Password management
+  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
+  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse);
+  rpc ConfirmPasswordReset(ConfirmPasswordResetRequest) returns (ConfirmPasswordResetResponse);
+  
+  // Email verification
+  rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse);
+  rpc ResendVerification(ResendVerificationRequest) returns (ResendVerificationResponse);
+  
+  // Two-factor authentication
+  rpc SetupTwoFactor(SetupTwoFactorRequest) returns (SetupTwoFactorResponse);
+  rpc VerifyTwoFactor(VerifyTwoFactorRequest) returns (VerifyTwoFactorResponse);
+  rpc DisableTwoFactor(DisableTwoFactorRequest) returns (DisableTwoFactorResponse);
+  
+  // Session management
+  rpc GetActiveSessions(GetActiveSessionsRequest) returns (GetActiveSessionsResponse);
+  rpc TerminateSession(TerminateSessionRequest) returns (TerminateSessionResponse);
+  
+  // Profile management
+  rpc GetUserProfile(GetUserProfileRequest) returns (GetUserProfileResponse);
+  rpc UpdateUserProfile(UpdateUserProfileRequest) returns (UpdateUserProfileResponse);
+}

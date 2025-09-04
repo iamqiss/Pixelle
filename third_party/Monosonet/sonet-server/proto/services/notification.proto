@@ -1,0 +1,59 @@
+//
+// Copyright (c) 2025 Neo Qiss
+// All rights reserved.
+//
+// Proprietary and confidential.
+//
+
+syntax = "proto3";
+
+package sonet.notification;
+
+import "common/pagination.proto";
+import "common/timestamp.proto";
+
+// Notification types
+enum NotificationType {
+  NOTIFICATION_TYPE_UNKNOWN = 0;
+  NOTIFICATION_TYPE_LIKE = 1;
+  NOTIFICATION_TYPE_REPLY = 2;
+  NOTIFICATION_TYPE_MENTION = 3;
+  NOTIFICATION_TYPE_FOLLOW = 4;
+  NOTIFICATION_TYPE_RENOTE = 5;
+}
+
+// Notification entity
+message Notification {
+  string notification_id = 1;
+  string user_id = 2;            // recipient
+  NotificationType type = 3;
+  string actor_user_id = 4;      // actor
+  string note_id = 5;            // optional, for note-related events
+  bool is_read = 6;
+  sonet.common.Timestamp created_at = 7;
+}
+
+message ListNotificationsRequest {
+  string user_id = 1;
+  sonet.common.Pagination pagination = 2;
+  bool unread_only = 3;
+}
+
+message ListNotificationsResponse {
+  repeated Notification notifications = 1;
+  sonet.common.Pagination pagination = 2;
+}
+
+message MarkNotificationReadRequest {
+  string user_id = 1;
+  string notification_id = 2;
+}
+
+message MarkNotificationReadResponse {
+  bool success = 1;
+}
+
+service NotificationService {
+  rpc ListNotifications(ListNotificationsRequest) returns (ListNotificationsResponse);
+  rpc MarkNotificationRead(MarkNotificationReadRequest) returns (MarkNotificationReadResponse);
+}

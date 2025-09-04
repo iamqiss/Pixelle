@@ -1,0 +1,27 @@
+# Overdrive Serving (C++)
+
+High-performance gRPC service for Overdrive ranking and retrieval.
+
+- Loads ONNX models via ONNX Runtime or TensorRT
+- In-memory ANN indices (FAISS/HNSW)
+- Low-latency online feature fetch from Redis
+
+Build:
+
+```bash
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make -j$(nproc)
+```
+
+Run:
+
+```bash
+./overdrive-serving
+```
+
+The service will start on port 7070 and expose the `OverdriveRanker.RankForYou` gRPC method.
+
+Targets:
+
+- `overdrive-serving` binary exposing `RankForYou` gRPC

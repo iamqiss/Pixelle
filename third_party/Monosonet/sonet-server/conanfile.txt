@@ -1,0 +1,51 @@
+#
+# Copyright (c) 2025 Neo Qiss
+# All rights reserved.
+# 
+# This software is proprietary and confidential.
+# Unauthorized copying, distribution, or use is strictly prohibited.
+#
+
+[requires]
+# Core dependencies
+boost/1.84.0
+grpc/1.54.3
+protobuf/3.21.12
+openssl/1.1.1w
+zlib/1.3.1
+
+# Database
+libpq/15.4
+redis-plus-plus/1.3.12
+hiredis/1.2.0
+
+# JSON handling
+nlohmann_json/3.11.3
+
+# Logging
+spdlog/1.10.0
+
+# Testing
+gtest/1.14.0
+
+# HTTP client/server
+cpr/1.10.5
+cpp-httplib/0.15.3
+
+# Caching and utilities
+fmt/8.1.1
+cli11/2.4.1
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[options]
+grpc/*:shared=False
+boost/*:shared=False
+openssl/*:shared=False
+fmt/*:header_only=True
+spdlog/*:header_only=True
+
+[tool_requires]
+cmake/3.27.7
