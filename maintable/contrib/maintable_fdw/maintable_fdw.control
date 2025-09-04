@@ -1,5 +1,0 @@
-# maintable_fdw extension
-comment = 'foreign-data wrapper for remote maintableQL servers'
-default_version = '1.2'
-module_pathname = '$libdir/maintable_fdw'
-relocatable = true
