@@ -1,0 +1,385 @@
+# T3SS Production Configuration
+# (c) 2025 Qiss Labs. All Rights Reserved.
+
+# Server configuration
+server:
+  host: "0.0.0.0"
+  port: 8080
+  read_timeout: 30
+  write_timeout: 30
+  idle_timeout: 120
+  enable_https: true
+  cert_file: "/etc/ssl/certs/t3ss.crt"
+  key_file: "/etc/ssl/private/t3ss.key"
+
+# Redis configuration
+redis:
+  host: "redis-cluster.t3ss.internal"
+  port: 6379
+  password: "${REDIS_PASSWORD}"
+  db: 0
+  pool_size: 100
+  max_retries: 3
+  dial_timeout: 5s
+  read_timeout: 3s
+  write_timeout: 3s
+
+# Security configuration
+security:
+  enable_cors: true
+  allowed_origins:
+    - "https://search.t3ss.com"
+    - "https://admin.t3ss.com"
+    - "https://api.t3ss.com"
+  enable_api_keys: true
+  api_key_header: "X-API-Key"
+  enable_jwt: true
+  jwt_secret: "${JWT_SECRET}"
+  enable_rate_limit: true
+  session_timeout: 3600
+  max_login_attempts: 5
+  lockout_duration: 900
+
+# Rate limiting configuration
+rate_limit:
+  requests_per_minute: 1000
+  burst_size: 100
+  enable_per_ip: true
+  enable_per_api_key: true
+  cleanup_interval: 60s
+
+# Cache configuration
+cache:
+  enable_redis: true
+  default_ttl: 300s
+  max_cache_size: 1073741824  # 1GB
+  enable_compression: true
+  compression_level: 6
+  max_key_length: 250
+
+# Service discovery configuration
+services:
+  search_service: "search-service.t3ss.svc.cluster.local:9090"
+  indexing_service: "indexing-service.t3ss.svc.cluster.local:9091"
+  ranking_service: "ranking-service.t3ss.svc.cluster.local:9092"
+  ml_service: "ml-service.t3ss.svc.cluster.local:9093"
+  auth_service: "auth-service.t3ss.svc.cluster.local:9094"
+  analytics_service: "analytics-service.t3ss.svc.cluster.local:9095"
+
+# gRPC configuration
+grpc:
+  max_connection_idle: 300s
+  max_connection_age: 300s
+  max_connection_age_grace: 5s
+  time: 2h
+  timeout: 20s
+  keepalive_enforcement_policy:
+    min_time: 5s
+    permit_without_stream: true
+  keepalive_params:
+    time: 15s
+    timeout: 5s
+    permit_without_stream: true
+
+# Database configuration
+database:
+  postgresql:
+    host: "postgres-cluster.t3ss.internal"
+    port: 5432
+    database: "t3ss"
+    username: "${POSTGRES_USERNAME}"
+    password: "${POSTGRES_PASSWORD}"
+    ssl_mode: "require"
+    max_connections: 100
+    max_idle_connections: 10
+    connection_max_lifetime: 1h
+    connection_max_idle_time: 30m
+    query_timeout: 30s
+
+  elasticsearch:
+    hosts:
+      - "elasticsearch-0.t3ss.svc.cluster.local:9200"
+      - "elasticsearch-1.t3ss.svc.cluster.local:9200"
+      - "elasticsearch-2.t3ss.svc.cluster.local:9200"
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+    max_retries: 3
+    timeout: 30s
+    health_check_interval: 30s
+    sniff: true
+    sniff_interval: 30s
+
+# Logging configuration
+logging:
+  level: "info"
+  format: "json"
+  output: "stdout"
+  file:
+    enabled: true
+    path: "/var/log/t3ss/api-gateway.log"
+    max_size: 100
+    max_backups: 3
+    max_age: 28
+    compress: true
+  fields:
+    service: "api-gateway"
+    version: "1.0.0"
+    environment: "production"
+
+# Metrics configuration
+metrics:
+  enable_prometheus: true
+  metrics_path: "/metrics"
+  enable_health_check: true
+  health_check_path: "/health"
+  enable_profiling: true
+  profiling_path: "/debug/pprof"
+  collection_interval: 15s
+  retention_period: 30d
+
+# Monitoring configuration
+monitoring:
+  jaeger:
+    endpoint: "jaeger-collector.t3ss.svc.cluster.local:14268"
+    service_name: "api-gateway"
+    sampler_type: "const"
+    sampler_param: 0.1
+    reporter_log_spans: false
+    reporter_queue_size: 100
+    reporter_flush_interval: 1s
+
+  prometheus:
+    endpoint: "prometheus.t3ss.svc.cluster.local:9090"
+    scrape_interval: 15s
+    scrape_timeout: 10s
+    metrics_path: "/metrics"
+
+  grafana:
+    endpoint: "grafana.t3ss.svc.cluster.local:3000"
+    username: "${GRAFANA_USERNAME}"
+    password: "${GRAFANA_PASSWORD}"
+
+# Search configuration
+search:
+  default_page_size: 10
+  max_page_size: 100
+  default_timeout: 5s
+  max_timeout: 30s
+  enable_highlighting: true
+  highlight_size: 200
+  enable_suggestions: true
+  suggestion_limit: 10
+  enable_autocomplete: true
+  autocomplete_limit: 10
+  enable_spell_correction: true
+  enable_query_expansion: true
+  enable_personalization: true
+
+# Indexing configuration
+indexing:
+  batch_size: 1000
+  flush_interval: 1s
+  max_retries: 3
+  retry_delay: 1s
+  enable_compression: true
+  compression_level: 6
+  enable_deduplication: true
+  deduplication_window: 24h
+  enable_content_analysis: true
+  content_analysis_timeout: 30s
+
+# Ranking configuration
+ranking:
+  default_model: "neural_ranking_v1"
+  enable_learning: true
+  learning_rate: 0.001
+  batch_size: 32
+  epochs: 100
+  validation_split: 0.2
+  enable_personalization: true
+  personalization_weight: 0.3
+  enable_reranking: true
+  reranking_threshold: 0.7
+
+# ML configuration
+ml:
+  models:
+    neural_ranking:
+      path: "/models/neural_ranking"
+      version: "v1.0.0"
+      batch_size: 32
+      max_sequence_length: 512
+      enable_gpu: true
+      gpu_memory_fraction: 0.8
+    
+    embedding:
+      path: "/models/embedding"
+      version: "v1.0.0"
+      model_name: "sentence-transformers/all-MiniLM-L6-v2"
+      max_sequence_length: 256
+      enable_gpu: true
+    
+    query_classification:
+      path: "/models/query_classification"
+      version: "v1.0.0"
+      model_name: "bert-base-uncased"
+      max_sequence_length: 128
+      enable_gpu: true
+    
+    entity_extraction:
+      path: "/models/entity_extraction"
+      version: "v1.0.0"
+      model_name: "dbmdz/bert-large-cased-finetuned-conll03-english"
+      max_sequence_length: 256
+      enable_gpu: true
+
+  training:
+    data_path: "/data/training"
+    output_path: "/models"
+    validation_split: 0.2
+    test_split: 0.1
+    enable_cross_validation: true
+    cross_validation_folds: 5
+    enable_early_stopping: true
+    early_stopping_patience: 10
+    enable_model_checkpointing: true
+    checkpoint_frequency: 5
+
+# Crawling configuration
+crawling:
+  max_concurrent_crawls: 1000
+  crawl_delay: 1s
+  max_pages_per_domain: 10000
+  max_depth: 5
+  user_agent: "T3SS-Crawler/1.0 (+https://t3ss.com/robots.txt)"
+  respect_robots_txt: true
+  enable_compression: true
+  max_response_size: 10485760  # 10MB
+  timeout: 30s
+  max_retries: 3
+  retry_delay: 5s
+  enable_politeness: true
+  politeness_delay: 1s
+
+# Analytics configuration
+analytics:
+  enable_tracking: true
+  tracking_endpoint: "https://analytics.t3ss.com/track"
+  batch_size: 100
+  flush_interval: 5s
+  max_retries: 3
+  retry_delay: 1s
+  enable_anonymization: true
+  data_retention: 90d
+  enable_real_time: true
+  real_time_endpoint: "wss://analytics.t3ss.com/realtime"
+
+# Security scanning configuration
+security_scanning:
+  enable_virus_scanning: true
+  virus_scan_endpoint: "clamav.t3ss.svc.cluster.local:3310"
+  scan_timeout: 30s
+  enable_content_analysis: true
+  content_analysis_endpoint: "content-analyzer.t3ss.svc.cluster.local:8080"
+  enable_malware_detection: true
+  malware_detection_endpoint: "malware-detector.t3ss.svc.cluster.local:8080"
+
+# Backup configuration
+backup:
+  enable_automated_backup: true
+  backup_schedule: "0 2 * * *"  # Daily at 2 AM
+  backup_retention: 30d
+  backup_storage:
+    type: "s3"
+    bucket: "t3ss-backups"
+    region: "us-west-2"
+    access_key: "${AWS_ACCESS_KEY_ID}"
+    secret_key: "${AWS_SECRET_ACCESS_KEY}"
+  enable_encryption: true
+  encryption_key: "${BACKUP_ENCRYPTION_KEY}"
+
+# Disaster recovery configuration
+disaster_recovery:
+  enable_replication: true
+  replication_factor: 3
+  enable_auto_failover: true
+  failover_timeout: 30s
+  enable_geo_replication: true
+  geo_regions:
+    - "us-west-2"
+    - "us-east-1"
+    - "eu-west-1"
+  enable_backup_restore: true
+  restore_timeout: 300s
+
+# Performance tuning
+performance:
+  enable_connection_pooling: true
+  max_connections: 1000
+  max_idle_connections: 100
+  connection_timeout: 30s
+  idle_timeout: 300s
+  enable_keep_alive: true
+  keep_alive_timeout: 30s
+  enable_compression: true
+  compression_level: 6
+  enable_caching: true
+  cache_size: 1073741824  # 1GB
+  cache_ttl: 300s
+
+# Feature flags
+feature_flags:
+  enable_semantic_search: true
+  enable_neural_ranking: true
+  enable_personalization: true
+  enable_real_time_analytics: true
+  enable_advanced_filtering: true
+  enable_query_suggestions: true
+  enable_autocomplete: true
+  enable_spell_correction: true
+  enable_content_analysis: true
+  enable_entity_extraction: true
+  enable_sentiment_analysis: true
+  enable_language_detection: true
+  enable_duplicate_detection: true
+  enable_quality_scoring: true
+  enable_click_tracking: true
+  enable_impression_tracking: true
+  enable_ab_testing: true
+  enable_ml_insights: true
+  enable_advanced_analytics: true
+
+# Environment-specific overrides
+environments:
+  development:
+    logging:
+      level: "debug"
+    metrics:
+      enable_profiling: true
+    performance:
+      max_connections: 100
+    feature_flags:
+      enable_debug_mode: true
+      enable_verbose_logging: true
+
+  staging:
+    logging:
+      level: "info"
+    metrics:
+      enable_profiling: true
+    performance:
+      max_connections: 500
+    feature_flags:
+      enable_debug_mode: false
+      enable_verbose_logging: false
+
+  production:
+    logging:
+      level: "warn"
+    metrics:
+      enable_profiling: false
+    performance:
+      max_connections: 1000
+    feature_flags:
+      enable_debug_mode: false
+      enable_verbose_logging: false

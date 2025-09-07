@@ -1,0 +1,452 @@
+# T3SS Project
+# File: infrastructure/deployment/docker-compose.yml
+# (c) 2025 Qiss Labs. All Rights Reserved.
+
+version: '3.8'
+
+services:
+  # API Gateway
+  api-gateway:
+    build:
+      context: ../../frontend/api_gateway
+      dockerfile: Dockerfile
+    container_name: t3ss-api-gateway
+    ports:
+      - "8080:8080"
+      - "9090:9090"
+    environment:
+      - CONFIG_PATH=/etc/config/config.yaml
+      - LOG_LEVEL=info
+    volumes:
+      - ./config:/etc/config:ro
+      - ./logs:/var/log/t3ss
+    depends_on:
+      - redis
+      - search-service
+    networks:
+      - t3ss-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+
+  # Search Service
+  search-service:
+    build:
+      context: ../../core/querying
+      dockerfile: Dockerfile
+    container_name: t3ss-search-service
+    ports:
+      - "8081:8080"
+      - "9091:9090"
+    environment:
+      - CONFIG_PATH=/etc/config/config.yaml
+      - LOG_LEVEL=info
+    volumes:
+      - ./config:/etc/config:ro
+      - ./data/search:/data
+      - ./logs:/var/log/t3ss
+    depends_on:
+      - redis
+      - indexing-service
+    networks:
+      - t3ss-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+
+  # Indexing Service
+  indexing-service:
+    build:
+      context: ../../core/indexing
+      dockerfile: Dockerfile
+    container_name: t3ss-indexing-service
+    ports:
+      - "8082:8080"
+      - "9092:9090"
+    environment:
+      - CONFIG_PATH=/etc/config/config.yaml
+      - LOG_LEVEL=info
+    volumes:
+      - ./config:/etc/config:ro
+      - ./data/indexes:/data/indexes
+      - ./logs:/var/log/t3ss
+    depends_on:
+      - redis
+    networks:
+      - t3ss-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2.0'
+        reservations:
+          memory: 2G
+          cpus: '1.0'
+
+  # Crawler Service
+  crawler-service:
+    build:
+      context: ../../core/indexing/crawler
+      dockerfile: Dockerfile
+    container_name: t3ss-crawler-service
+    ports:
+      - "8083:8080"
+      - "9093:9090"
+    environment:
+      - CONFIG_PATH=/etc/config/config.yaml
+      - LOG_LEVEL=info
+      - NODE_ID=crawler-1
+    volumes:
+      - ./config:/etc/config:ro
+      - ./data/crawl:/data/crawl
+      - ./logs:/var/log/t3ss
+    depends_on:
+      - redis
+      - indexing-service
+    networks:
+      - t3ss-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+        reservations:
+          memory: 512M
+          cpus: '0.25'
+    scale: 3
+
+  # Ranking Service
+  ranking-service:
+    build:
+      context: ../../core/querying/ranking
+      dockerfile: Dockerfile
+    container_name: t3ss-ranking-service
+    ports:
+      - "8084:8080"
+      - "9094:9090"
+    environment:
+      - CONFIG_PATH=/etc/config/config.yaml
+      - LOG_LEVEL=info
+    volumes:
+      - ./config:/etc/config:ro
+      - ./data/models:/data/models
+      - ./logs:/var/log/t3ss
+    depends_on:
+      - redis
+    networks:
+      - t3ss-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+
+  # Analytics Service
+  analytics-service:
+    build:
+      context: ../../backend_services/analytics
+      dockerfile: Dockerfile
+    container_name: t3ss-analytics-service
+    ports:
+      - "8085:8080"
+      - "9095:9090"
+    environment:
+      - CONFIG_PATH=/etc/config/config.yaml
+      - LOG_LEVEL=info
+    volumes:
+      - ./config:/etc/config:ro
+      - ./data/analytics:/data/analytics
+      - ./logs:/var/log/t3ss
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - t3ss-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+        reservations:
+          memory: 512M
+          cpus: '0.25'
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: t3ss-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --replica-read-only no
+    volumes:
+      - ./data/redis:/data
+      - ./config/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    networks:
+      - t3ss-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.2'
+        reservations:
+          memory: 256M
+          cpus: '0.1'
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: t3ss-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=t3ss
+      - POSTGRES_USER=t3ss
+      - POSTGRES_PASSWORD=t3ss_password
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+      - ./config/postgres-init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - t3ss-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U t3ss"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+        reservations:
+          memory: 512M
+          cpus: '0.25'
+
+  # Elasticsearch for full-text search
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+    container_name: t3ss-elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    volumes:
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+    networks:
+      - t3ss-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+
+  # Prometheus for metrics collection
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: t3ss-prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./data/prometheus:/prometheus
+    networks:
+      - t3ss-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9090/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+        reservations:
+          memory: 512M
+          cpus: '0.25'
+
+  # Grafana for visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: t3ss-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+      - ./config/grafana:/etc/grafana/provisioning:ro
+    depends_on:
+      - prometheus
+    networks:
+      - t3ss-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.25'
+        reservations:
+          memory: 256M
+          cpus: '0.1'
+
+  # Jaeger for distributed tracing
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: t3ss-jaeger
+    ports:
+      - "16686:16686"
+      - "14268:14268"
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    networks:
+      - t3ss-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:16686/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.25'
+        reservations:
+          memory: 256M
+          cpus: '0.1'
+
+  # Nginx Load Balancer
+  nginx:
+    image: nginx:alpine
+    container_name: t3ss-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./config/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - api-gateway
+    networks:
+      - t3ss-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.1'
+        reservations:
+          memory: 128M
+          cpus: '0.05'
+
+networks:
+  t3ss-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  postgres_data:
+  redis_data:
+  elasticsearch_data:
+  prometheus_data:
+  grafana_data:
+  search_data:
+  index_data:
+  crawl_data:
+  analytics_data:
+  model_data:
