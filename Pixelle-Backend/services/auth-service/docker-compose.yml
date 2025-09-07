@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  auth-service:
+    build:
+      context: ../..
+      dockerfile: services/auth-service/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - RUST_LOG=info
+      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - JWT_EXPIRATION_SECONDS=3600
+      - REFRESH_TOKEN_EXPIRATION_SECONDS=604800
+      - PASSWORD_MIN_LENGTH=8
+      - PASSWORD_MAX_LENGTH=128
+      - PASSWORD_REQUIRE_UPPERCASE=true
+      - PASSWORD_REQUIRE_LOWERCASE=true
+      - PASSWORD_REQUIRE_NUMBERS=true
+      - PASSWORD_REQUIRE_SPECIAL_CHARS=true
+      - ARGON2_MEMORY_COST=4096
+      - ARGON2_TIME_COST=3
+      - ARGON2_PARALLELISM=1
+      - SESSION_TIMEOUT_SECONDS=3600
+      - MAX_CONCURRENT_SESSIONS=5
+      - SESSION_CLEANUP_INTERVAL_SECONDS=300
+      - SESSION_COOKIE_NAME=pixelle_session
+      - SESSION_COOKIE_SECURE=true
+      - SESSION_COOKIE_HTTP_ONLY=true
+      - SESSION_COOKIE_SAME_SITE=Strict
+      - RATE_LIMIT_ENABLED=true
+      - RATE_LIMIT_MAX_REQUESTS=100
+      - RATE_LIMIT_WINDOW_SECONDS=60
+      - LOGIN_MAX_ATTEMPTS=5
+      - LOGIN_WINDOW_SECONDS=900
+      - PASSWORD_RESET_MAX_ATTEMPTS=3
+      - PASSWORD_RESET_WINDOW_SECONDS=3600
+      - ENABLE_ACCOUNT_LOCKOUT=true
+      - MAX_FAILED_ATTEMPTS=5
+      - LOCKOUT_DURATION_SECONDS=1800
+      - ENABLE_PASSWORD_HISTORY=true
+      - PASSWORD_HISTORY_COUNT=5
+      - PASSWORD_EXPIRATION_DAYS=90
+      - ENABLE_2FA=false
+      - ENABLE_EMAIL_VERIFICATION=true
+      - ENABLE_PASSWORD_RESET=true
+      - PASSWORD_RESET_TOKEN_EXPIRATION_HOURS=24
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - pixelle-network
+
+  # Optional: Add a database service for production
+  # postgres:
+  #   image: postgres:15-alpine
+  #   environment:
+  #     - POSTGRES_DB=pixelle_auth
+  #     - POSTGRES_USER=pixelle
+  #     - POSTGRES_PASSWORD=your-database-password
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - pixelle-network
+
+  # Optional: Add Redis for session storage
+  # redis:
+  #   image: redis:7-alpine
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_data:/data
+  #   networks:
+  #     - pixelle-network
+
+networks:
+  pixelle-network:
+    driver: bridge
+
+# volumes:
+#   postgres_data:
+#   redis_data:

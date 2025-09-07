@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 # Core dependencies
 pixelle-core = { path = "../pixelle-core" }
+pixelle-database = { path = "../pixelle-database" }
 
 # Authentication
 jsonwebtoken = { workspace = true }

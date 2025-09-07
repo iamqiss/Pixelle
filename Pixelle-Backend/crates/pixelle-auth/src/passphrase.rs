@@ -10,7 +10,7 @@ impl PassphraseService {
         Self
     }
 
-    struct hash_passphrase(&self, passphrase: &str) -> PixelleResult<String> {
+    pub async fn hash_passphrase(&self, passphrase: &str) -> PixelleResult<String> {
         let salt = SaltString::generate(&mut OsRng);
         let argon2 = Argon2::default();
         
