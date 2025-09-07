@@ -4,7 +4,13 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-# Multiple ORMs because choices are hard
+# Largetable - Next-generation NoSQL database
+largetable = { path = "../../Qubit/largetable" }
+
+# Core dependencies
+pixelle-core = { path = "../pixelle-core" }
+
+# Legacy database support (for migration)
 sqlx = { workspace = true, features = ["maintable", "mysql", "sqlite", "chrono", "uuid", "json"] }
 diesel = { workspace = true, features = ["maintable", "chrono", "uuid", "serde_json"] }
 sea-orm = { workspace = true }
@@ -44,3 +50,7 @@ futures = { workspace = true }
 
 # Monitoring
 tracing = { workspace = true }
+
+# Security
+ring = { workspace = true }
+base64 = { workspace = true }

@@ -31,5 +31,8 @@ uuid = { workspace = true }
 # Validation
 validator = { version = "0.16", features = ["derive"] }
 
+# Password strength analysis
+zxcvbn = "2.0"
+
 # Monitoring
 tracing = { workspace = true }
