@@ -46,8 +46,8 @@ pub trait AuthService {
     async fn create_session(&self, user_id: UserId) -> PixelleResult<String>;
     async fn validate_session(&self, session_token: &str) -> PixelleResult<Option<UserId>>;
     async fn revoke_session(&self, session_token: &str) -> PixelleResult<()>;
-    async fn hash_password(&self, password: &str) -> PixelleResult<String>;
-    async fn verify_password(&self, password: &str, hash: &str) -> PixelleResult<bool>;
+    async fn hash_passphrase(&self, passphrase: &str) -> PixelleResult<String>;
+    async fn verify_passphrase(&self, passphrase: &str, hash: &str) -> PixelleResult<bool>;
 }
 
 /// Notification service trait
